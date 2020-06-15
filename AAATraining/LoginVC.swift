@@ -27,7 +27,7 @@ class LoginVC: UIViewController {
         let width = CGFloat(2)
         let color = UIColor.groupTableViewBackground.cgColor
         
-        // creating layer to be a border of the view added
+        // creating layer to be a border of the view added test
         let border = CALayer()
         border.borderWidth = width
         border.borderColor = color
