@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		B7F18C6424970084009BFA17 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F18C6324970084009BFA17 /* AppDelegate.swift */; };
 		B7F18C6624970084009BFA17 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F18C6524970084009BFA17 /* SceneDelegate.swift */; };
-		B7F18C6824970084009BFA17 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F18C6724970084009BFA17 /* ViewController.swift */; };
 		B7F18C6B24970084009BFA17 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7F18C6924970084009BFA17 /* Main.storyboard */; };
 		B7F18C6D24970085009BFA17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B7F18C6C24970085009BFA17 /* Assets.xcassets */; };
 		B7F18C7024970085009BFA17 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7F18C6E24970085009BFA17 /* LaunchScreen.storyboard */; };
@@ -18,6 +17,7 @@
 		B7F18C9624972CC8009BFA17 /* aaaLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F18C9524972CC8009BFA17 /* aaaLogo.png */; };
 		B7F18C9824972E64009BFA17 /* aaahockeyplayer.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F18C9724972E64009BFA17 /* aaahockeyplayer.png */; };
 		B7F18C9A24972F82009BFA17 /* aaahockeysilhouette.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F18C9924972F82009BFA17 /* aaahockeysilhouette.png */; };
+		B7F18C9C24975B60009BFA17 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F18C9B24975B60009BFA17 /* LoginVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,7 +41,6 @@
 		B7F18C6024970084009BFA17 /* AAATraining.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AAATraining.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7F18C6324970084009BFA17 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B7F18C6524970084009BFA17 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B7F18C6724970084009BFA17 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B7F18C6A24970084009BFA17 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B7F18C6C24970085009BFA17 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B7F18C6F24970085009BFA17 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -55,6 +54,7 @@
 		B7F18C9524972CC8009BFA17 /* aaaLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aaaLogo.png; sourceTree = "<group>"; };
 		B7F18C9724972E64009BFA17 /* aaahockeyplayer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aaahockeyplayer.png; sourceTree = "<group>"; };
 		B7F18C9924972F82009BFA17 /* aaahockeysilhouette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aaahockeysilhouette.png; sourceTree = "<group>"; };
+		B7F18C9B24975B60009BFA17 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,11 +110,11 @@
 				B7F18C9524972CC8009BFA17 /* aaaLogo.png */,
 				B7F18C6324970084009BFA17 /* AppDelegate.swift */,
 				B7F18C6524970084009BFA17 /* SceneDelegate.swift */,
-				B7F18C6724970084009BFA17 /* ViewController.swift */,
 				B7F18C6924970084009BFA17 /* Main.storyboard */,
 				B7F18C6C24970085009BFA17 /* Assets.xcassets */,
 				B7F18C6E24970085009BFA17 /* LaunchScreen.storyboard */,
 				B7F18C7124970085009BFA17 /* Info.plist */,
+				B7F18C9B24975B60009BFA17 /* LoginVC.swift */,
 			);
 			path = AAATraining;
 			sourceTree = "<group>";
@@ -271,9 +271,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B7F18C6824970084009BFA17 /* ViewController.swift in Sources */,
 				B7F18C6424970084009BFA17 /* AppDelegate.swift in Sources */,
 				B7F18C6624970084009BFA17 /* SceneDelegate.swift in Sources */,
+				B7F18C9C24975B60009BFA17 /* LoginVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
