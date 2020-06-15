@@ -40,7 +40,6 @@
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
                                 </subviews>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="5ki-fC-ste" firstAttribute="height" secondItem="sD3-jG-cqK" secondAttribute="height" id="5lt-Zq-JmK"/>
                                     <constraint firstItem="sD3-jG-cqK" firstAttribute="leading" secondItem="uzs-ic-xiQ" secondAttribute="leading" constant="8" id="HOa-WC-c0J"/>
@@ -53,17 +52,6 @@
                                     <constraint firstAttribute="trailing" secondItem="sD3-jG-cqK" secondAttribute="trailing" constant="8" id="zj1-Jc-tDm"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zby-oh-UfM">
-                                <rect key="frame" x="16" y="376" width="343" height="35"/>
-                                <color key="backgroundColor" red="0.012204516679048538" green="0.28411296010017395" blue="0.70980292558670044" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="35" id="Vxl-ph-c0G"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
-                                <state key="normal" title="Login">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                            </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1B3-pR-x0u">
                                 <rect key="frame" x="56" y="773" width="123" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -74,13 +62,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hJq-QS-kOH">
-                                <rect key="frame" x="119.5" y="423" width="136" height="32"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="16"/>
-                                <state key="normal" title="Forgot Password?">
-                                    <color key="titleColor" red="0.012204516679999999" green="0.28411296009999998" blue="0.70980292560000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZe-8z-doS">
                                 <rect key="frame" x="176.5" y="575.5" width="22" height="17.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
@@ -120,6 +101,24 @@
                                     <constraint firstAttribute="width" constant="101" id="QT8-oO-cQm"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zby-oh-UfM">
+                                <rect key="frame" x="16" y="386" width="343" height="35"/>
+                                <color key="backgroundColor" red="0.012204516679048538" green="0.28411296010017395" blue="0.70980292558670044" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="Vxl-ph-c0G"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
+                                <state key="normal" title="Login">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hJq-QS-kOH">
+                                <rect key="frame" x="119" y="433" width="136" height="32"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="16"/>
+                                <state key="normal" title="Forgot Password?">
+                                    <color key="titleColor" red="0.012204516679999999" green="0.28411296009999998" blue="0.70980292560000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -127,7 +126,7 @@
                             <constraint firstItem="Zby-oh-UfM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="AjI-Yw-mf0"/>
                             <constraint firstItem="ZGu-rk-B5T" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Bge-g8-dEk"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="hbp-zo-E0U" secondAttribute="trailing" constant="16" id="Dlf-mu-XSz"/>
-                            <constraint firstItem="Zby-oh-UfM" firstAttribute="top" secondItem="uzs-ic-xiQ" secondAttribute="bottom" constant="8" id="EvM-cG-Aqp"/>
+                            <constraint firstItem="Zby-oh-UfM" firstAttribute="top" secondItem="uzs-ic-xiQ" secondAttribute="bottom" constant="18" id="EvM-cG-Aqp"/>
                             <constraint firstItem="ZGu-rk-B5T" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="JNt-BP-70t"/>
                             <constraint firstItem="frV-E3-DQZ" firstAttribute="centerY" secondItem="HZe-8z-doS" secondAttribute="centerY" id="Rbe-2C-1ie"/>
                             <constraint firstItem="HZe-8z-doS" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Vg1-l5-yYf"/>

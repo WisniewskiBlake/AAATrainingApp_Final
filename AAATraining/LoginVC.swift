@@ -20,6 +20,13 @@ class LoginVC: UIViewController {
         
     }
     
+    // executed after aligning the objects
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        configure_textFieldsView()
+        
+    }
     // this func stores code which configures appearance of the textFields' View
     func configure_textFieldsView() {
         
