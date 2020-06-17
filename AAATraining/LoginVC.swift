@@ -10,7 +10,10 @@ import UIKit
 
 class LoginVC: UIViewController {
     
-    //ui objects
+    @IBOutlet weak var logo: UIImageView!
+    @IBOutlet weak var loginBtn: UIButton!
+    @IBOutlet weak var forgotPassBtn: UIButton!    
+    @IBOutlet weak var registerAccBtn: UIButton!
     @IBOutlet weak var textFieldsView: UIView!
     
     //executed when scene is loaded
