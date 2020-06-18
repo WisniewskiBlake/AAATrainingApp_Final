@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B7B7578B249AB1E8000D0D8A /* AAAbackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B7B7578A249AB1E8000D0D8A /* AAAbackground.jpg */; };
+		B7B7578D249ADDAF000D0D8A /* aaaLogo1.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B7578C249ADDAF000D0D8A /* aaaLogo1.png */; };
+		B7B75791249AE11F000D0D8A /* logoBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B75790249AE11F000D0D8A /* logoBackground.png */; };
 		B7F18C6424970084009BFA17 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F18C6324970084009BFA17 /* AppDelegate.swift */; };
 		B7F18C6624970084009BFA17 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F18C6524970084009BFA17 /* SceneDelegate.swift */; };
 		B7F18C6B24970084009BFA17 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7F18C6924970084009BFA17 /* Main.storyboard */; };
@@ -39,6 +42,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B7B7578A249AB1E8000D0D8A /* AAAbackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = AAAbackground.jpg; path = ../../../Downloads/AAAbackground.jpg; sourceTree = "<group>"; };
+		B7B7578C249ADDAF000D0D8A /* aaaLogo1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = aaaLogo1.png; path = ../../../Desktop/Blake/Projects/TestTraining/TestTraining/Pictures/aaaLogo1.png; sourceTree = "<group>"; };
+		B7B75790249AE11F000D0D8A /* logoBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logoBackground.png; path = ../../../Downloads/logoBackground.png; sourceTree = "<group>"; };
 		B7F18C6024970084009BFA17 /* AAATraining.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AAATraining.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7F18C6324970084009BFA17 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B7F18C6524970084009BFA17 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -107,7 +113,10 @@
 		B7F18C6224970084009BFA17 /* AAATraining */ = {
 			isa = PBXGroup;
 			children = (
+				B7B75790249AE11F000D0D8A /* logoBackground.png */,
+				B7B7578C249ADDAF000D0D8A /* aaaLogo1.png */,
 				B7F18D2F2497B2A2009BFA17 /* email.png */,
+				B7B7578A249AB1E8000D0D8A /* AAAbackground.jpg */,
 				B7F18C9724972E64009BFA17 /* aaahockeyplayer.png */,
 				B7F18C9924972F82009BFA17 /* aaahockeysilhouette.png */,
 				B7F18C9524972CC8009BFA17 /* aaaLogo.png */,
@@ -246,10 +255,13 @@
 			files = (
 				B7F18C7024970085009BFA17 /* LaunchScreen.storyboard in Resources */,
 				B7F18C9824972E64009BFA17 /* aaahockeyplayer.png in Resources */,
+				B7B75791249AE11F000D0D8A /* logoBackground.png in Resources */,
 				B7F18C9A24972F82009BFA17 /* aaahockeysilhouette.png in Resources */,
+				B7B7578B249AB1E8000D0D8A /* AAAbackground.jpg in Resources */,
 				B7F18C6D24970085009BFA17 /* Assets.xcassets in Resources */,
 				B7F18C9624972CC8009BFA17 /* aaaLogo.png in Resources */,
 				B7F18C6B24970084009BFA17 /* Main.storyboard in Resources */,
+				B7B7578D249ADDAF000D0D8A /* aaaLogo1.png in Resources */,
 				B7F18D302497B2A2009BFA17 /* email.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -451,6 +463,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Z2A427979Q;
 				INFOPLIST_FILE = AAATraining/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -468,6 +481,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Z2A427979Q;
 				INFOPLIST_FILE = AAATraining/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
