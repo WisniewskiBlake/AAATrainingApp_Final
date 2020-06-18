@@ -79,14 +79,14 @@ class LoginVC: UIViewController {
     }
     
     
-    // executed once the keyboard is about to be shown
+    //THERE IS A BUG IN THIS METHOD WHEN CLICKING BETWEEN EMAIL AND PASSWORD, IT CAN PROBABLY BE FIXED BY THE CODE IN Q&A ON VIDEO 20 or 18
     @objc func keyboardWillShow(notification: Notification) {
         
         logoBackground_height.constant = self.view.frame.width/5
         logo_height.constant = self.view.frame.width/5
         silhoutte_top.constant = -15
         
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             registerButton_bottom.constant = keyboardSize.height + 20
             //registerButton_bottom.constant = self.view.frame.width / 1.75423
         }
