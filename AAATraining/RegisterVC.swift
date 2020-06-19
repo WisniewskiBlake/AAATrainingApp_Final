@@ -63,6 +63,9 @@ class RegisterVC: UIViewController {
         padding(for: passwordTextField)
         padding(for: birthdayTextField)
         
+        // run function of configuration
+        configure_footerView()
+        
     }
     
     // make corners rounded for any views (objects)
