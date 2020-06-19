@@ -22,7 +22,7 @@ class RegisterVC: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!    
+    @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var birthdayTextField: UITextField!
     
     
@@ -31,6 +31,7 @@ class RegisterVC: UIViewController {
     @IBOutlet weak var passwordContinueButton: UIButton!
     @IBOutlet weak var birthdayContinueButton: UIButton!
     
+    @IBOutlet weak var footerView: UIView!
     
 
     override func viewDidLoad() {
@@ -44,11 +45,50 @@ class RegisterVC: UIViewController {
         birthdayView_width.constant = self.view.frame.width
         genderView_width.constant = self.view.frame.width
         
+        // make corners of the objects rounded
+        cornerRadius(for: emailTextField)
+        cornerRadius(for: firstNameTextField)
+        cornerRadius(for: lastNameTextField)
+        cornerRadius(for: passwordTextField)
+        cornerRadius(for: birthdayTextField)
+        cornerRadius(for: emailContinueButton)
+        cornerRadius(for: fullnameContinueButton)
+        cornerRadius(for: passwordContinueButton)
+        cornerRadius(for: birthdayContinueButton)
         
+        // apply padding to the textFields
+        padding(for: emailTextField)
+        padding(for: firstNameTextField)
+        padding(for: lastNameTextField)
+        padding(for: passwordTextField)
+        padding(for: birthdayTextField)
         
     }
     
-
+    // make corners rounded for any views (objects)
+    func cornerRadius(for view: UIView) {
+        view.layer.cornerRadius = 5
+        view.layer.masksToBounds = true
+    }
+    
+    // add blank view to the left side of the TextField (it'll act as a blank gap)
+    func padding(for textField: UITextField) {
+        let blankView = UIView.init(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
+        textField.leftView = blankView
+        textField.leftViewMode = .always
+    }
+    
+    // configuring the appearance of the footerView
+    func configure_footerView() {
+        // adding the line at the top of the footerView
+        let topLine = CALayer()
+        topLine.borderWidth = 1
+        topLine.borderColor = UIColor.lightGray.cgColor
+        topLine.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 1)
+        
+        footerView.layer.addSublayer(topLine)
+    }
+    
     
     @IBAction func cancelButton_clicked(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
