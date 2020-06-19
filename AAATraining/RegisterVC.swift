@@ -33,6 +33,9 @@ class RegisterVC: UIViewController {
     
     @IBOutlet weak var footerView: UIView!
     
+    // code obj
+    var datePicker: UIDatePicker!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,8 +96,93 @@ class RegisterVC: UIViewController {
     }
     
     
+    
+    @IBAction func emailContinueButton_clicked(_ sender: Any) {
+        // move scrollView horizontally (by X to the WIDTH as a pointer)
+        let position = CGPoint(x: self.view.frame.width, y: 0)
+        scrollView.setContentOffset(position, animated: true)
+        
+        // show keyboard of next TextField
+        if firstNameTextField.text!.isEmpty {
+            firstNameTextField.becomeFirstResponder()
+        } else if lastNameTextField.text!.isEmpty {
+            lastNameTextField.becomeFirstResponder()
+        } else if firstNameTextField.text!.isEmpty == false && lastNameTextField.text!.isEmpty == false {
+            firstNameTextField.resignFirstResponder()
+            lastNameTextField.resignFirstResponder()
+        }
+    }
+    
+    @IBAction func fullnameContinueButton_clicked(_ sender: Any) {
+        // move scrollView horizontally (by X to the 2x WIDTH as a pointer)
+        let position = CGPoint(x: self.view.frame.width * 2, y: 0)
+        scrollView.setContentOffset(position, animated: true)
+        
+        // show keyboard of next TextField
+        if passwordTextField.text!.isEmpty {
+            passwordTextField.becomeFirstResponder()
+        } else if passwordTextField.text!.isEmpty == false {
+            passwordTextField.resignFirstResponder()
+        }
+    }
+    
+    @IBAction func passwordContinueButton_clicked(_ sender: Any) {
+        // move scrollView horizontally (by X to the 3x WIDTH as a pointer)
+        let position = CGPoint(x: self.view.frame.width * 3, y: 0)
+        scrollView.setContentOffset(position, animated: true)
+        
+        // show keyboard of next TextField
+        if birthdayTextField.text!.isEmpty {
+            birthdayTextField.becomeFirstResponder()
+        } else if birthdayTextField.text!.isEmpty == false {
+            birthdayTextField.resignFirstResponder()
+        }
+    }
+    
+    @IBAction func birthdayContinueButton_clicked(_ sender: Any) {
+        // move scrollView horizontally (by X to the 4x WIDTH as a pointer)
+        let position = CGPoint(x: self.view.frame.width * 4, y: 0)
+        scrollView.setContentOffset(position, animated: true)
+        
+        // hide keyboard when Continue button on Birthday Page is clicked
+        birthdayTextField.resignFirstResponder()
+    }
+    
     @IBAction func cancelButton_clicked(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    @IBAction func textFieldDidChange(_ textField: UITextField) {
+        
+        // declaring constant (shortcut) to the Helper Class
+        let helper = Helper()
+        
+        // logic for Email TextField
+        if textField == emailTextField {
+            
+            // check email validation
+            if helper.isValid(email: emailTextField.text!) {
+                emailContinueButton.isHidden = false
+            }
+            
+        // logic for First Name or Last Name TextFields
+        } else if textField == firstNameTextField || textField == lastNameTextField {
+            
+            // check fullname validation
+            if helper.isValid(name: firstNameTextField.text!) && helper.isValid(name: lastNameTextField.text!) {
+                fullnameContinueButton.isHidden = false
+            }
+            
+        // logic for Password TextField
+        } else if textField == passwordTextField {
+            
+            // check password validation
+            if passwordTextField.text!.count >= 6 {
+                passwordContinueButton.isHidden = false
+            }
+        }
+    }
+    
+    
     
 }
