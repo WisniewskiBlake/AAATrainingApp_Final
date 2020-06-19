@@ -567,6 +567,9 @@
                                                 <state key="normal" title="Already have an account?">
                                                     <color key="titleColor" red="0.25926578039999998" green="0.40468230840000002" blue="0.69936054940000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="cancelButton_clicked:" destination="pbD-KU-4y7" eventType="touchUpInside" id="pOu-j6-yAC"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.91337895390000001" green="0.92143708469999996" blue="0.93379235270000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -595,12 +598,22 @@
                     </view>
                     <size key="freeformSize" width="1875" height="667"/>
                     <connections>
+                        <outlet property="birthdayContinueButton" destination="XKU-gi-AdU" id="F9H-fJ-S9q"/>
+                        <outlet property="birthdayTextField" destination="P4s-qk-npJ" id="CqH-ln-tRx"/>
                         <outlet property="birthdayView_width" destination="tDw-51-afh" id="M4g-hL-rMW"/>
                         <outlet property="contentView_width" destination="cGs-Qw-p8D" id="4yC-Uv-DM4"/>
+                        <outlet property="emailContinueButton" destination="mUE-W0-Y98" id="yaR-xM-96o"/>
+                        <outlet property="emailTextField" destination="wSq-7N-OXS" id="2f6-G9-VXJ"/>
                         <outlet property="emailView_width" destination="2cC-PW-eXO" id="TcP-ux-Mcu"/>
+                        <outlet property="firstNameTextField" destination="h5M-KM-cgm" id="zXA-tb-FFE"/>
+                        <outlet property="fullnameContinueButton" destination="Naf-km-CaD" id="Jla-Y1-aQf"/>
                         <outlet property="genderView_width" destination="6Fn-mT-58j" id="fZd-5u-pRA"/>
+                        <outlet property="lastNameTextField" destination="PXR-9y-H1A" id="eVE-ah-rmT"/>
                         <outlet property="nameView_width" destination="IL8-yw-ziF" id="SJY-mt-khm"/>
+                        <outlet property="passwordContinueButton" destination="93p-UV-cZJ" id="dmq-IY-u8d"/>
+                        <outlet property="passwordTextField" destination="gLx-36-i7d" id="am6-i2-6n1"/>
                         <outlet property="passwordView_width" destination="1hb-po-I7I" id="CGc-bm-GTV"/>
+                        <outlet property="scrollView" destination="WMk-xw-MZo" id="tVv-Wj-fxC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sdo-Dc-Wp2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
