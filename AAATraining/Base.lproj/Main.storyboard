@@ -75,6 +75,9 @@
                                 <state key="normal" title="Login">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="loginButton_clicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DvD-UA-csb"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1B3-pR-x0u">
                                 <rect key="frame" x="56" y="773" width="123" height="27"/>
@@ -161,6 +164,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="emailTextField" destination="5ki-fC-ste" id="8Oe-c3-Ydi"/>
                         <outlet property="forgotPassBtn" destination="hJq-QS-kOH" id="aB7-ww-TR1"/>
                         <outlet property="leftLineView" destination="EHQ-ct-98R" id="JnB-ld-9jp"/>
                         <outlet property="loginBtn" destination="Zby-oh-UfM" id="Nat-R6-LBJ"/>
@@ -169,6 +173,7 @@
                         <outlet property="logoBackground_height" destination="3ez-2P-c7K" id="Bur-MM-NHZ"/>
                         <outlet property="logoBackground_top" destination="a7c-gz-JZd" id="w5t-ED-c31"/>
                         <outlet property="logo_height" destination="ugq-np-dIx" id="qVu-rA-NFA"/>
+                        <outlet property="passwordTextField" destination="sD3-jG-cqK" id="0Lq-O6-W8B"/>
                         <outlet property="registerAccBtn" destination="hbp-zo-E0U" id="fLr-et-g8P"/>
                         <outlet property="registerButton_bottom" destination="Y1p-R5-Ia3" id="EfF-5x-lQj"/>
                         <outlet property="rightLineView" destination="ofM-Lj-7R0" id="3f2-Lf-HkP"/>

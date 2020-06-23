@@ -39,6 +39,8 @@ class LoginVC: UIViewController {
     var logo_height_cache: CGFloat!
     var registerButton_bottom_cache: CGFloat!
     
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
     
     
     
@@ -195,6 +197,28 @@ class LoginVC: UIViewController {
         registerAccBtn.layer.masksToBounds = true
     }
 
+    @IBAction func loginButton_clicked(_ sender: Any) {
+      // accessing Helper Class that stores multi-used functions
+            let helper = Helper()
+            
+            // 1st Varification: if etnered text in EmailTextField doesn't match our expression/rule, show alert
+            if helper.isValid(email: emailTextField.text!) == false {
+                helper.showAlert(title: "Invalid Email", message: "Please enter registered Email address", in: self)
+                return
+                
+            // 2nd Varification: if password is less than 6 chars, then return do not executed further
+            } else if passwordTextField.text!.count < 6 {
+                helper.showAlert(title: "Invalid Password", message: "Password must contain at least 6 characters", in: self)
+                return
+            }
+            
+            // run LoginRequest Function
+            loginRequest()
+            
+        }
+        
+        
+        
     
 
     
