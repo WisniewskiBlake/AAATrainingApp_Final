@@ -267,7 +267,7 @@ class LoginVC: UIViewController {
                         // go to TabBar
                         helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
                         
-                        // saving logged user
+                        // saving logged user                      
                         currentUser = parsedJSON.mutableCopy() as? NSMutableDictionary
                         UserDefaults.standard.set(currentUser, forKey: "currentUser")
                         UserDefaults.standard.synchronize()

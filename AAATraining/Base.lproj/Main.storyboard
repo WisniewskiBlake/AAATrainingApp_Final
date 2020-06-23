@@ -693,6 +693,39 @@
             </objects>
             <point key="canvasLocation" x="2044" y="137.18140929535232"/>
         </scene>
+        <!--Item 1-->
+        <scene sceneID="af2-tr-eud">
+            <objects>
+                <viewController id="ug9-B7-1ex" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jAL-dl-EG6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.14039075370000001" green="0.29558742049999998" blue="0.71822762490000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="t06-7V-2e5"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item 1" id="nuw-zo-eZS"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bo5-7T-vBA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="881" y="1115"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="ip0-xe-B0W">
+            <objects>
+                <tabBarController storyboardIdentifier="TabBar" id="mTs-gk-jhS" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="JjK-JT-nuv">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="ug9-B7-1ex" kind="relationship" relationship="viewControllers" id="e2V-hk-E4O"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="auK-d3-pyx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="76" y="1115"/>
+        </scene>
     </scenes>
     <resources>
         <image name="aaaLogo1.png" width="619.5" height="374.25"/>

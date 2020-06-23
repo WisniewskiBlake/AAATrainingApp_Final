@@ -8,13 +8,32 @@
 
 import UIKit
 
+// global var - to store all logged / registered user infromation
+var currentUser: NSMutableDictionary?
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // loading current user
+        currentUser = UserDefaults.standard.object(forKey: "currentUser") as? NSMutableDictionary
+        
+        print(currentUser as Any)
+        
+        // checking is the glob variable that stores current user's info is empty or not
+        if currentUser?["id"] != nil {
+            
+            // accessing TabBar controller via Main.storyboard
+            let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabBar")
+            
+            // assigning TabBar as RootViewController of the project
+            window?.rootViewController = TabBar
+        }
+        
         return true
     }
 
