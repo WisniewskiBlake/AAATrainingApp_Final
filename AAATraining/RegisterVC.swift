@@ -184,7 +184,7 @@ class RegisterVC: UIViewController {
              
              // error
              if error != nil {
-                 helper.showAlert(title: "Server Error", message: error!.localizedDescription, from: self)
+                helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
                  return
              }
              // fetch JSON if no error
@@ -192,7 +192,7 @@ class RegisterVC: UIViewController {
                  
                  // save mode of casting data
                  guard let data = data else {
-                     helper.showAlert(title: "Data Error", message: error!.localizedDescription, from: self)
+                    helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
                      return
                  }
                  
@@ -203,7 +203,7 @@ class RegisterVC: UIViewController {
                  
              // error while fetching JSON
              } catch {
-                 helper.showAlert(title: "JSON Error", message: error.localizedDescription, from: self)
+                helper.showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
              }
              
              
