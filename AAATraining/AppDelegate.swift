@@ -9,7 +9,12 @@
 import UIKit
 
 // global var - to store all logged / registered user infromation
-var currentUser: NSMutableDictionary?
+
+//changed in Video 56
+//var currentUser: NSMutableDictionary?
+var currentUser: Dictionary<String, Any>?
+let DEFAULTS = UserDefaults.standard
+let keyCURRENT_USER = "currentUser"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         // loading current user
-        currentUser = UserDefaults.standard.object(forKey: "currentUser") as? NSMutableDictionary
+        currentUser = UserDefaults.standard.object(forKey: "currentUser") as? Dictionary<String, Any>
         
         print(currentUser as Any)
         

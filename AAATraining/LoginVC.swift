@@ -268,9 +268,13 @@ class LoginVC: UIViewController {
                         helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
                         
                         // saving logged user                      
-                        currentUser = parsedJSON.mutableCopy() as? NSMutableDictionary
-                        UserDefaults.standard.set(currentUser, forKey: "currentUser")
-                        UserDefaults.standard.synchronize()
+                        currentUser = parsedJSON.mutableCopy() as? Dictionary<String, Any>
+                        
+                        //CHANGED IN VIDEO 56
+//                        UserDefaults.standard.set(currentUser, forKey: "currentUser")
+//                        UserDefaults.standard.synchronize()
+                        DEFAULTS.set(currentUser, forKey: keyCURRENT_USER)
+                        DEFAULTS.synchronize()
                         
                     // Some error occured related to the entered data, like: wrong password, wrong email, etc
                     } else {
