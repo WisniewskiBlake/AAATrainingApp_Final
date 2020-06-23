@@ -59,6 +59,11 @@ class RegisterVC: UIViewController {
         cornerRadius(for: lastNameTextField)
         cornerRadius(for: passwordTextField)
         cornerRadius(for: birthdayTextField)
+        cornerRadius(for: heightTextField)
+        cornerRadius(for: weightTextField)
+        cornerRadius(for: positionTextField)
+        cornerRadius(for: numberTextField)
+        
         cornerRadius(for: emailContinueButton)
         cornerRadius(for: fullnameContinueButton)
         cornerRadius(for: passwordContinueButton)
@@ -70,6 +75,10 @@ class RegisterVC: UIViewController {
         padding(for: lastNameTextField)
         padding(for: passwordTextField)
         padding(for: birthdayTextField)
+        padding(for: heightTextField)
+        padding(for: weightTextField)
+        padding(for: positionTextField)
+        padding(for: numberTextField)
         
         // run function of configuration
         configure_footerView()
