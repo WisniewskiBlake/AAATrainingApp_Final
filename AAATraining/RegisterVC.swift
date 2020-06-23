@@ -167,48 +167,6 @@ class RegisterVC: UIViewController {
     
     @IBAction func statsContinueButton_clicked(_ sender: Any) {
         // STEP 1. Declaring URL of the request; declaring the body to the URL; declaring request with the safest method - POST, that no one can grab our info.
-//        let url = URL(string: "http://localhost/fb/register.php")!
-//
-//        let body = "email=\(emailTextField.text!.lowercased())&firstName=\(firstNameTextField.text!.lowercased())&lastName=\(lastNameTextField.text!.lowercased())&password=\(passwordTextField.text!)&birthday=\(datePicker.date)&height=\(heightTextField.text!)&weight=\(weightTextField.text!)&position=\(positionTextField.text!.lowercased())&number=\(numberTextField.text!)"
-//        print(body)
-//        var request = URLRequest(url: url)
-//        request.httpBody = body.data(using: .utf8)
-//        request.httpMethod = "POST"
-//
-//        // STEP 2. Execute created above request
-//        URLSession.shared.dataTask(with: request) { (data, response, error) in
-//
-//            // access helper class
-//            let helper = Helper()
-//
-//            // error
-//            if error != nil {
-//                helper.showAlert(title: "Server Error", message: error!.localizedDescription, from: self)
-//                return
-//            }
-//            // fetch JSON if no error
-//            do {
-//
-//                // save mode of casting data
-//                guard let data = data else {
-//                    helper.showAlert(title: "Data Error", message: error!.localizedDescription, from: self)
-//                    return
-//                }
-//
-//                // fetching all JSON received from the server
-//                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
-//
-//                print(json as Any)
-//
-//            // error while fetching JSON
-//            } catch {
-//                helper.showAlert(title: "JSON Error", message: error.localizedDescription, from: self)
-//            }
-//
-//
-//        }.resume()
-        
-        //
         
         let request = NSMutableURLRequest(url: NSURL (string: "http://localhost/fb/register.php")! as URL)
         request.httpMethod = "POST"
@@ -218,7 +176,7 @@ class RegisterVC: UIViewController {
          request.httpBody = body.data(using: String.Encoding.utf8)
                   
          // STEP 2. Execute created above request
-         let task = URLSession.shared.dataTask(with: request as URLRequest) {
+        let _: Void = URLSession.shared.dataTask(with: request as URLRequest) {
          data, response, error in
              
              // access helper class
