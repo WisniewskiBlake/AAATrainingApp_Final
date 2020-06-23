@@ -218,7 +218,50 @@ class LoginVC: UIViewController {
         }
         
         
-        
+        // sending request to the server for proceeding Log In
+        func loginRequest() {
+            
+            // STEP 1. Declaring URL to be sent request to; declaring the body to be appended to URL (all this managed via request); declaring request to be executed
+            let url = URL(string: "http://localhost/fb/login.php")!
+            let body = "email=\(emailTextField.text!)&password=\(passwordTextField.text!)"
+            var request = URLRequest(url: url)
+            request.httpBody = body.data(using: .utf8)
+            request.httpMethod = "POST"
+            
+            // STEP 2. Execute created above request
+            URLSession.shared.dataTask(with: request) { (data, response, error) in
+                
+                // accessing Helper Class to access its functions
+                let helper = Helper()
+                
+                // if error occures
+                if error != nil {
+                    helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
+                    return
+                }
+                
+                // STEP 3. Receive JSON message
+                do {
+                    
+                    // save mode of casting any data
+                    guard let data = data else {
+                        helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
+                        return
+                    }
+                    
+                    // fetching all JSON info received from the server
+                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
+                    
+                    print(json as Any)
+                    
+                // error while fetching JSON
+                } catch {
+                    helper.showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
+                }
+                
+            }.resume()
+            
+        }
     
 
     
