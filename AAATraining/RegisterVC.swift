@@ -25,11 +25,16 @@ class RegisterVC: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var birthdayTextField: UITextField!
     
+    @IBOutlet weak var heightTextField: UITextField!
+    @IBOutlet weak var weightTextField: UITextField!
+    @IBOutlet weak var positionTextField: UITextField!
+    @IBOutlet weak var numberTextField: UITextField!
     
     @IBOutlet weak var emailContinueButton: UIButton!
     @IBOutlet weak var fullnameContinueButton: UIButton!
     @IBOutlet weak var passwordContinueButton: UIButton!
-    @IBOutlet weak var birthdayContinueButton: UIButton!
+    @IBOutlet weak var birthdayContinueButton: UIButton!    
+    @IBOutlet weak var statsContinueButton: UIButton!
     
     @IBOutlet weak var footerView: UIView!
     
@@ -68,6 +73,23 @@ class RegisterVC: UIViewController {
         
         // run function of configuration
         configure_footerView()
+        
+        // creating, configuring and implementing datePicker into BirthdayTextField
+        datePicker = UIDatePicker()
+        datePicker.datePickerMode = .date
+        datePicker.maximumDate = Calendar.current.date(byAdding: .year, value: -5, to: Date())
+        datePicker.addTarget(self, action: #selector(self.datePickerDidChange(_:)), for: .valueChanged)
+        birthdayTextField.inputView = datePicker
+        
+        // implementation of Swipe Gesture
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handle(_:)))
+        swipe.direction = .right
+        self.view.addGestureRecognizer(swipe)
+        
+//        let swipeRight = UISwipeGestureRecognizer()
+//        swipeRight.direction = .right
+//        self.view.addGestureRecognizer(swipeRight)
+//        swipeRight.addTarget(self, action: #selector(swipe(sender:)))
         
     }
     
@@ -148,6 +170,11 @@ class RegisterVC: UIViewController {
         birthdayTextField.resignFirstResponder()
     }
     
+    @IBAction func statsContinueButton_clicked(_ sender: Any) {
+        
+    }
+    
+    
     @IBAction func cancelButton_clicked(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -180,9 +207,58 @@ class RegisterVC: UIViewController {
             if passwordTextField.text!.count >= 6 {
                 passwordContinueButton.isHidden = false
             }
+        } else if textField == positionTextField || textField == weightTextField || textField == numberTextField {
+            if helper.isValid(position: positionTextField.text!) && helper.isValid(weight: weightTextField.text!) && helper.isValid(number: numberTextField.text!) {
+                statsContinueButton.isHidden = false
+            }
         }
     }
     
+    // func will be executed whenever any date is selected
+    @objc func datePickerDidChange(_ datePicker: UIDatePicker) {
+        
+        // declaring the format to be used in TextField while presenting the date
+        let formatter = DateFormatter()
+        formatter.dateStyle = DateFormatter.Style.medium
+        birthdayTextField.text = formatter.string(from: datePicker.date)
+        
+        // declaring the format of date, then to place a dummy date into this format
+        let compareDateFormatter = DateFormatter()
+        compareDateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
+        let compareDate = compareDateFormatter.date(from: "2011/01/01 00:01")
+        
+        // IF logic. If user is older than 5 years, show Continue Button
+        if datePicker.date < compareDate! {
+            birthdayContinueButton.isHidden = false
+        } else {
+            birthdayContinueButton.isHidden = true
+        }
+        
+    }
+    
+    // called once Swiped to the direction Right ->
+    @objc func handle(_ gesture: UISwipeGestureRecognizer) {
+        print(gesture)
+        // getting current position of the ScrollView (horizontal position)
+        let current_x = scrollView.contentOffset.x
+        
+        // getting the width of the screen (deduct this size)
+        let screen_width = self.view.frame.width
+        
+        // from current position of ScrollView, we comeback by width of the screen
+        let new_x = CGPoint(x: current_x - screen_width, y: 0)
+        
+        // ... until unless it's more than 0 (0 - 1st page)
+        if current_x > 0 {
+            scrollView.setContentOffset(new_x, animated: true)
+        }
+        
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(false)
+    }
+           
     
     
 }

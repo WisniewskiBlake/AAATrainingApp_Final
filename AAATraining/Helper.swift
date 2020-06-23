@@ -36,5 +36,37 @@ class Helper {
         return result
     }
     
+    // validate name function / logic
+    func isValid(position: String) -> Bool {
+        
+        // declaring the rule of regular expression (chars to be used). Applying the rele to current state. Verifying the result (email = rule)
+        let regex = "[A-Za-z]{2,}"
+        let test = NSPredicate(format: "SELF MATCHES %@", regex)
+        let result = test.evaluate(with: position)
+        
+        return result
+    }
+    
+    // validate name function / logic
+    func isValid(number: String) -> Bool {
+        
+        // declaring the rule of regular expression (chars to be used). Applying the rele to current state. Verifying the result (email = rule)
+        let regex = "[0-9]{2,}"
+        let test = NSPredicate(format: "SELF MATCHES %@", regex)
+        let result = test.evaluate(with: number)
+        
+        return result
+    }
+    
+    func isValid(weight: String) -> Bool {
+        
+        // declaring the rule of regular expression (chars to be used). Applying the rele to current state. Verifying the result (email = rule)
+        let regex = "[0-9]{2,}"
+        let test = NSPredicate(format: "SELF MATCHES %@", regex)
+        let result = test.evaluate(with: weight)
+        
+        return result
+    }
+    
     
 }
