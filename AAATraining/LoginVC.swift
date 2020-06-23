@@ -231,6 +231,8 @@ class LoginVC: UIViewController {
             // STEP 2. Execute created above request
             URLSession.shared.dataTask(with: request) { (data, response, error) in
                 
+                DispatchQueue.main.async {
+                
                 // accessing Helper Class to access its functions
                 let helper = Helper()
                 
@@ -287,7 +289,7 @@ class LoginVC: UIViewController {
                 } catch {
                     helper.showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
                 }
-                
+                }
             }.resume()
             
         }

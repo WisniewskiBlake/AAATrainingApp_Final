@@ -199,7 +199,35 @@ class RegisterVC: UIViewController {
                  // fetching all JSON received from the server
                  let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
                  
-                 print(json as Any)
+                 // save mode of casting JSON
+                 guard let parsedJSON = json else {
+                     print("Parsing Error")
+                     return
+                 }
+                 
+                 
+                 // STEP 4. Create Scenarious
+                 // Successfully Registered In
+                 if parsedJSON["status"] as! String == "200" {
+                     
+                     // go to TabBar
+                     helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
+                     
+                     // saving logged user
+                     currentUser = parsedJSON.mutableCopy() as? NSMutableDictionary
+                     UserDefaults.standard.set(currentUser, forKey: "currentUser")
+                     UserDefaults.standard.synchronize()
+                     
+                 // Some error occured related to the entered data, like: wrong password, wrong email, etc
+                 } else {
+                     
+                     // save mode of casting / checking existance of Server Message
+                     if parsedJSON["message"] != nil {
+                         let message = parsedJSON["message"] as! String
+                         helper.showAlert(title: "Error", message: message, in: self)
+                     }
+                     
+                 }
                  
              // error while fetching JSON
              } catch {
