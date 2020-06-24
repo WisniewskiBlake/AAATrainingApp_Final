@@ -113,7 +113,36 @@ class Helper {
         
         return body
     }
-
+    
+    // allows us to download the image from certain url string
+    func downloadImage(from path: String, showIn imageView: UIImageView, orShow placeholder: String) {
+        
+        // if avaPath string is having a valid url, IT'S NOT EMPTY (e.g. if ava isn't assigned, than in DB the link is stored as blank string)
+        if String(describing: path).isEmpty == false {
+            DispatchQueue.main.async {
+                
+                // converting url string to the valid URL
+                if let url = URL(string: path) {
+                    
+                    // downloading all data from the URL
+                    guard let data = try? Data(contentsOf: url) else {
+                        imageView.image = UIImage(named: placeholder)
+                        return
+                    }
+                    
+                    // converting donwloaded data to the image
+                    guard let image = UIImage(data: data) else {
+                        imageView.image = UIImage(named: placeholder)
+                        return
+                    }
+                    
+                    // assigning image to the imageView
+                    imageView.image = image
+                    
+                }
+            }
+        }
+    }
     
     
 }

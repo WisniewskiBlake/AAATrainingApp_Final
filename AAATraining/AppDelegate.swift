@@ -13,6 +13,7 @@ import UIKit
 //changed in Video 56
 //var currentUser: NSMutableDictionary?
 var currentUser: Dictionary<String, Any>?
+var currentUser_ava: UIImage?
 let DEFAULTS = UserDefaults.standard
 let keyCURRENT_USER = "currentUser"
 
@@ -25,9 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         // loading current user
-        currentUser = UserDefaults.standard.object(forKey: "currentUser") as? Dictionary<String, Any>
+        currentUser = DEFAULTS.object(forKey: "currentUser") as? Dictionary<String, Any>
         
-        print(currentUser as Any)
         
         // checking is the glob variable that stores current user's info is empty or not
         if currentUser?["id"] != nil {

@@ -188,6 +188,7 @@ class RegisterVC: UIViewController {
 //        let _: Void = URLSession.shared.dataTask(with: request as URLRequest) {
 //         data, response, error in
 //
+//            DispatchQueue.main.async {
 //             // access helper class
 //             let helper = Helper()
 //
@@ -223,7 +224,7 @@ class RegisterVC: UIViewController {
 //                     helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
 //
 //                     // saving logged user
-//                     currentUser = parsedJSON.mutableCopy() as? NSMutableDictionary
+//                    currentUser = parsedJSON.mutableCopy() as?  Dictionary<String, Any>
 //                     UserDefaults.standard.set(currentUser, forKey: "currentUser")
 //                     UserDefaults.standard.synchronize()
 //
@@ -243,7 +244,7 @@ class RegisterVC: UIViewController {
 //                helper.showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
 //             }
 //
-//
+//            }
 //         }.resume()
         
         //
@@ -253,75 +254,75 @@ class RegisterVC: UIViewController {
         var request = URLRequest(url: url)
         request.httpBody = body.data(using: .utf8)
         request.httpMethod = "POST"
-        
+
         // STEP 2. Execute created above request
         URLSession.shared.dataTask(with: request) { (data, response, error) in
-            
+
             DispatchQueue.main.async {
-            
+                print(response!)
             // access helper class
             let helper = Helper()
-            
+
             // error
             if error != nil {
                 helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
                 return
             }
-            
+
             // fetch JSON if no error
             do {
-                
+
                 // save mode of casting data
                 guard let data = data else {
                     helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
                     return
                 }
-                
+
                 // fetching all JSON received from the server
                 let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
-                
+
                 // save mode of casting JSON
                 guard let parsedJSON = json else {
                     print("Parsing Error")
                     return
                 }
-                
-                
+
+
                 // STEP 4. Create Scenarious
                 // Successfully Registered In
                 if parsedJSON["status"] as! String == "200" {
-                    
+
                     // go to TabBar
                     helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
-                    
+
                     // CHANGED IN VIDEO 56
 //                    currentUser = parsedJSON.mutableCopy() as? NSMutableDictionary
 //                    UserDefaults.standard.set(currentUser, forKey: "currentUser")
 //                    UserDefaults.standard.synchronize()
-                    
-                    currentUser = parsedJSON.mutableCopy() as? Dictionary<String, Any>                    
+
+                    currentUser = parsedJSON.mutableCopy() as? Dictionary<String, Any>
 
                     DEFAULTS.set(currentUser, forKey: keyCURRENT_USER)
                     DEFAULTS.synchronize()
-                    
+
                 // Some error occured related to the entered data, like: wrong password, wrong email, etc
                 } else {
-                    
+
                     // save mode of casting / checking existance of Server Message
                     if parsedJSON["message"] != nil {
                         let message = parsedJSON["message"] as! String
                         helper.showAlert(title: "Error", message: message, in: self)
                     }
-                    
+
                 }
-                
-                
+
+
             // error while fetching JSON
             } catch {
                 helper.showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
             }
             }
-            
+
         }.resume()
         
     }
