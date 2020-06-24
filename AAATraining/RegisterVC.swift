@@ -250,7 +250,7 @@ class RegisterVC: UIViewController {
         //
         
         let url = URL(string: "http://localhost/fb/register.php")!
-        let body = "email=\(emailTextField.text!.lowercased())&firstName=\(firstNameTextField.text!.lowercased())&lastName=\(lastNameTextField.text!.lowercased())&password=\(passwordTextField.text!)&birthday=\(datePicker.date)&height=\(heightTextField.text!)&weight=\(weightTextField.text!)&position=\(positionTextField.text!.lowercased())&number=\(numberTextField.text!)&ava=\("http://localhost/fb/cover/25/cover.jpg")&cover=\("http://localhost/fb/cover/25/cover.jpg")"
+        let body = "email=\(emailTextField.text!.lowercased())&firstName=\(firstNameTextField.text!.lowercased())&lastName=\(lastNameTextField.text!.lowercased())&password=\(passwordTextField.text!)&birthday=\(datePicker.date)&height=\(heightTextField.text!)&weight=\(weightTextField.text!)&position=\(positionTextField.text!.lowercased())&number=\(numberTextField.text!)&ava=\("http://localhost/fb/ava/user.png")&cover=\("http://localhost/fb/cover/HomeCover.jpg")"
         var request = URLRequest(url: url)
         request.httpBody = body.data(using: .utf8)
         request.httpMethod = "POST"
