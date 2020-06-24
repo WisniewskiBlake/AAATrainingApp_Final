@@ -269,7 +269,7 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
         // safe method of accessing user related information in glob var
         guard let firstName = currentUser?["firstName"], let lastName = currentUser?["lastName"], let avaPath = currentUser?["ava"], let coverPath = currentUser?["cover"], let height = currentUser?["height"], let weight = currentUser?["weight"], let position = currentUser?["position"], let number = currentUser?["number"] else {
             print(currentUser?.isEmpty)
-            print(currentUser)
+            print(currentUser?.index(forKey: "ava")!)
             return
         }
         // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
