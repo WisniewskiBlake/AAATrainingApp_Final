@@ -68,6 +68,7 @@ class RegisterVC: UIViewController {
         cornerRadius(for: fullnameContinueButton)
         cornerRadius(for: passwordContinueButton)
         cornerRadius(for: birthdayContinueButton)
+        cornerRadius(for: statsContinueButton)
         
         // apply padding to the textFields
         padding(for: emailTextField)
@@ -120,7 +121,6 @@ class RegisterVC: UIViewController {
         
         footerView.layer.addSublayer(topLine)
     }
-    
     
     
     @IBAction func emailContinueButton_clicked(_ sender: Any) {
@@ -177,77 +177,6 @@ class RegisterVC: UIViewController {
     @IBAction func statsContinueButton_clicked(_ sender: Any) {
         // STEP 1. Declaring URL of the request; declaring the body to the URL; declaring request with the safest method - POST, that no one can grab our info.
         
-//        let request = NSMutableURLRequest(url: NSURL (string: "http://localhost/fb/register.php")! as URL)
-//        request.httpMethod = "POST"
-//
-//         let body = "email=\(emailTextField.text!.lowercased())&firstName=\(firstNameTextField.text!.lowercased())&lastName=\(lastNameTextField.text!.lowercased())&password=\(passwordTextField.text!)&birthday=\(datePicker.date)&height=\(heightTextField.text!)&weight=\(weightTextField.text!)&position=\(positionTextField.text!.lowercased())&number=\(numberTextField.text!)"
-//         print(body)
-//         request.httpBody = body.data(using: String.Encoding.utf8)
-//
-//         // STEP 2. Execute created above request
-//        let _: Void = URLSession.shared.dataTask(with: request as URLRequest) {
-//         data, response, error in
-//
-//            DispatchQueue.main.async {
-//             // access helper class
-//             let helper = Helper()
-//
-//             // error
-//             if error != nil {
-//                helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
-//                 return
-//             }
-//             // fetch JSON if no error
-//             do {
-//
-//                 // save mode of casting data
-//                 guard let data = data else {
-//                    helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
-//                     return
-//                 }
-//
-//                 // fetching all JSON received from the server
-//                 let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
-//
-//                 // save mode of casting JSON
-//                 guard let parsedJSON = json else {
-//                     print("Parsing Error")
-//                     return
-//                 }
-//
-//
-//                 // STEP 4. Create Scenarious
-//                 // Successfully Registered In
-//                 if parsedJSON["status"] as! String == "200" {
-//
-//                     // go to TabBar
-//                     helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
-//
-//                     // saving logged user
-//                    currentUser = parsedJSON.mutableCopy() as?  Dictionary<String, Any>
-//                     UserDefaults.standard.set(currentUser, forKey: "currentUser")
-//                     UserDefaults.standard.synchronize()
-//
-//                 // Some error occured related to the entered data, like: wrong password, wrong email, etc
-//                 } else {
-//
-//                     // save mode of casting / checking existance of Server Message
-//                     if parsedJSON["message"] != nil {
-//                         let message = parsedJSON["message"] as! String
-//                         helper.showAlert(title: "Error", message: message, in: self)
-//                     }
-//
-//                 }
-//
-//             // error while fetching JSON
-//             } catch {
-//                helper.showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
-//             }
-//
-//            }
-//         }.resume()
-        
-        //
         
         let url = URL(string: "http://localhost/fb/register.php")!
         

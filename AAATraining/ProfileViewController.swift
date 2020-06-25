@@ -64,8 +64,9 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
         if (stringResult) {
             heightFinal = (heightTxt.prefix(1)) + apostrophe
                heightFinal.append(heightLast!)
-           }
-           guard let firstName = currentUser?["firstName"], let lastName = currentUser?["lastName"], let avaPath = currentUser?["ava"], let coverPath = currentUser?["cover"], let height = currentUser?["height"], let weight = currentUser?["weight"], let position = currentUser?["position"], let number = currentUser?["number"] else {
+           }         
+       
+        guard let firstName = currentUser?["firstName"], let lastName = currentUser?["lastName"], let avaPath = currentUser?["ava"], let coverPath = currentUser?["cover"], let weight = currentUser?["weight"], let position = currentUser?["position"], let number = currentUser?["number"] else {
                
                return
            }

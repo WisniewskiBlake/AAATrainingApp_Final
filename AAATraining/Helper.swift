@@ -68,6 +68,16 @@ class Helper {
         return result
     }
     
+    func isValid(height: String) -> Bool {
+        
+        // declaring the rule of regular expression (chars to be used). Applying the rele to current state. Verifying the result (email = rule)
+        let regex = "[0-9][']{2,}"
+        let test = NSPredicate(format: "SELF MATCHES %@", regex)
+        let result = test.evaluate(with: height)
+        
+        return result
+    }
+    
         // show alert message to the user
     func showAlert(title: String, message: String, in vc: UIViewController) {
         
