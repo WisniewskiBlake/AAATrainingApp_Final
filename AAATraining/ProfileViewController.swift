@@ -45,7 +45,8 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(currentUser)
+       // add observers for notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(loadUser), name: NSNotification.Name(rawValue: "updateStats"), object: nil)
 
         configure_avaImageView()
         loadUser()
