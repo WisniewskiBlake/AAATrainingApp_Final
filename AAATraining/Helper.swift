@@ -40,7 +40,7 @@ class Helper {
     func isValid(position: String) -> Bool {
         
         // declaring the rule of regular expression (chars to be used). Applying the rele to current state. Verifying the result (email = rule)
-        let regex = "[A-Za-z]{2,}"
+        let regex = "^[a-zA-Z ]*${2,}"
         let test = NSPredicate(format: "SELF MATCHES %@", regex)
         let result = test.evaluate(with: position)
         
@@ -51,7 +51,7 @@ class Helper {
     func isValid(number: String) -> Bool {
         
         // declaring the rule of regular expression (chars to be used). Applying the rele to current state. Verifying the result (email = rule)
-        let regex = "[0-9]{2,}"
+        let regex = "[0-9]{1,3}"
         let test = NSPredicate(format: "SELF MATCHES %@", regex)
         let result = test.evaluate(with: number)
         
@@ -71,7 +71,7 @@ class Helper {
     func isValid(height: String) -> Bool {
         
         // declaring the rule of regular expression (chars to be used). Applying the rele to current state. Verifying the result (email = rule)
-        let regex = "[0-9][']{2,}"
+        let regex = "[0-9]{2,2}"
         let test = NSPredicate(format: "SELF MATCHES %@", regex)
         let result = test.evaluate(with: height)
         

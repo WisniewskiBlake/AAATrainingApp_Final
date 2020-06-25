@@ -55,18 +55,18 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
        @objc func loadUser() {
            // safe method of accessing user related information in glob var
            
-           let apostrophe = "'"
-           
-           var heightFinal = ""
-           let heightTxt = currentUser?["height"] as! String
-        let heightLast = heightTxt.last
-        let stringResult = heightTxt.contains("&rsquo")
-        if (stringResult) {
-            heightFinal = (heightTxt.prefix(1)) + apostrophe
-               heightFinal.append(heightLast!)
-           }         
+//           let apostrophe = "'"
+//
+//           var heightFinal = ""
+//           let heightTxt = currentUser?["height"] as! String
+//        let heightLast = heightTxt.last
+//        let stringResult = heightTxt.contains("&rsquo")
+//        if (stringResult) {
+//            heightFinal = (heightTxt.prefix(1)) + apostrophe
+//               heightFinal.append(heightLast!)
+//           }
        
-        guard let firstName = currentUser?["firstName"], let lastName = currentUser?["lastName"], let avaPath = currentUser?["ava"], let coverPath = currentUser?["cover"], let weight = currentUser?["weight"], let position = currentUser?["position"], let number = currentUser?["number"] else {
+        guard let firstName = currentUser?["firstName"], let lastName = currentUser?["lastName"], let avaPath = currentUser?["ava"], let coverPath = currentUser?["cover"], let height =  currentUser?["height"],let weight = currentUser?["weight"], let position = currentUser?["position"], let number = currentUser?["number"] else {
                
                return
            }
@@ -86,8 +86,8 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
            }
            // assigning vars which we accessed from global var, to fullnameLabel
            fullnameLabel.text = "\((firstName as! String).capitalized) \((lastName as! String).capitalized)"
-           heightTextLabel.text = "\(heightFinal.capitalized)"
-           weightTextLabel.text = "\((weight as! String).capitalized)"
+           heightTextLabel.text = "\((height as! String).capitalized)" + "in."
+           weightTextLabel.text = "\((weight as! String).capitalized)" + "lbs."
            positionTextLabel.text = "\((position as! String).capitalized)"
            numberTextLabel.text = "\((number as! String).capitalized)"
            // downloading the images and assigning to certain imageViews

@@ -291,8 +291,8 @@ class RegisterVC: UIViewController {
             if passwordTextField.text!.count >= 6 {
                 passwordContinueButton.isHidden = false
             }
-        } else if textField == positionTextField || textField == weightTextField || textField == numberTextField {
-            if helper.isValid(position: positionTextField.text!) && helper.isValid(weight: weightTextField.text!) && helper.isValid(number: numberTextField.text!) {
+        } else if textField == positionTextField || textField == weightTextField || textField == numberTextField || textField == heightTextField {
+            if helper.isValid(position: positionTextField.text!) && helper.isValid(weight: weightTextField.text!) && helper.isValid(number: numberTextField.text!) && helper.isValid(height: heightTextField.text!) {
                 statsContinueButton.isHidden = false
             }
         }

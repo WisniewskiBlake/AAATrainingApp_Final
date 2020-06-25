@@ -23,7 +23,7 @@ class StatsVC: UIViewController {
     let tableView = UITableView()
     var selectedButton = UIButton()
     var dataSource = [String]()
-    var cellText = ""
+    var cellText = "Select Stat"
     
     override func viewDidLoad() {
        super.viewDidLoad()
@@ -102,21 +102,21 @@ class StatsVC: UIViewController {
     func updateStats() {
         let stat = cellText.lowercased()
         // STEP 1. Access var / params to be sent to the server
-        guard let id = currentUser?["id"], let statValue = statTextField.text else {
+        guard let id = currentUser?["id"] else {
             return
         }
         
         
-        // send notification to the server
-        let notification_url = "http://localhost/fb/notification.php"
-        let notification_body = "byUser_id=\(id)&user_id=\(id)&type=bio&action=insert"
-        _ = Helper().sendHTTPRequest(url: notification_url, body: notification_body, success: {}, failure: {})
+//        // send notification to the server
+//        let notification_url = "http://localhost/fb/notification.php"
+//        let notification_body = "byUser_id=\(id)&user_id=\(id)&type=bio&action=insert"
+//        _ = Helper().sendHTTPRequest(url: notification_url, body: notification_body, success: {}, failure: {})
 
         
         
         // STEP 2. Declare URL, Request, Method, etc
-        let url = URL(string: "http://localhost/fb/updateBio.php")!
-        let body = "id=\(id)&bio=\(bio)"
+        let url = URL(string: "http://localhost/fb/updateStats.php")!
+        let body = "id=\(id)&stat=\(stat)&statValue=\(statTextField.text!)"
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.httpBody = body.data(using: .utf8)
@@ -143,6 +143,8 @@ class StatsVC: UIViewController {
                     // STEP 4. Parse JSON
                     let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
                     
+                    print(json!)
+                    
                     // save method of casting json
                     guard let parsedJSON = json else {
                         return
@@ -152,17 +154,17 @@ class StatsVC: UIViewController {
                     if parsedJSON["status"] as! String == "200" {
                         
                         // save updated user information in the app
-                        currentUser = parsedJSON.mutableCopy() as? NSMutableDictionary
+                        currentUser = parsedJSON.mutableCopy() as?  Dictionary<String, Any>
                         UserDefaults.standard.set(currentUser, forKey: "currentUser")
                         UserDefaults.standard.synchronize()
                         
                         // post notification -> update Bio on Home Page
-                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateBio"), object: nil)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateStats"), object: nil)
                         self.dismiss(animated: true, completion: nil)
                     
                     // error while updating (e.g. Status = 400)
                     } else {
-                        Helper().showAlert(title: "400", message: "Error while updating the bio", in: self)
+                        Helper().showAlert(title: "400", message: "Error while updating stats", in: self)
                     }
                     
                 // error while processing/accessing json
@@ -266,7 +268,6 @@ extension StatsVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = dataSource[indexPath.row]
-        cellText = (cell.textLabel?.text!)!
         return cell
     }
     
@@ -277,6 +278,7 @@ extension StatsVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedButton.setTitle(dataSource[indexPath.row], for: .normal)
         removeTransparentView()
+        cellText = dataSource[indexPath.row]
     }
     
     
