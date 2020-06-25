@@ -12,9 +12,7 @@ class LoginVC: UIViewController {
     
     @IBOutlet weak var logo: UIImageView!
     @IBOutlet weak var logo_height: NSLayoutConstraint!
-    
-    
-    
+        
     @IBOutlet weak var logoBackground: UIImageView!
     @IBOutlet weak var logoBackground_top: NSLayoutConstraint!
     @IBOutlet weak var logoBackground_height: NSLayoutConstraint!
@@ -22,9 +20,7 @@ class LoginVC: UIViewController {
     @IBOutlet weak var silhouetteLogo: UIImageView!
     @IBOutlet weak var silhoutte_top: NSLayoutConstraint!
     @IBOutlet weak var silhoutte_height: NSLayoutConstraint!
-    
-    
-    
+        
     @IBOutlet weak var loginBtn: UIButton!
     @IBOutlet weak var forgotPassBtn: UIButton!
     @IBOutlet weak var registerAccBtn: UIButton!
@@ -33,6 +29,7 @@ class LoginVC: UIViewController {
     @IBOutlet weak var rightLineView: UIView!
     
     @IBOutlet weak var registerButton_bottom: NSLayoutConstraint!
+    @IBOutlet weak var registerCoachBtn: UIButton!
     
     // cache obj
     var logoBackground_height_cache: CGFloat!
@@ -125,7 +122,8 @@ class LoginVC: UIViewController {
         configure_textFieldsView()
         configure_loginBtn()
         configure_orLabel()
-        configure_registerButton()
+        configure_registerButton(btn: registerAccBtn)
+        configure_registerCoachButton(btn: registerCoachBtn)
     }
     
     // this func stores code which configures appearance of the textFields' View
@@ -182,19 +180,38 @@ class LoginVC: UIViewController {
        rightLineView.layer.addSublayer(rightLine)
     }
     
-    func configure_registerButton() {
+    func configure_registerButton(btn: UIButton) {
+        // creating constant named 'border' of type layer which acts as a border frame
+        let border = CALayer()
+        border.borderColor = #colorLiteral(red: 0.9044845104, green: 0.09804645926, blue: 0.1389197409, alpha: 1)
+        border.borderWidth = 2
+        border.frame = CGRect(x: 0, y: 0, width: btn.frame.width, height: btn.frame.height)
+        
+        // assign border to the obj (button)
+        btn.layer.addSublayer(border)
+        
+        
+        // rounded corner
+        btn.layer.cornerRadius = 5
+        btn.layer.masksToBounds = true
+        
+    }
+    
+    func configure_registerCoachButton(btn: UIButton) {
         // creating constant named 'border' of type layer which acts as a border frame
         let border = CALayer()
         border.borderColor = #colorLiteral(red: 0.01220451668, green: 0.2841129601, blue: 0.7098029256, alpha: 1)
         border.borderWidth = 2
-        border.frame = CGRect(x: 0, y: 0, width: registerAccBtn.frame.width, height: registerAccBtn.frame.height)
+        border.frame = CGRect(x: 0, y: 0, width: btn.frame.width, height: btn.frame.height)
         
         // assign border to the obj (button)
-        registerAccBtn.layer.addSublayer(border)
+        btn.layer.addSublayer(border)
+        
         
         // rounded corner
-        registerAccBtn.layer.cornerRadius = 5
-        registerAccBtn.layer.masksToBounds = true
+        btn.layer.cornerRadius = 5
+        btn.layer.masksToBounds = true
+        
     }
 
     @IBAction func loginButton_clicked(_ sender: Any) {

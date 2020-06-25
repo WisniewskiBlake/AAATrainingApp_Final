@@ -32,6 +32,7 @@
 		B7F18C9C24975B60009BFA17 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F18C9B24975B60009BFA17 /* LoginVC.swift */; };
 		B7F18D302497B2A2009BFA17 /* email.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F18D2F2497B2A2009BFA17 /* email.png */; };
 		B7F8AFE924A45ABA00B315FD /* StatsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F8AFE824A45ABA00B315FD /* StatsVC.swift */; };
+		B7F8AFEC24A4B3A800B315FD /* CoachRegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F8AFEB24A4B3A800B315FD /* CoachRegisterVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		B7F18C9B24975B60009BFA17 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		B7F18D2F2497B2A2009BFA17 /* email.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = email.png; sourceTree = "<group>"; };
 		B7F8AFE824A45ABA00B315FD /* StatsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsVC.swift; sourceTree = "<group>"; };
+		B7F8AFEB24A4B3A800B315FD /* CoachRegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachRegisterVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,8 @@
 		B7F18C6224970084009BFA17 /* AAATraining */ = {
 			isa = PBXGroup;
 			children = (
+				B7F8AFED24A4B3AF00B315FD /* CoachViewControllers */,
+				B7F8AFEA24A4ABBC00B315FD /* PlayerViewControllers */,
 				B755108624A214B700598A30 /* meijerBackground.jpg */,
 				B755108424A2032500598A30 /* More.png */,
 				B755108024A200DC00598A30 /* user.png */,
@@ -153,7 +157,6 @@
 				B7F18C6E24970085009BFA17 /* LaunchScreen.storyboard */,
 				B7F18C7124970085009BFA17 /* Info.plist */,
 				B7F18C9B24975B60009BFA17 /* LoginVC.swift */,
-				B7551076249C2CD400598A30 /* RegisterVC.swift */,
 				B755107A249CAB7400598A30 /* Helper.swift */,
 				B755108824A21EB400598A30 /* ProfileViewController.swift */,
 				B7F8AFE824A45ABA00B315FD /* StatsVC.swift */,
@@ -177,6 +180,22 @@
 				B7F18C8724970085009BFA17 /* Info.plist */,
 			);
 			path = AAATrainingUITests;
+			sourceTree = "<group>";
+		};
+		B7F8AFEA24A4ABBC00B315FD /* PlayerViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				B7551076249C2CD400598A30 /* RegisterVC.swift */,
+			);
+			path = PlayerViewControllers;
+			sourceTree = "<group>";
+		};
+		B7F8AFED24A4B3AF00B315FD /* CoachViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				B7F8AFEB24A4B3A800B315FD /* CoachRegisterVC.swift */,
+			);
+			path = CoachViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -327,6 +346,7 @@
 				B7F18C6424970084009BFA17 /* AppDelegate.swift in Sources */,
 				B7551077249C2CD400598A30 /* RegisterVC.swift in Sources */,
 				B7F18C6624970084009BFA17 /* SceneDelegate.swift in Sources */,
+				B7F8AFEC24A4B3A800B315FD /* CoachRegisterVC.swift in Sources */,
 				B7F18C9C24975B60009BFA17 /* LoginVC.swift in Sources */,
 				B7F8AFE924A45ABA00B315FD /* StatsVC.swift in Sources */,
 				B755107B249CAB7400598A30 /* Helper.swift in Sources */,

@@ -29,7 +29,7 @@ class Helper {
     func isValid(name: String) -> Bool {
         
         // declaring the rule of regular expression (chars to be used). Applying the rele to current state. Verifying the result (email = rule)
-        let regex = "^[A-Za-z]*${2,}{2,}"
+        let regex = "^[A-Za-z]*${2,}"
         let test = NSPredicate(format: "SELF MATCHES %@", regex)
         let result = test.evaluate(with: name)
         
