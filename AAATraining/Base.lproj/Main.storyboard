@@ -1202,7 +1202,7 @@
         <!--Edit Bio-->
         <scene sceneID="nUr-VR-han">
             <objects>
-                <viewController id="uDR-2j-KOc" sceneMemberID="viewController">
+                <viewController id="uDR-2j-KOc" customClass="StatsVC" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pDE-cb-wsS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1214,6 +1214,12 @@
                                     <constraint firstAttribute="height" constant="50" id="hzj-LK-5aT"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Firstname Lastname" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TB5-yZ-ADc">
+                                <rect key="frame" x="104" y="87.5" width="166" height="21"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Height, Ex: 6'2" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KpH-2P-IAY">
                                 <rect key="frame" x="41" y="150" width="130" height="34"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1255,16 +1261,23 @@
                                     <action selector="textFieldDidChange:" destination="pbD-KU-4y7" eventType="editingChanged" id="ueg-qo-Hh6"/>
                                 </connections>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Firstname Lastname" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TB5-yZ-ADc">
-                                <rect key="frame" x="104" y="87.5" width="166" height="21"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Leave text fields empty that you do not wish to change." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ff-sz-d5k">
+                                <rect key="frame" x="16" y="264" width="343" height="36"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="1Jq-Zb-vwa"/>
+                                    <constraint firstAttribute="width" constant="343" id="xLT-3w-LP6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="TB5-yZ-ADc" firstAttribute="centerY" secondItem="bUO-pF-wuU" secondAttribute="centerY" id="2CT-A3-HLt"/>
+                            <constraint firstItem="2Ff-sz-d5k" firstAttribute="leading" secondItem="NnO-cB-UAI" secondAttribute="leading" constant="16" id="4rc-Ob-PMf"/>
                             <constraint firstItem="I12-N2-idn" firstAttribute="top" secondItem="KpH-2P-IAY" secondAttribute="bottom" constant="18" id="6MJ-lJ-1iY"/>
                             <constraint firstItem="I12-N2-idn" firstAttribute="width" secondItem="KpH-2P-IAY" secondAttribute="width" id="AV6-NR-TrV"/>
                             <constraint firstItem="V9n-eD-Eo7" firstAttribute="top" secondItem="d5y-7f-0IT" secondAttribute="bottom" constant="18" id="EFU-HD-Aa6"/>
@@ -1273,6 +1286,7 @@
                             <constraint firstItem="bUO-pF-wuU" firstAttribute="top" secondItem="NnO-cB-UAI" secondAttribute="top" constant="17" id="Gkz-NX-76v"/>
                             <constraint firstItem="d5y-7f-0IT" firstAttribute="top" secondItem="TB5-yZ-ADc" secondAttribute="bottom" constant="41.5" id="L76-v4-6u2"/>
                             <constraint firstItem="bUO-pF-wuU" firstAttribute="leading" secondItem="NnO-cB-UAI" secondAttribute="leading" constant="20" id="NTh-WA-G96"/>
+                            <constraint firstItem="2Ff-sz-d5k" firstAttribute="top" secondItem="I12-N2-idn" secondAttribute="bottom" constant="28" id="PEP-Sn-8kW"/>
                             <constraint firstItem="TB5-yZ-ADc" firstAttribute="leading" secondItem="bUO-pF-wuU" secondAttribute="trailing" constant="34" id="d18-OK-TC9"/>
                             <constraint firstItem="KpH-2P-IAY" firstAttribute="top" secondItem="bUO-pF-wuU" secondAttribute="bottom" constant="27" id="g9s-qE-I63"/>
                             <constraint firstItem="NnO-cB-UAI" firstAttribute="trailing" secondItem="V9n-eD-Eo7" secondAttribute="trailing" constant="41" id="hg6-i6-fbp"/>
@@ -1281,13 +1295,30 @@
                             <constraint firstItem="KpH-2P-IAY" firstAttribute="leading" secondItem="NnO-cB-UAI" secondAttribute="leading" constant="41" id="o9e-4k-yDf"/>
                             <constraint firstItem="NnO-cB-UAI" firstAttribute="trailing" secondItem="d5y-7f-0IT" secondAttribute="trailing" constant="41" id="pkK-jL-6ba"/>
                             <constraint firstItem="V9n-eD-Eo7" firstAttribute="width" secondItem="d5y-7f-0IT" secondAttribute="width" id="t2U-tm-NpE"/>
+                            <constraint firstItem="NnO-cB-UAI" firstAttribute="trailing" secondItem="2Ff-sz-d5k" secondAttribute="trailing" constant="16" id="u5U-3f-Sb7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="NnO-cB-UAI"/>
                     </view>
                     <navigationItem key="navigationItem" title="Edit Bio" id="z45-vL-gRD">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="eM2-Mj-u83"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="l8O-3L-0vi"/>
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="eM2-Mj-u83">
+                            <connections>
+                                <action selector="cancelButton_clicked:" destination="uDR-2j-KOc" id="pss-ef-QRH"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="l8O-3L-0vi">
+                            <connections>
+                                <action selector="saveButton_clicked:" destination="uDR-2j-KOc" id="kNI-6R-0Oh"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="avaImageView" destination="bUO-pF-wuU" id="OJZ-Hh-dKn"/>
+                        <outlet property="fullnameLabel" destination="TB5-yZ-ADc" id="XL9-CG-uNa"/>
+                        <outlet property="heightText" destination="KpH-2P-IAY" id="LxL-cW-Rxm"/>
+                        <outlet property="numberText" destination="V9n-eD-Eo7" id="yPm-ls-PKO"/>
+                        <outlet property="positionText" destination="d5y-7f-0IT" id="4rG-b5-ZuG"/>
+                        <outlet property="weightText" destination="I12-N2-idn" id="W6q-se-cDC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NUp-NI-7JB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
