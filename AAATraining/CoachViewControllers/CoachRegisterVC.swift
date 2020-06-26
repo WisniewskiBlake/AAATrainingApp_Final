@@ -17,8 +17,20 @@ class CoachRegisterVC: UIViewController {
     
     @IBOutlet weak var contentView_width: NSLayoutConstraint!
     
+    @IBOutlet weak var scrollView: UIScrollView!
+    
+    @IBOutlet weak var coachPasswordTextField: UITextField!
+    @IBOutlet weak var firstNameTextField: UITextField!
+    @IBOutlet weak var lastNameTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+    
+    @IBOutlet weak var emailContinueButton: UIButton!
+    @IBOutlet weak var fullnameContinueButton: UIButton!
     
     
+    
+    
+    @IBOutlet weak var footerView: UIView!
     
     
     
