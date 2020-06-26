@@ -14,7 +14,6 @@ class CoachRegisterVC: UIViewController {
     @IBOutlet weak var nameView_width: NSLayoutConstraint!
     @IBOutlet weak var emailView_width: NSLayoutConstraint!
     @IBOutlet weak var passwordView_width: NSLayoutConstraint!
-    
     @IBOutlet weak var contentView_width: NSLayoutConstraint!
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -22,10 +21,12 @@ class CoachRegisterVC: UIViewController {
     @IBOutlet weak var coachPasswordTextField: UITextField!
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var emailTextField: UITextField!
     
-    @IBOutlet weak var emailContinueButton: UIButton!
+   
+    @IBOutlet weak var coachPasswordContinueButton: UIButton!
     @IBOutlet weak var fullnameContinueButton: UIButton!
+    @IBOutlet weak var emailContinueButton: UIButton!
     
     
     
@@ -41,6 +42,7 @@ class CoachRegisterVC: UIViewController {
 
         contentView_width.constant = self.view.frame.width * 4
         coachPassword_width.constant = self.view.frame.width
+        
         
     }
     
