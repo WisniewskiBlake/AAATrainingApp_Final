@@ -75,16 +75,16 @@ class CoachRegisterVC: UIViewController {
     }
     
     
-    @IBAction func textFieldDidChange(_ sender: Any) {
+    @IBAction func textFieldDidChange(_ textField: UITextField) {
         // declaring constant (shortcut) to the Helper Class
         let helper = Helper()
         
         // logic for Email TextField
-        if textField == emailTextField {
+        if textField == coachPasswordTextField {
             
             // check email validation
-            if helper.isValid(email: emailTextField.text!) {
-                emailContinueButton.isHidden = false
+            if coachPasswordTextField.text!.count >= 6 {
+                coachPasswordContinueButton.isHidden = false
             }
             
         // logic for First Name or Last Name TextFields
@@ -102,11 +102,7 @@ class CoachRegisterVC: UIViewController {
             if passwordTextField.text!.count >= 6 {
                 passwordContinueButton.isHidden = false
             }
-        } else if textField == positionTextField || textField == weightTextField || textField == numberTextField || textField == heightTextField {
-            if helper.isValid(position: positionTextField.text!) && helper.isValid(weight: weightTextField.text!) && helper.isValid(number: numberTextField.text!) && helper.isValid(height: heightTextField.text!) {
-                statsContinueButton.isHidden = false
-            }
-        }
+        } 
     }
     
 
