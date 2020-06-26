@@ -248,6 +248,9 @@
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" textContentType="password"/>
+                                                        <connections>
+                                                            <action selector="textFieldDidChange:" destination="Lz1-PB-y5L" eventType="editingChanged" id="UqF-sx-xqK"/>
+                                                        </connections>
                                                     </textField>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -302,6 +305,9 @@
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <action selector="textFieldDidChange:" destination="Lz1-PB-y5L" eventType="editingDidEnd" id="sLo-1j-4zp"/>
+                                                        </connections>
                                                     </textField>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tEN-WN-UdQ">
                                                         <rect key="frame" x="199" y="192" width="160" height="35"/>
@@ -311,6 +317,9 @@
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <action selector="textFieldDidChange:" destination="Lz1-PB-y5L" eventType="editingDidEnd" id="m7g-2O-uoz"/>
+                                                        </connections>
                                                     </textField>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.91337895390000001" green="0.92143708469999996" blue="0.93379235270000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -368,6 +377,9 @@
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                        <connections>
+                                                            <action selector="textFieldDidChange:" destination="Lz1-PB-y5L" eventType="editingDidEnd" id="hf8-YJ-iae"/>
+                                                        </connections>
                                                     </textField>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.91337895390000001" green="0.92143708469999996" blue="0.93379235270000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -422,6 +434,9 @@
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <action selector="textFieldDidChange:" destination="Lz1-PB-y5L" eventType="editingDidEnd" id="LnT-LH-ohu"/>
+                                                        </connections>
                                                     </textField>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.91337895390000001" green="0.92143708469999996" blue="0.93379235270000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -521,6 +536,8 @@
                         <outlet property="fullnameContinueButton" destination="Gj9-qG-FEx" id="ZqG-42-TPt"/>
                         <outlet property="lastNameTextField" destination="tEN-WN-UdQ" id="LUT-iI-8Zf"/>
                         <outlet property="nameView_width" destination="EzC-yW-fRq" id="mNV-CJ-fXF"/>
+                        <outlet property="passwordContinueButton" destination="AO2-Ow-nLm" id="Qto-jS-ff9"/>
+                        <outlet property="passwordTextField" destination="Ekz-o1-FL3" id="Obe-nr-ASK"/>
                         <outlet property="passwordView_width" destination="4YB-ri-h5i" id="3yE-ch-aHO"/>
                         <outlet property="scrollView" destination="s4Y-Z1-f0n" id="0WR-Dh-zDz"/>
                     </connections>
