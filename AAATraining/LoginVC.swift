@@ -30,11 +30,13 @@ class LoginVC: UIViewController {
     
     @IBOutlet weak var registerButton_bottom: NSLayoutConstraint!
     @IBOutlet weak var registerCoachBtn: UIButton!
+    @IBOutlet weak var registerCoachButton_bottom: NSLayoutConstraint!
     
     // cache obj
     var logoBackground_height_cache: CGFloat!
     var logo_height_cache: CGFloat!
     var registerButton_bottom_cache: CGFloat!
+    var registerCoachButton_bottom_cache: CGFloat!
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -49,6 +51,7 @@ class LoginVC: UIViewController {
         logoBackground_height_cache = logoBackground_height.constant
         logo_height_cache = logo_height.constant
         registerButton_bottom_cache = registerButton_bottom.constant
+        registerCoachButton_bottom_cache = registerCoachButton_bottom.constant
     }
     
     // executed EVERYTIME when view did appear on the screen
@@ -87,6 +90,7 @@ class LoginVC: UIViewController {
         
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             registerButton_bottom.constant = keyboardSize.height + 20
+            registerCoachButton_bottom.constant = keyboardSize.height + 20
             //registerButton_bottom.constant = self.view.frame.width / 1.75423
         }
         
@@ -106,6 +110,7 @@ class LoginVC: UIViewController {
         logo_height.constant = logo_height_cache
         silhoutte_top.constant = 177
         registerButton_bottom.constant = registerButton_bottom_cache
+        registerCoachButton_bottom.constant = registerCoachButton_bottom_cache
         
         // animation function. Whatever in the closures below will be animated
         UIView.animate(withDuration: 0.5) {
@@ -183,7 +188,7 @@ class LoginVC: UIViewController {
     func configure_registerButton(btn: UIButton) {
         // creating constant named 'border' of type layer which acts as a border frame
         let border = CALayer()
-        border.borderColor = #colorLiteral(red: 0.9044845104, green: 0.09804645926, blue: 0.1389197409, alpha: 1)
+        border.borderColor = #colorLiteral(red: 0.01220451668, green: 0.2841129601, blue: 0.7098029256, alpha: 1)
         border.borderWidth = 2
         border.frame = CGRect(x: 0, y: 0, width: btn.frame.width, height: btn.frame.height)
         

@@ -9,22 +9,30 @@
 import UIKit
 
 class CoachRegisterVC: UIViewController {
+    
+    @IBOutlet weak var coachPassword_width: NSLayoutConstraint!
+    @IBOutlet weak var nameView_width: NSLayoutConstraint!
+    @IBOutlet weak var emailView_width: NSLayoutConstraint!
+    @IBOutlet weak var passwordView_width: NSLayoutConstraint!
+    
+    @IBOutlet weak var contentView_width: NSLayoutConstraint!
+    
+    
+    
+    
+    
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        contentView_width.constant = self.view.frame.width * 4
+        coachPassword_width.constant = self.view.frame.width
+        
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    
 
 }
