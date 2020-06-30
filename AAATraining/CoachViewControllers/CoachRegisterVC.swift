@@ -193,6 +193,14 @@ class CoachRegisterVC: UIViewController {
             }
             
         // logic for Password TextField
+        } else if textField == emailTextField {
+            
+            // check email validation
+            if helper.isValid(email: emailTextField.text!) {
+                emailContinueButton.isHidden = false
+            }
+            
+        // logic for First Name or Last Name TextFields
         } else if textField == passwordTextField {
             
             // check password validation
