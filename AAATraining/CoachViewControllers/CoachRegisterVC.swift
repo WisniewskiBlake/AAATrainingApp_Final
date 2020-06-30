@@ -58,6 +58,14 @@ class CoachRegisterVC: UIViewController {
         cornerRadius(for: fullnameContinueButton)
         cornerRadius(for: passwordContinueButton)
         cornerRadius(for: coachPasswordContinueButton)
+        
+        padding(for: emailTextField)
+        padding(for: firstNameTextField)
+        padding(for: lastNameTextField)
+        padding(for: passwordTextField)
+        padding(for: coachPasswordTextField)
+        
+        configure_footerView()
     }
     
     // make corners rounded for any views (objects)
@@ -83,6 +91,40 @@ class CoachRegisterVC: UIViewController {
         
         footerView.layer.addSublayer(topLine)
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     @IBAction func textFieldDidChange(_ textField: UITextField) {
