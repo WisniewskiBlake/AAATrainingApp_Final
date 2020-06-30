@@ -109,6 +109,15 @@ class CoachRegisterVC: UIViewController {
     }
     
     @IBAction func fullnameContinue_clicked(_ sender: Any) {
+        let position = CGPoint(x: self.view.frame.width * 2, y: 0)
+        scrollView.setContentOffset(position, animated: true)
+        
+        // show keyboard of next TextField
+        if emailTextField.text!.isEmpty {
+            emailTextField.becomeFirstResponder()
+        } else if emailTextField.text!.isEmpty == false {
+            emailTextField.resignFirstResponder()
+        }
         
     }
     
