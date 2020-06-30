@@ -92,6 +92,34 @@ class CoachRegisterVC: UIViewController {
         footerView.layer.addSublayer(topLine)
     }
     
+    @IBAction func coachPasswordContinue_clicked(_ sender: Any) {
+        // move scrollView horizontally (by X to the WIDTH as a pointer)
+        let position = CGPoint(x: self.view.frame.width, y: 0)
+        scrollView.setContentOffset(position, animated: true)
+        
+        // show keyboard of next TextField
+        if firstNameTextField.text!.isEmpty {
+            firstNameTextField.becomeFirstResponder()
+        } else if lastNameTextField.text!.isEmpty {
+            lastNameTextField.becomeFirstResponder()
+        } else if firstNameTextField.text!.isEmpty == false && lastNameTextField.text!.isEmpty == false {
+            firstNameTextField.resignFirstResponder()
+            lastNameTextField.resignFirstResponder()
+        }
+    }
+    
+    @IBAction func fullnameContinue_clicked(_ sender: Any) {
+        
+    }
+    
+    @IBAction func emailContinue_clicked(_ sender: Any) {
+        
+    }
+    
+    @IBAction func passwordContinue_clicked(_ sender: Any) {
+        
+    }
+    
     
     
     
