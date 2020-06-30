@@ -122,7 +122,15 @@ class CoachRegisterVC: UIViewController {
     }
     
     @IBAction func emailContinue_clicked(_ sender: Any) {
+        let position = CGPoint(x: self.view.frame.width * 3, y: 0)
+        scrollView.setContentOffset(position, animated: true)
         
+        // show keyboard of next TextField
+        if passwordTextField.text!.isEmpty {
+            passwordTextField.becomeFirstResponder()
+        } else if passwordTextField.text!.isEmpty == false {
+            passwordTextField.resignFirstResponder()
+        }
     }
     
     @IBAction func passwordContinue_clicked(_ sender: Any) {
