@@ -48,6 +48,16 @@ class CoachRegisterVC: UIViewController {
         emailView_width.constant = self.view.frame.width
         passwordView_width.constant = self.view.frame.width
         
+        cornerRadius(for: coachPasswordTextField)
+        cornerRadius(for: firstNameTextField)
+        cornerRadius(for: lastNameTextField)
+        cornerRadius(for: emailTextField)
+        cornerRadius(for: passwordTextField)
+        
+        cornerRadius(for: emailContinueButton)
+        cornerRadius(for: fullnameContinueButton)
+        cornerRadius(for: passwordContinueButton)
+        cornerRadius(for: coachPasswordContinueButton)
     }
     
     // make corners rounded for any views (objects)
