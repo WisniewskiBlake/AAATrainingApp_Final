@@ -37,7 +37,7 @@ class CoachRegisterVC: UIViewController {
     
     
     
-    
+    var accountType = 2
 
     override func viewDidLoad() {
         super.viewDidLoad()

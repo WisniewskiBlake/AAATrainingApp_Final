@@ -41,6 +41,8 @@ class RegisterVC: UIViewController {
     // code obj
     var datePicker: UIDatePicker!
     
+    var accountType = 1
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -181,7 +183,7 @@ class RegisterVC: UIViewController {
         let url = URL(string: "http://localhost/fb/register.php")!
         
         
-        let body = "email=\(emailTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&firstName=\(firstNameTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&lastName=\(lastNameTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&password=\(passwordTextField.text!)&birthday=\(datePicker.date)&height=\(heightTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines))&weight=\(weightTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines))&position=\(positionTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&number=\(numberTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines))&ava=\("http://localhost/fb/ava/user.png")&cover=\("http://localhost/fb/cover/HomeCover.jpg")"
+        let body = "email=\(emailTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&firstName=\(firstNameTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&lastName=\(lastNameTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&password=\(passwordTextField.text!)&birthday=\(datePicker.date)&height=\(heightTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines))&weight=\(weightTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines))&position=\(positionTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&number=\(numberTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines))&ava=\("http://localhost/fb/ava/user.png")&cover=\("http://localhost/fb/cover/HomeCover.jpg")&accountType=\(accountType)"
         var request = URLRequest(url: url)
         request.httpBody = body.data(using: .utf8)
         request.httpMethod = "POST"
