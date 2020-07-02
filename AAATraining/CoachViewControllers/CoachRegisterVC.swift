@@ -145,6 +145,20 @@ class CoachRegisterVC: UIViewController {
         var request = URLRequest(url: url)
         request.httpBody = body.data(using: .utf8)
         request.httpMethod = "POST"
+        
+        // STEP 2. Execute created above request
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+
+            DispatchQueue.main.async {
+                print(response!)
+            // access helper class
+            let helper = Helper()
+
+            // error
+            if error != nil {
+                helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
+                return
+            }
     }
     
     
