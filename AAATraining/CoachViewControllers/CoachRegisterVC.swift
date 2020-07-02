@@ -135,79 +135,79 @@ class CoachRegisterVC: UIViewController {
     
     @IBAction func passwordContinue_clicked(_ sender: Any) {
         // STEP 1. Declaring URL of the request; declaring the body to the URL; declaring request with the safest method - POST, that no one can grab our info.
-        
-        
-        let url = URL(string: "http://localhost/fb/register.php")!
-        
-        
-        let body = "email=\(emailTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&firstName=\(firstNameTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&lastName=\(lastNameTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&password=\(passwordTextField.text!)&birthday=\("2007-07-02 04:00:00  0000")&height=\("0")&weight=\("0")&position=\("0")&number=\("0")&ava=\("http://localhost/fb/ava/user.png")&cover=\("http://localhost/fb/cover/HomeCover.jpg")&accountType=\("2")"
-        
-        var request = URLRequest(url: url)
-        request.httpBody = body.data(using: .utf8)
-        request.httpMethod = "POST"
-        
-        // STEP 2. Execute created above request
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-
-            DispatchQueue.main.async {
-                print(response!)
-            // access helper class
-            let helper = Helper()
-
-            // error
-            if error != nil {
-                helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
-                return
-            }
-                
-            // fetch JSON if no error
-            do {
-
-                // save mode of casting data
-                guard let data = data else {
-                    helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
-                    return
-                }
-
-                // fetching all JSON received from the server
-                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
-
-                // save mode of casting JSON
-                guard let parsedJSON = json else {
-                    print("Parsing Error")
-                    return
-                }
                 
                 
-            // STEP 4. Create Scenarious
-                            // Successfully Registered In
-                            if parsedJSON["status"] as! String == "200" {
+                let url = URL(string: "http://localhost/fb/register.php")!
+                
+                
+                let body = "email=\(emailTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&firstName=\(firstNameTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&lastName=\(lastNameTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&password=\(passwordTextField.text!)&birthday=\("2007-07-02 04:00:00  +0000")&height=\("21")&weight=\("21")&position=\("21")&number=\("21")&ava=\("http://localhost/fb/ava/user.png")&cover=\("http://localhost/fb/cover/HomeCover.jpg")&accountType=\("2")"
+                var request = URLRequest(url: url)
+                request.httpBody = body.data(using: .utf8)
+                request.httpMethod = "POST"
 
-                                // go to TabBar
-                                helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
+                // STEP 2. Execute created above request
+                URLSession.shared.dataTask(with: request) { (data, response, error) in
 
-                                // CHANGED IN VIDEO 56
-            //                    currentUser = parsedJSON.mutableCopy() as? NSMutableDictionary
-            //                    UserDefaults.standard.set(currentUser, forKey: "currentUser")
-            //                    UserDefaults.standard.synchronize()
+                    DispatchQueue.main.async {
+                        print(response!)
+                    // access helper class
+                    let helper = Helper()
 
-                                currentUser = parsedJSON.mutableCopy() as? Dictionary<String, Any>
+                    // error
+                    if error != nil {
+                        helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
+                        return
+                    }
 
-                                DEFAULTS.set(currentUser, forKey: keyCURRENT_USER)
-                                DEFAULTS.synchronize()
+                    // fetch JSON if no error
+                    do {
 
-                            // Some error occured related to the entered data, like: wrong password, wrong email, etc
-                            } else {
+                        // save mode of casting data
+                        guard let data = data else {
+                            helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
+                            return
+                        }
 
-                                // save mode of casting / checking existance of Server Message
-                                if parsedJSON["message"] != nil {
-                                    let message = parsedJSON["message"] as! String
-                                    helper.showAlert(title: "Error", message: message, in: self)
-                                }
+                        // fetching all JSON received from the server
+                        let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
 
+                        // save mode of casting JSON
+                        guard let parsedJSON = json else {
+                            print("Parsing Error")
+                            return
+                        }
+
+
+                        // STEP 4. Create Scenarious
+                        // Successfully Registered In
+                        if parsedJSON["status"] as! String == "200" {
+
+                            // go to TabBar
+                            helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
+
+                            // CHANGED IN VIDEO 56
+        //                    currentUser = parsedJSON.mutableCopy() as? NSMutableDictionary
+        //                    UserDefaults.standard.set(currentUser, forKey: "currentUser")
+        //                    UserDefaults.standard.synchronize()
+
+                            currentUser = parsedJSON.mutableCopy() as? Dictionary<String, Any>
+
+                            DEFAULTS.set(currentUser, forKey: keyCURRENT_USER)
+                            DEFAULTS.synchronize()
+
+                        // Some error occured related to the entered data, like: wrong password, wrong email, etc
+                        } else {
+
+                            // save mode of casting / checking existance of Server Message
+                            if parsedJSON["message"] != nil {
+                                let message = parsedJSON["message"] as! String
+                                helper.showAlert(title: "Error", message: message, in: self)
                             }
-                
-                // error while fetching JSON
+
+                        }
+
+
+                    // error while fetching JSON
                     } catch {
                         helper.showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
                     }
