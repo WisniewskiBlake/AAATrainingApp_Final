@@ -159,6 +159,28 @@ class CoachRegisterVC: UIViewController {
                 helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
                 return
             }
+                
+            // fetch JSON if no error
+            do {
+
+                // save mode of casting data
+                guard let data = data else {
+                    helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
+                    return
+                }
+
+                // fetching all JSON received from the server
+                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
+
+                // save mode of casting JSON
+                guard let parsedJSON = json else {
+                    print("Parsing Error")
+                    return
+                }
+                
+                
+            }
+                
     }
     
     
