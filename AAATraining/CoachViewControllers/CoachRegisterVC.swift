@@ -207,6 +207,14 @@ class CoachRegisterVC: UIViewController {
 
                             }
                 
+                // error while fetching JSON
+                    } catch {
+                        helper.showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
+                    }
+                    }
+
+                }.resume()
+                
     }
     
     
