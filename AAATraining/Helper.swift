@@ -161,5 +161,66 @@ class Helper {
         }
     }
     
+    // sends HTTP requests and return JSON results
+    func sendHTTPRequest(url: String, body: String, success: @escaping () -> Void, failure: @escaping () -> Void) -> NSDictionary {
+        
+        // var to be returned
+        var result = NSDictionary()
+        
+        // prerparing request
+        let url = URL(string: url)!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = body.data(using: .utf8)
+        
+        // send request
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            DispatchQueue.main.async {
+                
+                // errors
+                if error != nil {
+                    failure()
+                    return
+                }
+                
+                do {
+                    // casting data received from the server
+                    guard let data = data else {
+                        failure()
+                        return
+                    }
+                    
+                    // casting json from data
+                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
+                    
+                    // safe mode of accessing json
+                    guard let parsedJSON = json else {
+                        failure()
+                        return
+                    }
+                    
+                    // completionHandler. This can be customized whenever this func is called from any other swift classes / files
+                    if parsedJSON["status"] as! String == "200" {
+                        success()
+                    } else {
+                        failure()
+                    }
+                    
+                    // assigning json data to the result var to be returned with the func
+                    result = parsedJSON
+                    
+                } catch {
+                    failure()
+                    return
+                }
+                
+            }
+        }.resume()
+        
+        // reutrning json
+        return result
+        
+    }
+    
     
 }
