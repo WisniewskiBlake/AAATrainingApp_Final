@@ -50,43 +50,43 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     }
     
     // loads all user related information to be shown in the header
-   @objc func loadUser() {
+    @objc func loadUser() {
        
    
-    guard let firstName = currentUser?["firstName"], let lastName = currentUser?["lastName"], let avaPath = currentUser?["ava"], let coverPath = currentUser?["cover"] else {
+        guard let firstName = currentUser?["firstName"], let lastName = currentUser?["lastName"], let avaPath = currentUser?["ava"], let coverPath = currentUser?["cover"] else {
+               
+               return
+           }
+           // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
+           if (avaPath as! String).count > 10 {
+               isAva = true
+           } else {
+               avaImageView.image = UIImage(named: "user.png")
+               isAva = false
+           }
            
-           return
-       }
-       // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
-       if (avaPath as! String).count > 10 {
-           isAva = true
-       } else {
-           avaImageView.image = UIImage(named: "user.png")
-           isAva = false
-       }
-       
-       if (coverPath as! String).count > 10 {
-           isCover = true
-       } else {
-           coverImageView.image = UIImage(named: "HomeCover.jpg")
-           isCover = false
-       }
-       // assigning vars which we accessed from global var, to fullnameLabel
-       fullnameLabel.text = "\((firstName as! String).capitalized) \((lastName as! String).capitalized)"
-       
-       // downloading the images and assigning to certain imageViews
-       Helper().downloadImage(from: avaPath as! String, showIn: self.avaImageView, orShow: "user.png")
-       Helper().downloadImage(from: coverPath as! String, showIn: self.coverImageView, orShow: "HomeCover.jpg")
-       // if bio is empty in the server -> hide bio label, otherwise, show bio label
-       
-       // save in the background thread the user's profile picture
-       DispatchQueue.main.async {
-           currentUser_ava = self.avaImageView.image
-       }
-   }
+           if (coverPath as! String).count > 10 {
+               isCover = true
+           } else {
+               coverImageView.image = UIImage(named: "HomeCover.jpg")
+               isCover = false
+           }
+           // assigning vars which we accessed from global var, to fullnameLabel
+           fullnameLabel.text = "\((firstName as! String).capitalized) \((lastName as! String).capitalized)"
+           
+           // downloading the images and assigning to certain imageViews
+           Helper().downloadImage(from: avaPath as! String, showIn: self.avaImageView, orShow: "user.png")
+           Helper().downloadImage(from: coverPath as! String, showIn: self.coverImageView, orShow: "HomeCover.jpg")
+           // if bio is empty in the server -> hide bio label, otherwise, show bio label
+           
+           // save in the background thread the user's profile picture
+           DispatchQueue.main.async {
+               currentUser_ava = self.avaImageView.image
+           }
+    }
     
     // configuring the appearance of AvaImageView
-   func configure_avaImageView() {
+    func configure_avaImageView() {
         
         // creating layer that will be applied to avaImageView (layer - broders of ava)
         let border = CALayer()
@@ -99,10 +99,23 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         avaImageView.layer.cornerRadius = 10
         avaImageView.layer.masksToBounds = true
         avaImageView.clipsToBounds = true
-   }
+    }
+    
+    // takes us to the PickerController (Controller that allows us to select picture)
+    func showPicker(with source: UIImagePickerController.SourceType) {
+        
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true
+        picker.sourceType = source
+        present(picker, animated: true, completion: nil)
+    }
+    
+    
+    
     
     // this function launches Action Sheet for the photos
-   func showActionSheet() {
+    func showActionSheet() {
         // declaring action sheet
         let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
@@ -152,7 +165,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         sheet.addAction(delete)
         // present action sheet to the user finally
         self.present(sheet, animated: true, completion: nil)
-   }
+    }
     
     
     
