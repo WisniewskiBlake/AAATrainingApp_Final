@@ -183,7 +183,7 @@ class CoachRegisterVC: UIViewController {
                         if parsedJSON["status"] as! String == "200" {
 
                             // go to TabBar
-                            helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
+                            helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
 
                             // CHANGED IN VIDEO 56
         //                    currentUser = parsedJSON.mutableCopy() as? NSMutableDictionary
