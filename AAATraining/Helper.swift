@@ -154,5 +154,12 @@ class Helper {
         }
     }
     
+    // configure appearance of the fullname & fullname label
+    func loadFullname(firstName: String, lastName: String, showIn label: UILabel) {
+        DispatchQueue.main.async {
+            label.text = "\(firstName.capitalized) \(lastName.capitalized)"
+        }
+    }
+    
     
 }
