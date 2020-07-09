@@ -85,7 +85,21 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
        }
    }
     
-    
+    // configuring the appearance of AvaImageView
+   func configure_avaImageView() {
+        
+        // creating layer that will be applied to avaImageView (layer - broders of ava)
+        let border = CALayer()
+        border.borderColor = UIColor.white.cgColor
+        border.borderWidth = 5
+        border.frame = CGRect(x: 0, y: 0, width: avaImageView.frame.width, height: avaImageView.frame.height)
+        avaImageView.layer.addSublayer(border)
+        
+        // rounded corners
+        avaImageView.layer.cornerRadius = 10
+        avaImageView.layer.masksToBounds = true
+        avaImageView.clipsToBounds = true
+   }
     
     
     
