@@ -35,6 +35,19 @@ class PostVC: UIViewController {
         avaImageView.clipsToBounds = true
     }
     
+    // loading user
+    func loadUser() {
+        
+        // safely accessing user related detailes ["key">"value"]
+        guard let firstName = currentUser?["firstName"], let lastName = currentUser?["lastName"], let avaPath = currentUser?["ava"] else {
+            return
+        }
+        
+        // assigning accessed details to the functions which loads the user
+        Helper().loadFullname(firstName: firstName as! String, lastName: lastName as! String, showIn: fullnameLabel)
+        Helper().downloadImage(from: avaPath as! String, showIn: avaImageView, orShow: "user.png")
+    }
+    
 
     
 
