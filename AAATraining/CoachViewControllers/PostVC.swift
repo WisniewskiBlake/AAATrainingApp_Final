@@ -10,6 +10,11 @@ import UIKit
 
 class PostVC: UIViewController {
     
+    @IBOutlet weak var avaImageView: UIImageView!
+    @IBOutlet weak var fullnameLabel: UILabel!
+    @IBOutlet weak var placeholderLabel: UILabel!
+    @IBOutlet weak var postTextView: UITextView!
+    @IBOutlet weak var pictureImageView: UIImageView!
     
 
     override func viewDidLoad() {
