@@ -36,6 +36,7 @@
 		B7F8AFF624B6AC1A00B315FD /* CoachProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F8AFF524B6AC1A00B315FD /* CoachProfileViewController.swift */; };
 		B7F8AFF824B6BE3500B315FD /* Post.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F8AFF724B6BE3500B315FD /* Post.png */; };
 		B7F8AFFA24B6E98600B315FD /* PostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F8AFF924B6E98600B315FD /* PostVC.swift */; };
+		B7F8AFFD24B713E700B315FD /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7F8AFFC24B713E700B315FD /* MediaPlayer.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		B7F8AFF524B6AC1A00B315FD /* CoachProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachProfileViewController.swift; sourceTree = "<group>"; };
 		B7F8AFF724B6BE3500B315FD /* Post.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Post.png; sourceTree = "<group>"; };
 		B7F8AFF924B6E98600B315FD /* PostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostVC.swift; sourceTree = "<group>"; };
+		B7F8AFFC24B713E700B315FD /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7F8AFFD24B713E700B315FD /* MediaPlayer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +128,7 @@
 				B7F18C7924970085009BFA17 /* AAATrainingTests */,
 				B7F18C8424970085009BFA17 /* AAATrainingUITests */,
 				B7F18C6124970084009BFA17 /* Products */,
+				B7F8AFFB24B713E600B315FD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -213,6 +217,14 @@
 				B7F18C9B24975B60009BFA17 /* LoginVC.swift */,
 			);
 			path = MutualControllers;
+			sourceTree = "<group>";
+		};
+		B7F8AFFB24B713E600B315FD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B7F8AFFC24B713E700B315FD /* MediaPlayer.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

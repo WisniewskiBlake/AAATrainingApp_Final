@@ -71,6 +71,10 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
                
                return
            }
+//        let aType = accountType as! String
+//        print(aType)
+//        let nType = number as! String
+//        print(nType)
            // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
            if (avaPath as! String).count > 10 {
                isAva = true
@@ -99,6 +103,7 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
            // save in the background thread the user's profile picture
            DispatchQueue.main.async {
                currentUser_ava = self.avaImageView.image
+               
            }
        }
     
@@ -265,7 +270,8 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
         }
         // STEP 1. Declare URL, Request and Params
         // url we gonna access (API)
-        let url = URL(string: "http://localhost/fb/uploadImage.php")!
+        //let url = URL(string: "http://localhost/fb/uploadImage.php")!
+        let url = URL(string: "http://192.168.1.17/fb/uploadImage.php")!
         // declaring reqeust with further configs
         var request = URLRequest(url: url)
         // POST - safest method of passing data to the server
@@ -305,7 +311,7 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
                     }
                     // uploaded successfully
                     if parsedJSON["status"] as! String == "200" {
-                        
+                        print(currentUser)
                         // saving upaded user related information (e.g. ava's path, cover's path)
                         currentUser = parsedJSON.mutableCopy()  as? Dictionary<String, Any>
                         DEFAULTS.set(currentUser, forKey: "currentUser")

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MediaPlayer
 
 class CoachProfileViewController: UITableViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
@@ -82,6 +83,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
            // save in the background thread the user's profile picture
            DispatchQueue.main.async {
                currentUser_ava = self.avaImageView.image
+               
            }
     }
     
@@ -94,7 +96,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         }
         // STEP 1. Declare URL, Request and Params
         // url we gonna access (API)
-        let url = URL(string: "http://localhost/fb/uploadImage.php")!
+        //let url = URL(string: "http://localhost/fb/uploadImage.php")!
+        let url = URL(string: "http://192.168.1.17/fb/uploadImage.php")!
         // declaring reqeust with further configs
         var request = URLRequest(url: url)
         // POST - safest method of passing data to the server

@@ -1740,6 +1740,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="41R-QL-2o6" id="FGM-YM-9Rk"/>
+                                </connections>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Make a post here..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s64-lb-SY3">
                                 <rect key="frame" x="50" y="151" width="172" height="24"/>
@@ -1751,6 +1754,9 @@
                                 <rect key="frame" x="265" y="82" width="90" height="33"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="16"/>
                                 <state key="normal" title="Add Pic/Vid"/>
+                                <connections>
+                                    <action selector="addPicture_clicked:" destination="41R-QL-2o6" eventType="touchUpInside" id="uy1-pv-jii"/>
+                                </connections>
                             </button>
                             <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pxq-WT-FBV">
                                 <rect key="frame" x="20" y="271" width="335" height="276"/>
@@ -1779,8 +1785,16 @@
                         <viewLayoutGuide key="safeArea" id="JLh-Kz-aJs"/>
                     </view>
                     <navigationItem key="navigationItem" title="Create Post" id="NSP-Jg-Rek">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="pvJ-9a-qZW"/>
-                        <barButtonItem key="rightBarButtonItem" title="Share" id="1uC-iw-qsK"/>
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="pvJ-9a-qZW">
+                            <connections>
+                                <action selector="cancelButton_clicked:" destination="41R-QL-2o6" id="zk1-lu-c72"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Share" id="1uC-iw-qsK">
+                            <connections>
+                                <action selector="shareButton_clicked:" destination="41R-QL-2o6" id="81C-eP-tgF"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="avaImageView" destination="cpD-Sm-ox3" id="Y0z-wa-0wv"/>

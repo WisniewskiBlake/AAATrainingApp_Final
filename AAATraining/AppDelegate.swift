@@ -14,6 +14,7 @@ import UIKit
 //var currentUser: NSMutableDictionary?
 var currentUser: Dictionary<String, Any>?
 var currentUser_ava: UIImage?
+//var currentUser_accountType = "0"
 let DEFAULTS = UserDefaults.standard
 let keyCURRENT_USER = "currentUser"
 
@@ -31,12 +32,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // checking is the glob variable that stores current user's info is empty or not
         if currentUser?["id"] != nil {
+            let weight = currentUser?["weight"] as! String
             
-            // accessing TabBar controller via Main.storyboard
-            let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabBar")
+            if weight == "123456789" {
+                let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoachTabBar")
+                window?.rootViewController = TabBar
+            } else {
+                // accessing TabBar controller via Main.storyboard
+                let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabBar")
+                window?.rootViewController = TabBar
+            }
+            
             
             // assigning TabBar as RootViewController of the project
-            window?.rootViewController = TabBar
+            
         }
         
         return true

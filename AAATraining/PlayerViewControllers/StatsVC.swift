@@ -118,6 +118,7 @@ class StatsVC: UIViewController {
         
         // STEP 2. Declare URL, Request, Method, etc
         let url = URL(string: "http://localhost/fb/updateStats.php")!
+      //  let url = URL(string: "http://192.168.1.17/fb/updateStats.php")!
         let body = "id=\(id)&stat=\(stat)&statValue=\(statTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines))"
         var request = URLRequest(url: url)
         request.httpMethod = "POST"

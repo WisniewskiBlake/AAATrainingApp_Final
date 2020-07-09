@@ -27,8 +27,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func goToMain() {
-    let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController")
-    window?.rootViewController = TabBar
+        let weight = currentUser?["weight"] as! String
+        
+    if weight == "123456789" {
+        let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoachTabBar")
+        window?.rootViewController = TabBar
+    } else {
+        // accessing TabBar controller via Main.storyboard
+        let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabBar")
+        window?.rootViewController = TabBar
+    }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

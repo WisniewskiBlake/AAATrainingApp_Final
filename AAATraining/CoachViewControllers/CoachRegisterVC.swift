@@ -138,9 +138,10 @@ class CoachRegisterVC: UIViewController {
                 
                 
                 let url = URL(string: "http://localhost/fb/register.php")!
+               // let url = URL(string: "http://192.168.1.17/fb/register.php")!
                 
                 
-                let body = "email=\(emailTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&firstName=\(firstNameTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&lastName=\(lastNameTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&password=\(passwordTextField.text!)&birthday=\("2007-07-02 04:00:00  +0000")&height=\("21")&weight=\("21")&position=\("21")&number=\("21")&ava=\("http://localhost/fb/ava/user.png")&cover=\("http://localhost/fb/cover/HomeCover.jpg")&accountType=\("2")"
+                let body = "email=\(emailTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&firstName=\(firstNameTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&lastName=\(lastNameTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&password=\(passwordTextField.text!)&birthday=\("2007-07-02 04:00:00  +0000")&height=\("21")&weight=\("123456789")&position=\("21")&number=\("21")&ava=\("http://localhost/fb/ava/user.png")&cover=\("http://localhost/fb/cover/HomeCover.jpg")&accountType=\("2")"
                 var request = URLRequest(url: url)
                 request.httpBody = body.data(using: .utf8)
                 request.httpMethod = "POST"
@@ -189,7 +190,7 @@ class CoachRegisterVC: UIViewController {
         //                    currentUser = parsedJSON.mutableCopy() as? NSMutableDictionary
         //                    UserDefaults.standard.set(currentUser, forKey: "currentUser")
         //                    UserDefaults.standard.synchronize()
-
+            //                print(currentUser)
                             currentUser = parsedJSON.mutableCopy() as? Dictionary<String, Any>
 
                             DEFAULTS.set(currentUser, forKey: keyCURRENT_USER)
