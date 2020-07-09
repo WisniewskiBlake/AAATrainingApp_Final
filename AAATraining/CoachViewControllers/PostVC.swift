@@ -48,6 +48,18 @@ class PostVC: UIViewController {
         Helper().downloadImage(from: avaPath as! String, showIn: avaImageView, orShow: "user.png")
     }
     
+    // tracks whenver textView gets changed
+    func textViewDidChange(_ textView: UITextView) {
+        
+        // if textview isn't empty -> there's some text in textView, show the label, otherwise -> hide
+        if textView.text.isEmpty {
+            placeholderLabel.isHidden = false
+        } else {
+            placeholderLabel.isHidden = true
+        }
+        
+    }
+    
 
     
 
