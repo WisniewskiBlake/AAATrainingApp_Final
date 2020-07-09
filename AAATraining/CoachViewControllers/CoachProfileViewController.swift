@@ -103,12 +103,43 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     
     // takes us to the PickerController (Controller that allows us to select picture)
     func showPicker(with source: UIImagePickerController.SourceType) {
-        
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.allowsEditing = true
         picker.sourceType = source
         present(picker, animated: true, completion: nil)
+    }
+    
+    // executed once the picture is selected in PickerController
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    
+        // accessing selected image from its variable
+        let image = info[UIImagePickerController.InfoKey(rawValue: convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage))] as? UIImage
+        
+        // based on the trigger we are assigning selected pictures to the appropriated imageView
+        if imageViewTapped == "cover" {
+            // assign selected image to CoverImageView
+            self.coverImageView.image = image
+            // upload image to the server
+            self.uploadImage(from: self.coverImageView)
+        } else if imageViewTapped == "ava" {
+            // assign selected image to AvaImageView
+            self.avaImageView.image = image
+            // refresh global variable storing the user's profile pic
+            currentUser_ava = self.avaImageView.image
+            
+            // upload image to the server
+            self.uploadImage(from: avaImageView)
+        }
+        // completion handler, to communicate to the project that images has been selected (enable delete button)
+        dismiss(animated: true) {
+            if self.imageViewTapped == "cover" {
+                self.isCover = true
+            } else if self.imageViewTapped == "ava" {
+                self.isAva = true
+            }
+        }
+        
     }
     
     
