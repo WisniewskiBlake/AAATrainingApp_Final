@@ -286,7 +286,7 @@ class LoginVC: UIViewController {
                     // Successfully Logged In
                     if parsedJSON["status"] as! String == "200" {
                         
-                        if parsedJson["accountType"] as! String == "1" {
+                        if parsedJSON["accountType"] as! String == "1" {
                             // go to TabBar
                             helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
                             
@@ -298,7 +298,7 @@ class LoginVC: UIViewController {
     //                        UserDefaults.standard.synchronize()
                             DEFAULTS.set(currentUser, forKey: keyCURRENT_USER)
                             DEFAULTS.synchronize()
-                        } else if parsedJson["accountType"] as! String == "2" {
+                        } else if parsedJSON["accountType"] as! String == "2" {
                             // go to TabBar
                             helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
                             

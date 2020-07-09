@@ -175,23 +175,33 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
         // declaring cancel button
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         // declaring delete button
+        // declaring delete button
         let delete = UIAlertAction(title: "Delete", style: .destructive) { (action) in
             
             // deleting profile picture (ava), by returning placeholder
             if self.imageViewTapped == "ava" {
+                
                 self.avaImageView.image = UIImage(named: "user.png")
                 self.isAva = false
+                
                 self.uploadImage(from: self.avaImageView)
+                
             } else if self.imageViewTapped == "cover" {
+                
                 self.coverImageView.image = UIImage(named: "HomeCover.jpg")
                 self.isCover = false
+                
                 self.uploadImage(from: self.coverImageView)
             }
+            
         }
+        
+        
         // manipulating appearance of delete button for each scenarios
         if imageViewTapped == "ava" && isAva == false && imageViewTapped != "cover" {
             delete.isEnabled = false
         }
+        
         if imageViewTapped == "cover" && isCover == false && imageViewTapped != "ava" {
             delete.isEnabled = false
         }
