@@ -16,22 +16,26 @@ class PostVC: UIViewController {
     @IBOutlet weak var postTextView: UITextView!
     @IBOutlet weak var pictureImageView: UIImageView!
     
+    
+    // code obj
+    var isPictureSelected = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        loadUser()
+    }
+    
+    // loaded after adjusting the layouts
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // rounded corners
+        avaImageView.layer.cornerRadius = avaImageView.frame.width / 2
+        avaImageView.clipsToBounds = true
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    
 
 }
