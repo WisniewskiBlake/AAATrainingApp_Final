@@ -8,17 +8,99 @@
 
 import UIKit
 
-class CoachProfileViewController: UITableViewController {
+class CoachProfileViewController: UITableViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
+    @IBOutlet weak var coverImageView: UIImageView!
+    @IBOutlet weak var avaImageView: UIImageView!
+    @IBOutlet weak var fullnameLabel: UILabel!
+    
+    
+    // code obj (to build logic of distinguishing tapped / shown Cover / Ava)
+    var isCover = false
+    var isAva = false
+    var imageViewTapped = ""
+    
+    // posts obj
+    var posts = [NSDictionary?]()
+    var avas = [UIImage]()
+    var pictures = [UIImage]()
+    var skip = 0
+    var limit = 10
+    var isLoading = false
+    var liked = [Int]()
+    
+    // color obj
+    let likeColor = UIColor(red: 28/255, green: 165/255, blue: 252/255, alpha: 1)
+    
+    // friends obj
+    var myFriends = [NSDictionary?]()
+    var myFriends_avas = [UIImage]()
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        // add observers for notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(loadUser), name: NSNotification.Name(rawValue: "updateStats"), object: nil)
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        configure_avaImageView()
+        loadUser()
+        
     }
+    
+    // loads all user related information to be shown in the header
+   @objc func loadUser() {
+       
+   
+    guard let firstName = currentUser?["firstName"], let lastName = currentUser?["lastName"], let avaPath = currentUser?["ava"], let coverPath = currentUser?["cover"] else {
+           
+           return
+       }
+       // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
+       if (avaPath as! String).count > 10 {
+           isAva = true
+       } else {
+           avaImageView.image = UIImage(named: "user.png")
+           isAva = false
+       }
+       
+       if (coverPath as! String).count > 10 {
+           isCover = true
+       } else {
+           coverImageView.image = UIImage(named: "HomeCover.jpg")
+           isCover = false
+       }
+       // assigning vars which we accessed from global var, to fullnameLabel
+       fullnameLabel.text = "\((firstName as! String).capitalized) \((lastName as! String).capitalized)"
+       
+       // downloading the images and assigning to certain imageViews
+       Helper().downloadImage(from: avaPath as! String, showIn: self.avaImageView, orShow: "user.png")
+       Helper().downloadImage(from: coverPath as! String, showIn: self.coverImageView, orShow: "HomeCover.jpg")
+       // if bio is empty in the server -> hide bio label, otherwise, show bio label
+       
+       // save in the background thread the user's profile picture
+       DispatchQueue.main.async {
+           currentUser_ava = self.avaImageView.image
+       }
+   }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     // MARK: - Table view data source
 
@@ -31,6 +113,49 @@ class CoachProfileViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return 0
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
