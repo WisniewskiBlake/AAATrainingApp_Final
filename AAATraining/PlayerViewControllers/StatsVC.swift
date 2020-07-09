@@ -18,6 +18,7 @@ class StatsVC: UIViewController {
     @IBOutlet weak var fullnameLabel: UILabel!
     @IBOutlet weak var statButton: UIButton!
     @IBOutlet weak var statTextField: UITextField!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     
     let transparentView = UIView()
     let tableView = UITableView()
@@ -33,6 +34,7 @@ class StatsVC: UIViewController {
         
         padding(for: statTextField)
         cornerRadius(for: statButton)
+        
         
         configure_avaImageView()
         loadUser()

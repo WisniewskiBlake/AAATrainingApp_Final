@@ -1664,6 +1664,7 @@
                     <connections>
                         <outlet property="avaImageView" destination="bUO-pF-wuU" id="OJZ-Hh-dKn"/>
                         <outlet property="fullnameLabel" destination="TB5-yZ-ADc" id="XL9-CG-uNa"/>
+                        <outlet property="saveButton" destination="l8O-3L-0vi" id="SiD-Jo-QlW"/>
                         <outlet property="statButton" destination="Pve-QX-dNs" id="CL4-ot-YAA"/>
                         <outlet property="statTextField" destination="V9n-eD-Eo7" id="L1D-gw-Zs9"/>
                     </connections>
@@ -1710,7 +1711,7 @@
         <!--Create Post-->
         <scene sceneID="pM1-m6-NxO">
             <objects>
-                <viewController id="41R-QL-2o6" sceneMemberID="viewController">
+                <viewController id="41R-QL-2o6" customClass="PostVC" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pNJ-YM-K6E">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
