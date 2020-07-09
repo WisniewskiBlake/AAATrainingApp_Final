@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PostVC: UIViewController {
+class PostVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
     @IBOutlet weak var avaImageView: UIImageView!
     @IBOutlet weak var fullnameLabel: UILabel!
@@ -97,6 +97,33 @@ class PostVC: UIViewController {
         // present action sheet to the user finally
         self.present(sheet, animated: true, completion: nil)
         
+    }
+    
+    // takes us to the PickerController (Controller that allows us to select picture)
+    func showPicker(with source: UIImagePickerController.SourceType) {
+        
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true
+        picker.sourceType = source
+        present(picker, animated: true, completion: nil)
+        
+    }
+    
+    // executed whenever the image has been picked via pickerController
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    
+        // accessing selected image from its variable
+        let image = info[UIImagePickerController.InfoKey(rawValue: convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage))] as? UIImage
+        
+        // assigning selected image to pictureImageView
+        pictureImageView.image = image
+        
+        // cast boolean as TRUE -> Picture Is Selected
+        isPictureSelected = true
+        
+        // remove pickerController
+        dismiss(animated: true, completion: nil)
     }
     
 
