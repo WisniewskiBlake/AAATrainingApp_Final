@@ -60,6 +60,45 @@ class PostVC: UIViewController {
         
     }
     
+    // this function launches Action Sheet for the photos
+    func showActionSheet() {
+        
+        // declaring action sheet
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // declaring camera button
+        let camera = UIAlertAction(title: "Camera", style: .default) { (action) in
+            
+            // if camera available on device, than show
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                self.showPicker(with: .camera)
+            }
+            
+        }
+        
+        // declaring library button
+        let library = UIAlertAction(title: "Photo Library", style: .default) { (action) in
+            
+            // checking availability of photo library
+            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+                self.showPicker(with: .photoLibrary)
+            }
+            
+        }
+        
+        // declaring cancel button
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        // adding buttons to the sheet
+        sheet.addAction(camera)
+        sheet.addAction(library)
+        sheet.addAction(cancel)
+        
+        // present action sheet to the user finally
+        self.present(sheet, animated: true, completion: nil)
+        
+    }
+    
 
     
 
