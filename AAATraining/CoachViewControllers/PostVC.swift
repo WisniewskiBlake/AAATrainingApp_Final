@@ -126,6 +126,11 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate & UINavigationCo
         dismiss(animated: true, completion: nil)
     }
     
+    // exec whenever the screen has been tapped
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        postTextView.resignFirstResponder()
+    }
+    
 
     
 
