@@ -101,6 +101,59 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         avaImageView.clipsToBounds = true
    }
     
+    // this function launches Action Sheet for the photos
+   func showActionSheet() {
+        // declaring action sheet
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // declaring camera button
+        let camera = UIAlertAction(title: "Camera", style: .default) { (action) in
+            
+            // if camera available on device, than show
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                self.showPicker(with: .camera)
+            }
+        }
+        // declaring library button
+        let library = UIAlertAction(title: "Photo Library", style: .default) { (action) in
+            
+            // checking availability of photo library
+            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+                self.showPicker(with: .photoLibrary)
+            }
+        }
+        // declaring cancel button
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        // declaring delete button
+        let delete = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+            
+            // deleting profile picture (ava), by returning placeholder
+            if self.imageViewTapped == "ava" {
+                self.avaImageView.image = UIImage(named: "user.png")
+                self.isAva = false
+                self.uploadImage(from: self.avaImageView)
+            } else if self.imageViewTapped == "cover" {
+                self.coverImageView.image = UIImage(named: "HomeCover.jpg")
+                self.isCover = false
+                self.uploadImage(from: self.coverImageView)
+            }
+        }
+        // manipulating appearance of delete button for each scenarios
+        if imageViewTapped == "ava" && isAva == false && imageViewTapped != "cover" {
+            delete.isEnabled = false
+        }
+        if imageViewTapped == "cover" && isCover == false && imageViewTapped != "ava" {
+            delete.isEnabled = false
+        }
+        // adding buttons to the sheet
+        sheet.addAction(camera)
+        sheet.addAction(library)
+        sheet.addAction(cancel)
+        sheet.addAction(delete)
+        // present action sheet to the user finally
+        self.present(sheet, animated: true, completion: nil)
+   }
+    
     
     
     
