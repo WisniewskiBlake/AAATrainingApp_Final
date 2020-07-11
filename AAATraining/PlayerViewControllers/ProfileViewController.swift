@@ -267,11 +267,16 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
         // save method of accessing ID of current user
         guard let id = currentUser?["id"] else {
             return
+            
+            
+            
+
         }
         // STEP 1. Declare URL, Request and Params
         // url we gonna access (API)
         //let url = URL(string: "http://localhost/fb/uploadImage.php")!
         let url = URL(string: "http://192.168.1.17/fb/uploadImage.php")!
+        
         // declaring reqeust with further configs
         var request = URLRequest(url: url)
         // POST - safest method of passing data to the server

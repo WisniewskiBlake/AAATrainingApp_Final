@@ -180,8 +180,8 @@ class RegisterVC: UIViewController {
         // STEP 1. Declaring URL of the request; declaring the body to the URL; declaring request with the safest method - POST, that no one can grab our info.
         
         
-        let url = URL(string: "http://localhost/fb/register.php")!
-        //let url = URL(string: "http://192.168.1.17/fb/register.php")!
+        //let url = URL(string: "http://localhost/fb/register.php")!
+        let url = URL(string: "http://192.168.1.17/fb/register.php")!
         
         
         let body = "email=\(emailTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&firstName=\(firstNameTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&lastName=\(lastNameTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&password=\(passwordTextField.text!)&birthday=\(datePicker.date)&height=\(heightTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines))&weight=\(weightTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines))&position=\(positionTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&number=\(numberTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines))&ava=\("http://localhost/fb/ava/user.png")&cover=\("http://localhost/fb/cover/HomeCover.jpg")&accountType=\("1")"
