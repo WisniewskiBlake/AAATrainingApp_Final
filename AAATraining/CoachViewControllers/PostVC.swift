@@ -21,6 +21,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     
     // code obj
     var isPictureSelected = false
+    var isVideoSelected = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,15 +86,20 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
         // access / convert image to Data for sending to the server
         var imageData = Data()
         
-        
+        //NEED TO DECIDE IF
         
         // if picture has been selected, compress the picture before sending to the server
         if isPictureSelected {
             imageData = pictureImageView.image!.jpegData(compressionQuality: 0.5)!
+            // building the full body along with the string, text, file parameters
+            request.httpBody = Helper().body(with: params, filename: "\(NSUUID().uuidString).jpg", filePathKey: "file", imageDataKey: imageData, boundary: boundary) as Data
+        } else if isVideoSelected {
+            imageData = videoURL!.dataRepresentation
+            // building the full body along with the string, text, file parameters
+            request.httpBody = Helper().body(with: params, filename: "\(NSUUID().uuidString).MOV", filePathKey: "file", imageDataKey: imageData, boundary: boundary) as Data
         }
         
-        // building the full body along with the string, text, file parameters
-        request.httpBody = Helper().body(with: params, filename: "\(NSUUID().uuidString).jpg", filePathKey: "file", imageDataKey: imageData, boundary: boundary) as Data
+        
         
         // run the session
         URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -224,7 +230,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
             if mediaType  == "public.image" {
                 // accessing selected image from its variable
                 let image = info[UIImagePickerController.InfoKey(rawValue: convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage))] as? UIImage
-
+                print(image!)
                 // assigning selected image to pictureImageView
                 pictureImageView.image = image
 
@@ -245,6 +251,9 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
                     let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(value: 0, timescale: 1), actualTime: nil)
                     let thumbnail = UIImage(cgImage: cgImage)
                     pictureImageView.image = thumbnail
+                    
+                    isVideoSelected = true
+                    
                 } catch let error {
                     print("*** Error generating thumbnail: \(error.localizedDescription)")
                 }
