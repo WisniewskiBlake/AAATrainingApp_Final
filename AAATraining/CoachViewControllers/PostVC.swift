@@ -85,6 +85,8 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
         // access / convert image to Data for sending to the server
         var imageData = Data()
         
+        
+        
         // if picture has been selected, compress the picture before sending to the server
         if isPictureSelected {
             imageData = pictureImageView.image!.jpegData(compressionQuality: 0.5)!
