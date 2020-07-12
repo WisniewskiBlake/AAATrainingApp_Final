@@ -42,12 +42,37 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // dynamic cell height
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 200
+        
         // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadUser), name: NSNotification.Name(rawValue: "updateStats"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(loadUser), name: NSNotification.Name(rawValue: "updateUser"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(loadNewPosts), name: NSNotification.Name(rawValue: "uploadPost"), object: nil)
 
         configure_avaImageView()
         loadUser()
+        loadPosts(offset: skip, limit: limit)
         
+    }
+    
+    // pre-load func
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // hide navigation bar on Home Pagex
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        
+    }
+    
+    // exec-d when new post is published
+    @objc func loadNewPosts() {
+        
+        // skipping 0 posts, as we want to load the entire feed. And we are extending Limit value based on the previous loaded posts.
+        loadPosts(offset: 0, limit: skip + 1)
     }
     
     // loads all user related information to be shown in the header
@@ -467,17 +492,276 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return posts.count
     }
     
+    // heights of the cells
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+            return UITableView.automaticDimension
+        
+    }
+    
+    // cell config
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        
+        
+        
+            // accessing the value (e.g. url) under the key 'picture' for every single element of the array (indexPath.row)
+            let pictureURL = posts[indexPath.row]!["picture"] as! String
+            
+            // no picture in the post
+            if pictureURL.isEmpty {
+                
+                
+                // accessing the cell from main.storyboard
+                let cell = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
+                
+                
+                // fullname logic
+                let firstName = posts[indexPath.row]!["firstName"] as! String
+                let lastName = posts[indexPath.row]!["lastName"] as! String
+                cell.fullnameLabel.text = firstName.capitalized + " " + lastName.capitalized
+                
+                
+                // date logic
+                let dateString = posts[indexPath.row]!["date_created"] as! String
+                
+                // taking the date received from the server and putting it in the following format to be recognized as being Date()
+                let formatterGet = DateFormatter()
+                formatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                let date = formatterGet.date(from: dateString)!
+                
+                // we are writing a new readable format and putting Date() into this format and converting it to the string to be shown to the user
+                let formatterShow = DateFormatter()
+                formatterShow.dateFormat = "MMMM dd yyyy - HH:mm"
+                cell.dateLabel.text = formatterShow.string(from: date)
+                
+                
+                // text logic
+                let text = posts[indexPath.row]!["text"] as! String
+                cell.postTextLabel.text = text
+                
+                
+                // avas logic
+                let avaString = posts[indexPath.row]!["ava"] as! String
+                let avaURL = URL(string: avaString)!
+                
+                // if there are still avas to be loaded
+                if posts.count != avas.count {
+                    
+                    URLSession(configuration: .default).dataTask(with: avaURL) { (data, response, error) in
+                        
+                        // failed downloading - assign placeholder
+                        if error != nil {
+                            if let image = UIImage(named: "user.png") {
+                                
+                                self.avas.append(image)
+                                
+                                DispatchQueue.main.async {
+                                    cell.avaImageView.image = image
+                                }
+                                
+                            }
+                            
+                        }
+                        
+                        // downloaded
+                        if let image = UIImage(data: data!) {
+                            
+                            self.avas.append(image)
+                            
+                            DispatchQueue.main.async {
+                                cell.avaImageView.image = image
+                            }
+                        }
+                        
+                    }.resume()
+                    
+                // cached ava
+                } else {
+                    
+                    DispatchQueue.main.async {
+                        cell.avaImageView.image = self.avas[indexPath.row]
+                    }
+                }
+                
+                
+                // picture logic
+                pictures.append(UIImage())
+                
+                // get the index of the cell in order to get the certain post's id
+                cell.numberCompleted.tag = indexPath.row
+                cell.optionsButton.tag = indexPath.row
+                
+                
+//                // manipulating the appearance of the button based is the post has been liken or not
+//                DispatchQueue.main.async {
+//                    if self.liked[indexPath.row] == 1 {
+//                        cell.numberCompleted.setImage(UIImage(named: "like.png"), for: .normal)
+//                        cell.numberCompleted.tintColor = self.likeColor
+//                    } else {
+//                        cell.numberCompleted.setImage(UIImage(named: "unlike.png"), for: .normal)
+//                        cell.numberCompleted.tintColor = UIColor.darkGray
+//                    }
+//                }
+                
+                
+                return cell
+                
+                
+            // picture in the post
+            } else {
+                
+                
+                // accessing the cell from main.storyboard
+                let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
+                
+                
+                // fullname logic
+                let firstName = posts[indexPath.row]!["firstName"] as! String
+                let lastName = posts[indexPath.row]!["lastName"] as! String
+                cell.fullnameLabel.text = firstName.capitalized + " " + lastName.capitalized
+                
+                
+                // date logic
+                let dateString = posts[indexPath.row]!["date_created"] as! String
+                
+                // taking the date received from the server and putting it in the following format to be recognized as being Date()
+                let formatterGet = DateFormatter()
+                formatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                let date = formatterGet.date(from: dateString)!
+                
+                // we are writing a new readable format and putting Date() into this format and converting it to the string to be shown to the user
+                let formatterShow = DateFormatter()
+                formatterShow.dateFormat = "MMMM dd yyyy - HH:mm"
+                cell.dateLabel.text = formatterShow.string(from: date)
+                
+                
+                // text logic
+                let text = posts[indexPath.row]!["text"] as! String
+                cell.postTextLabel.text = text
+                
+                
+                // avas logic
+                let avaString = posts[indexPath.row]!["ava"] as! String
+                let avaURL = URL(string: avaString)!
+                
+                // if there are still avas to be loaded
+                if posts.count != avas.count {
+                    
+                    URLSession(configuration: .default).dataTask(with: avaURL) { (data, response, error) in
+                        
+                        // failed downloading - assign placeholder
+                        if error != nil {
+                            if let image = UIImage(named: "user.png") {
+                                
+                                self.avas.append(image)
+                                
+                                DispatchQueue.main.async {
+                                    cell.avaImageView.image = image
+                                }
+                                
+                            }
 
+                        }
+                        
+                        // downloaded
+                        if let image = UIImage(data: data!) {
+                            
+                            self.avas.append(image)
+                            
+                            DispatchQueue.main.async {
+                                cell.avaImageView.image = image
+                            }
+                        }
+                        
+                        }.resume()
+                    
+                    // cached ava
+                } else {
+                    
+                    DispatchQueue.main.async {
+                        cell.avaImageView.image = self.avas[indexPath.row]
+                    }
+                }
+                
+                
+                // pictures logic
+                let pictureString = posts[indexPath.row]!["picture"] as! String
+                let pictureURL = URL(string: pictureString)!
+                
+                // if there are still pictures to be loaded
+                if posts.count != pictures.count {
+                    
+                    URLSession(configuration: .default).dataTask(with: pictureURL) { (data, response, error) in
+                        
+                        // failed downloading - assign placeholder
+                        if error != nil {
+                            if let image = UIImage(named: "user.png") {
+                                
+                                self.pictures.append(image)
+                                
+                                DispatchQueue.main.async {
+                                    cell.pictureImageView.image = image
+                                }
+                                
+                            }
+                            
+                        }
+                        
+                        // downloaded
+                        if let image = UIImage(data: data!) {
+                            
+                            self.pictures.append(image)
+                            
+                            DispatchQueue.main.async {
+                                cell.pictureImageView.image = image
+                            }
+                        }
+                        
+                        }.resume()
+                    
+                // cached picture
+                } else {
+                    
+                    DispatchQueue.main.async {
+                        cell.pictureImageView.image = self.pictures[indexPath.row]
+                    }
+                }
+                
+                
+                // get the index of the cell in order to get the certain post's id
+                cell.likeButton.tag = indexPath.row
+                cell.commentsButton.tag = indexPath.row
+                cell.optionsButton.tag = indexPath.row
+                
+                
+                // manipulating the appearance of the button based is the post has been liken or not
+                DispatchQueue.main.async {
+                    if self.liked[indexPath.row] == 1 {
+                        cell.likeButton.setImage(UIImage(named: "like.png"), for: .normal)
+                        cell.likeButton.tintColor = self.likeColor
+                    } else {
+                        cell.likeButton.setImage(UIImage(named: "unlike.png"), for: .normal)
+                        cell.likeButton.tintColor = UIColor.darkGray
+                    }
+                }
+                
+                
+                return cell
+                
+            }
+        
+        }
 
-}
+    }
 
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
