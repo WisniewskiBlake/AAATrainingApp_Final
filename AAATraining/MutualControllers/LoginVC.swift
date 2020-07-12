@@ -244,8 +244,8 @@ class LoginVC: UIViewController {
         func loginRequest() {
             
             // STEP 1. Declaring URL to be sent request to; declaring the body to be appended to URL (all this managed via request); declaring request to be executed
-//            let url = URL(string: "http://192.168.1.17/fb/login.php")!
-            let url = URL(string: "http://localhost/fb/login.php")!
+            let url = URL(string: "http://192.168.1.17/fb/login.php")!
+            //let url = URL(string: "http://localhost/fb/login.php")!
             let body = "email=\(emailTextField.text!)&password=\(passwordTextField.text!)"
             var request = URLRequest(url: url)
             request.httpBody = body.data(using: .utf8)
