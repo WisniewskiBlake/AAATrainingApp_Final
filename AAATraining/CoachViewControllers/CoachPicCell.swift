@@ -22,7 +22,10 @@ class CoachPicCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        // rounded corners
+       avaImageView.layer.cornerRadius = avaImageView.frame.width / 2
+       avaImageView.clipsToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
