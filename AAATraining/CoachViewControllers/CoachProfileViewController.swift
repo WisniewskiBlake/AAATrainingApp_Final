@@ -52,7 +52,6 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     
     // loads all user related information to be shown in the header
     @objc func loadUser() {
-       
    
         guard let firstName = currentUser?["firstName"], let lastName = currentUser?["lastName"], let avaPath = currentUser?["ava"], let coverPath = currentUser?["cover"] else {
                
@@ -85,6 +84,173 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                currentUser_ava = self.avaImageView.image
                
            }
+    }
+    
+    // loading posts from the server via@objc  PHP protocol
+    func loadPosts(offset: Int, limit: Int) {
+        
+        isLoading = true
+        
+        // accessing id of the user : safe mode
+        guard let id = currentUser?["id"] else {
+            return
+        }
+        
+        // prepare request
+        let url = URL(string: "http://localhost/fb/selectPosts.php")!
+        let body = "id=\(id)&offset=\(offset)&limit=\(limit)"
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = body.data(using: .utf8)
+        
+        // send request
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            DispatchQueue.main.async {
+                
+                // error occured
+                if error != nil {
+                    Helper().showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
+                    self.isLoading = false
+                    return
+                }
+                
+                do {
+                    // access data - safe mode
+                    guard let data = data else {
+                        Helper().showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
+                        self.isLoading = false
+                        return
+                    }
+                    
+                    // converting data to JSON
+                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
+                    
+                    // accessing json data - safe mode
+                    guard let posts = json?["posts"] as? [NSDictionary] else {
+                        self.isLoading = false
+                        return
+                    }
+                    
+                    // assigning all successfully loaded posts to our Class Var - posts (after it got loaded successfully)
+                    self.posts = posts
+                    
+                    // we are skipping already loaded numb of posts for the next load - pagination
+                    self.skip = posts.count
+                    
+                    
+                    // clean up likes for the refetching
+                    self.liked.removeAll(keepingCapacity: false)
+                    
+                    
+                    // logic of tracking liked posts
+                    for post in posts {
+                        if post["liked"] is NSNull {
+                            self.liked.append(Int())
+                        } else {
+                            self.liked.append(1)
+                        }
+                    }
+                    
+                    
+                    // reloading tableView to have an affect - show posts
+                    self.tableView.reloadData()
+                    
+                    self.isLoading = false
+                    
+                } catch {
+                    Helper().showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
+                    self.isLoading = false
+                    return
+                }
+                
+            }
+        }.resume()
+        
+    }
+    
+    // loading more posts from the server via PHP protocol
+    func loadMore(offset: Int, limit: Int) {
+        
+        isLoading = true
+        
+        // accessing id of the user : safe mode
+        guard let id = currentUser?["id"] else {
+            return
+        }
+        
+        // prepare request
+        let url = URL(string: "http://localhost/fb/selectPosts.php")!
+        let body = "id=\(id)&offset=\(offset)&limit=\(limit)"
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = body.data(using: .utf8)
+        
+        // send request
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            DispatchQueue.main.async {
+                
+                // error occured
+                if error != nil {
+                    self.isLoading = false
+                    Helper().showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
+                    return
+                }
+                
+                do {
+                    // access data - safe mode
+                    guard let data = data else {
+                        self.isLoading = false
+                        return
+                    }
+                    
+                    // converting data to JSON
+                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
+                    
+                    // accessing json data - safe mode
+                    guard let posts = json?["posts"] as? [NSDictionary] else {
+                        self.isLoading = false
+                        return
+                    }
+                    
+                    // assigning all successfully loaded posts to our Class Var - posts (after it got loaded successfully)
+                    self.posts.append(contentsOf: posts)
+                    
+                    // we are skipping already loaded numb of posts for the next load - pagination
+                    self.skip += posts.count
+                    
+                    
+                    // logic of tracking liked posts
+                    for post in posts {
+                        if post["liked"] is NSNull {
+                            self.liked.append(Int())
+                        } else {
+                            self.liked.append(1)
+                        }
+                    }
+                    
+                    
+                    // reloading tableView to have an affect - show posts
+                    self.tableView.beginUpdates()
+                    
+                    for i in 0 ..< posts.count {
+                        let lastSectionIndex = self.tableView.numberOfSections - 1
+                        let lastRowIndex = self.tableView.numberOfRows(inSection: lastSectionIndex)
+                        let pathToLastRow = IndexPath(row: lastRowIndex + i, section: lastSectionIndex)
+                        self.tableView.insertRows(at: [pathToLastRow], with: .fade)
+                    }
+                    
+                    self.tableView.endUpdates()
+                    
+                    self.isLoading = false
+                    
+                } catch {
+                    self.isLoading = false
+                    return
+                }
+                
+            }
+        }.resume()
+        
     }
     
     // sends request to the server to upload the Image (ava/cover)
