@@ -1928,7 +1928,7 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoPicCell" rowHeight="170" id="2gM-1l-yEM" customClass="NoPicCell" customModule="AAATraining" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoPicCell" rowHeight="170" id="2gM-1l-yEM" customClass="CoachNoPicCell" customModule="AAATraining" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="433" width="375" height="170"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2gM-1l-yEM" id="m6w-ac-ZIE">
@@ -2026,14 +2026,14 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="avaImageView" destination="rI8-YU-824" id="5dX-aN-ffQ"/>
+                                    <outlet property="avaImageView" destination="rI8-YU-824" id="Iib-ng-JhI"/>
                                     <outlet property="dateLabel" destination="8ko-PQ-5yU" id="lBp-Ef-Om4"/>
-                                    <outlet property="fullnameLabel" destination="yAj-lR-kTs" id="fcY-0R-eAc"/>
+                                    <outlet property="fullnameLabel" destination="yAj-lR-kTs" id="E2M-6G-1WI"/>
                                     <outlet property="optionsButton" destination="17c-sy-3Tp" id="ceh-4G-5Oe"/>
                                     <outlet property="postTextLabel" destination="63r-H9-JwU" id="1p0-Dx-zSJ"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PicCell" rowHeight="536" id="FRN-AY-ddR" customClass="PicCell" customModule="AAATraining" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PicCell" rowHeight="536" id="FRN-AY-ddR" customClass="CoachPicCell" customModule="AAATraining" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="603" width="375" height="536"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FRN-AY-ddR" id="ExZ-sK-irr">
@@ -2074,16 +2074,16 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Here will be text of the media post." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pSA-St-gZC">
-                                            <rect key="frame" x="16" y="75" width="343" height="26.5"/>
+                                            <rect key="frame" x="16" y="75" width="343" height="96"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yDP-zM-VHB">
-                                            <rect key="frame" x="16" y="111.5" width="343" height="374"/>
+                                            <rect key="frame" x="16" y="178.5" width="343" height="307"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="374" id="Yjj-qJ-zUe"/>
-                                                <constraint firstAttribute="width" constant="374" id="s0w-EJ-Abu"/>
+                                                <constraint firstAttribute="height" constant="307" id="Yjj-qJ-zUe"/>
+                                                <constraint firstAttribute="width" constant="343" id="s0w-EJ-Abu"/>
                                             </constraints>
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cwa-Ao-ha3">
@@ -2119,7 +2119,7 @@
                                         <constraint firstAttribute="bottom" secondItem="Cwa-Ao-ha3" secondAttribute="bottom" constant="5" id="KRG-ta-hhq"/>
                                         <constraint firstAttribute="bottom" secondItem="yDP-zM-VHB" secondAttribute="bottom" constant="50.666666666666629" id="LXJ-q2-aPs"/>
                                         <constraint firstItem="Aey-ZE-GWh" firstAttribute="top" secondItem="ExZ-sK-irr" secondAttribute="topMargin" constant="3" id="LhV-XK-dul"/>
-                                        <constraint firstItem="yDP-zM-VHB" firstAttribute="top" secondItem="pSA-St-gZC" secondAttribute="bottom" constant="10" id="Mx6-ar-qme"/>
+                                        <constraint firstItem="yDP-zM-VHB" firstAttribute="top" secondItem="pSA-St-gZC" secondAttribute="bottom" constant="7.5" id="Mx6-ar-qme"/>
                                         <constraint firstItem="yDP-zM-VHB" firstAttribute="leading" secondItem="ExZ-sK-irr" secondAttribute="leadingMargin" id="U4m-gw-fEB"/>
                                         <constraint firstItem="kSj-Fb-xmD" firstAttribute="leading" secondItem="ExZ-sK-irr" secondAttribute="leading" constant="16" id="UBy-R0-7gL"/>
                                         <constraint firstAttribute="trailing" secondItem="NF3-8P-uUr" secondAttribute="trailing" id="bAy-R3-zH7"/>
@@ -2141,11 +2141,13 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="avaImageView" destination="Sx7-6b-Y7F" id="FWt-jU-gkZ"/>
-                                    <outlet property="dateLabel" destination="KMD-84-MIi" id="toS-tF-Md1"/>
-                                    <outlet property="fullnameLabel" destination="Aey-ZE-GWh" id="qMP-gH-iZh"/>
-                                    <outlet property="pictureImageView" destination="yDP-zM-VHB" id="9Td-w0-Vdf"/>
-                                    <outlet property="postTextLabel" destination="pSA-St-gZC" id="mtE-XB-I5p"/>
+                                    <outlet property="avaImageView" destination="Sx7-6b-Y7F" id="5tO-u5-yQB"/>
+                                    <outlet property="dateLabel" destination="KMD-84-MIi" id="gOx-3u-UbL"/>
+                                    <outlet property="fullnameLabel" destination="Aey-ZE-GWh" id="TIV-kj-gZa"/>
+                                    <outlet property="numberComplete" destination="kSj-Fb-xmD" id="6wz-Er-edg"/>
+                                    <outlet property="optionsButton" destination="Cwa-Ao-ha3" id="bxf-eS-J2g"/>
+                                    <outlet property="pictureImageView" destination="yDP-zM-VHB" id="jqH-vt-1Yr"/>
+                                    <outlet property="postTextLabel" destination="pSA-St-gZC" id="D3j-DZ-fjV"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

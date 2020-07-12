@@ -9,6 +9,16 @@
 import UIKit
 
 class CoachPicCell: UITableViewCell {
+    
+    @IBOutlet weak var avaImageView: UIImageView!
+    @IBOutlet weak var fullnameLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var postTextLabel: UILabel!
+    @IBOutlet weak var pictureImageView: UIImageView!
+    
+    @IBOutlet weak var numberComplete: UILabel!
+    @IBOutlet weak var optionsButton: UIButton!
+    
 
     override func awakeFromNib() {
         super.awakeFromNib()
