@@ -1928,59 +1928,11 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="friends" rowHeight="200" id="tEg-rQ-Nk3">
-                                <rect key="frame" x="0.0" y="433" width="375" height="200"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tEg-rQ-Nk3" id="11c-8r-19Z">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gnV-g5-ksq">
-                                            <rect key="frame" x="311" y="13" width="48" height="30"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
-                                            <state key="normal" title="See All"/>
-                                        </button>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SM5-FG-RLI">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="6"/>
-                                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="6" id="anD-pP-LFW"/>
-                                            </constraints>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sGC-dI-fmr">
-                                            <rect key="frame" x="0.0" y="197" width="375" height="3"/>
-                                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="3" id="HRj-Pd-bFJ"/>
-                                            </constraints>
-                                        </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Friends" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3m-CW-2z9">
-                                            <rect key="frame" x="16" y="19" width="52" height="18"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
-                                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="gnV-g5-ksq" secondAttribute="trailing" constant="16" id="5n9-XA-DSc"/>
-                                        <constraint firstItem="h3m-CW-2z9" firstAttribute="leading" secondItem="11c-8r-19Z" secondAttribute="leadingMargin" id="LVW-uR-AJP"/>
-                                        <constraint firstAttribute="trailing" secondItem="sGC-dI-fmr" secondAttribute="trailing" id="OzF-T1-SvA"/>
-                                        <constraint firstItem="gnV-g5-ksq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="11c-8r-19Z" secondAttribute="leading" constant="20" symbolic="YES" id="PC3-qz-ZkG"/>
-                                        <constraint firstItem="h3m-CW-2z9" firstAttribute="centerY" secondItem="gnV-g5-ksq" secondAttribute="centerY" id="VbQ-0T-NpR"/>
-                                        <constraint firstAttribute="bottom" secondItem="sGC-dI-fmr" secondAttribute="bottom" id="XsX-9S-c2g"/>
-                                        <constraint firstItem="SM5-FG-RLI" firstAttribute="top" secondItem="11c-8r-19Z" secondAttribute="top" id="dvE-a2-dun"/>
-                                        <constraint firstAttribute="trailing" secondItem="SM5-FG-RLI" secondAttribute="trailing" id="kCG-zt-twY"/>
-                                        <constraint firstItem="sGC-dI-fmr" firstAttribute="leading" secondItem="11c-8r-19Z" secondAttribute="leading" id="lNy-ap-anH"/>
-                                        <constraint firstItem="gnV-g5-ksq" firstAttribute="top" secondItem="11c-8r-19Z" secondAttribute="top" constant="13" id="oiI-LZ-5Ch"/>
-                                        <constraint firstItem="SM5-FG-RLI" firstAttribute="leading" secondItem="11c-8r-19Z" secondAttribute="leading" id="vgB-Mu-rGQ"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoPicCell" rowHeight="153" id="2gM-1l-yEM" customClass="NoPicCell" customModule="AAATraining" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="633" width="375" height="153"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoPicCell" rowHeight="170" id="2gM-1l-yEM" customClass="NoPicCell" customModule="AAATraining" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="433" width="375" height="170"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2gM-1l-yEM" id="m6w-ac-ZIE">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="153"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="170"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user.png" translatesAutoresizingMaskIntoConstraints="NO" id="rI8-YU-824">
@@ -2003,32 +1955,11 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Here will be text of the post." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="63r-H9-JwU">
-                                            <rect key="frame" x="16" y="75" width="343" height="26"/>
+                                            <rect key="frame" x="16" y="75" width="343" height="43"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2sz-7Q-XNX">
-                                            <rect key="frame" x="20" y="14" width="58" height="128"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
-                                            <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <state key="normal" title=" Like" image="unlike">
-                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </state>
-                                        </button>
-                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sTw-Vj-rCe">
-                                            <rect key="frame" x="97" y="14" width="97" height="128"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
-                                            <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <state key="normal" title=" Comment" image="comments">
-                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </state>
-                                        </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="17c-sy-3Tp">
-                                            <rect key="frame" x="231" y="16" width="128" height="128"/>
-                                            <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <state key="normal" backgroundImage="options"/>
-                                        </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oka-bc-qz6">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="3"/>
                                             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -2037,12 +1968,25 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xfZ-vY-Xul">
-                                            <rect key="frame" x="0.0" y="150.5" width="375" height="3"/>
+                                            <rect key="frame" x="0.0" y="167.5" width="375" height="3"/>
                                             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="3" id="70E-Za-HE7"/>
                                             </constraints>
                                         </view>
+                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2sz-7Q-XNX">
+                                            <rect key="frame" x="16" y="126" width="50" height="33"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
+                                            <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <state key="normal" title=" Like" image="unlike">
+                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="17c-sy-3Tp">
+                                            <rect key="frame" x="312" y="126" width="47" height="33"/>
+                                            <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <state key="normal" backgroundImage="options"/>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="xfZ-vY-Xul" secondAttribute="trailing" id="06X-WS-2pF"/>
@@ -2059,22 +2003,18 @@
                                         <constraint firstItem="8ko-PQ-5yU" firstAttribute="top" secondItem="yAj-lR-kTs" secondAttribute="bottom" constant="1" id="bop-0g-LCy"/>
                                         <constraint firstItem="yAj-lR-kTs" firstAttribute="leading" secondItem="rI8-YU-824" secondAttribute="trailing" constant="8" id="cpJ-lC-o4M"/>
                                         <constraint firstItem="yAj-lR-kTs" firstAttribute="top" secondItem="m6w-ac-ZIE" secondAttribute="topMargin" constant="8" id="hhs-AD-xF0"/>
-                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sTw-Vj-rCe" secondAttribute="trailing" constant="20" symbolic="YES" id="ilL-Dz-9ZW"/>
                                         <constraint firstItem="rI8-YU-824" firstAttribute="leading" secondItem="m6w-ac-ZIE" secondAttribute="leadingMargin" id="mMc-fF-fSs"/>
                                         <constraint firstItem="2sz-7Q-XNX" firstAttribute="leading" secondItem="m6w-ac-ZIE" secondAttribute="leadingMargin" id="oF9-Ad-twW"/>
                                         <constraint firstItem="xfZ-vY-Xul" firstAttribute="leading" secondItem="m6w-ac-ZIE" secondAttribute="leading" id="sYE-SQ-fik"/>
                                         <constraint firstItem="2sz-7Q-XNX" firstAttribute="bottom" secondItem="m6w-ac-ZIE" secondAttribute="bottomMargin" id="ull-q2-tlT"/>
                                         <constraint firstItem="oka-bc-qz6" firstAttribute="leading" secondItem="m6w-ac-ZIE" secondAttribute="leading" id="vLG-vi-Cgk"/>
                                         <constraint firstItem="63r-H9-JwU" firstAttribute="leading" secondItem="m6w-ac-ZIE" secondAttribute="leadingMargin" id="vwh-m1-9vG"/>
-                                        <constraint firstItem="sTw-Vj-rCe" firstAttribute="bottom" secondItem="m6w-ac-ZIE" secondAttribute="bottomMargin" id="xP8-UA-cBt"/>
                                         <constraint firstItem="rI8-YU-824" firstAttribute="top" secondItem="m6w-ac-ZIE" secondAttribute="topMargin" constant="5" id="xhH-U8-30m"/>
-                                        <constraint firstItem="sTw-Vj-rCe" firstAttribute="leading" secondItem="2sz-7Q-XNX" secondAttribute="trailing" constant="19" id="yDI-oh-HHt"/>
                                         <constraint firstItem="oka-bc-qz6" firstAttribute="top" secondItem="m6w-ac-ZIE" secondAttribute="top" id="zSu-7q-N2z"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="avaImageView" destination="rI8-YU-824" id="5dX-aN-ffQ"/>
-                                    <outlet property="commentsButton" destination="sTw-Vj-rCe" id="CUu-Yl-B6o"/>
                                     <outlet property="dateLabel" destination="8ko-PQ-5yU" id="lBp-Ef-Om4"/>
                                     <outlet property="fullnameLabel" destination="yAj-lR-kTs" id="fcY-0R-eAc"/>
                                     <outlet property="likeButton" destination="2sz-7Q-XNX" id="4xN-0V-CUj"/>
@@ -2083,7 +2023,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PicCell" rowHeight="536" id="FRN-AY-ddR" customClass="PicCell" customModule="AAATraining" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="786" width="375" height="536"/>
+                                <rect key="frame" x="0.0" y="603" width="375" height="536"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FRN-AY-ddR" id="ExZ-sK-irr">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="536"/>
