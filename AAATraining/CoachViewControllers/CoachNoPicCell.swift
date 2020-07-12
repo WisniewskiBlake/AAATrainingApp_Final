@@ -10,6 +10,15 @@ import UIKit
 
 class CoachNoPicCell: UITableViewCell {
 
+    @IBOutlet weak var avaImageView: UIImageView!
+    @IBOutlet weak var fullnameLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var postTextLabel: UILabel!
+    @IBOutlet weak var numberCompleted: UILabel!
+    @IBOutlet weak var optionsButton: UIButton!
+    
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
