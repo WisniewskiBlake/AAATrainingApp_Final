@@ -1978,15 +1978,22 @@
                                             <rect key="frame" x="16" y="126" width="50" height="33"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
                                             <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <state key="normal" title=" Like" image="unlike">
+                                            <state key="normal" image="check">
                                                 <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </state>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="17c-sy-3Tp">
-                                            <rect key="frame" x="312" y="126" width="47" height="33"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="17c-sy-3Tp">
+                                            <rect key="frame" x="305" y="126" width="54" height="30"/>
                                             <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <state key="normal" backgroundImage="options"/>
+                                            <state key="normal" title="Options"/>
                                         </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Completed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3qF-wP-A4t">
+                                            <rect key="frame" x="74" y="126" width="94" height="33"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="xfZ-vY-Xul" secondAttribute="trailing" id="06X-WS-2pF"/>
@@ -1994,9 +2001,10 @@
                                         <constraint firstItem="yAj-lR-kTs" firstAttribute="trailing" secondItem="m6w-ac-ZIE" secondAttribute="trailingMargin" constant="-33" id="5Av-1L-pky"/>
                                         <constraint firstAttribute="trailing" secondItem="oka-bc-qz6" secondAttribute="trailing" id="6gz-K9-Ylv"/>
                                         <constraint firstAttribute="bottom" secondItem="xfZ-vY-Xul" secondAttribute="bottom" constant="-0.33333333333334281" id="6vr-Bj-eSu"/>
-                                        <constraint firstItem="17c-sy-3Tp" firstAttribute="top" secondItem="m6w-ac-ZIE" secondAttribute="topMargin" constant="5" id="CxH-BR-Ph4"/>
+                                        <constraint firstItem="17c-sy-3Tp" firstAttribute="top" secondItem="m6w-ac-ZIE" secondAttribute="topMargin" constant="115" id="CxH-BR-Ph4"/>
                                         <constraint firstItem="63r-H9-JwU" firstAttribute="top" secondItem="rI8-YU-824" secondAttribute="bottom" constant="9" id="DSu-j8-WQ6"/>
                                         <constraint firstItem="63r-H9-JwU" firstAttribute="trailing" secondItem="m6w-ac-ZIE" secondAttribute="trailingMargin" id="Fcs-D9-cn6"/>
+                                        <constraint firstItem="17c-sy-3Tp" firstAttribute="trailing" secondItem="m6w-ac-ZIE" secondAttribute="trailingMargin" id="JJL-nX-Qhz"/>
                                         <constraint firstItem="8ko-PQ-5yU" firstAttribute="leading" secondItem="rI8-YU-824" secondAttribute="trailing" constant="8" id="OMt-ZL-Oql"/>
                                         <constraint firstItem="8ko-PQ-5yU" firstAttribute="trailing" secondItem="m6w-ac-ZIE" secondAttribute="trailingMargin" id="RqM-qY-34q"/>
                                         <constraint firstItem="17c-sy-3Tp" firstAttribute="trailing" secondItem="m6w-ac-ZIE" secondAttribute="trailingMargin" id="WOs-ot-oN8"/>
@@ -2194,6 +2202,7 @@
         <image name="Post.png" width="150" height="150"/>
         <image name="aaaLogo1.png" width="619.5" height="374.25"/>
         <image name="aaahockeysilhouette.png" width="220" height="229"/>
+        <image name="check" width="128" height="128"/>
         <image name="comments" width="128" height="128"/>
         <image name="logoBackground.png" width="810" height="540"/>
         <image name="meijerBackground.jpg" width="2048" height="1536"/>
