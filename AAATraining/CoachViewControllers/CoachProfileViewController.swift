@@ -514,6 +514,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
             // accessing the value (e.g. url) under the key 'picture' for every single element of the array (indexPath.row)
             let pictureURL = posts[indexPath.row]!["picture"] as! String
+            let numOfLikes = posts[indexPath.row]!["numOfLikes"] as! String
             
             // no picture in the post
             if pictureURL.isEmpty {
@@ -527,7 +528,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 let firstName = posts[indexPath.row]!["firstName"] as! String
                 let lastName = posts[indexPath.row]!["lastName"] as! String
                 cell.fullnameLabel.text = firstName.capitalized + " " + lastName.capitalized
-                
+                cell.
                 
                 // date logic
                 let dateString = posts[indexPath.row]!["date_created"] as! String
@@ -603,12 +604,13 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
 //                // manipulating the appearance of the button based is the post has been liken or not
 //                DispatchQueue.main.async {
 //                    if self.liked[indexPath.row] == 1 {
-//                        cell.numberCompleted.setImage(UIImage(named: "like.png"), for: .normal)
-//                        cell.numberCompleted.tintColor = self.likeColor
-//                    } else {
-//                        cell.numberCompleted.setImage(UIImage(named: "unlike.png"), for: .normal)
-//                        cell.numberCompleted.tintColor = UIColor.darkGray
+//                        cell.numberCompleted.text =
+//                        //cell.numberCompleted.tintColor = self.likeColor
 //                    }
+////                        else {
+////                        cell.numberCompleted.setImage(UIImage(named: "unlike.png"), for: .normal)
+////                        cell.numberCompleted.tintColor = UIColor.darkGray
+////                    }
 //                }
                 
                 

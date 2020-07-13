@@ -18,6 +18,9 @@ class FeedVC: UITableViewController {
     var limit = 10
     var isLoading = false
     var liked = [Int]()
+    
+    // CHANGE THIS COLOR TO GREEN
+    let likeColor = UIColor(red: 28/255, green: 165/255, blue: 252/255, alpha: 1)
 
     override func viewDidLoad() {
         super.viewDidLoad()
