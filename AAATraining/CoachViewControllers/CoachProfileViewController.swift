@@ -29,6 +29,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     var limit = 10
     var isLoading = false
     var liked = [Int]()
+    //var numLiked = [Int]()
     
     // color obj
     let likeColor = UIColor(red: 28/255, green: 165/255, blue: 252/255, alpha: 1)
@@ -49,7 +50,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadUser), name: NSNotification.Name(rawValue: "updateStats"), object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(loadUser), name: NSNotification.Name(rawValue: "updateUser"), object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(loadUser), name: NSNotification.Name(rawValue: "updateUser"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadNewPosts), name: NSNotification.Name(rawValue: "uploadPost"), object: nil)
 
@@ -165,6 +166,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                     
                     // clean up likes for the refetching
                     self.liked.removeAll(keepingCapacity: false)
+                    // clean up likes for the refetching
+                    //self.numLiked.removeAll(keepingCapacity: false)
                     
                     
                     // logic of tracking liked posts
@@ -173,6 +176,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                             self.liked.append(Int())
                         } else {
                             self.liked.append(1)
+                            
                         }
                     }
                     
@@ -514,7 +518,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
             // accessing the value (e.g. url) under the key 'picture' for every single element of the array (indexPath.row)
             let pictureURL = posts[indexPath.row]!["picture"] as! String
-            let numOfLikes = posts[indexPath.row]!["numOfLikes"] as! String
+        
+            let numOfLikes = posts[indexPath.row]!["quantity"] as! String
             
             // no picture in the post
             if pictureURL.isEmpty {
@@ -528,7 +533,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 let firstName = posts[indexPath.row]!["firstName"] as! String
                 let lastName = posts[indexPath.row]!["lastName"] as! String
                 cell.fullnameLabel.text = firstName.capitalized + " " + lastName.capitalized
-                cell.
+                cell.numberCompleted.text = numOfLikes
                 
                 // date logic
                 let dateString = posts[indexPath.row]!["date_created"] as! String
@@ -629,7 +634,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 let firstName = posts[indexPath.row]!["firstName"] as! String
                 let lastName = posts[indexPath.row]!["lastName"] as! String
                 cell.fullnameLabel.text = firstName.capitalized + " " + lastName.capitalized
-                
+                cell.numberComplete.text = numOfLikes
                 
                 // date logic
                 let dateString = posts[indexPath.row]!["date_created"] as! String
