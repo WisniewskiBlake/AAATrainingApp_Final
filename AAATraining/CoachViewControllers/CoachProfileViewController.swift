@@ -512,7 +512,6 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
         
         
-        
             // accessing the value (e.g. url) under the key 'picture' for every single element of the array (indexPath.row)
             let pictureURL = posts[indexPath.row]!["picture"] as! String
             
