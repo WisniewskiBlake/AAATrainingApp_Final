@@ -772,8 +772,131 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         }
         
     }
-
+    
+    @IBAction func moreButton_clicked(_ sender: Any) {
+        // creating action sheet
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // creating buttons for action sheet
+        let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
+            
+            // access/instantiate loginViewController
+            let loginvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+            
+            // show loginViewController
+            self.present(loginvc, animated: false, completion: {
+                
+                // clear currentUser global var, after showing loginViewController - save as an empty user (blank NSMutableDictionary)
+                currentUser = NSMutableDictionary() as? Dictionary<String, Any>
+                UserDefaults.standard.set(currentUser, forKey: "currentUser")
+                UserDefaults.standard.synchronize()
+                
+            })
+            
+        })
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        // add buttons to action sheet
+        sheet.addAction(logout)
+        sheet.addAction(cancel)
+        
+        // show action sheet
+        present(sheet, animated: true, completion: nil)
     }
+    
+    
+    @IBAction func optionsButton_clicked(_ optionButton: UIButton) {
+        // accessing indexPath of the button / cell
+        let indexPathRow = optionButton.tag
+        
+        
+        // creating actionSheet
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // creating Delete button
+        let delete = UIAlertAction(title: "Delete Post", style: .destructive) { (delete) in
+            self.deletePost(_: indexPathRow)
+        }
+        
+        // creating Cancel button
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        // assigning buttons to the sheet
+        alert.addAction(delete)
+        alert.addAction(cancel)
+        
+        // showing actionSheet
+        present(alert, animated: true, completion: nil)
+    }
+    
+    // sends request to the server to delete the post
+    func deletePost(_ row: Int) {
+        
+        // accessing id of the post which is stored in the tapped cell
+        guard let id = posts[row]?["id"] as? Int else {
+            return
+        }
+        
+        // prepare request
+        let url = URL(string: "http://localhost/fb/deletePost.php")!
+        let body = "id=\(id)"
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = body.data(using: .utf8)
+        
+        
+        // clean up of the data stored in the background of our logic in order to keep everything synchronized
+        posts.remove(at: row)
+        avas.remove(at: row)
+        pictures.remove(at: row)
+        liked.remove(at: row)
+        
+        
+        // remove the cell itself from the tableView
+        let indexPath = IndexPath(row: row, section: 1)
+        tableView.beginUpdates()
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+        tableView.endUpdates()
+        
+        
+        // execute request
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            DispatchQueue.main.async {
+                
+                // error occured
+                if error != nil {
+                    Helper().showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
+                    return
+                }
+                
+                // receive data from the server
+                do {
+                    
+                    // safe mode of casting data
+                    guard let data = data else {
+                        Helper().showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
+                        return
+                    }
+                    
+                    // accessing json via data received
+                    let _ = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
+                    
+                    
+                // json error
+                } catch {
+                    Helper().showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
+                    return
+                }
+                
+            }
+        }.resume()
+        
+    }
+    
+    
+
+}
 
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
