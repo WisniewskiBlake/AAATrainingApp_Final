@@ -9,6 +9,15 @@
 import UIKit
 
 class FeedVC: UITableViewController {
+    
+    // posts obj
+    var posts = [NSDictionary?]()
+    var avas = [UIImage]()
+    var pictures = [UIImage]()
+    var skip = 0
+    var limit = 10
+    var isLoading = false
+    var liked = [Int]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
