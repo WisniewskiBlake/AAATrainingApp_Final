@@ -1054,15 +1054,15 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="bOM-tb-b1G" kind="relationship" relationship="viewControllers" id="Lq5-Rq-PUz"/>
                         <segue destination="N2S-73-j4q" kind="relationship" relationship="viewControllers" id="ROj-Zk-gY9"/>
+                        <segue destination="bOM-tb-b1G" kind="relationship" relationship="viewControllers" id="Lq5-Rq-PUz"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="auK-d3-pyx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="844" y="1127"/>
         </scene>
-        <!--Item-->
+        <!--Profile View Controller-->
         <scene sceneID="cRi-Ak-vhH">
             <objects>
                 <tableViewController storyboardIdentifier="ProfileViewController" id="bOM-tb-b1G" customClass="ProfileViewController" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
@@ -1548,7 +1548,9 @@
                             <outlet property="delegate" destination="bOM-tb-b1G" id="Uew-X0-C90"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Item" id="cUM-MC-d4z"/>
+                    <tabBarItem key="tabBarItem" title="" image="homeIcon" selectedImage="homeIcon" id="cUM-MC-d4z">
+                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-10"/>
+                    </tabBarItem>
                     <connections>
                         <outlet property="avaImageView" destination="crE-Wq-xST" id="VbJ-pB-Hx8"/>
                         <outlet property="coverImageView" destination="epD-jS-ZUy" id="2oY-kn-hBJ"/>
@@ -1840,7 +1842,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pty-2B-NHd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1654" y="-1609"/>
+            <point key="canvasLocation" x="3169" y="-914"/>
         </scene>
         <!--Coach Profile View Controller-->
         <scene sceneID="XEa-YY-jvv">
@@ -2202,7 +2204,7 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="" image="homeIcon" id="8HM-oj-0Za">
-                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-9"/>
+                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-10"/>
                         <color key="badgeColor" red="0.14039075370000001" green="0.29558742049999998" blue="0.71822762490000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBarItem>
                     <connections>
@@ -2241,13 +2243,15 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HZs-8U-OUg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="844" y="-1608"/>
+            <point key="canvasLocation" x="2422" y="-914"/>
         </scene>
-        <!--Item-->
+        <!--Navigation Controller-->
         <scene sceneID="XEN-Pb-9bl">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="H7u-2R-9xg" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" image="searchIcon" selectedImage="searchIconSelected" id="biK-dr-7Zk"/>
+                    <tabBarItem key="tabBarItem" title="" image="searchIcon" selectedImage="searchIconSelected" id="biK-dr-7Zk">
+                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-10"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="32S-qw-6Z3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -2262,11 +2266,13 @@
             </objects>
             <point key="canvasLocation" x="-1367" y="-453"/>
         </scene>
-        <!--Item-->
+        <!--Navigation Controller-->
         <scene sceneID="lY7-Ve-eWM">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="N2S-73-j4q" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" image="searchIcon" selectedImage="searchIconSelected" id="SFE-kh-tE8"/>
+                    <tabBarItem key="tabBarItem" title="" image="searchIcon" selectedImage="searchIconSelected" id="SFE-kh-tE8">
+                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-10"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bZB-Te-kdR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
