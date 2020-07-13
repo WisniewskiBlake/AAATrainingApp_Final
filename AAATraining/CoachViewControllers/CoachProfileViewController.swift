@@ -860,7 +860,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
         
         // remove the cell itself from the tableView
-        let indexPath = IndexPath(row: row, section: 1)
+        let indexPath = IndexPath(row: row, section: 0)
         tableView.beginUpdates()
         tableView.deleteRows(at: [indexPath], with: .automatic)
         tableView.endUpdates()
