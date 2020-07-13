@@ -738,21 +738,20 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 
                 
                 // get the index of the cell in order to get the certain post's id
-                cell.likeButton.tag = indexPath.row
-                cell.commentsButton.tag = indexPath.row
+                cell.numberComplete.tag = indexPath.row
                 cell.optionsButton.tag = indexPath.row
                 
                 
-                // manipulating the appearance of the button based is the post has been liken or not
-                DispatchQueue.main.async {
-                    if self.liked[indexPath.row] == 1 {
-                        cell.likeButton.setImage(UIImage(named: "like.png"), for: .normal)
-                        cell.likeButton.tintColor = self.likeColor
-                    } else {
-                        cell.likeButton.setImage(UIImage(named: "unlike.png"), for: .normal)
-                        cell.likeButton.tintColor = UIColor.darkGray
-                    }
-                }
+//                // manipulating the appearance of the button based is the post has been liken or not
+//                DispatchQueue.main.async {
+//                    if self.liked[indexPath.row] == 1 {
+//                        cell.likeButton.setImage(UIImage(named: "like.png"), for: .normal)
+//                        cell.likeButton.tintColor = self.likeColor
+//                    } else {
+//                        cell.likeButton.setImage(UIImage(named: "unlike.png"), for: .normal)
+//                        cell.likeButton.tintColor = UIColor.darkGray
+//                    }
+//                }
                 
                 
                 return cell
@@ -760,6 +759,19 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             }
         
         }
+    
+    // executed always whenever tableView is scrolling
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        // load more posts when the scroll is about to reach the bottom AND currently is not loading (posts)
+        let a = tableView.contentOffset.y - tableView.contentSize.height + 60
+        let b = -tableView.frame.height
+        
+        if a > b && isLoading == false {
+            loadMore(offset: skip, limit: limit)
+        }
+        
+    }
 
     }
 

@@ -1928,7 +1928,7 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoPicCell" rowHeight="170" id="2gM-1l-yEM" customClass="CoachNoPicCell" customModule="AAATraining" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CoachNoPicCell" rowHeight="170" id="2gM-1l-yEM" customClass="CoachNoPicCell" customModule="AAATraining" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="433" width="375" height="170"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2gM-1l-yEM" id="m6w-ac-ZIE">
@@ -2034,7 +2034,7 @@
                                     <outlet property="postTextLabel" destination="63r-H9-JwU" id="0Wf-pk-Lgx"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PicCell" rowHeight="536" id="FRN-AY-ddR" customClass="CoachPicCell" customModule="AAATraining" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CoachPicCell" rowHeight="536" id="FRN-AY-ddR" customClass="CoachPicCell" customModule="AAATraining" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="603" width="375" height="536"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FRN-AY-ddR" id="ExZ-sK-irr">
@@ -2141,6 +2141,7 @@
                                         <constraint firstItem="pSA-St-gZC" firstAttribute="trailing" secondItem="ExZ-sK-irr" secondAttribute="trailingMargin" id="yv4-ZI-eCd"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <accessibility key="accessibilityConfiguration" identifier="CoachPicCell"/>
                                 <connections>
                                     <outlet property="avaImageView" destination="Sx7-6b-Y7F" id="5tO-u5-yQB"/>
                                     <outlet property="dateLabel" destination="KMD-84-MIi" id="gOx-3u-UbL"/>

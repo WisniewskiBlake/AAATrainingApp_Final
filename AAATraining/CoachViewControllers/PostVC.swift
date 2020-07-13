@@ -97,6 +97,9 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
             imageData = videoURL!.dataRepresentation
             // building the full body along with the string, text, file parameters
             request.httpBody = Helper().body(with: params, filename: "\(NSUUID().uuidString).MOV", filePathKey: "file", imageDataKey: imageData, boundary: boundary) as Data
+        } else {
+            // building the full body along with the string, text, file parameters
+            request.httpBody = Helper().body(with: params, filename: "\(NSUUID().uuidString).jpg", filePathKey: "file", imageDataKey: imageData, boundary: boundary) as Data
         }
         
         
