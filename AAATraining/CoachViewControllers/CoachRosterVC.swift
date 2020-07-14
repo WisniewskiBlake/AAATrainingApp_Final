@@ -12,13 +12,83 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
     
     func deleteUserPermanent(with action: String, status: Int, from cell: UITableViewCell) {
         // getting indexPath of the cell
-        guard let indexPath = tableView.indexPath(for: cell) else {
+//        guard let indexPath = tableView.indexPath(for: cell) else {
+//            return
+//        }
+//        guard let user_id = users[indexPath.row]!["id"] else {
+//                   return
+//        }
+        
+        let indexPathRow = cell.tag
+        
+       
+        
+        self.deleteUser(_: indexPathRow)
+    }
+    
+    // sends request to the server to delete the post
+    func deleteUser(_ row: Int) {
+        
+        // accessing id of the post which is stored in the tapped cell
+        guard let id = users[row]?["id"] as? Int else {
             return
         }
         
-        guard let user_id = users[indexPath.row]!["id"] else {
-            return
-        }
+        // prepare request
+        let url = URL(string: "http://localhost/fb/deletePost.php")!
+        let body = "id=\(id)"
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = body.data(using: .utf8)
+        
+        
+        // clean up of the data stored in the background of our logic in order to keep everything synchronized
+        posts.remove(at: row)
+        avas.remove(at: row)
+        pictures.remove(at: row)
+        liked.remove(at: row)
+        
+        
+        // remove the cell itself from the tableView
+        let indexPath = IndexPath(row: row, section: 0)
+        tableView.beginUpdates()
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+        tableView.endUpdates()
+        tableView.reloadData()
+        
+        
+        // execute request
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            DispatchQueue.main.async {
+                
+                // error occured
+                if error != nil {
+                    Helper().showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
+                    return
+                }
+                
+                // receive data from the server
+                do {
+                    
+                    // safe mode of casting data
+                    guard let data = data else {
+                        Helper().showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
+                        return
+                    }
+                    
+                    // accessing json via data received
+                    let _ = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
+                    
+                    
+                // json error
+                } catch {
+                    Helper().showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
+                    return
+                }
+                
+            }
+        }.resume()
+        
     }
            
     @IBOutlet weak var tableView: UITableView!
