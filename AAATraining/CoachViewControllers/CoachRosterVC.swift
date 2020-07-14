@@ -8,9 +8,19 @@
 
 import UIKit
 
-class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
-       
+class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, CoachRosterCellDelegate {
     
+    func deleteUserPermanent(with action: String, status: Int, from cell: UITableViewCell) {
+        // getting indexPath of the cell
+        guard let indexPath = tableView.indexPath(for: cell) else {
+            return
+        }
+        
+        guard let user_id = users[indexPath.row]!["id"] else {
+            return
+        }
+    }
+           
     @IBOutlet weak var tableView: UITableView!
     
     // search obj
