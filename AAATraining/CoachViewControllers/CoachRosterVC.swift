@@ -10,7 +10,7 @@ import UIKit
 
 class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
        
-    @IBOutlet weak var searchTableView: UITableView!
+    
     @IBOutlet weak var tableView: UITableView!
     
     // search obj
@@ -268,8 +268,9 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return users.count
+        return users.count    
     }
+    
     
     // heights of the cells
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -283,13 +284,12 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
         let pictureURL = users[indexPath.row]!["ava"] as! String
                    
         // accessing the cell from main.storyboard
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchUserCell", for: indexPath) as!
         
         // fullname logic
-        let firstName = posts[indexPath.row]!["firstName"] as! String
-        let lastName = posts[indexPath.row]!["lastName"] as! String
-        cell.fullnameLabel.text = firstName.capitalized + " " + lastName.capitalized
+        let firstName = users[indexPath.row]!["firstName"] as! String
+        let lastName = users[indexPath.row]!["lastName"] as! String
+        cell.coachFullNameLabel.text = firstName.capitalized + " " + lastName.capitalized
         cell.numberCompleted.text = numOfLikes
         
         // date logic
