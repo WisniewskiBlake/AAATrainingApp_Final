@@ -855,6 +855,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         tableView.beginUpdates()
         tableView.deleteRows(at: [indexPath], with: .automatic)
         tableView.endUpdates()
+        tableView.reloadData()
         
         
         // execute request
