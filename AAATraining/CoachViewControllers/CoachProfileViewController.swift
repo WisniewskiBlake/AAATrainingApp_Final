@@ -524,7 +524,6 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             // no picture in the post
             if pictureURL.isEmpty {
                 
-                
                 // accessing the cell from main.storyboard
                 let cell = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
                 
@@ -572,9 +571,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                                 DispatchQueue.main.async {
                                     cell.avaImageView.image = image
                                 }
-                                
                             }
-                            
                         }
                         
                         // downloaded
@@ -586,7 +583,6 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                                 cell.avaImageView.image = image
                             }
                         }
-                        
                     }.resume()
                     
                 // cached ava
@@ -596,7 +592,6 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                         cell.avaImageView.image = self.avas[indexPath.row]
                     }
                 }
-                
                 
                 // picture logic
                 pictures.append(UIImage())
@@ -618,17 +613,13 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
 ////                    }
 //                }
                 
-                
                 return cell
-                
                 
             // picture in the post
             } else {
                 
-                
                 // accessing the cell from main.storyboard
                 let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
-                
                 
                 // fullname logic
                 let firstName = posts[indexPath.row]!["firstName"] as! String
