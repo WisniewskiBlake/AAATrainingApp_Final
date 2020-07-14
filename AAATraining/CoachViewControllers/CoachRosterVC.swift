@@ -149,23 +149,6 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
                     self.skip = users.count
 
 
-                    // clean up likes for the refetching
-                    //self.liked.removeAll(keepingCapacity: false)
-                    // clean up likes for the refetching
-                    //self.numLiked.removeAll(keepingCapacity: false)
-
-
-                    // logic of tracking liked posts
-//                    for post in posts {
-//                        if post["liked"] is NSNull {
-//                            self.liked.append(Int())
-//                        } else {
-//                            self.liked.append(1)
-//
-//                        }
-//                    }
-
-
                     // reloading tableView to have an affect - show posts
                     self.tableView.reloadData()
 
@@ -188,7 +171,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
         isLoading = true
 
         // prepare request
-        let url = URL(string: "http://localhost/fb/selectPosts.php")!
+        let url = URL(string: "http://localhost/fb/selectUsers.php")!
         let body = "offset=\(offset)&limit=\(limit)"
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -278,7 +261,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // accessing the value (e.g. url) under the key 'picture' for every single element of the array (indexPath.row)
-        let pictureURL = users[indexPath.row]!["ava"] as! String
+        
                    
         // accessing the cell from main.storyboard
         let cell = tableView.dequeueReusableCell(withIdentifier: "CoachRosterCell", for: indexPath) as! CoachRosterCell
@@ -287,33 +270,13 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
         let firstName = users[indexPath.row]!["firstName"] as! String
         let lastName = users[indexPath.row]!["lastName"] as! String
         cell.coachFirstNameLabel.text = firstName.capitalized + " " + lastName.capitalized
-        cell.coachAvaImage.image = pictureURL
-        
-        // date logic
-        let dateString = posts[indexPath.row]!["date_created"] as! String
-        
-        // taking the date received from the server and putting it in the following format to be recognized as being Date()
-        let formatterGet = DateFormatter()
-        formatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let date = formatterGet.date(from: dateString)!
-        
-        // we are writing a new readable format and putting Date() into this format and converting it to the string to be shown to the user
-        let formatterShow = DateFormatter()
-        formatterShow.dateFormat = "MMMM dd yyyy - HH:mm"
-        cell.dateLabel.text = formatterShow.string(from: date)
-        
-        
-        // text logic
-        let text = posts[indexPath.row]!["text"] as! String
-        cell.postTextLabel.text = text
-        
         
         // avas logic
-        let avaString = posts[indexPath.row]!["ava"] as! String
+        let avaString = users[indexPath.row]!["ava"] as! String
         let avaURL = URL(string: avaString)!
         
         // if there are still avas to be loaded
-        if posts.count != avas.count {
+        if users.count != avas.count {
             
             URLSession(configuration: .default).dataTask(with: avaURL) { (data, response, error) in
                 
@@ -324,7 +287,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
                         self.avas.append(image)
                         
                         DispatchQueue.main.async {
-                            cell.avaImageView.image = image
+                            cell.coachAvaImage.image = image
                         }
                     }
                 }
@@ -335,7 +298,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
                     self.avas.append(image)
                     
                     DispatchQueue.main.async {
-                        cell.avaImageView.image = image
+                        cell.coachAvaImage.image = image
                     }
                 }
             }.resume()
@@ -344,7 +307,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
         } else {
             
             DispatchQueue.main.async {
-                cell.avaImageView.image = self.avas[indexPath.row]
+                cell.coachAvaImage.image = self.avas[indexPath.row]
             }
         }
         
@@ -352,8 +315,8 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
         pictures.append(UIImage())
         
         // get the index of the cell in order to get the certain post's id
-        cell.numberCompleted.tag = indexPath.row
-        cell.optionsButton.tag = indexPath.row
+        cell.coachDeleteButton.tag = indexPath.row
+        
         
         return cell
     
