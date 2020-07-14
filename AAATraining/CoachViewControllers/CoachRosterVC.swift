@@ -264,8 +264,9 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return users.count    
+        return users.count
     }
+    
     
     
     // heights of the cells
@@ -280,13 +281,13 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
         let pictureURL = users[indexPath.row]!["ava"] as! String
                    
         // accessing the cell from main.storyboard
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchUserCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CoachRosterCell", for: indexPath) as! CoachRosterCell
         
         // fullname logic
         let firstName = users[indexPath.row]!["firstName"] as! String
         let lastName = users[indexPath.row]!["lastName"] as! String
-        cell.coachFullNameLabel.text = firstName.capitalized + " " + lastName.capitalized
-        cell.numberCompleted.text = numOfLikes
+        cell.coachFirstNameLabel.text = firstName.capitalized + " " + lastName.capitalized
+        cell.coachAvaImage.image = pictureURL
         
         // date logic
         let dateString = posts[indexPath.row]!["date_created"] as! String
