@@ -72,11 +72,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
     // once the searchBar is tapped
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         
-        // show cancel button
-        searchBar.setShowsCancelButton(true, animated: true)
-
-        // show tableView that presents searched users
-        searchTableView.isHidden = false
+       
     }
     
     
@@ -87,7 +83,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
         searchBar.setShowsCancelButton(false, animated: true)
         
         // hide tableView that presents searched users
-        searchTableView.isHidden = true
+        
         
         // hide keyboard
         searchBar.resignFirstResponder()
@@ -97,7 +93,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
         searchedUsers.removeAll(keepingCapacity: false)
         searchedUsers_avas.removeAll(keepingCapacity: false)
         friendshipStatus.removeAll(keepingCapacity: false)
-        searchTableView.reloadData()
+        tableView.reloadData()
         
     }
     
@@ -193,7 +189,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
 
         // prepare request
         let url = URL(string: "http://localhost/fb/selectPosts.php")!
-        let body = "id=\(id)&offset=\(offset)&limit=\(limit)"
+        let body = "offset=\(offset)&limit=\(limit)"
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.httpBody = body.data(using: .utf8)
@@ -284,7 +280,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
         let pictureURL = users[indexPath.row]!["ava"] as! String
                    
         // accessing the cell from main.storyboard
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchUserCell", for: indexPath) as!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchUserCell", for: indexPath)
         
         // fullname logic
         let firstName = users[indexPath.row]!["firstName"] as! String
