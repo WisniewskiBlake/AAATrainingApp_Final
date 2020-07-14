@@ -8,16 +8,37 @@
 
 import UIKit
 
+// Delegate Protocol to be sent to the motherViewControler along with the data (e.g. action, cell)
+protocol CoachRosterCellDelegate: class {
+    func deleteUserPermanent(with action: String, status: Int, from cell: UITableViewCell)
+}
+
 class CoachRosterCell: UITableViewCell {
 
     @IBOutlet weak var coachAvaImage: UIImageView!
     @IBOutlet weak var coachFirstNameLabel: UILabel!
     @IBOutlet weak var coachDeleteButton: UIButton!
+    @IBOutlet weak var coachConfirmButton: UIButton!
+    
+    var delegate: CoachRosterCellDelegate?
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        // creating border for delete button
+        let border = CALayer()
+        border.borderWidth = 1.5
+        border.borderColor = UIColor.lightGray.cgColor
+        border.frame = CGRect(x: 0, y: 0, width: coachDeleteButton.frame.width, height: coachDeleteButton.frame.height)
+        
+        // assining border to delete button and making corners rounded
+        coachDeleteButton.layer.addSublayer(border)
+        coachDeleteButton.layer.cornerRadius = 3
+        coachDeleteButton.layer.masksToBounds = true
+        
+        // rounded corners for confirmButton
+        coachConfirmButton.layer.cornerRadius = 3
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -27,5 +48,17 @@ class CoachRosterCell: UITableViewCell {
         coachAvaImage.layer.cornerRadius = coachAvaImage.frame.width / 2
         coachAvaImage.clipsToBounds = true
     }
-
+    @IBAction func coachDeleteButton_clicked(_ sender: Any) {
+        if(coachConfirmButton.isHidden == true) {
+            coachConfirmButton.isHidden = false
+        } else if (coachConfirmButton.isHidden == false) {
+            coachConfirmButton.isHidden = true
+        }
+    }
+    
+    @IBAction func coachConfirmButton_clicked(_ sender: Any) {
+        delegate?.deleteUserPermanent(with: "delete", status: 0, from: self)
+    }
+    
+    
 }

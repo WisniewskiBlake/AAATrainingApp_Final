@@ -1844,15 +1844,32 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qal-hF-bhU">
-                                                    <rect key="frame" x="260" y="56" width="100" height="29"/>
+                                                    <rect key="frame" x="300" y="56" width="60" height="29"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="100" id="f10-Ms-dxs"/>
+                                                        <constraint firstAttribute="width" constant="60" id="f10-Ms-dxs"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
                                                     <state key="normal" title="Delete">
                                                         <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="coachDeleteButton_clicked:" destination="eHb-Uz-LYZ" eventType="touchUpInside" id="Qid-xd-gKI"/>
+                                                    </connections>
+                                                </button>
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w62-cI-IQC">
+                                                    <rect key="frame" x="220" y="56" width="60" height="29"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="60" id="sAw-4h-H9j"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
+                                                    <state key="normal" title="Confirm">
+                                                        <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="coachConfirmButton_clicked:" destination="eHb-Uz-LYZ" eventType="touchUpInside" id="T2v-pA-r4h"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -1862,12 +1879,16 @@
                                                 <constraint firstAttribute="bottomMargin" secondItem="qal-hF-bhU" secondAttribute="bottom" constant="4" id="BCa-LP-k3j"/>
                                                 <constraint firstItem="MMa-To-F7h" firstAttribute="leading" secondItem="WVe-oa-zyu" secondAttribute="trailing" constant="8" id="Klx-rv-tK0"/>
                                                 <constraint firstItem="qal-hF-bhU" firstAttribute="trailing" secondItem="Qc9-dD-2O7" secondAttribute="trailingMargin" id="RKv-5s-6Us"/>
+                                                <constraint firstItem="qal-hF-bhU" firstAttribute="leading" secondItem="w62-cI-IQC" secondAttribute="trailing" constant="20" id="Xwg-GR-MAk"/>
                                                 <constraint firstItem="qal-hF-bhU" firstAttribute="top" secondItem="MMa-To-F7h" secondAttribute="bottom" constant="13" id="izW-he-QFF"/>
                                                 <constraint firstItem="WVe-oa-zyu" firstAttribute="top" secondItem="Qc9-dD-2O7" secondAttribute="topMargin" constant="4" id="m5g-sB-rWv"/>
+                                                <constraint firstItem="w62-cI-IQC" firstAttribute="top" secondItem="MMa-To-F7h" secondAttribute="bottom" constant="13" id="x45-fA-JRl"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="w62-cI-IQC" secondAttribute="bottom" constant="4" id="ybB-1s-mJJ"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="coachAvaImage" destination="WVe-oa-zyu" id="0nU-1B-ha2"/>
+                                            <outlet property="coachConfirmButton" destination="w62-cI-IQC" id="nf6-xY-g1u"/>
                                             <outlet property="coachDeleteButton" destination="qal-hF-bhU" id="1ir-av-7fN"/>
                                             <outlet property="coachFirstNameLabel" destination="MMa-To-F7h" id="F8V-JN-EqU"/>
                                         </connections>
@@ -1896,7 +1917,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bZ6-Wd-g3z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-626" y="-554"/>
+            <point key="canvasLocation" x="-626.39999999999998" y="-554.57271364317842"/>
         </scene>
         <!--Create Post-->
         <scene sceneID="pM1-m6-NxO">
