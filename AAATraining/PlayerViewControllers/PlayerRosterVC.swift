@@ -180,15 +180,90 @@ class PlayerRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate
 
     }
     
+    // MARK: - loadMore
+    // loading more posts from the server via PHP protocol
+    func loadMore(offset: Int, limit: Int) {
+        isLoading = true
+
+        // prepare request
+        let url = URL(string: "http://localhost/fb/selectUsers.php")!
+        let body = "offset=\(offset)&limit=\(limit)"
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = body.data(using: .utf8)
+
+        // send request
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            DispatchQueue.main.async {
+                // error occured
+                if error != nil {
+                    self.isLoading = false
+                    Helper().showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
+                    return
+                }
+                do {
+                    // access data - safe mode
+                    guard let data = data else {
+                        self.isLoading = false
+                        return
+                    }
+                    // converting data to JSON
+                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
+
+                    // accessing json data - safe mode
+                    guard let users = json?["users"] as? [NSDictionary] else {
+                        self.isLoading = false
+                        return
+                    }
+                    // assigning all successfully loaded posts to our Class Var - posts (after it got loaded successfully)
+                    self.users.append(contentsOf: users)
+
+                    // we are skipping already loaded numb of posts for the next load - pagination
+                    self.skip += users.count
+                    // reloading tableView to have an affect - show posts
+                    self.tableView.beginUpdates()
+
+                    for i in 0 ..< users.count {
+                        let lastSectionIndex = self.tableView.numberOfSections - 1
+                        let lastRowIndex = self.tableView.numberOfRows(inSection: lastSectionIndex)
+                        let pathToLastRow = IndexPath(row: lastRowIndex + i, section: lastSectionIndex)
+                        self.tableView.insertRows(at: [pathToLastRow], with: .fade)
+                    }
+
+                    self.tableView.endUpdates()
+                    self.isLoading = false
+
+                } catch {
+                    self.isLoading = false
+                    return
+                }
+
+            }
+        }.resume()
+
+    }
+    
     
     
 
    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       <#code#>
+       return 1
    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        if searching{
+            return searchQuery.count
+        }else{
+            return users.count
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
    
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       <#code#>
+       
    }
 
 }
