@@ -10,7 +10,7 @@ import UIKit
 
 // Delegate Protocol to be sent to the motherViewControler along with the data (e.g. action, cell)
 protocol CoachRosterCellDelegate: class {
-    func deleteUserPermanent(with action: String, status: Int, from cell: UITableViewCell)
+    func deleteUserPermanent(from cell: UITableViewCell)
 }
 
 class CoachRosterCell: UITableViewCell {
@@ -19,6 +19,7 @@ class CoachRosterCell: UITableViewCell {
     @IBOutlet weak var coachFirstNameLabel: UILabel!
     @IBOutlet weak var coachDeleteButton: UIButton!
     @IBOutlet weak var coachConfirmButton: UIButton!
+    
     
     var delegate: CoachRosterCellDelegate?
     
@@ -56,9 +57,11 @@ class CoachRosterCell: UITableViewCell {
         }
     }
     
-    @IBAction func coachConfirmButton_clicked(_ sender: Any) {
-        delegate?.deleteUserPermanent(with: "delete", status: 0, from: self)
-    }
+//    @IBAction func coachConfirmButton_clicked(_ sender: Any) {
+//        let indexPathRow = coachConfirmButton.tag
+//        let newvar = CoachRosterVC.deleteUser(_: indexPathRow)
+//        delegate?.deleteUserPermanent(from: self)
+//    }
     
     
 }

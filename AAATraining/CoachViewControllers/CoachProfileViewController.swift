@@ -283,7 +283,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     }
     
     // sends request to the server to upload the Image (ava/cover)
-    func uploadImage(from imageView: UIImageView) {
+    func uploadImage(from imageView: UIImageView, action: String) {
         
         // save method of accessing ID of current user
         guard let id = currentUser?["id"] else {
@@ -291,8 +291,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         }
         // STEP 1. Declare URL, Request and Params
         // url we gonna access (API)
-        //let url = URL(string: "http://localhost/fb/uploadImage.php")!
-        let url = URL(string: "http://192.168.1.17/fb/uploadImage.php")!
+        let url = URL(string: "http://localhost/fb/uploadImage.php")!
+        //let url = URL(string: "http://192.168.1.17/fb/uploadImage.php")!
         // declaring reqeust with further configs
         var request = URLRequest(url: url)
         // POST - safest method of passing data to the server
@@ -305,9 +305,17 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         // if in the imageView is placeholder - send no picture to the server
         // Compressing image and converting image to 'Data' type
         var imageData = Data()
-        if imageView.image != UIImage(named: "HomeCover.jpg") && imageView.image != UIImage(named: "user.png") {
-            imageData = imageView.image!.jpegData(compressionQuality: 0.5)!
-        }
+        
+//        if imageView.image != UIImage(named: "HomeCover.jpg") && imageView.image != UIImage(named: "user.png") {
+//            imageData = imageView.image!.jpegData(compressionQuality: 0.5)!
+//        }
+        
+//        if imageView.image != UIImage(named: "HomeCover.jpg") && imageView.image != UIImage(named: "user.png") {
+//            imageData = imageView.image!.jpegData(compressionQuality: 0.5)!
+//        }
+        imageData = imageView.image!.jpegData(compressionQuality: 0.5)!
+        let xxx = imageView.image!
+        print(xxx)
         // assigning full body to the request to be sent to the server
         request.httpBody = Helper().body(with: params, filename: "\(imageViewTapped).jpg", filePathKey: "file", imageDataKey: imageData, boundary: boundary) as Data
         URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -388,7 +396,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             // assign selected image to CoverImageView
             self.coverImageView.image = image
             // upload image to the server
-            self.uploadImage(from: self.coverImageView)
+            self.uploadImage(from: self.coverImageView, action: "newPic")
         } else if imageViewTapped == "ava" {
             // assign selected image to AvaImageView
             self.avaImageView.image = image
@@ -396,7 +404,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             currentUser_ava = self.avaImageView.image
             
             // upload image to the server
-            self.uploadImage(from: avaImageView)
+            self.uploadImage(from: avaImageView, action: "newPic")
         }
         // completion handler, to communicate to the project that images has been selected (enable delete button)
         dismiss(animated: true) {
@@ -436,17 +444,20 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         // declaring cancel button
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         // declaring delete button
+        let xxx = currentUser?["ava"] as! String
+    
+        
         let delete = UIAlertAction(title: "Delete", style: .destructive) { (action) in
             
             // deleting profile picture (ava), by returning placeholder
             if self.imageViewTapped == "ava" {
                 self.avaImageView.image = UIImage(named: "user.png")
                 self.isAva = false
-                self.uploadImage(from: self.avaImageView)
+                self.uploadImage(from: self.avaImageView, action: "defaultPic")
             } else if self.imageViewTapped == "cover" {
                 self.coverImageView.image = UIImage(named: "HomeCover.jpg")
                 self.isCover = false
-                self.uploadImage(from: self.coverImageView)
+                self.uploadImage(from: self.coverImageView, action: "defaultPic")
             }
         }
         // manipulating appearance of delete button for each scenarios
@@ -456,11 +467,21 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         if imageViewTapped == "cover" && isCover == false && imageViewTapped != "ava" {
             delete.isEnabled = false
         }
-        // adding buttons to the sheet
-        sheet.addAction(camera)
-        sheet.addAction(library)
-        sheet.addAction(cancel)
-        sheet.addAction(delete)
+        
+        if(xxx == "http://localhost/fb/ava/user.png") {
+            // adding buttons to the sheet
+            sheet.addAction(camera)
+            sheet.addAction(library)
+            sheet.addAction(cancel)
+            
+        } else {
+            // adding buttons to the sheet
+            sheet.addAction(camera)
+            sheet.addAction(library)
+            sheet.addAction(cancel)
+            sheet.addAction(delete)
+        }
+        
         // present action sheet to the user finally
         self.present(sheet, animated: true, completion: nil)
     }
@@ -513,7 +534,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     
     // cell config
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+        //1,3,6,last
         
         
             // accessing the value (e.g. url) under the key 'picture' for every single element of the array (indexPath.row)

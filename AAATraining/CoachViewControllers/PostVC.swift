@@ -74,8 +74,8 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
         let params = ["user_id": id, "text": text]
         
         // declaring URL and request
-        //let url = URL(string: "http://localhost/fb/uploadPost.php")!
-        let url = URL(string: "http://192.168.1.17/fb/uploadPost.php")!
+        let url = URL(string: "http://localhost/fb/uploadPost.php")!
+        //let url = URL(string: "http://192.168.1.17/fb/uploadPost.php")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         
