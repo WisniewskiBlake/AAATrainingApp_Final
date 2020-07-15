@@ -321,6 +321,12 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
             
             Helper().downloadImage(from: avaString, showIn: cell.coachAvaImage, orShow: "user.png")
             
+            if(currentUser?["id"] == filteredArray[indexPath.row]!["id"]) {
+                cell.coachDeleteButton.isHidden = true
+            } else {
+               cell.coachDeleteButton.isHidden = false
+            }
+            
             cell.coachDeleteButton.tag = indexPath.row
             cell.coachConfirmButton.tag = indexPath.row
         } else {
@@ -342,6 +348,12 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
             }
             
             Helper().downloadImage(from: avaString, showIn: cell.coachAvaImage, orShow: "user.png")
+            
+            if(currentUser?["lastName"] as! String == users[indexPath.row]!["lastName"] as! String) {
+                cell.coachDeleteButton.isHidden = true
+            } else {
+               cell.coachDeleteButton.isHidden = false
+            }
             
             cell.coachDeleteButton.tag = indexPath.row
             cell.coachConfirmButton.tag = indexPath.row
