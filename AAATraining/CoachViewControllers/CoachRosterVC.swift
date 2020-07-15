@@ -64,7 +64,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
     }
     
     // creates search bar programmatically
-    func createSearchBar() {        
+    func createSearchBar() {
         // creating search bar and configuring it
         searchBar.showsCancelButton = false
         searchBar.placeholder = "Search"
@@ -294,7 +294,6 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // accessing the value (e.g. url) under the key 'picture' for every single element of the array (indexPath.row)
-        
                    
         // accessing the cell from main.storyboard
         let cell = tableView.dequeueReusableCell(withIdentifier: "CoachRosterCell", for: indexPath) as! CoachRosterCell
@@ -439,7 +438,6 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
         if a > b && isLoading == false {
             loadMore(offset: skip, limit: limit)
         }
-        
     }
     
     // MARK: - Delete functions

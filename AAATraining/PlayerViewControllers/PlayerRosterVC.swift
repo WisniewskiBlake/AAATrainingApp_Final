@@ -263,7 +263,80 @@ class PlayerRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate
     }
    
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+       // accessing the cell from main.storyboard
+       let cell = tableView.dequeueReusableCell(withIdentifier: "PlayerRosterCell", for: indexPath) as! PlayerRosterCell
        
+       if searching {
+           let firstName = filteredArray[indexPath.row]!["firstName"] as! String
+           let lastName = filteredArray[indexPath.row]!["lastName"] as! String
+           cell.fullNameLabel.text = firstName.capitalized + " " + lastName.capitalized
+           
+           // avas logic
+           let avaString = filteredArray[indexPath.row]!["ava"] as! String
+           
+           // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
+           if (avaString).count > 10 {
+               cell.avaImageView.image = filteredArray[indexPath.row]!["ava"] as? UIImage
+           
+           } else {
+               cell.avaImageView.image = UIImage(named: "user.png")
+               
+           }
+           
+           Helper().downloadImage(from: avaString, showIn: cell.avaImageView, orShow: "user.png")
+                    
+                      
+       } else {
+           // fullname logic
+           let firstName = users[indexPath.row]!["firstName"] as! String
+           let lastName = users[indexPath.row]!["lastName"] as! String
+           cell.fullNameLabel.text = firstName.capitalized + " " + lastName.capitalized
+           
+           // avas logic
+           let avaString = users[indexPath.row]!["ava"] as! String
+           
+           // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
+           if (avaString).count > 10 {
+               cell.avaImageView.image = users[indexPath.row]!["ava"] as? UIImage
+           
+           } else {
+               cell.avaImageView.image = UIImage(named: "user.png")
+               
+           }
+           
+           Helper().downloadImage(from: avaString, showIn: cell.avaImageView, orShow: "user.png")
+       
+           
+       }
+       
+       print(avas)
+       return cell
    }
+    
+    // MARK: - Update and scrollDidScroll
+    // updates any button with following params
+    func update(button: UIButton, icon: String, color: UIColor) {
+        
+        // setting icon / background image
+        button.setBackgroundImage(UIImage(named: icon), for: .normal)
+        
+        // setting color of the button
+        button.tintColor = color
+        
+    }
+    
+    // executed always whenever tableView is scrolling
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        // load more posts when the scroll is about to reach the bottom AND currently is not loading (posts)
+        let a = tableView.contentOffset.y - tableView.contentSize.height + 60
+        let b = -tableView.frame.height
+        
+        if a > b && isLoading == false {
+            loadMore(offset: skip, limit: limit)
+        }
+    }
+    
+    
 
 }
