@@ -57,6 +57,27 @@ class PlayerRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate
         tableView.reloadData()
     }
     
+    // MARK: - Search Bar
+    // once the searchBar is tapped
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        // show cancel button
+        searchBar.setShowsCancelButton(true, animated: true)
+    }
+    
+    
+    // cancel button in the searchBar has been clicked
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        // hide cancel button
+        searchBar.setShowsCancelButton(false, animated: true)
+        // hide tableView that presents searched users
+        
+        // hide keyboard
+        searchBar.resignFirstResponder()
+        // remove all searched results
+        searchBar.text = ""
+        tableView.reloadData()
+    }
+    
     // creates search bar programmatically
     func createSearchBar() {
         // creating search bar and configuring it
@@ -73,7 +94,90 @@ class PlayerRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate
         
         // insert searchBar into navigationBar
         self.navigationItem.titleView = searchBar
+    }
+    
+    // called whenever we typed any letter in the searchbar
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchQuery = lastNames.filter({$0.prefix(searchText.count).lowercased() == searchText.lowercased()})
         
+        if(filteredArray.count >= 1){
+            for i in 0 ..< filteredArray.count{
+                filteredArray.remove(at: 0)
+            }
+        }
+        for i in 0 ..< searchQuery.count{
+            for j in 0 ..< users.count{
+                if(users[j]!["lastName"] as! String == searchQuery[i]){
+                    filteredArray.append(users[j])
+                }
+            }
+        }
+        searching = true
+        self.tableView.reloadData()
+    }
+    
+    // MARK: - loadUsers
+    // loading posts from the server via@objc  PHP protocol
+    @objc func loadUsers(offset: Int, limit: Int) {
+
+        isLoading = true
+
+        // prepare request
+        let url = URL(string: "http://localhost/fb/selectUsers.php")!
+        let body = "offset=\(offset)&limit=\(limit)"
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = body.data(using: .utf8)
+
+        // send request
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            DispatchQueue.main.async {
+                // error occured
+                if error != nil {
+                    Helper().showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
+                    self.isLoading = false
+                    return
+                }
+                do {
+                    // access data - safe mode
+                    guard let data = data else {
+                        Helper().showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
+                        self.isLoading = false
+                        return
+                    }
+                    // converting data to JSON
+                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
+
+                    // accessing json data - safe mode
+                    guard let users = json?["users"] as? [NSDictionary] else {
+                        self.isLoading = false
+                        return
+                    }
+                    // assigning all successfully loaded users to our Class Var - posts (after it got loaded successfully)
+                    self.users = users
+                    // we are skipping already loaded numb of posts for the next load - pagination
+                    self.skip = users.count
+                    
+                    for user in users {
+                        self.lastNames.append(user["lastName"] as! String)
+                    }
+
+                    self.avas.removeAll(keepingCapacity: false)
+
+                    // reloading tableView to have an affect - show posts
+                    self.tableView.reloadData()
+
+                    self.isLoading = false
+
+                } catch {
+                    Helper().showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
+                    self.isLoading = false
+                    return
+                }
+
+            }
+        }.resume()
+
     }
     
     

@@ -64,8 +64,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
     }
     
     // creates search bar programmatically
-    func createSearchBar() {
-        
+    func createSearchBar() {        
         // creating search bar and configuring it
         searchBar.showsCancelButton = false
         searchBar.placeholder = "Search"
