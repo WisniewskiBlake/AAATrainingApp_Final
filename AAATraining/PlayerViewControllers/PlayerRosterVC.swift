@@ -8,7 +8,11 @@
 
 import UIKit
 
-class PlayerRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
+class PlayerRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, PlayerRosterCellDelegate {
+    func deleteUserPermanent(from cell: UITableViewCell) {
+        
+    }
+    
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -244,18 +248,18 @@ class PlayerRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate
     }
     
     
-    
+    // MARK: - Table view data source
 
    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       return 1
+      if searching{
+           return searchQuery.count
+       }else{
+           return users.count
+       }
    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        if searching{
-            return searchQuery.count
-        }else{
-            return users.count
-        }
+        return 1
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

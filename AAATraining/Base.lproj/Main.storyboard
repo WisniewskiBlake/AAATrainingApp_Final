@@ -1706,7 +1706,7 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="574"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PlayerRosterCell" rowHeight="100" id="BF5-rV-PoW" customClass="PlayerRosterCell" customModule="AAATraining" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PlayerRosterCell" rowHeight="100" id="BF5-rV-PoW" customClass="PlayerRosterCell" customModule="AAATraining" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BF5-rV-PoW" id="BQn-yt-CWJ">
@@ -1733,6 +1733,7 @@
                                                 <constraint firstItem="dHg-Mk-xhN" firstAttribute="leading" secondItem="BQn-yt-CWJ" secondAttribute="leadingMargin" id="QFr-s7-W7A"/>
                                                 <constraint firstItem="C8M-Wr-y9g" firstAttribute="trailing" secondItem="BQn-yt-CWJ" secondAttribute="trailingMargin" id="bAE-be-hYP"/>
                                                 <constraint firstItem="dHg-Mk-xhN" firstAttribute="top" secondItem="BQn-yt-CWJ" secondAttribute="topMargin" constant="4" id="tTR-OD-J7H"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="C8M-Wr-y9g" secondAttribute="bottom" constant="46" id="xPJ-ta-yGD"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>

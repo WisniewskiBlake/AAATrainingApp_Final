@@ -8,10 +8,17 @@
 
 import UIKit
 
+// Delegate Protocol to be sent to the motherViewControler along with the data (e.g. action, cell)
+protocol PlayerRosterCellDelegate: class {
+    func deleteUserPermanent(from cell: UITableViewCell)
+}
+
 class PlayerRosterCell: UITableViewCell {
 
     @IBOutlet weak var avaImageView: UIImageView!
     @IBOutlet weak var fullNameLabel: UILabel!
+    
+    var delegate: PlayerRosterCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
