@@ -40,7 +40,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
         
 //        NotificationCenter.default.addObserver(self, selector: #selector(loadNewUsers), name: NSNotification.Name(rawValue: "uploadPost"), object: nil)
         
-        tableView.reloadData()
+        self.tableView.reloadData()
         // Do any additional setup after loading the view.
         createSearchBar()
         loadUsers(offset: skip, limit: limit)
@@ -58,7 +58,8 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         tableView.reloadData()
     }
     
@@ -97,22 +98,19 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
         // hide cancel button
         searchBar.setShowsCancelButton(false, animated: true)
         
-        // hide tableView that presents searched users
-        
+        // hide tableView that presents searched users        
         
         // hide keyboard
         searchBar.resignFirstResponder()
-        
         // remove all searched results
         searchBar.text = ""
-        
         
         tableView.reloadData()
         
     }
     
     // called whenever we typed any letter in the searchbar
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String, indexPathRow: Int) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchQuery = lastNames.filter({$0.prefix(searchText.count).lowercased() == searchText.lowercased()})
         
         if(filteredArray.count >= 1){
@@ -321,7 +319,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
             
             Helper().downloadImage(from: avaString, showIn: cell.coachAvaImage, orShow: "user.png")
             
-            if(currentUser?["id"] == filteredArray[indexPath.row]!["id"]) {
+            if(currentUser?["lastName"] as! String == users[indexPath.row]!["lastName"] as! String) {
                 cell.coachDeleteButton.isHidden = true
             } else {
                cell.coachDeleteButton.isHidden = false
