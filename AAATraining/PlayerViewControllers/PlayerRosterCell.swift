@@ -10,6 +10,9 @@ import UIKit
 
 class PlayerRosterCell: UITableViewCell {
 
+    @IBOutlet weak var avaImageView: UIImageView!
+    @IBOutlet weak var fullNameLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -18,7 +21,10 @@ class PlayerRosterCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
+        // rounded corners
+        avaImageView.layer.cornerRadius = avaImageView.frame.width / 2
+        avaImageView.clipsToBounds = true
     }
+    
 
 }
