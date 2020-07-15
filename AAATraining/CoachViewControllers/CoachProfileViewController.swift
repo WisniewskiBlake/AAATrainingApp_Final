@@ -76,6 +76,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         loadPosts(offset: 0, limit: skip + 1)
     }
     
+    // MARK: - Load User
     // loads all user related information to be shown in the header
     @objc func loadUser() {
    
@@ -112,6 +113,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
            }
     }
     
+    // MARK: - Load Posts
     // loading posts from the server via@objc  PHP protocol
     func loadPosts(offset: Int, limit: Int) {
         
@@ -197,6 +199,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
     }
     
+    // MARK: - Load More
     // loading more posts from the server via PHP protocol
     func loadMore(offset: Int, limit: Int) {
         
@@ -282,6 +285,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
     }
     
+    // MARK: - Upload Image
     // sends request to the server to upload the Image (ava/cover)
     func uploadImage(from imageView: UIImageView, action: String) {
         
@@ -376,6 +380,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         avaImageView.clipsToBounds = true
     }
     
+    // MARK: - Show Picker
     // takes us to the PickerController (Controller that allows us to select picture)
     func showPicker(with source: UIImagePickerController.SourceType) {
         let picker = UIImagePickerController()
@@ -385,6 +390,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         present(picker, animated: true, completion: nil)
     }
     
+    // MARK: - Image Picker Controller
     // executed once the picture is selected in PickerController
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
     
@@ -419,7 +425,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     
     
     
-    
+    // MARK: - Show Action Sheet
     // this function launches Action Sheet for the photos
     func showActionSheet() {
         // declaring action sheet
@@ -449,7 +455,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
         let delete = UIAlertAction(title: "Delete", style: .destructive) { (action) in
             
-            // deleting profile picture (ava), by returning placeholder
+            // deleting profile picture (ava), by returning placeholder.. here i added the "default pic" for ava, may need to change for home
             if self.imageViewTapped == "ava" {
                 self.avaImageView.image = UIImage(named: "user.png")
                 self.isAva = false
@@ -486,7 +492,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         self.present(sheet, animated: true, completion: nil)
     }
     
-    
+    // MARK: - Images tapped
     @IBAction func avaImageView_tapped(_ sender: Any) {
         // switching trigger
         imageViewTapped = "ava"
@@ -778,6 +784,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
         }
     
+    // MARK: - Scroll did scroll
     // executed always whenever tableView is scrolling
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
@@ -823,7 +830,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         present(sheet, animated: true, completion: nil)
     }
     
-    
+    // MARK: - Option Button Click
     @IBAction func optionsButton_clicked(_ optionButton: UIButton) {
         // accessing indexPath of the button / cell
         let indexPathRow = optionButton.tag
@@ -848,6 +855,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         present(alert, animated: true, completion: nil)
     }
     
+    // MARK: - Delete Posts
     // sends request to the server to delete the post
     func deletePost(_ row: Int) {
         

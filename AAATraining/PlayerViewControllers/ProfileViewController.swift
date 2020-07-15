@@ -52,6 +52,7 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
         loadUser()
     }
     
+    // MARK: - Load User
     // loads all user related information to be shown in the header
        @objc func loadUser() {
            // safe method of accessing user related information in glob var
@@ -107,6 +108,7 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
            }
        }
     
+    // MARK: - Images Tapped
     @IBAction func coverImageView_tapped(_ sender: Any) {
         // switching trigger
         imageViewTapped = "cover"
@@ -155,6 +157,8 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
         avaImageView.clipsToBounds = true
     }
 
+    
+    // MARK: - Show Action Sheet
     // this function launches Action Sheet for the photos
     func showActionSheet() {
         
@@ -180,27 +184,21 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
         // declaring cancel button
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         // declaring delete button
-        // declaring delete button
+        let xxx = currentUser?["ava"] as! String
         let delete = UIAlertAction(title: "Delete", style: .destructive) { (action) in
             
-            // deleting profile picture (ava), by returning placeholder
-            if self.imageViewTapped == "ava" {
-                
-                self.avaImageView.image = UIImage(named: "user.png")
-                self.isAva = false
-                
-                self.uploadImage(from: self.avaImageView)
-                
-            } else if self.imageViewTapped == "cover" {
-                
-                self.coverImageView.image = UIImage(named: "HomeCover.jpg")
-                self.isCover = false
-                
-                self.uploadImage(from: self.coverImageView)
-            }
+             // deleting profile picture (ava), by returning placeholder
+           if self.imageViewTapped == "ava" {
+               self.avaImageView.image = UIImage(named: "user.png")
+               self.isAva = false
+               self.uploadImage(from: self.avaImageView, action: "defaultPic")
+           } else if self.imageViewTapped == "cover" {
+               self.coverImageView.image = UIImage(named: "HomeCover.jpg")
+               self.isCover = false
+               self.uploadImage(from: self.coverImageView, action: "defaultPic")
+           }
             
         }
-        
         
         // manipulating appearance of delete button for each scenarios
         if imageViewTapped == "ava" && isAva == false && imageViewTapped != "cover" {
@@ -211,14 +209,24 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
             delete.isEnabled = false
         }
         // adding buttons to the sheet
-        sheet.addAction(camera)
-        sheet.addAction(library)
-        sheet.addAction(cancel)
-        sheet.addAction(delete)
+        if(xxx == "http://localhost/fb/ava/user.png") {
+            // adding buttons to the sheet
+            sheet.addAction(camera)
+            sheet.addAction(library)
+            sheet.addAction(cancel)
+            
+        } else {
+            // adding buttons to the sheet
+            sheet.addAction(camera)
+            sheet.addAction(library)
+            sheet.addAction(cancel)
+            sheet.addAction(delete)
+        }
         // present action sheet to the user finally
         self.present(sheet, animated: true, completion: nil)
     }
     
+    // MARK: - Show Picker
     // takes us to the PickerController (Controller that allows us to select picture)
     func showPicker(with source: UIImagePickerController.SourceType) {
         
@@ -229,6 +237,7 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
         present(picker, animated: true, completion: nil)
     }
     
+    // MARK: - Image Picker Controller
     // executed once the picture is selected in PickerController
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
     
@@ -240,7 +249,7 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
             // assign selected image to CoverImageView
             self.coverImageView.image = image
             // upload image to the server
-            self.uploadImage(from: self.coverImageView)
+            self.uploadImage(from: self.coverImageView, action: "newPic")
         } else if imageViewTapped == "ava" {
             // assign selected image to AvaImageView
             self.avaImageView.image = image
@@ -248,7 +257,7 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
             currentUser_ava = self.avaImageView.image
             
             // upload image to the server
-            self.uploadImage(from: avaImageView)
+            self.uploadImage(from: avaImageView, action: "newPic")
         }
         // completion handler, to communicate to the project that images has been selected (enable delete button)
         dismiss(animated: true) {
@@ -261,8 +270,9 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
         
     }
     
+    // MARK: - Upload Image
     // sends request to the server to upload the Image (ava/cover)
-    func uploadImage(from imageView: UIImageView) {
+    func uploadImage(from imageView: UIImageView, action: String) {
         
         // save method of accessing ID of current user
         guard let id = currentUser?["id"] else {
@@ -274,8 +284,8 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
         }
         // STEP 1. Declare URL, Request and Params
         // url we gonna access (API)
-        //let url = URL(string: "http://localhost/fb/uploadImage.php")!
-        let url = URL(string: "http://192.168.1.17/fb/uploadImage.php")!
+        let url = URL(string: "http://localhost/fb/uploadImage.php")!
+        //let url = URL(string: "http://192.168.1.17/fb/uploadImage.php")!
         
         // declaring reqeust with further configs
         var request = URLRequest(url: url)
@@ -289,9 +299,12 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
         // if in the imageView is placeholder - send no picture to the server
         // Compressing image and converting image to 'Data' type
         var imageData = Data()
-        if imageView.image != UIImage(named: "HomeCover.jpg") && imageView.image != UIImage(named: "user.png") {
-            imageData = imageView.image!.jpegData(compressionQuality: 0.5)!
-        }
+        
+//        if imageView.image != UIImage(named: "HomeCover.jpg") && imageView.image != UIImage(named: "user.png") {
+//            imageData = imageView.image!.jpegData(compressionQuality: 0.5)!
+//        }
+        
+        imageData = imageView.image!.jpegData(compressionQuality: 0.5)!
         // assigning full body to the request to be sent to the server
         request.httpBody = Helper().body(with: params, filename: "\(imageViewTapped).jpg", filePathKey: "file", imageDataKey: imageData, boundary: boundary) as Data
         URLSession.shared.dataTask(with: request) { (data, response, error) in
