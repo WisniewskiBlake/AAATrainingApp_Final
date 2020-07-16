@@ -57,7 +57,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
        
         
         loadUsers(offset: skip, limit: limit)
-        
+        //self.tableView.reloadData()
         // add observer of the notifications received/sent to current vc
         
     }
@@ -94,8 +94,8 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
 //            self.tableView.reloadData()
 //        }
         
-        loadUsers(offset: skip, limit: limit)
-//        tableView.reloadData()
+        //loadUsers(offset: skip, limit: limit)
+        tableView.reloadData()
     }
     
     // creates search bar programmatically
@@ -228,7 +228,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
                 
             }
         }.resume()
-
+        //sleep(UInt32(1.0))
     }
     
 // MARK: - loadMore

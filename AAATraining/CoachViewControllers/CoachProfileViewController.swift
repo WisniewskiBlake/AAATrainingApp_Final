@@ -399,8 +399,10 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                             Helper().showAlert(title: "Error", message: message, in: self)
                         }
                     }
+                    
                     self.tableView.reloadData()
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
+                    
                     
                 } catch {
                     Helper().showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
