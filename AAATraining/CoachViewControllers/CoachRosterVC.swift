@@ -9,7 +9,9 @@
 import UIKit
 
 class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, CoachRosterCellDelegate {
-               
+    
+    var refreshControl = UIRefreshControl()
+    
     @IBOutlet weak var tableView: UITableView!
     // search obj
     var searchBar = UISearchBar()
@@ -43,6 +45,10 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
 //           self.tableView.reloadData()
 //        }
         
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+        tableView.addSubview(refreshControl)
+        
         // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadUsers), name: NSNotification.Name(rawValue: "register"), object: nil)
         
@@ -60,6 +66,10 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
         //self.tableView.reloadData()
         // add observer of the notifications received/sent to current vc
         
+    }
+    
+    @objc func refresh(_ sender: AnyObject) {
+        loadUsers(offset: skip, limit: limit)
     }
     
     // exec-d when new post is published
@@ -128,7 +138,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
     
     // cancel button in the searchBar has been clicked
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        
+        searchBar.text = ""
         // hide cancel button
         searchBar.setShowsCancelButton(false, animated: true)
         
@@ -137,7 +147,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
         // hide keyboard
         searchBar.resignFirstResponder()
         // remove all searched results
-        searchBar.text = ""
+        
         
         tableView.reloadData()
         

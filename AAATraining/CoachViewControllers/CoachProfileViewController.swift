@@ -38,7 +38,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     var myFriends = [NSDictionary?]()
     var myFriends_avas = [UIImage]()
     
-    
+    var refreshing = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +47,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200
         
-        
+        self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
         
         // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadUser), name: NSNotification.Name(rawValue: "updateStats"), object: nil)
@@ -76,6 +76,16 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
 //        }
         
         
+        
+        
+    }
+    
+    @objc func refresh(sender:AnyObject)
+    {
+        refreshing = true
+        loadPosts(offset: skip, limit: limit)
+        self.tableView.reloadData()
+        self.refreshControl?.endRefreshing()
         
         
     }
@@ -228,7 +238,10 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                     
                     // reloading tableView to have an affect - show posts
                     self.tableView.reloadData()
-                    
+//                    if(self.refreshing) {
+//                        self.refreshing = false
+//                        self.refreshControl?.endRefreshing()
+//                    }
                     self.isLoading = false
                     
                 } catch {
@@ -236,6 +249,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                     self.isLoading = false
                     return
                 }
+                
+                
                 
             }
             
@@ -401,14 +416,16 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                             Helper().showAlert(title: "Error", message: message, in: self)
                         }
                     }
-                    
-                    self.tableView.reloadData()
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
+                    //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
+                    self.loadPosts(offset: self.skip, limit: self.limit)
+                    //self.tableView.reloadData()
+                    //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
                     
                     
                 } catch {
                     Helper().showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
                 }
+                //self.tableView.reloadData()
             }
         }.resume()
         //self.tableView.reloadData()
