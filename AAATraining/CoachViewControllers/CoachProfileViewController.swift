@@ -480,7 +480,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             
             // upload image to the server
             self.uploadImage(from: avaImageView, action: "newPic")
-          //  self.tableView.reloadData()
+            sleep(UInt32(1.0))
+            self.tableView.reloadData()
             //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
         }
         // completion handler, to communicate to the project that images has been selected (enable delete button)
