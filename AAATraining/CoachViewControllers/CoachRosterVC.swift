@@ -368,6 +368,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
             
             if(currentUser?["lastName"] as! String == users[indexPath.row]!["lastName"] as! String) {
                 cell.coachDeleteButton.isHidden = true
+                cell.coachAvaImage.image = currentUser_ava
             } else {
                cell.coachDeleteButton.isHidden = false
             }
@@ -380,23 +381,25 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
             let lastName = users[indexPath.row]!["lastName"] as! String
             cell.coachFirstNameLabel.text = firstName.capitalized + " " + lastName.capitalized
             
-            // avas logic
-            let avaString = users[indexPath.row]!["ava"] as! String
             
-            // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
-            if (avaString).count > 10 {
-                cell.coachAvaImage.image = users[indexPath.row]!["ava"] as? UIImage
-            
-            } else {
-                cell.coachAvaImage.image = UIImage(named: "user.png")
-                
-            }
-            
-            Helper().downloadImage(from: avaString, showIn: cell.coachAvaImage, orShow: "user.png")
             
             if(currentUser?["lastName"] as! String == users[indexPath.row]!["lastName"] as! String) {
                 cell.coachDeleteButton.isHidden = true
+                cell.coachAvaImage.image = currentUser_ava
             } else {
+                // avas logic
+                let avaString = users[indexPath.row]!["ava"] as! String
+                
+                // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
+                if (avaString).count > 10 {
+                    cell.coachAvaImage.image = users[indexPath.row]!["ava"] as? UIImage
+                
+                } else {
+                    cell.coachAvaImage.image = UIImage(named: "user.png")
+                    
+                }
+                
+                Helper().downloadImage(from: avaString, showIn: cell.coachAvaImage, orShow: "user.png")
                cell.coachDeleteButton.isHidden = false
             }
             
