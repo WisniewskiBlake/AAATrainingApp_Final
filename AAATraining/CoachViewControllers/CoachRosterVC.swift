@@ -15,7 +15,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
     var searchBar = UISearchBar()
     
     var skip = 0
-    var limit = 15
+    var limit = 10
     
     var filteredArray = [NSDictionary?]()
     var lastNames : [String] = []
@@ -38,29 +38,62 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadUsers), name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
         
-//        NotificationCenter.default.addObserver(self, selector: #selector(loadNewUsers), name: NSNotification.Name(rawValue: "uploadPost"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadNewUsers), name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
         
-        self.tableView.reloadData()
+        //self.tableView.reloadData()
         // Do any additional setup after loading the view.
         createSearchBar()
-        loadUsers(offset: skip, limit: limit)
+        
+        DispatchQueue.global().async {
+            let lock = DispatchSemaphore(value: 0)
+            // Load any saved meals, otherwise load sample data.
+            self.loadUsers(offset: self.skip, limit: self.limit, completion: {
+                lock.signal()
+            })
+            lock.wait()
+            // finished fetching data
+        }
+        
+        //loadUsers(offset: skip, limit: limit)
         
         // add observer of the notifications received/sent to current vc
         
     }
     
     // exec-d when new post is published
-//    @objc func loadNewPosts() {
-//
-//        // skipping 0 posts, as we want to load the entire feed. And we are extending Limit value based on the previous loaded posts.
-//        loadPosts(offset: 0, limit: skip + 1)
-//    }
+    @objc func loadNewUsers() {
+
+        // skipping 0 posts, as we want to load the entire feed. And we are extending Limit value based on the previous loaded posts.
+        
+        //loadUsers(offset: 0, limit: skip + 1)
+        
+        DispatchQueue.global().async {
+            let lock = DispatchSemaphore(value: 0)
+            // Load any saved meals, otherwise load sample data.
+            self.loadUsers(offset: self.skip, limit: self.limit, completion: {
+                lock.signal()
+            })
+            lock.wait()
+            // finished fetching data
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        tableView.reloadData()
+        DispatchQueue.global().async {
+            let lock = DispatchSemaphore(value: 0)
+            // Load any saved meals, otherwise load sample data.
+            self.loadUsers(offset: self.skip, limit: self.limit, completion: {
+                lock.signal()
+            })
+            lock.wait()
+            // finished fetching data
+        }
+        
+//        loadUsers(offset: skip, limit: limit)
+//        tableView.reloadData()
     }
     
     // creates search bar programmatically
@@ -131,7 +164,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
     
     // MARK: - loadUsers
     // loading posts from the server via@objc  PHP protocol
-    @objc func loadUsers(offset: Int, limit: Int) {
+    @objc func loadUsers(offset: Int, limit: Int, completion: (() -> Void)?) {
 
         isLoading = true
 
@@ -145,6 +178,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
         // send request
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             DispatchQueue.main.async {
+                
                 // error occured
                 if error != nil {
                     Helper().showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
@@ -158,6 +192,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
                         self.isLoading = false
                         return
                     }
+                    
                     // converting data to JSON
                     let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
 
@@ -166,6 +201,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
                         self.isLoading = false
                         return
                     }
+                    
                     // assigning all successfully loaded users to our Class Var - posts (after it got loaded successfully)
                     self.users = users
                     // we are skipping already loaded numb of posts for the next load - pagination
@@ -175,7 +211,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
                         self.lastNames.append(user["lastName"] as! String)
                     }
 
-                    self.avas.removeAll(keepingCapacity: false)
+                   // self.avas.removeAll(keepingCapacity: false)
 
                     // reloading tableView to have an affect - show posts
                     self.tableView.reloadData()
@@ -187,7 +223,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
                     self.isLoading = false
                     return
                 }
-
+                completion!()
             }
         }.resume()
 
@@ -195,7 +231,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
     
 // MARK: - loadMore
     // loading more posts from the server via PHP protocol
-    func loadMore(offset: Int, limit: Int) {
+    func loadMore(offset: Int, limit: Int, completion: (() -> Void)?) {
         isLoading = true
 
         // prepare request
@@ -260,6 +296,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
                 }
 
             }
+            completion!()
         }.resume()
 
     }
@@ -315,7 +352,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
                 
             }
             
-            Helper().downloadImage(from: avaString, showIn: cell.coachAvaImage, orShow: "user.png")
+            Helper().downloadImage(from: avaString, showIn: cell.coachAvaImage, orShow: "HomeCover.jpg")
             
             if(currentUser?["lastName"] as! String == users[indexPath.row]!["lastName"] as! String) {
                 cell.coachDeleteButton.isHidden = true
@@ -436,7 +473,16 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
         let b = -tableView.frame.height
         
         if a > b && isLoading == false {
-            loadMore(offset: skip, limit: limit)
+            //loadMore(offset: skip, limit: limit)
+            DispatchQueue.global().async {
+                let lock = DispatchSemaphore(value: 0)
+                // Load any saved meals, otherwise load sample data.
+                self.loadMore(offset: self.skip, limit: self.limit, completion: {
+                    lock.signal()
+                })
+                lock.wait()
+                // finished fetching data
+            }
         }
     }
     

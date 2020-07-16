@@ -50,13 +50,15 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadUser), name: NSNotification.Name(rawValue: "updateStats"), object: nil)
         
-        //NotificationCenter.default.addObserver(self, selector: #selector(loadUser), name: NSNotification.Name(rawValue: "updateUser"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadUser), name: NSNotification.Name(rawValue: "updateUser"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadNewPosts), name: NSNotification.Name(rawValue: "uploadPost"), object: nil)
 
         configure_avaImageView()
         loadUser()
         loadPosts(offset: skip, limit: limit)
+        
+        
         
     }
     
@@ -784,7 +786,11 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
         }
     
-    // MARK: - Scroll did scroll
+    
+    
+    
+    
+    // MARK: - Scroll Did Scroll
     // executed always whenever tableView is scrolling
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
@@ -798,6 +804,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
     }
     
+    // MARK: - More Clicked
     @IBAction func moreButton_clicked(_ sender: Any) {
         // creating action sheet
         let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
