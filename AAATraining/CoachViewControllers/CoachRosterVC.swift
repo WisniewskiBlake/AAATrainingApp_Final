@@ -32,16 +32,16 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        DispatchQueue.main.async {
-           let lock = DispatchSemaphore(value: 0)
-           // Load any saved meals, otherwise load sample data.
-           self.loadUsers(offset: self.skip, limit: self.limit, completion: {
-               lock.signal()
-           })
-           lock.wait()
-           // finished fetching data
-           self.tableView.reloadData()
-        }
+//        DispatchQueue.main.async {
+//           let lock = DispatchSemaphore(value: 0)
+//           // Load any saved meals, otherwise load sample data.
+//           self.loadUsers(offset: self.skip, limit: self.limit, completion: {
+//               lock.signal()
+//           })
+//           lock.wait()
+//           // finished fetching data
+//           self.tableView.reloadData()
+//        }
         
         // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadUsers), name: NSNotification.Name(rawValue: "register"), object: nil)
@@ -56,7 +56,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
         
        
         
-        //loadUsers(offset: skip, limit: limit)
+        loadUsers(offset: skip, limit: limit)
         
         // add observer of the notifications received/sent to current vc
         
@@ -82,19 +82,19 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        DispatchQueue.main.async {
-            let lock = DispatchSemaphore(value: 0)
-            // Load any saved meals, otherwise load sample data.
-            self.loadUsers(offset: self.skip, limit: self.limit, completion: {
-                lock.signal()
-            })
-            lock.wait()
-            self.tableView.reloadData()
-        }
+//        self.tableView.delegate = self
+//        self.tableView.dataSource = self
+//        DispatchQueue.main.async {
+//            let lock = DispatchSemaphore(value: 0)
+//            // Load any saved meals, otherwise load sample data.
+//            self.loadUsers(offset: self.skip, limit: self.limit, completion: {
+//                lock.signal()
+//            })
+//            lock.wait()
+//            self.tableView.reloadData()
+//        }
         
-//        loadUsers(offset: skip, limit: limit)
+        loadUsers(offset: skip, limit: limit)
 //        tableView.reloadData()
     }
     
@@ -166,7 +166,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
     
     // MARK: - loadUsers
     // loading posts from the server via@objc  PHP protocol
-    @objc func loadUsers(offset: Int, limit: Int, completion: (() -> Void)?) {
+    @objc func loadUsers(offset: Int, limit: Int) {
 
         isLoading = true
 
@@ -225,7 +225,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
                     self.isLoading = false
                     return
                 }
-                completion!()
+                
             }
         }.resume()
 
@@ -233,7 +233,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
     
 // MARK: - loadMore
     // loading more posts from the server via PHP protocol
-    func loadMore(offset: Int, limit: Int, completion: (() -> Void)?) {
+    func loadMore(offset: Int, limit: Int) {
         isLoading = true
 
         // prepare request
@@ -475,16 +475,16 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
         let b = -tableView.frame.height
         
         if a > b && isLoading == false {
-            //loadMore(offset: skip, limit: limit)
-            DispatchQueue.main.async {
-                let lock = DispatchSemaphore(value: 0)
-                // Load any saved meals, otherwise load sample data.
-                self.loadMore(offset: self.skip, limit: self.limit, completion: {
-                    lock.signal()
-                })
-                lock.wait()
-                // finished fetching data
-            }
+            loadMore(offset: skip, limit: limit)
+//            DispatchQueue.main.async {
+//                let lock = DispatchSemaphore(value: 0)
+//                // Load any saved meals, otherwise load sample data.
+//                self.loadMore(offset: self.skip, limit: self.limit, completion: {
+//                    lock.signal()
+//                })
+//                lock.wait()
+//                // finished fetching data
+//            }
         }
     }
     

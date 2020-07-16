@@ -357,9 +357,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
 //            imageData = imageView.image!.jpegData(compressionQuality: 0.5)!
 //        }
         
-//        if imageView.image != UIImage(named: "HomeCover.jpg") && imageView.image != UIImage(named: "user.png") {
-//            imageData = imageView.image!.jpegData(compressionQuality: 0.5)!
-//        }
+
         imageData = imageView.image!.jpegData(compressionQuality: 0.5)!
         let xxx = imageView.image!
         print(xxx)
@@ -392,6 +390,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                         currentUser = parsedJSON.mutableCopy()  as? Dictionary<String, Any>
                         DEFAULTS.set(currentUser, forKey: "currentUser")
                         DEFAULTS.synchronize()
+                        //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
                     // error while uploading
                     } else {
                         // show the error message in AlertView
@@ -400,6 +399,9 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                             Helper().showAlert(title: "Error", message: message, in: self)
                         }
                     }
+                    self.tableView.reloadData()
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
+                    
                 } catch {
                     Helper().showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
                 }
@@ -454,6 +456,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             
             // upload image to the server
             self.uploadImage(from: avaImageView, action: "newPic")
+            //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
         }
         // completion handler, to communicate to the project that images has been selected (enable delete button)
         dismiss(animated: true) {
@@ -621,43 +624,43 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 // text logic
                 let text = posts[indexPath.row]!["text"] as! String
                 cell.postTextLabel.text = text
-                
+                //cell.avaImageView.image = currentUser_ava
                 
                 // avas logic
                 let avaString = posts[indexPath.row]!["ava"] as! String
                 let avaURL = URL(string: avaString)!
                 
-                // if there are still avas to be loaded
+        //         if there are still avas to be loaded
                 if posts.count != avas.count {
-                    
+
                     URLSession(configuration: .default).dataTask(with: avaURL) { (data, response, error) in
-                        
+
                         // failed downloading - assign placeholder
                         if error != nil {
                             if let image = UIImage(named: "user.png") {
-                                
+
                                 self.avas.append(image)
-                                
+
                                 DispatchQueue.main.async {
                                     cell.avaImageView.image = image
                                 }
                             }
                         }
-                        
+
                         // downloaded
                         if let image = UIImage(data: data!) {
-                            
+
                             self.avas.append(image)
-                            
+
                             DispatchQueue.main.async {
                                 cell.avaImageView.image = image
                             }
                         }
                     }.resume()
-                    
+
                 // cached ava
                 } else {
-                    
+
                     DispatchQueue.main.async {
                         cell.avaImageView.image = self.avas[indexPath.row]
                     }
