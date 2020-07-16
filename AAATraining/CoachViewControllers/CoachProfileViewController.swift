@@ -55,6 +55,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         NotificationCenter.default.addObserver(self, selector: #selector(loadUser), name: NSNotification.Name(rawValue: "updateUser"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadNewPosts), name: NSNotification.Name(rawValue: "uploadPost"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
 
         configure_avaImageView()
         loadUser()
@@ -156,7 +158,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     
     // MARK: - Load Posts
     // loading posts from the server via@objc  PHP protocol
-    func loadPosts(offset: Int, limit: Int) {
+    @objc func loadPosts(offset: Int, limit: Int) {
         
         isLoading = true
         
@@ -409,6 +411,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 }
             }
         }.resume()
+        //self.tableView.reloadData()
     }
     
     // configuring the appearance of AvaImageView
@@ -458,6 +461,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             
             // upload image to the server
             self.uploadImage(from: avaImageView, action: "newPic")
+          //  self.tableView.reloadData()
             //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
         }
         // completion handler, to communicate to the project that images has been selected (enable delete button)
