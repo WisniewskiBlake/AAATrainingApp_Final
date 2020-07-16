@@ -32,27 +32,29 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        DispatchQueue.main.async {
+           let lock = DispatchSemaphore(value: 0)
+           // Load any saved meals, otherwise load sample data.
+           self.loadUsers(offset: self.skip, limit: self.limit, completion: {
+               lock.signal()
+           })
+           lock.wait()
+           // finished fetching data
+           self.tableView.reloadData()
+        }
         
         // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadUsers), name: NSNotification.Name(rawValue: "register"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadUsers), name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(loadNewUsers), name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(loadNewUsers), name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
         
         //self.tableView.reloadData()
         // Do any additional setup after loading the view.
         createSearchBar()
         
-        DispatchQueue.global().async {
-            let lock = DispatchSemaphore(value: 0)
-            // Load any saved meals, otherwise load sample data.
-            self.loadUsers(offset: self.skip, limit: self.limit, completion: {
-                lock.signal()
-            })
-            lock.wait()
-            // finished fetching data
-        }
+       
         
         //loadUsers(offset: skip, limit: limit)
         
@@ -61,35 +63,35 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
     }
     
     // exec-d when new post is published
-    @objc func loadNewUsers() {
-
-        // skipping 0 posts, as we want to load the entire feed. And we are extending Limit value based on the previous loaded posts.
-        
-        //loadUsers(offset: 0, limit: skip + 1)
-        
-        DispatchQueue.global().async {
-            let lock = DispatchSemaphore(value: 0)
-            // Load any saved meals, otherwise load sample data.
-            self.loadUsers(offset: self.skip, limit: self.limit, completion: {
-                lock.signal()
-            })
-            lock.wait()
-            // finished fetching data
-        }
-    }
+//    @objc func loadNewUsers() {
+//
+//        // skipping 0 posts, as we want to load the entire feed. And we are extending Limit value based on the previous loaded posts.
+//
+//        //loadUsers(offset: 0, limit: skip + 1)
+//
+//        DispatchQueue.global().async {
+//            let lock = DispatchSemaphore(value: 0)
+//            // Load any saved meals, otherwise load sample data.
+//            self.loadUsers(offset: self.skip, limit: self.limit, completion: {
+//                lock.signal()
+//            })
+//            lock.wait()
+//            // finished fetching data
+//        }
+//    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        DispatchQueue.global().async {
+        DispatchQueue.main.async {
             let lock = DispatchSemaphore(value: 0)
             // Load any saved meals, otherwise load sample data.
             self.loadUsers(offset: self.skip, limit: self.limit, completion: {
                 lock.signal()
             })
             lock.wait()
-            // finished fetching data
+            self.tableView.reloadData()
         }
         
 //        loadUsers(offset: skip, limit: limit)
@@ -296,7 +298,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
                 }
 
             }
-            completion!()
+            //completion!()
         }.resume()
 
     }
@@ -474,7 +476,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
         
         if a > b && isLoading == false {
             //loadMore(offset: skip, limit: limit)
-            DispatchQueue.global().async {
+            DispatchQueue.main.async {
                 let lock = DispatchSemaphore(value: 0)
                 // Load any saved meals, otherwise load sample data.
                 self.loadMore(offset: self.skip, limit: self.limit, completion: {

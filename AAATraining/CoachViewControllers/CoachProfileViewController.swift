@@ -47,6 +47,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200
         
+        
+        
         // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadUser), name: NSNotification.Name(rawValue: "updateStats"), object: nil)
         
@@ -58,6 +60,20 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         loadUser()
         loadPosts(offset: skip, limit: limit)
         
+        //loadPosts(offset: skip, limit: limit)
+//        DispatchQueue.global().async {
+//            let lock = DispatchSemaphore(value: 0)
+//            // Load any saved meals, otherwise load sample data.
+//
+//            self.loadPosts(offset: self.skip, limit: self.limit, completion: {
+//                lock.signal()
+//            })
+//            lock.wait()
+//            // finished fetching data
+//            //self.tableView.reloadData()
+//        }
+        
+        
         
         
     }
@@ -65,6 +81,17 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+//        DispatchQueue.global().async {
+//            let lock = DispatchSemaphore(value: 0)
+//            // Load any saved meals, otherwise load sample data.
+//            self.loadPosts(offset: self.skip, limit: self.limit, completion: {
+//                lock.signal()
+//            })
+//            lock.wait()
+//            // finished fetching data
+//            //self.tableView.reloadData()
+//        }
         
         // hide navigation bar on Home Pagex
         navigationController?.setNavigationBarHidden(true, animated: true)
@@ -76,6 +103,18 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
         // skipping 0 posts, as we want to load the entire feed. And we are extending Limit value based on the previous loaded posts.
         loadPosts(offset: 0, limit: skip + 1)
+        
+//        DispatchQueue.global().async {
+//            let lock = DispatchSemaphore(value: 0)
+//            // Load any saved meals, otherwise load sample data.
+//            self.loadPosts(offset: self.skip, limit: self.limit + 1, completion: {
+//                lock.signal()
+//            })
+//            lock.wait()
+//            // finished fetching data
+//            self.tableView.reloadData()
+//
+//        }
     }
     
     // MARK: - Load User
@@ -197,6 +236,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 }
                 
             }
+            
         }.resume()
         
     }
@@ -283,6 +323,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 }
                 
             }
+            
         }.resume()
         
     }
@@ -800,6 +841,15 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
         if a > b && isLoading == false {
             loadMore(offset: skip, limit: limit)
+//            DispatchQueue.global().async {
+//                let lock = DispatchSemaphore(value: 0)
+//                // Load any saved meals, otherwise load sample data.
+//                self.loadMore(offset: self.skip, limit: self.limit, completion: {
+//                    lock.signal()
+//                })
+//                lock.wait()
+//                // finished fetching data
+//            }
         }
         
     }
