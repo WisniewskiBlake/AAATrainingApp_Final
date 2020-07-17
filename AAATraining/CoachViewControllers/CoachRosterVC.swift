@@ -352,29 +352,35 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
             let lastName = filteredArray[indexPath.row]!["lastName"] as! String
             cell.coachFirstNameLabel.text = firstName.capitalized + " " + lastName.capitalized
             
-            // avas logic
-            let avaString = filteredArray[indexPath.row]!["ava"] as! String
             
-            // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
-            if (avaString).count > 10 {
-                cell.coachAvaImage.image = filteredArray[indexPath.row]!["ava"] as? UIImage
             
-            } else {
-                cell.coachAvaImage.image = UIImage(named: "user.png")
-                
-            }
             
-            Helper().downloadImage(from: avaString, showIn: cell.coachAvaImage, orShow: "HomeCover.jpg")
             
             if(currentUser?["lastName"] as! String == users[indexPath.row]!["lastName"] as! String) {
                 cell.coachDeleteButton.isHidden = true
                 cell.coachAvaImage.image = currentUser_ava
+                let avaString = users[indexPath.row]!["ava"] as! String
+                Helper().downloadImage(from: avaString, showIn: cell.coachAvaImage, orShow: "user.png")
             } else {
+                // avas logic
+                let avaString = filteredArray[indexPath.row]!["ava"] as! String
+                
+                // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
+                if (avaString).count > 10 {
+                    cell.coachAvaImage.image = filteredArray[indexPath.row]!["ava"] as? UIImage
+                
+                } else {
+                    cell.coachAvaImage.image = UIImage(named: "user.png")
+                    
+                }
+                Helper().downloadImage(from: avaString, showIn: cell.coachAvaImage, orShow: "HomeCover.jpg")
                cell.coachDeleteButton.isHidden = false
             }
             
             cell.coachDeleteButton.tag = indexPath.row
             cell.coachConfirmButton.tag = indexPath.row
+            
+            searching = false
         } else {
             // fullname logic
             let firstName = users[indexPath.row]!["firstName"] as! String
@@ -386,6 +392,14 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
             if(currentUser?["lastName"] as! String == users[indexPath.row]!["lastName"] as! String) {
                 cell.coachDeleteButton.isHidden = true
                 cell.coachAvaImage.image = currentUser_ava
+                //cell.coachAvaImage.image = currentUser?["ava"] as? UIImage
+                let avaString = currentUser?["ava"] as! String
+                print(avaString)
+                
+                Helper().downloadImage(from: avaString, showIn: cell.coachAvaImage, orShow: "user.png")
+                
+                //let avaString = cell.coachAvaImage.image as! String
+                //Helper().downloadImage(from: avaString, showIn: cell.coachAvaImage, orShow: "user.png")
             } else {
                 // avas logic
                 let avaString = users[indexPath.row]!["ava"] as! String
@@ -398,8 +412,8 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
                     cell.coachAvaImage.image = UIImage(named: "user.png")
                     
                 }
-                
                 Helper().downloadImage(from: avaString, showIn: cell.coachAvaImage, orShow: "user.png")
+                
                cell.coachDeleteButton.isHidden = false
             }
             
@@ -463,7 +477,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
         // get the index of the cell in order to get the certain post's id
         
         
-        print(avas)
+        //print(avas)
         return cell
     
     }

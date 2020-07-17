@@ -27,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func goToMain() {
-        let weight = currentUser?["weight"] as! String
+    let weight = currentUser?["weight"] as! String
         
     if weight == "123456789" {
         let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoachTabBar")

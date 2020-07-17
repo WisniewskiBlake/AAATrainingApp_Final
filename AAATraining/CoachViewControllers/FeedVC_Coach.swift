@@ -30,24 +30,35 @@ class FeedVC_Coach: UITableViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200
         
+        self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
         
         // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadNewPosts), name: NSNotification.Name(rawValue: "uploadPost"), object: nil)
         
         
         // run function
-        //loadPosts(offset: skip, limit: limit)
+        loadPosts(offset: skip, limit: limit)
         
-        DispatchQueue.main.async {
-            let lock = DispatchSemaphore(value: 0)
-            // Load any saved meals, otherwise load sample data.
-            self.loadPosts(offset: self.skip, limit: self.limit, completion: {
-                lock.signal()
-            })
-            lock.wait()
-            // finished fetching data
-            self.tableView.reloadData()
-        }
+//        DispatchQueue.main.async {
+//            let lock = DispatchSemaphore(value: 0)
+//            // Load any saved meals, otherwise load sample data.
+//            self.loadPosts(offset: self.skip, limit: self.limit, completion: {
+//                lock.signal()
+//            })
+//            lock.wait()
+//            // finished fetching data
+//            self.tableView.reloadData()
+//        }
+    }
+    
+    @objc func refresh(sender:AnyObject)
+    {
+        //refreshing = true
+        loadPosts(offset: skip, limit: limit)
+        self.tableView.reloadData()
+        self.refreshControl?.endRefreshing()
+        
+        
     }
     
     // pre-load func
@@ -56,16 +67,17 @@ class FeedVC_Coach: UITableViewController {
         
         // hide navigation bar on Home Pagex
         navigationController?.setNavigationBarHidden(true, animated: true)
-        DispatchQueue.main.async {
-            let lock = DispatchSemaphore(value: 0)
-            // Load any saved meals, otherwise load sample data.
-            self.loadPosts(offset: self.skip, limit: self.limit, completion: {
-                lock.signal()
-            })
-            lock.wait()
-            // finished fetching data
-            self.tableView.reloadData()
-        }
+//        DispatchQueue.main.async {
+//            let lock = DispatchSemaphore(value: 0)
+//            // Load any saved meals, otherwise load sample data.
+//            self.loadPosts(offset: self.skip, limit: self.limit, completion: {
+//                lock.signal()
+//            })
+//            lock.wait()
+//            // finished fetching data
+//            self.tableView.reloadData()
+//        }
+        tableView.reloadData()
         
     }
     
@@ -73,21 +85,21 @@ class FeedVC_Coach: UITableViewController {
     @objc func loadNewPosts() {
         
         // skipping 0 posts, as we want to load the entire feed. And we are extending Limit value based on the previous loaded posts.
-        //loadPosts(offset: 0, limit: skip + 1)
-        DispatchQueue.global().async {
-            let lock = DispatchSemaphore(value: 0)
-            // Load any saved meals, otherwise load sample data.
-            self.loadPosts(offset: self.skip, limit: self.limit, completion: {
-                lock.signal()
-            })
-            lock.wait()
-            // finished fetching data
-        }
+        loadPosts(offset: 0, limit: skip + 1)
+//        DispatchQueue.global().async {
+//            let lock = DispatchSemaphore(value: 0)
+//            // Load any saved meals, otherwise load sample data.
+//            self.loadPosts(offset: self.skip, limit: self.limit, completion: {
+//                lock.signal()
+//            })
+//            lock.wait()
+//            // finished fetching data
+//        }
     }
     
     // MARK: - Load Posts
     // loading posts from the server via@objc  PHP protocol
-    func loadPosts(offset: Int, limit: Int, completion: (() -> Void)?) {
+    func loadPosts(offset: Int, limit: Int) {
         isLoading = true
         
         // accessing id of the user : safe mode
@@ -165,14 +177,14 @@ class FeedVC_Coach: UITableViewController {
                 }
                 
             }
-            completion!()
+            //completion!()
         }.resume()
         
     }
     
     // MARK: - Load More
     // loading more posts from the server via PHP protocol
-    func loadMore(offset: Int, limit: Int, completion: (() -> Void)?) {
+    func loadMore(offset: Int, limit: Int) {
         
         isLoading = true
         
@@ -252,7 +264,7 @@ class FeedVC_Coach: UITableViewController {
                 }
                 
             }
-            completion!()
+            //completion!()
         }.resume()
         
     }
@@ -266,16 +278,16 @@ class FeedVC_Coach: UITableViewController {
         let b = -tableView.frame.height
         
         if a > b && isLoading == false {
-            //loadMore(offset: skip, limit: limit)
-            DispatchQueue.main.async {
-                let lock = DispatchSemaphore(value: 0)
-                // Load any saved meals, otherwise load sample data.
-                self.loadMore(offset: self.skip, limit: self.limit, completion: {
-                    lock.signal()
-                })
-                lock.wait()
-                // finished fetching data
-            }
+            loadMore(offset: skip, limit: limit)
+//            DispatchQueue.main.async {
+//                let lock = DispatchSemaphore(value: 0)
+//                // Load any saved meals, otherwise load sample data.
+//                self.loadMore(offset: self.skip, limit: self.limit, completion: {
+//                    lock.signal()
+//                })
+//                lock.wait()
+//                // finished fetching data
+//            }
         }
         
     }
