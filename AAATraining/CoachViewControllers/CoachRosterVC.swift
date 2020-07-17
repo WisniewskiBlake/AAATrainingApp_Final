@@ -17,7 +17,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
     var searchBar = UISearchBar()
     
     var skip = 0
-    var limit = 10
+    var limit = 25
     
     var filteredArray = [NSDictionary?]()
     var lastNames : [String] = []
@@ -373,7 +373,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
                     cell.coachAvaImage.image = UIImage(named: "user.png")
                     
                 }
-                Helper().downloadImage(from: avaString, showIn: cell.coachAvaImage, orShow: "HomeCover.jpg")
+                Helper().downloadImage(from: avaString, showIn: cell.coachAvaImage, orShow: "user.png")
                cell.coachDeleteButton.isHidden = false
             }
             
