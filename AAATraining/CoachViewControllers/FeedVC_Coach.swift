@@ -35,6 +35,11 @@ class FeedVC_Coach: UITableViewController {
         // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadNewPosts), name: NSNotification.Name(rawValue: "uploadPost"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
+        // add observers for notifications
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "deletePost"), object: nil)
+        
         
         // run function
         loadPosts(offset: skip, limit: limit)
@@ -81,25 +86,11 @@ class FeedVC_Coach: UITableViewController {
         
     }
     
-    // exec-d when new post is published
-    @objc func loadNewPosts() {
-        
-        // skipping 0 posts, as we want to load the entire feed. And we are extending Limit value based on the previous loaded posts.
-        loadPosts(offset: 0, limit: skip + 1)
-//        DispatchQueue.global().async {
-//            let lock = DispatchSemaphore(value: 0)
-//            // Load any saved meals, otherwise load sample data.
-//            self.loadPosts(offset: self.skip, limit: self.limit, completion: {
-//                lock.signal()
-//            })
-//            lock.wait()
-//            // finished fetching data
-//        }
-    }
+    
     
     // MARK: - Load Posts
     // loading posts from the server via@objc  PHP protocol
-    func loadPosts(offset: Int, limit: Int) {
+    @objc func loadPosts(offset: Int, limit: Int) {
         isLoading = true
         
         // accessing id of the user : safe mode
@@ -182,9 +173,25 @@ class FeedVC_Coach: UITableViewController {
         
     }
     
+    // exec-d when new post is published
+        @objc func loadNewPosts() {
+            
+            // skipping 0 posts, as we want to load the entire feed. And we are extending Limit value based on the previous loaded posts.
+            loadPosts(offset: 0, limit: skip + 1)
+    //        DispatchQueue.global().async {
+    //            let lock = DispatchSemaphore(value: 0)
+    //            // Load any saved meals, otherwise load sample data.
+    //            self.loadPosts(offset: self.skip, limit: self.limit, completion: {
+    //                lock.signal()
+    //            })
+    //            lock.wait()
+    //            // finished fetching data
+    //        }
+        }
+    
     // MARK: - Load More
     // loading more posts from the server via PHP protocol
-    func loadMore(offset: Int, limit: Int) {
+    @objc func loadMore(offset: Int, limit: Int) {
         
         isLoading = true
         
@@ -392,7 +399,8 @@ class FeedVC_Coach: UITableViewController {
                 } else {
                     
                     DispatchQueue.main.async {
-                        cell.avaImageView.image = self.avas[indexPath.row]
+                        //cell.avaImageView.image = self.avas[indexPath.row]
+                        cell.avaImageView.image = currentUser_ava
                     }
                 }
                 
