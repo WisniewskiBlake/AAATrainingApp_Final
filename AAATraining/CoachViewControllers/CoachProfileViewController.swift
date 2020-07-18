@@ -991,10 +991,12 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                         return
                     }
                     
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "deletePost"), object: nil)
+                    
                     // accessing json via data received
                     let _ = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
                     
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "deletePost"), object: nil)
+                    
                 // json error
                 } catch {
                     Helper().showAlert(title: "JSON Error", message: error.localizedDescription, in: self)

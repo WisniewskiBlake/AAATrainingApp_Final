@@ -41,10 +41,10 @@ class FeedVC_Coach: UITableViewController {
         // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadNewPosts), name: NSNotification.Name(rawValue: "uploadPost"), object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(test), name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
         // add observers for notifications
         
-//        NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "deletePost"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "deletePost"), object: nil)
         
 //        NotificationCenter.default.addObserver(self, selector: #selector(deletePost), name: NSNotification.Name(rawValue: "deletePost"), object: nil)
         
@@ -62,6 +62,10 @@ class FeedVC_Coach: UITableViewController {
 //            // finished fetching data
 //            self.tableView.reloadData()
 //        }
+    }
+    
+    @objc func test() {
+        self.tableView.reloadData()
     }
     
     @objc func refresh(sender:AnyObject)
@@ -97,6 +101,9 @@ class FeedVC_Coach: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        loadPosts(offset: skip, limit: limit)
+        //tableView.reloadData()
+        
         // hide navigation bar on Home Pagex
         navigationController?.setNavigationBarHidden(true, animated: true)
 //        DispatchQueue.main.async {
@@ -110,6 +117,7 @@ class FeedVC_Coach: UITableViewController {
 //            self.tableView.reloadData()
 //        }
         //tableView.reloadData()
+        
         
     }
     
@@ -217,6 +225,21 @@ class FeedVC_Coach: UITableViewController {
     //            // finished fetching data
     //        }
         }
+    // MARK: - Load Delete
+//    @objc func loadNewPosts() {
+//            
+//            // skipping 0 posts, as we want to load the entire feed. And we are extending Limit value based on the previous loaded posts.
+//            loadPosts(offset: 0, limit: skip + 1)
+//    //        DispatchQueue.global().async {
+//    //            let lock = DispatchSemaphore(value: 0)
+//    //            // Load any saved meals, otherwise load sample data.
+//    //            self.loadPosts(offset: self.skip, limit: self.limit, completion: {
+//    //                lock.signal()
+//    //            })
+//    //            lock.wait()
+//    //            // finished fetching data
+//    //        }
+//        }
     
     // MARK: - Load More
     // loading more posts from the server via PHP protocol
