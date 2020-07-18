@@ -31,6 +31,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     var liked = [Int]()
     //var numLiked = [Int]()
     
+    let vc = FeedVC_Coach()
+    
     // color obj
     let likeColor = UIColor(red: 28/255, green: 165/255, blue: 252/255, alpha: 1)
     
@@ -39,6 +41,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     var myFriends_avas = [UIImage]()
     
     var refreshing = true
+    
+//    var postID:Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -840,16 +844,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 cell.optionsButton.tag = indexPath.row
                 
                 
-//                // manipulating the appearance of the button based is the post has been liken or not
-//                DispatchQueue.main.async {
-//                    if self.liked[indexPath.row] == 1 {
-//                        cell.likeButton.setImage(UIImage(named: "like.png"), for: .normal)
-//                        cell.likeButton.tintColor = self.likeColor
-//                    } else {
-//                        cell.likeButton.setImage(UIImage(named: "unlike.png"), for: .normal)
-//                        cell.likeButton.tintColor = UIColor.darkGray
-//                    }
-//                }
+
                 
                 
                 return cell
@@ -945,12 +940,13 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     
     // MARK: - Delete Posts
     // sends request to the server to delete the post
-    func deletePost(_ row: Int) {
+    @objc func deletePost(_ row: Int) {
         
         // accessing id of the post which is stored in the tapped cell
         guard let id = posts[row]?["id"] as? Int else {
             return
         }
+        
         
         // prepare request
         let url = URL(string: "http://localhost/fb/deletePost.php")!
@@ -974,6 +970,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         tableView.endUpdates()
         tableView.reloadData()
         
+//        vc.postID = id
         
         // execute request
         URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -997,7 +994,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                     // accessing json via data received
                     let _ = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
                     
-                    
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "deletePost"), object: nil)
                 // json error
                 } catch {
                     Helper().showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
@@ -1097,16 +1094,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                //cell.commentsButton.tag = indexPath.row
                cell.optionsButton.tag = indexPath.row
                
-//               // manipulating the appearance of the button based is the post has been liken or not
-//               DispatchQueue.main.async {
-//                   if self.liked[indexPath.row] == 1 {
-//                       cell.likeButton.setImage(UIImage(named: "like.png"), for: .normal)
-//                       cell.likeButton.tintColor = self.likeColor
-//                   } else {
-//                       cell.likeButton.setImage(UIImage(named: "unlike.png"), for: .normal)
-//                       cell.likeButton.tintColor = UIColor.darkGray
-//                   }
-//               }
+
     
            // picture in the post
            } else {

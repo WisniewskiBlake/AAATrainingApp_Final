@@ -229,6 +229,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
                     self.tableView.reloadData()
 
                     self.isLoading = false
+                    
 
                 } catch {
                     Helper().showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
@@ -238,6 +239,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
                 
             }
         }.resume()
+        self.refreshControl.endRefreshing()
         //sleep(UInt32(1.0))
     }
     
