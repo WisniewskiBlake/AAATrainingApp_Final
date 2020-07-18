@@ -41,10 +41,10 @@ class FeedVC_Coach: UITableViewController {
         // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadNewPosts), name: NSNotification.Name(rawValue: "uploadPost"), object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(test), name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadAvaAfterUpload), name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
         // add observers for notifications
         
-        NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "deletePost"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadPostsAfterDelete), name: NSNotification.Name(rawValue: "deletePost"), object: nil)
         
 //        NotificationCenter.default.addObserver(self, selector: #selector(deletePost), name: NSNotification.Name(rawValue: "deletePost"), object: nil)
         
@@ -64,9 +64,7 @@ class FeedVC_Coach: UITableViewController {
 //        }
     }
     
-    @objc func test() {
-        self.tableView.reloadData()
-    }
+    
     
     @objc func refresh(sender:AnyObject)
     {
@@ -79,29 +77,13 @@ class FeedVC_Coach: UITableViewController {
         
     }
     
-//    @objc func deletePost(_ row: Int) {
-//        if(posts[row]?["id"] == postID) {
-//            // clean up of the data stored in the background of our logic in order to keep everything synchronized
-//            posts.remove(at: row)
-//            avas.remove(at: row)
-//            pictures.remove(at: row)
-//            liked.remove(at: row)
-//
-//
-//            // remove the cell itself from the tableView
-//            let indexPath = IndexPath(row: row, section: 0)
-//            tableView.beginUpdates()
-//            tableView.deleteRows(at: [indexPath], with: .automatic)
-//            tableView.endUpdates()
-//            tableView.reloadData()
-//        }
-//    }
+
     
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        loadPosts(offset: skip, limit: limit)
+        //loadPosts(offset: skip, limit: limit)
         //tableView.reloadData()
         
         // hide navigation bar on Home Pagex
@@ -121,7 +103,9 @@ class FeedVC_Coach: UITableViewController {
         
     }
     
-    
+    @objc func test() {
+        loadPosts(offset: skip, limit: limit)
+    }
     
     // MARK: - Load Posts
     // loading posts from the server via@objc  PHP protocol
@@ -191,7 +175,7 @@ class FeedVC_Coach: UITableViewController {
                         self.lastNames.append(post["lastName"] as! String)
                     }
                     
-                    
+                    print("Loaded----------------------------------------------------------")
                     // reloading tableView to have an affect - show posts
                     self.tableView.reloadData()
                     
@@ -200,6 +184,7 @@ class FeedVC_Coach: UITableViewController {
                 } catch {
                     Helper().showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
                     self.isLoading = false
+                    print("JSON ERROR----------------------------------------------------------------------------")
                     return
                 }
                 
@@ -226,20 +211,20 @@ class FeedVC_Coach: UITableViewController {
     //        }
         }
     // MARK: - Load Delete
-//    @objc func loadNewPosts() {
-//            
-//            // skipping 0 posts, as we want to load the entire feed. And we are extending Limit value based on the previous loaded posts.
-//            loadPosts(offset: 0, limit: skip + 1)
-//    //        DispatchQueue.global().async {
-//    //            let lock = DispatchSemaphore(value: 0)
-//    //            // Load any saved meals, otherwise load sample data.
-//    //            self.loadPosts(offset: self.skip, limit: self.limit, completion: {
-//    //                lock.signal()
-//    //            })
-//    //            lock.wait()
-//    //            // finished fetching data
-//    //        }
-//        }
+    @objc func loadPostsAfterDelete() {
+            
+            // skipping 0 posts, as we want to load the entire feed. And we are extending Limit value based on the previous loaded posts.
+            loadPosts(offset: 0, limit: skip - 1)
+    
+        }
+    
+    // MARK: - Load Ava
+    @objc func loadAvaAfterUpload() {
+            
+            // skipping 0 posts, as we want to load the entire feed. And we are extending Limit value based on the previous loaded posts.
+            loadPosts(offset: 0, limit: skip - 1 + 1)
+    
+        }
     
     // MARK: - Load More
     // loading more posts from the server via PHP protocol
@@ -314,7 +299,7 @@ class FeedVC_Coach: UITableViewController {
                     }
                     
                     self.tableView.endUpdates()
-                    
+                    print("End updates --------------------------------------------------------")
                     self.isLoading = false
                     
                 } catch {
