@@ -61,6 +61,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         NotificationCenter.default.addObserver(self, selector: #selector(loadNewPosts), name: NSNotification.Name(rawValue: "uploadPost"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
+        
+        
 
         configure_avaImageView()
         loadUser()
