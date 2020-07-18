@@ -168,7 +168,9 @@ class CoachRegisterVC: UIViewController {
                             helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
                             return
                         }
-
+                        
+                        
+                        
                         // fetching all JSON received from the server
                         let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
 

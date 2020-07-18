@@ -391,7 +391,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
             
             
             
-            if(currentUser?["lastName"] as! String == users[indexPath.row]!["lastName"] as! String) {
+            if(currentUser?["lastName"] as! String == users[indexPath.row]!["lastName"] as! String && currentUser?["firstName"] as! String == users[indexPath.row]!["firstName"] as! String) {
                 cell.coachDeleteButton.isHidden = true
                 cell.coachAvaImage.image = currentUser_ava
                 //cell.coachAvaImage.image = currentUser?["ava"] as? UIImage

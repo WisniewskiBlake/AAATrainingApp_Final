@@ -655,44 +655,57 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 
                 // avas logic
                 let avaString = posts[indexPath.row]!["ava"] as! String
-                let avaURL = URL(string: avaString)!
+                
+                // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
+                if (avaString).count > 10 {
+                    cell.avaImageView.image = posts[indexPath.row]!["ava"] as? UIImage
+                
+                } else {
+                    cell.avaImageView.image = UIImage(named: "user.png")
+                    
+                }
+                Helper().downloadImage(from: avaString, showIn: cell.avaImageView, orShow: "user.png")
+                
+                // avas logic
+//                let avaString = posts[indexPath.row]!["ava"] as! String
+//                let avaURL = URL(string: avaString)!
                 
         //         if there are still avas to be loaded
-                if posts.count != avas.count {
-
-                    URLSession(configuration: .default).dataTask(with: avaURL) { (data, response, error) in
-
-                        // failed downloading - assign placeholder
-                        if error != nil {
-                            if let image = UIImage(named: "user.png") {
-
-                                self.avas.append(image)
-
-                                DispatchQueue.main.async {
-                                    cell.avaImageView.image = image
-                                }
-                            }
-                        }
-
-                        // downloaded
-                        if let image = UIImage(data: data!) {
-
-                            self.avas.append(image)
-
-                            DispatchQueue.main.async {
-                                cell.avaImageView.image = image
-                            }
-                        }
-                    }.resume()
-
-                // cached ava
-                } else {
-
-                    DispatchQueue.main.async {
-                        //cell.avaImageView.image = self.avas[indexPath.row]
-                        cell.avaImageView.image = currentUser_ava
-                    }
-                }
+//                if posts.count != avas.count {
+//
+//                    URLSession(configuration: .default).dataTask(with: avaURL) { (data, response, error) in
+//
+//                        // failed downloading - assign placeholder
+//                        if error != nil {
+//                            if let image = UIImage(named: "user.png") {
+//
+//                                self.avas.append(image)
+//
+//                                DispatchQueue.main.async {
+//                                    cell.avaImageView.image = image
+//                                }
+//                            }
+//                        }
+//
+//                        // downloaded
+//                        if let image = UIImage(data: data!) {
+//
+//                            self.avas.append(image)
+//
+//                            DispatchQueue.main.async {
+//                                cell.avaImageView.image = image
+//                            }
+//                        }
+//                    }.resume()
+//
+//                // cached ava
+//                } else {
+//
+//                    DispatchQueue.main.async {
+//                        //cell.avaImageView.image = self.avas[indexPath.row]
+//                        cell.avaImageView.image = currentUser_ava
+//                    }
+//                }
                 
                 // picture logic
                 pictures.append(UIImage())
@@ -702,17 +715,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 cell.optionsButton.tag = indexPath.row
                 
                 
-//                // manipulating the appearance of the button based is the post has been liken or not
-//                DispatchQueue.main.async {
-//                    if self.liked[indexPath.row] == 1 {
-//                        cell.numberCompleted.text =
-//                        //cell.numberCompleted.tintColor = self.likeColor
-//                    }
-////                        else {
-////                        cell.numberCompleted.setImage(UIImage(named: "unlike.png"), for: .normal)
-////                        cell.numberCompleted.tintColor = UIColor.darkGray
-////                    }
-//                }
+
                 
                 return cell
                 
@@ -746,50 +749,61 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 let text = posts[indexPath.row]!["text"] as! String
                 cell.postTextLabel.text = text
                 
-                
                 // avas logic
                 let avaString = posts[indexPath.row]!["ava"] as! String
-                let avaURL = URL(string: avaString)!
                 
-                // if there are still avas to be loaded
-                if posts.count != avas.count {
-                    
-                    URLSession(configuration: .default).dataTask(with: avaURL) { (data, response, error) in
-                        
-                        // failed downloading - assign placeholder
-                        if error != nil {
-                            if let image = UIImage(named: "user.png") {
-                                
-                                self.avas.append(image)
-                                
-                                DispatchQueue.main.async {
-                                    cell.avaImageView.image = image
-                                }
-                                
-                            }
-
-                        }
-                        
-                        // downloaded
-                        if let image = UIImage(data: data!) {
-                            
-                            self.avas.append(image)
-                            
-                            DispatchQueue.main.async {
-                                cell.avaImageView.image = image
-                            }
-                        }
-                        
-                        }.resume()
-                    
-                    // cached ava
+                // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
+                if (avaString).count > 10 {
+                    cell.avaImageView.image = posts[indexPath.row]!["ava"] as? UIImage
+                
                 } else {
+                    cell.avaImageView.image = UIImage(named: "user.png")
                     
-                    DispatchQueue.main.async {
-                        //cell.avaImageView.image = self.avas[indexPath.row]
-                        cell.avaImageView.image = currentUser_ava
-                    }
                 }
+                Helper().downloadImage(from: avaString, showIn: cell.avaImageView, orShow: "user.png")
+//                // avas logic
+//                let avaString = posts[indexPath.row]!["ava"] as! String
+//                let avaURL = URL(string: avaString)!
+//
+//                // if there are still avas to be loaded
+//                if posts.count != avas.count {
+//
+//                    URLSession(configuration: .default).dataTask(with: avaURL) { (data, response, error) in
+//
+//                        // failed downloading - assign placeholder
+//                        if error != nil {
+//                            if let image = UIImage(named: "user.png") {
+//
+//                                self.avas.append(image)
+//
+//                                DispatchQueue.main.async {
+//                                    cell.avaImageView.image = image
+//                                }
+//
+//                            }
+//
+//                        }
+//
+//                        // downloaded
+//                        if let image = UIImage(data: data!) {
+//
+//                            self.avas.append(image)
+//
+//                            DispatchQueue.main.async {
+//                                cell.avaImageView.image = image
+//                            }
+//                        }
+//
+//                        }.resume()
+//
+//                    // cached ava
+//                } else {
+//
+//                    DispatchQueue.main.async {
+//                        //cell.avaImageView.image = self.avas[indexPath.row]
+//                        cell.avaImageView.image = currentUser_ava
+//                    }
+//                }
                 
                 
                 // pictures logic
@@ -955,7 +969,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
         // clean up of the data stored in the background of our logic in order to keep everything synchronized
         posts.remove(at: row)
-        avas.remove(at: row)
+        //avas.remove(at: row)
         pictures.remove(at: row)
         liked.remove(at: row)
         
