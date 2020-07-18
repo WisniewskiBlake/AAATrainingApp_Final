@@ -487,41 +487,49 @@ class FeedVC_Coach: UITableViewController {
                 cell.postTextLabel.text = text
                 
                 
-                // avas logic
-                let avaString = posts[indexPath.row]!["ava"] as! String
-                let avaURL = URL(string: avaString)!
-                
-                // if there are still avas to be loaded
-                if posts.count != avas.count {
+                if(currentUser?["lastName"] as! String == posts[indexPath.row]!["lastName"] as! String) {
+                    cell.avaImageView.image = currentUser_ava
+                    let avaString = posts[indexPath.row]!["ava"] as! String
+                    Helper().downloadImage(from: avaString, showIn: cell.avaImageView, orShow: "user.png")
+                } else {
+                    // avas logic
+                    let avaString = posts[indexPath.row]!["ava"] as! String
+                    let avaURL = URL(string: avaString)!
                     
-                    URLSession(configuration: .default).dataTask(with: avaURL) { (data, response, error) in
+                    // if there are still avas to be loaded
+                    if posts.count != avas.count {
                         
-                        // failed downloading - assign placeholder
-                        if error != nil {
-                            if let image = UIImage(named: "user.png") {
-                                
+                        URLSession(configuration: .default).dataTask(with: avaURL) { (data, response, error) in
+                            
+                            // failed downloading - assign placeholder
+                            if error != nil {
+                                if let image = UIImage(named: "user.png") {
+                                    
+                                    self.avas.append(image)
+                                    
+                                    DispatchQueue.main.async {
+                                        cell.avaImageView.image = image
+                                    }
+                                }
+                            }
+                            // downloaded
+                            if let image = UIImage(data: data!) {
                                 self.avas.append(image)
-                                
                                 DispatchQueue.main.async {
                                     cell.avaImageView.image = image
                                 }
                             }
+                            }.resume()
+                        // cached ava
+                    } else {
+                        DispatchQueue.main.async {
+                            cell.avaImageView.image = self.avas[indexPath.row]
+                            //cell.avaImageView.image = currentUser_ava
                         }
-                        // downloaded
-                        if let image = UIImage(data: data!) {
-                            self.avas.append(image)
-                            DispatchQueue.main.async {
-                                cell.avaImageView.image = image
-                            }
-                        }
-                        }.resume()
-                    // cached ava
-                } else {
-                    DispatchQueue.main.async {
-                        cell.avaImageView.image = self.avas[indexPath.row]
-                        //cell.avaImageView.image = currentUser_ava
                     }
                 }
+                
+                
                 
                 // pictures logic
                 let pictureString = posts[indexPath.row]!["picture"] as! String
@@ -601,44 +609,47 @@ class FeedVC_Coach: UITableViewController {
                    let text = posts[indexPath.row]!["text"] as! String
                    cell.postTextLabel.text = text
                    
-                   // avas logic
-                   let avaString = posts[indexPath.row]!["ava"] as! String
-                   let avaURL = URL(string: avaString)!
-                   
-                   // if there are still avas to be loaded
-                   if posts.count != avas.count {
-                       
-                       URLSession(configuration: .default).dataTask(with: avaURL) { (data, response, error) in
-                           
-                           // failed downloading - assign placeholder
-                           if error != nil {
-                               if let image = UIImage(named: "user.png") {
-                                   self.avas.append(image)
-                                   
-                                   DispatchQueue.main.async {
-                                       cell.avaImageView.image = image
-                                   }
-                               }
-                           }
-                           
-                           // downloaded
-                           if let image = UIImage(data: data!) {
-                               self.avas.append(image)
-                               
-                               DispatchQueue.main.async {
-                                   cell.avaImageView.image = image
-                               }
-                           }
-                           
-                           }.resume()
-                       
-                       // cached ava
-                   } else {
-                       DispatchQueue.main.async {
-                           //cell.avaImageView.image = self.avas[indexPath.row]
-                        cell.avaImageView.image = currentUser_ava
-                       }
-                   }
+                   if(currentUser?["lastName"] as! String == posts[indexPath.row]!["lastName"] as! String) {
+                      cell.avaImageView.image = currentUser_ava
+                      let avaString = posts[indexPath.row]!["ava"] as! String
+                      Helper().downloadImage(from: avaString, showIn: cell.avaImageView, orShow: "user.png")
+                  } else {
+                      // avas logic
+                      let avaString = posts[indexPath.row]!["ava"] as! String
+                      let avaURL = URL(string: avaString)!
+                      
+                      // if there are still avas to be loaded
+                      if posts.count != avas.count {
+                          
+                          URLSession(configuration: .default).dataTask(with: avaURL) { (data, response, error) in
+                              
+                              // failed downloading - assign placeholder
+                              if error != nil {
+                                  if let image = UIImage(named: "user.png") {
+                                      
+                                      self.avas.append(image)
+                                      
+                                      DispatchQueue.main.async {
+                                          cell.avaImageView.image = image
+                                      }
+                                  }
+                              }
+                              // downloaded
+                              if let image = UIImage(data: data!) {
+                                  self.avas.append(image)
+                                  DispatchQueue.main.async {
+                                      cell.avaImageView.image = image
+                                  }
+                              }
+                              }.resume()
+                          // cached ava
+                      } else {
+                          DispatchQueue.main.async {
+                              cell.avaImageView.image = self.avas[indexPath.row]
+                              //cell.avaImageView.image = currentUser_ava
+                          }
+                      }
+                  }
                    
                    
                    // picture logic
@@ -650,16 +661,7 @@ class FeedVC_Coach: UITableViewController {
                    //cell.commentsButton.tag = indexPath.row
                    cell.optionsButton.tag = indexPath.row
                    
-    //               // manipulating the appearance of the button based is the post has been liken or not
-    //               DispatchQueue.main.async {
-    //                   if self.liked[indexPath.row] == 1 {
-    //                       cell.likeButton.setImage(UIImage(named: "like.png"), for: .normal)
-    //                       cell.likeButton.tintColor = self.likeColor
-    //                   } else {
-    //                       cell.likeButton.setImage(UIImage(named: "unlike.png"), for: .normal)
-    //                       cell.likeButton.tintColor = UIColor.darkGray
-    //                   }
-    //               }
+
         
                // picture in the post
                } else {
@@ -689,40 +691,47 @@ class FeedVC_Coach: UITableViewController {
                    let text = posts[indexPath.row]!["text"] as! String
                    cell.postTextLabel.text = text
                    
-                   // avas logic
-                   let avaString = posts[indexPath.row]!["ava"] as! String
-                   let avaURL = URL(string: avaString)!
-                   
-                   // if there are still avas to be loaded
-                   if posts.count != avas.count {
-                       
-                       URLSession(configuration: .default).dataTask(with: avaURL) { (data, response, error) in
-                           // failed downloading - assign placeholder
-                           if error != nil {
-                               if let image = UIImage(named: "user.png") {
-                                   self.avas.append(image)
-                                   DispatchQueue.main.async {
-                                       cell.avaImageView.image = image
-                                   }
-                               }
-                           }
-                           // downloaded
-                           if let image = UIImage(data: data!) {
-                               
-                               self.avas.append(image)
-                               
-                               DispatchQueue.main.async {
-                                   cell.avaImageView.image = image
-                               }
-                           }
-                           }.resume()
-                       // cached ava
-                   } else {
-                       DispatchQueue.main.async {
-                           //cell.avaImageView.image = self.avas[indexPath.row]
-                        cell.avaImageView.image = currentUser_ava
-                       }
-                   }
+                    if(currentUser?["lastName"] as! String == posts[indexPath.row]!["lastName"] as! String) {
+                      cell.avaImageView.image = currentUser_ava
+                      let avaString = posts[indexPath.row]!["ava"] as! String
+                      Helper().downloadImage(from: avaString, showIn: cell.avaImageView, orShow: "user.png")
+                  } else {
+                      // avas logic
+                      let avaString = posts[indexPath.row]!["ava"] as! String
+                      let avaURL = URL(string: avaString)!
+                      
+                      // if there are still avas to be loaded
+                      if posts.count != avas.count {
+                          
+                          URLSession(configuration: .default).dataTask(with: avaURL) { (data, response, error) in
+                              
+                              // failed downloading - assign placeholder
+                              if error != nil {
+                                  if let image = UIImage(named: "user.png") {
+                                      
+                                      self.avas.append(image)
+                                      
+                                      DispatchQueue.main.async {
+                                          cell.avaImageView.image = image
+                                      }
+                                  }
+                              }
+                              // downloaded
+                              if let image = UIImage(data: data!) {
+                                  self.avas.append(image)
+                                  DispatchQueue.main.async {
+                                      cell.avaImageView.image = image
+                                  }
+                              }
+                              }.resume()
+                          // cached ava
+                      } else {
+                          DispatchQueue.main.async {
+                              cell.avaImageView.image = self.avas[indexPath.row]
+                              //cell.avaImageView.image = currentUser_ava
+                          }
+                      }
+                  }
                    
                    // pictures logic
                    // avas logic
@@ -766,16 +775,6 @@ class FeedVC_Coach: UITableViewController {
                    //cell.commentsButton.tag = indexPath.row
                    cell.optionsButton.tag = indexPath.row
                    
-                   // manipulating the appearance of the button based is the post has been liken or not
-    //               DispatchQueue.main.async {
-    //                   if self.liked[indexPath.row] == 1 {
-    //                       cell.likeButton.setImage(UIImage(named: "like.png"), for: .normal)
-    //                       cell.likeButton.tintColor = self.likeColor
-    //                   } else {
-    //                       cell.likeButton.setImage(UIImage(named: "unlike.png"), for: .normal)
-    //                       cell.likeButton.tintColor = UIColor.darkGray
-    //                   }
-    //               }
                    
                    
                }
