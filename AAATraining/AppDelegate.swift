@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 // global var - to store all logged / registered user infromation
 
@@ -25,6 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        FirebaseApp.configure()
         
         // loading current user
         currentUser = DEFAULTS.object(forKey: "currentUser") as? Dictionary<String, Any>
