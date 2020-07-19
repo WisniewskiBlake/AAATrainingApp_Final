@@ -909,8 +909,10 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             self.present(loginvc, animated: false, completion: {
                 
                 // clear currentUser global var, after showing loginViewController - save as an empty user (blank NSMutableDictionary)
-                currentUser = NSMutableDictionary() as? Dictionary<String, Any>
-                UserDefaults.standard.set(currentUser, forKey: "currentUser")
+//                currentUser = NSMutableDictionary() as? Dictionary<String, Any>
+//                UserDefaults.standard.set(currentUser, forKey: "currentUser")
+//                UserDefaults.standard.synchronize()
+                UserDefaults.standard.removeObject(forKey: "currentUser")
                 UserDefaults.standard.synchronize()
                 
             })
