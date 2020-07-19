@@ -63,7 +63,7 @@ class FUser {
     
     
     
-    init(_dictionary: NSDictionary) {        
+    init(_dictionary: NSDictionary) {
         
         objectId = _dictionary[kOBJECTID] as! String
         pushId = _dictionary[kPUSHID] as? String

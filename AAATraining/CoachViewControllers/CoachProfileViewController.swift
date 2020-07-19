@@ -904,6 +904,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             // access/instantiate loginViewController
             let loginvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
             
+            
             // show loginViewController
             self.present(loginvc, animated: false, completion: {
                 
@@ -1234,6 +1235,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     
 
 }
+
 
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
