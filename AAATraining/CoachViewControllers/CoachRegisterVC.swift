@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 class CoachRegisterVC: UIViewController {
     
@@ -217,6 +218,16 @@ class CoachRegisterVC: UIViewController {
                     }
 
                 }.resume()
+        
+        FUser.loginUserWith(email: emailTextField.text!, password: passwordTextField.text!) { (error) in
+            
+            if error != nil {
+                ProgressHUD.showError(error!.localizedDescription)
+                return
+            }
+            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
+        }
                 
     }
     

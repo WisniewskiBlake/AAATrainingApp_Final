@@ -234,10 +234,14 @@ class LoginVC: UIViewController {
                 return
             }
             
+        FUser.loginUserWith(email: emailTextField.text!, password: passwordTextField.text!) { (error) in
             // run LoginRequest Function
-            loginRequest()
-            
+            self.loginRequest()
         }
+            
+            
+            
+    }
         
         
         // sending request to the server for proceeding Log In
@@ -288,6 +292,8 @@ class LoginVC: UIViewController {
                     if parsedJSON["status"] as! String == "200" {
                         
                         if parsedJSON["accountType"] as! String == "1" {
+                            
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
                             // go to TabBar
                             helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
                             
