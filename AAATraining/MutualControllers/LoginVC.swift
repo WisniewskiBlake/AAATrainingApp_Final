@@ -306,6 +306,8 @@ class LoginVC: UIViewController {
                             DEFAULTS.set(currentUser, forKey: keyCURRENT_USER)
                             DEFAULTS.synchronize()
                         } else if parsedJSON["accountType"] as! String == "2" {
+                            
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
                             // go to TabBar
                             helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
                             
