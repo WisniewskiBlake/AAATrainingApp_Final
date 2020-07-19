@@ -13,6 +13,7 @@
 		B7342CDC24C41295000C24D3 /* FUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7342CDB24C41295000C24D3 /* FUser.swift */; };
 		B7342CDE24C4130C000C24D3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7342CDD24C4130C000C24D3 /* Constants.swift */; };
 		B7342CE224C419FF000C24D3 /* CollectionReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7342CE124C419FF000C24D3 /* CollectionReference.swift */; };
+		B7342CE424C41E52000C24D3 /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7342CE324C41E52000C24D3 /* HelperFunctions.swift */; };
 		B7551077249C2CD400598A30 /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7551076249C2CD400598A30 /* RegisterVC.swift */; };
 		B755107B249CAB7400598A30 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B755107A249CAB7400598A30 /* Helper.swift */; };
 		B755107E24A2000200598A30 /* Log.png in Resources */ = {isa = PBXBuildFile; fileRef = B755107C24A1FFFE00598A30 /* Log.png */; };
@@ -79,6 +80,7 @@
 		B7342CDB24C41295000C24D3 /* FUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FUser.swift; sourceTree = "<group>"; };
 		B7342CDD24C4130C000C24D3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B7342CE124C419FF000C24D3 /* CollectionReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionReference.swift; sourceTree = "<group>"; };
+		B7342CE324C41E52000C24D3 /* HelperFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 		B7551076249C2CD400598A30 /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		B755107A249CAB7400598A30 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		B755107C24A1FFFE00598A30 /* Log.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Log.png; path = ../../../Downloads/FaceBook/FaceBook/Log.png; sourceTree = "<group>"; };
@@ -231,7 +233,6 @@
 				B7F18C6E24970085009BFA17 /* LaunchScreen.storyboard */,
 				B7F18C7124970085009BFA17 /* Info.plist */,
 				B7342CD924C40E0A000C24D3 /* GoogleService-Info.plist */,
-				B755107A249CAB7400598A30 /* Helper.swift */,
 			);
 			path = AAATraining;
 			sourceTree = "<group>";
@@ -284,10 +285,12 @@
 		B7F8AFF224B6965100B315FD /* MutualControllers */ = {
 			isa = PBXGroup;
 			children = (
+				B755107A249CAB7400598A30 /* Helper.swift */,
 				B7F18C9B24975B60009BFA17 /* LoginVC.swift */,
 				B7342CDB24C41295000C24D3 /* FUser.swift */,
 				B7342CDD24C4130C000C24D3 /* Constants.swift */,
 				B7342CE124C419FF000C24D3 /* CollectionReference.swift */,
+				B7342CE324C41E52000C24D3 /* HelperFunctions.swift */,
 			);
 			path = MutualControllers;
 			sourceTree = "<group>";
@@ -572,6 +575,7 @@
 				B7F18C6624970084009BFA17 /* SceneDelegate.swift in Sources */,
 				B7F8AFEC24A4B3A800B315FD /* CoachRegisterVC.swift in Sources */,
 				B7F18C9C24975B60009BFA17 /* LoginVC.swift in Sources */,
+				B7342CE424C41E52000C24D3 /* HelperFunctions.swift in Sources */,
 				B75D0AEB24BFC8D900CF7943 /* FeedVC_Coach.swift in Sources */,
 				B7F8AFE924A45ABA00B315FD /* StatsVC.swift in Sources */,
 				B755107B249CAB7400598A30 /* Helper.swift in Sources */,

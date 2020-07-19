@@ -71,7 +71,7 @@ class FUser {
         if let created = _dictionary[kCREATEDAT] {
             if (created as! String).count != 14 {
                 createdAt = Date()
-            } else {
+            } else {               
                 createdAt = dateFormatter().date(from: created as! String)!
             }
         } else {

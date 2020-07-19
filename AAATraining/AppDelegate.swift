@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseCore
 
 // global var - to store all logged / registered user infromation
 
@@ -26,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
         
         FirebaseApp.configure()
         
