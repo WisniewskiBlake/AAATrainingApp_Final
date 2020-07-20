@@ -200,12 +200,15 @@ class CoachRegisterVC: UIViewController {
         //                    UserDefaults.standard.set(currentUser, forKey: "currentUser")
         //                    UserDefaults.standard.synchronize()
             //                print(currentUser)
-//                            currentUser = parsedJSON.mutableCopy() as? Dictionary<String, Any>
-//
-//                            DEFAULTS.set(currentUser, forKey: keyCURRENT_USER)
-//                            DEFAULTS.synchronize()
+                            
+                            
+                            currentUser = parsedJSON.mutableCopy() as? Dictionary<String, Any>
 
+                            DEFAULTS.set(currentUser, forKey: kCURRENTUSER)
+                            DEFAULTS.synchronize()
+                            print(currentUser as Any)
                             self.preRegister()
+                            print(currentUser as Any)
                             
                         // Some error occured related to the entered data, like: wrong password, wrong email, etc
                         } else {
