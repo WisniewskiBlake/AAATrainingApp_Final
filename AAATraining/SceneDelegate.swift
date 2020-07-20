@@ -18,25 +18,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).      
         
-        currentUser = DEFAULTS.object(forKey: keyCURRENT_USER) as? Dictionary<String, Any>
-        if currentUser != nil {
-        goToMain()
-        }
         
-        guard let _ = (scene as? UIWindowScene) else { return }
-    }
-    
-    func goToMain() {
-    let weight = currentUser?["weight"] as! String
+//        currentUser = DEFAULTS.object(forKey: keyCURRENT_USER) as? Dictionary<String, Any>
+//        if currentUser != nil {
+//        goToMain()
+//        }
+//
+//        guard let _ = (scene as? UIWindowScene) else { return }
+//    }
+//
+//    func goToMain() {
+//    let weight = currentUser?["weight"] as! String
+//
+//    if weight == "123456789" {
+//        let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoachTabBar")
+//        window?.rootViewController = TabBar
+//    } else {
+//        // accessing TabBar controller via Main.storyboard
+//        let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabBar")
+//        window?.rootViewController = TabBar
+//    }
         
-    if weight == "123456789" {
-        let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoachTabBar")
-        window?.rootViewController = TabBar
-    } else {
-        // accessing TabBar controller via Main.storyboard
-        let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabBar")
-        window?.rootViewController = TabBar
-    }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

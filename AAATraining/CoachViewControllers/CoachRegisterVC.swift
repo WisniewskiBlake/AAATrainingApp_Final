@@ -175,7 +175,7 @@ class CoachRegisterVC: UIViewController {
                             return
                         }
                         
-                        self.preRegister()
+                        
                         
                         
                         // fetching all JSON received from the server
@@ -193,7 +193,7 @@ class CoachRegisterVC: UIViewController {
                         if parsedJSON["status"] as! String == "200" {
 
                             // go to TabBar
-                            helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
+                         //   helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
 
                             // CHANGED IN VIDEO 56
         //                    currentUser = parsedJSON.mutableCopy() as? NSMutableDictionary
@@ -205,6 +205,8 @@ class CoachRegisterVC: UIViewController {
 //                            DEFAULTS.set(currentUser, forKey: keyCURRENT_USER)
 //                            DEFAULTS.synchronize()
 
+                            self.preRegister()
+                            
                         // Some error occured related to the entered data, like: wrong password, wrong email, etc
                         } else {
 

@@ -54,6 +54,8 @@ public let kPOSITION = "postition"
 public let kAVATAR = "avatar"
 public let kCURRENTUSER = "currentUser"
 public let kNUMBER = "number"
+public let kID = "id"
+public let kACCOUNTTYPE = "accountType"
 
 
 public let kPHONE = "phone"

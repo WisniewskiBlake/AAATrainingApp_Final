@@ -9,7 +9,8 @@
 import UIKit
 import Firebase
 import FirebaseCore
-
+import CoreLocation
+import PushKit
 // global var - to store all logged / registered user infromation
 
 //changed in Video 56
@@ -18,7 +19,7 @@ var currentUser: Dictionary<String, Any>?
 var currentUser_ava: UIImage?
 //var currentUser_accountType = "0"
 let DEFAULTS = UserDefaults.standard
-let keyCURRENT_USER = "currentUser"
+//let keyCURRENT_USER = "currentUser"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -31,26 +32,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         
         // loading current user
-        currentUser = DEFAULTS.object(forKey: "currentUser") as? Dictionary<String, Any>
-        
-        
-        // checking is the glob variable that stores current user's info is empty or not
-        if currentUser?["id"] != nil {
-            let weight = currentUser?["weight"] as! String
-            
-            if weight == "123456789" {
-                let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoachTabBar")
-                window?.rootViewController = TabBar
-            } else {
-                // accessing TabBar controller via Main.storyboard
-                let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabBar")
-                window?.rootViewController = TabBar
-            }
-            
-            
-            // assigning TabBar as RootViewController of the project
-            
-        }
+//        currentUser = DEFAULTS.object(forKey: "currentUser") as? Dictionary<String, Any>
+//
+//
+//        // checking is the glob variable that stores current user's info is empty or not
+//        if currentUser?["id"] != nil {
+//            let weight = currentUser?["weight"] as! String
+//
+//            if weight == "123456789" {
+//                let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoachTabBar")
+//                window?.rootViewController = TabBar
+//            } else {
+//                // accessing TabBar controller via Main.storyboard
+//                let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabBar")
+//                window?.rootViewController = TabBar
+//            }
+//
+//
+//            // assigning TabBar as RootViewController of the project
+//
+//        }
         
         return true
     }

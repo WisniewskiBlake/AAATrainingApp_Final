@@ -30,6 +30,8 @@ public class FUser {
     var weight: String
     var position: String
     var number: String
+    var id: String
+    var accountType: String
     
     
     var contacts: [String]
@@ -38,7 +40,7 @@ public class FUser {
     
     //MARK: Initializers
     
-    init(_objectId: String, _pushId: String?, _createdAt: Date, _updatedAt: Date, _email: String, _firstname: String, _lastname: String, _avatar: String = "", _loginMethod: String, _phoneNumber: String, _height: String, _weight: String, _position: String, _number: String) {
+    init(_objectId: String, _pushId: String?, _createdAt: Date, _updatedAt: Date, _email: String, _firstname: String, _lastname: String, _avatar: String = "", _loginMethod: String, _phoneNumber: String, _height: String, _weight: String, _position: String, _number: String, _id: String, _accountType: String) {
         
         objectId = _objectId
         pushId = _pushId
@@ -57,6 +59,8 @@ public class FUser {
         weight = _weight
         position = _position
         number = _number
+        id = _id
+        accountType = _accountType
         
         
         loginMethod = _loginMethod
@@ -160,6 +164,16 @@ public class FUser {
         } else {
             number = ""
         }
+        if let ide = _dictionary[kID] {
+            id = ide as! String
+        } else {
+            id = ""
+        }
+        if let accT = _dictionary[kACCOUNTTYPE] {
+            accountType = accT as! String
+        } else {
+            accountType = ""
+        }
      }
     
     
@@ -220,7 +234,7 @@ public class FUser {
                 return
             }
             
-            let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: firuser!.user.email!, _firstname: firstName, _lastname: lastName, _avatar: avatar, _loginMethod: kEMAIL, _phoneNumber: "", _height: "", _weight: "", _position: "", _number: "")
+            let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: firuser!.user.email!, _firstname: firstName, _lastname: lastName, _avatar: avatar, _loginMethod: kEMAIL, _phoneNumber: "", _height: "", _weight: "", _position: "", _number: "", _id: "", _accountType: "")
             
             
             saveUserLocally(fUser: fUser)
@@ -260,7 +274,7 @@ public class FUser {
                 } else {
 
                     //    we have no user, register
-                    let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: "", _firstname: "", _lastname: "", _avatar: "", _loginMethod: kPHONE, _phoneNumber: firuser!.user.phoneNumber!, _height: "", _weight: "", _position: "", _number: "")
+                    let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: "", _firstname: "", _lastname: "", _avatar: "", _loginMethod: kPHONE, _phoneNumber: firuser!.user.phoneNumber!, _height: "", _weight: "", _position: "", _number: "", _id: "", _accountType: "")
 
                     saveUserLocally(fUser: fUser)
                     saveUserToFirestore(fUser: fUser)
@@ -322,7 +336,7 @@ public class FUser {
 func saveUserToFirestore(fUser: FUser) {
     reference(.User).document(fUser.objectId).setData(userDictionaryFrom(user: fUser) as! [String : Any]) { (error) in
         
-        print("error is \(error?.localizedDescription)")
+        print("error is \(String(describing: error?.localizedDescription))")
     }
 }
 
@@ -383,7 +397,9 @@ func userDictionaryFrom(user: FUser) -> NSDictionary {
     let createdAt = helper.dateFormatter().string(from: user.createdAt)
     let updatedAt = helper.dateFormatter().string(from: user.updatedAt)
     
-    return NSDictionary(objects: [user.objectId,  createdAt, updatedAt, user.email, user.loginMethod, user.pushId!, user.firstname, user.lastname, user.fullname, user.avatar, user.contacts, user.blockedUsers, user.isOnline, user.phoneNumber], forKeys: [kOBJECTID as NSCopying, kCREATEDAT as NSCopying, kUPDATEDAT as NSCopying, kEMAIL as NSCopying, kLOGINMETHOD as NSCopying, kPUSHID as NSCopying, kFIRSTNAME as NSCopying, kLASTNAME as NSCopying, kCONTACT as NSCopying, kBLOCKEDUSERID as NSCopying, kISONLINE as NSCopying, kPHONE as NSCopying])
+    return NSDictionary(objects: [user.objectId,  createdAt, updatedAt, user.email, user.loginMethod, user.pushId!, user.firstname, user.lastname, user.avatar, user.contacts, user.blockedUsers, user.isOnline, user.phoneNumber], forKeys: [kOBJECTID as NSCopying, kCREATEDAT as NSCopying, kUPDATEDAT as NSCopying, kEMAIL as NSCopying, kLOGINMETHOD as NSCopying, kPUSHID as NSCopying, kFIRSTNAME as NSCopying, kLASTNAME as NSCopying, kAVATAR as NSCopying, kCONTACT as NSCopying, kBLOCKEDUSERID as NSCopying, kISONLINE as NSCopying, kPHONE as NSCopying])
+    
+    
     
 }
 
