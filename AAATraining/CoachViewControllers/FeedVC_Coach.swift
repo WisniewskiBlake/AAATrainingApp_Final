@@ -675,7 +675,8 @@ class FeedVC_Coach: UITableViewController {
                           let avaString = currentUser?["ava"] as! String
                           print(avaString)
                           
-                          Helper().downloadImage(from: avaString, showIn: cell.avaImageView, orShow: "user.png")
+                          
+                    Helper().downloadImage(from: avaString, showIn: cell.avaImageView, orShow: "user.png")
                           
                           //let avaString = cell.coachAvaImage.image as! String
                           //Helper().downloadImage(from: avaString, showIn: cell.coachAvaImage, orShow: "user.png")

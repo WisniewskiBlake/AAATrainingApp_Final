@@ -36,7 +36,12 @@ class CoachRegisterVC: UIViewController {
     
     @IBOutlet weak var footerView: UIView!
     
-    
+    var email: String!
+    var password: String!
+    let height = "123456789"
+    let weight = "123456789"
+    let position = "coach"
+    let number = "123456789"
     
     var accountType = 2
 
@@ -170,6 +175,7 @@ class CoachRegisterVC: UIViewController {
                             return
                         }
                         
+                        self.preRegister()
                         
                         
                         // fetching all JSON received from the server
@@ -194,10 +200,10 @@ class CoachRegisterVC: UIViewController {
         //                    UserDefaults.standard.set(currentUser, forKey: "currentUser")
         //                    UserDefaults.standard.synchronize()
             //                print(currentUser)
-                            currentUser = parsedJSON.mutableCopy() as? Dictionary<String, Any>
-
-                            DEFAULTS.set(currentUser, forKey: keyCURRENT_USER)
-                            DEFAULTS.synchronize()
+//                            currentUser = parsedJSON.mutableCopy() as? Dictionary<String, Any>
+//
+//                            DEFAULTS.set(currentUser, forKey: keyCURRENT_USER)
+//                            DEFAULTS.synchronize()
 
                         // Some error occured related to the entered data, like: wrong password, wrong email, etc
                         } else {
@@ -219,21 +225,71 @@ class CoachRegisterVC: UIViewController {
 
                 }.resume()
         
-//        FUser.loginUserWith(email: emailTextField.text!, password: passwordTextField.text!) { (error) in
-//
-//            if error != nil {
-//                ProgressHUD.showError(error!.localizedDescription)
-//                return
-//            }
-//
-//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
-//        }
+
                 
+    }
+    
+    func preRegister() {
+        FUser.registerUserWith(email: emailTextField.text!, password: passwordTextField.text!, firstName: firstNameTextField.text!, lastName: lastNameTextField.text!) { (error) in
+        
+                        if error != nil {
+                            ProgressHUD.dismiss()
+                            ProgressHUD.showError(error!.localizedDescription)
+                            return
+                        }
+        
+        
+                        self.registerUser()
+                    }
     }
     
     
     
+    func registerUser() {
+        
+        let helper = Helper()
+        
+        
+        
+        
+        var tempDictionary : Dictionary = [kFIRSTNAME : firstNameTextField.text!, kLASTNAME : lastNameTextField.text!, kHEIGHT : height, kWEIGHT : weight, kPOSITION : position, kNUMBER : number] as [String : Any]
+        
+        
+        
+            
+        helper.imageFromInitials(firstName: firstNameTextField.text!, lastName: lastNameTextField.text!) { (avatarInitials) in
+                
+                let avatarIMG = avatarInitials.jpegData(compressionQuality: 0.7)
+                let avatar = avatarIMG!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+                
+                tempDictionary[kAVATAR] = avatar
+                
+                self.finishRegistration(withValues: tempDictionary)
+            }
+            
+        
+
+    }
     
+    func finishRegistration(withValues: [String : Any]) {
+        
+        updateCurrentUserInFirestore(withValues: withValues) { (error) in
+            
+            if error != nil {
+                
+                DispatchQueue.main.async {
+                    ProgressHUD.showError(error!.localizedDescription)
+                    print(error!.localizedDescription)
+                }
+                return
+            }
+            
+            
+            ProgressHUD.dismiss()
+            
+        }
+        
+    }
     
     
     

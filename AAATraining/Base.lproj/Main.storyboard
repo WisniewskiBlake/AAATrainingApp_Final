@@ -1511,6 +1511,7 @@
                     <connections>
                         <segue destination="cc0-1y-0MC" kind="relationship" relationship="viewControllers" id="ge4-wA-y2D"/>
                         <segue destination="H7u-2R-9xg" kind="relationship" relationship="viewControllers" id="ek6-rB-X5d"/>
+                        <segue destination="wZc-wg-aaS" kind="relationship" relationship="viewControllers" id="V8t-7e-Kcx"/>
                         <segue destination="alf-MY-Jyr" kind="relationship" relationship="viewControllers" id="RRA-jM-C7I"/>
                     </connections>
                 </tabBarController>
@@ -1773,7 +1774,23 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CFj-yB-s0x" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4588" y="-1656"/>
+            <point key="canvasLocation" x="4588" y="-2484"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="6hW-az-6Ff">
+            <objects>
+                <viewController id="m41-eK-O4l" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6GD-SN-13O">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="U8y-Za-MPQ"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="32c-1N-GlY"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FJy-7Q-Kaj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4588" y="-1682"/>
         </scene>
         <!--Roster-->
         <scene sceneID="Zyp-25-8RY">
@@ -2455,7 +2472,28 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DGb-JC-goB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3889" y="-1656"/>
+            <point key="canvasLocation" x="3889" y="-2484"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="vwk-wG-tHM">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wZc-wg-aaS" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="message" catalog="system" selectedImage="message.fill" id="5pe-05-CYY">
+                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-3"/>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="oiG-dv-0e2">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="m41-eK-O4l" kind="relationship" relationship="rootViewController" id="aa1-lV-JfD"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RwI-6f-cRf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3889" y="-1681"/>
         </scene>
     </scenes>
     <resources>
@@ -2471,6 +2509,8 @@
         <image name="homeIcon" width="25" height="25"/>
         <image name="logoBackground.png" width="810" height="540"/>
         <image name="meijerBackground.jpg" width="2048" height="1536"/>
+        <image name="message" catalog="system" width="128" height="113"/>
+        <image name="message.fill" catalog="system" width="128" height="113"/>
         <image name="searchIcon" width="25" height="25"/>
         <image name="searchIconSelected" width="25" height="25"/>
         <image name="user.png" width="300" height="300"/>

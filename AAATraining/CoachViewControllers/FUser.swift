@@ -10,7 +10,7 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 
-class FUser {
+public class FUser {
     
     let objectId: String
     var pushId: String?
@@ -25,9 +25,12 @@ class FUser {
     var avatar: String
     var isOnline: Bool
     var phoneNumber: String
-    var countryCode: String
-    var country:String
-    var city: String
+    
+    var height: String
+    var weight: String
+    var position: String
+    var number: String
+    
     
     var contacts: [String]
     var blockedUsers: [String]
@@ -35,7 +38,7 @@ class FUser {
     
     //MARK: Initializers
     
-    init(_objectId: String, _pushId: String?, _createdAt: Date, _updatedAt: Date, _email: String, _firstname: String, _lastname: String, _avatar: String = "", _loginMethod: String, _phoneNumber: String, _city: String, _country: String) {
+    init(_objectId: String, _pushId: String?, _createdAt: Date, _updatedAt: Date, _email: String, _firstname: String, _lastname: String, _avatar: String = "", _loginMethod: String, _phoneNumber: String, _height: String, _weight: String, _position: String, _number: String) {
         
         objectId = _objectId
         pushId = _pushId
@@ -50,12 +53,15 @@ class FUser {
         avatar = _avatar
         isOnline = true
         
-        city = _city
-        country = _country
+        height = _height
+        weight = _weight
+        position = _position
+        number = _number
+        
         
         loginMethod = _loginMethod
         phoneNumber = _phoneNumber
-        countryCode = ""
+        
         blockedUsers = []
         contacts = []
         
@@ -64,7 +70,7 @@ class FUser {
     
     
     init(_dictionary: NSDictionary) {
-        
+        let helper = Helper()
         objectId = _dictionary[kOBJECTID] as! String
         pushId = _dictionary[kPUSHID] as? String
         
@@ -72,7 +78,7 @@ class FUser {
             if (created as! String).count != 14 {
                 createdAt = Date()
             } else {               
-                createdAt = dateFormatter().date(from: created as! String)!
+                createdAt = helper.dateFormatter().date(from: created as! String)!
             }
         } else {
             createdAt = Date()
@@ -81,7 +87,7 @@ class FUser {
             if (updateded as! String).count != 14 {
                 updatedAt = Date()
             } else {
-                updatedAt = dateFormatter().date(from: updateded as! String)!
+                updatedAt = helper.dateFormatter().date(from: updateded as! String)!
             }
         } else {
             updatedAt = Date()
@@ -118,11 +124,7 @@ class FUser {
         } else {
             phoneNumber = ""
         }
-        if let countryC = _dictionary[kCOUNTRYCODE] {
-            countryCode = countryC as! String
-        } else {
-            countryCode = ""
-        }
+        
         if let cont = _dictionary[kCONTACT] {
             contacts = cont as! [String]
         } else {
@@ -133,24 +135,32 @@ class FUser {
         } else {
             blockedUsers = []
         }
-        
         if let lgm = _dictionary[kLOGINMETHOD] {
             loginMethod = lgm as! String
         } else {
             loginMethod = ""
         }
-        if let cit = _dictionary[kCITY] {
-            city = cit as! String
+        if let hgt = _dictionary[kHEIGHT] {
+            height = hgt as! String
         } else {
-            city = ""
+            height = ""
         }
-        if let count = _dictionary[kCOUNTRY] {
-            country = count as! String
+        if let wgt = _dictionary[kWEIGHT] {
+            weight = wgt as! String
         } else {
-            country = ""
+            weight = ""
         }
-        
-    }
+        if let pos = _dictionary[kPOSITION] {
+            position = pos as! String
+        } else {
+            position = ""
+        }
+        if let nmbr = _dictionary[kNUMBER] {
+            number = nmbr as! String
+        } else {
+            number = ""
+        }
+     }
     
     
     //MARK: Returning current user funcs
@@ -210,7 +220,7 @@ class FUser {
                 return
             }
             
-            let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: firuser!.user.email!, _firstname: firstName, _lastname: lastName, _avatar: avatar, _loginMethod: kEMAIL, _phoneNumber: "", _city: "", _country: "")
+            let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: firuser!.user.email!, _firstname: firstName, _lastname: lastName, _avatar: avatar, _loginMethod: kEMAIL, _phoneNumber: "", _height: "", _weight: "", _position: "", _number: "")
             
             
             saveUserLocally(fUser: fUser)
@@ -227,8 +237,8 @@ class FUser {
 
 
         let credential = PhoneAuthProvider.provider().credential(withVerificationID: verificationId, verificationCode: verificationCode)
-
-        Auth.auth().signInAndRetrieveData(with: credential) { (firuser, error) in
+//        Auth.auth().signInAndRetrieveData(with: credential) { (firuser, error) in
+        Auth.auth().signIn(with: credential) { (firuser, error) in
 
             if error != nil {
 
@@ -250,7 +260,7 @@ class FUser {
                 } else {
 
                     //    we have no user, register
-                    let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: "", _firstname: "", _lastname: "", _avatar: "", _loginMethod: kPHONE, _phoneNumber: firuser!.user.phoneNumber!, _city: "", _country: "")
+                    let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: "", _firstname: "", _lastname: "", _avatar: "", _loginMethod: kPHONE, _phoneNumber: firuser!.user.phoneNumber!, _height: "", _weight: "", _position: "", _number: "")
 
                     saveUserLocally(fUser: fUser)
                     saveUserToFirestore(fUser: fUser)
@@ -368,10 +378,12 @@ func fetchCurrentUserFromFirestore(userId: String, completion: @escaping (_ user
 
 func userDictionaryFrom(user: FUser) -> NSDictionary {
     
-    let createdAt = dateFormatter().string(from: user.createdAt)
-    let updatedAt = dateFormatter().string(from: user.updatedAt)
+    let helper = Helper()
     
-    return NSDictionary(objects: [user.objectId,  createdAt, updatedAt, user.email, user.loginMethod, user.pushId!, user.firstname, user.lastname, user.fullname, user.avatar, user.contacts, user.blockedUsers, user.isOnline, user.phoneNumber, user.countryCode, user.city, user.country], forKeys: [kOBJECTID as NSCopying, kCREATEDAT as NSCopying, kUPDATEDAT as NSCopying, kEMAIL as NSCopying, kLOGINMETHOD as NSCopying, kPUSHID as NSCopying, kFIRSTNAME as NSCopying, kLASTNAME as NSCopying, kFULLNAME as NSCopying, kAVATAR as NSCopying, kCONTACT as NSCopying, kBLOCKEDUSERID as NSCopying, kISONLINE as NSCopying, kPHONE as NSCopying, kCOUNTRYCODE as NSCopying, kCITY as NSCopying, kCOUNTRY as NSCopying])
+    let createdAt = helper.dateFormatter().string(from: user.createdAt)
+    let updatedAt = helper.dateFormatter().string(from: user.updatedAt)
+    
+    return NSDictionary(objects: [user.objectId,  createdAt, updatedAt, user.email, user.loginMethod, user.pushId!, user.firstname, user.lastname, user.fullname, user.avatar, user.contacts, user.blockedUsers, user.isOnline, user.phoneNumber], forKeys: [kOBJECTID as NSCopying, kCREATEDAT as NSCopying, kUPDATEDAT as NSCopying, kEMAIL as NSCopying, kLOGINMETHOD as NSCopying, kPUSHID as NSCopying, kFIRSTNAME as NSCopying, kLASTNAME as NSCopying, kCONTACT as NSCopying, kBLOCKEDUSERID as NSCopying, kISONLINE as NSCopying, kPHONE as NSCopying])
     
 }
 
@@ -389,7 +401,7 @@ func getUsersFromFirestore(withIds: [String], completion: @escaping (_ usersArra
             
             if snapshot.exists {
                 
-                let user = FUser(_dictionary: snapshot.data() as! NSDictionary)
+                let user = FUser(_dictionary: snapshot.data()! as NSDictionary)
                 count += 1
                 
                 //dont add if its current user
@@ -414,13 +426,15 @@ func getUsersFromFirestore(withIds: [String], completion: @escaping (_ usersArra
 
 func updateCurrentUserInFirestore(withValues : [String : Any], completion: @escaping (_ error: Error?) -> Void) {
     
+    let helper = Helper()
+    
     if let dictionary = UserDefaults.standard.object(forKey: kCURRENTUSER) {
         
         var tempWithValues = withValues
         
         let currentUserId = FUser.currentId()
         
-        let updatedAt = dateFormatter().string(from: Date())
+        let updatedAt = helper.dateFormatter().string(from: Date())
         
         tempWithValues[kUPDATEDAT] = updatedAt
         
