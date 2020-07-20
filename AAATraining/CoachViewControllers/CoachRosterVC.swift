@@ -358,7 +358,7 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
             
             
             
-            if(currentUser?["lastName"] as! String == users[indexPath.row]!["lastName"] as! String) {
+            if(currentUser1?["lastName"] as! String == users[indexPath.row]!["lastName"] as! String) {
                 cell.coachDeleteButton.isHidden = true
                 cell.coachAvaImage.image = currentUser_ava
                 let avaString = users[indexPath.row]!["ava"] as! String
@@ -391,11 +391,11 @@ class CoachRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate,
             
             
             
-            if(currentUser?["lastName"] as! String == users[indexPath.row]!["lastName"] as! String && currentUser?["firstName"] as! String == users[indexPath.row]!["firstName"] as! String) {
+            if(currentUser1?["lastName"] as! String == users[indexPath.row]!["lastName"] as! String && currentUser1?["firstName"] as! String == users[indexPath.row]!["firstName"] as! String) {
                 cell.coachDeleteButton.isHidden = true
                 cell.coachAvaImage.image = currentUser_ava
                 //cell.coachAvaImage.image = currentUser?["ava"] as? UIImage
-                let avaString = currentUser?["ava"] as! String
+                let avaString = currentUser1?["ava"] as! String
                 print(avaString)
                 
                 Helper().downloadImage(from: avaString, showIn: cell.coachAvaImage, orShow: "user.png")

@@ -42,7 +42,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     func loadUser() {
         
         // safely accessing user related detailes ["key">"value"]
-        guard let firstName = currentUser?["firstName"], let lastName = currentUser?["lastName"], let avaPath = currentUser?["ava"] else {
+        guard let firstName = currentUser1?["firstName"], let lastName = currentUser1?["lastName"], let avaPath = currentUser1?["ava"] else {
             return
         }
         
@@ -66,7 +66,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     
     @IBAction func shareButton_clicked(_ sender: Any) {
         // safe method to access 2 values to be sent to the server
-        guard let id = currentUser?["id"], let text = postTextView.text else {
+        guard let id = currentUser1?["id"], let text = postTextView.text else {
             return
         }
         

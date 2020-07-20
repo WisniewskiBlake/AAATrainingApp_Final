@@ -63,7 +63,7 @@ class StatsVC: UIViewController {
     func loadUser() {
         
         // safe method of accessing user related information in glob var
-        guard let firstName = currentUser?["firstName"], let lastName = currentUser?["lastName"], let avaPath = currentUser?["ava"] else {
+        guard let firstName = currentUser1?["firstName"], let lastName = currentUser1?["lastName"], let avaPath = currentUser1?["ava"] else {
             return
         }
         
@@ -104,7 +104,7 @@ class StatsVC: UIViewController {
     func updateStats() {
         let stat = cellText.lowercased()
         // STEP 1. Access var / params to be sent to the server
-        guard let id = currentUser?["id"] else {
+        guard let id = currentUser1?["id"] else {
             return
         }
         
@@ -157,8 +157,8 @@ class StatsVC: UIViewController {
                     if parsedJSON["status"] as! String == "200" {
                         
                         // save updated user information in the app
-                        currentUser = parsedJSON.mutableCopy() as?  Dictionary<String, Any>
-                        UserDefaults.standard.set(currentUser, forKey: "currentUser")
+                        currentUser1 = parsedJSON.mutableCopy() as?  Dictionary<String, Any>
+                        UserDefaults.standard.set(currentUser1, forKey: "currentUser")
                         UserDefaults.standard.synchronize()
                         
                         // post notification -> update Bio on Home Page

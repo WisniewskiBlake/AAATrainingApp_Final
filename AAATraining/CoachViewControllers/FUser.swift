@@ -22,7 +22,7 @@ public class FUser {
     var firstname: String
     var lastname: String
     var fullname: String
-    var avatar: String
+    var ava: String
     var isOnline: Bool
     var phoneNumber: String
     
@@ -32,6 +32,9 @@ public class FUser {
     var number: String
     var id: String
     var accountType: String
+    var birthday: String
+    var cover: String
+    
     
     
     var contacts: [String]
@@ -40,7 +43,7 @@ public class FUser {
     
     //MARK: Initializers
     
-    init(_objectId: String, _pushId: String?, _createdAt: Date, _updatedAt: Date, _email: String, _firstname: String, _lastname: String, _avatar: String = "", _loginMethod: String, _phoneNumber: String, _height: String, _weight: String, _position: String, _number: String, _id: String, _accountType: String) {
+    init(_objectId: String, _pushId: String?, _createdAt: Date, _updatedAt: Date, _email: String, _firstname: String, _lastname: String, _avatar: String = "", _loginMethod: String, _phoneNumber: String, _height: String, _weight: String, _position: String, _number: String, _id: String, _accountType: String, _birthday: String, _cover: String) {
         
         objectId = _objectId
         pushId = _pushId
@@ -52,7 +55,7 @@ public class FUser {
         firstname = _firstname
         lastname = _lastname
         fullname = _firstname + " " + _lastname
-        avatar = _avatar
+        ava = _avatar
         isOnline = true
         
         height = _height
@@ -61,6 +64,8 @@ public class FUser {
         number = _number
         id = _id
         accountType = _accountType
+        birthday = _birthday
+        cover = _cover
         
         
         loginMethod = _loginMethod
@@ -114,9 +119,9 @@ public class FUser {
         }
         fullname = firstname + " " + lastname
         if let avat = _dictionary[kAVATAR] {
-            avatar = avat as! String
+            ava = avat as! String
         } else {
-            avatar = ""
+            ava = ""
         }
         if let onl = _dictionary[kISONLINE] {
             isOnline = onl as! Bool
@@ -174,6 +179,16 @@ public class FUser {
         } else {
             accountType = ""
         }
+        if let bDay = _dictionary[kBIRTHDAY] {
+            birthday = bDay as! String
+        } else {
+            birthday = ""
+        }
+        if let cvr = _dictionary[kCOVER] {
+            cover = cvr as! String
+        } else {
+            cover = ""
+        }
      }
     
     
@@ -224,7 +239,7 @@ public class FUser {
     
     //MARK: Register functions
     
-    class func registerUserWith(email: String, password: String, firstName: String, lastName: String, avatar: String = "", completion: @escaping (_ error: Error?) -> Void ) {
+    class func registerUserWith(email: String, password: String, firstName: String, lastName: String, avatar: String = "", id: String, birthday: String, height: String, weight: String, position: String, number: String, accountType: String, cover: String, completion: @escaping (_ error: Error?) -> Void ) {
         
         Auth.auth().createUser(withEmail: email, password: password, completion: { (firuser, error) in
             
@@ -234,7 +249,7 @@ public class FUser {
                 return
             }
             
-            let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: firuser!.user.email!, _firstname: firstName, _lastname: lastName, _avatar: avatar, _loginMethod: kEMAIL, _phoneNumber: "", _height: "", _weight: "", _position: "", _number: "", _id: "", _accountType: "")
+            let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: firuser!.user.email!, _firstname: firstName, _lastname: lastName, _avatar: avatar, _loginMethod: kEMAIL, _phoneNumber: "", _height: height, _weight: weight, _position: position, _number: number, _id: id, _accountType: accountType, _birthday: birthday, _cover: cover)
             
             
             saveUserLocally(fUser: fUser)
@@ -274,7 +289,7 @@ public class FUser {
                 } else {
 
                     //    we have no user, register
-                    let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: "", _firstname: "", _lastname: "", _avatar: "", _loginMethod: kPHONE, _phoneNumber: firuser!.user.phoneNumber!, _height: "", _weight: "", _position: "", _number: "", _id: "", _accountType: "")
+                    let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: "", _firstname: "", _lastname: "", _avatar: "", _loginMethod: kPHONE, _phoneNumber: firuser!.user.phoneNumber!, _height: "", _weight: "", _position: "", _number: "", _id: "", _accountType: "", _birthday: "", _cover: "")
 
                     saveUserLocally(fUser: fUser)
                     saveUserToFirestore(fUser: fUser)
@@ -397,7 +412,7 @@ func userDictionaryFrom(user: FUser) -> NSDictionary {
     let createdAt = helper.dateFormatter().string(from: user.createdAt)
     let updatedAt = helper.dateFormatter().string(from: user.updatedAt)
     
-    return NSDictionary(objects: [user.objectId,  createdAt, updatedAt, user.email, user.loginMethod, user.pushId!, user.firstname, user.lastname, user.avatar, user.contacts, user.blockedUsers, user.isOnline, user.phoneNumber], forKeys: [kOBJECTID as NSCopying, kCREATEDAT as NSCopying, kUPDATEDAT as NSCopying, kEMAIL as NSCopying, kLOGINMETHOD as NSCopying, kPUSHID as NSCopying, kFIRSTNAME as NSCopying, kLASTNAME as NSCopying, kAVATAR as NSCopying, kCONTACT as NSCopying, kBLOCKEDUSERID as NSCopying, kISONLINE as NSCopying, kPHONE as NSCopying])
+    return NSDictionary(objects: [user.objectId,  createdAt, updatedAt, user.email, user.loginMethod, user.pushId!, user.firstname, user.lastname, user.ava, user.contacts, user.blockedUsers, user.isOnline, user.phoneNumber], forKeys: [kOBJECTID as NSCopying, kCREATEDAT as NSCopying, kUPDATEDAT as NSCopying, kEMAIL as NSCopying, kLOGINMETHOD as NSCopying, kPUSHID as NSCopying, kFIRSTNAME as NSCopying, kLASTNAME as NSCopying, kAVATAR as NSCopying, kCONTACT as NSCopying, kBLOCKEDUSERID as NSCopying, kISONLINE as NSCopying, kPHONE as NSCopying])
     
     
     

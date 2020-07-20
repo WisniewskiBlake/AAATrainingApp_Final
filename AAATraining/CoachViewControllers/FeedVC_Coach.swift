@@ -115,7 +115,7 @@ class FeedVC_Coach: UITableViewController {
         isLoading = true
         
         // accessing id of the user : safe mode
-        guard let id = currentUser?["id"] else {
+        guard let id = currentUser1?["id"] else {
             return
         }
         
@@ -235,7 +235,7 @@ class FeedVC_Coach: UITableViewController {
         isLoading = true
         
         // accessing id of the user : safe mode
-        guard let id = currentUser?["id"] else {
+        guard let id = currentUser1?["id"] else {
             return
         }
         
@@ -405,11 +405,11 @@ class FeedVC_Coach: UITableViewController {
                 let text = posts[indexPath.row]!["text"] as! String
                 cell.postTextLabel.text = text
                 
-                if(currentUser?["lastName"] as! String == posts[indexPath.row]!["lastName"] as! String && currentUser?["firstName"] as! String == posts[indexPath.row]!["firstName"] as! String) {
+                if(currentUser1?["lastName"] as! String == posts[indexPath.row]!["lastName"] as! String && currentUser1?["firstName"] as! String == posts[indexPath.row]!["firstName"] as! String) {
                                
                                cell.avaImageView.image = currentUser_ava
                                //cell.coachAvaImage.image = currentUser?["ava"] as? UIImage
-                               let avaString = currentUser?["ava"] as! String
+                               let avaString = currentUser1?["ava"] as! String
                                print(avaString)
                                
                                Helper().downloadImage(from: avaString, showIn: cell.avaImageView, orShow: "user.png")
@@ -521,11 +521,11 @@ class FeedVC_Coach: UITableViewController {
                 let text = posts[indexPath.row]!["text"] as! String
                 cell.postTextLabel.text = text
                 
-                if(currentUser?["lastName"] as! String == posts[indexPath.row]!["lastName"] as! String && currentUser?["firstName"] as! String == posts[indexPath.row]!["firstName"] as! String) {
+                if(currentUser1?["lastName"] as! String == posts[indexPath.row]!["lastName"] as! String && currentUser1?["firstName"] as! String == posts[indexPath.row]!["firstName"] as! String) {
                        
                        cell.avaImageView.image = currentUser_ava
                        //cell.coachAvaImage.image = currentUser?["ava"] as? UIImage
-                       let avaString = currentUser?["ava"] as! String
+                       let avaString = currentUser1?["ava"] as! String
                        print(avaString)
                        
                        Helper().downloadImage(from: avaString, showIn: cell.avaImageView, orShow: "user.png")
@@ -668,11 +668,11 @@ class FeedVC_Coach: UITableViewController {
                    let text = posts[indexPath.row]!["text"] as! String
                    cell.postTextLabel.text = text
                 
-                   if(currentUser?["lastName"] as! String == posts[indexPath.row]!["lastName"] as! String && currentUser?["firstName"] as! String == posts[indexPath.row]!["firstName"] as! String) {
+                   if(currentUser1?["lastName"] as! String == posts[indexPath.row]!["lastName"] as! String && currentUser1?["firstName"] as! String == posts[indexPath.row]!["firstName"] as! String) {
                           
                           cell.avaImageView.image = currentUser_ava
                           //cell.coachAvaImage.image = currentUser?["ava"] as? UIImage
-                          let avaString = currentUser?["ava"] as! String
+                          let avaString = currentUser1?["ava"] as! String
                           print(avaString)
                           
                           
@@ -776,11 +776,11 @@ class FeedVC_Coach: UITableViewController {
                    let text = posts[indexPath.row]!["text"] as! String
                    cell.postTextLabel.text = text
                    
-                if(currentUser?["lastName"] as! String == posts[indexPath.row]!["lastName"] as! String && currentUser?["firstName"] as! String == posts[indexPath.row]!["firstName"] as! String) {
+                if(currentUser1?["lastName"] as! String == posts[indexPath.row]!["lastName"] as! String && currentUser1?["firstName"] as! String == posts[indexPath.row]!["firstName"] as! String) {
                        
                        cell.avaImageView.image = currentUser_ava
                        //cell.coachAvaImage.image = currentUser?["ava"] as? UIImage
-                       let avaString = currentUser?["ava"] as! String
+                       let avaString = currentUser1?["ava"] as! String
                        print(avaString)
                        
                        Helper().downloadImage(from: avaString, showIn: cell.avaImageView, orShow: "user.png")

@@ -68,7 +68,7 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
 //               heightFinal.append(heightLast!)
 //           }
        
-        guard let firstName = currentUser?["firstName"], let lastName = currentUser?["lastName"], let avaPath = currentUser?["ava"], let coverPath = currentUser?["cover"], let height =  currentUser?["height"],let weight = currentUser?["weight"], let position = currentUser?["position"], let number = currentUser?["number"] else {
+        guard let firstName = currentUser1?["firstName"], let lastName = currentUser1?["lastName"], let avaPath = currentUser1?["ava"], let coverPath = currentUser1?["cover"], let height =  currentUser1?["height"],let weight = currentUser1?["weight"], let position = currentUser1?["position"], let number = currentUser1?["number"] else {
                
                return
            }
@@ -184,7 +184,7 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
         // declaring cancel button
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         // declaring delete button
-        let xxx = currentUser?["ava"] as! String
+        let xxx = currentUser1?["ava"] as! String
         let delete = UIAlertAction(title: "Delete", style: .destructive) { (action) in
             
              // deleting profile picture (ava), by returning placeholder
@@ -275,7 +275,7 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
     func uploadImage(from imageView: UIImageView, action: String) {
         
         // save method of accessing ID of current user
-        guard let id = currentUser?["id"] else {
+        guard let id = currentUser1?["id"] else {
             return
             
             
@@ -329,10 +329,10 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
                     }
                     // uploaded successfully
                     if parsedJSON["status"] as! String == "200" {
-                        print(currentUser)
+                        print(currentUser1)
                         // saving upaded user related information (e.g. ava's path, cover's path)
-                        currentUser = parsedJSON.mutableCopy()  as? Dictionary<String, Any>
-                        DEFAULTS.set(currentUser, forKey: "currentUser")
+                        currentUser1 = parsedJSON.mutableCopy()  as? Dictionary<String, Any>
+                        DEFAULTS.set(currentUser1, forKey: "currentUser")
                         DEFAULTS.synchronize()
                     // error while uploading
                     } else {

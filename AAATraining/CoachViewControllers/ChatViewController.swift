@@ -26,7 +26,24 @@ class ChatViewController: JSQMessagesViewController {
 
         self.senderId = FUser.currentId()
         self.senderDisplayName = FUser.currentUser()!.firstname
+        
+        //fix for Ipgone x
+        let constraint = perform(Selector(("toolbarBottomLayoutGuide")))?.takeUnretainedValue() as! NSLayoutConstraint
+        
+        constraint.priority = UILayoutPriority(rawValue: 1000)
+        
+        self.inputToolbar.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        
+        //end of iphone x fix
     }
+    
+    //fix for Iphone x
+    override func viewDidLayoutSubviews() {
+        perform(Selector(("jsq_updateCollectionViewInsets")))
+    }
+    //end of iphone x fix
+    
+    
     // pre-load func
         override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(animated)

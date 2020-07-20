@@ -19,8 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).      
         
         
-        currentUser = DEFAULTS.object(forKey: kCURRENTUSER) as? Dictionary<String, Any>
-        if currentUser != nil {
+        currentUser1 = DEFAULTS.object(forKey: keyCURRENT_USER) as? Dictionary<String, Any>
+        if currentUser1 != nil {
         goToMain()
         }
 
@@ -28,7 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func goToMain() {
-    let weight = currentUser?["weight"] as! String
+    let weight = currentUser1?["weight"] as! String
 
     if weight == "123456789" {
         let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoachTabBar")

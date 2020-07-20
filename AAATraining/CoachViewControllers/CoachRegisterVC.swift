@@ -202,13 +202,21 @@ class CoachRegisterVC: UIViewController {
             //                print(currentUser)
                             
                             
-                            currentUser = parsedJSON.mutableCopy() as? Dictionary<String, Any>
+                            currentUser1 = parsedJSON.mutableCopy() as? Dictionary<String, Any>
 
-                            DEFAULTS.set(currentUser, forKey: kCURRENTUSER)
+                            DEFAULTS.set(currentUser1, forKey: kCURRENTUSER)
                             DEFAULTS.synchronize()
-                            print(currentUser as Any)
-                            self.preRegister()
-                            print(currentUser as Any)
+                            FUser.registerUserWith(email: emailTextField.text!, password: passwordTextField.text!, firstName: firstNameTextField.text!, lastName: lastNameTextField.text!, ) { (error) in
+                            
+                                            if error != nil {
+                                                ProgressHUD.dismiss()
+                                                ProgressHUD.showError(error!.localizedDescription)
+                                                return
+                                            }
+                            
+                            
+                                            self.registerUser()
+                            }
                             
                         // Some error occured related to the entered data, like: wrong password, wrong email, etc
                         } else {
@@ -235,17 +243,7 @@ class CoachRegisterVC: UIViewController {
     }
     
     func preRegister() {
-        FUser.registerUserWith(email: emailTextField.text!, password: passwordTextField.text!, firstName: firstNameTextField.text!, lastName: lastNameTextField.text!) { (error) in
         
-                        if error != nil {
-                            ProgressHUD.dismiss()
-                            ProgressHUD.showError(error!.localizedDescription)
-                            return
-                        }
-        
-        
-                        self.registerUser()
-                    }
     }
     
     

@@ -139,7 +139,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     // loads all user related information to be shown in the header
     @objc func loadUser() {
    
-        guard let firstName = currentUser?["firstName"], let lastName = currentUser?["lastName"], let avaPath = currentUser?["ava"], let coverPath = currentUser?["cover"] else {
+        guard let firstName = currentUser1?["firstName"], let lastName = currentUser1?["lastName"], let avaPath = currentUser1?["ava"], let coverPath = currentUser1?["cover"] else {
                
                return
            }
@@ -179,7 +179,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         isLoading = true
         
         // accessing id of the user : safe mode
-        guard let id = currentUser?["id"] else {
+        guard let id = currentUser1?["id"] else {
             return
         }
         
@@ -271,7 +271,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         isLoading = true
         
         // accessing id of the user : safe mode
-        guard let id = currentUser?["id"] else {
+        guard let id = currentUser1?["id"] else {
             return
         }
         
@@ -356,7 +356,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     func uploadImage(from imageView: UIImageView, action: String) {
         
         // save method of accessing ID of current user
-        guard let id = currentUser?["id"] else {
+        guard let id = currentUser1?["id"] else {
             return
         }
         // STEP 1. Declare URL, Request and Params
@@ -411,8 +411,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                     if parsedJSON["status"] as! String == "200" {
                         
                         // saving upaded user related information (e.g. ava's path, cover's path)
-                        currentUser = parsedJSON.mutableCopy()  as? Dictionary<String, Any>
-                        DEFAULTS.set(currentUser, forKey: "currentUser")
+                        currentUser1 = parsedJSON.mutableCopy()  as? Dictionary<String, Any>
+                        DEFAULTS.set(currentUser1, forKey: "currentUser")
                         DEFAULTS.synchronize()
                         //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
                     // error while uploading
@@ -525,7 +525,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         // declaring cancel button
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         // declaring delete button
-        let xxx = currentUser?["ava"] as! String
+        let xxx = currentUser1?["ava"] as! String
     
         
         let delete = UIAlertAction(title: "Delete", style: .destructive) { (action) in

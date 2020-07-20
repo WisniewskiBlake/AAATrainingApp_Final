@@ -15,7 +15,7 @@ import PushKit
 
 //changed in Video 56
 //var currentUser: NSMutableDictionary?
-var currentUser: Dictionary<String, Any>?
+var currentUser1: Dictionary<String, Any>?
 var currentUser_ava: UIImage?
 //var currentUser_accountType = "0"
 let DEFAULTS = UserDefaults.standard
