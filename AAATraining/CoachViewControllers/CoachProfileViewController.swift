@@ -904,18 +904,24 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             // access/instantiate loginViewController
             let loginvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
             
+            FUser.logOutCurrentUser { (success) in
+                
+                if success {
+                    self.present(loginvc, animated: false, completion: {
+                                    
+                                    // clear currentUser global var, after showing loginViewController - save as an empty user (blank NSMutableDictionary)
+                    //                currentUser = NSMutableDictionary() as? Dictionary<String, Any>
+                    //                UserDefaults.standard.set(currentUser, forKey: "currentUser")
+                    //                UserDefaults.standard.synchronize()
+                                    UserDefaults.standard.removeObject(forKey: "currentUser1")
+                                    UserDefaults.standard.synchronize()
+                                    
+                                })
+                }
+                
+            }
             
-            // show loginViewController
-            self.present(loginvc, animated: false, completion: {
-                
-                // clear currentUser global var, after showing loginViewController - save as an empty user (blank NSMutableDictionary)
-//                currentUser = NSMutableDictionary() as? Dictionary<String, Any>
-//                UserDefaults.standard.set(currentUser, forKey: "currentUser")
-//                UserDefaults.standard.synchronize()
-                UserDefaults.standard.removeObject(forKey: "currentUser")
-                UserDefaults.standard.synchronize()
-                
-            })
+            
             
         })
         
@@ -928,6 +934,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         // show action sheet
         present(sheet, animated: true, completion: nil)
     }
+    
+    
     
     // MARK: - Option Button Click
     @IBAction func optionsButton_clicked(_ optionButton: UIButton) {
