@@ -291,36 +291,36 @@ class LoginVC: UIViewController {
                     // Successfully Logged In
                     if parsedJSON["status"] as! String == "200" {
                         
-//                        if parsedJSON["accountType"] as! String == "1" {
-//
-//                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
-//
-//                            // go to TabBar
-//                            helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
-//
-//                            // saving logged user
-//                            currentUser = parsedJSON.mutableCopy() as? Dictionary<String, Any>
+                        if parsedJSON["accountType"] as! String == "1" {
+
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
+
+                            // go to TabBar
+                            helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
+
+                            // saving logged user
+                            currentUser1 = parsedJSON.mutableCopy() as? Dictionary<String, Any>
+
+//                            //CHANGED IN VIDEO 56
+//    //                        UserDefaults.standard.set(currentUser, forKey: "currentUser")
+//    //                        UserDefaults.standard.synchronize()
+//                            DEFAULTS.set(currentUser, forKey: keyCURRENT_USER)
+//                            DEFAULTS.synchronize()
+                        } else if parsedJSON["accountType"] as! String == "2" {
+
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
+                            // go to TabBar
+                            helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
+
+                            // saving logged user
+                            currentUser1 = parsedJSON.mutableCopy() as? Dictionary<String, Any>
 //
 //                            //CHANGED IN VIDEO 56
 //    //                        UserDefaults.standard.set(currentUser, forKey: "currentUser")
 //    //                        UserDefaults.standard.synchronize()
 //                            DEFAULTS.set(currentUser, forKey: keyCURRENT_USER)
 //                            DEFAULTS.synchronize()
-//                        } else if parsedJSON["accountType"] as! String == "2" {
-//
-//                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
-//                            // go to TabBar
-//                            helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
-//
-//                            // saving logged user
-//                            currentUser = parsedJSON.mutableCopy() as? Dictionary<String, Any>
-//
-//                            //CHANGED IN VIDEO 56
-//    //                        UserDefaults.standard.set(currentUser, forKey: "currentUser")
-//    //                        UserDefaults.standard.synchronize()
-//                            DEFAULTS.set(currentUser, forKey: keyCURRENT_USER)
-//                            DEFAULTS.synchronize()
-//                        }
+                        }
                         
                         
                     // Some error occured related to the entered data, like: wrong password, wrong email, etc

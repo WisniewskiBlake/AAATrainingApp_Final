@@ -34,24 +34,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         
         //AutoLogin
-        authListener = Auth.auth().addStateDidChangeListener({ (auth, user) in
-            
-            Auth.auth().removeStateDidChangeListener(self.authListener!)
-            
-            if user != nil {
-                
-                if UserDefaults.standard.object(forKey: kCURRENTUSER) != nil {
-                    
-                    DispatchQueue.main.async {
-                        self.goToApp()
-
-                    }
-                }
-            }
-        })
+//        authListener = Auth.auth().addStateDidChangeListener({ (auth, user) in
+//            
+//            Auth.auth().removeStateDidChangeListener(self.authListener!)
+//            
+//            if user != nil {
+//                
+//                if UserDefaults.standard.object(forKey: kCURRENTUSER) != nil {
+//                    
+//                    DispatchQueue.main.async {
+//                        self.goToApp()
+//
+//                    }
+//                }
+//            }
+//        })
         
-        // loading current user
-        currentUser1 = DEFAULTS.object(forKey: "currentUser1") as? Dictionary<String, Any>
+        
 
 
         
@@ -74,7 +73,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func goToApp() {
-
+        // loading current user
+        currentUser1 = DEFAULTS.object(forKey: "currentUser1") as? Dictionary<String, Any>
            NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
         
         // checking is the glob variable that stores current user's info is empty or not

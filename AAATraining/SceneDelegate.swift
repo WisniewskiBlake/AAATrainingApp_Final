@@ -7,11 +7,17 @@
 //
 
 import UIKit
+import UIKit
+import Firebase
+import FirebaseCore
+import CoreLocation
+import PushKit
+import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    var authListener: AuthStateDidChangeListenerHandle?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -19,15 +25,40 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).      
         
         
-        currentUser1 = DEFAULTS.object(forKey: keyCURRENT_USER) as? Dictionary<String, Any>
-        if currentUser1 != nil {
-        goToMain()
-        }
+        //AutoLogin
+        authListener = Auth.auth().addStateDidChangeListener({ (auth, user) in
+            
+            Auth.auth().removeStateDidChangeListener(self.authListener!)
+            
+            if user != nil {
+                
+                if UserDefaults.standard.object(forKey: kCURRENTUSER) != nil {
+                    
+                    DispatchQueue.main.async {
+                        self.goToApp()
+
+                    }
+                }
+            }
+        })
+        
+        
 
         guard let _ = (scene as? UIWindowScene) else { return }
     }
 
+    func goToApp() {
+        
+        currentUser1 = DEFAULTS.object(forKey: keyCURRENT_USER) as? Dictionary<String, Any>
+        if currentUser1 != nil {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
+            goToMain()
+        }
+    }
+    
     func goToMain() {
+        
+        
     let weight = currentUser1?["weight"] as! String
 
     if weight == "123456789" {

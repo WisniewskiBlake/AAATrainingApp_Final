@@ -265,13 +265,8 @@ class CoachRegisterVC: UIViewController {
         let helper = Helper()
         
         
-        
-        
         var tempDictionary : Dictionary = [kFIRSTNAME : firstNameTextField.text!, kLASTNAME : lastNameTextField.text!, kHEIGHT : height, kWEIGHT : weight, kPOSITION : position, kNUMBER : number, kID : id as Any, kBIRTHDAY : birthday as Any, kCOVER : cover as Any, kACCOUNTTYPE : accountType] as [String : Any]
         
-        
-        
-            
         helper.imageFromInitials(firstName: firstNameTextField.text!, lastName: lastNameTextField.text!) { (avatarInitials) in
                 
                 let avatarIMG = avatarInitials.jpegData(compressionQuality: 0.7)
@@ -288,8 +283,6 @@ class CoachRegisterVC: UIViewController {
     
     func finishRegistration(withValues: [String : Any]) {
         
-        let helper = Helper()
-        
         updateCurrentUserInFirestore(withValues: withValues) { (error) in
             
             if error != nil {
@@ -303,11 +296,18 @@ class CoachRegisterVC: UIViewController {
             
             
             ProgressHUD.dismiss()
-            
+            self.goToApp()
         }
+        
+        
+        
+    }
+    
+    func goToApp() {
+        let helper = Helper()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
         // go to TabBar
         helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
-        
     }
     
     
