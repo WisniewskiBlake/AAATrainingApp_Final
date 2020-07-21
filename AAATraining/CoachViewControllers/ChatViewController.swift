@@ -23,6 +23,9 @@ class ChatViewController: JSQMessagesViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(FUser.currentId())
+        print(FUser.currentUser()!.firstname)
 
         self.senderId = FUser.currentId()
         

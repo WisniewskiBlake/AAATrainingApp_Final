@@ -196,8 +196,7 @@ class CoachRegisterVC: UIViewController {
                         // Successfully Registered In
                         if parsedJSON["status"] as! String == "200" {
 
-                            // go to TabBar
-                            helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
+                            
 
                             // CHANGED IN VIDEO 56
         //                    currentUser = parsedJSON.mutableCopy() as? NSMutableDictionary
@@ -289,6 +288,8 @@ class CoachRegisterVC: UIViewController {
     
     func finishRegistration(withValues: [String : Any]) {
         
+        let helper = Helper()
+        
         updateCurrentUserInFirestore(withValues: withValues) { (error) in
             
             if error != nil {
@@ -304,6 +305,8 @@ class CoachRegisterVC: UIViewController {
             ProgressHUD.dismiss()
             
         }
+        // go to TabBar
+        helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
         
     }
     

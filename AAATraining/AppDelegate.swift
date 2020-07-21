@@ -11,6 +11,7 @@ import Firebase
 import FirebaseCore
 import CoreLocation
 import PushKit
+import FirebaseAuth
 // global var - to store all logged / registered user infromation
 
 //changed in Video 56
@@ -25,33 +26,35 @@ let keyCURRENT_USER = "currentUser1"
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var authListener: AuthStateDidChangeListenerHandle?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         FirebaseApp.configure()
         
+        //AutoLogin
+        authListener = Auth.auth().addStateDidChangeListener({ (auth, user) in
+            
+            Auth.auth().removeStateDidChangeListener(self.authListener!)
+            
+            if user != nil {
+                
+                if UserDefaults.standard.object(forKey: kCURRENTUSER) != nil {
+                    
+                    DispatchQueue.main.async {
+                        self.goToApp()
+
+                    }
+                }
+            }
+        })
+        
         // loading current user
         currentUser1 = DEFAULTS.object(forKey: "currentUser1") as? Dictionary<String, Any>
 
 
-        // checking is the glob variable that stores current user's info is empty or not
-        if currentUser1?["id"] != nil {
-            let weight = currentUser1?["weight"] as! String
-
-            if weight == "123456789" {
-                let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoachTabBar")
-                window?.rootViewController = TabBar
-            } else {
-                // accessing TabBar controller via Main.storyboard
-                let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabBar")
-                window?.rootViewController = TabBar
-            }
-
-
-            // assigning TabBar as RootViewController of the project
-
-        }
+        
         
         return true
     }
@@ -69,6 +72,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
+    
+    func goToApp() {
+
+           NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
+        
+        // checking is the glob variable that stores current user's info is empty or not
+        if currentUser1?["id"] != nil {
+            let weight = currentUser1?["weight"] as! String
+
+            if weight == "123456789" {
+                let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoachTabBar")
+                window?.rootViewController = TabBar
+            } else {
+                // accessing TabBar controller via Main.storyboard
+                let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabBar")
+                window?.rootViewController = TabBar
+            }
+
+
+        }
+           
+//           let mainView = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainApplication") as! UITabBarController
+//
+//           self.window?.rootViewController = mainView
+       }
 
 
 }
