@@ -375,7 +375,7 @@ func fetchCurrentUserFromFirestore(userId: String) {
         if snapshot.exists {
             print("updated current users param")
             
-            UserDefaults.standard.setValue(snapshot.data() as! NSDictionary, forKeyPath: kCURRENTUSER)
+            UserDefaults.standard.setValue(snapshot.data()! as NSDictionary, forKeyPath: kCURRENTUSER)
             UserDefaults.standard.synchronize()
             
         }

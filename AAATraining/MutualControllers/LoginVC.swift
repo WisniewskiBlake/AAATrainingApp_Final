@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 class LoginVC: UIViewController {
     
@@ -291,15 +292,23 @@ class LoginVC: UIViewController {
                     // Successfully Logged In
                     if parsedJSON["status"] as! String == "200" {
                         
+                        currentUser1 = parsedJSON.mutableCopy() as? Dictionary<String, Any>
+                        DEFAULTS.set(currentUser1, forKey: keyCURRENT_USER)
+                        DEFAULTS.synchronize()
+                        
                         if parsedJSON["accountType"] as! String == "1" {
+                            
 
-                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
-
-                            // go to TabBar
-                            helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
-
-                            // saving logged user
-                            currentUser1 = parsedJSON.mutableCopy() as? Dictionary<String, Any>
+                            FUser.loginUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!) { (error) in
+                                
+                                if error != nil {
+                                    ProgressHUD.showError(error!.localizedDescription)
+                                    return
+                                }
+                                self.goToApp(accountType: parsedJSON["accountType"] as! String)
+                                
+                            }
+                            
 
 //                            //CHANGED IN VIDEO 56
 //    //                        UserDefaults.standard.set(currentUser, forKey: "currentUser")
@@ -307,14 +316,19 @@ class LoginVC: UIViewController {
 //                            DEFAULTS.set(currentUser, forKey: keyCURRENT_USER)
 //                            DEFAULTS.synchronize()
                         } else if parsedJSON["accountType"] as! String == "2" {
+                            
+                            
 
-                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
-                            // go to TabBar
-                            helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
-
-                            // saving logged user
-                            currentUser1 = parsedJSON.mutableCopy() as? Dictionary<String, Any>
-//
+                            FUser.loginUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!) { (error) in
+                                
+                                if error != nil {
+                                    ProgressHUD.showError(error!.localizedDescription)
+                                    return
+                                }
+                                self.goToApp(accountType: parsedJSON["accountType"] as! String)
+                                
+                            }
+                            
 //                            //CHANGED IN VIDEO 56
 //    //                        UserDefaults.standard.set(currentUser, forKey: "currentUser")
 //    //                        UserDefaults.standard.synchronize()
@@ -344,6 +358,27 @@ class LoginVC: UIViewController {
             }.resume()
             
         }
+    
+    func goToApp(accountType: String) {
+        
+        let helper = Helper()
+        
+        if(accountType == "1") {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
+            // go to TabBar
+            helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
+        } else if(accountType == "2") {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
+            // go to TabBar
+            helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
+        }
+        
+        
+        
+        
+        
+        
+    }
     
 
     
