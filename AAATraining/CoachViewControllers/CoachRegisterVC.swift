@@ -42,8 +42,12 @@ class CoachRegisterVC: UIViewController {
     let weight = "123456789"
     let position = "coach"
     let number = "123456789"
+    var id: Any!
+    var birthday: Any!
+    var cover: Any!
     
-    var accountType = 2
+    
+    var accountType = "2"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -193,7 +197,7 @@ class CoachRegisterVC: UIViewController {
                         if parsedJSON["status"] as! String == "200" {
 
                             // go to TabBar
-                         //   helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
+                            helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
 
                             // CHANGED IN VIDEO 56
         //                    currentUser = parsedJSON.mutableCopy() as? NSMutableDictionary
@@ -204,9 +208,20 @@ class CoachRegisterVC: UIViewController {
                             
                             currentUser1 = parsedJSON.mutableCopy() as? Dictionary<String, Any>
 
-                            DEFAULTS.set(currentUser1, forKey: kCURRENTUSER)
+                            DEFAULTS.set(currentUser1, forKey: keyCURRENT_USER)
                             DEFAULTS.synchronize()
-                            FUser.registerUserWith(email: emailTextField.text!, password: passwordTextField.text!, firstName: firstNameTextField.text!, lastName: lastNameTextField.text!, ) { (error) in
+                            
+                            self.id = parsedJSON["id"] as Any
+                            self.birthday = parsedJSON["birthday"] as Any
+                            let height = parsedJSON["height"]
+                            let weight = parsedJSON["weight"]
+                            let position = parsedJSON["position"]
+                            let number = parsedJSON["number"]
+                            //let accountType = parsedJSON["accountType"]
+                            self.cover = parsedJSON["cover"] as Any
+                            
+                            
+                            FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, id: self.id as! String, birthday: self.birthday as! String, height: height as! String, weight: weight as! String, position: position as! String, number: number as! String, accountType: self.accountType, cover: self.cover as! String) { (error)  in
                             
                                             if error != nil {
                                                 ProgressHUD.dismiss()
@@ -242,9 +257,7 @@ class CoachRegisterVC: UIViewController {
                 
     }
     
-    func preRegister() {
-        
-    }
+    
     
     
     
@@ -255,7 +268,7 @@ class CoachRegisterVC: UIViewController {
         
         
         
-        var tempDictionary : Dictionary = [kFIRSTNAME : firstNameTextField.text!, kLASTNAME : lastNameTextField.text!, kHEIGHT : height, kWEIGHT : weight, kPOSITION : position, kNUMBER : number] as [String : Any]
+        var tempDictionary : Dictionary = [kFIRSTNAME : firstNameTextField.text!, kLASTNAME : lastNameTextField.text!, kHEIGHT : height, kWEIGHT : weight, kPOSITION : position, kNUMBER : number, kID : id as Any, kBIRTHDAY : birthday as Any, kCOVER : cover as Any, kACCOUNTTYPE : accountType] as [String : Any]
         
         
         
