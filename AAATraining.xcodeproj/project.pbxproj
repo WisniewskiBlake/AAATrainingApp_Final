@@ -13,7 +13,6 @@
 		B7342CDE24C4130C000C24D3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7342CDD24C4130C000C24D3 /* Constants.swift */; };
 		B7342CE224C419FF000C24D3 /* CollectionReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7342CE124C419FF000C24D3 /* CollectionReference.swift */; };
 		B7342CE624C43BC6000C24D3 /* aaaLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = B7342CE524C43BC6000C24D3 /* aaaLogo.png */; };
-		B7342CE924C57980000C24D3 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7342CE824C57980000C24D3 /* ChatViewController.swift */; };
 		B7551077249C2CD400598A30 /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7551076249C2CD400598A30 /* RegisterVC.swift */; };
 		B755107B249CAB7400598A30 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B755107A249CAB7400598A30 /* Helper.swift */; };
 		B755107E24A2000200598A30 /* Log.png in Resources */ = {isa = PBXBuildFile; fileRef = B755107C24A1FFFE00598A30 /* Log.png */; };
@@ -89,7 +88,6 @@
 		B7342CDD24C4130C000C24D3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B7342CE124C419FF000C24D3 /* CollectionReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionReference.swift; sourceTree = "<group>"; };
 		B7342CE524C43BC6000C24D3 /* aaaLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aaaLogo.png; sourceTree = "<group>"; };
-		B7342CE824C57980000C24D3 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		B7551076249C2CD400598A30 /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		B755107A249CAB7400598A30 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		B755107C24A1FFFE00598A30 /* Log.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Log.png; path = ../../../Downloads/FaceBook/FaceBook/Log.png; sourceTree = "<group>"; };
@@ -197,6 +195,8 @@
 		B75AD62E24CA93FB00DCC857 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				B75AD62A24C9A73E00DCC857 /* Encryption.swift */,
+				B75AD62624C9984300DCC857 /* Group_Coach.swift */,
 				B75AD62424C996D700DCC857 /* Recent.swift */,
 				B755107A249CAB7400598A30 /* Helper.swift */,
 				B7342CDD24C4130C000C24D3 /* Constants.swift */,
@@ -311,12 +311,10 @@
 				B7C3BDF724BB08D200086C27 /* CoachNoPicCell.swift */,
 				B7C3BDF924BB0B1500086C27 /* CoachPicCell.swift */,
 				B75D0AEA24BFC8D900CF7943 /* FeedVC_Coach.swift */,
-				B7342CE824C57980000C24D3 /* ChatViewController.swift */,
 				B75AD61C24C9667000DCC857 /* RosterVC_Coach.swift */,
 				B75AD61E24C9669700DCC857 /* RosterCell_Coach.swift */,
 				B75AD62024C993B500DCC857 /* ChatVC_Coach.swift */,
 				B75AD62224C9944B00DCC857 /* RecentChatVC_Coach.swift */,
-				B75AD62624C9984300DCC857 /* Group_Coach.swift */,
 				B75AD62824C9A56300DCC857 /* RecentChatCell_Coach.swift */,
 				B75AD62C24CA927900DCC857 /* ContactsVC_Coach.swift */,
 			);
@@ -327,7 +325,6 @@
 			isa = PBXGroup;
 			children = (
 				B7F18C9B24975B60009BFA17 /* LoginVC.swift */,
-				B75AD62A24C9A73E00DCC857 /* Encryption.swift */,
 			);
 			path = MutualControllers;
 			sourceTree = "<group>";
@@ -614,7 +611,6 @@
 				B75D0AE724BECD7000CF7943 /* PlayerRosterCell.swift in Sources */,
 				B75AD63024CA945E00DCC857 /* IncomingMessages.swift in Sources */,
 				B7C3BDF824BB08D200086C27 /* CoachNoPicCell.swift in Sources */,
-				B7342CE924C57980000C24D3 /* ChatViewController.swift in Sources */,
 				B7C3BE0324BC735000086C27 /* PlayerRosterVC.swift in Sources */,
 				B7F18C6624970084009BFA17 /* SceneDelegate.swift in Sources */,
 				B75AD62324C9944B00DCC857 /* RecentChatVC_Coach.swift in Sources */,

@@ -224,7 +224,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         var membersToPush = recent[kMEMBERSTOPUSH] as! [String]
         
         if mute {
-            let index = membersToPush.index(of: FUser.currentId())!
+            let index = membersToPush.firstIndex(of: FUser.currentId())!
             membersToPush.remove(at: index)
         } else {
             membersToPush.append(FUser.currentId())
