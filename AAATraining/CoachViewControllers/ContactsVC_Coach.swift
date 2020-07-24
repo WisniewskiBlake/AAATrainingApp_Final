@@ -13,10 +13,12 @@ import ProgressHUD
 
 class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell_CoachDelegate {
     
+    
+    
     @IBOutlet weak var filterSegmentedControl: UISegmentedControl!
     
     var allUsers: [FUser] = []
-    var filteredUsers: [FUser] = []
+    
     var users: [FUser] = []
     var matchedUsers: [FUser] = []
     var filteredMatchedUsers: [FUser] = []
@@ -54,8 +56,6 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
         searchController.obscuresBackgroundDuringPresentation = false
         definesPresentationContext = true
         
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,7 +67,12 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     }
     
     @IBAction func nextButtonPressed(_ sender: Any) {
+        let newGroupVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newGroupView") as! NewGroupVC_Coach
         
+        newGroupVC.memberIds = memberIdsOfGroupChat
+        newGroupVC.allMembers = membersOfGroupChat
+        
+        self.navigationController?.pushViewController(newGroupVC, animated: true)
     }
     
     
@@ -145,7 +150,7 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
         
         if searchController.isActive && searchController.searchBar.text != "" {
             
-            return filteredUsers.count
+            return filteredMatchedUsers.count
             
         } else {
             
@@ -169,7 +174,7 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
         
         if searchController.isActive && searchController.searchBar.text != "" {
             
-            user = filteredUsers[indexPath.row]
+            user = filteredMatchedUsers[indexPath.row]
         } else {
             
             let sectionTitle = self.sectionTitleList[indexPath.section]
@@ -230,7 +235,7 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
         if !isGroup {
             //1 on 1 chat
             
-            if !checkBlockedStatus(withUser: userToChat) {
+            
            
             
         } else {
@@ -253,7 +258,7 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
             
             
             if selected {
-                let objectIndex = memberIdsOfGroupChat.index(of: userToChat.objectId)
+                let objectIndex = memberIdsOfGroupChat.firstIndex(of: userToChat.objectId)
                 
                 memberIdsOfGroupChat.remove(at: objectIndex!)
                 membersOfGroupChat.remove(at: objectIndex!)
@@ -265,18 +270,13 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
             self.navigationItem.rightBarButtonItem?.isEnabled = memberIdsOfGroupChat.count > 0
         }
         
-        
-        }
-
-   
-
     }
     
     //MARK: Search controller functions
     
     func filterContentForSearchText(searchText: String, scope: String = "All") {
     
-        filteredUsers = allUsers.filter({ (user) -> Bool in
+        filteredMatchedUsers = allUsers.filter({ (user) -> Bool in
             
             return user.firstname.lowercased().contains(searchText.lowercased())
         })
@@ -294,33 +294,33 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     }
     
     fileprivate func splitDataIntoSection() {
-             
-             var sectionTitle: String = ""
-             
-             for i in 0..<self.allUsers.count {
-                 
-                 let currentUser = self.allUsers[i]
-                 
-                 let firstChar = currentUser.firstname.first!
-                 
-                 let firstCarString = "\(firstChar)"
-                 
-                 
-                 if firstCarString != sectionTitle {
-                     
-                     sectionTitle = firstCarString
-                     
-                     self.allUsersGrouped[sectionTitle] = []
-                     
-                     if !sectionTitleList.contains(sectionTitle) {
-                         self.sectionTitleList.append(sectionTitle)
-                     }
-                 }
-                 
-                 self.allUsersGrouped[firstCarString]?.append(currentUser)
-                 
-             }
-       
-         }
+          
+          var sectionTitle: String = ""
+          
+          for i in 0..<self.allUsers.count {
+              
+              let currentUser = self.allUsers[i]
+              
+              let firstChar = currentUser.firstname.first!
+              
+              let firstCarString = "\(firstChar)"
+              
+              
+              if firstCarString != sectionTitle {
+                  
+                  sectionTitle = firstCarString
+                  
+                  self.allUsersGrouped[sectionTitle] = []
+                  
+                  if !sectionTitleList.contains(sectionTitle) {
+                      self.sectionTitleList.append(sectionTitle)
+                  }
+              }
+              
+              self.allUsersGrouped[firstCarString]?.append(currentUser)
+              
+          }
+    
+      }
 
 }
