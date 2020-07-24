@@ -1911,17 +1911,21 @@
         <!--New GroupVC Coach-->
         <scene sceneID="cTU-iz-inf">
             <objects>
-                <viewController id="Y5s-hv-4It" customClass="NewGroupVC_Coach" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="newGroupView" id="Y5s-hv-4It" customClass="NewGroupVC_Coach" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fDa-0D-doq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="groupIcon" translatesAutoresizingMaskIntoConstraints="NO" id="mog-bZ-zbo">
                                 <rect key="frame" x="11" y="35" width="80" height="80"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="NyW-Ga-bdR"/>
                                     <constraint firstAttribute="width" constant="80" id="vPN-Td-2MQ"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="0hc-3S-EwO" appends="YES" id="CXt-BC-cFL"/>
+                                </connections>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please provide a title and icon." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zWQ-oq-RgG">
                                 <rect key="frame" x="104" y="126" width="255" height="18"/>
@@ -1937,6 +1941,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <state key="normal" title="Edit"/>
+                                <connections>
+                                    <action selector="editButtonPressed:" destination="Y5s-hv-4It" eventType="touchUpInside" id="X7x-ro-SG3"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WBk-Aj-Enw">
                                 <rect key="frame" x="0.0" y="156" width="375" height="40"/>
@@ -1966,7 +1973,7 @@
                                     <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="qTL-dz-Pl4">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="qTL-dz-Pl4" customClass="GroupMemberCell_Coach" customModule="AAATraining" customModuleProvider="target">
                                         <rect key="frame" x="10" y="10" width="100" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="J6y-dd-fGR">
@@ -1996,6 +2003,9 @@
                                                         <constraint firstAttribute="height" constant="25" id="hpE-pb-yMl"/>
                                                     </constraints>
                                                     <state key="normal" image="cancel"/>
+                                                    <connections>
+                                                        <action selector="deleteButtonPressed:" destination="qTL-dz-Pl4" eventType="touchUpInside" id="DCO-8c-KtM"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -2009,6 +2019,10 @@
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="100" height="100"/>
+                                        <connections>
+                                            <outlet property="avatarImageView" destination="ynb-SX-Jfn" id="CaM-JM-uOA"/>
+                                            <outlet property="nameLabel" destination="qHA-gc-Sc4" id="2o3-RD-CMZ"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
@@ -2046,8 +2060,21 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="eat-p0-VXT"/>
                     </view>
+                    <connections>
+                        <outlet property="collectionView" destination="EF6-ZK-fxI" id="dLG-q1-TH0"/>
+                        <outlet property="editAvatarButtonOutlet" destination="4nd-uk-QER" id="vYd-mR-mF7"/>
+                        <outlet property="groupIconImageView" destination="mog-bZ-zbo" id="cNp-Yj-9P1"/>
+                        <outlet property="groupSubjectTextField" destination="z0f-Fn-t4f" id="2tY-ky-qNj"/>
+                        <outlet property="iconTapGesture" destination="0hc-3S-EwO" id="vp4-Ab-CqH"/>
+                        <outlet property="participantsLabel" destination="GJC-i0-msg" id="Tga-Zr-Yhe"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="awp-Qe-fXa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="0hc-3S-EwO">
+                    <connections>
+                        <action selector="groupIconTapped:" destination="Y5s-hv-4It" id="B6Z-vG-4Wd"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="6384.8000000000002" y="-2419.3403298350827"/>
         </scene>
@@ -2137,7 +2164,7 @@
         <!--Select Members-->
         <scene sceneID="VP0-r2-905">
             <objects>
-                <tableViewController id="4vj-nx-aZJ" customClass="ContactsVC_Coach" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="contactsView" id="4vj-nx-aZJ" customClass="ContactsVC_Coach" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="5gH-2H-lbU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2217,7 +2244,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="filterSegmentedControl" destination="CpW-Pq-Cub" id="de9-E4-qc3"/>
-                        <outlet property="headerView" destination="Jaa-ps-PO9" id="FGE-p4-5wo"/>
+                        <outlet property="headerView" destination="Jaa-ps-PO9" id="Xmp-Hb-gEE"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q3m-ca-zTv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

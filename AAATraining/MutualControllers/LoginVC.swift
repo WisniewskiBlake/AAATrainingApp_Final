@@ -43,8 +43,8 @@ class LoginVC: UIViewController {
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    
-    var loginRef: DatabaseReference!
+    //
+//    var loginRef: DatabaseReference!
     
     //executed when scene is loaded
     override func viewDidLoad() {
