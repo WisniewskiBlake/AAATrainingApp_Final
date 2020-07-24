@@ -56,6 +56,45 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
     
     var incomingBubble = JSQMessagesBubbleImageFactory()?.outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
     
+    //MARK: CustomHeaders
+
+    let leftBarButtonView: UIView = {
+        
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 44))
+        return view
+    }()
+    let avatarButton: UIButton = {
+       let button = UIButton(frame: CGRect(x: 0, y: 10, width: 25, height: 25))
+        return button
+    }()
+    let titleLabel: UILabel = {
+       let title = UILabel(frame: CGRect(x: 30, y: 10, width: 140, height: 15))
+        title.textAlignment = .left
+        title.font = UIFont(name: title.font.fontName, size: 14)
+        
+        return title
+    }()
+    let subTitleLabel: UILabel = {
+       let subTitle = UILabel(frame: CGRect(x: 30, y: 25, width: 140, height: 15))
+        subTitle.textAlignment = .left
+        subTitle.font = UIFont(name: subTitle.font.fontName, size: 10)
+        
+        return subTitle
+    }()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        clearRecentCounter(chatRoomId: chatRoomId)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        clearRecentCounter(chatRoomId: chatRoomId)
+    }
+    
+    //fix for Iphone x
+    override func viewDidLayoutSubviews() {
+        perform(Selector(("jsq_updateCollectionViewInsets")))
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
