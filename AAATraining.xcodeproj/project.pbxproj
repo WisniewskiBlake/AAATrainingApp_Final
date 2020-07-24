@@ -38,6 +38,12 @@
 		B75AD63824CABA9F00DCC857 /* NewGroupVC_Coach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AD63724CABA9F00DCC857 /* NewGroupVC_Coach.swift */; };
 		B75AD63A24CABFED00DCC857 /* PushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AD63924CABFED00DCC857 /* PushNotifications.swift */; };
 		B75AD63C24CACF5200DCC857 /* GroupMemberCell_Coach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AD63B24CACF5200DCC857 /* GroupMemberCell_Coach.swift */; };
+		B75AD63E24CAE80800DCC857 /* PhotoMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AD63D24CAE80800DCC857 /* PhotoMediaItem.swift */; };
+		B75AD64024CAE82900DCC857 /* VideoMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AD63F24CAE82900DCC857 /* VideoMessage.swift */; };
+		B75AD64224CAE88F00DCC857 /* AudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AD64124CAE88F00DCC857 /* AudioViewController.swift */; };
+		B75AD64424CAEBF200DCC857 /* Badges.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AD64324CAEBF200DCC857 /* Badges.swift */; };
+		B75AD64624CAEC7A00DCC857 /* BackgroundCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AD64524CAEC7A00DCC857 /* BackgroundCollectionVC.swift */; };
+		B75AD64824CAF39C00DCC857 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AD64724CAF39B00DCC857 /* Camera.swift */; };
 		B75D0AE724BECD7000CF7943 /* PlayerRosterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75D0AE624BECD7000CF7943 /* PlayerRosterCell.swift */; };
 		B75D0AEB24BFC8D900CF7943 /* FeedVC_Coach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75D0AEA24BFC8D900CF7943 /* FeedVC_Coach.swift */; };
 		B7B7578B249AB1E8000D0D8A /* AAAbackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B7B7578A249AB1E8000D0D8A /* AAAbackground.jpg */; };
@@ -116,6 +122,12 @@
 		B75AD63724CABA9F00DCC857 /* NewGroupVC_Coach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupVC_Coach.swift; sourceTree = "<group>"; };
 		B75AD63924CABFED00DCC857 /* PushNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotifications.swift; sourceTree = "<group>"; };
 		B75AD63B24CACF5200DCC857 /* GroupMemberCell_Coach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMemberCell_Coach.swift; sourceTree = "<group>"; };
+		B75AD63D24CAE80800DCC857 /* PhotoMediaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoMediaItem.swift; sourceTree = "<group>"; };
+		B75AD63F24CAE82900DCC857 /* VideoMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessage.swift; sourceTree = "<group>"; };
+		B75AD64124CAE88F00DCC857 /* AudioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioViewController.swift; sourceTree = "<group>"; };
+		B75AD64324CAEBF200DCC857 /* Badges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Badges.swift; sourceTree = "<group>"; };
+		B75AD64524CAEC7A00DCC857 /* BackgroundCollectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundCollectionVC.swift; sourceTree = "<group>"; };
+		B75AD64724CAF39B00DCC857 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		B75D0AE624BECD7000CF7943 /* PlayerRosterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerRosterCell.swift; sourceTree = "<group>"; };
 		B75D0AEA24BFC8D900CF7943 /* FeedVC_Coach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedVC_Coach.swift; sourceTree = "<group>"; };
 		B7B7578A249AB1E8000D0D8A /* AAAbackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = AAAbackground.jpg; path = ../../../Downloads/AAAbackground.jpg; sourceTree = "<group>"; };
@@ -212,6 +224,12 @@
 				B75AD63124CA946D00DCC857 /* OutgoingMessage.swift */,
 				B75AD63324CA94AD00DCC857 /* Download.swift */,
 				B75AD63924CABFED00DCC857 /* PushNotifications.swift */,
+				B75AD63D24CAE80800DCC857 /* PhotoMediaItem.swift */,
+				B75AD63F24CAE82900DCC857 /* VideoMessage.swift */,
+				B75AD64124CAE88F00DCC857 /* AudioViewController.swift */,
+				B75AD64324CAEBF200DCC857 /* Badges.swift */,
+				B75AD64524CAEC7A00DCC857 /* BackgroundCollectionVC.swift */,
+				B75AD64724CAF39B00DCC857 /* Camera.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -608,19 +626,25 @@
 				B7342CDE24C4130C000C24D3 /* Constants.swift in Sources */,
 				B75AD63224CA946D00DCC857 /* OutgoingMessage.swift in Sources */,
 				B75AD62B24C9A73E00DCC857 /* Encryption.swift in Sources */,
+				B75AD64224CAE88F00DCC857 /* AudioViewController.swift in Sources */,
 				B7F18C6424970084009BFA17 /* AppDelegate.swift in Sources */,
 				B75AD62124C993B500DCC857 /* ChatVC_Coach.swift in Sources */,
 				B75AD62D24CA927900DCC857 /* ContactsVC_Coach.swift in Sources */,
 				B75AD62924C9A56300DCC857 /* RecentChatCell_Coach.swift in Sources */,
 				B75AD61F24C9669700DCC857 /* RosterCell_Coach.swift in Sources */,
 				B7342CE224C419FF000C24D3 /* CollectionReference.swift in Sources */,
+				B75AD64024CAE82900DCC857 /* VideoMessage.swift in Sources */,
 				B7551077249C2CD400598A30 /* RegisterVC.swift in Sources */,
 				B75AD63A24CABFED00DCC857 /* PushNotifications.swift in Sources */,
 				B7F8AFF624B6AC1A00B315FD /* CoachProfileViewController.swift in Sources */,
 				B7F8AFFA24B6E98600B315FD /* PostVC.swift in Sources */,
+				B75AD64424CAEBF200DCC857 /* Badges.swift in Sources */,
 				B75D0AE724BECD7000CF7943 /* PlayerRosterCell.swift in Sources */,
+				B75AD63E24CAE80800DCC857 /* PhotoMediaItem.swift in Sources */,
+				B75AD64624CAEC7A00DCC857 /* BackgroundCollectionVC.swift in Sources */,
 				B75AD63024CA945E00DCC857 /* IncomingMessages.swift in Sources */,
 				B7C3BDF824BB08D200086C27 /* CoachNoPicCell.swift in Sources */,
+				B75AD64824CAF39C00DCC857 /* Camera.swift in Sources */,
 				B75AD63C24CACF5200DCC857 /* GroupMemberCell_Coach.swift in Sources */,
 				B7C3BE0324BC735000086C27 /* PlayerRosterVC.swift in Sources */,
 				B7F18C6624970084009BFA17 /* SceneDelegate.swift in Sources */,

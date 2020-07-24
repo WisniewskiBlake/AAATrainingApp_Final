@@ -23,32 +23,24 @@ let DEFAULTS = UserDefaults.standard
 let keyCURRENT_USER = "currentUser1"
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate, PKPushRegistryDelegate {
+    func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
+        
+    }
+    
 
     var window: UIWindow?
     var authListener: AuthStateDidChangeListenerHandle?
+    
+    var locationManager: CLLocationManager?
+    var coordinates: CLLocationCoordinate2D?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         FirebaseApp.configure()
         
-        //AutoLogin
-//        authListener = Auth.auth().addStateDidChangeListener({ (auth, user) in
-//            
-//            Auth.auth().removeStateDidChangeListener(self.authListener!)
-//            
-//            if user != nil {
-//                
-//                if UserDefaults.standard.object(forKey: kCURRENTUSER) != nil {
-//                    
-//                    DispatchQueue.main.async {
-//                        self.goToApp()
-//
-//                    }
-//                }
-//            }
-//        })
+
         
         
 
