@@ -188,7 +188,31 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     }
        
        func didTapAvatarImage(indexPath: IndexPath) {
-           
+//           var recentChat: NSDictionary!
+//           
+//           if searchController.isActive && searchController.searchBar.text != "" {
+//               recentChat = filteredChats[indexPath.row]
+//           } else {
+//               recentChat = recentChats[indexPath.row]
+//           }
+//           
+//           if recentChat[kTYPE] as! String == kPRIVATE {
+//               
+//               reference(.User).document(recentChat[kWITHUSERUSERID] as! String).getDocument { (snapshot, error) in
+//                   
+//                   guard let snapshot = snapshot else { return }
+//                   
+//                   if snapshot.exists {
+//                       
+//                       let userDictionary = snapshot.data() as! NSDictionary
+//                       
+//                       let tempUser = FUser(_dictionary: userDictionary)
+//                       
+//                       self.showUserProfile(user: tempUser)
+//                   }
+//                   
+//               }
+//           }
        }
        
        //MARK: Search controller functions
@@ -233,6 +257,14 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         updateExistingRicentWithNewValues(chatRoomId: recent[kCHATROOMID] as! String, members: recent[kMEMBERS] as! [String], withValues: [kMEMBERSTOPUSH : membersToPush])
         
     }
+    
+//    func showUserProfile(user: FUser) {
+//
+//        let profileVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "profileView") as! ProfileViewTableViewController
+//
+//        profileVC.user = user
+//        self.navigationController?.pushViewController(profileVC, animated: true)
+//    }
     
      //MARK: Custom tableViewHeader
         

@@ -68,22 +68,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         loadUser()
         loadPosts(offset: skip, limit: limit)
         
-        //loadPosts(offset: skip, limit: limit)
-//        DispatchQueue.global().async {
-//            let lock = DispatchSemaphore(value: 0)
-//            // Load any saved meals, otherwise load sample data.
-//
-//            self.loadPosts(offset: self.skip, limit: self.limit, completion: {
-//                lock.signal()
-//            })
-//            lock.wait()
-//            // finished fetching data
-//            //self.tableView.reloadData()
-//        }
-        
-        
-        
-        
+
     }
     
     @objc func refresh(sender:AnyObject)
@@ -100,16 +85,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//        DispatchQueue.global().async {
-//            let lock = DispatchSemaphore(value: 0)
-//            // Load any saved meals, otherwise load sample data.
-//            self.loadPosts(offset: self.skip, limit: self.limit, completion: {
-//                lock.signal()
-//            })
-//            lock.wait()
-//            // finished fetching data
-//            //self.tableView.reloadData()
-//        }
+
         
         // hide navigation bar on Home Pagex
         navigationController?.setNavigationBarHidden(true, animated: true)
@@ -122,17 +98,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         // skipping 0 posts, as we want to load the entire feed. And we are extending Limit value based on the previous loaded posts.
         loadPosts(offset: 0, limit: skip + 1)
         
-//        DispatchQueue.global().async {
-//            let lock = DispatchSemaphore(value: 0)
-//            // Load any saved meals, otherwise load sample data.
-//            self.loadPosts(offset: self.skip, limit: self.limit + 1, completion: {
-//                lock.signal()
-//            })
-//            lock.wait()
-//            // finished fetching data
-//            self.tableView.reloadData()
-//
-//        }
+
     }
     
     // MARK: - Load User

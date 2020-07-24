@@ -14,6 +14,9 @@ import IDMPhotoBrowser
 import AVFoundation
 import AVKit
 import FirebaseFirestore
+import Firebase
+import FirebaseCore
+import FirebaseAuth
 
 class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, IQAudioRecorderViewControllerDelegate {
     
@@ -248,7 +251,7 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
         
         var avatar: JSQMessageAvatarImageDataSource
         
-        if let testAvatar = jsqAvatarDictionary!.object(forKey: message.senderId) {
+        if let testAvatar = jsqAvatarDictionary!.object(forKey: message.senderId!) {
             avatar = testAvatar as! JSQMessageAvatarImageDataSource
         } else {
             avatar = JSQMessagesAvatarImageFactory.avatarImage(with: UIImage(named: "avatarPlaceholder"), diameter: 70)
@@ -261,7 +264,7 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
     
     override func didPressAccessoryButton(_ sender: UIButton!) {
 
-        
+                
         let camera = Camera(delegate_: self)
         
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -911,17 +914,17 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
         leftBarButtonView.addSubview(titleLabel)
         leftBarButtonView.addSubview(subTitleLabel)
         
-        let infoButton = UIBarButtonItem(image: UIImage(named: "info"), style: .plain, target: self, action: #selector(self.infoButtonPressed))
+//        let infoButton = UIBarButtonItem(image: UIImage(named: "info"), style: .plain, target: self, action: #selector(self.infoButtonPressed))
         
-        self.navigationItem.rightBarButtonItem = infoButton
+//        self.navigationItem.rightBarButtonItem = infoButton
         
         let leftBarButtonItem = UIBarButtonItem(customView: leftBarButtonView)
         self.navigationItem.leftBarButtonItems?.append(leftBarButtonItem)
         
         if isGroup! {
-            avatarButton.addTarget(self, action: #selector(self.showGroup), for: .touchUpInside)
+//            avatarButton.addTarget(self, action: #selector(self.showGroup), for: .touchUpInside)
         } else {
-            avatarButton.addTarget(self, action: #selector(self.showUserProfile), for: .touchUpInside)
+//            avatarButton.addTarget(self, action: #selector(self.showUserProfile), for: .touchUpInside)
         }
         
         getUsersFromFirestore(withIds: memberIds) { (withUsers) in
@@ -954,7 +957,7 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
             subTitleLabel.text = "Offline"
         }
         
-        avatarButton.addTarget(self, action: #selector(self.showUserProfile), for: .touchUpInside)
+//        avatarButton.addTarget(self, action: #selector(self.showUserProfile), for: .touchUpInside)
     }
     
     func setUIForGroupChat() {
@@ -1052,7 +1055,7 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
 
 
     //MARK: Location access
-    
+        
     func haveAccessToUserLocation() -> Bool {
         if appDelegate.locationManager != nil {
             return true
@@ -1178,5 +1181,25 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
     
     
 
+
+}
+
+extension JSQMessagesInputToolbar {
+
+override open func didMoveToWindow() {
+
+super.didMoveToWindow()
+
+guard let window = window else { return }
+
+if #available(iOS 11.0, *) {
+
+let anchor = window.safeAreaLayoutGuide.bottomAnchor
+
+bottomAnchor.constraint(lessThanOrEqualToSystemSpacingBelow: anchor, multiplier: 1.0).isActive = true
+
+}
+
+}
 
 }

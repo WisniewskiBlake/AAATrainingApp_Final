@@ -224,8 +224,32 @@ public class FUser {
             } else {
                 
                 //get user from firebase and save locally
-                fetchCurrentUserFromFirestore(userId: firUser!.user.uid)
-                completion(error)
+//                fetchCurrentUserFromFirestore(userId: firUser!.user.uid)
+//                completion(error)
+                //check if user exist - login else register
+                           fetchCurrentUserFromFirestore(userId: firUser!.user.uid, completion: { (user) in
+
+                               if user != nil && user!.firstname != "" {
+                                   //we have user, login
+
+                                   saveUserLocally(fUser: user!)
+                                   saveUserToFirestore(fUser: user!)
+
+                                   completion(error)
+
+                               } else {
+
+//                                   //    we have no user, register
+//                                   let fUser = FUser(_objectId: firUser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: "", _firstname: "", _lastname: "", _avatar: "", _loginMethod: kPHONE, _phoneNumber: firUser!.user.phoneNumber!, _height: "", _weight: "", _position: "", _number: "", _accountType: "", _birthday: "", _cover: "")
+//
+//                                   saveUserLocally(fUser: fUser)
+//                                   saveUserToFirestore(fUser: fUser)
+//                                   completion(error)
+
+                               }
+
+                           })
+                
             }
             
         })
@@ -369,8 +393,10 @@ func fetchCurrentUserFromFirestore(userId: String) {
         
         if snapshot.exists {
             print("updated current users param")
+            print(snapshot)
             
             UserDefaults.standard.setValue(snapshot.data()! as NSDictionary, forKeyPath: kCURRENTUSER)
+            UserDefaults.standard.setValue(snapshot.data()! as NSDictionary, forKeyPath: kACCOUNTTYPE)
             UserDefaults.standard.synchronize()
             
         }

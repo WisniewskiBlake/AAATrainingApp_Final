@@ -109,34 +109,48 @@ class LoginVC: UIViewController {
                         return
                     }
                     
-                    
+                    print(FUser.currentId())
+                    self.goToApp()
                     
                     
                 }
+                
+                print(FUser.currentUser()?.accountType)
                
-                if FUser.currentUser()?.accountType == "coach" {
-                    ProgressHUD.show("Login...")
-                    self.goToCoach()
-                    
-
-                    
-
-                } else if FUser.currentUser()?.accountType == "player" {
-                    ProgressHUD.show("Login...")
-                    self.goToPlayer()
-                    
-                }
+                
                 
                             
                         
                 
             }
+    
+    func goToApp() {
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
+        print(FUser.currentId())
+        print(FUser.currentUser()?.accountType)
+        print(FUser.currentUser()?.height)
+        
+        
+        if FUser.currentUser()?.accountType == "coach" {
+            ProgressHUD.show("Login...")
+            self.goToCoach()
+            
+
+            
+
+        } else if FUser.currentUser()?.accountType == "player" {
+            ProgressHUD.show("Login...")
+            self.goToPlayer()
+            
+        }
+    }
         
         func goToCoach() {
             
             let helper = Helper()
             
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
+            
             // go to TabBar
             helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
             
@@ -147,7 +161,7 @@ class LoginVC: UIViewController {
         
         let helper = Helper()
         
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
+//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
         // go to TabBar
         helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
         

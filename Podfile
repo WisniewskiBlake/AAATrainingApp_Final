@@ -21,7 +21,7 @@ pod 'JSQMessagesViewController', '7.3.3'
 pod 'IDMPhotoBrowser'
 pod 'RNCryptor'
 
-#pod 'ImagePicker'
+pod 'ImagePicker'
 
 
   # Pods for AAATraining

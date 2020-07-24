@@ -28,17 +28,17 @@ class RecentChatCell_Coach: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
         messageCounterBackground.layer.cornerRadius = messageCounterBackground.frame.width / 2
         
         tapGesture.addTarget(self, action: #selector(self.avatarTap))
         avatarImageView.isUserInteractionEnabled = true
         avatarImageView.addGestureRecognizer(tapGesture)
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        
     }
     
     //MARK: Generate cell
@@ -46,7 +46,7 @@ class RecentChatCell_Coach: UITableViewCell {
     func generateCell(recentChat: NSDictionary, indexPath: IndexPath) {
         
         let helper = Helper()
-        let encrypt = Encryption()
+        
         
         self.indexPath = indexPath
         

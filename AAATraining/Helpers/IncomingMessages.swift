@@ -140,8 +140,8 @@ class IncomingMessage {
             
             mediaItem.status = kSUCCESS
             mediaItem.fileURL = url
-            
-            helper.imageFromData(pictureData: messageDictionary[kPICTURE] as! String, withBlock: { (image) in
+                        
+            self.helper.imageFromData(pictureData: messageDictionary[kPICTURE] as! String, withBlock: { (image) in
                 
                 if image != nil {
                     mediaItem.image = image!

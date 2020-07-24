@@ -8,9 +8,29 @@
 
 import UIKit
 import ProgressHUD
-//import ImagePicker
+import ImagePicker
 
-class NewGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, GroupMemberCell_CoachDelegate {
+class NewGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, GroupMemberCell_CoachDelegate, ImagePickerDelegate {
+    //MARK: ImagePickerControllerDelegate
+    
+    func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+        
+        if images.count > 0 {
+            self.groupIcon = images.first!
+            self.groupIconImageView.image = self.groupIcon!.circleMasked
+            self.editAvatarButtonOutlet.isHidden = false
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     
     
     
@@ -81,11 +101,11 @@ class NewGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollecti
     }
     
     @IBAction func editButtonPressed(_ sender: Any) {
-//        showIconOptions()
+        showIconOptions()
     }
     
     @IBAction func groupIconTapped(_ sender: Any) {
-//        showIconOptions()
+        showIconOptions()
     }
     
     //MARK: CollectionViewDataSource
@@ -114,82 +134,65 @@ class NewGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollecti
     
     //MARK: HelperFunctions
     
-//    func showIconOptions() {
-//
-//        let optionMenu = UIAlertController(title: "Choose group Icon", message: nil, preferredStyle: .actionSheet)
-//
-//        let takePhotoActio = UIAlertAction(title: "Take/Choose Photo", style: .default) { (alert) in
-//
-//            let imagePicker = ImagePickerController()
-//            imagePicker.delegate = self
-//            imagePicker.imageLimit = 1
-//
-//            self.present(imagePicker, animated: true, completion: nil)
-//        }
-//
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (alert) in
-//
-//        }
-//
-//        if groupIcon != nil {
-//
-//            let resetAction = UIAlertAction(title: "Reset", style: .default) { (alert) in
-//
-//                self.groupIcon = nil
-//                self.groupIconImageView.image = UIImage(named: "cameraIcon")
-//                self.editAvatarButtonOutlet.isHidden = true
-//            }
-//            optionMenu.addAction(resetAction)
-//        }
-//
-//        optionMenu.addAction(takePhotoActio)
-//        optionMenu.addAction(cancelAction)
-//
-//        if ( UI_USER_INTERFACE_IDIOM() == .pad )
-//        {
-//            if let currentPopoverpresentioncontroller = optionMenu.popoverPresentationController{
-//
-//                currentPopoverpresentioncontroller.sourceView = editAvatarButtonOutlet
-//                currentPopoverpresentioncontroller.sourceRect = editAvatarButtonOutlet.bounds
-//
-//
-//                currentPopoverpresentioncontroller.permittedArrowDirections = .up
-//                self.present(optionMenu, animated: true, completion: nil)
-//            }
-//        } else {
-//            self.present(optionMenu, animated: true, completion: nil)
-//        }
-//
-//    }
+    func showIconOptions() {
+
+        let optionMenu = UIAlertController(title: "Choose group Icon", message: nil, preferredStyle: .actionSheet)
+
+        let takePhotoActio = UIAlertAction(title: "Take/Choose Photo", style: .default) { (alert) in
+
+            let imagePicker = ImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.imageLimit = 1
+
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (alert) in
+
+        }
+
+        if groupIcon != nil {
+
+            let resetAction = UIAlertAction(title: "Reset", style: .default) { (alert) in
+
+                self.groupIcon = nil
+                self.groupIconImageView.image = UIImage(named: "cameraIcon")
+                self.editAvatarButtonOutlet.isHidden = true
+            }
+            optionMenu.addAction(resetAction)
+        }
+
+        optionMenu.addAction(takePhotoActio)
+        optionMenu.addAction(cancelAction)
+
+        if ( UI_USER_INTERFACE_IDIOM() == .pad )
+        {
+            if let currentPopoverpresentioncontroller = optionMenu.popoverPresentationController{
+
+                currentPopoverpresentioncontroller.sourceView = editAvatarButtonOutlet
+                currentPopoverpresentioncontroller.sourceRect = editAvatarButtonOutlet.bounds
+
+
+                currentPopoverpresentioncontroller.permittedArrowDirections = .up
+                self.present(optionMenu, animated: true, completion: nil)
+            }
+        } else {
+            self.present(optionMenu, animated: true, completion: nil)
+        }
+
+    }
     
     func updateParticipantsLabel() {
         
         participantsLabel.text = "PARTICIPANTS: \(allMembers.count)"
         
         self.navigationItem.rightBarButtonItems = [UIBarButtonItem(title: "Create", style: .plain, target: self, action: #selector(self.createButtonPressed))]
-        
+        self.navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        self.navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         self.navigationItem.rightBarButtonItem?.isEnabled = allMembers.count > 0
     }
     
-    //MARK: ImagePickerControllerDelegate
-    
-//    func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
-//        self.dismiss(animated: true, completion: nil)
-//    }
-//
-//    func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
-//
-//        if images.count > 0 {
-//            self.groupIcon = images.first!
-//            self.groupIconImageView.image = self.groupIcon!.circleMasked
-//            self.editAvatarButtonOutlet.isHidden = false
-//        }
-//        self.dismiss(animated: true, completion: nil)
-//    }
-//
-//    func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
-//        self.dismiss(animated: true, completion: nil)
-//    }
+
 
     
 
