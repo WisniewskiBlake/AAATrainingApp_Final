@@ -14,11 +14,14 @@ import CoreLocation
 import PushKit
 import FirebaseAuth
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelegate, PKPushRegistryDelegate {
+    
+    
 
     var window: UIWindow?
     var authListener: AuthStateDidChangeListenerHandle?
-    
+    var locationManager: CLLocationManager?
+    var coordinates: CLLocationCoordinate2D?
     
 //    var ref = Database.database().reference()
 
@@ -66,15 +69,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
           self.window?.rootViewController = TabBar
         }
         
-//        ref.child("User").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
-//          // Get user value
-//          let value = snapshot.value as? NSDictionary
-//          accountType = value?["accountType"] as? String ?? ""
-//
-//
-//          }) { (error) in
-//            print(error.localizedDescription)
-//        }
+
 
         
         
@@ -108,6 +103,95 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
+    
+    //MARK: Location manger
+    
+    func locationManagerStart() {
+        
+        if locationManager == nil {
+            locationManager = CLLocationManager()
+            locationManager!.delegate = self
+            locationManager!.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager!.requestWhenInUseAuthorization()
+        }
+        
+        locationManager!.startUpdatingLocation()
+    }
+
+    func locationMangerStop() {
+        
+        if locationManager != nil {
+            locationManager!.stopUpdatingLocation()
+        }
+    }
+    
+    //MARK: Location Manager delegate
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        
+        print("faild to get location")
+    }
+
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        
+        switch status {
+        case .notDetermined:
+            manager.requestWhenInUseAuthorization()
+        case .authorizedWhenInUse:
+            manager.startUpdatingLocation()
+        case .authorizedAlways:
+            manager.startUpdatingLocation()
+        case .restricted:
+            print("restricted")
+        case .denied:
+            locationManager = nil
+            print("denied location access")
+            break
+        @unknown default:
+            print("Error")
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        coordinates = locations.last!.coordinate
+    }
+    
+    //MARK: PKPushDelegate
+    
+    func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
+        
+    }
+    
+//    func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType) {
+//
+//        print("did get incoming push")
+//        self.handleRemoteNotification(userInfo: payload.dictionaryPayload as NSDictionary)
+//
+//    }
+//
+//    func handleRemoteNotification(userInfo: NSDictionary) {
+//
+//        if _client == nil {
+//            let userId = UserDefaults.standard.object(forKey: kUSERID)
+//
+//            if userId != nil {
+//                self.initSinchWithUserId(userId: userId as! String)
+//            }
+//        }
+//
+//
+//        let result = self._client.relayRemotePushNotification(userInfo as! [AnyHashable : Any])
+//
+//        if result!.isCall() {
+//            print("handle call notification")
+//        }
+//
+//        if result!.isCall() && result!.call()!.isCallCanceled {
+//            self.presentMissedCallNotificationWithRemoteUserId(userId: result!.call()!.callId)
+//        }
+//
+//    }
 
 
 }
