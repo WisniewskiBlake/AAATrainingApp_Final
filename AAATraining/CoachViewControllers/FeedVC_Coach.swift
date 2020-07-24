@@ -22,8 +22,7 @@ class FeedVC_Coach: UITableViewController {
     var lastNames : [String] = []
     
     
-    // color obj
-    let likeColor = UIColor(red: 28/255, green: 165/255, blue: 252/255, alpha: 1)
+   
     
     var refreshing = true
     
@@ -31,7 +30,7 @@ class FeedVC_Coach: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        configureNavBar()
         // dynamic cell height
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200
@@ -75,8 +74,12 @@ class FeedVC_Coach: UITableViewController {
         self.tableView.reloadData()
         self.refreshControl?.endRefreshing()
         
-        
-        
+    }
+    
+    func configureNavBar() {
+        let imageView = UIImageView(image: UIImage(named: "aaaLogo.png"))        
+        imageView.contentMode = .scaleAspectFit
+        navigationItem.titleView = imageView
     }
     
 

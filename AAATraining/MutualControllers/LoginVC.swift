@@ -8,6 +8,8 @@
 
 import UIKit
 import ProgressHUD
+import FirebaseFirestore
+import Firebase
 
 class LoginVC: UIViewController {
     
@@ -42,7 +44,7 @@ class LoginVC: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
-    
+    var loginRef: DatabaseReference!
     
     //executed when scene is loaded
     override func viewDidLoad() {
@@ -73,6 +75,83 @@ class LoginVC: UIViewController {
         // switch off notification center, so it wouldn't in action / running
         NotificationCenter.default.removeObserver(self)
      }
+    
+    @IBAction func loginButton_clicked(_ sender: Any) {
+          // accessing Helper Class that stores multi-used functions
+                let helper = Helper()
+                
+                // 1st Varification: if etnered text in EmailTextField doesn't match our expression/rule, show alert
+                if helper.isValid(email: emailTextField.text!) == false {
+                    helper.showAlert(title: "Invalid Email", message: "Please enter registered Email address", in: self)
+                    return
+                    
+                // 2nd Varification: if password is less than 6 chars, then return do not executed further
+                } else if passwordTextField.text!.count < 6 {
+                    helper.showAlert(title: "Invalid Password", message: "Password must contain at least 6 characters", in: self)
+                    return
+                }
+                
+            loginUser()
+                
+                
+                
+        }
+            
+            
+            // sending request to the server for proceeding Log In
+            func loginUser() {
+                
+                
+                FUser.loginUserWith(email: emailTextField.text!, password: passwordTextField.text!) { (error) in
+                    
+                    if error != nil {
+                        ProgressHUD.showError(error!.localizedDescription)
+                        return
+                    }
+                    
+                    
+                    
+                    
+                }
+               
+                if FUser.currentUser()?.accountType == "coach" {
+                    ProgressHUD.show("Login...")
+                    self.goToCoach()
+                    
+
+                    
+
+                } else if FUser.currentUser()?.accountType == "player" {
+                    ProgressHUD.show("Login...")
+                    self.goToPlayer()
+                    
+                }
+                
+                            
+                        
+                
+            }
+        
+        func goToCoach() {
+            
+            let helper = Helper()
+            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
+            // go to TabBar
+            helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
+            
+            
+        }
+    
+    func goToPlayer() {
+        
+        let helper = Helper()
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
+        // go to TabBar
+        helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
+        
+    }
     
     // executed always when the Screen's White Space (anywhere excluding objects) tapped
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -220,165 +299,7 @@ class LoginVC: UIViewController {
         
     }
 
-    @IBAction func loginButton_clicked(_ sender: Any) {
-      // accessing Helper Class that stores multi-used functions
-            let helper = Helper()
-            
-            // 1st Varification: if etnered text in EmailTextField doesn't match our expression/rule, show alert
-            if helper.isValid(email: emailTextField.text!) == false {
-                helper.showAlert(title: "Invalid Email", message: "Please enter registered Email address", in: self)
-                return
-                
-            // 2nd Varification: if password is less than 6 chars, then return do not executed further
-            } else if passwordTextField.text!.count < 6 {
-                helper.showAlert(title: "Invalid Password", message: "Password must contain at least 6 characters", in: self)
-                return
-            }
-            
-        FUser.loginUserWith(email: emailTextField.text!, password: passwordTextField.text!) { (error) in
-            // run LoginRequest Function
-            self.loginRequest()
-        }
-            
-            
-            
-    }
-        
-        
-        // sending request to the server for proceeding Log In
-        func loginRequest() {
-            
-            // STEP 1. Declaring URL to be sent request to; declaring the body to be appended to URL (all this managed via request); declaring request to be executed
-            //let url = URL(string: "http://192.168.1.17/fb/login.php")!
-            let url = URL(string: "http://localhost/fb/login.php")!
-            let body = "email=\(emailTextField.text!)&password=\(passwordTextField.text!)"
-            var request = URLRequest(url: url)
-            request.httpBody = body.data(using: .utf8)
-            request.httpMethod = "POST"
-            
-            // STEP 2. Execute created above request
-            URLSession.shared.dataTask(with: request) { (data, response, error) in
-                
-                DispatchQueue.main.async {
-                
-                // accessing Helper Class to access its functions
-                let helper = Helper()
-                
-                // if error occures
-                if error != nil {
-                    helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
-                    return
-                }
-                
-                // STEP 3. Receive JSON message
-                do {
-                    
-                    // save mode of casting any data
-                    guard let data = data else {
-                        helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
-                        return
-                    }
-                    
-                    // fetching all JSON info received from the server
-                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
-                    
-                    // save mode of casting JSON
-                    guard let parsedJSON = json else {
-                        print("Parsing Error")
-                        return
-                    }
-                    
-                    // STEP 4. Create Scenarios
-                    // Successfully Logged In
-                    if parsedJSON["status"] as! String == "200" {
-                        
-                        currentUser1 = parsedJSON.mutableCopy() as? Dictionary<String, Any>
-                        DEFAULTS.set(currentUser1, forKey: keyCURRENT_USER)
-                        DEFAULTS.synchronize()
-                        
-                        if parsedJSON["accountType"] as! String == "1" {
-                            
-
-                            FUser.loginUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!) { (error) in
-                                
-                                if error != nil {
-                                    ProgressHUD.showError(error!.localizedDescription)
-                                    return
-                                }
-                                self.goToApp(accountType: parsedJSON["accountType"] as! String)
-                                
-                            }
-                            
-
-//                            //CHANGED IN VIDEO 56
-//    //                        UserDefaults.standard.set(currentUser, forKey: "currentUser")
-//    //                        UserDefaults.standard.synchronize()
-//                            DEFAULTS.set(currentUser, forKey: keyCURRENT_USER)
-//                            DEFAULTS.synchronize()
-                        } else if parsedJSON["accountType"] as! String == "2" {
-                            
-                            
-
-                            FUser.loginUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!) { (error) in
-                                
-                                if error != nil {
-                                    ProgressHUD.showError(error!.localizedDescription)
-                                    return
-                                }
-                                self.goToApp(accountType: parsedJSON["accountType"] as! String)
-                                
-                            }
-                            
-//                            //CHANGED IN VIDEO 56
-//    //                        UserDefaults.standard.set(currentUser, forKey: "currentUser")
-//    //                        UserDefaults.standard.synchronize()
-//                            DEFAULTS.set(currentUser, forKey: keyCURRENT_USER)
-//                            DEFAULTS.synchronize()
-                        }
-                        
-                        
-                    // Some error occured related to the entered data, like: wrong password, wrong email, etc
-                    } else {
-                        
-                        // save mode of casting / checking existance of Server Message
-                        if parsedJSON["message"] != nil {
-                            let message = parsedJSON["message"] as! String
-                            helper.showAlert(title: "Error", message: message, in: self)
-                        }
-                        
-                    }
-                    
-                    print(parsedJSON)
-                    
-                // error while fetching JSON
-                } catch {
-                    helper.showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
-                }
-                }
-            }.resume()
-            
-        }
     
-    func goToApp(accountType: String) {
-        
-        let helper = Helper()
-        
-        if(accountType == "1") {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
-            // go to TabBar
-            helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
-        } else if(accountType == "2") {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
-            // go to TabBar
-            helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
-        }
-        
-        
-        
-        
-        
-        
-    }
     
 
     

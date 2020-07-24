@@ -24,6 +24,7 @@ class CoachRegisterVC: UIViewController {
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var phoneTextField: UITextField!
     
    
     @IBOutlet weak var coachPasswordContinueButton: UIButton!
@@ -63,6 +64,7 @@ class CoachRegisterVC: UIViewController {
         cornerRadius(for: lastNameTextField)
         cornerRadius(for: emailTextField)
         cornerRadius(for: passwordTextField)
+        cornerRadius(for: phoneTextField)
         
         cornerRadius(for: emailContinueButton)
         cornerRadius(for: fullnameContinueButton)
@@ -74,6 +76,7 @@ class CoachRegisterVC: UIViewController {
         padding(for: lastNameTextField)
         padding(for: passwordTextField)
         padding(for: coachPasswordTextField)
+        padding(for: phoneTextField)
         
         configure_footerView()
     }
@@ -144,164 +147,42 @@ class CoachRegisterVC: UIViewController {
     }
     
     @IBAction func passwordContinue_clicked(_ sender: Any) {
-        // STEP 1. Declaring URL of the request; declaring the body to the URL; declaring request with the safest method - POST, that no one can grab our info.
-                
-                
-                let url = URL(string: "http://localhost/fb/register.php")!
-               // let url = URL(string: "http://192.168.1.17/fb/register.php")!
-                
-                
-                let body = "email=\(emailTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&firstName=\(firstNameTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&lastName=\(lastNameTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&password=\(passwordTextField.text!)&birthday=\("2007-07-02 04:00:00  +0000")&height=\("21")&weight=\("123456789")&position=\("21")&number=\("21")&ava=\("http://localhost/fb/ava/user.png")&cover=\("http://localhost/fb/cover/HomeCover.jpg")&accountType=\("2")"
-                var request = URLRequest(url: url)
-                request.httpBody = body.data(using: .utf8)
-                request.httpMethod = "POST"
-
-                // STEP 2. Execute created above request
-                URLSession.shared.dataTask(with: request) { (data, response, error) in
-
-                    DispatchQueue.main.async {
-                        print(response!)
-                    // access helper class
-                    let helper = Helper()
-
-                    // error
-                    if error != nil {
-                        helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
-                        return
-                    }
-
-                    // fetch JSON if no error
-                    do {
-
-                        // save mode of casting data
-                        guard let data = data else {
-                            helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
-                            return
-                        }
-                        
-                        
-                        
-                        
-                        // fetching all JSON received from the server
-                        let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
-
-                        // save mode of casting JSON
-                        guard let parsedJSON = json else {
-                            print("Parsing Error")
-                            return
-                        }
-
-
-                        // STEP 4. Create Scenarious
-                        // Successfully Registered In
-                        if parsedJSON["status"] as! String == "200" {
-
-                            
-
-                            // CHANGED IN VIDEO 56
-        //                    currentUser = parsedJSON.mutableCopy() as? NSMutableDictionary
-        //                    UserDefaults.standard.set(currentUser, forKey: "currentUser")
-        //                    UserDefaults.standard.synchronize()
-            //                print(currentUser)
-                            
-                            
-                            currentUser1 = parsedJSON.mutableCopy() as? Dictionary<String, Any>
-
-                            DEFAULTS.set(currentUser1, forKey: keyCURRENT_USER)
-                            DEFAULTS.synchronize()
-                            
-                            self.id = parsedJSON["id"] as Any
-                            self.birthday = parsedJSON["birthday"] as Any
-                            let height = parsedJSON["height"]
-                            let weight = parsedJSON["weight"]
-                            let position = parsedJSON["position"]
-                            let number = parsedJSON["number"]
-                            //let accountType = parsedJSON["accountType"]
-                            self.cover = parsedJSON["cover"] as Any
-                            
-                            
-                            FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, id: self.id as! String, birthday: self.birthday as! String, height: height as! String, weight: weight as! String, position: position as! String, number: number as! String, accountType: self.accountType, cover: self.cover as! String) { (error)  in
-                            
-                                            if error != nil {
-                                                ProgressHUD.dismiss()
-                                                ProgressHUD.showError(error!.localizedDescription)
-                                                return
-                                            }
-                            
-                            
-                                            self.registerUser()
-                            }
-                            
-                        // Some error occured related to the entered data, like: wrong password, wrong email, etc
-                        } else {
-
-                            // save mode of casting / checking existance of Server Message
-                            if parsedJSON["message"] != nil {
-                                let message = parsedJSON["message"] as! String
-                                helper.showAlert(title: "Error", message: message, in: self)
-                            }
-
-                        }
-
-
-                    // error while fetching JSON
-                    } catch {
-                        helper.showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
-                    }
-                    }
-
-                }.resume()
         
-
-                
+        let avatar = getAvatar()
+        
+        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "coach", birthday: "", cover: "", phoneNumber: phoneTextField.text!) { (error)  in
+            
+                            if error != nil {
+                                ProgressHUD.dismiss()
+                                ProgressHUD.showError(error!.localizedDescription)
+                                return
+                            }            
+            
+                            self.goToApp()
+            }
+            
     }
     
     
     
     
     
-    func registerUser() {
-        
+    func getAvatar() -> String {
         let helper = Helper()
         
-        
-        var tempDictionary : Dictionary = [kFIRSTNAME : firstNameTextField.text!, kLASTNAME : lastNameTextField.text!, kHEIGHT : height, kWEIGHT : weight, kPOSITION : position, kNUMBER : number, kID : id as Any, kBIRTHDAY : birthday as Any, kCOVER : cover as Any, kACCOUNTTYPE : accountType] as [String : Any]
+        var avatar = ""
         
         helper.imageFromInitials(firstName: firstNameTextField.text!, lastName: lastNameTextField.text!) { (avatarInitials) in
                 
                 let avatarIMG = avatarInitials.jpegData(compressionQuality: 0.7)
-                let avatar = avatarIMG!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+                avatar = avatarIMG!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
                 
-                tempDictionary[kAVATAR] = avatar
-                
-                self.finishRegistration(withValues: tempDictionary)
-            }
+        }
             
-        
+        return avatar
 
     }
     
-    func finishRegistration(withValues: [String : Any]) {
-        
-        updateCurrentUserInFirestore(withValues: withValues) { (error) in
-            
-            if error != nil {
-                
-                DispatchQueue.main.async {
-                    ProgressHUD.showError(error!.localizedDescription)
-                    print(error!.localizedDescription)
-                }
-                return
-            }
-            
-            
-            ProgressHUD.dismiss()
-            self.goToApp()
-        }
-        
-        
-        
-    }
     
     func goToApp() {
         let helper = Helper()
@@ -362,10 +243,10 @@ class CoachRegisterVC: UIViewController {
             }
             
         // logic for Password TextField
-        } else if textField == emailTextField {
+        } else if textField == emailTextField || textField == phoneTextField {
             
             // check email validation
-            if helper.isValid(email: emailTextField.text!) {
+            if helper.isValid(email: emailTextField.text!) && helper.isValid(phone: phoneTextField.text!) {
                 emailContinueButton.isHidden = false
             }
             

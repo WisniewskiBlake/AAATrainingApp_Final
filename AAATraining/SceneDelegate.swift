@@ -18,6 +18,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     var authListener: AuthStateDidChangeListenerHandle?
+    
+    
+    var ref = Database.database().reference()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -48,30 +51,35 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func goToApp() {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
+        //var accountType = ""
+        let user = FUser.currentUser()!
+        let accountType = user.accountType
         
-        currentUser1 = DEFAULTS.object(forKey: keyCURRENT_USER) as? Dictionary<String, Any>
-        if currentUser1 != nil {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
-            goToMain()
+        if accountType == "coach" {
+            print(FUser.currentId())
+            let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoachTabBar")
+          self.window?.rootViewController = TabBar
+        } else {
+            // accessing TabBar controller via Main.storyboard
+            let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabBar")
+          self.window?.rootViewController = TabBar
         }
-    }
-    
-    func goToMain() {
         
-        
-    let weight = currentUser1?["weight"] as! String
+//        ref.child("User").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
+//          // Get user value
+//          let value = snapshot.value as? NSDictionary
+//          accountType = value?["accountType"] as? String ?? ""
+//
+//
+//          }) { (error) in
+//            print(error.localizedDescription)
+//        }
 
-    if weight == "123456789" {
-        print(FUser.currentId())
-        let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoachTabBar")
-        window?.rootViewController = TabBar
-    } else {
-        // accessing TabBar controller via Main.storyboard
-        let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabBar")
-        window?.rootViewController = TabBar
-    }
+        
         
     }
+   
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

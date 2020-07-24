@@ -138,38 +138,37 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     // MARK: - Load User
     // loads all user related information to be shown in the header
     @objc func loadUser() {
+        let helper = Helper()
+        let user = FUser.currentUser()
    
-        guard let firstName = currentUser1?["firstName"], let lastName = currentUser1?["lastName"], let avaPath = currentUser1?["ava"], let coverPath = currentUser1?["cover"] else {
+        guard let firstName = user?.firstname, let lastName = user?.lastname, let avaPath = user?.ava, let coverPath = user?.cover else {
                
                return
            }
-           // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
-           if (avaPath as! String).count > 10 {
-               isAva = true
-           } else {
-               avaImageView.image = UIImage(named: "user.png")
-               isAva = false
-           }
            
-           if (coverPath as! String).count > 10 {
+           
+           if (coverPath).count > 10 {
                isCover = true
            } else {
                coverImageView.image = UIImage(named: "HomeCover.jpg")
                isCover = false
            }
+            if avaPath != "" {
+                
+                helper.imageFromData(pictureData: avaPath) { (avatarImage) in
+                    
+                    if avatarImage != nil {
+                        avaImageView.image = avatarImage!
+                        isAva = true
+                    }
+                }
+            } else{
+                avaImageView.image = UIImage(named: "user.png")
+                isAva = false
+            }
            // assigning vars which we accessed from global var, to fullnameLabel
-           fullnameLabel.text = "\((firstName as! String).capitalized) \((lastName as! String).capitalized)"
+           fullnameLabel.text = "\((firstName).capitalized) \((lastName).capitalized)"
            
-           // downloading the images and assigning to certain imageViews
-           Helper().downloadImage(from: avaPath as! String, showIn: self.avaImageView, orShow: "user.png")
-           Helper().downloadImage(from: coverPath as! String, showIn: self.coverImageView, orShow: "HomeCover.jpg")
-           // if bio is empty in the server -> hide bio label, otherwise, show bio label
-           
-           // save in the background thread the user's profile picture
-           DispatchQueue.main.async {
-               currentUser_ava = self.avaImageView.image
-               
-           }
     }
     
     // MARK: - Load Posts
@@ -668,46 +667,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 }
                 Helper().downloadImage(from: avaString, showIn: cell.avaImageView, orShow: "user.png")
                 
-                // avas logic
-//                let avaString = posts[indexPath.row]!["ava"] as! String
-//                let avaURL = URL(string: avaString)!
-                
-        //         if there are still avas to be loaded
-//                if posts.count != avas.count {
-//
-//                    URLSession(configuration: .default).dataTask(with: avaURL) { (data, response, error) in
-//
-//                        // failed downloading - assign placeholder
-//                        if error != nil {
-//                            if let image = UIImage(named: "user.png") {
-//
-//                                self.avas.append(image)
-//
-//                                DispatchQueue.main.async {
-//                                    cell.avaImageView.image = image
-//                                }
-//                            }
-//                        }
-//
-//                        // downloaded
-//                        if let image = UIImage(data: data!) {
-//
-//                            self.avas.append(image)
-//
-//                            DispatchQueue.main.async {
-//                                cell.avaImageView.image = image
-//                            }
-//                        }
-//                    }.resume()
-//
-//                // cached ava
-//                } else {
-//
-//                    DispatchQueue.main.async {
-//                        //cell.avaImageView.image = self.avas[indexPath.row]
-//                        cell.avaImageView.image = currentUser_ava
-//                    }
-//                }
+
                 
                 // picture logic
                 pictures.append(UIImage())
@@ -763,49 +723,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                     
                 }
                 Helper().downloadImage(from: avaString, showIn: cell.avaImageView, orShow: "user.png")
-//                // avas logic
-//                let avaString = posts[indexPath.row]!["ava"] as! String
-//                let avaURL = URL(string: avaString)!
-//
-//                // if there are still avas to be loaded
-//                if posts.count != avas.count {
-//
-//                    URLSession(configuration: .default).dataTask(with: avaURL) { (data, response, error) in
-//
-//                        // failed downloading - assign placeholder
-//                        if error != nil {
-//                            if let image = UIImage(named: "user.png") {
-//
-//                                self.avas.append(image)
-//
-//                                DispatchQueue.main.async {
-//                                    cell.avaImageView.image = image
-//                                }
-//
-//                            }
-//
-//                        }
-//
-//                        // downloaded
-//                        if let image = UIImage(data: data!) {
-//
-//                            self.avas.append(image)
-//
-//                            DispatchQueue.main.async {
-//                                cell.avaImageView.image = image
-//                            }
-//                        }
-//
-//                        }.resume()
-//
-//                    // cached ava
-//                } else {
-//
-//                    DispatchQueue.main.async {
-//                        //cell.avaImageView.image = self.avas[indexPath.row]
-//                        cell.avaImageView.image = currentUser_ava
-//                    }
-//                }
+
                 
                 
                 // pictures logic
@@ -880,15 +798,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
         if a > b && isLoading == false {
             loadMore(offset: skip, limit: limit)
-//            DispatchQueue.global().async {
-//                let lock = DispatchSemaphore(value: 0)
-//                // Load any saved meals, otherwise load sample data.
-//                self.loadMore(offset: self.skip, limit: self.limit, completion: {
-//                    lock.signal()
-//                })
-//                lock.wait()
-//                // finished fetching data
-//            }
+
         }
         
     }
@@ -907,16 +817,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             FUser.logOutCurrentUser { (success) in
                 
                 if success {
-                    self.present(loginvc, animated: false, completion: {
-                                    
-                                    // clear currentUser global var, after showing loginViewController - save as an empty user (blank NSMutableDictionary)
-                    //                currentUser = NSMutableDictionary() as? Dictionary<String, Any>
-                    //                UserDefaults.standard.set(currentUser, forKey: "currentUser")
-                    //                UserDefaults.standard.synchronize()
-                                    UserDefaults.standard.removeObject(forKey: "currentUser1")
-                                    UserDefaults.standard.synchronize()
-                                    
-                                })
+                    self.present(loginvc, animated: false, completion: nil)
                 }
                 
             }
@@ -972,19 +873,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         }
         
         
-        // prepare request
-        let url = URL(string: "http://localhost/fb/deletePost.php")!
-        let body = "id=\(id)"
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.httpBody = body.data(using: .utf8)
-        
-        
-        // clean up of the data stored in the background of our logic in order to keep everything synchronized
-        posts.remove(at: row)
-        //avas.remove(at: row)
-        pictures.remove(at: row)
-        liked.remove(at: row)
+       
         
         
         // remove the cell itself from the tableView
@@ -996,204 +885,9 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
 //        vc.postID = id
         
-        // execute request
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            DispatchQueue.main.async {
-                
-                // error occured
-                if error != nil {
-                    Helper().showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
-                    return
-                }
-                
-                // receive data from the server
-                do {
-                    
-                    // safe mode of casting data
-                    guard let data = data else {
-                        Helper().showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
-                        return
-                    }
-                    
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "deletePost"), object: nil)
-                    
-                    // accessing json via data received
-                    let _ = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
-                    
-                    
-                // json error
-                } catch {
-                    Helper().showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
-                    return
-                }
-                
-            }
-        }.resume()
-        
     }
     
-    // exec-d whenever new cell is to be displayed
-       override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-           
-           
-           // accessing the value (e.g. url) under the key 'picture' for every single element of the array (indexPath.row)
-           let pictureURL = posts[indexPath.row]!["picture"] as! String
-           
-           // no picture in the post
-           if pictureURL.isEmpty {
-               
-               
-               // accessing the cell from main.storyboard
-               let cell = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
-               
-               
-               // fullname logic
-               let firstName = posts[indexPath.row]!["firstName"] as! String
-               let lastName = posts[indexPath.row]!["lastName"] as! String
-               cell.fullnameLabel.text = firstName.capitalized + " " + lastName.capitalized
-               
-               
-               // date logic
-               let dateString = posts[indexPath.row]!["date_created"] as! String
-               
-               // taking the date received from the server and putting it in the following format to be recognized as being Date()
-               let formatterGet = DateFormatter()
-               formatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
-               let date = formatterGet.date(from: dateString)!
-               
-               // we are writing a new readable format and putting Date() into this format and converting it to the string to be shown to the user
-               let formatterShow = DateFormatter()
-               formatterShow.dateFormat = "MMMM dd yyyy - HH:mm"
-               cell.dateLabel.text = formatterShow.string(from: date)
-               
-               
-               // text logic
-               let text = posts[indexPath.row]!["text"] as! String
-               cell.postTextLabel.text = text
-               
-               // avas logic
-               let avaString = posts[indexPath.row]!["ava"] as! String
-               
-               // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
-               if (avaString).count > 10 {
-                   cell.avaImageView.image = posts[indexPath.row]!["ava"] as? UIImage
-               
-               } else {
-                   cell.avaImageView.image = UIImage(named: "user.png")
-                   
-               }
-               Helper().downloadImage(from: avaString, showIn: cell.avaImageView, orShow: "user.png")
-               
-               
-               // picture logic
-               pictures.append(UIImage())
-               
-               // get the index of the cell in order to get the certain post's id
-               cell.numberCompleted.tag = indexPath.row
-            
-               //cell.commentsButton.tag = indexPath.row
-               cell.optionsButton.tag = indexPath.row
-               
-
     
-           // picture in the post
-           } else {
-               
-               // accessing the cell from main.storyboard
-               let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
-               
-               // fullname logic
-               let firstName = posts[indexPath.row]!["firstName"] as! String
-               let lastName = posts[indexPath.row]!["lastName"] as! String
-               cell.fullnameLabel.text = firstName.capitalized + " " + lastName.capitalized
-               
-               // date logic
-               let dateString = posts[indexPath.row]!["date_created"] as! String
-               
-               // taking the date received from the server and putting it in the following format to be recognized as being Date()
-               let formatterGet = DateFormatter()
-               formatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
-               let date = formatterGet.date(from: dateString)!
-               
-               // we are writing a new readable format and putting Date() into this format and converting it to the string to be shown to the user
-               let formatterShow = DateFormatter()
-               formatterShow.dateFormat = "MMMM dd yyyy - HH:mm"
-               cell.dateLabel.text = formatterShow.string(from: date)
-               
-               // text logic
-               let text = posts[indexPath.row]!["text"] as! String
-               cell.postTextLabel.text = text
-               
-               // avas logic
-               let avaString = posts[indexPath.row]!["ava"] as! String
-               
-               // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
-               if (avaString).count > 10 {
-                   cell.avaImageView.image = posts[indexPath.row]!["ava"] as? UIImage
-               
-               } else {
-                   cell.avaImageView.image = UIImage(named: "user.png")
-                   
-               }
-               Helper().downloadImage(from: avaString, showIn: cell.avaImageView, orShow: "user.png")
-               
-               // pictures logic
-               // avas logic
-               let pictureString = posts[indexPath.row]!["picture"] as! String
-               let pictureURL = URL(string: pictureString)!
-               
-               // if there are still pictures to be loaded
-               if posts.count != pictures.count {
-                   
-                   URLSession(configuration: .default).dataTask(with: pictureURL) { (data, response, error) in
-                       
-                       // failed downloading - assign placeholder
-                       if error != nil {
-                           if let image = UIImage(named: "user.png") {
-                               self.pictures.append(image)
-                               DispatchQueue.main.async {
-                                   cell.pictureImageView.image = image
-                               }
-                           }
-                       }
-                       // downloaded
-                       if let image = UIImage(data: data!) {
-                           
-                           self.pictures.append(image)
-                           
-                           DispatchQueue.main.async {
-                               cell.pictureImageView.image = image
-                           }
-                       }
-                       }.resume()
-                   
-                   // cached picture
-               } else {
-                   DispatchQueue.main.async {
-                       cell.pictureImageView.image = self.pictures[indexPath.row]
-                   }
-               }
-               
-               // get the index of the cell in order to get the certain post's id
-               cell.numberComplete.tag = indexPath.row
-               //cell.commentsButton.tag = indexPath.row
-               cell.optionsButton.tag = indexPath.row
-               
-               // manipulating the appearance of the button based is the post has been liken or not
-//               DispatchQueue.main.async {
-//                   if self.liked[indexPath.row] == 1 {
-//                       cell.likeButton.setImage(UIImage(named: "like.png"), for: .normal)
-//                       cell.likeButton.tintColor = self.likeColor
-//                   } else {
-//                       cell.likeButton.setImage(UIImage(named: "unlike.png"), for: .normal)
-//                       cell.likeButton.tintColor = UIColor.darkGray
-//                   }
-//               }
-               
-               
-           }
-           
-       }
     
 
 }
@@ -1208,3 +902,6 @@ fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [U
 fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
     return input.rawValue
 }
+
+
+

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 class RegisterVC: UIViewController {
     
@@ -24,6 +25,7 @@ class RegisterVC: UIViewController {
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var birthdayTextField: UITextField!
+    @IBOutlet weak var phoneTextField: UITextField!
     
     @IBOutlet weak var heightTextField: UITextField!
     @IBOutlet weak var weightTextField: UITextField!
@@ -65,6 +67,7 @@ class RegisterVC: UIViewController {
         cornerRadius(for: weightTextField)
         cornerRadius(for: positionTextField)
         cornerRadius(for: numberTextField)
+        cornerRadius(for: phoneTextField)
         
         cornerRadius(for: emailContinueButton)
         cornerRadius(for: fullnameContinueButton)
@@ -82,6 +85,7 @@ class RegisterVC: UIViewController {
         padding(for: weightTextField)
         padding(for: positionTextField)
         padding(for: numberTextField)
+        padding(for: phoneTextField)
         
         // run function of configuration
         configure_footerView()
@@ -177,88 +181,43 @@ class RegisterVC: UIViewController {
     }
     
     @IBAction func statsContinueButton_clicked(_ sender: Any) {
-        // STEP 1. Declaring URL of the request; declaring the body to the URL; declaring request with the safest method - POST, that no one can grab our info.
         
+        let avatar = getAvatar()
         
-        //let url = URL(string: "http://localhost/fb/register.php")!
-        let url = URL(string: "http://192.168.1.17/fb/register.php")!
-        
-        
-        let body = "email=\(emailTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&firstName=\(firstNameTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&lastName=\(lastNameTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&password=\(passwordTextField.text!)&birthday=\(datePicker.date)&height=\(heightTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines))&weight=\(weightTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines))&position=\(positionTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))&number=\(numberTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines))&ava=\("http://localhost/fb/ava/user.png")&cover=\("http://localhost/fb/cover/HomeCover.jpg")&accountType=\("1")"
-        var request = URLRequest(url: url)
-        request.httpBody = body.data(using: .utf8)
-        request.httpMethod = "POST"
-
-        // STEP 2. Execute created above request
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-
-            DispatchQueue.main.async {
-                print(response!)
-            // access helper class
-            let helper = Helper()
-
-            // error
-            if error != nil {
-                helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
-                return
+        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: self.heightTextField.text!, weight: self.weightTextField.text!, position: self.positionTextField.text!, number: self.numberTextField.text!, accountType: "player", birthday: "", cover: "", phoneNumber: phoneTextField.text!) { (error)  in
+            
+                            if error != nil {
+                                ProgressHUD.dismiss()
+                                ProgressHUD.showError(error!.localizedDescription)
+                                return
+                            }
+            
+                            self.goToApp()
             }
-
-            // fetch JSON if no error
-            do {
-
-                // save mode of casting data
-                guard let data = data else {
-                    helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
-                    return
-                }
-
-                // fetching all JSON received from the server
-                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
-
-                // save mode of casting JSON
-                guard let parsedJSON = json else {
-                    print("Parsing Error")
-                    return
-                }
-
-
-                // STEP 4. Create Scenarious
-                // Successfully Registered In
-                if parsedJSON["status"] as! String == "200" {
-
-                    // go to TabBar
-                    helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
-
-                    // CHANGED IN VIDEO 56
-//                    currentUser = parsedJSON.mutableCopy() as? NSMutableDictionary
-//                    UserDefaults.standard.set(currentUser, forKey: "currentUser")
-//                    UserDefaults.standard.synchronize()
-
-//                    currentUser = parsedJSON.mutableCopy() as? Dictionary<String, Any>
-//
-//                    DEFAULTS.set(currentUser, forKey: keyCURRENT_USER)
-//                    DEFAULTS.synchronize()
-
-                // Some error occured related to the entered data, like: wrong password, wrong email, etc
-                } else {
-
-                    // save mode of casting / checking existance of Server Message
-                    if parsedJSON["message"] != nil {
-                        let message = parsedJSON["message"] as! String
-                        helper.showAlert(title: "Error", message: message, in: self)
-                    }
-
-                }
-
-
-            // error while fetching JSON
-            } catch {
-                helper.showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
-            }
-            }
-
-        }.resume()
         
+    }
+    
+    func getAvatar() -> String {
+        let helper = Helper()
+        
+        var avatar = ""
+        
+        helper.imageFromInitials(firstName: firstNameTextField.text!, lastName: lastNameTextField.text!) { (avatarInitials) in
+                
+                let avatarIMG = avatarInitials.jpegData(compressionQuality: 0.7)
+                avatar = avatarIMG!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+                
+        }
+            
+        return avatar
+
+    }
+    
+    func goToApp() {
+        let helper = Helper()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
+        // go to TabBar
+        helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
     }
     
     
@@ -272,10 +231,10 @@ class RegisterVC: UIViewController {
         let helper = Helper()
         
         // logic for Email TextField
-        if textField == emailTextField {
+        if textField == emailTextField || textField == phoneTextField {
             
             // check email validation
-            if helper.isValid(email: emailTextField.text!) {
+            if helper.isValid(email: emailTextField.text!) && helper.isValid(phone: phoneTextField.text!) {
                 emailContinueButton.isHidden = false
             }
             

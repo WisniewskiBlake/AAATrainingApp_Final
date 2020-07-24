@@ -58,6 +58,8 @@ public let kID = "id"
 public let kACCOUNTTYPE = "accountType"
 public let kBIRTHDAY = "birthday"
 public let kCOVER = "cover"
+public let kCOACH = "coach"
+public let kPLAYER = "player"
 
 
 public let kPHONE = "phone"
@@ -136,3 +138,13 @@ public let kDELETED = "deleted"
 
 //push
 public let kDEVICEID = "deviceId"
+
+//Call
+
+public let kISINCOMING = "isIncoming"
+public let kCALLERID = "callerId"
+public let kCALLERFULLNAME = "callerFullName"
+public let kCALLSTATUS = "callStatus"
+public let kWITHUSERFULLNAME = "withUserFullName"
+public let kCALLERAVATAR = "callerAvatar"
+public let kWITHUSERAVATAR = "withUserAvatar"

@@ -30,7 +30,7 @@ public class FUser {
     var weight: String
     var position: String
     var number: String
-    var id: String
+    
     var accountType: String
     var birthday: String
     var cover: String
@@ -43,7 +43,7 @@ public class FUser {
     
     //MARK: Initializers
     
-    init(_objectId: String, _pushId: String?, _createdAt: Date, _updatedAt: Date, _email: String, _firstname: String, _lastname: String, _avatar: String = "", _loginMethod: String, _phoneNumber: String, _height: String, _weight: String, _position: String, _number: String, _id: String, _accountType: String, _birthday: String, _cover: String) {
+    init(_objectId: String, _pushId: String?, _createdAt: Date, _updatedAt: Date, _email: String, _firstname: String, _lastname: String, _avatar: String = "", _loginMethod: String, _phoneNumber: String, _height: String, _weight: String, _position: String, _number: String, _accountType: String, _birthday: String, _cover: String) {
         
         objectId = _objectId
         pushId = _pushId
@@ -62,7 +62,7 @@ public class FUser {
         weight = _weight
         position = _position
         number = _number
-        id = _id
+        
         accountType = _accountType
         birthday = _birthday
         cover = _cover
@@ -169,11 +169,6 @@ public class FUser {
         } else {
             number = ""
         }
-        if let ide = _dictionary[kID] {
-            id = ide as! String
-        } else {
-            id = ""
-        }
         if let accT = _dictionary[kACCOUNTTYPE] {
             accountType = accT as! String
         } else {
@@ -239,7 +234,7 @@ public class FUser {
     
     //MARK: Register functions
     
-    class func registerUserWith(email: String, password: String, firstName: String, lastName: String, avatar: String = "", id: String, birthday: String, height: String, weight: String, position: String, number: String, accountType: String, cover: String, completion: @escaping (_ error: Error?) -> Void ) {
+    class func registerUserWith(email: String, password: String, firstName: String, lastName: String, avatar: String, height: String, weight: String, position: String, number: String, accountType: String, birthday: String, cover: String, phoneNumber: String, completion: @escaping (_ error: Error?) -> Void ) {
         
         Auth.auth().createUser(withEmail: email, password: password, completion: { (firuser, error) in
             
@@ -249,7 +244,7 @@ public class FUser {
                 return
             }
             
-            let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: firuser!.user.email!, _firstname: firstName, _lastname: lastName, _avatar: avatar, _loginMethod: kEMAIL, _phoneNumber: "", _height: height, _weight: weight, _position: position, _number: number, _id: id, _accountType: accountType, _birthday: birthday, _cover: cover)
+            let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: firuser!.user.email!, _firstname: firstName, _lastname: lastName, _avatar: avatar, _loginMethod: kEMAIL, _phoneNumber: phoneNumber, _height: height, _weight: weight, _position: position, _number: number,  _accountType: accountType, _birthday: birthday, _cover: cover)
             
             
             saveUserLocally(fUser: fUser)
@@ -289,7 +284,7 @@ public class FUser {
                 } else {
 
                     //    we have no user, register
-                    let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: "", _firstname: "", _lastname: "", _avatar: "", _loginMethod: kPHONE, _phoneNumber: firuser!.user.phoneNumber!, _height: "", _weight: "", _position: "", _number: "", _id: "", _accountType: "", _birthday: "", _cover: "")
+                    let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: "", _firstname: "", _lastname: "", _avatar: "", _loginMethod: kPHONE, _phoneNumber: firuser!.user.phoneNumber!, _height: "", _weight: "", _position: "", _number: "", _accountType: "", _birthday: "", _cover: "")
 
                     saveUserLocally(fUser: fUser)
                     saveUserToFirestore(fUser: fUser)
@@ -412,7 +407,7 @@ func userDictionaryFrom(user: FUser) -> NSDictionary {
     let createdAt = helper.dateFormatter().string(from: user.createdAt)
     let updatedAt = helper.dateFormatter().string(from: user.updatedAt)
     
-    return NSDictionary(objects: [user.objectId,  createdAt, updatedAt, user.email, user.loginMethod, user.pushId!, user.firstname, user.lastname, user.ava, user.contacts, user.blockedUsers, user.isOnline, user.phoneNumber], forKeys: [kOBJECTID as NSCopying, kCREATEDAT as NSCopying, kUPDATEDAT as NSCopying, kEMAIL as NSCopying, kLOGINMETHOD as NSCopying, kPUSHID as NSCopying, kFIRSTNAME as NSCopying, kLASTNAME as NSCopying, kAVATAR as NSCopying, kCONTACT as NSCopying, kBLOCKEDUSERID as NSCopying, kISONLINE as NSCopying, kPHONE as NSCopying])
+    return NSDictionary(objects: [user.objectId,  createdAt, updatedAt, user.email, user.loginMethod, user.pushId!, user.firstname, user.lastname, user.ava, user.contacts, user.blockedUsers, user.isOnline, user.phoneNumber, user.height, user.weight, user.position, user.number, user.birthday, user.cover, user.accountType], forKeys: [kOBJECTID as NSCopying, kCREATEDAT as NSCopying, kUPDATEDAT as NSCopying, kEMAIL as NSCopying, kLOGINMETHOD as NSCopying, kPUSHID as NSCopying, kFIRSTNAME as NSCopying, kLASTNAME as NSCopying, kAVATAR as NSCopying, kCONTACT as NSCopying, kBLOCKEDUSERID as NSCopying, kISONLINE as NSCopying, kPHONE as NSCopying, kHEIGHT as NSCopying, kWEIGHT as NSCopying, kPOSITION as NSCopying, kNUMBER as NSCopying, kBIRTHDAY as NSCopying, kCOVER as NSCopying, kACCOUNTTYPE as NSCopying])
     
     
     

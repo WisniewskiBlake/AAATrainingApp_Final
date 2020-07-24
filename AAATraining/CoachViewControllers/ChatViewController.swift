@@ -41,6 +41,8 @@ class ChatViewController: JSQMessagesViewController {
         //end of iphone x fix
     }
     
+    
+    
     //fix for Iphone x
     override func viewDidLayoutSubviews() {
         perform(Selector(("jsq_updateCollectionViewInsets")))
