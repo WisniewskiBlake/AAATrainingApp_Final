@@ -14,6 +14,7 @@ import ProgressHUD
 class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell_CoachDelegate {
     
     
+    @IBOutlet weak var headerView: UIView!
     
     @IBOutlet weak var filterSegmentedControl: UISegmentedControl!
     
@@ -192,14 +193,14 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        
-        if searchController.isActive && searchController.searchBar.text != "" {
-            return ""
-        } else {
-            return self.sectionTitleList[section]
-        }
-    }
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//
+//        if searchController.isActive && searchController.searchBar.text != "" {
+//            return ""
+//        } else {
+//            return self.sectionTitleList[section]
+//        }
+//    }
     
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         if searchController.isActive && searchController.searchBar.text != "" {
