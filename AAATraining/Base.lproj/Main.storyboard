@@ -1941,7 +1941,7 @@
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="GROUP TITLE" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z0f-Fn-t4f">
                                 <rect key="frame" x="104" y="102" width="255" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4nd-uk-QER">
                                 <rect key="frame" x="11" y="167" width="80" height="25"/>
@@ -2097,27 +2097,30 @@
             </objects>
             <point key="canvasLocation" x="8186" y="-1682"/>
         </scene>
-        <!--Messages View Controller-->
+        <!--Group Chat-->
         <scene sceneID="IJ2-9X-0BF">
             <objects>
-                <viewController storyboardIdentifier="chatVC" id="eOF-gJ-6N6" customClass="JSQMessagesViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="chatVC" id="eOF-gJ-6N6" customClass="ChatVC_Coach" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ISP-6r-fIa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="C53-2x-bsv"/>
                     </view>
-                    <navigationItem key="navigationItem" id="zxu-Pg-k4A">
+                    <navigationItem key="navigationItem" title="Group Chat" id="zxu-Pg-k4A">
                         <barButtonItem key="leftBarButtonItem" title="I" image="back" id="zMh-h7-zSx">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <action selector="backButtonPressed:" destination="2p6-Jt-euc" id="ciL-6N-s95"/>
+                                <action selector="backButtonPressed:" destination="eOF-gJ-6N6" id="J6V-KM-aCJ"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="groupIcon" id="cuu-Lp-n9f"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="rightBarGrpImage" destination="cuu-Lp-n9f" id="C2E-HN-DKP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="08n-Dt-k7C" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="2p6-Jt-euc" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="10184.799999999999" y="-1684.4077961019491"/>
         </scene>
@@ -2936,6 +2939,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.1006183103" green="0.2956552207" blue="0.71825700999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
                     </navigationBar>

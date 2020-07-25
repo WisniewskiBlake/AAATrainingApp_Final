@@ -175,7 +175,7 @@ class NewGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollecti
             
             let chatVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "chatVC") as! ChatVC_Coach
             
-            chatVC.titleName = group.groupDictionary[kNAME] as? String
+            chatVC.title = group.groupDictionary[kNAME] as? String
             chatVC.memberIds = group.groupDictionary[kMEMBERS] as? [String]
             chatVC.membersToPush = group.groupDictionary[kMEMBERS] as? [String]
             
@@ -183,6 +183,7 @@ class NewGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollecti
             
             chatVC.isGroup = true
             chatVC.hidesBottomBarWhenPushed = true
+            
             
             self.navigationController?.pushViewController(chatVC, animated: true)
             

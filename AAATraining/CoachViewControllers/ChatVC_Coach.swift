@@ -24,6 +24,9 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
 
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
+    @IBOutlet weak var rightBarGrpImage: UIBarButtonItem!
+    
+    
     var chatRoomId: String!
     var memberIds: [String]!
     var membersToPush: [String]!
@@ -60,6 +63,12 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
     var outgoingBubble = JSQMessagesBubbleImageFactory()?.outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleRed())
     
     var incomingBubble = JSQMessagesBubbleImageFactory()?.outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
+    
+    
+    @IBAction func backButtonPressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     
     //MARK: CustomHeaders
 
