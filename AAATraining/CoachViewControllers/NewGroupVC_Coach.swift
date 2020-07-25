@@ -32,6 +32,11 @@ class NewGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollecti
         self.dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func backButtonPressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
     
     
     
@@ -50,7 +55,7 @@ class NewGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollecti
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.largeTitleDisplayMode = .never
+        //navigationItem.largeTitleDisplayMode = .never
         
         groupIconImageView.isUserInteractionEnabled = true
         groupIconImageView.addGestureRecognizer(iconTapGesture)
@@ -62,43 +67,7 @@ class NewGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollecti
     
     @objc func createButtonPressed(_ sender: Any) {
         
-        if groupSubjectTextField.text != "" {
-            
-            memberIds.append(FUser.currentId())
-            
-            let avatarData = UIImage(named: "groupIcon")!.jpegData(compressionQuality: 0.7)!
-            var avatar = avatarData.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-            
-            if groupIcon != nil {
-                
-                let avatarData = groupIcon!.jpegData(compressionQuality: 0.4)!
-                avatar = avatarData.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-            }
-            
-            let groupId = UUID().uuidString
-            
-            let group = Group_Coach(groupId: groupId, subject: groupSubjectTextField.text!, ownerId: FUser.currentId(), members: memberIds, avatar: avatar)
-            
-            group.saveGroup()
-            
-            startGroupChat(group: group)
-            
-            let chatVC = ChatVC_Coach()
-            
-            chatVC.titleName = group.groupDictionary[kNAME] as? String
-            chatVC.memberIds = group.groupDictionary[kMEMBERS] as? [String]
-            chatVC.membersToPush = group.groupDictionary[kMEMBERS] as? [String]
-            
-            chatVC.chatRoomId = groupId
-            
-            chatVC.isGroup = true
-            chatVC.hidesBottomBarWhenPushed = true
-            
-            self.navigationController?.pushViewController(chatVC, animated: true)
-            
-        } else {
-            ProgressHUD.showError("Subject is required!")
-        }
+        
     }
     
     @IBAction func editButtonPressed(_ sender: Any) {
@@ -182,14 +151,52 @@ class NewGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollecti
         }
 
     }
+    @IBAction func createButtonClicked(_ sender: Any) {
+        if groupSubjectTextField.text != "" {
+            
+            memberIds.append(FUser.currentId())
+            
+            let avatarData = UIImage(named: "groupIcon")!.jpegData(compressionQuality: 0.7)!
+            var avatar = avatarData.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+            
+            if groupIcon != nil {
+                
+                let avatarData = groupIcon!.jpegData(compressionQuality: 0.4)!
+                avatar = avatarData.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+            }
+            
+            let groupId = UUID().uuidString
+            
+            let group = Group_Coach(groupId: groupId, subject: groupSubjectTextField.text!, ownerId: FUser.currentId(), members: memberIds, avatar: avatar)
+            
+            group.saveGroup()
+            
+            startGroupChat(group: group)
+            
+            let chatVC = ChatVC_Coach()
+            
+            chatVC.titleName = group.groupDictionary[kNAME] as? String
+            chatVC.memberIds = group.groupDictionary[kMEMBERS] as? [String]
+            chatVC.membersToPush = group.groupDictionary[kMEMBERS] as? [String]
+            
+            chatVC.chatRoomId = groupId
+            
+            chatVC.isGroup = true
+            chatVC.hidesBottomBarWhenPushed = true
+            
+            self.navigationController?.pushViewController(chatVC, animated: true)
+            
+        } else {
+            ProgressHUD.showError("Subject is required!")
+        }
+    }
     
     func updateParticipantsLabel() {
         
         participantsLabel.text = "PARTICIPANTS: \(allMembers.count)"
         
-        self.navigationItem.rightBarButtonItems = [UIBarButtonItem(title: "Create", style: .plain, target: self, action: #selector(self.createButtonPressed))]
-        self.navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        self.navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+//        self.navigationItem.rightBarButtonItems = [UIBarButtonItem(title: "Create", style: .plain, target: self, action: #selector(self.createButtonPressed))]
+        
         self.navigationItem.rightBarButtonItem?.isEnabled = allMembers.count > 0
     }
     

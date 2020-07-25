@@ -13,6 +13,9 @@ import ProgressHUD
 
 class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell_CoachDelegate {
     
+    @IBAction func backButtonPressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
     
     @IBOutlet weak var headerView: UIView!
     
@@ -73,7 +76,7 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     
     @IBAction func nextButtonPressed(_ sender: Any) {
         let newGroupVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newGroupView") as! NewGroupVC_Coach
-        
+        //let newGroupVC = NewGroupVC_Coach()
         newGroupVC.memberIds = memberIdsOfGroupChat
         newGroupVC.allMembers = membersOfGroupChat
         

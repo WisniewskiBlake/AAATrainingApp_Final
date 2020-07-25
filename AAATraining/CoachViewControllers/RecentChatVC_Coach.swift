@@ -191,7 +191,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
 //        navigationItem.backBarButtonItem = backItem
         
         
-        
+        //self.present(chatVC, animated: true, completion: nil)
         navigationController?.pushViewController(chatVC, animated: true)
         
         //navigationController?.pushViewController(chatVC, animated: true)
@@ -249,10 +249,11 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     func selectUserForChat(isGroup: Bool) {
         
         let contactsVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "contactsView") as! ContactsVC_Coach
-        
+        let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "addMembersNav") as! UINavigationController
         contactsVC.isGroup = isGroup
         
-        self.navigationController?.pushViewController(contactsVC, animated: true)
+        self.present(navigation, animated: true, completion: nil)
+        //self.navigationController?.pushViewController(contactsVC, animated: true)
     }
     
     func updatePushMembers(recent: NSDictionary, mute: Bool) {

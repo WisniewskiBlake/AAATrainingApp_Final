@@ -1913,7 +1913,7 @@
             </objects>
             <point key="canvasLocation" x="4588" y="-1682.608695652174"/>
         </scene>
-        <!--New GroupVC Coach-->
+        <!--Preferences-->
         <scene sceneID="cTU-iz-inf">
             <objects>
                 <viewController storyboardIdentifier="newGroupView" id="Y5s-hv-4It" customClass="NewGroupVC_Coach" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
@@ -1922,7 +1922,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="groupIcon" translatesAutoresizingMaskIntoConstraints="NO" id="mog-bZ-zbo">
-                                <rect key="frame" x="11" y="35" width="80" height="80"/>
+                                <rect key="frame" x="11" y="79" width="80" height="80"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="NyW-Ga-bdR"/>
@@ -1933,18 +1933,18 @@
                                 </connections>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please provide a title and icon." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zWQ-oq-RgG">
-                                <rect key="frame" x="104" y="126" width="255" height="18"/>
+                                <rect key="frame" x="104" y="170" width="255" height="18"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="GROUP TITLE" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z0f-Fn-t4f">
-                                <rect key="frame" x="104" y="58" width="255" height="34"/>
+                                <rect key="frame" x="104" y="102" width="255" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4nd-uk-QER">
-                                <rect key="frame" x="11" y="123" width="80" height="25"/>
+                                <rect key="frame" x="11" y="167" width="80" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="RMc-zU-pRm"/>
                                     <constraint firstAttribute="width" constant="80" id="aWe-0P-jOT"/>
@@ -1956,7 +1956,7 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="EF6-ZK-fxI">
-                                <rect key="frame" x="0.0" y="204" width="375" height="463"/>
+                                <rect key="frame" x="0.0" y="248" width="375" height="419"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Mda-KB-mEq">
                                     <size key="itemSize" width="100" height="100"/>
@@ -2024,7 +2024,7 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WBk-Aj-Enw">
-                                <rect key="frame" x="0.0" y="156" width="375" height="40"/>
+                                <rect key="frame" x="0.0" y="200" width="375" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PARTICIPANTS: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GJC-i0-msg">
                                         <rect key="frame" x="8" y="10" width="359" height="20.5"/>
@@ -2065,7 +2065,20 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="eat-p0-VXT"/>
                     </view>
-                    <navigationItem key="navigationItem" id="fcb-7J-eME"/>
+                    <navigationItem key="navigationItem" title="Preferences" id="fcb-7J-eME">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="j2u-ut-flC">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="backButtonPressed:" destination="Y5s-hv-4It" id="1u0-bT-dy7"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Create" id="Z3A-1t-yGA">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="createButtonClicked:" destination="Y5s-hv-4It" id="gmb-pd-DBQ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="EF6-ZK-fxI" id="dLG-q1-TH0"/>
                         <outlet property="editAvatarButtonOutlet" destination="4nd-uk-QER" id="vYd-mR-mF7"/>
@@ -2082,7 +2095,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="7359" y="-1682"/>
+            <point key="canvasLocation" x="8186" y="-1682"/>
         </scene>
         <!--Messages View Controller-->
         <scene sceneID="IJ2-9X-0BF">
@@ -2106,7 +2119,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="08n-Dt-k7C" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="2p6-Jt-euc" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="9246" y="-1684"/>
+            <point key="canvasLocation" x="10184.799999999999" y="-1684.4077961019491"/>
         </scene>
         <!--Roster-->
         <scene sceneID="yw7-UA-o4j">
@@ -2265,8 +2278,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Add Members" id="k10-ei-buP">
-                        <barButtonItem key="leftBarButtonItem" image="back" id="Ia2-Ip-ukN">
+                        <barButtonItem key="leftBarButtonItem" title="Chats" image="back" width="10" id="Ia2-Ip-ukN">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="backButtonPressed:" destination="4vj-nx-aZJ" id="TqU-aN-dKh"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" enabled="NO" title="Next" id="uBv-xG-XF6">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2891,7 +2907,7 @@
         <!--Navigation Controller-->
         <scene sceneID="2cJ-wb-KsL">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="WUb-e7-mCc" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="addMembersNav" automaticallyAdjustsScrollViewInsets="NO" id="WUb-e7-mCc" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="KJH-hP-dKm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -2930,7 +2946,29 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="srI-UI-F2G" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8404" y="-1684"/>
+            <point key="canvasLocation" x="9343.2000000000007" y="-1684.4077961019491"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Wb7-4k-erC">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="HnU-mL-v4F" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ISh-cv-m6z">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.1006183103" green="0.2956552207" blue="0.71825700999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Y5s-hv-4It" kind="relationship" relationship="rootViewController" id="0nu-mx-Ns6"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qqi-MT-fpX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7273" y="-1684"/>
         </scene>
     </scenes>
     <resources>
