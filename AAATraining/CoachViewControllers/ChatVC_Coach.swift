@@ -105,9 +105,9 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
         
         func setCustomTitle() {
 //            leftBarButtonView.addSubview(backButton)
-            leftBarButtonView.addSubview(avatarButton)
-            leftBarButtonView.addSubview(titleLabel)
-            leftBarButtonView.addSubview(subTitleLabel)
+//            leftBarButtonView.addSubview(avatarButton)
+//            leftBarButtonView.addSubview(titleLabel)
+//            leftBarButtonView.addSubview(subTitleLabel)
 
     //        let infoButton = UIBarButtonItem(image: UIImage(named: "info"), style: .plain, target: self, action: #selector(self.infoButtonPressed))
     //
@@ -117,8 +117,8 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
 //            backButton.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 //            self.navigationItem.leftBarButtonItem = backButton
 
-            let leftBarButtonItem = UIBarButtonItem(customView: leftBarButtonView)
-            self.navigationItem.leftBarButtonItems?.append(leftBarButtonItem)
+//            let leftBarButtonItem = UIBarButtonItem(customView: leftBarButtonView)
+//            self.navigationItem.leftBarButtonItems?.append(leftBarButtonItem)
             
             if isGroup! {
                 avatarButton.addTarget(self, action: #selector(self.showGroup), for: .touchUpInside)
@@ -158,8 +158,8 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
         
         JSQMessagesCollectionViewCell.registerMenuAction(#selector(delete))
         
-        navigationItem.largeTitleDisplayMode = .never
-        navigationController?.navigationBar.barTintColor = UIColor.white
+//        navigationItem.largeTitleDisplayMode = .never
+//        navigationController?.navigationBar.barTintColor = UIColor.white
         
 //        let backButton = UIBarButtonItem(image: UIImage(named: "Back"), style: .plain, target: self, action: #selector(self.backAction))
 //        backButton.tintColor = UIColor.white
@@ -202,10 +202,10 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
     }
     
     
-    @IBAction func backButtonPressed(_ sender: Any) {
-        let recentChatVC = RecentChatVC_Coach()
-        navigationController?.pushViewController(recentChatVC, animated: true)
-    }
+//    @IBAction func backButtonPressed(_ sender: Any) {
+//        let recentChatVC = RecentChatVC_Coach()
+//        navigationController?.pushViewController(recentChatVC, animated: true)
+//    }
     
     //MARK: IBActions
     @objc func backAction() {

@@ -173,7 +173,7 @@ class NewGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollecti
             
             startGroupChat(group: group)
             
-            let chatVC = ChatVC_Coach()
+            let chatVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "chatVC") as! ChatVC_Coach
             
             chatVC.titleName = group.groupDictionary[kNAME] as? String
             chatVC.memberIds = group.groupDictionary[kMEMBERS] as? [String]
