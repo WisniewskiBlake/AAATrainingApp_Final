@@ -234,6 +234,18 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		B75AD64A24CBFC8000DCC857 /* CoachCells */ = {
+			isa = PBXGroup;
+			children = (
+				B75AD63B24CACF5200DCC857 /* GroupMemberCell_Coach.swift */,
+				B7C3BDF924BB0B1500086C27 /* CoachPicCell.swift */,
+				B7C3BDF724BB08D200086C27 /* CoachNoPicCell.swift */,
+				B75AD62824C9A56300DCC857 /* RecentChatCell_Coach.swift */,
+				B75AD61E24C9669700DCC857 /* RosterCell_Coach.swift */,
+			);
+			path = CoachCells;
+			sourceTree = "<group>";
+		};
 		B7C3BDFD24BC630C00086C27 /* fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,6 +284,7 @@
 				B7F8AFF224B6965100B315FD /* MutualControllers */,
 				B7F8AFED24A4B3AF00B315FD /* CoachViewControllers */,
 				B7F8AFEA24A4ABBC00B315FD /* PlayerViewControllers */,
+				B7F18C6924970084009BFA17 /* Main.storyboard */,
 				B755108624A214B700598A30 /* meijerBackground.jpg */,
 				B755108424A2032500598A30 /* More.png */,
 				B7F8AFF724B6BE3500B315FD /* Post.png */,
@@ -288,7 +301,6 @@
 				B7F18C9524972CC8009BFA17 /* aaaLogo.png */,
 				B7F18C6324970084009BFA17 /* AppDelegate.swift */,
 				B7F18C6524970084009BFA17 /* SceneDelegate.swift */,
-				B7F18C6924970084009BFA17 /* Main.storyboard */,
 				B7F18C6C24970085009BFA17 /* Assets.xcassets */,
 				B7F18C6E24970085009BFA17 /* LaunchScreen.storyboard */,
 				B7F18C7124970085009BFA17 /* Info.plist */,
@@ -330,20 +342,16 @@
 		B7F8AFED24A4B3AF00B315FD /* CoachViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				B75AD64A24CBFC8000DCC857 /* CoachCells */,
 				B7F8AFEB24A4B3A800B315FD /* CoachRegisterVC.swift */,
 				B7F8AFF524B6AC1A00B315FD /* CoachProfileViewController.swift */,
 				B7F8AFF924B6E98600B315FD /* PostVC.swift */,
-				B7C3BDF724BB08D200086C27 /* CoachNoPicCell.swift */,
-				B7C3BDF924BB0B1500086C27 /* CoachPicCell.swift */,
 				B75D0AEA24BFC8D900CF7943 /* FeedVC_Coach.swift */,
 				B75AD61C24C9667000DCC857 /* RosterVC_Coach.swift */,
-				B75AD61E24C9669700DCC857 /* RosterCell_Coach.swift */,
-				B75AD62024C993B500DCC857 /* ChatVC_Coach.swift */,
 				B75AD62224C9944B00DCC857 /* RecentChatVC_Coach.swift */,
-				B75AD62824C9A56300DCC857 /* RecentChatCell_Coach.swift */,
 				B75AD62C24CA927900DCC857 /* ContactsVC_Coach.swift */,
 				B75AD63724CABA9F00DCC857 /* NewGroupVC_Coach.swift */,
-				B75AD63B24CACF5200DCC857 /* GroupMemberCell_Coach.swift */,
+				B75AD62024C993B500DCC857 /* ChatVC_Coach.swift */,
 			);
 			path = CoachViewControllers;
 			sourceTree = "<group>";

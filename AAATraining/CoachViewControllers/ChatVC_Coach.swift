@@ -64,23 +64,24 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
     //MARK: CustomHeaders
 
     let leftBarButtonView: UIView = {
-        
+
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 44))
         return view
     }()
     let avatarButton: UIButton = {
-       let button = UIButton(frame: CGRect(x: 0, y: 10, width: 25, height: 25))
+       let button = UIButton(frame: CGRect(x: 20, y: 10, width: 25, height: 25))
         return button
     }()
+    
     let titleLabel: UILabel = {
-       let title = UILabel(frame: CGRect(x: 30, y: 10, width: 140, height: 15))
+       let title = UILabel(frame: CGRect(x: 50, y: 10, width: 140, height: 15))
         title.textAlignment = .left
         title.font = UIFont(name: title.font.fontName, size: 14)
         
         return title
     }()
     let subTitleLabel: UILabel = {
-       let subTitle = UILabel(frame: CGRect(x: 30, y: 25, width: 140, height: 15))
+       let subTitle = UILabel(frame: CGRect(x: 50, y: 25, width: 140, height: 15))
         subTitle.textAlignment = .left
         subTitle.font = UIFont(name: subTitle.font.fontName, size: 10)
         
@@ -100,6 +101,55 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
         perform(Selector(("jsq_updateCollectionViewInsets")))
     }
     
+    //MARK: UpdateUI
+        
+        func setCustomTitle() {
+//            leftBarButtonView.addSubview(backButton)
+            leftBarButtonView.addSubview(avatarButton)
+            leftBarButtonView.addSubview(titleLabel)
+            leftBarButtonView.addSubview(subTitleLabel)
+
+    //        let infoButton = UIBarButtonItem(image: UIImage(named: "info"), style: .plain, target: self, action: #selector(self.infoButtonPressed))
+    //
+    //        self.navigationItem.rightBarButtonItem = infoButton
+            
+//            let backButton = UIBarButtonItem(image: UIImage(named: "Back"), style: .plain, target: self, action: #selector(self.backAction))
+//            backButton.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+//            self.navigationItem.leftBarButtonItem = backButton
+
+            let leftBarButtonItem = UIBarButtonItem(customView: leftBarButtonView)
+            self.navigationItem.leftBarButtonItems?.append(leftBarButtonItem)
+            
+            if isGroup! {
+                avatarButton.addTarget(self, action: #selector(self.showGroup), for: .touchUpInside)
+            } else {
+    //            avatarButton.addTarget(self, action: #selector(self.showUserProfile), for: .touchUpInside)
+            }
+            
+            getUsersFromFirestore(withIds: memberIds) { (withUsers) in
+                
+                self.withUsers = withUsers
+                self.getAvatarImages()
+                if !self.isGroup! {
+                    self.setUIForSingleChat()
+                }
+            }
+            
+        }
+    
+    func setUIForGroupChat() {
+        
+        helper.imageFromData(pictureData: (group![kAVATAR] as! String)) { (image) in
+            
+            if image != nil {
+                avatarButton.setImage(image!.circleMasked, for: .normal)
+            }
+        }
+        
+        titleLabel.text = titleName
+        subTitleLabel.text = ""
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -109,9 +159,13 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
         JSQMessagesCollectionViewCell.registerMenuAction(#selector(delete))
         
         navigationItem.largeTitleDisplayMode = .never
+        navigationController?.navigationBar.barTintColor = UIColor.white
         
-        self.navigationItem.leftBarButtonItems = [UIBarButtonItem(image: UIImage(named: "Back"), style: .plain, target: self, action: #selector(self.backAction))]
-        
+//        let backButton = UIBarButtonItem(image: UIImage(named: "Back"), style: .plain, target: self, action: #selector(self.backAction))
+//        backButton.tintColor = UIColor.white
+//        //self.navigationItem.leftBarButtonItems = backButton
+//        self.navigationItem.leftBarButtonItems = [backButton]
+
         
         if isGroup! {
             getCurrentGroup(withId: chatRoomId)
@@ -123,7 +177,7 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
         jsqAvatarDictionary = [ : ]
         
         
-        setCustomTitle()
+        //setCustomTitle()
         
         
         loadMessages()
@@ -145,6 +199,20 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
         //custom send button
         self.inputToolbar.contentView.rightBarButtonItem.setImage(UIImage(named: "mic"), for: .normal)
         self.inputToolbar.contentView.rightBarButtonItem.setTitle("", for: .normal)
+    }
+    
+    
+    @IBAction func backButtonPressed(_ sender: Any) {
+        let recentChatVC = RecentChatVC_Coach()
+        navigationController?.pushViewController(recentChatVC, animated: true)
+    }
+    
+    //MARK: IBActions
+    @objc func backAction() {
+        
+        clearRecentCounter(chatRoomId: chatRoomId)
+        removeListeners()
+        self.navigationController?.popViewController(animated: true)
     }
     
     //MARK: JSQMessages DataSource functions
@@ -768,13 +836,7 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
            messages.insert(message!, at: 0)
        }
     
-    //MARK: IBActions
-    @objc func backAction() {
-        
-        clearRecentCounter(chatRoomId: chatRoomId)
-        removeListeners()
-        self.navigationController?.popViewController(animated: true)
-    }
+    
     
 //    @objc func infoButtonPressed() {
 //
@@ -906,37 +968,7 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
         controller.dismiss(animated: true, completion: nil)
     }
 
-    //MARK: UpdateUI
     
-    func setCustomTitle() {
-        
-        leftBarButtonView.addSubview(avatarButton)
-        leftBarButtonView.addSubview(titleLabel)
-        leftBarButtonView.addSubview(subTitleLabel)
-        
-//        let infoButton = UIBarButtonItem(image: UIImage(named: "info"), style: .plain, target: self, action: #selector(self.infoButtonPressed))
-        
-//        self.navigationItem.rightBarButtonItem = infoButton
-        
-        let leftBarButtonItem = UIBarButtonItem(customView: leftBarButtonView)
-        self.navigationItem.leftBarButtonItems?.append(leftBarButtonItem)
-        
-        if isGroup! {
-            avatarButton.addTarget(self, action: #selector(self.showGroup), for: .touchUpInside)
-        } else {
-//            avatarButton.addTarget(self, action: #selector(self.showUserProfile), for: .touchUpInside)
-        }
-        
-        getUsersFromFirestore(withIds: memberIds) { (withUsers) in
-            
-            self.withUsers = withUsers
-            self.getAvatarImages()
-            if !self.isGroup! {
-                self.setUIForSingleChat()
-            }
-        }
-        
-    }
     
     func setUIForSingleChat() {
         
@@ -960,18 +992,7 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
 //        avatarButton.addTarget(self, action: #selector(self.showUserProfile), for: .touchUpInside)
     }
     
-    func setUIForGroupChat() {
-        
-        helper.imageFromData(pictureData: (group![kAVATAR] as! String)) { (image) in
-            
-            if image != nil {
-                avatarButton.setImage(image!.circleMasked, for: .normal)
-            }
-        }
-        
-        titleLabel.text = titleName
-        subTitleLabel.text = ""
-    }
+    
     
 
     //MARK: UIImagePickerController delegate

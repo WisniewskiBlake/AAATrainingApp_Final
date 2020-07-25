@@ -38,7 +38,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     override func viewWillAppear(_ animated: Bool) {
         loadRecentChats()
     //    self.tableView.reloadData()
-        //tableView.tableFooterView = UIView()
+        tableView.tableFooterView = UIView()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -177,6 +177,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
 
         restartRecentChat(recent: recent)
         
+        //let chatVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "chatVC") as! ChatVC_Coach
         let chatVC = ChatVC_Coach()
         chatVC.hidesBottomBarWhenPushed = true
         chatVC.titleName = (recent[kWITHUSERFULLNAME] as? String)!
@@ -185,7 +186,15 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         chatVC.chatRoomId = (recent[kCHATROOMID] as? String)!
         chatVC.isGroup = (recent[kTYPE] as! String) == kGROUP
         
+//        let backItem = UIBarButtonItem()
+//        backItem.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+//        navigationItem.backBarButtonItem = backItem
+        
+        
+        
         navigationController?.pushViewController(chatVC, animated: true)
+        
+        //navigationController?.pushViewController(chatVC, animated: true)
     }
     
     

@@ -1898,6 +1898,7 @@
                         <viewLayoutGuide key="safeArea" id="U8y-Za-MPQ"/>
                     </view>
                     <navigationItem key="navigationItem" title="Chats" id="32c-1N-GlY">
+                        <barButtonItem key="backBarButtonItem" title="Chat" id="ZLT-qF-Twx"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="IWU-3Y-fG3">
                             <connections>
                                 <action selector="createNewGroupButtonPressed:" destination="m41-eK-O4l" id="J9O-KO-ajd"/>
@@ -2081,22 +2082,31 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="6284" y="-1682"/>
+            <point key="canvasLocation" x="7359" y="-1682"/>
         </scene>
-        <!--ChatVC Coach-->
+        <!--Messages View Controller-->
         <scene sceneID="IJ2-9X-0BF">
             <objects>
-                <viewController id="eOF-gJ-6N6" customClass="ChatVC_Coach" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="chatVC" id="eOF-gJ-6N6" customClass="JSQMessagesViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ISP-6r-fIa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="C53-2x-bsv"/>
                     </view>
+                    <navigationItem key="navigationItem" id="zxu-Pg-k4A">
+                        <barButtonItem key="leftBarButtonItem" title="I" image="back" id="zMh-h7-zSx">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="backButtonPressed:" destination="2p6-Jt-euc" id="ciL-6N-s95"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="08n-Dt-k7C" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="2p6-Jt-euc" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="7935" y="-2433"/>
+            <point key="canvasLocation" x="9246" y="-1684"/>
         </scene>
         <!--Roster-->
         <scene sceneID="yw7-UA-o4j">
@@ -2181,7 +2191,7 @@
             </objects>
             <point key="canvasLocation" x="4588" y="-950"/>
         </scene>
-        <!--Select Members-->
+        <!--Add Members-->
         <scene sceneID="VP0-r2-905">
             <objects>
                 <tableViewController storyboardIdentifier="contactsView" id="4vj-nx-aZJ" customClass="ContactsVC_Coach" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
@@ -2254,8 +2264,11 @@
                             <outlet property="delegate" destination="4vj-nx-aZJ" id="Lwy-pL-zLB"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Select Members" id="k10-ei-buP">
-                        <barButtonItem key="rightBarButtonItem" title="Next" id="uBv-xG-XF6">
+                    <navigationItem key="navigationItem" title="Add Members" id="k10-ei-buP">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="Ia2-Ip-ukN">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Next" id="uBv-xG-XF6">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="nextButtonPressed:" destination="4vj-nx-aZJ" id="4CR-aa-r7D"/>
@@ -2269,7 +2282,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q3m-ca-zTv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5372" y="-1682"/>
+            <point key="canvasLocation" x="6375" y="-1684"/>
         </scene>
         <!--Create Post-->
         <scene sceneID="pM1-m6-NxO">
@@ -2875,6 +2888,50 @@
             </objects>
             <point key="canvasLocation" x="3889" y="-950"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="2cJ-wb-KsL">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="WUb-e7-mCc" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="KJH-hP-dKm">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.1006183103" green="0.2956552207" blue="0.71825700999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="4vj-nx-aZJ" kind="relationship" relationship="rootViewController" id="Jhc-Md-idX"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MaY-o9-nYA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5513" y="-1684"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="XF9-u3-W8x">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ivv-cq-YWo" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Gy3-vC-u1K">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.1006183103" green="0.2956552207" blue="0.71825700999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="eOF-gJ-6N6" kind="relationship" relationship="rootViewController" id="Ado-yb-bpR"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="srI-UI-F2G" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8404" y="-1684"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Edit.png" width="150" height="150"/>
@@ -2885,6 +2942,7 @@
         <image name="aaaLogo.png" width="619.5" height="374.25"/>
         <image name="aaahockeysilhouette.png" width="220" height="229"/>
         <image name="avatarPlaceholder" width="101" height="101"/>
+        <image name="back" width="25" height="25"/>
         <image name="cancel" width="25" height="25"/>
         <image name="chat" width="25" height="25"/>
         <image name="feed" width="25" height="25"/>

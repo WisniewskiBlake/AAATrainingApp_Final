@@ -53,6 +53,10 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
         
         navigationItem.searchController = searchController
         
+//        let backItem = UIBarButtonItem()
+//        backItem.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+//        navigationItem.backBarButtonItem = backItem
+        
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         definesPresentationContext = true
