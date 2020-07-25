@@ -1791,7 +1791,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vQb-66-3wr">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vQb-66-3wr">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
@@ -1882,6 +1882,10 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="m41-eK-O4l" id="ja6-j9-FdE"/>
+                                    <outlet property="delegate" destination="m41-eK-O4l" id="YGh-Vs-hd3"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -1901,7 +1905,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="tableView" destination="vQb-66-3wr" id="mop-n9-IsI"/>
+                        <outlet property="tableView" destination="vQb-66-3wr" id="lTQ-2c-Oxn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJy-7Q-Kaj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2823,6 +2827,7 @@
         <!--Navigation Controller-->
         <scene sceneID="vwk-wG-tHM">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RwI-6f-cRf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wZc-wg-aaS" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="chat" selectedImage="chat" id="5pe-05-CYY">
                         <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-3"/>
@@ -2841,7 +2846,6 @@
                         <segue destination="m41-eK-O4l" kind="relationship" relationship="rootViewController" id="aa1-lV-JfD"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RwI-6f-cRf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3889" y="-1681"/>
         </scene>

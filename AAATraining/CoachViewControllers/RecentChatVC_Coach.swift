@@ -11,6 +11,7 @@ import FirebaseFirestore
 
 class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewDataSource, RecentChatCell_CoachDelegate, UISearchResultsUpdating {
    
+    @IBOutlet weak var tableView: UITableView!
     
     
     var recentChats: [NSDictionary] = []
@@ -20,7 +21,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     
     let searchController = UISearchController(searchResultsController: nil)
 
-    @IBOutlet weak var tableView: UITableView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,12 +37,45 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewWillAppear(_ animated: Bool) {
         loadRecentChats()
-        
-        tableView.tableFooterView = UIView()
+    //    self.tableView.reloadData()
+        //tableView.tableFooterView = UIView()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         recentListener.remove()
+    }
+    
+    //MARK: LoadRecentChats
+    
+    func loadRecentChats() {
+        
+        recentListener = reference(.Recent).whereField(kUSERID, isEqualTo: FUser.currentId()).addSnapshotListener({ (snapshot, error) in
+            let helper = Helper()
+            guard let snapshot = snapshot else { return }
+            
+            self.recentChats = []
+            
+            if !snapshot.isEmpty {
+                
+                let sorted = ((helper.dictionaryFromSnapshots(snapshots: snapshot.documents)) as NSArray).sortedArray(using: [NSSortDescriptor(key: kDATE, ascending: false)]) as! [NSDictionary]
+                
+                for recent in sorted {
+                    
+                    if recent[kLASTMESSAGE] as! String != "" && recent[kCHATROOMID] != nil && recent[kRECENTID] != nil {
+                        
+                        self.recentChats.append(recent)
+                    }
+                    
+                    reference(.Recent).whereField(kCHATROOMID, isEqualTo: recent[kCHATROOMID] as! String).getDocuments(completion: { (snapshot, error) in
+                        
+                    })
+                }
+                
+                self.tableView.reloadData()
+            }
+
+        })
+
     }
     
 
@@ -154,38 +188,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         navigationController?.pushViewController(chatVC, animated: true)
     }
     
-    //MARK: LoadRecentChats
     
-    func loadRecentChats() {
-        
-        recentListener = reference(.Recent).whereField(kUSERID, isEqualTo: FUser.currentId()).addSnapshotListener({ (snapshot, error) in
-            let helper = Helper()
-            guard let snapshot = snapshot else { return }
-            
-            self.recentChats = []
-            
-            if !snapshot.isEmpty {
-                
-                let sorted = ((helper.dictionaryFromSnapshots(snapshots: snapshot.documents)) as NSArray).sortedArray(using: [NSSortDescriptor(key: kDATE, ascending: false)]) as! [NSDictionary]
-                
-                for recent in sorted {
-                    
-                    if recent[kLASTMESSAGE] as! String != "" && recent[kCHATROOMID] != nil && recent[kRECENTID] != nil {
-                        
-                        self.recentChats.append(recent)
-                    }
-                    
-                    reference(.Recent).whereField(kCHATROOMID, isEqualTo: recent[kCHATROOMID] as! String).getDocuments(completion: { (snapshot, error) in
-                        
-                    })
-                }
-                
-                self.tableView.reloadData()
-            }
-
-        })
-
-    }
        
        func didTapAvatarImage(indexPath: IndexPath) {
 //           var recentChat: NSDictionary!
