@@ -7,7 +7,7 @@
 //
 
 import Foundation
-//import OneSignal
+import OneSignal
 
 func sendPushNotification(memberToPush: [String], message: String) {
 
@@ -17,7 +17,7 @@ func sendPushNotification(memberToPush: [String], message: String) {
 
         let currentUser = FUser.currentUser()!
 
-//        OneSignal.postNotification(["contents" : ["en" : "\(currentUser.firstname) \n \(message)"], "ios_badgeType" : "Increase", "ios_badgeCount" : 1, "include_player_ids" : userPushIds])
+        OneSignal.postNotification(["contents" : ["en" : "\(currentUser.firstname) \n \(message)"], "ios_badgeType" : "Increase", "ios_badgeCount" : 1, "include_player_ids" : userPushIds])
     }
 
 }

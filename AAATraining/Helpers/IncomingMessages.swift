@@ -11,9 +11,10 @@ import JSQMessagesViewController
 
 class IncomingMessage {
     
+    let helper = Helper()
+    
     var collectionView: JSQMessagesCollectionView
     
-    let helper = Helper()
     
     init(collectionView_: JSQMessagesCollectionView) {
         collectionView = collectionView_
@@ -140,7 +141,7 @@ class IncomingMessage {
             
             mediaItem.status = kSUCCESS
             mediaItem.fileURL = url
-                        
+            
             self.helper.imageFromData(pictureData: messageDictionary[kPICTURE] as! String, withBlock: { (image) in
                 
                 if image != nil {

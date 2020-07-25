@@ -1786,7 +1786,7 @@
         <!--Chats-->
         <scene sceneID="6hW-az-6Ff">
             <objects>
-                <viewController id="m41-eK-O4l" customClass="RecentChatVC_Coach" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="recentVC" id="m41-eK-O4l" customClass="RecentChatVC_Coach" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6GD-SN-13O">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2064,6 +2064,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="eat-p0-VXT"/>
                     </view>
+                    <navigationItem key="navigationItem" id="fcb-7J-eME"/>
                     <connections>
                         <outlet property="collectionView" destination="EF6-ZK-fxI" id="dLG-q1-TH0"/>
                         <outlet property="editAvatarButtonOutlet" destination="4nd-uk-QER" id="vYd-mR-mF7"/>
@@ -2080,7 +2081,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="7148" y="-1683.5082458770617"/>
+            <point key="canvasLocation" x="6284" y="-1682"/>
         </scene>
         <!--ChatVC Coach-->
         <scene sceneID="IJ2-9X-0BF">
@@ -2095,7 +2096,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="08n-Dt-k7C" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7913" y="-1690"/>
+            <point key="canvasLocation" x="7935" y="-2433"/>
         </scene>
         <!--Roster-->
         <scene sceneID="yw7-UA-o4j">
@@ -2268,7 +2269,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q3m-ca-zTv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6385" y="-1682"/>
+            <point key="canvasLocation" x="5372" y="-1682"/>
         </scene>
         <!--Create Post-->
         <scene sceneID="pM1-m6-NxO">
@@ -2873,31 +2874,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YR0-81-pKc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3889" y="-950"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="eyr-IU-Dkl">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2Wt-wp-Tg9" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="zGm-9g-pIJ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.1006183103" green="0.2956552207" blue="0.71825700999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
-                        <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="4vj-nx-aZJ" kind="relationship" relationship="rootViewController" id="4Es-jM-0kr"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3p7-D2-lZg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5534" y="-1683"/>
         </scene>
     </scenes>
     <resources>

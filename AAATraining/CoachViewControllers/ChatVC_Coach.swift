@@ -785,13 +785,13 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
 //        self.navigationController?.pushViewController(mediaVC, animated: true)
 //    }
     
-//    @objc func showGroup() {
-//
-//        let groupVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "groupView") as! NewGroupVC_Coach
-//
-//        groupVC.group = group!
-//        self.navigationController?.pushViewController(groupVC, animated: true)
-//    }
+    @objc func showGroup() {
+
+        let groupVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newGroupView") as! NewGroupVC_Coach
+
+        
+        self.navigationController?.pushViewController(groupVC, animated: true)
+    }
     
 //    @objc func showUserProfile() {
 //
@@ -922,7 +922,7 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
         self.navigationItem.leftBarButtonItems?.append(leftBarButtonItem)
         
         if isGroup! {
-//            avatarButton.addTarget(self, action: #selector(self.showGroup), for: .touchUpInside)
+            avatarButton.addTarget(self, action: #selector(self.showGroup), for: .touchUpInside)
         } else {
 //            avatarButton.addTarget(self, action: #selector(self.showUserProfile), for: .touchUpInside)
         }

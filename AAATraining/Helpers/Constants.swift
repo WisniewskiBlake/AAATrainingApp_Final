@@ -129,7 +129,7 @@ public let kLONGITUDE = "longitude"
 
 
 //message status
-public let kDELIVERED = "delivered"
+public let kDELIVERED = "Delivered"
 public let kREAD = "read"
 public let kREADDATE = "readDate"
 public let kDELETED = "deleted"

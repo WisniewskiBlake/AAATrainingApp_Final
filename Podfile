@@ -22,6 +22,8 @@ pod 'IDMPhotoBrowser'
 pod 'RNCryptor'
 
 pod 'ImagePicker'
+pod 'OneSignal'
+pod 'SinchRTC'
 
 
   # Pods for AAATraining

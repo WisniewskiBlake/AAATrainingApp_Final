@@ -13,8 +13,22 @@ import FirebaseCore
 import CoreLocation
 import PushKit
 import FirebaseAuth
+import Sinch
+import OneSignal
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelegate, PKPushRegistryDelegate {
+class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelegate, PKPushRegistryDelegate, SINClientDelegate, SINCallClientDelegate, SINManagedPushDelegate {
+    func clientDidStart(_ client: SINClient!) {
+        
+    }
+    
+    func clientDidFail(_ client: SINClient!, error: Error!) {
+        
+    }
+    
+    func managedPush(_ managedPush: SINManagedPush!, didReceiveIncomingPushWithPayload payload: [AnyHashable : Any]!, forType pushType: String!) {
+        
+    }
+    
     
     
 
@@ -22,6 +36,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
     var authListener: AuthStateDidChangeListenerHandle?
     var locationManager: CLLocationManager?
     var coordinates: CLLocationCoordinate2D?
+    
+    var _client: SINClient!
+    var push: SINManagedPush!
     
 //    var ref = Database.database().reference()
 
@@ -48,6 +65,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
             }
         })
         
+//        self.voioRegistration()
+//
+//        self.push = Sinch.managedPush(with: .development)
+//        self.push.delegate = self
+//        self.push.setDesiredPushTypeAutomatically()
+//
+//        func userDidLogin(userId: String) {
+//            self.push.registerUserNotificationSettings()
+//            self.initSinchWithUserId(userId: userId)
+//            self.startOneSignal()
+//        }
+//
+//        NotificationCenter.default.addObserver(forName: NSNotification.Name(USER_DID_LOGIN_NOTIFICATION), object: nil, queue: nil) { (note) in
+//
+//            let userId = note.userInfo![kUSERID] as! String
+//            UserDefaults.standard.set(userId, forKey: kUSERID)
+//            UserDefaults.standard.synchronize()
+//
+//            userDidLogin(userId: userId)
+//        }
+
         
 
         guard let _ = (scene as? UIWindowScene) else { return }
@@ -86,6 +124,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        var top = self.window?.rootViewController
+        
+        while top?.presentedViewController != nil {
+            top = top?.presentedViewController
+        }
+        
+        if top! is UITabBarController {
+            setBadges(controller: top as! UITabBarController)
+        }
+        
+        
+        if FUser.currentUser() != nil {
+            updateCurrentUserInFirestore(withValues: [kISONLINE : true]) { (success) in
+                
+            }
+        }
+        
+        locationManagerStart()
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
@@ -102,7 +158,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+        recentBadgeHandler?.remove()
+        if FUser.currentUser() != nil {
+            updateCurrentUserInFirestore(withValues: [kISONLINE : false]) { (success) in
+                
+            }
+        }
+
+        locationMangerStop()
     }
+    
+
     
     //MARK: Location manger
     
