@@ -2129,10 +2129,10 @@
             </objects>
             <point key="canvasLocation" x="10184.799999999999" y="-1684.4077961019491"/>
         </scene>
-        <!--View Controller-->
+        <!--Map View Controller-->
         <scene sceneID="wpS-bg-yUb">
             <objects>
-                <viewController storyboardIdentifier="MapViewController" id="Knx-xy-mlX" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MapViewController" id="Knx-xy-mlX" customClass="MapViewController" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JH7-Zc-mM9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2150,6 +2150,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xH2-va-1fo"/>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="lGZ-6P-luE" id="Z9i-E8-ecl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XJo-I0-oU8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
