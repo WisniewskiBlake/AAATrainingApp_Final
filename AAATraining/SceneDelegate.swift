@@ -30,7 +30,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
     }
     
     
-    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     var window: UIWindow?
     var authListener: AuthStateDidChangeListenerHandle?
@@ -125,6 +125,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
         var top = self.window?.rootViewController
+                
+        appDelegate.locationManagerStart()
         
         while top?.presentedViewController != nil {
             top = top?.presentedViewController
@@ -158,6 +160,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+        
+        
+        appDelegate.locationManagerStop()
+        
         recentBadgeHandler?.remove()
         if FUser.currentUser() != nil {
             updateCurrentUserInFirestore(withValues: [kISONLINE : false]) { (success) in

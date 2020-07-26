@@ -177,6 +177,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         }
     }
     
+    func locationManagerStart() {
+        
+        if locationManager == nil {
+            locationManager = CLLocationManager()
+            locationManager!.delegate = self
+            locationManager!.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager!.requestWhenInUseAuthorization()
+        }
+        
+        locationManager!.startUpdatingLocation()
+    }
+
+    func locationManagerStop() {
+        
+        if locationManager != nil {
+            locationManager!.stopUpdatingLocation()
+        }
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         coordinates = locations.last!.coordinate
