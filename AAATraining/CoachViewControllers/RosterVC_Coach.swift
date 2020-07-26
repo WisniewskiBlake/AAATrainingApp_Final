@@ -21,6 +21,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     var filteredUsers: [FUser] = []
     var allUsersGroupped = NSDictionary() as! [String : [FUser]]
     var sectionTitleList : [String] = []
+    var userListener: ListenerRegistration!
     
     let searchController = UISearchController(searchResultsController: nil)
     
@@ -280,7 +281,55 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         
         filterContentForSearchText(searchText: searchController.searchBar.text!)
     }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+
+        var user: FUser
+
+        if searchController.isActive && searchController.searchBar.text != "" {
+
+            user = filteredUsers[indexPath.row]
+        } else {
+
+            let sectionTitle = self.sectionTitleList[indexPath.section]
+
+            let users = self.allUsersGroupped[sectionTitle]
+
+            user = users![indexPath.row]
+
+            
+        }
+
+        let deleteAction = UITableViewRowAction(style: .default, title: "Delete") { (action, indexPath) in
+
+            //allUsersGroupped.remove(at: users, indexPath.row)
+
+            self.deleteAUser(user: user)
+
+            self.tableView.reloadData()
+        }
+        
+        
+        
+        return [deleteAction]
+    }
+    
+    func deleteAUser(user : FUser) {
+        print(user.objectId)
+        reference(.User).document(user.objectId).delete() { err in
+        if let err = err {
+            print("Error removing document: \(err)")
+        } else {
+            print("Document successfully removed!")
+        }
+    }
+        self.tableView.reloadData()
 
     
 
+}
 }

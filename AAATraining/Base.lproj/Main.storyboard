@@ -2114,7 +2114,12 @@
                                 <action selector="backButtonPressed:" destination="eOF-gJ-6N6" id="J6V-KM-aCJ"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="groupIcon" id="cuu-Lp-n9f"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="info" style="plain" id="cuu-Lp-n9f">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="rightBarGrpImageClicked:" destination="eOF-gJ-6N6" id="nbQ-NV-Nnr"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="rightBarGrpImage" destination="cuu-Lp-n9f" id="C2E-HN-DKP"/>
@@ -2860,7 +2865,6 @@
         <!--Navigation Controller-->
         <scene sceneID="vwk-wG-tHM">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RwI-6f-cRf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wZc-wg-aaS" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="chat" selectedImage="chat" id="5pe-05-CYY">
                         <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-3"/>
@@ -2879,6 +2883,7 @@
                         <segue destination="m41-eK-O4l" kind="relationship" relationship="rootViewController" id="aa1-lV-JfD"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RwI-6f-cRf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3889" y="-1681"/>
         </scene>
@@ -2939,7 +2944,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.1006183103" green="0.2956552207" blue="0.71825700999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
-                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="24"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
                     </navigationBar>
@@ -2991,6 +2996,7 @@
         <image name="feed_selected" width="25" height="25"/>
         <image name="groupIcon" width="99.5" height="99"/>
         <image name="homeIcon" width="25" height="25"/>
+        <image name="info" width="25" height="25"/>
         <image name="logoBackground.png" width="810" height="540"/>
         <image name="meijerBackground.jpg" width="2048" height="1536"/>
         <image name="searchIcon" width="25" height="25"/>

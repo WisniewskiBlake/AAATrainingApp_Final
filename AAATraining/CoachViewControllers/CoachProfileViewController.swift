@@ -784,6 +784,10 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 
                 if success {
                     self.present(loginvc, animated: false, completion: nil)
+                    //self.navigationController?.popViewController(animated: true)
+                    //self.navigationController?.popToRootViewController(animated: true)
+                    //self.navigationController?.popToViewController(loginvc, animated: true)
+                    //self.navigationController?.pushViewController(loginvc, animated: true)
                 }
                 
             }

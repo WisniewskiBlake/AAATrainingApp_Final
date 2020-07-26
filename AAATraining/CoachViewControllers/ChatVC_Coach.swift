@@ -26,6 +26,9 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
     
     @IBOutlet weak var rightBarGrpImage: UIBarButtonItem!
     
+    @IBAction func rightBarGrpImageClicked(_ sender: Any) {
+        print("Hello")
+    }
     
     var chatRoomId: String!
     var memberIds: [String]!
