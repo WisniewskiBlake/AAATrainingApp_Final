@@ -445,11 +445,11 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
                
                let mediaItem = message.media as! JSQLocationMediaItem
                
-//               let mapView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
-//               
-//               mapView.location = mediaItem.location
-//               
-//               self.navigationController?.pushViewController(mapView, animated: true)
+               let mapView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
+               
+               mapView.location = mediaItem.location
+               
+               self.navigationController?.pushViewController(mapView, animated: true)
 
            case kVIDEO:
 
