@@ -21,13 +21,26 @@ import FirebaseAuth
 class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, IQAudioRecorderViewControllerDelegate {
     
     let helper = Helper()
-
+    var allMembers: [FUser] = []
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     @IBOutlet weak var rightBarGrpImage: UIBarButtonItem!
     
     @IBAction func rightBarGrpImageClicked(_ sender: Any) {
         print("Hello")
+        let groupInfoVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "groupInfoVC") as! EditGroupVC_Coach
+        
+        
+        groupInfoVC.memberIds = self.memberIds
+        groupInfoVC.allMembers = self.allMembers
+        
+        //chatVC.chatRoomId = groupId
+        
+        //chatVC.isGroup = true
+        groupInfoVC.hidesBottomBarWhenPushed = true
+        
+        
+        self.navigationController?.pushViewController(groupInfoVC, animated: true)
     }
     
     var chatRoomId: String!
@@ -209,8 +222,9 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
         
         
         //custom send button
-//        self.inputToolbar.contentView.rightBarButtonItem.setImage(UIImage(named: "mic"), for: .normal)
-        self.inputToolbar.contentView.rightBarButtonItem.setTitle("", for: .normal)
+        self.inputToolbar.contentView.rightBarButtonItem.setImage(UIImage(named: "send"), for: .normal)
+        //self.inputToolbar.contentView.rightBarButtonItem.setImage(UIImage(named: "mic"), for: .normal)
+        //self.inputToolbar.contentView.rightBarButtonItem.setTitle("", for: .normal)
     }
     
     

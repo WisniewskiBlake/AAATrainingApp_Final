@@ -178,7 +178,7 @@ class NewGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollecti
             chatVC.title = group.groupDictionary[kNAME] as? String
             chatVC.memberIds = group.groupDictionary[kMEMBERS] as? [String]
             chatVC.membersToPush = group.groupDictionary[kMEMBERS] as? [String]
-            
+            chatVC.allMembers = self.allMembers
             chatVC.chatRoomId = groupId
             
             chatVC.isGroup = true
