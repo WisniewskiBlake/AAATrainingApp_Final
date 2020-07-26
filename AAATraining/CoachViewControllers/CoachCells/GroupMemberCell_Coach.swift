@@ -25,7 +25,7 @@ class GroupMemberCell_Coach: UICollectionViewCell {
     func generateCell(user: FUser, indexPath: IndexPath) {
         
         self.indexPath = indexPath
-        nameLabel.text = user.firstname
+        nameLabel.text = user.firstname + " " + user.lastname
         
         if user.ava != "" {
             

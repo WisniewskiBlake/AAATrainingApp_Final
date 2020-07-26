@@ -8,9 +8,9 @@
 
 import UIKit
 
-protocol EditGroupCell_CoachDelegate {
-    func didClickDeleteButton(indexPath: IndexPath)
-}
+//protocol EditGroupCell_CoachDelegate {
+//    func didClickDeleteButton(indexPath: IndexPath)
+//}
 
 class EditGroupCell_Coach: UICollectionViewCell {
     
@@ -25,7 +25,7 @@ class EditGroupCell_Coach: UICollectionViewCell {
     func generateCell(user: FUser, indexPath: IndexPath) {
         
         self.indexPath = indexPath
-        nameLabel.text = user.firstname
+        nameLabel.text = user.firstname + " " + user.lastname
         
         if user.ava != "" {
             
@@ -42,7 +42,7 @@ class EditGroupCell_Coach: UICollectionViewCell {
         
     }
     
-    @IBAction func deleteButtonPressed(_ sender: Any) {
-        delegate!.didClickDeleteButton(indexPath: indexPath)
-    }
+//    @IBAction func deleteButtonPressed(_ sender: Any) {
+//        delegate!.didClickDeleteButton(indexPath: indexPath)
+//    }
 }
