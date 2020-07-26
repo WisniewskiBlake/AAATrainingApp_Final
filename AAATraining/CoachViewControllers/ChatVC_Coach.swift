@@ -209,7 +209,7 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
         
         
         //custom send button
-        self.inputToolbar.contentView.rightBarButtonItem.setImage(UIImage(named: "mic"), for: .normal)
+//        self.inputToolbar.contentView.rightBarButtonItem.setImage(UIImage(named: "mic"), for: .normal)
         self.inputToolbar.contentView.rightBarButtonItem.setTitle("", for: .normal)
     }
     
@@ -411,8 +411,8 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
                updateSendButton(isSend: false)
            } else {
 
-               let audioVC = AudioViewController(delegate_: self)
-               audioVC.presentAudioRecorder(target: self)
+//               let audioVC = AudioViewController(delegate_: self)
+//               audioVC.presentAudioRecorder(target: self)
            }
        }
        
@@ -962,7 +962,8 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
         if isSend {
             self.inputToolbar.contentView.rightBarButtonItem.setImage(UIImage(named: "send"), for: .normal)
         } else {
-            self.inputToolbar.contentView.rightBarButtonItem.setImage(UIImage(named: "mic"), for: .normal)
+//            self.inputToolbar.contentView.rightBarButtonItem.setImage(UIImage(named: "mic"), for: .normal)
+//            self.inputToolbar.contentView.rightBarButtonItem.setImage(UIImage(named: "send"), for: .normal)
         }
         
     }
