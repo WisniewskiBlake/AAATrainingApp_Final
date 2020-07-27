@@ -50,16 +50,27 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     }
     
     // loading user
-    func loadUser() {
-        
+    func loadUser() {        
+        let helper = Helper()
+        let user = FUser.currentUser()
         // safely accessing user related detailes ["key">"value"]
-        guard let firstName = currentUser1?["firstName"], let lastName = currentUser1?["lastName"], let avaPath = currentUser1?["ava"] else {
+        guard let firstName = user?.firstname, let lastName = user?.lastname, let avaPath = user?.ava else {
+            
             return
         }
         
-        // assigning accessed details to the functions which loads the user
-        Helper().loadFullname(firstName: firstName as! String, lastName: lastName as! String, showIn: fullnameLabel)
-        Helper().downloadImage(from: avaPath as! String, showIn: avaImageView, orShow: "user.png")
+        if avaPath != "" {
+            
+            helper.imageFromData(pictureData: avaPath) { (avatarImage) in
+                
+                if avatarImage != nil {
+                    avaImageView.image = avatarImage!
+                }
+            }
+        } else{
+            avaImageView.image = UIImage(named: "user.png")
+        }
+        fullnameLabel.text = "\((firstName).capitalized) \((lastName).capitalized)"
     }
             
     
