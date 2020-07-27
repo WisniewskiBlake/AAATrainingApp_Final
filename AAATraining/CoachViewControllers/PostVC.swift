@@ -22,7 +22,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     
     func createPost() {
         if postTextView.text != "" {
-            let post = PostService(postID: postID, ownerID: FUser.currentId(), text: postTextView.text, picture: "", date: "")
+            let post = Post(postID: postID, ownerID: FUser.currentId(), text: postTextView.text, picture: "", date: "")
             
             post.savePost()
         }
