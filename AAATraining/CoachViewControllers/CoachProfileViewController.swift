@@ -57,15 +57,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
 
     }
-    
-//    @objc func refresh(sender:AnyObject)
-//    {
-//        refreshing = true
-//        loadPosts(offset: skip, limit: limit)
-//        self.tableView.reloadData()
-//        self.refreshControl?.endRefreshing()
-//
-//    }
+
     
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
