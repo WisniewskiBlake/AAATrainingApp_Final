@@ -86,6 +86,7 @@ public let kMAXDURATION = 120.0
 public let kAUDIOMAXDURATION = 120.0
 public let kSUCCESS = 2
 
+//Posts
 public let kPOSTS = "posts"
 public let kPOSTID = "postID"
 public let kPOSTOWNERID = "ownerID"

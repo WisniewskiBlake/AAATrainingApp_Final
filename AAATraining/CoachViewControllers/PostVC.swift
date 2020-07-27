@@ -88,6 +88,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     
     @IBAction func shareButton_clicked(_ sender: Any) {        
         createPost()
+        dismiss(animated: true, completion: nil)
 
     }
     

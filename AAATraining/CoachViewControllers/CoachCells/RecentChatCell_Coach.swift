@@ -64,8 +64,7 @@ class RecentChatCell_Coach: UITableViewCell {
                     self.avatarImageView.image = avatarImage!.circleMasked
                 }
             }
-        }
-        
+        }       
         
         if recentChat[kCOUNTER] as! Int != 0 {
             

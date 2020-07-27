@@ -13,30 +13,6 @@ import Firebase
 import FirebaseFirestore
 
 class CoachProfileViewController: UITableViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, ImagePickerDelegate {
-    func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
-        if images.count > 0 {
-            self.profileIcon = images.first!
-            self.avaImageView.image = self.profileIcon!
-            //self.editAvatarButtonOutlet.isHidden = false
-            
-            let avatarData = profileIcon?.jpegData(compressionQuality: 0.4)!
-            let avatar = avatarData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-            updateCurrentUserInFirestore(withValues: [kAVATAR : avatar!]) { (success) in
-                
-            }
-        }
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var avaImageView: UIImageView!
     @IBOutlet weak var fullnameLabel: UILabel!
@@ -48,7 +24,10 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     var isAva = false
     
     var posts: [NSDictionary] = []
-    var filteredChats: [NSDictionary] = []
+    var filteredPosts: [NSDictionary] = []
+    
+    let helper = Helper()
+    let user = FUser.currentUser()
        
     var recentListener: ListenerRegistration!
     
@@ -68,13 +47,13 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadNewPosts), name: NSNotification.Name(rawValue: "uploadPost"), object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
         
         
 
         configure_avaImageView()
         loadUser()
-//        loadPosts(offset: skip, limit: limit)
+//        loadPosts()
         
 
     }
@@ -92,9 +71,15 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        loadPosts()
+        
         // hide navigation bar on Home Pagex
         navigationController?.setNavigationBarHidden(true, animated: true)
         
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        recentListener.remove()
     }
     
     // exec-d when new post is published
@@ -105,8 +90,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     // MARK: - Load User
     // loads all user related information to be shown in the header
     @objc func loadUser() {
-        let helper = Helper()
-        let user = FUser.currentUser()
+        
    
         guard let firstName = user?.firstname, let lastName = user?.lastname, let avaPath = user?.ava, let coverPath = user?.cover else {
                
@@ -145,8 +129,34 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     
     // MARK: - Load Posts
     // loading posts from the server via@objc  PHP protocol
-    @objc func loadPosts(offset: Int, limit: Int) {
-       
+    func loadPosts() {
+       recentListener = reference(.Post).whereField(kPOSTOWNERID, isEqualTo: FUser.currentId()).addSnapshotListener({ (snapshot, error) in
+           let helper = Helper()
+           guard let snapshot = snapshot else { return }
+           
+           self.posts = []
+           
+           if !snapshot.isEmpty {
+               
+               let sorted = ((helper.dictionaryFromSnapshots(snapshots: snapshot.documents)) as NSArray).sortedArray(using: [NSSortDescriptor(key: kPOSTDATE, ascending: false)]) as! [NSDictionary]
+               
+               for recent in sorted {
+                   
+                   if recent[kPOSTTEXT] as! String != "" {
+                       
+                       self.posts.append(recent)
+                        print(recent)
+                   }
+                   
+//                   reference(.Recent).whereField(kCHATROOMID, isEqualTo: recent[kCHATROOMID] as! String).getDocuments(completion: { (snapshot, error) in
+//
+//                   })
+               }
+               
+               self.tableView.reloadData()
+           }
+
+       })
         
     }
     
@@ -268,15 +278,48 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     
     // heights of the cells
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-            return UITableView.automaticDimension
-        
+        return UITableView.automaticDimension
     }
     
     // cell config
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
         
+        var date: Date!
+        
+        if let created = posts[indexPath.row][kPOSTDATE] {
+            if (created as! String).count != 14 {
+                date = Date()
+            } else {
+                date = helper.dateFormatter().date(from: created as! String)!
+            }
+        } else {
+            date = Date()
+        }
+        cell.dateLabel.text = helper.timeElapsed(date: date)
+        
+        
+        
+        
+        
+        let avaPath = user?.ava
+        if avaPath != "" {
+            
+            helper.imageFromData(pictureData: avaPath!) { (avatarImage) in
+                if avatarImage != nil {
+                    cell.avaImageView.image = avatarImage!
+                }
+            }
+        } else{
+            cell.avaImageView.image = UIImage(named: "user.png")
+            
+        }
+        cell.fullnameLabel.text = user!.firstname + " " + user!.lastname
+        
+        cell.postTextLabel.text = posts[indexPath.row][kPOSTTEXT] as? String
+        
+        //cell.commentsButton.tag = indexPath.row
+        cell.optionsButton.tag = indexPath.row
         
         return cell
         
@@ -377,6 +420,32 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         tableView.reloadData()
         
     }
+    
+    
+    func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+        if images.count > 0 {
+            self.profileIcon = images.first!
+            self.avaImageView.image = self.profileIcon!
+            //self.editAvatarButtonOutlet.isHidden = false
+            
+            let avatarData = profileIcon?.jpegData(compressionQuality: 0.4)!
+            let avatar = avatarData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+            updateCurrentUserInFirestore(withValues: [kAVATAR : avatar!]) { (success) in
+                
+            }
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+
     
     
     
