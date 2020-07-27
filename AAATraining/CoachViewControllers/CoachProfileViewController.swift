@@ -91,6 +91,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     // loads all user related information to be shown in the header
     @objc func loadUser() {
         
+        let helper = Helper()
+        let user = FUser.currentUser()
    
         guard let firstName = user?.firstname, let lastName = user?.lastname, let avaPath = user?.ava, let coverPath = user?.cover else {
                
@@ -159,20 +161,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
        })
         
     }
-    
-    // MARK: - Load More
-    // loading more posts from the server via PHP protocol
-    func loadMore(offset: Int, limit: Int) {
         
-        
-    }
-    
-    // MARK: - Upload Image
-    // sends request to the server to upload the Image (ava/cover)
-    func uploadImage(from imageView: UIImageView, action: String) {
-                
-    }
-    
     // configuring the appearance of AvaImageView
     func configure_avaImageView() {
         
@@ -188,14 +177,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         avaImageView.layer.masksToBounds = true
         avaImageView.clipsToBounds = true
     }
-    
-    func saveProfilePic() {
-        
-    }
-    
-    
-    
-    
+   
     
     // MARK: - Images tapped
     @IBAction func avaImageView_tapped(_ sender: Any) {
@@ -230,7 +212,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
            let resetAction = UIAlertAction(title: "Reset", style: .default) { (alert) in
 
                self.profileIcon = nil
-               self.avaImageView.image = UIImage(named: "cameraIcon")
+               self.avaImageView.image = UIImage(named: "user.png")
                //self.editAvatarButtonOutlet.isHidden = true
            }
            optionMenu.addAction(resetAction)
@@ -284,6 +266,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     // cell config
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
+        let helper = Helper()
+        let user = FUser.currentUser()
         
         var date: Date!
         
@@ -298,22 +282,19 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         }
         cell.dateLabel.text = helper.timeElapsed(date: date)
         
-        
-        
-        
-        
-        let avaPath = user?.ava
-        if avaPath != "" {
-            
-            helper.imageFromData(pictureData: avaPath!) { (avatarImage) in
-                if avatarImage != nil {
-                    cell.avaImageView.image = avatarImage!
-                }
-            }
-        } else{
-            cell.avaImageView.image = UIImage(named: "user.png")
-            
-        }
+//        let avaPath = user?.ava
+//        if avaPath != "" {
+//
+//            helper.imageFromData(pictureData: avaPath!) { (avatarImage) in
+//                if avatarImage != nil {
+//                    cell.avaImageView.image = avatarImage!
+//                }
+//            }
+//        } else{
+//            cell.avaImageView.image = UIImage(named: "user.png")
+//
+//        }
+        cell.avaImageView.image = self.avaImageView.image
         cell.fullnameLabel.text = user!.firstname + " " + user!.lastname
         
         cell.postTextLabel.text = posts[indexPath.row][kPOSTTEXT] as? String
@@ -406,10 +387,11 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     // sends request to the server to delete the post
     @objc func deletePost(_ row: Int) {
         
-        // accessing id of the post which is stored in the tapped cell
-        guard let id = posts[row]["id"] else {
-            return
+        if let postID = posts[row][kPOSTID] {
+            
+            reference(.Post).document(postID as! String).delete()
         }
+        self.posts.remove(at: row)
         
         
         // remove the cell itself from the tableView
@@ -438,6 +420,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 
             }
         }
+        loadPosts()
         self.dismiss(animated: true, completion: nil)
     }
     

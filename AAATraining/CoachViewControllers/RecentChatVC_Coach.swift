@@ -275,6 +275,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
             membersToPush.append(FUser.currentId())
         }
         
+        
         updateExistingRicentWithNewValues(chatRoomId: recent[kCHATROOMID] as! String, members: recent[kMEMBERS] as! [String], withValues: [kMEMBERSTOPUSH : membersToPush])
         
     }

@@ -2525,12 +2525,14 @@
                         <viewLayoutGuide key="safeArea" id="JLh-Kz-aJs"/>
                     </view>
                     <navigationItem key="navigationItem" title="Create Post" id="NSP-Jg-Rek">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="pvJ-9a-qZW">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="pvJ-9a-qZW">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="cancelButton_clicked:" destination="41R-QL-2o6" id="zk1-lu-c72"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Share" id="1uC-iw-qsK">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="shareButton_clicked:" destination="41R-QL-2o6" id="81C-eP-tgF"/>
                             </connections>
@@ -2945,6 +2947,10 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="brh-rC-gsb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.1006183103" green="0.2956552207" blue="0.71825700999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

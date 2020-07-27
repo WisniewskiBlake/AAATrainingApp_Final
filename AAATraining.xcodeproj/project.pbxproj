@@ -12,7 +12,6 @@
 		B70EDF0224CD3BC500CC21F5 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70EDF0124CD3BC500CC21F5 /* MapViewController.swift */; };
 		B70EDF0424CD40D400CC21F5 /* EditGroupVC_Coach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70EDF0324CD40D400CC21F5 /* EditGroupVC_Coach.swift */; };
 		B70EDF0624CD5F1D00CC21F5 /* EditGroupCell_Coach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70EDF0524CD5F1D00CC21F5 /* EditGroupCell_Coach.swift */; };
-		B70EDF0924CDA3BA00CC21F5 /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70EDF0824CDA3BA00CC21F5 /* PostService.swift */; };
 		B70EDF0F24CE9DC800CC21F5 /* aaaCoverLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = B70EDF0E24CE9DC800CC21F5 /* aaaCoverLogo.png */; };
 		B70EDF1124CE9FFF00CC21F5 /* aaaCoverLogo1.png in Resources */ = {isa = PBXBuildFile; fileRef = B70EDF1024CE9FFF00CC21F5 /* aaaCoverLogo1.png */; };
 		B70EDF1424CEAA6E00CC21F5 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70EDF1324CEAA6E00CC21F5 /* Post.swift */; };
@@ -103,7 +102,6 @@
 		B70EDF0124CD3BC500CC21F5 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		B70EDF0324CD40D400CC21F5 /* EditGroupVC_Coach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGroupVC_Coach.swift; sourceTree = "<group>"; };
 		B70EDF0524CD5F1D00CC21F5 /* EditGroupCell_Coach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGroupCell_Coach.swift; sourceTree = "<group>"; };
-		B70EDF0824CDA3BA00CC21F5 /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
 		B70EDF0E24CE9DC800CC21F5 /* aaaCoverLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aaaCoverLogo.png; sourceTree = "<group>"; };
 		B70EDF1024CE9FFF00CC21F5 /* aaaCoverLogo1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aaaCoverLogo1.png; sourceTree = "<group>"; };
 		B70EDF1324CEAA6E00CC21F5 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -224,14 +222,6 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		B70EDF0724CDA36E00CC21F5 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				B70EDF0824CDA3BA00CC21F5 /* PostService.swift */,
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
 		B70EDF1224CEAA4800CC21F5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -310,10 +300,9 @@
 		B7F18C6224970084009BFA17 /* AAATraining */ = {
 			isa = PBXGroup;
 			children = (
-				B70EDF1224CEAA4800CC21F5 /* Model */,
-				B70EDF0724CDA36E00CC21F5 /* Services */,
 				B75AD62E24CA93FB00DCC857 /* Helpers */,
 				B7C3BDFD24BC630C00086C27 /* fonts */,
+				B70EDF1224CEAA4800CC21F5 /* Model */,
 				B7F8AFF224B6965100B315FD /* MutualControllers */,
 				B7F8AFED24A4B3AF00B315FD /* CoachViewControllers */,
 				B7F8AFEA24A4ABBC00B315FD /* PlayerViewControllers */,
@@ -697,7 +686,6 @@
 				B75AD64824CAF39C00DCC857 /* Camera.swift in Sources */,
 				B75AD63C24CACF5200DCC857 /* GroupMemberCell_Coach.swift in Sources */,
 				B7C3BE0324BC735000086C27 /* PlayerRosterVC.swift in Sources */,
-				B70EDF0924CDA3BA00CC21F5 /* PostService.swift in Sources */,
 				B7F18C6624970084009BFA17 /* SceneDelegate.swift in Sources */,
 				B75AD62324C9944B00DCC857 /* RecentChatVC_Coach.swift in Sources */,
 				B75AD61D24C9667000DCC857 /* RosterVC_Coach.swift in Sources */,
