@@ -22,7 +22,8 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     
     func createPost() {
         if postTextView.text != "" {
-            let post = Post(postID: postID, ownerID: FUser.currentId(), text: postTextView.text, picture: "", date: "")
+            let fullName = FUser.currentUser()!.firstname + " " + FUser.currentUser()!.lastname
+            let post = Post(postID: postID, ownerID: FUser.currentId(), text: postTextView.text, picture: "", date: "", postUserAva: FUser.currentUser()!.ava, postUserName: fullName)
             
             post.savePost()
         }

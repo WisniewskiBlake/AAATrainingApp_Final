@@ -16,7 +16,10 @@ import ProgressHUD
 class FeedVC_Coach: UITableViewController {
     
     // posts obj
-    var posts: [NSDictionary] = []
+    //
+    //var posts: [NSDictionary] = []
+    // posts: NSDictionary() as! [String : [Post]]
+    var allPosts: [Post] = []
     var recentListener: ListenerRegistration!
     
     var avas = [UIImage]()
@@ -91,28 +94,36 @@ class FeedVC_Coach: UITableViewController {
     @objc func loadPosts() {
         ProgressHUD.show()
         
-        recentListener = reference(.Post).addSnapshotListener({ (snapshot, error) in
-                   let helper = Helper()
-                   guard let snapshot = snapshot else { return }
+        recentListener = reference(.Post).order(by: kPOSTDATE, descending: true).addSnapshotListener({ (snapshot, error) in
                    
-                   self.posts = []
+                    self.allPosts = []
+            
+            if error != nil {
+                print(error!.localizedDescription)
+                ProgressHUD.dismiss()
+                self.tableView.reloadData()
+                return
+            }
+                   guard let snapshot = snapshot else { ProgressHUD.dismiss(); return }
+                   
+//                   self.posts = []
                    
                    if !snapshot.isEmpty {
                        
-                       let sorted = ((helper.dictionaryFromSnapshots(snapshots: snapshot.documents)) as NSArray).sortedArray(using: [NSSortDescriptor(key: kPOSTDATE, ascending: false)]) as! [NSDictionary]
+//                       let sorted = ((helper.dictionaryFromSnapshots(snapshots: snapshot.documents)) as NSArray).sortedArray(using: [NSSortDescriptor(key: kPOSTDATE, ascending: false)]) as! [NSDictionary]
                        
-                       for recent in sorted {
+                       for userDictionary in snapshot.documents {
                            
-                           if recent[kPOSTTEXT] as! String != "" {
-                               
-                               self.posts.append(recent)
-                                print(recent)
-                           }
-      
+                           let userDictionary = userDictionary.data() as NSDictionary
+                           
+                        let post = Post(_dictionary: userDictionary)
+                           
+                           self.allPosts.append(post)
                        }
                        self.tableView.reloadData()
+                    
                    }
-
+            ProgressHUD.dismiss()
                })
         
     }
@@ -156,7 +167,7 @@ class FeedVC_Coach: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return posts.count
+        return allPosts.count
     }
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -166,6 +177,37 @@ class FeedVC_Coach: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
         
+        var post: Post
+        //let posts = self.allPosts[indexPath.row]
+        
+        post = allPosts[indexPath.row]
+        
+        var date: Date!
+
+        
+        date = helper.dateFormatter().date(from: post.date)
+       
+        cell.dateLabel.text = helper.timeElapsed(date: date)
+        
+        
+        
+            helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
+
+                if avatarImage != nil {
+
+                    cell.avaImageView.image = avatarImage!.circleMasked
+                }
+            }
+        
+
+        
+        
+
+
+        cell.fullnameLabel.text = post.postUserName
+
+        cell.postTextLabel.text = post.text
+//
         return cell
     }
     
