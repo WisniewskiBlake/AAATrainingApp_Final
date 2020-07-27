@@ -21,14 +21,14 @@ import FirebaseAuth
 class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, IQAudioRecorderViewControllerDelegate {
     
     let helper = Helper()
-    var allMembers: [FUser] = []
+    
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     @IBOutlet weak var rightBarGrpImage: UIBarButtonItem!
     
     @IBAction func rightBarGrpImageClicked(_ sender: Any) {
         print("Hello")
-        let groupInfoVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "groupInfoVC") as! EditGroupVC_Coach
+        let groupInfoVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditGroupVC_Coach") as! EditGroupVC_Coach
         
         
         groupInfoVC.memberIds = self.memberIds
@@ -56,6 +56,8 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
     var newChatListener: ListenerRegistration?
 
     let legitTypes = [kAUDIO, kVIDEO, kTEXT, kLOCATION, kPICTURE]
+    
+    var allMembers: [FUser] = []
     
     var maxMessageNumber = 0
     var minMessageNumber = 0
@@ -145,15 +147,16 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
 //            let leftBarButtonItem = UIBarButtonItem(customView: leftBarButtonView)
 //            self.navigationItem.leftBarButtonItems?.append(leftBarButtonItem)
             
-            if isGroup! {
-                avatarButton.addTarget(self, action: #selector(self.showGroup), for: .touchUpInside)
-            } else {
-    //            avatarButton.addTarget(self, action: #selector(self.showUserProfile), for: .touchUpInside)
-            }
+//            if isGroup! {
+//                avatarButton.addTarget(self, action: #selector(self.showGroup), for: .touchUpInside)
+//            } else {
+//    //            avatarButton.addTarget(self, action: #selector(self.showUserProfile), for: .touchUpInside)
+//            }
             
             getUsersFromFirestore(withIds: memberIds) { (withUsers) in
                 
                 self.withUsers = withUsers
+                self.allMembers = withUsers
                 self.getAvatarImages()
                 if !self.isGroup! {
                     self.setUIForSingleChat()
@@ -202,7 +205,7 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
         jsqAvatarDictionary = [ : ]
         
         
-        //setCustomTitle()
+        setCustomTitle()
         
         
         loadMessages()

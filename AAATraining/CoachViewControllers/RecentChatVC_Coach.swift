@@ -188,6 +188,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         chatVC.membersToPush = (recent[kMEMBERSTOPUSH] as? [String])!
         chatVC.chatRoomId = (recent[kCHATROOMID] as? String)!
         chatVC.isGroup = (recent[kTYPE] as! String) == kGROUP
+        //chatVC.allMembers = (recent[kMEMBERS])!
         
 //        let backItem = UIBarButtonItem()
 //        backItem.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)

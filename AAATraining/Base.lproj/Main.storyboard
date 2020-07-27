@@ -2195,9 +2195,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jnu-lW-cMh">
                                 <rect key="frame" x="0.0" y="44" width="375" height="45"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PARTICIPANTS: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wsO-7T-gKw">
-                                        <rect key="frame" x="0.0" y="12" width="375" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PARTICIPANTS: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wsO-7T-gKw">
+                                        <rect key="frame" x="8" y="12" width="359" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -2205,6 +2204,9 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="wsO-7T-gKw" secondAttribute="trailing" constant="8" id="cMG-Hv-rRp"/>
+                                    <constraint firstItem="wsO-7T-gKw" firstAttribute="centerY" secondItem="Jnu-lW-cMh" secondAttribute="centerY" id="fLf-6t-gwH"/>
+                                    <constraint firstItem="wsO-7T-gKw" firstAttribute="leading" secondItem="Jnu-lW-cMh" secondAttribute="leading" constant="8" id="gYf-Zw-o4c"/>
                                     <constraint firstAttribute="height" constant="45" id="n8d-iv-3Qb"/>
                                 </constraints>
                             </view>

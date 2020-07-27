@@ -8,7 +8,7 @@
 
 import Foundation
 
-import Foundation
+
 import FirebaseFirestore
 
 public class Group_Coach {

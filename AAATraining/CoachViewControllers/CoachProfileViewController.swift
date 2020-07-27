@@ -110,8 +110,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         guard let firstName = user?.firstname, let lastName = user?.lastname, let avaPath = user?.ava, let coverPath = user?.cover else {
                
                return
-           }
-           
+           }           
            
            if (coverPath).count > 10 {
                isCover = true
@@ -140,92 +139,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     // MARK: - Load Posts
     // loading posts from the server via@objc  PHP protocol
     @objc func loadPosts(offset: Int, limit: Int) {
-        
-        isLoading = true
-        
-        // accessing id of the user : safe mode
-        guard let id = currentUser1?["id"] else {
-            return
-        }
-        
-        // prepare request
-        let url = URL(string: "http://localhost/fb/selectPosts.php")!
-        let body = "id=\(id)&offset=\(offset)&limit=\(limit)"
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.httpBody = body.data(using: .utf8)
-        
-        // send request
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            DispatchQueue.main.async {
-                
-                // error occured
-                if error != nil {
-                    Helper().showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
-                    self.isLoading = false
-                    return
-                }
-                
-                do {
-                    // access data - safe mode
-                    guard let data = data else {
-                        Helper().showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
-                        self.isLoading = false
-                        return
-                    }
-                    
-                    // converting data to JSON
-                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
-                    
-                    // accessing json data - safe mode
-                    guard let posts = json?["posts"] as? [NSDictionary] else {
-                        self.isLoading = false
-                        return
-                    }
-                    
-                    // assigning all successfully loaded posts to our Class Var - posts (after it got loaded successfully)
-                    self.posts = posts
-                    
-                    // we are skipping already loaded numb of posts for the next load - pagination
-                    self.skip = posts.count
-                    
-                    
-                    // clean up likes for the refetching
-                    self.liked.removeAll(keepingCapacity: false)
-                    // clean up likes for the refetching
-                    //self.numLiked.removeAll(keepingCapacity: false)
-                    
-                    
-                    // logic of tracking liked posts
-                    for post in posts {
-                        if post["liked"] is NSNull {
-                            self.liked.append(Int())
-                        } else {
-                            self.liked.append(1)
-                            
-                        }
-                    }
-                    
-                    
-                    // reloading tableView to have an affect - show posts
-                    self.tableView.reloadData()
-//                    if(self.refreshing) {
-//                        self.refreshing = false
-//                        self.refreshControl?.endRefreshing()
-//                    }
-                    self.isLoading = false
-                    
-                } catch {
-                    Helper().showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
-                    self.isLoading = false
-                    return
-                }
-                
-                
-                
-            }
-            
-        }.resume()
+       
         
     }
     
@@ -233,172 +147,13 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     // loading more posts from the server via PHP protocol
     func loadMore(offset: Int, limit: Int) {
         
-        isLoading = true
-        
-        // accessing id of the user : safe mode
-        guard let id = currentUser1?["id"] else {
-            return
-        }
-        
-        // prepare request
-        let url = URL(string: "http://localhost/fb/selectPosts.php")!
-        let body = "id=\(id)&offset=\(offset)&limit=\(limit)"
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.httpBody = body.data(using: .utf8)
-        
-        // send request
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            DispatchQueue.main.async {
-                
-                // error occured
-                if error != nil {
-                    self.isLoading = false
-                    Helper().showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
-                    return
-                }
-                
-                do {
-                    // access data - safe mode
-                    guard let data = data else {
-                        self.isLoading = false
-                        return
-                    }
-                    
-                    // converting data to JSON
-                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
-                    
-                    // accessing json data - safe mode
-                    guard let posts = json?["posts"] as? [NSDictionary] else {
-                        self.isLoading = false
-                        return
-                    }
-                    
-                    // assigning all successfully loaded posts to our Class Var - posts (after it got loaded successfully)
-                    self.posts.append(contentsOf: posts)
-                    
-                    // we are skipping already loaded numb of posts for the next load - pagination
-                    self.skip += posts.count
-                    
-                    
-                    // logic of tracking liked posts
-                    for post in posts {
-                        if post["liked"] is NSNull {
-                            self.liked.append(Int())
-                        } else {
-                            self.liked.append(1)
-                        }
-                    }
-                    
-                    
-                    // reloading tableView to have an affect - show posts
-                    self.tableView.beginUpdates()
-                    
-                    for i in 0 ..< posts.count {
-                        let lastSectionIndex = self.tableView.numberOfSections - 1
-                        let lastRowIndex = self.tableView.numberOfRows(inSection: lastSectionIndex)
-                        let pathToLastRow = IndexPath(row: lastRowIndex + i, section: lastSectionIndex)
-                        self.tableView.insertRows(at: [pathToLastRow], with: .fade)
-                    }
-                    
-                    self.tableView.endUpdates()
-                    
-                    self.isLoading = false
-                    
-                } catch {
-                    self.isLoading = false
-                    return
-                }
-                
-            }
-            
-        }.resume()
         
     }
     
     // MARK: - Upload Image
     // sends request to the server to upload the Image (ava/cover)
     func uploadImage(from imageView: UIImageView, action: String) {
-        
-        // save method of accessing ID of current user
-        guard let id = currentUser1?["id"] else {
-            return
-        }
-        // STEP 1. Declare URL, Request and Params
-        // url we gonna access (API)
-        let url = URL(string: "http://localhost/fb/uploadImage.php")!
-        //let url = URL(string: "http://192.168.1.17/fb/uploadImage.php")!
-        // declaring reqeust with further configs
-        var request = URLRequest(url: url)
-        // POST - safest method of passing data to the server
-        request.httpMethod = "POST"
-        // values to be sent to the server under keys (e.g. ID, TYPE)
-        let params = ["id": id, "type": imageViewTapped]
-        // MIME Boundary, Header
-        let boundary = "Boundary-\(NSUUID().uuidString)"
-        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        // if in the imageView is placeholder - send no picture to the server
-        // Compressing image and converting image to 'Data' type
-        var imageData = Data()
-        
-//        if imageView.image != UIImage(named: "HomeCover.jpg") && imageView.image != UIImage(named: "user.png") {
-//            imageData = imageView.image!.jpegData(compressionQuality: 0.5)!
-//        }
-        
-
-        imageData = imageView.image!.jpegData(compressionQuality: 0.5)!
-        let xxx = imageView.image!
-        print(xxx)
-        // assigning full body to the request to be sent to the server
-        request.httpBody = Helper().body(with: params, filename: "\(imageViewTapped).jpg", filePathKey: "file", imageDataKey: imageData, boundary: boundary) as Data
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            DispatchQueue.main.async {
-                // error occured
-                if error != nil {
-                    Helper().showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
-                    return
-                }
-                do {
-                    // save mode of casting any data
-                    guard let data = data else {
-                        Helper().showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
-                        return
-                    }
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
-                    // fetching JSON generated by the server - php file
-                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
-                    
-                    // save method of accessing json constant
-                    guard let parsedJSON = json else {
-                        return
-                    }
-                    // uploaded successfully
-                    if parsedJSON["status"] as! String == "200" {
-                        
-                        // saving upaded user related information (e.g. ava's path, cover's path)
-                        currentUser1 = parsedJSON.mutableCopy()  as? Dictionary<String, Any>
-                        DEFAULTS.set(currentUser1, forKey: "currentUser")
-                        DEFAULTS.synchronize()
-                        //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
-                    // error while uploading
-                    } else {
-                        // show the error message in AlertView
-                        if parsedJSON["message"] != nil {
-                            let message = parsedJSON["message"] as! String
-                            Helper().showAlert(title: "Error", message: message, in: self)
-                        }
-                    }
-                    
-                    
-                    
-                    
-                } catch {
-                    Helper().showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
-                }
                 
-            }
-        }.resume()
-        
     }
     
     // configuring the appearance of AvaImageView

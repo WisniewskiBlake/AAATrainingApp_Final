@@ -18,6 +18,17 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     @IBOutlet weak var postTextView: UITextView!
     @IBOutlet weak var pictureImageView: UIImageView!
     
+    let postID = UUID().uuidString
+    
+    func createPost() {
+        if postTextView.text != "" {
+            let post = PostService(postID: postID, ownerID: FUser.currentId(), text: postTextView.text, picture: "", date: "")
+            
+            post.savePost()
+        }
+    }
+    
+    
     
     // code obj
     var isPictureSelected = false
@@ -65,94 +76,96 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     }
     
     @IBAction func shareButton_clicked(_ sender: Any) {
+        
+        createPost()
         // safe method to access 2 values to be sent to the server
-        guard let id = currentUser1?["id"], let text = postTextView.text else {
-            return
-        }
-        
-        // declaring keys and values to be sent to the server
-        let params = ["user_id": id, "text": text]
-        
-        // declaring URL and request
-        let url = URL(string: "http://localhost/fb/uploadPost.php")!
-        //let url = URL(string: "http://192.168.1.17/fb/uploadPost.php")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        
-        // web development and MIME Type of passing information to the web server
-        let boundary = "Boundary-\(NSUUID().uuidString)"
-        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        
-        // access / convert image to Data for sending to the server
-        var imageData = Data()
-        
-        //NEED TO DECIDE IF
-        
-        // if picture has been selected, compress the picture before sending to the server
-        if isPictureSelected {
-            imageData = pictureImageView.image!.jpegData(compressionQuality: 0.5)!
-            // building the full body along with the string, text, file parameters
-            request.httpBody = Helper().body(with: params, filename: "\(NSUUID().uuidString).jpg", filePathKey: "file", imageDataKey: imageData, boundary: boundary) as Data
-        } else if isVideoSelected {
-            imageData = videoURL!.dataRepresentation
-            // building the full body along with the string, text, file parameters
-            request.httpBody = Helper().body(with: params, filename: "\(NSUUID().uuidString).MOV", filePathKey: "file", imageDataKey: imageData, boundary: boundary) as Data
-        } else {
-            // building the full body along with the string, text, file parameters
-            request.httpBody = Helper().body(with: params, filename: "\(NSUUID().uuidString).jpg", filePathKey: "file", imageDataKey: imageData, boundary: boundary) as Data
-        }
-        
-        
-        
-        // run the session
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            DispatchQueue.main.async {
-                
-                // if error
-                if error != nil {
-                    Helper().showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
-                    return
-                }
-                
-                // access data / json
-                do {
-                
-                    // safe mode of accessing received data from the server
-                    guard let data = data else {
-                        Helper().showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
-                        return
-                    }
-                
-                    // converting data to JSON
-                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
-                    
-                    // safe mode of accessing / casting JSON
-                    guard let parsedJSON = json else {
-                        return
-                    }
-                    
-                    // if post is uploaded successfully -> come back to HomeVC, else -> show error message
-                    if parsedJSON["status"] as! String == "200" {
-                        
-                        // post notification in order to update the posts of the user in other viewControllers
-                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "uploadPost"), object: nil)
-                        
-                        // comeback
-                        self.dismiss(animated: true, completion: nil)
-                        
-                    } else {
-                        Helper().showAlert(title: "Error", message: parsedJSON["message"] as! String, in: self)
-                        return
-                    }
-                    
-                // error while accessing data / json
-                } catch {
-                    Helper().showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
-                    return
-                }
-                
-            }
-        }.resume()
+//        guard let id = currentUser1?["id"], let text = postTextView.text else {
+//            return
+//        }
+//
+//        // declaring keys and values to be sent to the server
+//        let params = ["user_id": id, "text": text]
+//
+//        // declaring URL and request
+//        let url = URL(string: "http://localhost/fb/uploadPost.php")!
+//        //let url = URL(string: "http://192.168.1.17/fb/uploadPost.php")!
+//        var request = URLRequest(url: url)
+//        request.httpMethod = "POST"
+//
+//        // web development and MIME Type of passing information to the web server
+//        let boundary = "Boundary-\(NSUUID().uuidString)"
+//        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+//
+//        // access / convert image to Data for sending to the server
+//        var imageData = Data()
+//
+//        //NEED TO DECIDE IF
+//
+//        // if picture has been selected, compress the picture before sending to the server
+//        if isPictureSelected {
+//            imageData = pictureImageView.image!.jpegData(compressionQuality: 0.5)!
+//            // building the full body along with the string, text, file parameters
+//            request.httpBody = Helper().body(with: params, filename: "\(NSUUID().uuidString).jpg", filePathKey: "file", imageDataKey: imageData, boundary: boundary) as Data
+//        } else if isVideoSelected {
+//            imageData = videoURL!.dataRepresentation
+//            // building the full body along with the string, text, file parameters
+//            request.httpBody = Helper().body(with: params, filename: "\(NSUUID().uuidString).MOV", filePathKey: "file", imageDataKey: imageData, boundary: boundary) as Data
+//        } else {
+//            // building the full body along with the string, text, file parameters
+//            request.httpBody = Helper().body(with: params, filename: "\(NSUUID().uuidString).jpg", filePathKey: "file", imageDataKey: imageData, boundary: boundary) as Data
+//        }
+//
+//
+//
+//        // run the session
+//        URLSession.shared.dataTask(with: request) { (data, response, error) in
+//            DispatchQueue.main.async {
+//
+//                // if error
+//                if error != nil {
+//                    Helper().showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
+//                    return
+//                }
+//
+//                // access data / json
+//                do {
+//
+//                    // safe mode of accessing received data from the server
+//                    guard let data = data else {
+//                        Helper().showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
+//                        return
+//                    }
+//
+//                    // converting data to JSON
+//                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
+//
+//                    // safe mode of accessing / casting JSON
+//                    guard let parsedJSON = json else {
+//                        return
+//                    }
+//
+//                    // if post is uploaded successfully -> come back to HomeVC, else -> show error message
+//                    if parsedJSON["status"] as! String == "200" {
+//
+//                        // post notification in order to update the posts of the user in other viewControllers
+//                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "uploadPost"), object: nil)
+//
+//                        // comeback
+//                        self.dismiss(animated: true, completion: nil)
+//
+//                    } else {
+//                        Helper().showAlert(title: "Error", message: parsedJSON["message"] as! String, in: self)
+//                        return
+//                    }
+//
+//                // error while accessing data / json
+//                } catch {
+//                    Helper().showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
+//                    return
+//                }
+//
+//            }
+//        }.resume()
         
         
     }

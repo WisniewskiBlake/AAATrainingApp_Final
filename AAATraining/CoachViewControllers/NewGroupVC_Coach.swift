@@ -106,9 +106,9 @@ class NewGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollecti
     
     func showIconOptions() {
 
-        let optionMenu = UIAlertController(title: "Choose group Icon", message: nil, preferredStyle: .actionSheet)
+        let optionMenu = UIAlertController(title: "Choose Group Icon", message: nil, preferredStyle: .actionSheet)
 
-        let takePhotoActio = UIAlertAction(title: "Take/Choose Photo", style: .default) { (alert) in
+        let takePhotoActio = UIAlertAction(title: "Choose Photo", style: .default) { (alert) in
 
             let imagePicker = ImagePickerController()
             imagePicker.delegate = self

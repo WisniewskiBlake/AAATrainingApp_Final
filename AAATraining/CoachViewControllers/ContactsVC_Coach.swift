@@ -23,6 +23,9 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     
     var allUsers: [FUser] = []
     
+    
+    var skip = 0
+    var limit = 25
     var users: [FUser] = []
     var matchedUsers: [FUser] = []
     var filteredMatchedUsers: [FUser] = []
@@ -134,7 +137,7 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
                    self.tableView.reloadData()
                }
                
-               self.tableView.reloadData()
+               //self.tableView.reloadData()
                ProgressHUD.dismiss()
                
            }
@@ -193,21 +196,21 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
         }
         
         
-        
-        cell.generateCellWith(fUser: user, indexPath: indexPath)
         cell.delegate = self
+        cell.generateCellWith(fUser: user, indexPath: indexPath)
+        
         
         return cell
     }
     
-//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//
-//        if searchController.isActive && searchController.searchBar.text != "" {
-//            return ""
-//        } else {
-//            return self.sectionTitleList[section]
-//        }
-//    }
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+
+        if searchController.isActive && searchController.searchBar.text != "" {
+            return ""
+        } else {
+            return self.sectionTitleList[section]
+        }
+    }
     
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         if searchController.isActive && searchController.searchBar.text != "" {
@@ -250,6 +253,8 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
             //group
             
             //checkmarks
+            let index = self.sectionTitleList[indexPath.section]
+            
             
             if let cell = tableView.cellForRow(at: indexPath) {
                 
