@@ -45,7 +45,7 @@ class CoachRegisterVC: UIViewController {
     let number = "123456789"
     var id: Any!
     var birthday: Any!
-    var cover: Any!
+    var cover = UIImage(named: "aaaCoverLogo1.png")
     
     
     var accountType = "2"
@@ -149,8 +149,10 @@ class CoachRegisterVC: UIViewController {
     @IBAction func passwordContinue_clicked(_ sender: Any) {
         
         let avatar = getAvatar()
+        let coverIMG = cover?.jpegData(compressionQuality: 0.7)
+        let coverData = coverIMG!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         
-        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "coach", birthday: "", cover: "", phoneNumber: phoneTextField.text!) { (error)  in
+        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "coach", birthday: "", cover: coverData, phoneNumber: phoneTextField.text!) { (error)  in
             
                             if error != nil {
                                 ProgressHUD.dismiss()
@@ -190,31 +192,6 @@ class CoachRegisterVC: UIViewController {
         // go to TabBar
         helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
