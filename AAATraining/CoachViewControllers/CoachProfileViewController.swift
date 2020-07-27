@@ -26,6 +26,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     
     var posts: [NSDictionary] = []
     var filteredPosts: [NSDictionary] = []
+    var allPostsGrouped = NSDictionary() as! [String : [Post]]
     var allPosts: [Post] = []
     
     let helper = Helper()
@@ -43,7 +44,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
 //        self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
         
         // add observers for notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(loadUser), name: NSNotification.Name(rawValue: "updateStats"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "createPost"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadUser), name: NSNotification.Name(rawValue: "updateUser"), object: nil)
         
@@ -65,15 +66,17 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        loadPosts()
         
+        
+        loadPosts()
+        tableView.tableFooterView = UIView()
         // hide navigation bar on Home Pagex
         navigationController?.setNavigationBarHidden(true, animated: true)
         
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        recentListener.remove()
+        //recentListener.remove()
     }
     
     // exec-d when new post is published
@@ -125,33 +128,70 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     
     // MARK: - Load Posts
     // loading posts from the server via@objc  PHP protocol
-    func loadPosts() {
+    @objc func loadPosts() {
         ProgressHUD.show()
-       recentListener = reference(.Post).whereField(kPOSTOWNERID, isEqualTo: FUser.currentId()).order(by: kPOSTDATE, descending: true).addSnapshotListener({ (snapshot, error) in
-           
-           
-           self.allPosts = []
         
-        guard let snapshot = snapshot else {  ProgressHUD.dismiss(); return }
-           
-           if !snapshot.isEmpty {
-               
-               
-               for postDictionary in snapshot.documents {
-                let postDictionary = postDictionary.data() as NSDictionary
-                   
-                   if postDictionary[kPOSTTEXT] as! String != "" {
-                       
-                       let post = Post(_dictionary: postDictionary)
-                           
-                           self.allPosts.append(post)
-                    }
-                }
-            self.tableView.reloadData()
+        var query: Query!
+        
+        query = reference(.Post).whereField(kPOSTOWNERID, isEqualTo: FUser.currentId()).order(by: kPOSTDATE, descending: true)
+        
+        query.getDocuments { (snapshot, error) in
+            self.allPosts = []
+            self.allPostsGrouped = [:]
+            
+            if error != nil {
+                print(error!.localizedDescription)
+                ProgressHUD.dismiss()
+                self.tableView.reloadData()
+                return
             }
-               
-              ProgressHUD.dismiss()
-        })
+            
+            guard let snapshot = snapshot else {
+                ProgressHUD.dismiss(); return
+            }
+            
+            if !snapshot.isEmpty {
+                
+                for postDictionary in snapshot.documents {
+                                let postDictionary = postDictionary.data() as NSDictionary
+                                let post = Post(_dictionary: postDictionary)
+                                   self.allPosts.append(post)
+                                    print(self.allPosts)
+                                    
+                }
+                self.tableView.reloadData()
+            
+            }
+            ProgressHUD.dismiss()
+        }
+        
+//        recentListener = reference(.Post).whereField(kPOSTOWNERID, isEqualTo: FUser.currentId()).order(by: kPOSTDATE, descending: true).addSnapshotListener({ (snapshot, error) in
+           
+           
+//           self.allPosts = []
+//            self.allPostsGrouped = [:]
+//
+//        guard let snapshot = snapshot else {  ProgressHUD.dismiss(); return }
+//
+//           if !snapshot.isEmpty {
+//
+//
+//               for postDictionary in snapshot.documents {
+//                let postDictionary = postDictionary.data() as NSDictionary
+//
+//                   if postDictionary[kPOSTTEXT] as! String != "" {
+//
+//                       let post = Post(_dictionary: postDictionary)
+//
+//                           self.allPosts.append(post)
+//                    print(self.allPosts)
+//                    }
+//                }
+//            self.tableView.reloadData()
+//            }
+//
+//              ProgressHUD.dismiss()
+//        })
 
        
         
@@ -183,64 +223,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         //showIconOptions()
     }
     
-   //MARK: HelperFunctions
    
-   func showIconOptions() {
-
-       let optionMenu = UIAlertController(title: "Choose Profile Picture", message: nil, preferredStyle: .actionSheet)
-
-       let takePhotoActio = UIAlertAction(title: "Choose Photo", style: .default) { (alert) in
-
-           let imagePicker = ImagePickerController()
-           imagePicker.delegate = self
-           imagePicker.imageLimit = 1
-
-           self.present(imagePicker, animated: true, completion: nil)
-       }
-
-       let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (alert) in
-
-       }
-
-       if profileIcon != nil {
-
-           let resetAction = UIAlertAction(title: "Reset", style: .default) { (alert) in
-
-               self.profileIcon = nil
-               self.avaImageView.image = UIImage(named: "user.png")
-               //self.editAvatarButtonOutlet.isHidden = true
-           }
-           optionMenu.addAction(resetAction)
-       }
-
-       optionMenu.addAction(takePhotoActio)
-       optionMenu.addAction(cancelAction)
-
-       if ( UI_USER_INTERFACE_IDIOM() == .pad )
-       {
-           if let currentPopoverpresentioncontroller = optionMenu.popoverPresentationController{
-
-//               currentPopoverpresentioncontroller.sourceView = editAvatarButtonOutlet
-//               currentPopoverpresentioncontroller.sourceRect = editAvatarButtonOutlet.bounds
-
-
-               currentPopoverpresentioncontroller.permittedArrowDirections = .up
-               self.present(optionMenu, animated: true, completion: nil)
-           }
-       } else {
-           self.present(optionMenu, animated: true, completion: nil)
-       }
-
-   }
     
-    
-    
-    
-    
-    
-    
-    
-
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -250,7 +234,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return posts.count
+        return allPosts.count
     }
     
     // heights of the cells
@@ -265,7 +249,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         var post: Post
         
         var date: Date!
-        
+        print(indexPath.row)
+        print(indexPath)
         post = allPosts[indexPath.row]
         
         date = helper.dateFormatter().date(from: post.date)
@@ -417,12 +402,19 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     // MARK: - Delete Posts
     // sends request to the server to delete the post
     @objc func deletePost(_ row: Int) {
+        let post = allPosts[row]
         
-        if let postID = posts[row][kPOSTID] {
-            
-            reference(.Post).document(postID as! String).delete()
-        }
-        self.posts.remove(at: row)
+        let postID = post.postID
+        
+                    reference(.Post).document(postID as! String).delete()
+                
+                self.allPosts.remove(at: row)
+        
+//        if let postID = allPosts[row][kPOSTID] {
+//
+//            reference(.Post).document(postID as! String).delete()
+//        }
+//        self.allPosts.remove(at: row)
         
         
         // remove the cell itself from the tableView
@@ -446,7 +438,55 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     }
     
 
-    
+    //MARK: HelperFunctions
+       
+       func showIconOptions() {
+
+           let optionMenu = UIAlertController(title: "Choose Profile Picture", message: nil, preferredStyle: .actionSheet)
+
+           let takePhotoActio = UIAlertAction(title: "Choose Photo", style: .default) { (alert) in
+
+               let imagePicker = ImagePickerController()
+               imagePicker.delegate = self
+               imagePicker.imageLimit = 1
+
+               self.present(imagePicker, animated: true, completion: nil)
+           }
+
+           let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (alert) in
+
+           }
+
+           if profileIcon != nil {
+
+               let resetAction = UIAlertAction(title: "Reset", style: .default) { (alert) in
+
+                   self.profileIcon = nil
+                   self.avaImageView.image = UIImage(named: "user.png")
+                   //self.editAvatarButtonOutlet.isHidden = true
+               }
+               optionMenu.addAction(resetAction)
+           }
+
+           optionMenu.addAction(takePhotoActio)
+           optionMenu.addAction(cancelAction)
+
+           if ( UI_USER_INTERFACE_IDIOM() == .pad )
+           {
+               if let currentPopoverpresentioncontroller = optionMenu.popoverPresentationController{
+
+    //               currentPopoverpresentioncontroller.sourceView = editAvatarButtonOutlet
+    //               currentPopoverpresentioncontroller.sourceRect = editAvatarButtonOutlet.bounds
+
+
+                   currentPopoverpresentioncontroller.permittedArrowDirections = .up
+                   self.present(optionMenu, animated: true, completion: nil)
+               }
+           } else {
+               self.present(optionMenu, animated: true, completion: nil)
+           }
+
+       }
     
     
 

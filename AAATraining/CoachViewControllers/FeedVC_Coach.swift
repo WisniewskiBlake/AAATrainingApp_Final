@@ -119,6 +119,7 @@ class FeedVC_Coach: UITableViewController {
                         let post = Post(_dictionary: userDictionary)
                            
                            self.allPosts.append(post)
+                        print(self.allPosts)
                        }
                        self.tableView.reloadData()
                     

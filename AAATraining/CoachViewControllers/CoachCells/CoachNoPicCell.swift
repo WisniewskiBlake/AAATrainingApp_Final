@@ -18,6 +18,7 @@ class CoachNoPicCell: UITableViewCell {
     @IBOutlet weak var optionsButton: UIButton!
     
     
+    var indexPath: IndexPath!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,6 +32,26 @@ class CoachNoPicCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func generateCellWith(post: Post, indexPath: IndexPath) {
+        let helper = Helper()
+        self.indexPath = indexPath
+        
+        self.fullnameLabel.text = post.postUserName
+        self.dateLabel.text = post.date
+        self.postTextLabel.text = post.text
+        
+        if post.postUserAva != "" {
+            
+            helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
+                
+                if avatarImage != nil {
+                    self.avaImageView.image = avatarImage!.circleMasked
+                }
+            }
+        }
+        
     }
 
 }

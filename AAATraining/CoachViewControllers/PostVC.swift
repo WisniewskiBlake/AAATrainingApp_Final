@@ -26,6 +26,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
             let post = Post(postID: postID, ownerID: FUser.currentId(), text: postTextView.text, picture: "", date: "", postUserAva: FUser.currentUser()!.ava, postUserName: fullName)
             
             post.savePost()
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createPost"), object: nil)
         }
     }
     
