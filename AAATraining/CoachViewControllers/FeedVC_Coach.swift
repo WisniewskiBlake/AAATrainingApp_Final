@@ -11,6 +11,7 @@ import MediaPlayer
 import ImagePicker
 import Firebase
 import FirebaseFirestore
+import ProgressHUD
 
 class FeedVC_Coach: UITableViewController {
     
@@ -27,6 +28,8 @@ class FeedVC_Coach: UITableViewController {
     
     var lastNames : [String] = []
  
+    let helper = Helper()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,15 +75,45 @@ class FeedVC_Coach: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        loadPosts()
        
         navigationController?.setNavigationBarHidden(true, animated: true)
 
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        recentListener.remove()
     }
     
     
     // MARK: - Load Posts
     
     @objc func loadPosts() {
+        ProgressHUD.show()
+        
+        recentListener = reference(.Post).addSnapshotListener({ (snapshot, error) in
+                   let helper = Helper()
+                   guard let snapshot = snapshot else { return }
+                   
+                   self.posts = []
+                   
+                   if !snapshot.isEmpty {
+                       
+                       let sorted = ((helper.dictionaryFromSnapshots(snapshots: snapshot.documents)) as NSArray).sortedArray(using: [NSSortDescriptor(key: kPOSTDATE, ascending: false)]) as! [NSDictionary]
+                       
+                       for recent in sorted {
+                           
+                           if recent[kPOSTTEXT] as! String != "" {
+                               
+                               self.posts.append(recent)
+                                print(recent)
+                           }
+      
+                       }
+                       self.tableView.reloadData()
+                   }
+
+               })
         
     }
     
