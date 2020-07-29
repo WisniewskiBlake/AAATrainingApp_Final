@@ -154,6 +154,11 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         
     }
     
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+    }
+    
+    
     
     
 
