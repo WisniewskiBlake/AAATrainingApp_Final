@@ -1517,6 +1517,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="cc0-1y-0MC" kind="relationship" relationship="viewControllers" id="ge4-wA-y2D"/>
+                        <segue destination="ykj-w3-fMi" kind="relationship" relationship="viewControllers" id="dyh-uU-6Sa"/>
                         <segue destination="wZc-wg-aaS" kind="relationship" relationship="viewControllers" id="V8t-7e-Kcx"/>
                         <segue destination="uKg-ky-hnP" kind="relationship" relationship="viewControllers" id="MVu-Ak-Fn7"/>
                         <segue destination="alf-MY-Jyr" kind="relationship" relationship="viewControllers" id="RRA-jM-C7I"/>
@@ -1781,7 +1782,23 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CFj-yB-s0x" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4588" y="-2484"/>
+            <point key="canvasLocation" x="4588" y="-3079"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="EHF-fk-EYM">
+            <objects>
+                <viewController id="tCe-Kh-oC2" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="IAF-hz-fjJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="xsQ-Yv-2Jm"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="9ox-Ly-2Fj"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JGO-GA-skj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4588" y="-2375"/>
         </scene>
         <!--Chats-->
         <scene sceneID="6hW-az-6Ff">
@@ -2490,14 +2507,6 @@
                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hYE-bZ-Luy">
-                                <rect key="frame" x="265" y="82" width="90" height="33"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="16"/>
-                                <state key="normal" title="Add Pic/Vid"/>
-                                <connections>
-                                    <action selector="addPicture_clicked:" destination="41R-QL-2o6" eventType="touchUpInside" id="uy1-pv-jii"/>
-                                </connections>
-                            </button>
                             <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pxq-WT-FBV">
                                 <rect key="frame" x="20" y="271" width="335" height="276"/>
                                 <gestureRecognizers/>
@@ -2505,7 +2514,6 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="JLh-Kz-aJs" firstAttribute="trailing" secondItem="hYE-bZ-Luy" secondAttribute="trailing" constant="20" id="0jY-w5-V3v"/>
                             <constraint firstItem="7Fn-Fh-X2f" firstAttribute="leading" secondItem="s64-lb-SY3" secondAttribute="trailing" constant="-202" id="KZw-CA-zof"/>
                             <constraint firstItem="pxq-WT-FBV" firstAttribute="top" secondItem="7Fn-Fh-X2f" secondAttribute="bottom" constant="8" id="NPH-QF-4GB"/>
                             <constraint firstItem="JLh-Kz-aJs" firstAttribute="bottom" secondItem="pxq-WT-FBV" secondAttribute="bottom" constant="100" id="Omm-8u-VeJ"/>
@@ -2518,7 +2526,6 @@
                             <constraint firstItem="cpD-Sm-ox3" firstAttribute="top" secondItem="JLh-Kz-aJs" secondAttribute="top" constant="17" id="cnu-KW-rPR"/>
                             <constraint firstItem="pxq-WT-FBV" firstAttribute="leading" secondItem="JLh-Kz-aJs" secondAttribute="leading" constant="20" id="pwA-ep-98r"/>
                             <constraint firstItem="JLh-Kz-aJs" firstAttribute="trailing" secondItem="pxq-WT-FBV" secondAttribute="trailing" constant="20" id="qoo-NL-Zyy"/>
-                            <constraint firstItem="hYE-bZ-Luy" firstAttribute="centerY" secondItem="iWW-rh-oYR" secondAttribute="centerY" id="sT5-aZ-jz4"/>
                             <constraint firstItem="cpD-Sm-ox3" firstAttribute="leading" secondItem="JLh-Kz-aJs" secondAttribute="leading" constant="20" id="uSQ-c7-e8e"/>
                             <constraint firstItem="s64-lb-SY3" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pNJ-YM-K6E" secondAttribute="leading" constant="20" symbolic="YES" id="vGb-If-Zj9"/>
                         </constraints>
@@ -3006,7 +3013,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DGb-JC-goB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3889" y="-2484"/>
+            <point key="canvasLocation" x="3889" y="-3078"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vwk-wG-tHM">
@@ -3147,6 +3154,27 @@
             </objects>
             <point key="canvasLocation" x="7273" y="-1012"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="15J-wG-SP4">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ykj-w3-fMi" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="calendar.circle" catalog="system" selectedImage="calendar.circle.fill" id="vk5-vb-uvK">
+                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-3"/>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="QLf-Go-g6I">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="tCe-Kh-oC2" kind="relationship" relationship="rootViewController" id="J5Q-KG-Mmw"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f8o-8R-PrY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3889" y="-2375"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Edit.png" width="150" height="150"/>
@@ -3158,6 +3186,8 @@
         <image name="aaahockeysilhouette.png" width="220" height="229"/>
         <image name="avatarPlaceholder" width="101" height="101"/>
         <image name="back" width="25" height="25"/>
+        <image name="calendar.circle" catalog="system" width="128" height="121"/>
+        <image name="calendar.circle.fill" catalog="system" width="128" height="121"/>
         <image name="cancel" width="25" height="25"/>
         <image name="chat" width="25" height="25"/>
         <image name="feed" width="25" height="25"/>

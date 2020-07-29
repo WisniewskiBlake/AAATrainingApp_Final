@@ -32,6 +32,8 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     var allUsersGrouped = NSDictionary() as! [String : [FUser]]
     var sectionTitleList: [String] = []
     
+    var intArray: [Int] = []
+    
     var isGroup = true
     var memberIdsOfGroupChat: [String] = []
     var membersOfGroupChat: [FUser] = []
@@ -179,7 +181,12 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! RosterCell_Coach
-
+        
+        //if intArray doesnt contain the cell tag appended in did select row at, then set the accessory type to none
+        
+//        if !intArray.contains(cell.tag) {
+//            cell.accessoryType = .none
+//        }
         
         var user: FUser
         
@@ -199,8 +206,58 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
         cell.delegate = self
         cell.generateCellWith(fUser: user, indexPath: indexPath)
         
+        cell.tag = indexPath.row
         
         return cell
+    }
+    
+    //MARK: TableViewDelegate
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let sectionTitle = self.sectionTitleList[indexPath.section]
+        let userToChat : FUser
+        
+        if searchController.isActive && searchController.searchBar.text != "" {
+            
+            userToChat = filteredMatchedUsers[indexPath.row]
+        } else {
+          let users = self.allUsersGrouped[sectionTitle]
+            
+            userToChat = users![indexPath.row]
+        }
+            if let cell = tableView.cellForRow(at: indexPath) {
+                let tag = cell.tag
+                intArray.append(tag)
+                if cell.accessoryType == .checkmark {
+                    cell.accessoryType = .none
+                } else {
+                    cell.accessoryType = .checkmark
+                }
+            }
+        //appendCheckMark(cell: tableView, row: <#T##Int#>)
+            
+            //add/remove user from the array
+            
+            let selected = memberIdsOfGroupChat.contains(userToChat.objectId)
+            
+            
+            if selected {
+                let objectIndex = memberIdsOfGroupChat.firstIndex(of: userToChat.objectId)
+                
+                memberIdsOfGroupChat.remove(at: objectIndex!)
+                membersOfGroupChat.remove(at: objectIndex!)
+            } else {
+                
+                memberIdsOfGroupChat.append(userToChat.objectId)
+                membersOfGroupChat.append(userToChat)
+            }
+            
+            self.navigationItem.rightBarButtonItem?.isEnabled = memberIdsOfGroupChat.count > 0
+        
+        
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -225,63 +282,9 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
         return index
     }
     
-    //MARK: TableViewDelegate
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        let sectionTitle = self.sectionTitleList[indexPath.section]
-        let userToChat : FUser
-        
-        if searchController.isActive && searchController.searchBar.text != "" {
-            
-            userToChat = filteredMatchedUsers[indexPath.row]
-        } else {
-          let users = self.allUsersGrouped[sectionTitle]
-            
-            userToChat = users![indexPath.row]
-        }
-        
-        if !isGroup {
-            //1 on 1 chat
-            
-            
-           
-            
-        } else {
-            //group
-            
-            //checkmarks
-            let index = self.sectionTitleList[indexPath.section]
-            
-            
-            if let cell = tableView.cellForRow(at: indexPath) {
-                
-                if cell.accessoryType == .checkmark {
-                    cell.accessoryType = .none
-                } else {
-                    cell.accessoryType = .checkmark
-                }
-            }
-            
-            //add/remove user from the array
-            
-            let selected = memberIdsOfGroupChat.contains(userToChat.objectId)
-            
-            
-            if selected {
-                let objectIndex = memberIdsOfGroupChat.firstIndex(of: userToChat.objectId)
-                
-                memberIdsOfGroupChat.remove(at: objectIndex!)
-                membersOfGroupChat.remove(at: objectIndex!)
-            } else {
-                memberIdsOfGroupChat.append(userToChat.objectId)
-                membersOfGroupChat.append(userToChat)
-            }
-            
-            self.navigationItem.rightBarButtonItem?.isEnabled = memberIdsOfGroupChat.count > 0
-        }
+    
+    func appendCheckMark(cell: UITableViewCell, row: Int) {
         
     }
     
