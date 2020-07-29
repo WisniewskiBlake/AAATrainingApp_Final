@@ -19,6 +19,7 @@
 		B70EDF1824D1270500CC21F5 /* Event_Coach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70EDF1724D1270500CC21F5 /* Event_Coach.swift */; };
 		B70EDF1A24D13EF500CC21F5 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70EDF1924D13EF400CC21F5 /* Event.swift */; };
 		B70EDF1C24D1798E00CC21F5 /* UserTypeSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70EDF1B24D1798D00CC21F5 /* UserTypeSelectionVC.swift */; };
+		B70EDF1F24D1A5AA00CC21F5 /* ParentRegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70EDF1E24D1A5A900CC21F5 /* ParentRegisterVC.swift */; };
 		B7342CDC24C41295000C24D3 /* FUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7342CDB24C41295000C24D3 /* FUser.swift */; };
 		B7342CDE24C4130C000C24D3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7342CDD24C4130C000C24D3 /* Constants.swift */; };
 		B7342CE224C419FF000C24D3 /* CollectionReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7342CE124C419FF000C24D3 /* CollectionReference.swift */; };
@@ -113,6 +114,7 @@
 		B70EDF1724D1270500CC21F5 /* Event_Coach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event_Coach.swift; sourceTree = "<group>"; };
 		B70EDF1924D13EF400CC21F5 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		B70EDF1B24D1798D00CC21F5 /* UserTypeSelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTypeSelectionVC.swift; sourceTree = "<group>"; };
+		B70EDF1E24D1A5A900CC21F5 /* ParentRegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentRegisterVC.swift; sourceTree = "<group>"; };
 		B7342CDB24C41295000C24D3 /* FUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FUser.swift; sourceTree = "<group>"; };
 		B7342CDD24C4130C000C24D3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B7342CE124C419FF000C24D3 /* CollectionReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionReference.swift; sourceTree = "<group>"; };
@@ -242,6 +244,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		B70EDF1D24D1A58800CC21F5 /* ParentViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				B70EDF1E24D1A5A900CC21F5 /* ParentRegisterVC.swift */,
+			);
+			path = ParentViewControllers;
+			sourceTree = "<group>";
+		};
 		B75AD62E24CA93FB00DCC857 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,8 +319,9 @@
 		B7F18C6224970084009BFA17 /* AAATraining */ = {
 			isa = PBXGroup;
 			children = (
-				B75AD62E24CA93FB00DCC857 /* Helpers */,
+				B70EDF1D24D1A58800CC21F5 /* ParentViewControllers */,
 				B7C3BDFD24BC630C00086C27 /* fonts */,
+				B75AD62E24CA93FB00DCC857 /* Helpers */,
 				B70EDF1224CEAA4800CC21F5 /* Model */,
 				B7F8AFF224B6965100B315FD /* MutualControllers */,
 				B7F8AFED24A4B3AF00B315FD /* CoachViewControllers */,
@@ -694,6 +705,7 @@
 				B75AD64624CAEC7A00DCC857 /* BackgroundCollectionVC.swift in Sources */,
 				B70EDF1624D120C800CC21F5 /* Calendar_Coach.swift in Sources */,
 				B75AD63024CA945E00DCC857 /* IncomingMessages.swift in Sources */,
+				B70EDF1F24D1A5AA00CC21F5 /* ParentRegisterVC.swift in Sources */,
 				B70EDF1424CEAA6E00CC21F5 /* Post.swift in Sources */,
 				B7C3BDF824BB08D200086C27 /* CoachNoPicCell.swift in Sources */,
 				B70EDF0224CD3BC500CC21F5 /* MapViewController.swift in Sources */,

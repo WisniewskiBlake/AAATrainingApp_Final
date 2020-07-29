@@ -26,6 +26,7 @@ class UserTypeSelectionVC: UIViewController {
     var selectedButton = UIButton()
     var dataSource = [String]()
     var cellText = "Select Here"
+    var viewToGoTo = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,15 +41,48 @@ class UserTypeSelectionVC: UIViewController {
     }
     
     @IBAction func nextButtonPressed(_ sender: Any) {
+        if viewToGoTo == "PlayerRegister" {
+            let pRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PlayerRegister") as! RegisterVC
+            
+            
+            self.navigationController?.pushViewController(pRegisterVC, animated: true)
+        } else if viewToGoTo == "ParentRegister" {
+            let newGroupVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newGroupView") as! NewGroupVC_Coach
+            
+            
+            self.navigationController?.pushViewController(newGroupVC, animated: true)
+        } else if viewToGoTo == "CoachRegister" {
+            let cRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoachRegister") as! CoachRegisterVC
+            
+            
+            self.navigationController?.pushViewController(cRegisterVC, animated: true)
+        }
     }
     
     @IBAction func backButtonPressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func checkButtonText() {
+        if cellText == "Select Here" {
+            Helper().showAlert(title: "Error", message: "Please select a stat", in: self)
+        } else if cellText == "Player" {
+            nextButton.isEnabled = true
+            viewToGoTo = "PlayerRegister"
+        } else if cellText == "Parent" {
+            nextButton.isEnabled = true
+            viewToGoTo = "ParentRegister"
+        } else if cellText == "Coach" {
+            nextButton.isEnabled = true
+            viewToGoTo = "CoachRegister"
+        }
     }
     
     @IBAction func userTypeButtonPressed(_ sender: Any) {
         dataSource = ["Player", "Parent", "Coach"]
         selectedButton = accountTypeButton
         addTransparentView(frames: accountTypeButton.frame)
+        checkButtonText()
     }
     
     func addTransparentView(frames: CGRect) {
