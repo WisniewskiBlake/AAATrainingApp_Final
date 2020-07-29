@@ -28,6 +28,9 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
             post.savePost()
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createPost"), object: nil)
         }
+        else {
+            Helper().showAlert(title: "Data Error", message: "Please fill in info.", in: self)
+        }
     }
     
     

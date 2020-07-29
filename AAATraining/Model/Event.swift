@@ -60,7 +60,7 @@ public class Event {
         
     }
 
-    func savePost() {
+    func saveEvent() {
         
         reference(.Event).document(eventDictionary[kEVENTID] as! String).setData(eventDictionary as! [String:Any])
     }

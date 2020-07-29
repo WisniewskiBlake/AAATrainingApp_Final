@@ -8,19 +8,60 @@
 
 import UIKit
 import FSCalendar
+import Firebase
+import FirebaseFirestore
+import ProgressHUD
 
 class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance {
     
     @IBOutlet var calendar: FSCalendar!
+    
+    var allEvents: [Event] = []
+    var recentListener: ListenerRegistration!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         calendar.delegate = self
+        loadEvents()
     }
     
-    func loadEvents() {
-        
+    // pre-load func
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+       loadEvents()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        recentListener.remove()
+    }
+    
+    @objc func loadEvents() {
+        ProgressHUD.show()
+        recentListener = reference(.Event).addSnapshotListener({ (snapshot, error) in
+                           
+            self.allEvents = []
+                        
+            if error != nil {
+                print(error!.localizedDescription)
+                ProgressHUD.dismiss()
+                self.calendar.reloadData()
+                return
+            }
+            guard let snapshot = snapshot else { ProgressHUD.dismiss(); return }
+                   
+            if !snapshot.isEmpty {
+                for eventDictionary in snapshot.documents {
+                    
+                   let eventDictionary = eventDictionary.data() as NSDictionary
+                   let event = Event(_dictionary: eventDictionary)
+                   self.allEvents.append(event)
+                
+               }
+               self.calendar.reloadData()
+            
+           }
+            ProgressHUD.dismiss()
+        })
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
@@ -35,7 +76,20 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     }
     
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
-        return UIColor.red
+        calendar.formatter.dateFormat = "EEEE, MM-dd-YYYY"
+        //let dateString: String = calendar.stringFromDate(date, format: "EEEE, yyyy-MM-dd")
+        let dateString = calendar.formatter.string(from: date)
+        
+        for event in allEvents {
+            if event.eventDate == dateString {
+                return UIColor.red
+            } else {
+                return nil
+            }
+            
+        }
+                
+        return nil
     }
     
 
