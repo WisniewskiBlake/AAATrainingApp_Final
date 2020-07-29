@@ -18,9 +18,11 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
     var allEvents: [Event] = []
     var recentListener: ListenerRegistration!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "createEvent"), object: nil)
 
         calendar.delegate = self
         loadEvents()
@@ -65,19 +67,29 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        calendar.formatter.dateFormat = "EEEE, MM-dd-YYYY"
+        let dateString = calendar.formatter.string(from: date)
         
         let eventVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as! Event_Coach
         let navController = UINavigationController(rootViewController: eventVC)
         
+        for event in allEvents {
+            if event.eventDate == dateString {
+                eventVC.eventText = event.eventText
+                eventVC.updateNeeded = true
+            } else {
+                eventVC.eventText = ""
+            }
+        }
+        
         eventVC.hidesBottomBarWhenPushed = true
-        eventVC.date = date
+        eventVC.dateString = dateString
         
         self.navigationController?.present(navController, animated: true, completion: nil)
     }
     
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
         calendar.formatter.dateFormat = "EEEE, MM-dd-YYYY"
-        //let dateString: String = calendar.stringFromDate(date, format: "EEEE, yyyy-MM-dd")
         let dateString = calendar.formatter.string(from: date)
         
         for event in allEvents {
@@ -86,7 +98,6 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
             } else {
                 return nil
             }
-            
         }
                 
         return nil

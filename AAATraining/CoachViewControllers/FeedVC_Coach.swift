@@ -105,13 +105,9 @@ class FeedVC_Coach: UITableViewController {
                 return
             }
                    guard let snapshot = snapshot else { ProgressHUD.dismiss(); return }
-                   
-//                   self.posts = []
-                   
+
                    if !snapshot.isEmpty {
-                       
-//                       let sorted = ((helper.dictionaryFromSnapshots(snapshots: snapshot.documents)) as NSArray).sortedArray(using: [NSSortDescriptor(key: kPOSTDATE, ascending: false)]) as! [NSDictionary]
-                       
+
                        for userDictionary in snapshot.documents {
                            
                            let userDictionary = userDictionary.data() as NSDictionary

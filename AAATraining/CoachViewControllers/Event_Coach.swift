@@ -20,17 +20,25 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var placeHolderLabel: UILabel!
     
-    var date = Date()
+    var dateString: String = ""
     let formatter = DateFormatter()
     let helper = Helper()
+    var eventText: String = ""
+    var updateNeeded: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        formatter.dateFormat = "EEEE, MM-dd-YYYY"
-        //formatter.dateFormat = "MM-dd-YYYY"
-        let string = formatter.string(from: date)
-        dateLabel.text = string
+//        formatter.dateFormat = "EEEE, MM-dd-YYYY"
+//        //formatter.dateFormat = "MM-dd-YYYY"
+//        let string = formatter.string(from: date)
+        dateLabel.text = dateString
+        textView.text = eventText
+        if eventText != "" {
+            placeHolderLabel.isHidden = true
+        } else {
+            placeHolderLabel.isHidden = true
+        }
     }
     
     func createEvent() {
@@ -38,8 +46,8 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         let eventID = UUID().uuidString
         let eventOwnerID = FUser.currentId()
         let eventAccountType = FUser.currentUser()?.accountType
-        let eventDate = helper.dateFormatter().string(from: Date())
-        let event = Event(eventID: eventID, eventOwnerID: eventOwnerID, eventText: eventText!, eventDate: dateLabel.text!, eventAccountType: eventAccountType!)
+        //let eventDate = helper.dateFormatter().string(from: Date())
+        let event = Event(eventID: eventID, eventOwnerID: eventOwnerID, eventText: eventText!, eventDate: dateString, eventAccountType: eventAccountType!)
         
         event.saveEvent()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
