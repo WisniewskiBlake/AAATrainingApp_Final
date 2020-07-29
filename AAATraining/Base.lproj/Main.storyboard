@@ -1787,7 +1787,7 @@
         <!--Calendar-->
         <scene sceneID="EHF-fk-EYM">
             <objects>
-                <viewController id="tCe-Kh-oC2" sceneMemberID="viewController">
+                <viewController id="tCe-Kh-oC2" customClass="Calendar_Coach" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IAF-hz-fjJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1809,6 +1809,9 @@
                         <viewLayoutGuide key="safeArea" id="xsQ-Yv-2Jm"/>
                     </view>
                     <navigationItem key="navigationItem" title="Calendar" id="9ox-Ly-2Fj"/>
+                    <connections>
+                        <outlet property="calendar" destination="HAZ-ud-SBX" id="dDF-Ve-xiz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JGO-GA-skj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
