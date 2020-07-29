@@ -10,77 +10,63 @@ import Foundation
 import Firebase
 
 public class Event {
-    var postID: String
-    var ownerID: String
-    var text: String
-    var picture: String
-    var date: String
-    var postUserAva: String
-    var postUserName: String
+    var eventID: String
+    var eventOwnerID: String
+    var eventText: String
+    var eventDate: String
+    var eventAccountType: String
     
-    let postDictionary: NSMutableDictionary
+    
+    
+    let eventDictionary: NSMutableDictionary
 
-    init(postID: String, ownerID: String, text: String, picture: String, date: String, postUserAva: String, postUserName: String) {
+    init(eventID: String, eventOwnerID: String, eventText: String, eventDate: String, eventAccountType: String) {
 
-        postDictionary = NSMutableDictionary(objects: [postID, ownerID, text, picture, postUserAva, postUserName], forKeys: [kPOSTID as NSCopying, kPOSTOWNERID as NSCopying, kPOSTTEXT as NSCopying, kPOSTPICTURE as NSCopying, kPOSTUSERAVA as NSCopying, kPOSTUSERNAME as NSCopying])
+        eventDictionary = NSMutableDictionary(objects: [eventID, eventOwnerID, eventText, eventDate, eventAccountType], forKeys: [kEVENTID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying])
         
-        self.postID = postID
-        self.ownerID = ownerID
-        self.text = text
-        self.picture = picture
-        self.date = date
-        self.postUserAva = postUserAva
-        self.postUserName = postUserName
+        self.eventID = eventID
+        self.eventOwnerID = eventOwnerID
+        self.eventText = eventText
+        self.eventDate = eventDate
+        self.eventAccountType = eventAccountType
+        
     }
     
     init(_dictionary: NSDictionary) {
         
-        
        //let helper = Helper()
-       postID = _dictionary[kPOSTID] as! String
-        ownerID = _dictionary[kOWNERID] as! String
+       eventID = _dictionary[kEVENTID] as! String
+       eventOwnerID = _dictionary[kEVENTOWNERID] as! String
        
        
-       if let fname = _dictionary[kPOSTUSERNAME] {
-           postUserName = fname as! String
+       if let txt = _dictionary[kEVENTTEXT] {
+           eventText = txt as! String
        } else {
-           postUserName = ""
+           eventText = ""
        }
-       if let txt = _dictionary[kPOSTTEXT] {
-           text = txt as! String
+       if let dte = _dictionary[kEVENTDATE] {
+           eventDate = dte as! String
        } else {
-           text = ""
+           eventDate = ""
        }
-       if let pic = _dictionary[kPOSTPICTURE] {
-           picture = pic as! String
+       if let accT = _dictionary[kEVENTACCOUNTTYPE] {
+           eventAccountType = accT as! String
        } else {
-           picture = ""
+           eventAccountType = ""
        }
-       if let dt = _dictionary[kPOSTDATE] {
-           date = dt as! String
-       } else {
-           date = ""
-       }
-        if let ava = _dictionary[kPOSTUSERAVA] {
-            postUserAva = ava as! String
-        } else {
-            postUserAva = ""
-        }
+       
         
-        postDictionary = NSMutableDictionary(objects: [postID, ownerID, text, picture, postUserAva, postUserName], forKeys: [kPOSTID as NSCopying, kPOSTOWNERID as NSCopying, kPOSTTEXT as NSCopying, kPOSTPICTURE as NSCopying, kPOSTUSERAVA as NSCopying, kPOSTUSERNAME as NSCopying])
+        eventDictionary = NSMutableDictionary(objects: [eventID, eventOwnerID, eventText, eventDate, eventAccountType], forKeys: [kEVENTID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying])
         
     }
 
     func savePost() {
-        let helper = Helper()
-
-        let date = helper.dateFormatter().string(from: Date())
-        postDictionary[kPOSTDATE] = date
-        reference(.Post).document(postDictionary[kPOSTID] as! String).setData(postDictionary as! [String:Any])
+        
+        reference(.Event).document(eventDictionary[kEVENTID] as! String).setData(eventDictionary as! [String:Any])
     }
 
     public func updatePost(postID: String, withValues: [String:Any]) {
-        reference(.Post).document(postID).updateData(withValues)
+        reference(.Event).document(eventID).updateData(withValues)
         
         
     }

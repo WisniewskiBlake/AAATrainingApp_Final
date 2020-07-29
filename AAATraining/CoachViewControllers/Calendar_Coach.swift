@@ -19,6 +19,10 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         calendar.delegate = self
     }
     
+    func loadEvents() {
+        
+    }
+    
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         
         let eventVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as! Event_Coach
@@ -28,6 +32,10 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         eventVC.date = date
         
         self.navigationController?.present(navController, animated: true, completion: nil)
+    }
+    
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
+        return UIColor.red
     }
     
 
