@@ -23,6 +23,12 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     var sectionTitleList : [String] = []
     var userListener: ListenerRegistration!
     
+    var isLoading = false
+    let helper = Helper()
+    var skip = 0
+    var limit = 10
+    
+    
     let searchController = UISearchController(searchResultsController: nil)
     
     @IBAction func filterSegmentValueChanged(_ sender: UISegmentedControl) {
@@ -59,7 +65,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     }
     
     func loadUsers(filter: String) {
-           
+           isLoading = true
            ProgressHUD.show()
            
            var query: Query!
@@ -83,11 +89,15 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
                if error != nil {
                    print(error!.localizedDescription)
                    ProgressHUD.dismiss()
+                self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
+                    self.isLoading = false
                    self.tableView.reloadData()
                    return
                }
                
                guard let snapshot = snapshot else {
+                self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
+                self.isLoading = false
                    ProgressHUD.dismiss(); return
                }
                
@@ -107,7 +117,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
                    self.splitDataIntoSection()
                    self.tableView.reloadData()
                }
-               
+               self.isLoading = false
                self.tableView.reloadData()
                ProgressHUD.dismiss()
                
@@ -155,7 +165,15 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
+        // load more posts when the scroll is about to reach the bottom AND currently is not loading (posts)
+        //print("Called")
+                let a = tableView.contentOffset.y - tableView.contentSize.height + 60
+                let b = -tableView.frame.height
+                
+                if a > b && isLoading == false {
+                    //loadMore(offset: skip, limit: limit)
+                    //print("Scrolled")
+                }
     }
     
     
