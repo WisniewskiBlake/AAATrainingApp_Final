@@ -19,6 +19,15 @@ public class Event {
     
     
     let eventDictionary: NSMutableDictionary
+    
+    init() {
+        eventID = ""
+        eventOwnerID = ""
+        eventText = ""
+        eventDate = ""
+        eventAccountType = ""
+        eventDictionary = NSMutableDictionary(objects: [eventID, eventOwnerID, eventText, eventDate, eventAccountType], forKeys: [kEVENTID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying])
+    }
 
     init(eventID: String, eventOwnerID: String, eventText: String, eventDate: String, eventAccountType: String) {
 
@@ -65,7 +74,7 @@ public class Event {
         reference(.Event).document(eventDictionary[kEVENTID] as! String).setData(eventDictionary as! [String:Any])
     }
 
-    public func updatePost(postID: String, withValues: [String:Any]) {
+    public func updateEvent(eventID: String, withValues: [String:Any]) {
         reference(.Event).document(eventID).updateData(withValues)
         
         

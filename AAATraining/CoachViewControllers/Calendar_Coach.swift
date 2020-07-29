@@ -18,11 +18,13 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
     var allEvents: [Event] = []
     var recentListener: ListenerRegistration!
+    var allEventDates: [String] = []
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "createEvent"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
 
         calendar.delegate = self
         loadEvents()
@@ -42,6 +44,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         recentListener = reference(.Event).addSnapshotListener({ (snapshot, error) in
                            
             self.allEvents = []
+            self.allEventDates = []
                         
             if error != nil {
                 print(error!.localizedDescription)
@@ -57,11 +60,13 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                    let eventDictionary = eventDictionary.data() as NSDictionary
                    let event = Event(_dictionary: eventDictionary)
                    self.allEvents.append(event)
+                    self.allEventDates.append(event.eventDate)
                 
                }
                self.calendar.reloadData()
             
            }
+            self.calendar.reloadData()
             ProgressHUD.dismiss()
         })
     }
@@ -75,8 +80,10 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         
         for event in allEvents {
             if event.eventDate == dateString {
-                eventVC.eventText = event.eventText
+                //eventVC.eventText = event.eventText
                 eventVC.updateNeeded = true
+                eventVC.eventID = event.eventID                
+                eventVC.event = event
             } else {
                 eventVC.eventText = ""
             }
@@ -92,15 +99,15 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         calendar.formatter.dateFormat = "EEEE, MM-dd-YYYY"
         let dateString = calendar.formatter.string(from: date)
         
-        for event in allEvents {
-            if event.eventDate == dateString {
-                return UIColor.red
-            } else {
-                return nil
-            }
+
+        
+        if allEventDates.contains(dateString) {
+            return UIColor.red
+        } else {
+            return nil
         }
-                
-        return nil
+        
+
     }
     
 

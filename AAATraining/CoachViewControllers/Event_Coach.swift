@@ -19,39 +19,70 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var placeHolderLabel: UILabel!
+    @IBOutlet weak var deleteButton: UIButton!
+    
     
     var dateString: String = ""
     let formatter = DateFormatter()
     let helper = Helper()
     var eventText: String = ""
     var updateNeeded: Bool = false
+    var eventID: String = ""
+    var event = Event()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        cornerRadius(for: deleteButton)
 
-//        formatter.dateFormat = "EEEE, MM-dd-YYYY"
-//        //formatter.dateFormat = "MM-dd-YYYY"
-//        let string = formatter.string(from: date)
         dateLabel.text = dateString
-        textView.text = eventText
-        if eventText != "" {
+        textView.text = event.eventText
+        if event.eventText != "" {
             placeHolderLabel.isHidden = true
         } else {
-            placeHolderLabel.isHidden = true
+            placeHolderLabel.isHidden = false
+        }
+        if updateNeeded == true {
+            deleteButton.isHidden = false
+            self.navigationItem.rightBarButtonItem?.title = "Update"
+        } else {
+            deleteButton.isHidden = true
         }
     }
     
     func createEvent() {
         let eventText = textView.text
-        let eventID = UUID().uuidString
-        let eventOwnerID = FUser.currentId()
-        let eventAccountType = FUser.currentUser()?.accountType
-        //let eventDate = helper.dateFormatter().string(from: Date())
-        let event = Event(eventID: eventID, eventOwnerID: eventOwnerID, eventText: eventText!, eventDate: dateString, eventAccountType: eventAccountType!)
         
-        event.saveEvent()
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
+        if updateNeeded == true {
+//            let eventOwnerID = FUser.currentId()
+//            let eventAccountType = FUser.currentUser()?.accountType
+//            //let eventDate = helper.dateFormatter().string(from: Date())
+//            let event = Event(eventID: eventID, eventOwnerID: eventOwnerID, eventText: eventText!, eventDate: dateString, eventAccountType: eventAccountType!)
+            event.updateEvent(eventID: eventID, withValues: [kEVENTTEXT : eventText!])
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
+        } else {
+            let eventID = UUID().uuidString
+            let eventOwnerID = FUser.currentId()
+            let eventAccountType = FUser.currentUser()?.accountType
+            //let eventDate = helper.dateFormatter().string(from: Date())
+            let event = Event(eventID: eventID, eventOwnerID: eventOwnerID, eventText: eventText!, eventDate: dateString, eventAccountType: eventAccountType!)
+            event.saveEvent()
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
+        }
+        
+        
+        
+        
+        
+        
+        
     }
+    
+    @IBAction func deleteButtonPressed(_ sender: Any) {
+        reference(.Event).document(eventID).delete()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
+        dismiss(animated: true, completion: nil)
+    }
+    
     
     @IBAction func doneButtonPressed(_ sender: Any) {
         if textView.text != "" {
@@ -81,6 +112,12 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     @IBAction func backButtonPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    // make corners rounded for any views (objects)
+    func cornerRadius(for view: UIView) {
+        view.layer.cornerRadius = 5
+        view.layer.masksToBounds = true
     }
     
 
