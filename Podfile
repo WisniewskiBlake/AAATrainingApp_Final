@@ -25,6 +25,8 @@ pod 'ImagePicker'
 pod 'OneSignal'
 pod 'SinchRTC'
 
+pod 'FSCalendar'
+
 
   # Pods for AAATraining
 
