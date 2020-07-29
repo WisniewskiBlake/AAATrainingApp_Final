@@ -18,6 +18,7 @@ enum FCollectionReference: String {
     case Group
     case Call
     case Post
+    case Event
 }
 
 

@@ -96,6 +96,15 @@ public let kPOSTDATE = "postDate"
 public let kPOSTUSERAVA = "postUserAva"
 public let kPOSTUSERNAME = "postUserName"
 
+//Events
+public let kEVENTS = "events"
+public let kEVENTID = "eventID"
+public let kEVENTOWNERID = "eventOwnerID"
+public let kEVENTTEXT = "eventText"
+public let kEVENTACCOUNTTYPE = "eventAccountType"
+public let kEVENTDATE = "eventDate"
+
+
 //recent
 public let kCHATROOMID = "chatRoomID"
 public let kUSERID = "userId"
