@@ -12,13 +12,17 @@ class Event_Coach: UIViewController {
 
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var dateLabel: UILabel!
     
     let date = Date()
+    let formatter = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        formatter.dateFormat = "EEEE MM-dd-YYYY"
+        let string = formatter.string(from: date)
+        dateLabel.text = string
     }
     
 

@@ -2395,17 +2395,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9Ye-CG-6dJ">
-                                <rect key="frame" x="16" y="64" width="343" height="169"/>
+                                <rect key="frame" x="16" y="121" width="343" height="112"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="169" id="3Ca-6C-Dba"/>
+                                    <constraint firstAttribute="height" constant="112" id="Hem-b9-79T"/>
                                 </constraints>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aqa-fl-rRl">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aqa-fl-rRl">
                                 <rect key="frame" x="16" y="241" width="343" height="40"/>
                                 <color key="backgroundColor" red="0.1006183103" green="0.2956552207" blue="0.71825700999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -2416,14 +2416,25 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qfo-S3-aDs">
+                                <rect key="frame" x="16" y="80" width="343" height="33"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="33" id="3MP-0D-X8m"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="9Ye-CG-6dJ" firstAttribute="top" secondItem="CfK-Er-iyL" secondAttribute="top" constant="20" id="GKc-tM-y1z"/>
+                            <constraint firstItem="CfK-Er-iyL" firstAttribute="trailing" secondItem="9Ye-CG-6dJ" secondAttribute="trailing" constant="16" id="2fC-Iv-Nqb"/>
+                            <constraint firstItem="Qfo-S3-aDs" firstAttribute="leading" secondItem="CfK-Er-iyL" secondAttribute="leading" constant="16" id="A5g-oA-LGl"/>
+                            <constraint firstItem="9Ye-CG-6dJ" firstAttribute="leading" secondItem="CfK-Er-iyL" secondAttribute="leading" constant="16" id="FH8-8E-u2n"/>
+                            <constraint firstItem="9Ye-CG-6dJ" firstAttribute="top" secondItem="Qfo-S3-aDs" secondAttribute="bottom" constant="8" id="Hs6-KA-RRU"/>
+                            <constraint firstItem="CfK-Er-iyL" firstAttribute="trailing" secondItem="Qfo-S3-aDs" secondAttribute="trailing" constant="16" id="MiD-6P-IZ6"/>
                             <constraint firstItem="Aqa-fl-rRl" firstAttribute="leading" secondItem="CfK-Er-iyL" secondAttribute="leading" constant="16" id="TO7-SZ-Cto"/>
-                            <constraint firstItem="Aqa-fl-rRl" firstAttribute="top" secondItem="9Ye-CG-6dJ" secondAttribute="bottom" constant="8" id="VyY-Qw-lK7"/>
-                            <constraint firstItem="9Ye-CG-6dJ" firstAttribute="leading" secondItem="CfK-Er-iyL" secondAttribute="leading" constant="16" id="WCd-wZ-dC0"/>
-                            <constraint firstItem="CfK-Er-iyL" firstAttribute="trailing" secondItem="9Ye-CG-6dJ" secondAttribute="trailing" constant="16" id="hc7-l9-JWF"/>
+                            <constraint firstItem="Qfo-S3-aDs" firstAttribute="top" secondItem="CfK-Er-iyL" secondAttribute="top" constant="36" id="ecM-Cn-X4c"/>
                             <constraint firstItem="CfK-Er-iyL" firstAttribute="trailing" secondItem="Aqa-fl-rRl" secondAttribute="trailing" constant="16" id="scK-DL-zfh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="CfK-Er-iyL"/>
@@ -2431,6 +2442,7 @@
                     <navigationItem key="navigationItem" title="Event" id="twh-6f-MWP"/>
                     <connections>
                         <outlet property="button" destination="Aqa-fl-rRl" id="vEm-aG-sDc"/>
+                        <outlet property="dateLabel" destination="Qfo-S3-aDs" id="zJ8-OU-4dP"/>
                         <outlet property="textView" destination="9Ye-CG-6dJ" id="kKl-Nr-afC"/>
                     </connections>
                 </viewController>
