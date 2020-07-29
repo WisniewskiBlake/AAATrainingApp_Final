@@ -13,8 +13,9 @@ class Event_Coach: UIViewController {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var backButton: UIBarButtonItem!
     
-    let date = Date()
+    var date = Date()
     let formatter = DateFormatter()
     
     override func viewDidLoad() {
@@ -25,6 +26,14 @@ class Event_Coach: UIViewController {
         dateLabel.text = string
     }
     
-
+    // exec whenever the screen has been tapped
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        textView.resignFirstResponder()
+    }
+    
+    @IBAction func backButtonPressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
 
 }

@@ -9,7 +9,7 @@
 import UIKit
 import FSCalendar
 
-class Calendar_Coach: UIViewController, FSCalendarDelegate {
+class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance {
     
     @IBOutlet var calendar: FSCalendar!
 

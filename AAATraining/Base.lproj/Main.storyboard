@@ -2400,17 +2400,16 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="112" id="Hem-b9-79T"/>
                                 </constraints>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aqa-fl-rRl">
-                                <rect key="frame" x="16" y="241" width="343" height="40"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aqa-fl-rRl">
+                                <rect key="frame" x="16" y="241" width="343" height="36"/>
                                 <color key="backgroundColor" red="0.1006183103" green="0.2956552207" blue="0.71825700999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="343" id="rRd-gY-luB"/>
-                                    <constraint firstAttribute="height" constant="40" id="zgW-gu-jWI"/>
+                                    <constraint firstAttribute="height" constant="36" id="Z0q-7d-hG4"/>
+                                    <constraint firstAttribute="width" constant="343" id="soH-Uu-hdC"/>
                                 </constraints>
                                 <state key="normal" title="Button">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2429,18 +2428,27 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="CfK-Er-iyL" firstAttribute="trailing" secondItem="9Ye-CG-6dJ" secondAttribute="trailing" constant="16" id="2fC-Iv-Nqb"/>
+                            <constraint firstItem="Aqa-fl-rRl" firstAttribute="top" secondItem="9Ye-CG-6dJ" secondAttribute="bottom" constant="8" id="37T-KC-87y"/>
                             <constraint firstItem="Qfo-S3-aDs" firstAttribute="leading" secondItem="CfK-Er-iyL" secondAttribute="leading" constant="16" id="A5g-oA-LGl"/>
                             <constraint firstItem="9Ye-CG-6dJ" firstAttribute="leading" secondItem="CfK-Er-iyL" secondAttribute="leading" constant="16" id="FH8-8E-u2n"/>
                             <constraint firstItem="9Ye-CG-6dJ" firstAttribute="top" secondItem="Qfo-S3-aDs" secondAttribute="bottom" constant="8" id="Hs6-KA-RRU"/>
                             <constraint firstItem="CfK-Er-iyL" firstAttribute="trailing" secondItem="Qfo-S3-aDs" secondAttribute="trailing" constant="16" id="MiD-6P-IZ6"/>
-                            <constraint firstItem="Aqa-fl-rRl" firstAttribute="leading" secondItem="CfK-Er-iyL" secondAttribute="leading" constant="16" id="TO7-SZ-Cto"/>
+                            <constraint firstItem="Aqa-fl-rRl" firstAttribute="leading" secondItem="CfK-Er-iyL" secondAttribute="leading" constant="16" id="dQn-FP-QBg"/>
                             <constraint firstItem="Qfo-S3-aDs" firstAttribute="top" secondItem="CfK-Er-iyL" secondAttribute="top" constant="36" id="ecM-Cn-X4c"/>
-                            <constraint firstItem="CfK-Er-iyL" firstAttribute="trailing" secondItem="Aqa-fl-rRl" secondAttribute="trailing" constant="16" id="scK-DL-zfh"/>
+                            <constraint firstItem="CfK-Er-iyL" firstAttribute="trailing" secondItem="Aqa-fl-rRl" secondAttribute="trailing" constant="16" id="f0K-5T-xqC"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="CfK-Er-iyL"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Event" id="twh-6f-MWP"/>
+                    <navigationItem key="navigationItem" title="Event" id="twh-6f-MWP">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="YeC-mp-Omd">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="backButtonPressed:" destination="cGp-No-v10" id="ohy-5H-7L3"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="backButton" destination="YeC-mp-Omd" id="nhN-cx-e9Y"/>
                         <outlet property="button" destination="Aqa-fl-rRl" id="vEm-aG-sDc"/>
                         <outlet property="dateLabel" destination="Qfo-S3-aDs" id="zJ8-OU-4dP"/>
                         <outlet property="textView" destination="9Ye-CG-6dJ" id="kKl-Nr-afC"/>
