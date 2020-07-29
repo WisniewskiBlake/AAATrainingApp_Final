@@ -13,6 +13,7 @@ class Event_Coach: UIViewController {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var button: UIButton!
     
+    let date = Date()
     
     override func viewDidLoad() {
         super.viewDidLoad()

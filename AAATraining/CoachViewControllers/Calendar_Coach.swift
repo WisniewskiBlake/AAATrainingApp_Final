@@ -20,7 +20,14 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate {
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        print("selected")
+        
+        let eventVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as! Event_Coach
+        let navController = UINavigationController(rootViewController: eventVC)
+        
+        eventVC.hidesBottomBarWhenPushed = true
+        eventVC.date = date
+        
+        self.navigationController?.present(navController, animated: true, completion: nil)
     }
     
 
