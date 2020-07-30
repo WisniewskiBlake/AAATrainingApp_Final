@@ -102,13 +102,16 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
 
         
         if allEventDates.contains(dateString) {
-            return UIColor.red
+            return #colorLiteral(red: 0.1006183103, green: 0.2956552207, blue: 0.71825701, alpha: 1)
+            
         } else {
             return nil
         }
         
 
     }
+    
+    
     
 
 

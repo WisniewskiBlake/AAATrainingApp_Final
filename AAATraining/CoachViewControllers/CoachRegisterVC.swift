@@ -79,6 +79,10 @@ class CoachRegisterVC: UIViewController {
         padding(for: phoneTextField)
         
         configure_footerView()
+        
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.white
+        
     }
     
     // make corners rounded for any views (objects)

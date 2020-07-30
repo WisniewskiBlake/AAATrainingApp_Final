@@ -36,7 +36,8 @@ class UserTypeSelectionVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UserSelectionCellClass.self, forCellReuseIdentifier: "Cell")
-
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.white
         // Do any additional setup after loading the view.
     }
     

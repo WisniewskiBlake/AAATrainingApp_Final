@@ -55,6 +55,8 @@ class LoginVC: UIViewController {
         logo_height_cache = logo_height.constant
         //registerButton_bottom_cache = registerButton_bottom.constant
         registerCoachButton_bottom_cache = registerCoachButton_bottom.constant
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.white
     }
     
     // executed EVERYTIME when view did appear on the screen
@@ -97,7 +99,7 @@ class LoginVC: UIViewController {
 //    @IBAction func registerButtonClicked(_ sender: Any) {
 //        let cRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserTypeSelection") as! UserTypeSelectionVC
 //        let navController = UINavigationController(rootViewController: cRegisterVC)
-//        
+//
 //        self.navigationController?.pushViewController(navController, animated: true)
 //    }
     
