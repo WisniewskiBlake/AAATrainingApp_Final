@@ -53,7 +53,7 @@ class LoginVC: UIViewController {
         // caching all values of constraints
         logoBackground_height_cache = logoBackground_height.constant
         logo_height_cache = logo_height.constant
-        registerButton_bottom_cache = registerButton_bottom.constant
+        //registerButton_bottom_cache = registerButton_bottom.constant
         registerCoachButton_bottom_cache = registerCoachButton_bottom.constant
     }
     
@@ -92,10 +92,15 @@ class LoginVC: UIViewController {
                 }
                 
             loginUser()
-                
-                
-                
-        }
+      }
+    
+//    @IBAction func registerButtonClicked(_ sender: Any) {
+//        let cRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserTypeSelection") as! UserTypeSelectionVC
+//        let navController = UINavigationController(rootViewController: cRegisterVC)
+//        
+//        self.navigationController?.pushViewController(navController, animated: true)
+//    }
+    
             
             
             // sending request to the server for proceeding Log In
@@ -183,7 +188,7 @@ class LoginVC: UIViewController {
         silhoutte_top.constant = -15
         
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            registerButton_bottom.constant = keyboardSize.height + 20
+            //registerButton_bottom.constant = keyboardSize.height + 20
             registerCoachButton_bottom.constant = keyboardSize.height + 20
             //registerButton_bottom.constant = self.view.frame.width / 1.75423
         }
@@ -203,7 +208,7 @@ class LoginVC: UIViewController {
         logoBackground_height.constant = logoBackground_height_cache
         logo_height.constant = logo_height_cache
         silhoutte_top.constant = 177
-        registerButton_bottom.constant = registerButton_bottom_cache
+        //registerButton_bottom.constant = registerButton_bottom_cache
         registerCoachButton_bottom.constant = registerCoachButton_bottom_cache
         
         // animation function. Whatever in the closures below will be animated
@@ -221,7 +226,7 @@ class LoginVC: UIViewController {
         configure_textFieldsView()
         configure_loginBtn()
         configure_orLabel()
-        configure_registerButton(btn: registerAccBtn)
+//        configure_registerButton(btn: registerAccBtn)
         configure_registerCoachButton(btn: registerCoachBtn)
     }
     

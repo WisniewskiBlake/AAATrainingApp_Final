@@ -87,20 +87,6 @@
                                     <color key="titleColor" red="0.012204516679999999" green="0.28411296009999998" blue="0.70980292560000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hbp-zo-E0U">
-                                <rect key="frame" x="193" y="604" width="166" height="43"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="166" id="X7s-MU-lX9"/>
-                                    <constraint firstAttribute="height" constant="43" id="pr8-Cf-ca8"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
-                                <state key="normal" title="Register Player">
-                                    <color key="titleColor" red="0.14039075370000001" green="0.29558742049999998" blue="0.71822762490000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <segue destination="pbD-KU-4y7" kind="presentation" id="g52-Pt-xor"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZe-8z-doS">
                                 <rect key="frame" x="176.5" y="558.5" width="22" height="17.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
@@ -122,34 +108,31 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ld-D8-TnF">
-                                <rect key="frame" x="16" y="604" width="166" height="43"/>
+                                <rect key="frame" x="16" y="604" width="343" height="43"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="43" id="Asx-VX-TcY"/>
-                                    <constraint firstAttribute="width" constant="166" id="Z3q-9s-6gz"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
-                                <state key="normal" title="Register Coach">
+                                <state key="normal" title="Register New User">
                                     <color key="titleColor" red="0.14039075370000001" green="0.29558742049999998" blue="0.71822762490000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Lz1-PB-y5L" kind="presentation" id="GhK-BP-2Nh"/>
+                                    <segue destination="3Bc-fd-Egn" kind="presentation" id="9Sq-Gx-9Og"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="hbp-zo-E0U" secondAttribute="trailing" constant="16" id="4RC-BC-0Tp"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2ld-D8-TnF" secondAttribute="trailing" constant="16" id="6Z5-cD-hhB"/>
                             <constraint firstItem="uzs-ic-xiQ" firstAttribute="top" secondItem="660-ty-t8W" secondAttribute="bottom" constant="30" id="87R-WX-63Y"/>
                             <constraint firstItem="EHQ-ct-98R" firstAttribute="centerY" secondItem="HZe-8z-doS" secondAttribute="centerY" constant="1.25" id="9id-Lb-fbk"/>
                             <constraint firstItem="660-ty-t8W" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="CV2-zs-cbV"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="uzs-ic-xiQ" secondAttribute="trailing" constant="16" id="E9C-kl-0cc"/>
-                            <constraint firstItem="hbp-zo-E0U" firstAttribute="top" secondItem="HZe-8z-doS" secondAttribute="bottom" constant="28" id="JjH-PI-nSV"/>
                             <constraint firstItem="66z-7w-9ST" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="MwG-Jj-HPE"/>
                             <constraint firstItem="hJq-QS-kOH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="QyN-Ya-QVr"/>
                             <constraint firstItem="Zby-oh-UfM" firstAttribute="top" secondItem="uzs-ic-xiQ" secondAttribute="bottom" constant="23" id="RYr-W7-vCV"/>
                             <constraint firstItem="2ld-D8-TnF" firstAttribute="top" secondItem="HZe-8z-doS" secondAttribute="bottom" constant="28" id="STe-J4-BYj"/>
                             <constraint firstItem="HZe-8z-doS" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Vg1-l5-yYf"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="hbp-zo-E0U" secondAttribute="bottom" constant="20" id="Y1p-R5-Ia3"/>
                             <constraint firstItem="660-ty-t8W" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="a7c-gz-JZd"/>
                             <constraint firstItem="ofM-Lj-7R0" firstAttribute="leading" secondItem="HZe-8z-doS" secondAttribute="trailing" constant="8.5" id="azL-ub-stT"/>
                             <constraint firstItem="2ld-D8-TnF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="dXh-DZ-rrw"/>
@@ -182,8 +165,6 @@
                         <outlet property="logoBackground_top" destination="a7c-gz-JZd" id="w5t-ED-c31"/>
                         <outlet property="logo_height" destination="ugq-np-dIx" id="qVu-rA-NFA"/>
                         <outlet property="passwordTextField" destination="sD3-jG-cqK" id="0Lq-O6-W8B"/>
-                        <outlet property="registerAccBtn" destination="hbp-zo-E0U" id="fLr-et-g8P"/>
-                        <outlet property="registerButton_bottom" destination="Y1p-R5-Ia3" id="EfF-5x-lQj"/>
                         <outlet property="registerCoachBtn" destination="2ld-D8-TnF" id="Afv-un-ppd"/>
                         <outlet property="registerCoachButton_bottom" destination="deu-9Q-vWe" id="BIG-DH-uSa"/>
                         <outlet property="rightLineView" destination="ofM-Lj-7R0" id="3f2-Lf-HkP"/>
@@ -195,21 +176,21 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-983" y="102"/>
+            <point key="canvasLocation" x="-983.20000000000005" y="101.19940029985008"/>
         </scene>
         <!--User Type SelectionVC-->
         <scene sceneID="ZkN-Co-ebJ">
             <objects>
-                <viewController id="jy3-Yi-Aj1" customClass="UserTypeSelectionVC" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserTypeSelection" id="jy3-Yi-Aj1" customClass="UserTypeSelectionVC" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="97l-BM-H7A">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sv4-mC-0X3">
-                                <rect key="frame" x="16" y="171" width="343" height="30"/>
+                                <rect key="frame" x="16" y="183" width="343" height="42"/>
                                 <color key="backgroundColor" red="0.1006183103" green="0.2956552207" blue="0.71825700999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="IkT-aX-LMA"/>
+                                    <constraint firstAttribute="height" constant="42" id="IkT-aX-LMA"/>
                                     <constraint firstAttribute="width" constant="343" id="hO9-kQ-ot6"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -221,7 +202,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's Your Account Type?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KiZ-O6-Raw">
-                                <rect key="frame" x="16" y="128" width="343" height="23"/>
+                                <rect key="frame" x="16" y="140" width="343" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="343" id="FDw-iX-BCC"/>
                                     <constraint firstAttribute="height" constant="23" id="kOd-ZE-ujp"/>
@@ -271,17 +252,17 @@
             <objects>
                 <viewController storyboardIdentifier="CoachRegister" id="Lz1-PB-y5L" customClass="CoachRegisterVC" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BZa-fa-r4R">
-                        <rect key="frame" x="0.0" y="0.0" width="712" height="547"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1500" height="587"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s4Y-Z1-f0n">
-                                <rect key="frame" x="0.0" y="0.0" width="712" height="547"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1500" height="587"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n09-ot-VS0">
                                         <rect key="frame" x="0.0" y="0.0" width="1500" height="667"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.10000000000000001" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="meijerBackground.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="XUp-aO-svT">
-                                                <rect key="frame" x="-274" y="0.0" width="2048" height="755"/>
+                                                <rect key="frame" x="-274" y="0.0" width="2048" height="795"/>
                                             </imageView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FfL-Lp-XnK">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -320,7 +301,7 @@
                                                             <constraint firstAttribute="height" constant="35" id="QtR-gB-Rbh"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
+                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                                         <connections>
                                                             <action selector="textFieldDidChange:" destination="Lz1-PB-y5L" eventType="editingChanged" id="UqF-sx-xqK"/>
                                                         </connections>
@@ -572,10 +553,10 @@
                                 </constraints>
                             </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OTE-w6-tTK">
-                                <rect key="frame" x="0.0" y="470" width="712" height="77"/>
+                                <rect key="frame" x="0.0" y="510" width="1500" height="77"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PT1-tu-UUv">
-                                        <rect key="frame" x="269" y="18.5" width="174" height="30"/>
+                                        <rect key="frame" x="663" y="18.5" width="174" height="30"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                         <state key="normal" title="Already have an account?">
                                             <color key="titleColor" red="0.25926578039999998" green="0.40468230840000002" blue="0.69936054940000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -634,17 +615,17 @@
             <objects>
                 <viewController storyboardIdentifier="PlayerRegister" id="pbD-KU-4y7" customClass="RegisterVC" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9MR-LN-soe">
-                        <rect key="frame" x="0.0" y="0.0" width="712" height="627"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1875" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="WMk-xw-MZo">
-                                <rect key="frame" x="0.0" y="0.0" width="712" height="627"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1875" height="667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HQ9-ge-PtR">
                                         <rect key="frame" x="0.0" y="0.0" width="1875" height="667"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.10000000000000001" contentMode="scaleToFill" image="meijerBackground.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="eu1-Ud-TYI">
-                                                <rect key="frame" x="-87.5" y="-51" width="2048" height="838"/>
+                                                <rect key="frame" x="-87.5" y="-51" width="2048" height="878"/>
                                             </imageView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PD6-NX-EPS">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -1054,10 +1035,10 @@
                                 </constraints>
                             </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fnJ-l6-YEM">
-                                <rect key="frame" x="0.0" y="550" width="712" height="77"/>
+                                <rect key="frame" x="0.0" y="590" width="1875" height="77"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Sg-eM-4Ai">
-                                        <rect key="frame" x="269" y="18.5" width="174" height="30"/>
+                                        <rect key="frame" x="850.5" y="18.5" width="174" height="30"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                         <state key="normal" title="Already have an account?">
                                             <color key="titleColor" red="0.25926578039999998" green="0.40468230840000002" blue="0.69936054940000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -3386,7 +3367,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="3Bc-fd-Egn" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="HHu-ax-6Ln">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.1006183103" green="0.2956552207" blue="0.71825700999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>

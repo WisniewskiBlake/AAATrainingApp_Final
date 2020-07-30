@@ -82,7 +82,7 @@ class UserTypeSelectionVC: UIViewController {
         dataSource = ["Player", "Parent", "Coach"]
         selectedButton = accountTypeButton
         addTransparentView(frames: accountTypeButton.frame)
-        checkButtonText()
+        
     }
     
     func addTransparentView(frames: CGRect) {
@@ -162,6 +162,7 @@ extension UserTypeSelectionVC: UITableViewDelegate, UITableViewDataSource {
         selectedButton.setTitle(dataSource[indexPath.row], for: .normal)
         removeTransparentView()
         cellText = dataSource[indexPath.row]
+        checkButtonText()
     }
     
     
