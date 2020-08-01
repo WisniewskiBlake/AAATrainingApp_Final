@@ -45,7 +45,7 @@ class CoachRegisterVC: UIViewController {
     let number = "123456789"
     var id: Any!
     var birthday: Any!
-    var cover = UIImage(named: "aaaCoverLogo1.png")
+    var cover = UIImage(named: "aaaCoverLogo.png")
     
     
     var accountType = "2"
@@ -168,10 +168,6 @@ class CoachRegisterVC: UIViewController {
             }
             
     }
-    
-    
-    
-    
     
     func getAvatar() -> String {
         let helper = Helper()

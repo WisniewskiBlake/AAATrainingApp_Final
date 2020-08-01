@@ -1537,6 +1537,75 @@
                                     <outlet property="delegate" destination="mck-gn-a1B" id="uea-jD-Rt4"/>
                                 </connections>
                             </tableView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="fgd-0h-3L4">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="5j2-TK-LOY">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="q64-Vs-Hv5">
+                                            <rect key="frame" x="8" y="6.5" width="359" height="32"/>
+                                            <segments>
+                                                <segment title="All"/>
+                                                <segment title="Players"/>
+                                                <segment title="Coaches"/>
+                                            </segments>
+                                            <connections>
+                                                <action selector="filterSegmentValueChanged:" destination="nfW-nG-ypf" eventType="valueChanged" id="eRS-IZ-JYE"/>
+                                            </connections>
+                                        </segmentedControl>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    <constraints>
+                                        <constraint firstItem="q64-Vs-Hv5" firstAttribute="centerY" secondItem="5j2-TK-LOY" secondAttribute="centerY" id="6Vw-8l-per"/>
+                                        <constraint firstItem="q64-Vs-Hv5" firstAttribute="leading" secondItem="5j2-TK-LOY" secondAttribute="leading" constant="8" id="9YN-zd-SlI"/>
+                                        <constraint firstAttribute="trailing" secondItem="q64-Vs-Hv5" secondAttribute="trailing" constant="8" id="DSZ-xJ-p3h"/>
+                                        <constraint firstItem="q64-Vs-Hv5" firstAttribute="centerX" secondItem="5j2-TK-LOY" secondAttribute="centerX" id="Og6-j1-hdB"/>
+                                    </constraints>
+                                </view>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="AxP-Bo-vfJ" customClass="RosterCell_Coach" customModule="AAATraining" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="72" width="375" height="80"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AxP-Bo-vfJ" id="BuU-gW-Sdt">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user.png" translatesAutoresizingMaskIntoConstraints="NO" id="PFT-tD-uPv">
+                                                    <rect key="frame" x="8" y="10" width="60" height="60"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="60" id="1PB-Kv-bGg"/>
+                                                        <constraint firstAttribute="width" constant="60" id="Ngx-Sd-IBf"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FULL NAME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="abh-Qr-glP">
+                                                    <rect key="frame" x="76" y="30" width="284" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="abh-Qr-glP" firstAttribute="leading" secondItem="PFT-tD-uPv" secondAttribute="trailing" constant="8" id="3gY-vD-eu2"/>
+                                                <constraint firstItem="PFT-tD-uPv" firstAttribute="centerY" secondItem="BuU-gW-Sdt" secondAttribute="centerY" id="dMv-4Z-75l"/>
+                                                <constraint firstItem="PFT-tD-uPv" firstAttribute="leading" secondItem="BuU-gW-Sdt" secondAttribute="leading" constant="8" id="dQ2-Yi-aTv"/>
+                                                <constraint firstItem="abh-Qr-glP" firstAttribute="trailing" secondItem="BuU-gW-Sdt" secondAttribute="trailingMargin" id="q7i-Va-0kr"/>
+                                                <constraint firstItem="abh-Qr-glP" firstAttribute="centerY" secondItem="BuU-gW-Sdt" secondAttribute="centerY" id="tpq-6I-rIY"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="avatarImageView" destination="PFT-tD-uPv" id="Bmb-6H-xVw"/>
+                                            <outlet property="fullNameLabel" destination="abh-Qr-glP" id="2bf-3n-O2e"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="nfW-nG-ypf" id="0pC-2f-b6B"/>
+                                    <outlet property="delegate" destination="nfW-nG-ypf" id="8oP-HE-cbq"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
