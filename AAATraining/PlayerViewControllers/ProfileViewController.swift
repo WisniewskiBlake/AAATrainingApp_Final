@@ -54,46 +54,49 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
     
     // MARK: - Load User
     // loads all user related information to be shown in the header
-       @objc func loadUser() {
-           let helper = Helper()
-           let user = FUser.currentUser()
-        
+   @objc func loadUser() {
+        let helper = Helper()
+        let user = FUser.currentUser()
+    
         guard let firstName = user?.firstname, let lastName = user?.lastname, let avaPath = user?.ava, let coverPath = user?.cover, let height = user?.height, let weight = user?.weight, let position = user?.position, let number = user?.number else {
                
                return
         }
-        
-           // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
-           if (avaPath as! String).count > 10 {
-               isAva = true
-           } else {
-               avaImageView.image = UIImage(named: "user.png")
-               isAva = false
-           }
-           
-           if (coverPath as! String).count > 10 {
-               isCover = true
-           } else {
-               coverImageView.image = UIImage(named: "HomeCover.jpg")
-               isCover = false
-           }
-           // assigning vars which we accessed from global var, to fullnameLabel
-           fullnameLabel.text = "\((firstName as! String).capitalized) \((lastName as! String).capitalized)"
-           heightTextLabel.text = "\((height as! String).capitalized)" + "in."
-           weightTextLabel.text = "\((weight as! String).capitalized)" + "lbs."
-           positionTextLabel.text = "\((position as! String).capitalized)"
-           numberTextLabel.text = "\((number as! String).capitalized)"
-           // downloading the images and assigning to certain imageViews
-           Helper().downloadImage(from: avaPath as! String, showIn: self.avaImageView, orShow: "user.png")
-           Helper().downloadImage(from: coverPath as! String, showIn: self.coverImageView, orShow: "HomeCover.jpg")
-           // if bio is empty in the server -> hide bio label, otherwise, show bio label
-           
-           // save in the background thread the user's profile picture
-           DispatchQueue.main.async {
-               currentUser_ava = self.avaImageView.image
+        if coverPath != "" {
+            helper.imageFromData(pictureData: coverPath) { (coverImage) in
+                
+                if coverImage != nil {
+                    coverImageView.image = coverImage!
+                    isCover = true
+                }
+            }
+        } else {
+            coverImageView.image = UIImage(named: "aaaCoverLogo.png")
+            isCover = false
+        }
+    
+       // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
+       if avaPath != "" {
+           helper.imageFromData(pictureData: avaPath) { (avatarImage) in
                
+               if avatarImage != nil {
+                   avaImageView.image = avatarImage!
+                   isAva = true
+               }
            }
+       } else{
+           avaImageView.image = UIImage(named: "user.png")
+           isAva = false
        }
+       
+       // assigning vars which we accessed from global var, to fullnameLabel
+       fullnameLabel.text = "\((firstName).capitalized) \((lastName as! String).capitalized)"
+       heightTextLabel.text = "\((height).capitalized)" + "in."
+       weightTextLabel.text = "\((weight).capitalized)" + "lbs."
+       positionTextLabel.text = "\((position).capitalized)"
+       numberTextLabel.text = "\((number).capitalized)"
+       
+   }
     
     // MARK: - Images Tapped
     @IBAction func coverImageView_tapped(_ sender: Any) {

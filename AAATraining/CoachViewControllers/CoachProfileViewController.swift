@@ -106,8 +106,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                coverImageView.image = UIImage(named: "aaaCoverLogo.png")
                isCover = false
            }
-            if avaPath != "" {
-                
+            if avaPath != "" {                
                 helper.imageFromData(pictureData: avaPath) { (avatarImage) in
                     
                     if avatarImage != nil {
