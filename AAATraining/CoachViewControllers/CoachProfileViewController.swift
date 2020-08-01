@@ -50,9 +50,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadNewPosts), name: NSNotification.Name(rawValue: "uploadPost"), object: nil)
         
-//        NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
-        
-        
+
 
         configure_avaImageView()
         loadUser()
@@ -94,7 +92,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         guard let firstName = user?.firstname, let lastName = user?.lastname, let avaPath = user?.ava, let coverPath = user?.cover else {
                
                return
-           }
+        }
            
            if coverPath != "" {
                helper.imageFromData(pictureData: coverPath) { (coverImage) in
@@ -105,7 +103,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                    }
                }
            } else {
-               coverImageView.image = UIImage(named: "HomeCover.jpg")
+               coverImageView.image = UIImage(named: "aaaCoverLogo.png")
                isCover = false
            }
             if avaPath != "" {

@@ -55,27 +55,14 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
     // MARK: - Load User
     // loads all user related information to be shown in the header
        @objc func loadUser() {
-           // safe method of accessing user related information in glob var
-           
-//           let apostrophe = "'"
-//
-//           var heightFinal = ""
-//           let heightTxt = currentUser?["height"] as! String
-//        let heightLast = heightTxt.last
-//        let stringResult = heightTxt.contains("&rsquo")
-//        if (stringResult) {
-//            heightFinal = (heightTxt.prefix(1)) + apostrophe
-//               heightFinal.append(heightLast!)
-//           }
-       
-        guard let firstName = currentUser1?["firstName"], let lastName = currentUser1?["lastName"], let avaPath = currentUser1?["ava"], let coverPath = currentUser1?["cover"], let height =  currentUser1?["height"],let weight = currentUser1?["weight"], let position = currentUser1?["position"], let number = currentUser1?["number"] else {
+           let helper = Helper()
+           let user = FUser.currentUser()
+        
+        guard let firstName = user?.firstname, let lastName = user?.lastname, let avaPath = user?.ava, let coverPath = user?.cover, let height = user?.height, let weight = user?.weight, let position = user?.position, let number = user?.number else {
                
                return
-           }
-//        let aType = accountType as! String
-//        print(aType)
-//        let nType = number as! String
-//        print(nType)
+        }
+        
            // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
            if (avaPath as! String).count > 10 {
                isAva = true
