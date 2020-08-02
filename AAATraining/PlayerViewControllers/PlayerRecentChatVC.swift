@@ -23,13 +23,13 @@ class PlayerRecentChatVC: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
 
-         navigationController?.navigationBar.prefersLargeTitles = true
-               navigationItem.searchController = searchController
-               navigationItem.hidesSearchBarWhenScrolling = true
-               
-               searchController.searchResultsUpdater = self
-               searchController.obscuresBackgroundDuringPresentation = false
-               definesPresentationContext = true
+        navigationController?.navigationBar.prefersLargeTitles = true
+       navigationItem.searchController = searchController
+       navigationItem.hidesSearchBarWhenScrolling = true
+       
+       searchController.searchResultsUpdater = self
+       searchController.obscuresBackgroundDuringPresentation = false
+       definesPresentationContext = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
