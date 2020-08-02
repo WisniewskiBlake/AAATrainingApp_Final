@@ -176,6 +176,27 @@ class PlayerFeedVC: UITableViewController {
     //
             return cell
         }
+    
+    // MARK: - Scroll Did Scroll
+    // executed always whenever tableView is scrolling
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        // load more posts when the scroll is about to reach the bottom AND currently is not loading (posts)
+        let a = tableView.contentOffset.y - tableView.contentSize.height + 60
+        let b = -tableView.frame.height
+        
+        if a > b && isLoading == false {
+            loadMore()
+
+        }
+        
+    }
+    
+    // MARK: - Load More
+    // loading more posts from the server via PHP protocol
+    @objc func loadMore() {
+        
+    }
 
     
 
