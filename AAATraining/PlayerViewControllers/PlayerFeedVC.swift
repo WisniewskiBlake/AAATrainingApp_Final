@@ -55,6 +55,23 @@ class PlayerFeedVC: UITableViewController {
         // run function
         loadPosts()
     }
+    
+    func configureNavBar() {
+        let imageView = UIImageView(image: UIImage(named: "aaaLogo.png"))
+        imageView.contentMode = .scaleAspectFit
+        navigationItem.titleView = imageView
+    }
+    
+    // pre-load func
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadPosts()
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        recentListener.remove()
+    }
 
     // MARK: - Table view data source
 
