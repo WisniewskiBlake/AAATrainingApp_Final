@@ -143,10 +143,10 @@ class FeedVC_Coach: UITableViewController {
     // MARK: - Load Ava
     @objc func loadAvaAfterUpload() {
             
-            // skipping 0 posts, as we want to load the entire feed. And we are extending Limit value based on the previous loaded posts.
-            loadPosts()
+        // skipping 0 posts, as we want to load the entire feed. And we are extending Limit value based on the previous loaded posts.
+        loadPosts()
     
-        }
+    }
     
     // MARK: - Load More
     // loading more posts from the server via PHP protocol

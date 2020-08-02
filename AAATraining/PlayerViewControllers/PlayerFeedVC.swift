@@ -158,8 +158,7 @@ class PlayerFeedVC: UITableViewController {
             date = helper.dateFormatter().date(from: post.date)
            
             cell.dateLabel.text = helper.timeElapsed(date: date)
-            
-            
+                        
             
                 helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
 

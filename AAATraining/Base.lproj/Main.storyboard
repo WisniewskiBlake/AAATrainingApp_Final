@@ -1693,21 +1693,38 @@
             </objects>
             <point key="canvasLocation" x="5310" y="1485"/>
         </scene>
-        <!--View Controller-->
+        <!--Calendar-->
         <scene sceneID="U5G-1R-Hk6">
             <objects>
-                <viewController id="sBL-Pa-tVv" sceneMemberID="viewController">
+                <viewController id="sBL-Pa-tVv" customClass="PlayerCalendar" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RwG-tt-kG5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YJ9-It-BNN" customClass="FSCalendar">
+                                <rect key="frame" x="0.0" y="44" width="375" height="350"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="350" id="2je-KH-JZX"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="YJ9-It-BNN" firstAttribute="top" secondItem="zOq-aN-bey" secondAttribute="top" id="9mZ-76-QIh"/>
+                            <constraint firstItem="YJ9-It-BNN" firstAttribute="leading" secondItem="zOq-aN-bey" secondAttribute="leading" id="nKE-pV-ec7"/>
+                            <constraint firstItem="YJ9-It-BNN" firstAttribute="trailing" secondItem="zOq-aN-bey" secondAttribute="trailing" id="wtA-Q6-Ez5"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="zOq-aN-bey"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Hh7-9l-eJx"/>
+                    <navigationItem key="navigationItem" title="Calendar" id="Hh7-9l-eJx"/>
+                    <connections>
+                        <outlet property="calendar" destination="YJ9-It-BNN" id="UhG-yw-1ed"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oXK-m6-jND" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5310" y="2156"/>
+            <point key="canvasLocation" x="5309.6000000000004" y="2155.7721139430287"/>
         </scene>
         <!--Workout Feed-->
         <scene sceneID="iyN-6G-yNa">
@@ -3814,6 +3831,10 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Xbo-l6-Usm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.1006183103" green="0.2956552207" blue="0.71825700999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
