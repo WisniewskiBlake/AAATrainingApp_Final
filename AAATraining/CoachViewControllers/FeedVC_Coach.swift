@@ -90,7 +90,6 @@ class FeedVC_Coach: UITableViewController {
     
     
     // MARK: - Load Posts
-    
     @objc func loadPosts() {
         ProgressHUD.show()
         
