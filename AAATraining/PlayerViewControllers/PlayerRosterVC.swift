@@ -7,51 +7,62 @@
 //
 
 import UIKit
+import Firebase
+import ProgressHUD
+import FirebaseFirestore
 
-class PlayerRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, PlayerRosterCellDelegate {
-    func deleteUserPermanent(from cell: UITableViewCell) {
+class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell_CoachDelegate {
+    
+    func didTapAvatarImage(indexPath: IndexPath) {
         
     }
     
+    func deleteUserPermanent(from cell: UITableViewCell) {
+        
+    }
+    @IBOutlet weak var filterSegmentControl: UISegmentedControl!
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBAction func filterSegmentChanged(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            loadUsers(filter: "")
+        case 1:
+            loadUsers(filter: "player")
+        case 2:
+            loadUsers(filter: "coach")
+        default:
+            return
+        }
+    }
     
-    // search obj
-    var searchBar = UISearchBar()
+    var allUsers: [FUser] = []
+    var filteredUsers: [FUser] = []
+    var allUsersGroupped = NSDictionary() as! [String : [FUser]]
+    var sectionTitleList : [String] = []
+    var userListener: ListenerRegistration!
     
-    var skip = 0
-    var limit = 15
+    @IBOutlet weak var headerView: UIView!
     
-    var filteredArray = [NSDictionary?]()
-    var lastNames : [String] = []
-    var searchQuery = [String]()
-    var searching = false
     
-    var users = [NSDictionary?]()
-    var avas = [UIImage]()
-    //var pictures = [UIImage]()
-    
-    // bool
     var isLoading = false
-    var isSearchedUserStatusUpdated = false
+    let helper = Helper()
+    var skip = 0
+    var limit = 10
+    
+    let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // add observers for notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(loadUsers), name: NSNotification.Name(rawValue: "register"), object: nil)
+        navigationItem.largeTitleDisplayMode = .never
+        tableView.tableFooterView = UIView()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(loadUsers), name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
+        navigationItem.searchController = searchController
         
-//        NotificationCenter.default.addObserver(self, selector: #selector(loadNewUsers), name: NSNotification.Name(rawValue: "uploadPost"), object: nil)
-        
-        self.tableView.reloadData()
-        // Do any additional setup after loading the view.
-        createSearchBar()
-        loadUsers(offset: skip, limit: limit)
-        
-        // add observer of the notifications received/sent to current vc
-            
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        definesPresentationContext = true
+        loadUsers(filter: "")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,285 +73,230 @@ class PlayerRosterVC: UIViewController, UISearchBarDelegate, UITableViewDelegate
     }
     
     // MARK: - Search Bar
-    // once the searchBar is tapped
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        // show cancel button
-        searchBar.setShowsCancelButton(true, animated: true)
-    }
+    fileprivate func splitDataIntoSection() {
+          
+          var sectionTitle: String = ""
+          
+          for i in 0..<self.allUsers.count {
+              let currentUser = self.allUsers[i]
+              
+              let firstChar = currentUser.firstname.first!
+              
+              let firstCarString = "\(firstChar)"
+              if firstCarString != sectionTitle {
+                  sectionTitle = firstCarString
+                  self.allUsersGroupped[sectionTitle] = []
+                  if !sectionTitleList.contains(sectionTitle) {
+                      self.sectionTitleList.append(sectionTitle)
+                  }
+              }
+              self.allUsersGroupped[firstCarString]?.append(currentUser)
+          }
     
+      }
     
-    // cancel button in the searchBar has been clicked
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        // hide cancel button
-        searchBar.setShowsCancelButton(false, animated: true)
-        // hide tableView that presents searched users
-        
-        // hide keyboard
-        searchBar.resignFirstResponder()
-        // remove all searched results
-        searchBar.text = ""
-        tableView.reloadData()
-    }
-    
-    // creates search bar programmatically
-    func createSearchBar() {
-        // creating search bar and configuring it
-        searchBar.showsCancelButton = false
-        searchBar.placeholder = "Search"
-        searchBar.delegate = self
-        searchBar.searchBarStyle = .minimal
-        searchBar.tintColor = .white
-        
-        // accessing childView - textField inside of the searchBar
-        let searchBar_textField = searchBar.value(forKey: "searchField") as? UITextField
-        searchBar_textField?.textColor = .white
-        searchBar_textField?.tintColor = .white
-        
-        // insert searchBar into navigationBar
-        self.navigationItem.titleView = searchBar
-    }
-    
-    // called whenever we typed any letter in the searchbar
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searchQuery = lastNames.filter({$0.prefix(searchText.count).lowercased() == searchText.lowercased()})
-        
-        if(filteredArray.count >= 1){
-            for i in 0 ..< filteredArray.count{
-                filteredArray.remove(at: 0)
-            }
-        }
-        for i in 0 ..< searchQuery.count{
-            for j in 0 ..< users.count{
-                if(users[j]!["lastName"] as! String == searchQuery[i]){
-                    filteredArray.append(users[j])
-                }
-            }
-        }
-        searching = true
-        self.tableView.reloadData()
-    }
+   
     
     // MARK: - loadUsers
-    // loading posts from the server via@objc  PHP protocol
-    @objc func loadUsers(offset: Int, limit: Int) {
-
-        isLoading = true
-
-        // prepare request
-        let url = URL(string: "http://localhost/fb/selectUsers.php")!
-        let body = "offset=\(offset)&limit=\(limit)"
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.httpBody = body.data(using: .utf8)
-
-        // send request
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            DispatchQueue.main.async {
-                // error occured
-                if error != nil {
-                    Helper().showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
+    func loadUsers(filter: String) {
+           isLoading = true
+           ProgressHUD.show()
+           
+           var query: Query!
+           
+           switch filter {
+            case "player":
+                query = reference(.User).whereField("accountType", isEqualTo: "player").order(by: kFIRSTNAME, descending: false)
+           case ("coach"):
+               query = reference(.User).whereField("accountType", isEqualTo: "coach").order(by: kFIRSTNAME, descending: false)
+           default:
+               query = reference(.User).order(by: kFIRSTNAME, descending: false)
+        }
+           
+           query.getDocuments { (snapshot, error) in
+               
+               self.allUsers = []
+               self.sectionTitleList = []
+               self.allUsersGroupped = [:]
+               
+               if error != nil {
+                   print(error!.localizedDescription)
+                   ProgressHUD.dismiss()
+                self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
                     self.isLoading = false
-                    return
-                }
-                do {
-                    // access data - safe mode
-                    guard let data = data else {
-                        Helper().showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
-                        self.isLoading = false
-                        return
-                    }
-                    // converting data to JSON
-                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
-
-                    // accessing json data - safe mode
-                    guard let users = json?["users"] as? [NSDictionary] else {
-                        self.isLoading = false
-                        return
-                    }
-                    // assigning all successfully loaded users to our Class Var - posts (after it got loaded successfully)
-                    self.users = users
-                    // we are skipping already loaded numb of posts for the next load - pagination
-                    self.skip = users.count
-                    
-                    for user in users {
-                        self.lastNames.append(user["lastName"] as! String)
-                    }
-
-                    self.avas.removeAll(keepingCapacity: false)
-
-                    // reloading tableView to have an affect - show posts
-                    self.tableView.reloadData()
-
-                    self.isLoading = false
-
-                } catch {
-                    Helper().showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
-                    self.isLoading = false
-                    return
-                }
-
-            }
-        }.resume()
-
-    }
+                   self.tableView.reloadData()
+                   return
+               }
+               
+               guard let snapshot = snapshot else {
+                self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
+                self.isLoading = false
+                   ProgressHUD.dismiss(); return
+               }
+               
+               if !snapshot.isEmpty {
+                   
+                   for userDictionary in snapshot.documents {
+                       
+                       let userDictionary = userDictionary.data() as NSDictionary
+                       let fUser = FUser(_dictionary: userDictionary)
+                       
+                       if fUser.objectId != FUser.currentId() {
+                           self.allUsers.append(fUser)
+                       }
+                   }
+                   
+                   self.splitDataIntoSection()
+                   self.tableView.reloadData()
+               }
+               self.isLoading = false
+               self.tableView.reloadData()
+               ProgressHUD.dismiss()
+           }
     
-    // MARK: - loadMore
-    // loading more posts from the server via PHP protocol
-    func loadMore(offset: Int, limit: Int) {
-        isLoading = true
-
-        // prepare request
-        let url = URL(string: "http://localhost/fb/selectUsers.php")!
-        let body = "offset=\(offset)&limit=\(limit)"
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.httpBody = body.data(using: .utf8)
-
-        // send request
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            DispatchQueue.main.async {
-                // error occured
-                if error != nil {
-                    self.isLoading = false
-                    Helper().showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
-                    return
-                }
-                do {
-                    // access data - safe mode
-                    guard let data = data else {
-                        self.isLoading = false
-                        return
-                    }
-                    // converting data to JSON
-                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
-
-                    // accessing json data - safe mode
-                    guard let users = json?["users"] as? [NSDictionary] else {
-                        self.isLoading = false
-                        return
-                    }
-                    // assigning all successfully loaded posts to our Class Var - posts (after it got loaded successfully)
-                    self.users.append(contentsOf: users)
-
-                    // we are skipping already loaded numb of posts for the next load - pagination
-                    self.skip += users.count
-                    // reloading tableView to have an affect - show posts
-                    self.tableView.beginUpdates()
-
-                    for i in 0 ..< users.count {
-                        let lastSectionIndex = self.tableView.numberOfSections - 1
-                        let lastRowIndex = self.tableView.numberOfRows(inSection: lastSectionIndex)
-                        let pathToLastRow = IndexPath(row: lastRowIndex + i, section: lastSectionIndex)
-                        self.tableView.insertRows(at: [pathToLastRow], with: .fade)
-                    }
-
-                    self.tableView.endUpdates()
-                    self.isLoading = false
-
-                } catch {
-                    self.isLoading = false
-                    return
-                }
-
-            }
-        }.resume()
-
-    }
+       }
+    
+    
     
     
     // MARK: - Table view data source
 
-   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      if searching{
-           return searchQuery.count
-       }else{
-           return users.count
-       }
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+      if searchController.isActive && searchController.searchBar.text != "" {
+          
+          return filteredUsers.count
+          
+      } else {
+          
+          //find section Title
+          let sectionTitle = self.sectionTitleList[section]
+          
+          //user for given title
+          let users = self.allUsersGroupped[sectionTitle]
+          
+          return users!.count
+      }
    }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
    
-   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       // accessing the cell from main.storyboard
-       let cell = tableView.dequeueReusableCell(withIdentifier: "PlayerRosterCell", for: indexPath) as! PlayerRosterCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+       let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! RosterCell_Coach
+
        
-       if searching {
-           let firstName = filteredArray[indexPath.row]!["firstName"] as! String
-           let lastName = filteredArray[indexPath.row]!["lastName"] as! String
-           cell.fullNameLabel.text = firstName.capitalized + " " + lastName.capitalized
+       var user: FUser
+       
+       if searchController.isActive && searchController.searchBar.text != "" {
            
-           // avas logic
-           let avaString = filteredArray[indexPath.row]!["ava"] as! String
-           
-           // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
-           if (avaString).count > 10 {
-               cell.avaImageView.image = filteredArray[indexPath.row]!["ava"] as? UIImage
-           
-           } else {
-               cell.avaImageView.image = UIImage(named: "user.png")
-               
-           }
-           
-           Helper().downloadImage(from: avaString, showIn: cell.avaImageView, orShow: "user.png")
-                    
-                      
+           user = filteredUsers[indexPath.row]
        } else {
-           // fullname logic
-           let firstName = users[indexPath.row]!["firstName"] as! String
-           let lastName = users[indexPath.row]!["lastName"] as! String
-           cell.fullNameLabel.text = firstName.capitalized + " " + lastName.capitalized
            
-           // avas logic
-           let avaString = users[indexPath.row]!["ava"] as! String
+           let sectionTitle = self.sectionTitleList[indexPath.section]
            
-           // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
-           if (avaString).count > 10 {
-               cell.avaImageView.image = users[indexPath.row]!["ava"] as? UIImage
-           
-           } else {
-               cell.avaImageView.image = UIImage(named: "user.png")
-               
-           }
-           
-           Helper().downloadImage(from: avaString, showIn: cell.avaImageView, orShow: "user.png")
-       
-           
+           let users = self.allUsersGroupped[sectionTitle]
+
+           user = users![indexPath.row]
        }
        
-       print(avas)
+       
+       
+       cell.generateCellWith(fUser: user, indexPath: indexPath)
+       cell.delegate = self
+       
        return cell
    }
     
-    // MARK: - Update and scrollDidScroll
-    // updates any button with following params
-    func update(button: UIButton, icon: String, color: UIColor) {
-        
-        // setting icon / background image
-        button.setBackgroundImage(UIImage(named: icon), for: .normal)
-        
-        // setting color of the button
-        button.tintColor = color
-        
-    }
-    
-    // executed always whenever tableView is scrolling
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        // load more posts when the scroll is about to reach the bottom AND currently is not loading (posts)
-        let a = tableView.contentOffset.y - tableView.contentSize.height + 60
-        let b = -tableView.frame.height
-        
-        if a > b && isLoading == false {
-            loadMore(offset: skip, limit: limit)
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+            
+            if searchController.isActive && searchController.searchBar.text != "" {
+                return ""
+            } else {
+                return sectionTitleList[section]
+            }
         }
+
+        
+        override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+            
+            if searchController.isActive && searchController.searchBar.text != "" {
+                return nil
+            } else {
+                return self.sectionTitleList
+            }
+        }
+        
+        override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
+            
+            return index
+        }
+        
+        //MARK: Search controller functions
+        
+        func filterContentForSearchText(searchText: String, scope: String = "All") {
+        
+            filteredUsers = allUsers.filter({ (user) -> Bool in
+                
+                return user.firstname.lowercased().contains(searchText.lowercased())
+            })
+            
+            tableView.reloadData()
+        }
+        
+        func updateSearchResults(for searchController: UISearchController) {
+            
+            filterContentForSearchText(searchText: searchController.searchBar.text!)
+        }
+        
+        override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+            return true
+        }
+        
+        override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+
+            var user: FUser
+
+            if searchController.isActive && searchController.searchBar.text != "" {
+
+                user = filteredUsers[indexPath.row]
+            } else {
+
+                let sectionTitle = self.sectionTitleList[indexPath.section]
+
+                let users = self.allUsersGroupped[sectionTitle]
+
+                user = users![indexPath.row]
+                
+            }
+
+            let deleteAction = UITableViewRowAction(style: .default, title: "Delete") { (action, indexPath) in
+
+                //allUsersGroupped.remove(at: users, indexPath.row)
+
+                self.deleteAUser(user: user)
+
+                self.tableView.reloadData()
+            }
+            
+            return [deleteAction]
+        }
+        
+        func deleteAUser(user : FUser) {
+            print(user.objectId)
+            reference(.User).document(user.objectId).delete() { err in
+            if let err = err {
+                print("Error removing document: \(err)")
+            } else {
+                print("Document successfully removed!")
+            }
+        }
+            self.tableView.reloadData()
+
+        
+
     }
-    
-    
 
 }

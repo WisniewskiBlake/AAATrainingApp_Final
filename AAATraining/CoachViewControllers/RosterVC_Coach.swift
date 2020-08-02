@@ -32,8 +32,6 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     let searchController = UISearchController(searchResultsController: nil)
     
     @IBAction func filterSegmentValueChanged(_ sender: UISegmentedControl) {
-//        let coach = "coach"
-//        let player = "player"
         
         switch sender.selectedSegmentIndex {
         case 0:
@@ -77,8 +75,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
                query = reference(.User).whereField("accountType", isEqualTo: "coach").order(by: kFIRSTNAME, descending: false)
            default:
                query = reference(.User).order(by: kFIRSTNAME, descending: false)
-           }
-        
+        }
            
            query.getDocuments { (snapshot, error) in
                
@@ -113,7 +110,6 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
                        }
                    }
                    
-                   
                    self.splitDataIntoSection()
                    self.tableView.reloadData()
                }
@@ -132,27 +128,19 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
           var sectionTitle: String = ""
           
           for i in 0..<self.allUsers.count {
-              
               let currentUser = self.allUsers[i]
               
               let firstChar = currentUser.firstname.first!
               
               let firstCarString = "\(firstChar)"
-              
-              
               if firstCarString != sectionTitle {
-                  
                   sectionTitle = firstCarString
-                  
                   self.allUsersGroupped[sectionTitle] = []
-                  
                   if !sectionTitleList.contains(sectionTitle) {
                       self.sectionTitleList.append(sectionTitle)
                   }
               }
-              
               self.allUsersGroupped[firstCarString]?.append(currentUser)
-              
           }
     
       }

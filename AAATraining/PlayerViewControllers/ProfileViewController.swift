@@ -7,8 +7,15 @@
 //
 
 import UIKit
+import MediaPlayer
+import ImagePicker
+import Firebase
+import FirebaseFirestore
+import ProgressHUD
 
-class ProfileViewController: UITableViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+class ProfileViewController: UITableViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, ImagePickerDelegate {
+    
+    
 
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var avaImageView: UIImageView!
@@ -18,7 +25,8 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
     @IBOutlet weak var weightTextLabel: UILabel!
     @IBOutlet weak var numberTextLabel: UILabel!
     
-    
+    var profileIcon: UIImage?
+    var coverIcon: UIImage?
     
     
     // code obj (to build logic of distinguishing tapped / shown Cover / Ava)
@@ -90,7 +98,7 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
        }
        
        // assigning vars which we accessed from global var, to fullnameLabel
-       fullnameLabel.text = "\((firstName).capitalized) \((lastName as! String).capitalized)"
+       fullnameLabel.text = "\((firstName).capitalized) \((lastName).capitalized)"
        heightTextLabel.text = "\((height).capitalized)" + "in."
        weightTextLabel.text = "\((weight).capitalized)" + "lbs."
        positionTextLabel.text = "\((position).capitalized)"
@@ -98,38 +106,11 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
        
    }
     
-    // MARK: - Images Tapped
-    @IBAction func coverImageView_tapped(_ sender: Any) {
-        // switching trigger
-        imageViewTapped = "cover"
-        
-        // launch action sheet calling function
-        showActionSheet()
-    }
     
     @IBAction func avaImageView_tapped(_ sender: Any) {
-        // switching trigger
-        imageViewTapped = "ava"
-        
-        // launch action sheet calling function
-        showActionSheet()
+        showIconOptions()
     }
     
-    
-    
-    
-
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
-    }
     
     // configuring the appearance of AvaImageView
     func configure_avaImageView() {
@@ -148,198 +129,81 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
     }
 
     
-    // MARK: - Show Action Sheet
-    // this function launches Action Sheet for the photos
-    func showActionSheet() {
-        
-        // declaring action sheet
-        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        // declaring camera button
-        let camera = UIAlertAction(title: "Camera", style: .default) { (action) in
-            
-            // if camera available on device, than show
-            if UIImagePickerController.isSourceTypeAvailable(.camera) {
-                self.showPicker(with: .camera)
-            }
-        }
-        // declaring library button
-        let library = UIAlertAction(title: "Photo Library", style: .default) { (action) in
-            
-            // checking availability of photo library
-            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
-                self.showPicker(with: .photoLibrary)
-            }
-        }
-        // declaring cancel button
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        // declaring delete button
-        let xxx = currentUser1?["ava"] as! String
-        let delete = UIAlertAction(title: "Delete", style: .destructive) { (action) in
-            
-             // deleting profile picture (ava), by returning placeholder
-           if self.imageViewTapped == "ava" {
-               self.avaImageView.image = UIImage(named: "user.png")
-               self.isAva = false
-               self.uploadImage(from: self.avaImageView, action: "defaultPic")
-           } else if self.imageViewTapped == "cover" {
-               self.coverImageView.image = UIImage(named: "HomeCover.jpg")
-               self.isCover = false
-               self.uploadImage(from: self.coverImageView, action: "defaultPic")
-           }
-            
-        }
-        
-        // manipulating appearance of delete button for each scenarios
-        if imageViewTapped == "ava" && isAva == false && imageViewTapped != "cover" {
-            delete.isEnabled = false
-        }
-        
-        if imageViewTapped == "cover" && isCover == false && imageViewTapped != "ava" {
-            delete.isEnabled = false
-        }
-        // adding buttons to the sheet
-        if(xxx == "http://localhost/fb/ava/user.png") {
-            // adding buttons to the sheet
-            sheet.addAction(camera)
-            sheet.addAction(library)
-            sheet.addAction(cancel)
-            
-        } else {
-            // adding buttons to the sheet
-            sheet.addAction(camera)
-            sheet.addAction(library)
-            sheet.addAction(cancel)
-            sheet.addAction(delete)
-        }
-        // present action sheet to the user finally
-        self.present(sheet, animated: true, completion: nil)
-    }
-    
-    // MARK: - Show Picker
-    // takes us to the PickerController (Controller that allows us to select picture)
-    func showPicker(with source: UIImagePickerController.SourceType) {
-        
-        let picker = UIImagePickerController()
-        picker.delegate = self
-        picker.allowsEditing = true
-        picker.sourceType = source
-        present(picker, animated: true, completion: nil)
-    }
-    
-    // MARK: - Image Picker Controller
-    // executed once the picture is selected in PickerController
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-    
-        // accessing selected image from its variable
-        let image = info[UIImagePickerController.InfoKey(rawValue: convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage))] as? UIImage
-        
-        // based on the trigger we are assigning selected pictures to the appropriated imageView
-        if imageViewTapped == "cover" {
-            // assign selected image to CoverImageView
-            self.coverImageView.image = image
-            // upload image to the server
-            self.uploadImage(from: self.coverImageView, action: "newPic")
-        } else if imageViewTapped == "ava" {
-            // assign selected image to AvaImageView
-            self.avaImageView.image = image
-            // refresh global variable storing the user's profile pic
-            currentUser_ava = self.avaImageView.image
-            
-            // upload image to the server
-            self.uploadImage(from: avaImageView, action: "newPic")
-        }
-        // completion handler, to communicate to the project that images has been selected (enable delete button)
-        dismiss(animated: true) {
-            if self.imageViewTapped == "cover" {
-                self.isCover = true
-            } else if self.imageViewTapped == "ava" {
-                self.isAva = true
-            }
-        }
-        
-    }
-    
-    // MARK: - Upload Image
-    // sends request to the server to upload the Image (ava/cover)
-    func uploadImage(from imageView: UIImageView, action: String) {
-        
-        // save method of accessing ID of current user
-        guard let id = currentUser1?["id"] else {
-            return
-            
-            
-            
+    func showIconOptions() {
 
-        }
-        // STEP 1. Declare URL, Request and Params
-        // url we gonna access (API)
-        let url = URL(string: "http://localhost/fb/uploadImage.php")!
-        //let url = URL(string: "http://192.168.1.17/fb/uploadImage.php")!
-        
-        // declaring reqeust with further configs
-        var request = URLRequest(url: url)
-        // POST - safest method of passing data to the server
-        request.httpMethod = "POST"
-        // values to be sent to the server under keys (e.g. ID, TYPE)
-        let params = ["id": id, "type": imageViewTapped]
-        // MIME Boundary, Header
-        let boundary = "Boundary-\(NSUUID().uuidString)"
-        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        // if in the imageView is placeholder - send no picture to the server
-        // Compressing image and converting image to 'Data' type
-        var imageData = Data()
-        
-//        if imageView.image != UIImage(named: "HomeCover.jpg") && imageView.image != UIImage(named: "user.png") {
-//            imageData = imageView.image!.jpegData(compressionQuality: 0.5)!
-//        }
-        
-        imageData = imageView.image!.jpegData(compressionQuality: 0.5)!
-        // assigning full body to the request to be sent to the server
-        request.httpBody = Helper().body(with: params, filename: "\(imageViewTapped).jpg", filePathKey: "file", imageDataKey: imageData, boundary: boundary) as Data
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            DispatchQueue.main.async {
-                // error occured
-                if error != nil {
-                    Helper().showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
-                    return
-                }
-                do {
-                    // save mode of casting any data
-                    guard let data = data else {
-                        Helper().showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
-                        return
-                    }
-                    // fetching JSON generated by the server - php file
-                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
-                    
-                    // save method of accessing json constant
-                    guard let parsedJSON = json else {
-                        return
-                    }
-                    // uploaded successfully
-                    if parsedJSON["status"] as! String == "200" {
-                        print(currentUser1)
-                        // saving upaded user related information (e.g. ava's path, cover's path)
-                        currentUser1 = parsedJSON.mutableCopy()  as? Dictionary<String, Any>
-                        DEFAULTS.set(currentUser1, forKey: "currentUser")
-                        DEFAULTS.synchronize()
-                    // error while uploading
-                    } else {
-                        // show the error message in AlertView
-                        if parsedJSON["message"] != nil {
-                            let message = parsedJSON["message"] as! String
-                            Helper().showAlert(title: "Error", message: message, in: self)
-                        }
-                    }
-                } catch {
-                    Helper().showAlert(title: "JSON Error", message: error.localizedDescription, in: self)
-                }
-            }
-        }.resume()
-    }
+       let optionMenu = UIAlertController(title: "Choose Profile Picture", message: nil, preferredStyle: .actionSheet)
+
+       let takePhotoActio = UIAlertAction(title: "Choose Photo", style: .default) { (alert) in
+
+           let imagePicker = ImagePickerController()
+           imagePicker.delegate = self
+           imagePicker.imageLimit = 1
+
+           self.present(imagePicker, animated: true, completion: nil)
+       }
+
+       let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (alert) in
+
+       }
+
+       if profileIcon != nil {
+
+           let resetAction = UIAlertAction(title: "Reset", style: .default) { (alert) in
+
+               self.profileIcon = nil
+               self.avaImageView.image = UIImage(named: "user.png")
+               //self.editAvatarButtonOutlet.isHidden = true
+           }
+           optionMenu.addAction(resetAction)
+       }
+
+       optionMenu.addAction(takePhotoActio)
+       optionMenu.addAction(cancelAction)
+
+       if ( UI_USER_INTERFACE_IDIOM() == .pad )
+       {
+           if let currentPopoverpresentioncontroller = optionMenu.popoverPresentationController{
+
+//               currentPopoverpresentioncontroller.sourceView = editAvatarButtonOutlet
+//               currentPopoverpresentioncontroller.sourceRect = editAvatarButtonOutlet.bounds
+
+
+               currentPopoverpresentioncontroller.permittedArrowDirections = .up
+               self.present(optionMenu, animated: true, completion: nil)
+           }
+       } else {
+           self.present(optionMenu, animated: true, completion: nil)
+       }
+
+   }
     
+    
+   func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+       self.dismiss(animated: true, completion: nil)
+   }
    
+   func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+        if images.count > 0 {
+                  
+                  self.profileIcon = images.first!
+                  self.avaImageView.image = self.profileIcon!
+                  //self.editAvatarButtonOutlet.isHidden = false
+                  
+                  let avatarData = profileIcon?.jpegData(compressionQuality: 0.4)!
+                  let avatar = avatarData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+                  updateCurrentUserInFirestore(withValues: [kAVATAR : avatar!]) { (success) in
+                      
+                  }
+                  
+                  
+              }
+              
+              self.dismiss(animated: true, completion: nil)
+   }
+   
+   func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
+       self.dismiss(animated: true, completion: nil)
+   }
     
     
     
