@@ -15,6 +15,8 @@ class ParentRegisterVC: UIViewController {
     @IBOutlet weak var emailView_width: NSLayoutConstraint!
     @IBOutlet weak var passwordView_width: NSLayoutConstraint!
     
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
