@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 class ParentRegisterVC: UIViewController {
     
@@ -14,6 +15,7 @@ class ParentRegisterVC: UIViewController {
     @IBOutlet weak var nameView_width: NSLayoutConstraint!
     @IBOutlet weak var emailView_width: NSLayoutConstraint!
     @IBOutlet weak var passwordView_width: NSLayoutConstraint!
+    @IBOutlet weak var contentView_width: NSLayoutConstraint!
     
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -43,20 +45,137 @@ class ParentRegisterVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        contentView_width.constant = self.view.frame.width * 4
+        coachPassword_width.constant = self.view.frame.width
+        nameView_width.constant = self.view.frame.width
+        emailView_width.constant = self.view.frame.width
+        passwordView_width.constant = self.view.frame.width
+        
+        cornerRadius(for: firstNameTextField)
+        cornerRadius(for: lastNameTextField)
+        cornerRadius(for: emailTextField)
+        cornerRadius(for: passwordTextField)
+        cornerRadius(for: phoneTextField)
+        
+        cornerRadius(for: emailContinueButton)
+        cornerRadius(for: nameContinueButton)
+        cornerRadius(for: phoneContinueButton)
+        cornerRadius(for: finishButton)
+        
+        padding(for: emailTextField)
+        padding(for: firstNameTextField)
+        padding(for: lastNameTextField)
+        padding(for: passwordTextField)
+        
+        padding(for: phoneTextField)
+        
+        configure_footerView()
+        
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.white
     }
     
-    @IBAction func finishButtonClicked(_ sender: Any) {
+    // make corners rounded for any views (objects)
+    func cornerRadius(for view: UIView) {
+        view.layer.cornerRadius = 5
+        view.layer.masksToBounds = true
     }
     
-    @IBAction func phoneContinueClicked(_ sender: Any) {
+    // add blank view to the left side of the TextField (it'll act as a blank gap)
+    func padding(for textField: UITextField) {
+        let blankView = UIView.init(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
+        textField.leftView = blankView
+        textField.leftViewMode = .always
+    }
+    
+    // configuring the appearance of the footerView
+    func configure_footerView() {
+        // adding the line at the top of the footerView
+        let topLine = CALayer()
+        topLine.borderWidth = 1
+        topLine.borderColor = UIColor.lightGray.cgColor
+        topLine.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 1)
+        
+        footerView.layer.addSublayer(topLine)
     }
     
     @IBAction func emailContinueClicked(_ sender: Any) {
+        // move scrollView horizontally (by X to the WIDTH as a pointer)
+        let position = CGPoint(x: self.view.frame.width, y: 0)
+        scrollView.setContentOffset(position, animated: true)
+        
+        // show keyboard of next TextField
+        if firstNameTextField.text!.isEmpty {
+            firstNameTextField.becomeFirstResponder()
+        } else if lastNameTextField.text!.isEmpty {
+            lastNameTextField.becomeFirstResponder()
+        } else if firstNameTextField.text!.isEmpty == false && lastNameTextField.text!.isEmpty == false {
+            firstNameTextField.resignFirstResponder()
+            lastNameTextField.resignFirstResponder()
+        }
     }
     
     @IBAction func nameContinueClicked(_ sender: Any) {
+        let position = CGPoint(x: self.view.frame.width * 2, y: 0)
+        scrollView.setContentOffset(position, animated: true)
+        
+        // show keyboard of next TextField
+        if phoneTextField.text!.isEmpty {
+            phoneTextField.becomeFirstResponder()
+        } else if phoneTextField.text!.isEmpty == false {
+            phoneTextField.resignFirstResponder()
+        }
     }
+    
+    @IBAction func phoneContinueClicked(_ sender: Any) {
+        let position = CGPoint(x: self.view.frame.width * 3, y: 0)
+        scrollView.setContentOffset(position, animated: true)
+        
+        // show keyboard of next TextField
+        if passwordTextField.text!.isEmpty {
+            passwordTextField.becomeFirstResponder()
+        } else if passwordTextField.text!.isEmpty == false {
+            passwordTextField.resignFirstResponder()
+        }
+    }
+    
+    @IBAction func finishButtonClicked(_ sender: Any) {
+        let avatar = getAvatar()
+        let coverIMG = cover?.jpegData(compressionQuality: 0.7)
+        let coverData = coverIMG!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+        
+        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "parent", birthday: "", cover: coverData, phoneNumber: phoneTextField.text!) { (error)  in
+            
+                            if error != nil {
+                                ProgressHUD.dismiss()
+                                ProgressHUD.showError(error!.localizedDescription)
+                                return
+                            }
+            
+                            self.goToApp()
+            }
+    }
+    
+    func getAvatar() -> String {
+        let helper = Helper()
+        var avatar = ""
+        
+        helper.imageFromInitials(firstName: firstNameTextField.text!, lastName: lastNameTextField.text!) { (avatarInitials) in
+                
+                let avatarIMG = avatarInitials.jpegData(compressionQuality: 0.7)
+                avatar = avatarIMG!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+        }
+        return avatar
+    }
+    
+    func goToApp() {
+        let helper = Helper()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
+        // go to TabBar
+        helper.instantiateViewController(identifier: "ParentTabBar", animated: true, by: self, completion: nil)
+    }
+    
+    
     
     @IBAction func textFieldDidChange(_ sender: UITextField) {
     }

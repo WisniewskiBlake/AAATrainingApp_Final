@@ -171,18 +171,14 @@ class CoachRegisterVC: UIViewController {
     
     func getAvatar() -> String {
         let helper = Helper()
-        
         var avatar = ""
         
         helper.imageFromInitials(firstName: firstNameTextField.text!, lastName: lastNameTextField.text!) { (avatarInitials) in
                 
                 let avatarIMG = avatarInitials.jpegData(compressionQuality: 0.7)
                 avatar = avatarIMG!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-                
         }
-            
         return avatar
-
     }
     
     
