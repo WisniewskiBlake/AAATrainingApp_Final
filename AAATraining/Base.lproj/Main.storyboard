@@ -4072,7 +4072,7 @@
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="emailContinue_clicked:" destination="t5H-gz-0An" eventType="touchUpInside" id="3pY-Nn-VoM"/>
+                                                            <action selector="phoneContinueClicked:" destination="t5H-gz-0An" eventType="touchUpInside" id="jRR-A6-dGP"/>
                                                         </connections>
                                                     </button>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone Ex: 9891234567" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Vl-Ig-8q8">
@@ -4132,7 +4132,7 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                                         <connections>
-                                                            <action selector="textFieldDidChange:" destination="t5H-gz-0An" eventType="editingChanged" id="hk4-8A-To0"/>
+                                                            <action selector="textFieldDidChange:" destination="t5H-gz-0An" eventType="editingChanged" id="7K3-Sm-0v7"/>
                                                         </connections>
                                                     </textField>
                                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bdi-0l-sIQ">
@@ -4146,7 +4146,7 @@
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="passwordContinue_clicked:" destination="t5H-gz-0An" eventType="touchUpInside" id="N8C-9a-RMc"/>
+                                                            <action selector="finishButtonClicked:" destination="t5H-gz-0An" eventType="touchUpInside" id="67l-tB-iK0"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -4240,15 +4240,16 @@
                         <outlet property="emailContinueButton" destination="4FR-jF-zqn" id="GHI-U4-QEV"/>
                         <outlet property="emailTextField" destination="G6l-pf-bYP" id="4Wl-Dj-AVs"/>
                         <outlet property="emailView_width" destination="YhW-4Z-FEU" id="dQU-GU-FG2"/>
+                        <outlet property="finishButton" destination="Bdi-0l-sIQ" id="o0v-8j-Tah"/>
                         <outlet property="firstNameTextField" destination="GAF-M5-3VJ" id="hxG-wZ-LIe"/>
                         <outlet property="footerView" destination="d5H-NX-WDW" id="Drc-N7-jwC"/>
                         <outlet property="lastNameTextField" destination="69i-bS-BhL" id="aIy-da-woO"/>
                         <outlet property="nameContinueButton" destination="H5G-Na-gjk" id="3qN-BF-1Ch"/>
                         <outlet property="nameView_width" destination="2oH-8H-ORG" id="j7B-lv-45f"/>
-                        <outlet property="passwordContinueButton" destination="Bdi-0l-sIQ" id="eE6-gt-agw"/>
-                        <outlet property="passwordTextField" destination="Qvp-gO-gTO" id="RFU-Ke-Njh"/>
+                        <outlet property="passwordTextField" destination="Qvp-gO-gTO" id="3OQ-7y-f42"/>
                         <outlet property="passwordView_width" destination="nn2-qM-WCr" id="BQN-43-CZP"/>
-                        <outlet property="phoneTextField" destination="3Vl-Ig-8q8" id="Xy8-eC-NVi"/>
+                        <outlet property="phoneContinueButton" destination="lLE-dP-A9Q" id="hmu-h2-B4b"/>
+                        <outlet property="phoneTextField" destination="3Vl-Ig-8q8" id="uaO-Ke-Zse"/>
                         <outlet property="scrollView" destination="7pk-SK-PUa" id="X1z-CV-rU0"/>
                     </connections>
                 </viewController>
