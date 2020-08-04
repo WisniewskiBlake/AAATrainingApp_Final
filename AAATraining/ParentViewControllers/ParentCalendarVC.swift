@@ -7,13 +7,23 @@
 //
 
 import UIKit
+import FSCalendar
+import Firebase
+import FirebaseFirestore
+import ProgressHUD
 
-class ParentCalendarVC: UIViewController {
-
+class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance {
+    
+    @IBOutlet weak var calendar: FSCalendar!
+    
+    var allEvents: [Event] = []
+    var recentListener: ListenerRegistration!
+    var allEventDates: [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        
     }
     
 

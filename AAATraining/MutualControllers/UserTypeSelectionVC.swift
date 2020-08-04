@@ -48,7 +48,7 @@ class UserTypeSelectionVC: UIViewController {
             
             self.navigationController?.pushViewController(pRegisterVC, animated: true)
         } else if viewToGoTo == "ParentRegister" {
-            let newGroupVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newGroupView") as! NewGroupVC_Coach
+            let newGroupVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ParentRegister") as! ParentRegisterVC
             
             
             self.navigationController?.pushViewController(newGroupVC, animated: true)
