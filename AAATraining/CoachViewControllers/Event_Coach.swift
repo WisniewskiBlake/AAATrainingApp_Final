@@ -29,6 +29,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     var updateNeeded: Bool = false
     var eventID: String = ""
     var event = Event()
+    var accountType = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +47,9 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             self.navigationItem.rightBarButtonItem?.title = "Update"
         } else {
             deleteButton.isHidden = true
+        }
+        if accountType != "coach" {
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
         }
     }
     

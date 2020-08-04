@@ -97,6 +97,7 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
                 eventVC.updateNeeded = false
                 eventVC.eventID = event.eventID
                 eventVC.event = event
+                eventVC.accountType = "player"
             } else {
                 eventVC.eventText = ""
             }

@@ -85,6 +85,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
                 eventVC.updateNeeded = false
                 eventVC.eventID = event.eventID
                 eventVC.event = event
+                eventVC.accountType = "parent"
             } else {
                 eventVC.eventText = ""
             }

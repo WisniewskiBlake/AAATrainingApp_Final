@@ -84,6 +84,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                 eventVC.updateNeeded = true
                 eventVC.eventID = event.eventID                
                 eventVC.event = event
+                eventVC.accountType = "coach"
             } else {
                 eventVC.eventText = ""
             }
