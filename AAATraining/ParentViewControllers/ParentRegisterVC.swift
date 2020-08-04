@@ -177,7 +177,41 @@ class ParentRegisterVC: UIViewController {
     
     
     
-    @IBAction func textFieldDidChange(_ sender: UITextField) {
+    @IBAction func textFieldDidChange(_ textField: UITextField) {
+        let helper = Helper()
+        
+        // logic for Email TextField
+        if textField == emailTextField {
+            
+            // check email validation
+            if helper.isValid(email: emailTextField.text!) {
+                emailContinueButton.isHidden = false
+            }
+            
+        // logic for First Name or Last Name TextFields
+        } else if textField == firstNameTextField || textField == lastNameTextField {
+            
+            // check fullname validation
+            if helper.isValid(name: firstNameTextField.text!) && helper.isValid(name: lastNameTextField.text!) {
+                nameContinueButton.isHidden = false
+            }
+            
+        // logic for Password TextField
+        } else if textField == phoneTextField {
+            
+            // check email validation
+            if helper.isValid(phone: phoneTextField.text!) {
+                phoneContinueButton.isHidden = false
+            }
+            
+        // logic for First Name or Last Name TextFields
+        } else if textField == passwordTextField {
+            
+            // check password validation
+            if passwordTextField.text!.count >= 6 {
+                finishButton.isHidden = false
+            }
+        }
     }
     
 }
