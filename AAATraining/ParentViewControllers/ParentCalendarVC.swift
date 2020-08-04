@@ -82,7 +82,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         for event in allEvents {
             if event.eventDate == dateString {
                 //eventVC.eventText = event.eventText
-                eventVC.updateNeeded = true
+                eventVC.updateNeeded = false
                 eventVC.eventID = event.eventID
                 eventVC.event = event
             } else {
