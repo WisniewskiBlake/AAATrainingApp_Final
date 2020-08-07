@@ -93,7 +93,6 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         
         eventVC.hidesBottomBarWhenPushed = true
         eventVC.dateString = dateString
-        
         self.navigationController?.present(navController, animated: true, completion: nil)
     }
     

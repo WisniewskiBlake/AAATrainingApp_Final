@@ -1726,21 +1726,52 @@
             </objects>
             <point key="canvasLocation" x="5310" y="2150"/>
         </scene>
-        <!--View Controller-->
+        <!--Event-->
         <scene sceneID="BIU-Ac-Y6e">
             <objects>
-                <viewController id="QND-vB-1DL" sceneMemberID="viewController">
+                <viewController id="QND-vB-1DL" customClass="PlayerEvent" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wLM-HS-9yQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="xIp-LO-krf">
+                                <rect key="frame" x="16" y="145" width="343" height="137"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="cGp-No-v10" id="eMe-sZ-zUd"/>
+                                </connections>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2EL-Qm-5yd">
+                                <rect key="frame" x="16" y="104" width="343" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Event here..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EGh-Ll-9zf">
+                                <rect key="frame" x="28" y="157" width="108.5" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="n4l-P8-1rY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="NFC-DU-5WF"/>
+                    <navigationItem key="navigationItem" title="Event" id="NFC-DU-5WF">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="Gsa-86-MVf">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yde-nn-HO4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6913" y="2151"/>
+            <point key="canvasLocation" x="6912.8000000000002" y="2150.3748125937032"/>
         </scene>
         <!--Workout Feed-->
         <scene sceneID="iyN-6G-yNa">
@@ -3892,6 +3923,10 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="h4J-ls-Iht">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.1006183103" green="0.2956552207" blue="0.71825700999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -4260,7 +4295,6 @@
         <!--View Controller-->
         <scene sceneID="DiC-jE-HUj">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Z1z-Me-YLy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController id="FNf-5w-pA4" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dwR-0H-4Jb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -4270,13 +4304,13 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="chat" selectedImage="chat" id="kni-4k-8Bd"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Z1z-Me-YLy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2121" y="1485"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="UtG-hn-8cl">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="VVm-M1-fel" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tabBarController storyboardIdentifier="ParentTabBar" id="vfI-Eh-Xs6" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="sAh-1y-DPY">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
@@ -4287,6 +4321,7 @@
                         <segue destination="FNf-5w-pA4" kind="relationship" relationship="viewControllers" id="THu-yS-lb9"/>
                     </connections>
                 </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VVm-M1-fel" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1372" y="1485"/>
         </scene>

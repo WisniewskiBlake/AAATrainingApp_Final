@@ -21,7 +21,6 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     @IBOutlet weak var placeHolderLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
     
-    
     var dateString: String = ""
     let formatter = DateFormatter()
     let helper = Helper()
@@ -57,10 +56,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         let eventText = textView.text
         
         if updateNeeded == true {
-//            let eventOwnerID = FUser.currentId()
-//            let eventAccountType = FUser.currentUser()?.accountType
-//            //let eventDate = helper.dateFormatter().string(from: Date())
-//            let event = Event(eventID: eventID, eventOwnerID: eventOwnerID, eventText: eventText!, eventDate: dateString, eventAccountType: eventAccountType!)
+
             event.updateEvent(eventID: eventID, withValues: [kEVENTTEXT : eventText!])
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
         } else {
@@ -72,11 +68,6 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             event.saveEvent()
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
         }
-        
-        
-        
-        
-        
         
         
     }
