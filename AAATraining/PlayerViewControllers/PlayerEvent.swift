@@ -7,9 +7,18 @@
 //
 
 import UIKit
+import ProgressHUD
+import Firebase
+import FirebaseCore
+import FirebaseFirestore
 
-class PlayerEvent: UIViewController {
+class PlayerEvent: UIViewController, UITextViewDelegate, UINavigationControllerDelegate {
 
+    @IBOutlet weak var backButton: UIBarButtonItem!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var placeHolderLabel: UILabel!
+    @IBOutlet weak var textView: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
