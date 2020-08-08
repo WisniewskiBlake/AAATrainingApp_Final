@@ -18,6 +18,12 @@ class ParentEvent: UIViewController, UITextViewDelegate, UINavigationControllerD
     @IBOutlet weak var placeHolderLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
     
+    var dateString: String = ""
+    let formatter = DateFormatter()
+    let helper = Helper()
+    var eventText: String = ""
+    var event = Event()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
