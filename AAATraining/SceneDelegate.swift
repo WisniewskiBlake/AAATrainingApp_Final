@@ -101,6 +101,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
             print(FUser.currentId())
             let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoachTabBar")
           self.window?.rootViewController = TabBar
+        } else if accountType == "parent" {
+            print(FUser.currentId())
+            let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ParentTabBar")
+          self.window?.rootViewController = TabBar
         } else {
             // accessing TabBar controller via Main.storyboard
             let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabBar")

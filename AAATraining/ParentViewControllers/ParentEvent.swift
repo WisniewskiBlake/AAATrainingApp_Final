@@ -14,6 +14,7 @@ import FirebaseFirestore
 
 class ParentEvent: UIViewController, UITextViewDelegate, UINavigationControllerDelegate {
     
+    @IBOutlet weak var rightButton: UIBarButtonItem!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var placeHolderLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
@@ -26,6 +27,8 @@ class ParentEvent: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         
         dateLabel.text = dateString
         textView.text = event.eventText

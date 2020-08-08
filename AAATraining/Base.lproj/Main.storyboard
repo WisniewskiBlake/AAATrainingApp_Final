@@ -1442,13 +1442,15 @@
                         <viewLayoutGuide key="safeArea" id="NnO-cB-UAI"/>
                     </view>
                     <navigationItem key="navigationItem" title="Edit Stats" id="z45-vL-gRD">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="eM2-Mj-u83">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="eM2-Mj-u83">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="cancelButton_clicked:" destination="uDR-2j-KOc" id="pss-ef-QRH"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" width="3" systemItem="save" id="l8O-3L-0vi">
                             <inset key="largeContentSizeImageInsets" minX="0.0" minY="0.0" maxX="1" maxY="0.0"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="saveButton_clicked:" destination="uDR-2j-KOc" id="jeM-op-m7k"/>
                             </connections>
@@ -1474,6 +1476,10 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="kZ7-1W-s1k">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.1006183103" green="0.2956552207" blue="0.71825700999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1729,7 +1735,7 @@
         <!--Event-->
         <scene sceneID="BIU-Ac-Y6e">
             <objects>
-                <viewController id="QND-vB-1DL" customClass="PlayerEvent" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PlayerEvent" id="QND-vB-1DL" customClass="PlayerEvent" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wLM-HS-9yQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3962,7 +3968,7 @@
         <!--Parent RegisterVC-->
         <scene sceneID="hP1-cd-ArE">
             <objects>
-                <viewController storyboardIdentifier="ParentRegisterVC" id="t5H-gz-0An" customClass="ParentRegisterVC" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ParentRegister" id="t5H-gz-0An" customClass="ParentRegisterVC" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="drt-kq-eli">
                         <rect key="frame" x="0.0" y="0.0" width="1500" height="587"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -4013,7 +4019,7 @@
                                                             <constraint firstAttribute="height" constant="35" id="PFa-jt-Lno"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                        <textInputTraits key="textInputTraits"/>
                                                         <connections>
                                                             <action selector="textFieldDidChange:" destination="t5H-gz-0An" eventType="editingChanged" id="DjH-UT-kbK"/>
                                                         </connections>
@@ -4453,7 +4459,7 @@
         <!--Event-->
         <scene sceneID="eEu-56-l4g">
             <objects>
-                <viewController id="Rdh-Sk-dJR" customClass="ParentEvent" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ParentEvent" id="Rdh-Sk-dJR" customClass="ParentEvent" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gJr-Mb-dyG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -4507,10 +4513,12 @@
                                 <action selector="backButtonPressed:" destination="Rdh-Sk-dJR" id="8NZ-dm-D6Z"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="NWH-5g-2w7"/>
                     </navigationItem>
                     <connections>
                         <outlet property="dateLabel" destination="wyl-yV-Q9l" id="j0n-8s-umL"/>
                         <outlet property="placeHolderLabel" destination="Ty6-OW-Ebl" id="EQT-5T-Pq8"/>
+                        <outlet property="rightButton" destination="NWH-5g-2w7" id="Gnk-uA-lpi"/>
                         <outlet property="textView" destination="ibj-SO-YlK" id="58f-hC-hLL"/>
                     </connections>
                 </viewController>
@@ -4578,7 +4586,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Hdq-ab-cPf" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="calendar.circle" catalog="system" selectedImage="calendar.circle.fill" id="CQZ-sQ-VVt">
-                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="20"/>
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="50"/>
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Ztc-bU-jr4">

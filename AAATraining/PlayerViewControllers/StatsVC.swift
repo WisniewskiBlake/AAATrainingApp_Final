@@ -80,19 +80,19 @@ class StatsVC: UIViewController {
                 Helper().showAlert(title: "Error", message: "Please select a stat", in: self)
             } else if cellText == "Height" {
                 if Helper().isValid(height: statTextField.text!) {
-                    self.updateStats()
+                    self.updateStats(stat: cellText.lowercased(), value: statTextField.text!)
                 }
             } else if cellText == "Weight" {
                 if Helper().isValid(weight: statTextField.text!) {
-                    self.updateStats()
+                    self.updateStats(stat: cellText.lowercased(), value: statTextField.text!)
                 }
             } else if cellText == "Position" {
                 if Helper().isValid(position: statTextField.text!) {
-                    self.updateStats()
+                    self.updateStats(stat: cellText.lowercased(), value: statTextField.text!)
                 }
             } else if cellText == "Number" {
                 if Helper().isValid(number: statTextField.text!) {
-                    self.updateStats()
+                    self.updateStats(stat: cellText.lowercased(), value: statTextField.text!)
                 }
             }
         } else {
@@ -101,8 +101,10 @@ class StatsVC: UIViewController {
     }
     
     // updating bio by sending request to the server
-    func updateStats() {
-        
+    func updateStats(stat: String, value: String) {
+        updateCurrentUserInFirestore(withValues: [stat : value]) { (success) in
+            
+        }
         
     }
     

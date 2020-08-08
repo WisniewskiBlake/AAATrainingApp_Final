@@ -76,16 +76,13 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         calendar.formatter.dateFormat = "EEEE, MM-dd-YYYY"
         let dateString = calendar.formatter.string(from: date)
         
-        let eventVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as! Event_Coach
+        let eventVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ParentEvent") as! ParentEvent
         let navController = UINavigationController(rootViewController: eventVC)
         
         for event in allEvents {
-            if event.eventDate == dateString {
-                //eventVC.eventText = event.eventText
-                eventVC.updateNeeded = false
-                eventVC.eventID = event.eventID
+            if event.eventDate == dateString {                
                 eventVC.event = event
-                eventVC.accountType = "parent"
+                
             } else {
                 eventVC.eventText = ""
             }
