@@ -1581,7 +1581,7 @@
             </objects>
             <point key="canvasLocation" x="5310" y="800"/>
         </scene>
-        <!--Player Recent ChatVC-->
+        <!--Chats-->
         <scene sceneID="D9s-LM-fC3">
             <objects>
                 <viewController id="cQP-Hp-tVS" customClass="PlayerRecentChatVC" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
@@ -1690,7 +1690,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="87d-bT-hDI"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Py9-tJ-u0a"/>
+                    <navigationItem key="navigationItem" title="Chats" id="Py9-tJ-u0a"/>
                     <connections>
                         <outlet property="tableView" destination="cU0-7F-DBa" id="Bqd-dV-yNo"/>
                     </connections>
@@ -1747,7 +1747,7 @@
                                     <constraint firstAttribute="height" constant="137" id="XHz-8m-6XJ"/>
                                 </constraints>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <connections>
                                     <outlet property="delegate" destination="cGp-No-v10" id="eMe-sZ-zUd"/>
@@ -2949,7 +2949,7 @@
                                     <constraint firstAttribute="height" constant="112" id="Hem-b9-79T"/>
                                 </constraints>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <connections>
                                     <outlet property="delegate" destination="cGp-No-v10" id="a6G-nL-qXg"/>
@@ -4320,7 +4320,7 @@
             </objects>
             <point key="canvasLocation" x="2272" y="763"/>
         </scene>
-        <!--Parent Recent Chat-->
+        <!--Chats-->
         <scene sceneID="DiC-jE-HUj">
             <objects>
                 <viewController id="FNf-5w-pA4" customClass="ParentRecentChat" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
@@ -4347,8 +4347,8 @@
                                                         <constraint firstAttribute="height" constant="80" id="RhT-aP-aVq"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Full Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ehh-Y3-GqX">
-                                                    <rect key="frame" x="93" y="16" width="158" height="32"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Full Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ehh-Y3-GqX">
+                                                    <rect key="frame" x="93" y="16" width="163" height="32"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="32" id="qLl-Hu-ktf"/>
                                                     </constraints>
@@ -4429,14 +4429,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="lXe-dw-1l9"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="chat" selectedImage="chat" id="kni-4k-8Bd"/>
+                    <navigationItem key="navigationItem" title="Chats" id="8i5-Qc-xXT"/>
                     <connections>
                         <outlet property="tableView" destination="2uc-yK-dtN" id="ygF-hl-kQD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z1z-Me-YLy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2121" y="1485"/>
+            <point key="canvasLocation" x="2823" y="1485"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="UtG-hn-8cl">
@@ -4449,7 +4449,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="Hdq-ab-cPf" kind="relationship" relationship="viewControllers" id="CeM-3M-bPA"/>
-                        <segue destination="FNf-5w-pA4" kind="relationship" relationship="viewControllers" id="THu-yS-lb9"/>
+                        <segue destination="E8o-iQ-apd" kind="relationship" relationship="viewControllers" id="Dow-5f-fRA"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VVm-M1-fel" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -4464,14 +4464,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ibj-SO-YlK">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ibj-SO-YlK">
                                 <rect key="frame" x="16" y="144" width="343" height="134"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="134" id="CEF-SB-iSg"/>
                                 </constraints>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <connections>
                                     <outlet property="delegate" destination="cGp-No-v10" id="Iid-LP-azY"/>
@@ -4513,12 +4513,10 @@
                                 <action selector="backButtonPressed:" destination="Rdh-Sk-dJR" id="8NZ-dm-D6Z"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="NWH-5g-2w7"/>
                     </navigationItem>
                     <connections>
                         <outlet property="dateLabel" destination="wyl-yV-Q9l" id="j0n-8s-umL"/>
                         <outlet property="placeHolderLabel" destination="Ty6-OW-Ebl" id="EQT-5T-Pq8"/>
-                        <outlet property="rightButton" destination="NWH-5g-2w7" id="Gnk-uA-lpi"/>
                         <outlet property="textView" destination="ibj-SO-YlK" id="58f-hC-hLL"/>
                     </connections>
                 </viewController>
@@ -4585,9 +4583,7 @@
         <scene sceneID="h06-1K-CNE">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Hdq-ab-cPf" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="calendar.circle" catalog="system" selectedImage="calendar.circle.fill" id="CQZ-sQ-VVt">
-                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="50"/>
-                    </tabBarItem>
+                    <tabBarItem key="tabBarItem" title="" image="calendar.circle" catalog="system" selectedImage="calendar.circle.fill" id="CQZ-sQ-VVt"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Ztc-bU-jr4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -4604,7 +4600,30 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GYv-T1-4yM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1372" y="2149"/>
+            <point key="canvasLocation" x="1372" y="2150"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="NqA-3r-fyU">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="E8o-iQ-apd" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="chat" selectedImage="chat" id="kni-4k-8Bd"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="2vY-Rp-Gmq">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.1006183103" green="0.2956552207" blue="0.71825700999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="FNf-5w-pA4" kind="relationship" relationship="rootViewController" id="HgV-bD-1iI"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qyZ-7G-vGU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2120.8000000000002" y="1484.7076461769116"/>
         </scene>
     </scenes>
     <resources>
