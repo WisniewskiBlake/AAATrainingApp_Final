@@ -24,6 +24,7 @@ class PlayerRecentChatVC: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
 
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.1006183103, green: 0.2956552207, blue: 0.71825701, alpha: 1)
        navigationItem.searchController = searchController
        navigationItem.hidesSearchBarWhenScrolling = true
        
