@@ -19,6 +19,15 @@ class PlayerEvent: UIViewController, UITextViewDelegate, UINavigationControllerD
     @IBOutlet weak var placeHolderLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
     
+    var dateString: String = ""
+    let formatter = DateFormatter()
+    let helper = Helper()
+    var eventText: String = ""
+    var updateNeeded: Bool = false
+    var eventID: String = ""
+    var event = Event()
+    var accountType = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
