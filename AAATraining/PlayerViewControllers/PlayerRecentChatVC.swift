@@ -43,7 +43,6 @@ class PlayerRecentChatVC: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     //MARK: LoadRecentChats
-    
     func loadRecentChats() {
         recentListener = reference(.Recent).whereField(kUSERID, isEqualTo: FUser.currentId()).addSnapshotListener({ (snapshot, error) in
             let helper = Helper()
