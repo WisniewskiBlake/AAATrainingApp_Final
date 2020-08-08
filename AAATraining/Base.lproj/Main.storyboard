@@ -4340,6 +4340,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
+                        <segue destination="Hdq-ab-cPf" kind="relationship" relationship="viewControllers" id="CeM-3M-bPA"/>
                         <segue destination="FNf-5w-pA4" kind="relationship" relationship="viewControllers" id="THu-yS-lb9"/>
                     </connections>
                 </tabBarController>
@@ -4347,21 +4348,73 @@
             </objects>
             <point key="canvasLocation" x="1372" y="1485"/>
         </scene>
-        <!--View Controller-->
+        <!--Event-->
         <scene sceneID="eEu-56-l4g">
             <objects>
-                <viewController id="Rdh-Sk-dJR" sceneMemberID="viewController">
+                <viewController id="Rdh-Sk-dJR" customClass="ParentEvent" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gJr-Mb-dyG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ibj-SO-YlK">
+                                <rect key="frame" x="16" y="144" width="343" height="134"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="134" id="CEF-SB-iSg"/>
+                                </constraints>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="cGp-No-v10" id="Iid-LP-azY"/>
+                                </connections>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wyl-yV-Q9l">
+                                <rect key="frame" x="16" y="96" width="343" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="2BE-00-ZiM"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event here..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ty6-OW-Ebl">
+                                <rect key="frame" x="28" y="156" width="108.5" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="m6h-7B-d3A" firstAttribute="trailing" secondItem="ibj-SO-YlK" secondAttribute="trailing" constant="16" id="JVW-QR-2zi"/>
+                            <constraint firstItem="wyl-yV-Q9l" firstAttribute="top" secondItem="m6h-7B-d3A" secondAttribute="top" constant="52" id="MUW-oD-FKa"/>
+                            <constraint firstItem="m6h-7B-d3A" firstAttribute="trailing" secondItem="wyl-yV-Q9l" secondAttribute="trailing" constant="16" id="XPP-nr-5Ig"/>
+                            <constraint firstItem="ibj-SO-YlK" firstAttribute="leading" secondItem="m6h-7B-d3A" secondAttribute="leading" constant="16" id="fcr-vH-tRL"/>
+                            <constraint firstItem="ibj-SO-YlK" firstAttribute="leading" secondItem="Ty6-OW-Ebl" secondAttribute="trailing" constant="-120.5" id="g2W-4S-aIm"/>
+                            <constraint firstItem="ibj-SO-YlK" firstAttribute="top" secondItem="wyl-yV-Q9l" secondAttribute="bottom" constant="8" id="kEh-jf-Hxt"/>
+                            <constraint firstItem="wyl-yV-Q9l" firstAttribute="leading" secondItem="m6h-7B-d3A" secondAttribute="leading" constant="16" id="tcW-0b-260"/>
+                            <constraint firstItem="ibj-SO-YlK" firstAttribute="top" secondItem="Ty6-OW-Ebl" secondAttribute="bottom" constant="-36" id="vhr-OP-NZD"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="m6h-7B-d3A"/>
                     </view>
-                    <navigationItem key="navigationItem" id="CjE-Uk-Dz7"/>
+                    <navigationItem key="navigationItem" title="Event" id="CjE-Uk-Dz7">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="NdR-cH-lhJ">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="backButtonPressed:" destination="Rdh-Sk-dJR" id="8NZ-dm-D6Z"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="dateLabel" destination="wyl-yV-Q9l" id="j0n-8s-umL"/>
+                        <outlet property="placeHolderLabel" destination="Ty6-OW-Ebl" id="EQT-5T-Pq8"/>
+                        <outlet property="textView" destination="ibj-SO-YlK" id="58f-hC-hLL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3vW-pS-BVY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2121" y="2812"/>
+            <point key="canvasLocation" x="2120.8000000000002" y="2811.5442278860573"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="BaY-XJ-gat">
@@ -4371,6 +4424,10 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="FNL-eA-hbn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.1006183103" green="0.2956552207" blue="0.71825700999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -4418,6 +4475,10 @@
         <scene sceneID="h06-1K-CNE">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Hdq-ab-cPf" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="calendar.circle" catalog="system" selectedImage="calendar.circle.fill" id="CQZ-sQ-VVt">
+                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-3"/>
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="20"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Ztc-bU-jr4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
