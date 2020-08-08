@@ -40,6 +40,12 @@ class StatsVC: UIViewController {
         loadUser()
     }
     
+    @IBAction func textFieldDidChange(_ sender: Any) {
+        if statTextField.text!.isEmpty == false && cellText != "Select Stat"  {
+            saveButton.isEnabled = true
+        }
+    }
+    
     // configures appearance of avaImageView
     func configure_avaImageView() {
         avaImageView.layer.cornerRadius = avaImageView.frame.width / 2
@@ -101,9 +107,9 @@ class StatsVC: UIViewController {
     }
     
     // updating bio by sending request to the server
-    func updateStats(stat: String, value: String) {
+    @objc func updateStats(stat: String, value: String) {
         updateCurrentUserInFirestore(withValues: [stat : value]) { (success) in
-            
+            self.dismiss(animated: true, completion: nil)
         }
         
     }
