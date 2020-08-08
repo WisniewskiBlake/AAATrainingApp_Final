@@ -23,19 +23,33 @@ class PlayerEvent: UIViewController, UITextViewDelegate, UINavigationControllerD
     let formatter = DateFormatter()
     let helper = Helper()
     var eventText: String = ""
-    var updateNeeded: Bool = false
-    var eventID: String = ""
     var event = Event()
     var accountType = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        dateLabel.text = dateString
+        textView.text = event.eventText
+        if event.eventText != "" {
+            placeHolderLabel.isHidden = true
+        } else {
+            placeHolderLabel.isHidden = false
+        }
+        
     }
     
 
     
+    @IBAction func backButtonPressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    // make corners rounded for any views (objects)
+    func cornerRadius(for view: UIView) {
+        view.layer.cornerRadius = 5
+        view.layer.masksToBounds = true
+    }
     
 
 }

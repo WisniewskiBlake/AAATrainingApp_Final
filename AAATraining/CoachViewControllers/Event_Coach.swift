@@ -47,9 +47,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         } else {
             deleteButton.isHidden = true
         }
-        if accountType != "coach" {
-            self.navigationItem.rightBarButtonItem?.isEnabled = false
-        }
+        
     }
     
     func createEvent() {
