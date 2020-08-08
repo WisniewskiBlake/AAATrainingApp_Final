@@ -26,12 +26,20 @@ class ParentEvent: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        dateLabel.text = dateString
+        textView.text = event.eventText
+        if event.eventText != "" {
+            placeHolderLabel.isHidden = true
+        } else {
+            placeHolderLabel.isHidden = false
+        }
 
         
     }
     
     @IBAction func backButtonPressed(_ sender: Any) {
-        
+        dismiss(animated: true, completion: nil)
     }
     
     
