@@ -59,6 +59,9 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
         configure_avaImageView()
         loadUser()
     }
+//    override func viewWillAppear(_ animated: Bool) {
+//        loadUser()
+//    }
     
     // MARK: - Load User
     // loads all user related information to be shown in the header
@@ -207,6 +210,35 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
     
     
     
+    @IBAction func moreButton_clicked(_ sender: Any) {
+        // creating action sheet
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // creating buttons for action sheet
+        let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
+            
+            // access/instantiate loginViewController
+            let loginvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+            
+            FUser.logOutCurrentUser { (success) in
+                
+                if success {
+                    self.present(loginvc, animated: false, completion: nil)
+                }
+                
+            }
+            
+        })
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        // add buttons to action sheet
+        sheet.addAction(logout)
+        sheet.addAction(cancel)
+        
+        // show action sheet
+        present(sheet, animated: true, completion: nil)
+    }
     
     
     

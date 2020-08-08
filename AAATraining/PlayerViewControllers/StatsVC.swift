@@ -67,15 +67,28 @@ class StatsVC: UIViewController {
     
     // loads all user related information to be shown in the header
     func loadUser() {
-        
+        let helper = Helper()
+        let user = FUser.currentUser()
         // safe method of accessing user related information in glob var
-        guard let firstName = currentUser1?["firstName"], let lastName = currentUser1?["lastName"], let avaPath = currentUser1?["ava"] else {
+        guard let firstName = user?.firstname, let lastName = user?.lastname, let avaPath = user?.ava else {
             return
         }
+        // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
+        if avaPath != "" {
+            helper.imageFromData(pictureData: avaPath) { (avatarImage) in
+                
+                if avatarImage != nil {
+                    avaImageView.image = avatarImage!
+                    
+                }
+            }
+        } else{
+            avaImageView.image = UIImage(named: "user.png")
+            
+        }
         
-        fullnameLabel.text = "\((firstName as! String).capitalized) \((lastName as! String).capitalized)"
+        fullnameLabel.text = "\((firstName).capitalized) \((lastName).capitalized)"
         
-         Helper().downloadImage(from: avaPath as! String, showIn: self.avaImageView, orShow: "user.png")
         
         
     }
@@ -109,9 +122,10 @@ class StatsVC: UIViewController {
     // updating bio by sending request to the server
     @objc func updateStats(stat: String, value: String) {
         updateCurrentUserInFirestore(withValues: [stat : value]) { (success) in
-            self.dismiss(animated: true, completion: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateStats"), object: nil)
         }
         
+        self.dismiss(animated: true, completion: nil)
     }
     
     

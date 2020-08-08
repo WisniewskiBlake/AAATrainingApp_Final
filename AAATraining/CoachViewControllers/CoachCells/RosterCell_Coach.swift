@@ -16,6 +16,7 @@ class RosterCell_Coach: UITableViewCell {
     
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var fullNameLabel: UILabel!
+    @IBOutlet weak var infoLabel: UILabel!
     
     let tapGestureRecognizer = UITapGestureRecognizer()
     
@@ -41,6 +42,15 @@ class RosterCell_Coach: UITableViewCell {
         self.indexPath = indexPath
         
         self.fullNameLabel.text = fUser.firstname + " " + fUser.lastname
+        
+        if fUser.accountType == "player" {
+            self.infoLabel.text = fUser.position.capitalized + ", #" + fUser.number
+        } else if fUser.accountType == "coach" {
+            self.infoLabel.text = "Coach"
+        } else {
+            self.infoLabel.text = ""
+        }
+        
         
         if fUser.ava != "" {
             
