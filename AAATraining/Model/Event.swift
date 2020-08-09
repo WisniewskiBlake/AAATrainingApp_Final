@@ -15,7 +15,7 @@ public class Event {
     var eventText: String
     var eventDate: String
     var eventAccountType: String
-    var eventCounter: String
+    var eventCounter: Int
     
     
     
@@ -27,11 +27,11 @@ public class Event {
         eventText = ""
         eventDate = ""
         eventAccountType = ""
-        eventCounter = ""
+        eventCounter = 0
         eventDictionary = NSMutableDictionary(objects: [eventID, eventOwnerID, eventText, eventDate, eventAccountType, eventCounter], forKeys: [kEVENTID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying, kEVENTCOUNTER as NSCopying])
     }
 
-    init(eventID: String, eventOwnerID: String, eventText: String, eventDate: String, eventAccountType: String, eventCounter: String) {
+    init(eventID: String, eventOwnerID: String, eventText: String, eventDate: String, eventAccountType: String, eventCounter: Int) {
 
         eventDictionary = NSMutableDictionary(objects: [eventID, eventOwnerID, eventText, eventDate, eventAccountType, eventCounter], forKeys: [kEVENTID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying, kEVENTCOUNTER as NSCopying])
         
@@ -66,9 +66,9 @@ public class Event {
            eventAccountType = ""
        }
         if let eC = _dictionary[kEVENTCOUNTER] {
-            eventCounter = eC as! String
+            eventCounter = eC as! Int
         } else {
-            eventCounter = ""
+            eventCounter = 0
         }
        
         

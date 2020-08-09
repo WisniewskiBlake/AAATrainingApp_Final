@@ -87,7 +87,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                 eventVC.eventCounter = event.eventCounter
             } else {
                 eventVC.eventText = ""
-                eventVC.eventCounter = "0"
+//                eventVC.eventCounter = 0
             }
         }
         

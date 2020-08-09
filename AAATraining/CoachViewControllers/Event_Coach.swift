@@ -29,7 +29,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     var eventID: String = ""
     var event = Event()
     var accountType = ""
-    var eventCounter = ""
+    var eventCounter = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,19 +53,21 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     func createEvent() {
         let eventText = textView.text
-        var eventCounter = Int(self.event.eventCounter)!
+        
+        eventCounter += 1
         
         
         if updateNeeded == true {
-            eventCounter += 1
+            
             event.updateEvent(eventID: eventID, withValues: [kEVENTTEXT : eventText!, kEVENTCOUNTER : eventCounter])
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
         } else {
             let eventID = UUID().uuidString
             let eventOwnerID = FUser.currentId()
             let eventAccountType = FUser.currentUser()?.accountType
+            
             //let eventDate = helper.dateFormatter().string(from: Date())
-            let event = Event(eventID: eventID, eventOwnerID: eventOwnerID, eventText: eventText!, eventDate: dateString, eventAccountType: eventAccountType!, eventCounter: self.event.eventCounter)
+            let event = Event(eventID: eventID, eventOwnerID: eventOwnerID, eventText: eventText!, eventDate: dateString, eventAccountType: eventAccountType!, eventCounter: eventCounter)
             event.saveEvent()
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
         }

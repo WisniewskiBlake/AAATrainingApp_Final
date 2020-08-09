@@ -81,6 +81,11 @@ func setBadges(controller: UITabBarController) {
         }
     }
     
+}
+
+func setCalendarBadges(controller: UITabBarController) {
+        
+    
     calendarBadgeCount { (badge) in
         
         if badge != 0 {

@@ -138,6 +138,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
         
         if top! is UITabBarController {
             setBadges(controller: top as! UITabBarController)
+            setCalendarBadges(controller: top as! UITabBarController)
         }
         
         
