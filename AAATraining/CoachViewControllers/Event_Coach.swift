@@ -21,6 +21,9 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     @IBOutlet weak var placeHolderLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
     
+    var memberIds: [String] = []
+    var allMembers: [FUser] = []
+    
     var dateString: String = ""
     let formatter = DateFormatter()
     let helper = Helper()
@@ -33,6 +36,8 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        getAllMembers()
         cornerRadius(for: deleteButton)
 
         dateLabel.text = dateString
@@ -60,6 +65,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     }
     
     func createEvent() {
+        
         let eventText = textView.text
         
         eventCounter += 1
@@ -81,6 +87,56 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         }
         
         
+    }
+    
+    func createEventForMembers() {
+        var tempMembers = memberIds
+               
+           reference(.Event).whereField(kACCOUNTTYPE, isEqualTo: "coach").getDocuments { (snapshot, error) in
+               
+               guard let snapshot = snapshot else { return }
+               
+               if !snapshot.isEmpty {
+                   
+                   for event in snapshot.documents {
+                       
+                       let currEvent = event.data() as NSDictionary
+                       
+                       if let currentUserId = currEvent[kEVENTUSERID] {
+                           
+                           if tempMembers.contains(currentUserId as! String) {
+                               tempMembers.remove(at: tempMembers.firstIndex(of: currentUserId as! String)!)
+                           }
+                       }
+                   }
+                   
+               }
+               
+               
+               for userId in tempMembers {
+                   
+                   createRecentItem(userId: userId, chatRoomId: chatRoomId, members: members, withUserUserName: withUserUserName, type: type, users: users, avatarOfGroup: avatarOfGroup)
+               }
+               
+           }
+    }
+    
+    func getAllMembers() {
+        reference(.User).getDocuments { (snapshot, error) in
+        
+            guard let snapshot = snapshot else { return }
+        
+            if !snapshot.isEmpty {
+                
+                for user in snapshot.documents {
+                    
+                    let currUser = user.data() as NSDictionary
+                    
+                    self.memberIds.append(currUser[kOBJECTID] as! String)
+                   
+                }
+            }
+        }
     }
     
 
