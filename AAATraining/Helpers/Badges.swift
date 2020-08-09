@@ -39,6 +39,37 @@ func recentBadgeCount(withBlock: @escaping(_ badgeNumber: Int) -> Void) {
     })
 }
 
+func calendarBadgeCount(withBlock: @escaping(_ badgeNumber: Int) -> Void) {
+    
+    
+    calendarBadgeHandler = reference(.Event).addSnapshotListener({ (snapshot, error) in
+        
+        var badge = 0
+        var counter = 0
+        
+        guard let snapshot = snapshot else { return }
+        
+        if !snapshot.isEmpty {
+            
+            let events = snapshot.documents
+            
+            for event in events {
+                
+                let currentEvent = event.data() as NSDictionary
+                
+                badge += currentEvent[kEVENTCOUNTER] as! Int
+                counter += 1
+                
+                if counter == events.count {
+                    withBlock(badge)
+                }
+            }
+        } else {
+            withBlock(badge)
+        }
+    })
+}
+
 func setBadges(controller: UITabBarController) {
     
     recentBadgeCount { (badge) in
@@ -47,6 +78,15 @@ func setBadges(controller: UITabBarController) {
             controller.tabBar.items![1].badgeValue = "\(badge)"
         } else {
             controller.tabBar.items![1].badgeValue = nil
+        }
+    }
+    
+    calendarBadgeCount { (badge) in
+        
+        if badge != 0 {
+            controller.tabBar.items![2].badgeValue = "\(badge)"
+        } else {
+            controller.tabBar.items![2].badgeValue = nil
         }
     }
 }

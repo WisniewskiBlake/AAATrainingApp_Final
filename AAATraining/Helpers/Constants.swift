@@ -16,6 +16,7 @@ import FirebaseFirestore
 
 
 public var recentBadgeHandler: ListenerRegistration?
+public var calendarBadgeHandler: ListenerRegistration?
 let userDefaults = UserDefaults.standard
 
 //NOTIFICATIONS
@@ -103,6 +104,7 @@ public let kEVENTOWNERID = "eventOwnerID"
 public let kEVENTTEXT = "eventText"
 public let kEVENTACCOUNTTYPE = "eventAccountType"
 public let kEVENTDATE = "eventDate"
+public let kEVENTCOUNTER = "eventCounter"
 
 
 //recent

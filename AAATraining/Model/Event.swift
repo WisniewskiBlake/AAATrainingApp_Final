@@ -15,6 +15,7 @@ public class Event {
     var eventText: String
     var eventDate: String
     var eventAccountType: String
+    var eventCounter: String
     
     
     
@@ -26,19 +27,20 @@ public class Event {
         eventText = ""
         eventDate = ""
         eventAccountType = ""
+        eventCounter = ""
         eventDictionary = NSMutableDictionary(objects: [eventID, eventOwnerID, eventText, eventDate, eventAccountType], forKeys: [kEVENTID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying])
     }
 
-    init(eventID: String, eventOwnerID: String, eventText: String, eventDate: String, eventAccountType: String) {
+    init(eventID: String, eventOwnerID: String, eventText: String, eventDate: String, eventAccountType: String, eventCounter: String) {
 
-        eventDictionary = NSMutableDictionary(objects: [eventID, eventOwnerID, eventText, eventDate, eventAccountType], forKeys: [kEVENTID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying])
+        eventDictionary = NSMutableDictionary(objects: [eventID, eventOwnerID, eventText, eventDate, eventAccountType], forKeys: [kEVENTID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying, kEVENTCOUNTER as NSCopying])
         
         self.eventID = eventID
         self.eventOwnerID = eventOwnerID
         self.eventText = eventText
         self.eventDate = eventDate
         self.eventAccountType = eventAccountType
-        
+        self.eventCounter = eventCounter
     }
     
     init(_dictionary: NSDictionary) {
@@ -63,9 +65,14 @@ public class Event {
        } else {
            eventAccountType = ""
        }
+        if let eC = _dictionary[kEVENTCOUNTER] {
+            eventCounter = eC as! String
+        } else {
+            eventCounter = ""
+        }
        
         
-        eventDictionary = NSMutableDictionary(objects: [eventID, eventOwnerID, eventText, eventDate, eventAccountType], forKeys: [kEVENTID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying])
+        eventDictionary = NSMutableDictionary(objects: [eventID, eventOwnerID, eventText, eventDate, eventAccountType], forKeys: [kEVENTID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying, kEVENTCOUNTER as NSCopying])
         
     }
 
@@ -77,7 +84,10 @@ public class Event {
     public func updateEvent(eventID: String, withValues: [String:Any]) {
         reference(.Event).document(eventID).updateData(withValues)
         
-        
+    }
+    
+    func clearCalendarCounterItem(event: NSDictionary) {
+        reference(.Event).document(event[kEVENTCOUNTER] as! String).updateData([kEVENTCOUNTER : 0])
     }
     
     

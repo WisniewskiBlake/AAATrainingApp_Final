@@ -169,6 +169,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
         appDelegate.locationManagerStop()
         
         recentBadgeHandler?.remove()
+        
+        calendarBadgeHandler?.remove()
         if FUser.currentUser() != nil {
             updateCurrentUserInFirestore(withValues: [kISONLINE : false]) { (success) in
                 

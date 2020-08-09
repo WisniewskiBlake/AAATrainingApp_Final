@@ -52,23 +52,26 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     func createEvent() {
         let eventText = textView.text
+        var eventCounter = Int(self.event.eventCounter)!
         
         if updateNeeded == true {
-
-            event.updateEvent(eventID: eventID, withValues: [kEVENTTEXT : eventText!])
+            eventCounter += 1
+            event.updateEvent(eventID: eventID, withValues: [kEVENTTEXT : eventText!, kEVENTCOUNTER : eventCounter])
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
         } else {
             let eventID = UUID().uuidString
             let eventOwnerID = FUser.currentId()
             let eventAccountType = FUser.currentUser()?.accountType
             //let eventDate = helper.dateFormatter().string(from: Date())
-            let event = Event(eventID: eventID, eventOwnerID: eventOwnerID, eventText: eventText!, eventDate: dateString, eventAccountType: eventAccountType!)
+            let event = Event(eventID: eventID, eventOwnerID: eventOwnerID, eventText: eventText!, eventDate: dateString, eventAccountType: eventAccountType!, eventCounter: self.event.eventCounter)
             event.saveEvent()
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
         }
         
         
     }
+    
+
     
     @IBAction func deleteButtonPressed(_ sender: Any) {
         reference(.Event).document(eventID).delete()
