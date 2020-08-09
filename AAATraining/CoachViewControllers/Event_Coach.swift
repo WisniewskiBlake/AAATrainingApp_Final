@@ -29,6 +29,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     var eventID: String = ""
     var event = Event()
     var accountType = ""
+    var eventCounter = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +54,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     func createEvent() {
         let eventText = textView.text
         var eventCounter = Int(self.event.eventCounter)!
+        
         
         if updateNeeded == true {
             eventCounter += 1
