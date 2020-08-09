@@ -153,9 +153,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
             top = top?.presentedViewController
         }
         
-        if top! is UITabBarController {
-            setBadges(controller: top as! UITabBarController)
-            setCalendarBadges(controller: top as! UITabBarController)
+        if top! is UITabBarController && top?.restorationIdentifier == "coach" {
+            setBadges(controller: top as! UITabBarController, accountType: "coach")
+            setCalendarBadges(controller: top as! UITabBarController, accountType: "coach")
+        } else if top! is UITabBarController && top?.restorationIdentifier == "player" {
+            setBadges(controller: top as! UITabBarController, accountType: "player")
+            setCalendarBadges(controller: top as! UITabBarController, accountType: "player")
+        } else if top! is UITabBarController && top?.restorationIdentifier == "parent" {
+            setBadges(controller: top as! UITabBarController, accountType: "parent")
+            setCalendarBadges(controller: top as! UITabBarController, accountType: "parent")
         }
         
         

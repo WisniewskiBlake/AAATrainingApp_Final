@@ -81,7 +81,7 @@ public class Event {
         reference(.Event).document(eventDictionary[kEVENTID] as! String).setData(eventDictionary as! [String:Any])
     }
 
-    public func updateEvent(eventID: String, withValues: [String:Any]) {
+    public func updateEvent(eventID: String, eventOwnerID: String, withValues: [String:Any]) {
         reference(.Event).document(eventID).updateData(withValues)
         
 //        reference(.Event).whereField(kEVENTACCOUNTTYPE, isEqualTo: "coach").getDocuments { (snapshot, error) in
@@ -130,7 +130,7 @@ public class Event {
                     
                     let currentRecent = recent.data() as NSDictionary
                     
-                    if currentRecent[kEVENTOWNERID] as? String == FUser.currentId() {
+                    if currentRecent[kEVENTID] as? String == eventID {
                         self.clearCalendarCounterItem(event: currentRecent)
                     }
                 }

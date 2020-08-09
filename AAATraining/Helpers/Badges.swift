@@ -70,28 +70,50 @@ func calendarBadgeCount(withBlock: @escaping(_ badgeNumber: Int) -> Void) {
     })
 }
 
-func setBadges(controller: UITabBarController) {
-    
-    recentBadgeCount { (badge) in
-        
-        if badge != 0 {
-            controller.tabBar.items![1].badgeValue = "\(badge)"
-        } else {
-            controller.tabBar.items![1].badgeValue = nil
+func setBadges(controller: UITabBarController, accountType: String) {
+    if accountType == "coach" || accountType == "player" {
+        recentBadgeCount { (badge) in
+            
+            if badge != 0 {
+                controller.tabBar.items![1].badgeValue = "\(badge)"
+            } else {
+                controller.tabBar.items![1].badgeValue = nil
+            }
+        }
+    } else {
+        recentBadgeCount { (badge) in
+            
+            if badge != 0 {
+                controller.tabBar.items![0].badgeValue = "\(badge)"
+            } else {
+                controller.tabBar.items![0].badgeValue = nil
+            }
         }
     }
+    
     
 }
 
-func setCalendarBadges(controller: UITabBarController) {
-        
-    
-    calendarBadgeCount { (badge) in
-        
-        if badge != 0 {
-            controller.tabBar.items![2].badgeValue = "\(badge)"
-        } else {
-            controller.tabBar.items![2].badgeValue = nil
+func setCalendarBadges(controller: UITabBarController, accountType: String) {
+    if accountType == "coach" || accountType == "player" {
+        calendarBadgeCount { (badge) in
+            
+            if badge != 0 {
+                controller.tabBar.items![2].badgeValue = "\(badge)"
+            } else {
+                controller.tabBar.items![2].badgeValue = nil
+            }
+        }
+    } else {
+        calendarBadgeCount { (badge) in
+            
+            if badge != 0 {
+                controller.tabBar.items![1].badgeValue = "\(badge)"
+            } else {
+                controller.tabBar.items![1].badgeValue = nil
+            }
         }
     }
+    
+    
 }

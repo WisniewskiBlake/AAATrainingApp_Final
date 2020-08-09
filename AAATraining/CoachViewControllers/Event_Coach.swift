@@ -66,8 +66,8 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         
         
         if updateNeeded == true {
-            
-            event.updateEvent(eventID: eventID, withValues: [kEVENTTEXT : eventText!, kEVENTCOUNTER : eventCounter])
+                        
+            event.updateEvent(eventID: eventID, eventOwnerID: event.eventOwnerID, withValues: [kEVENTTEXT : eventText!, kEVENTCOUNTER : eventCounter])
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
         } else {
             let eventID = UUID().uuidString
@@ -119,6 +119,8 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     }
     
     @IBAction func backButtonPressed(_ sender: Any) {
+        event.clearCalendarCounter(eventID: event.eventID)
+        //removeListeners()
         dismiss(animated: true, completion: nil)
     }
     

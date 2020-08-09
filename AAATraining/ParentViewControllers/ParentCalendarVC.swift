@@ -23,6 +23,10 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setBadges(controller: self.tabBarController!, accountType: "coach")
+        //commenting this out because notifications for parent calendar will only be seen by different color button
+        //setCalendarBadges(controller: self.tabBarController!, accountType: "coach")
+        
         NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "createEvent"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
 

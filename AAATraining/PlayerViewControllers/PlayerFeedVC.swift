@@ -37,7 +37,8 @@ class PlayerFeedVC: UITableViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200
         
-        
+        setBadges(controller: self.tabBarController!, accountType: "player")
+        setCalendarBadges(controller: self.tabBarController!, accountType: "player")
         
         // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadNewPosts), name: NSNotification.Name(rawValue: "uploadPost"), object: nil)

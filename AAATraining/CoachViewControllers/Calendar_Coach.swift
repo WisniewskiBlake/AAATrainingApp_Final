@@ -85,6 +85,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                 eventVC.eventID = event.eventID                
                 eventVC.event = event
                 eventVC.eventCounter = event.eventCounter
+                event.clearCalendarCounter(eventID: event.eventID)
             } else {
                 eventVC.eventText = ""
 //                eventVC.eventCounter = 0
