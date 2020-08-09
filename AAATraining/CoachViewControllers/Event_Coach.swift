@@ -51,6 +51,14 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        event.clearCalendarCounter(eventID: event.eventID)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        event.clearCalendarCounter(eventID: event.eventID)
+    }
+    
     func createEvent() {
         let eventText = textView.text
         

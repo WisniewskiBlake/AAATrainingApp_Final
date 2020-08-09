@@ -42,16 +42,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
         
         self.voioRegistration()
-        
+
         self.push = Sinch.managedPush(with: .development)
         self.push.delegate = self
         self.push.setDesiredPushTypeAutomatically()
-        
-//        func userDidLogin(userId: String) {
-//            self.push.
-//            self.initSinchWithUserId(userId: userId)
-//            self.startOneSignal()
-//        }
+
+        func userDidLogin(userId: String) {
+            self.push.registerUserNotificationSettings()
+            self.initSinchWithUserId(userId: userId)
+            self.startOneSignal()
+        }
         
 //        NotificationCenter.default.addObserver(forName: NSNotification.Name(USER_DID_LOGIN_NOTIFICATION), object: nil, queue: nil) { (note) in
 //

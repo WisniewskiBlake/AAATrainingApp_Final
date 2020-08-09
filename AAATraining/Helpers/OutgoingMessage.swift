@@ -63,7 +63,7 @@ class OutgoingMessage {
         
         let pushText = "[\(messageDictionary[kTYPE] as! String) message]"
         
-//        sendPushNotification(memberToPush: membersToPush, message: pushText)
+        sendPushNotification(memberToPush: membersToPush, message: pushText)
     }
 
     

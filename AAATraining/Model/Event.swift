@@ -86,6 +86,26 @@ public class Event {
         
     }
     
+    func clearCalendarCounter(eventID: String) {
+        
+        reference(.Recent).whereField(kEVENTID, isEqualTo: eventID).getDocuments { (snapshot, error) in
+            
+            guard let snapshot = snapshot else { return }
+            
+            if !snapshot.isEmpty {
+                
+                for recent in snapshot.documents {
+                    
+                    let currentRecent = recent.data() as NSDictionary
+                    
+                    if currentRecent[kEVENTOWNERID] as? String == FUser.currentId() {
+                        self.clearCalendarCounterItem(event: currentRecent)
+                    }
+                }
+            }
+        }
+    }
+    
     func clearCalendarCounterItem(event: NSDictionary) {
         reference(.Event).document(event[kEVENTCOUNTER] as! String).updateData([kEVENTCOUNTER : 0])
     }
