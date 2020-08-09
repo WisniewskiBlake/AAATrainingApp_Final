@@ -1112,8 +1112,8 @@
                     </tabBar>
                     <connections>
                         <segue destination="Xg5-eo-1Kl" kind="relationship" relationship="viewControllers" id="BFV-8D-7AM"/>
-                        <segue destination="08V-4U-vQp" kind="relationship" relationship="viewControllers" id="vVp-KQ-Km8"/>
                         <segue destination="L0s-LQ-IAc" kind="relationship" relationship="viewControllers" id="WtP-oa-CBA"/>
+                        <segue destination="08V-4U-vQp" kind="relationship" relationship="viewControllers" id="vVp-KQ-Km8"/>
                         <segue destination="N2S-73-j4q" kind="relationship" relationship="viewControllers" id="ROj-Zk-gY9"/>
                         <segue destination="bOM-tb-b1G" kind="relationship" relationship="viewControllers" id="Lq5-Rq-PUz"/>
                     </connections>
@@ -2068,8 +2068,8 @@
                     </tabBar>
                     <connections>
                         <segue destination="cc0-1y-0MC" kind="relationship" relationship="viewControllers" id="ge4-wA-y2D"/>
-                        <segue destination="ykj-w3-fMi" kind="relationship" relationship="viewControllers" id="dyh-uU-6Sa"/>
                         <segue destination="wZc-wg-aaS" kind="relationship" relationship="viewControllers" id="V8t-7e-Kcx"/>
+                        <segue destination="ykj-w3-fMi" kind="relationship" relationship="viewControllers" id="dyh-uU-6Sa"/>
                         <segue destination="uKg-ky-hnP" kind="relationship" relationship="viewControllers" id="MVu-Ak-Fn7"/>
                         <segue destination="alf-MY-Jyr" kind="relationship" relationship="viewControllers" id="RRA-jM-C7I"/>
                     </connections>
@@ -3088,9 +3088,19 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FULL NAME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jn1-h6-uGa">
-                                            <rect key="frame" x="76" y="30" width="283" height="20.5"/>
+                                            <rect key="frame" x="76" y="25" width="283" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RIGHT WING, #33" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5z8-mc-TEI">
+                                            <rect key="frame" x="220" y="55" width="139" height="16"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="16" id="HYu-P1-K5b"/>
+                                                <constraint firstAttribute="width" constant="139" id="Tfl-LQ-zQ1"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="italicSystem" pointSize="15"/>
+                                            <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -3098,13 +3108,16 @@
                                         <constraint firstItem="Uhg-G6-t48" firstAttribute="centerY" secondItem="Kw5-uF-T1H" secondAttribute="centerY" id="4Xy-Xy-0Ip"/>
                                         <constraint firstItem="Uhg-G6-t48" firstAttribute="leading" secondItem="Kw5-uF-T1H" secondAttribute="leading" constant="8" id="Au0-BB-c2L"/>
                                         <constraint firstItem="Jn1-h6-uGa" firstAttribute="leading" secondItem="Uhg-G6-t48" secondAttribute="trailing" constant="8" id="G4R-L8-vM1"/>
+                                        <constraint firstItem="5z8-mc-TEI" firstAttribute="top" secondItem="Jn1-h6-uGa" secondAttribute="bottom" constant="9.5" id="ToO-Kf-42X"/>
                                         <constraint firstItem="Jn1-h6-uGa" firstAttribute="trailing" secondItem="Kw5-uF-T1H" secondAttribute="trailingMargin" id="W5o-UL-q85"/>
-                                        <constraint firstItem="Jn1-h6-uGa" firstAttribute="centerY" secondItem="Kw5-uF-T1H" secondAttribute="centerY" id="woP-eC-Nfc"/>
+                                        <constraint firstAttribute="trailing" secondItem="5z8-mc-TEI" secondAttribute="trailing" constant="16" id="qeJ-5h-uMX"/>
+                                        <constraint firstItem="Jn1-h6-uGa" firstAttribute="centerY" secondItem="Kw5-uF-T1H" secondAttribute="centerY" constant="-4.75" id="woP-eC-Nfc"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="avatarImageView" destination="Uhg-G6-t48" id="fmW-gr-a5r"/>
                                     <outlet property="fullNameLabel" destination="Jn1-h6-uGa" id="lgR-2U-PVa"/>
+                                    <outlet property="infoLabel" destination="5z8-mc-TEI" id="rAp-5I-RQG"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -3134,7 +3147,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q3m-ca-zTv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6236" y="-2248"/>
+            <point key="canvasLocation" x="6236" y="-2248.4257871064469"/>
         </scene>
         <!--Create Post-->
         <scene sceneID="pM1-m6-NxO">
@@ -3589,7 +3602,7 @@
                             <outlet property="delegate" destination="alf-MY-Jyr" id="ey4-L5-MbB"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="" image="homeIcon" id="8HM-oj-0Za">
+                    <tabBarItem key="tabBarItem" title="" image="profile" selectedImage="profile_selected" id="8HM-oj-0Za">
                         <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-3"/>
                         <color key="badgeColor" red="0.14039075370000001" green="0.29558742049999998" blue="0.71822762490000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBarItem>
@@ -3693,7 +3706,7 @@
         <scene sceneID="vwk-wG-tHM">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wZc-wg-aaS" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="chat" selectedImage="chat" id="5pe-05-CYY">
+                    <tabBarItem key="tabBarItem" title="" image="chat3" selectedImage="chat3_selected" id="5pe-05-CYY">
                         <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-3"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -3832,8 +3845,8 @@
         <scene sceneID="15J-wG-SP4">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ykj-w3-fMi" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="calendar.circle" catalog="system" selectedImage="calendar.circle.fill" id="vk5-vb-uvK">
-                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-8"/>
+                    <tabBarItem key="tabBarItem" title="" image="date" selectedImage="date_filled" id="vk5-vb-uvK">
+                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-3"/>
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="QLf-Go-g6I">
@@ -3898,7 +3911,9 @@
         <scene sceneID="Nph-0I-Vp9">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="L0s-LQ-IAc" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="chat" selectedImage="chat" id="41w-7m-lgC"/>
+                    <tabBarItem key="tabBarItem" title="" image="chat3" selectedImage="chat3_selected" id="41w-7m-lgC">
+                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-3"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="7eN-Mf-MKT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -3921,7 +3936,9 @@
         <scene sceneID="eq2-qh-J8x">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="08V-4U-vQp" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="calendar.circle" catalog="system" selectedImage="calendar.circle.fill" id="XNr-ex-0u6"/>
+                    <tabBarItem key="tabBarItem" title="" image="date" selectedImage="date_filled" id="XNr-ex-0u6">
+                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-3"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Xbo-l6-Usm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -4603,7 +4620,9 @@
         <scene sceneID="h06-1K-CNE">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Hdq-ab-cPf" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="calendar.circle" catalog="system" selectedImage="calendar.circle.fill" id="CQZ-sQ-VVt"/>
+                    <tabBarItem key="tabBarItem" title="" image="date" selectedImage="date_filled" id="CQZ-sQ-VVt">
+                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-3"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Ztc-bU-jr4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -4626,7 +4645,9 @@
         <scene sceneID="NqA-3r-fyU">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="E8o-iQ-apd" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="chat" selectedImage="chat" id="kni-4k-8Bd"/>
+                    <tabBarItem key="tabBarItem" title="" image="chat3" selectedImage="chat3_selected" id="kni-4k-8Bd">
+                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-3"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="2vY-Rp-Gmq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -4656,10 +4677,11 @@
         <image name="aaahockeysilhouette.png" width="220" height="229"/>
         <image name="avatarPlaceholder" width="101" height="101"/>
         <image name="back" width="25" height="25"/>
-        <image name="calendar.circle" catalog="system" width="128" height="121"/>
-        <image name="calendar.circle.fill" catalog="system" width="128" height="121"/>
         <image name="cancel" width="25" height="25"/>
-        <image name="chat" width="25" height="25"/>
+        <image name="chat3" width="25" height="25"/>
+        <image name="chat3_selected" width="25" height="25"/>
+        <image name="date" width="25" height="25"/>
+        <image name="date_filled" width="25" height="25"/>
         <image name="feed" width="25" height="25"/>
         <image name="feed_selected" width="25" height="25"/>
         <image name="groupIcon" width="99.5" height="99"/>
@@ -4667,6 +4689,8 @@
         <image name="info" width="25" height="25"/>
         <image name="logoBackground.png" width="810" height="540"/>
         <image name="meijerBackground.jpg" width="2048" height="1536"/>
+        <image name="profile" width="25" height="25"/>
+        <image name="profile_selected" width="25" height="25"/>
         <image name="searchIcon" width="25" height="25"/>
         <image name="searchIconSelected" width="25" height="25"/>
         <image name="user.png" width="300" height="300"/>
