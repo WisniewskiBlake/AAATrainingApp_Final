@@ -116,15 +116,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
         
         if accountType == "coach" {
             print(FUser.currentId())
-            let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoachTabBar")
+            let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoachTabBar") as! UITabBarController
           self.window?.rootViewController = TabBar
         } else if accountType == "parent" {
             print(FUser.currentId())
-            let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ParentTabBar")
+            let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ParentTabBar") as! UITabBarController
           self.window?.rootViewController = TabBar
         } else {
             // accessing TabBar controller via Main.storyboard
-            let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabBar")
+            let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabBar") as! UITabBarController
           self.window?.rootViewController = TabBar
         }
         
@@ -147,7 +147,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
         var top = self.window?.rootViewController
                 
-        appDelegate.locationManagerStart()
+        
         
         while top?.presentedViewController != nil {
             top = top?.presentedViewController
@@ -155,7 +155,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
         
         if top! is UITabBarController {
             setBadges(controller: top as! UITabBarController)
-            //setCalendarBadges(controller: top as! UITabBarController)
+            setCalendarBadges(controller: top as! UITabBarController)
         }
         
         
@@ -164,7 +164,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
                 
             }
         }
-        
+        appDelegate.locationManagerStart()
         locationManagerStart()
     }
 
@@ -184,7 +184,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
         // to restore the scene back to its current state.
         
         
-        appDelegate.locationManagerStop()
+        
         
         recentBadgeHandler?.remove()
         
@@ -194,7 +194,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
                 
             }
         }
-
+        appDelegate.locationManagerStop()
         locationMangerStop()
     }
     

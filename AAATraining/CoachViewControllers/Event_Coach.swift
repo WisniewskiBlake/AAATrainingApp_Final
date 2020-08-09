@@ -75,7 +75,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             let eventAccountType = FUser.currentUser()?.accountType
             
             //let eventDate = helper.dateFormatter().string(from: Date())
-            let event = Event(eventID: eventID, eventOwnerID: eventOwnerID, eventText: eventText!, eventDate: dateString, eventAccountType: eventAccountType!, eventCounter: eventCounter)
+            let event = Event(eventID: eventID, eventOwnerID: eventOwnerID, eventText: eventText!, eventDate: dateString, eventAccountType: eventAccountType!, eventCounter: 0)
             event.saveEvent()
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
         }

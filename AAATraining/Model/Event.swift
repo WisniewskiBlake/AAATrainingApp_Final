@@ -84,7 +84,39 @@ public class Event {
     public func updateEvent(eventID: String, withValues: [String:Any]) {
         reference(.Event).document(eventID).updateData(withValues)
         
+//        reference(.Event).whereField(kEVENTACCOUNTTYPE, isEqualTo: "coach").getDocuments { (snapshot, error) in
+//
+//            guard let snapshot = snapshot else { return }
+//
+//            if !snapshot.isEmpty {
+//
+//                for event in snapshot.documents {
+//
+//                    let currentEvent = event.data() as NSDictionary
+//
+//                    self.updateEventItem(event: currentEvent)
+//                }
+//            }
+//        }
+        
     }
+    
+//    func updateEventItem(event: NSDictionary) {
+//
+//        let helper = Helper()
+//
+//        //let date = helper.dateFormatter().string(from: Date())
+//
+//        var counter = event[kEVENTCOUNTER] as! Int
+//
+//        if event[kEVENTOWNERID] as? String != FUser.currentId() {
+//            counter += 1
+//        }
+//
+//        let values = [kEVENTTEXT : event.eventText, kEVENTCOUNTER : eventCounter] as [String : Any]
+//
+//        reference(.Event).document(recent[kRECENTID] as! String).updateData(values)
+//    }
     
     func clearCalendarCounter(eventID: String) {
         

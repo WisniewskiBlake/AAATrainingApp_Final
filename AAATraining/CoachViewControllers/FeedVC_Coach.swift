@@ -41,7 +41,8 @@ class FeedVC_Coach: UITableViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200
         
-        
+        setBadges(controller: self.tabBarController!)
+        setCalendarBadges(controller: self.tabBarController!)
         
         // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadNewPosts), name: NSNotification.Name(rawValue: "uploadPost"), object: nil)

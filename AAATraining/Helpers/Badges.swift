@@ -42,7 +42,7 @@ func recentBadgeCount(withBlock: @escaping(_ badgeNumber: Int) -> Void) {
 func calendarBadgeCount(withBlock: @escaping(_ badgeNumber: Int) -> Void) {
     
     
-    calendarBadgeHandler = reference(.Event).addSnapshotListener({ (snapshot, error) in
+    calendarBadgeHandler = reference(.Event).whereField(kEVENTOWNERID, isEqualTo: FUser.currentId()).addSnapshotListener({ (snapshot, error) in
         
         var badge = 0
         var counter = 0
