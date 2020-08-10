@@ -27,12 +27,13 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     var dateString: String = ""
     let formatter = DateFormatter()
     let helper = Helper()
-    var eventText: String = ""
+    
     var updateNeeded: Bool = false
-    var eventID: String = ""
+    
     var event = Event()
     var accountType = ""
-    var eventCounter = 0
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,11 +58,11 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        event.clearCalendarCounter(eventID: event.eventID)
+        event.clearCalendarCounter(eventGroupID: event.eventGroupID)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        event.clearCalendarCounter(eventID: event.eventID)
+        event.clearCalendarCounter(eventGroupID: event.eventGroupID)
     }
     
     func createEvent(eventOwnerID: String, eventText: String, eventDate: String, eventAccountType: String, eventUserID: String, eventGroupID: String) {
@@ -82,9 +83,6 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         let eventAccountType = "coach"
         let eventGroupID = UUID().uuidString
         
-//        let localReference = reference(.Event).document()
-//        let eventId = localReference.documentID
-               
         
         //NEED TO ADD EVENTGROUPID HERE NOT DATE, EVENTGROUPID WILL BE THE ID ALL USERS SHARE FOR AN EVENT (SYNONYMOUS WITH CHATROOMID), AND EVENTID WILL BE
         //A UNIQUE IDENTIFIER FOR THE EVENT
@@ -112,17 +110,6 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
                for userId in tempMembers {
                 self.createEvent(eventOwnerID: eventOwnerID, eventText: eventText, eventDate: self.dateString, eventAccountType: eventAccountType, eventUserID: userId, eventGroupID: eventGroupID)
 
-                //                    if userId != FUser.currentId() {
-//                        let event = Event(eventID: eventId, eventOwnerID: FUser.currentId(), eventText: eventText!, eventDate: self.dateString, eventAccountType: eventAccountType, eventCounter: 1, eventUserID: userId)
-//                        event.saveEvent(eventID : eventId)
-//                    } else {
-//                        let event = Event(eventID: eventId, eventOwnerID: FUser.currentId(), eventText: eventText!, eventDate: self.dateString, eventAccountType: eventAccountType, eventCounter: 0, eventUserID: userId)
-//                        event.saveEvent(eventID : eventId)
-//                    }
-                    
-                
-                
-                   
                }
                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
            }
@@ -149,7 +136,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
 
     
     @IBAction func deleteButtonPressed(_ sender: Any) {
-        reference(.Event).document(eventID).delete()
+        reference(.Event).document(event.eventGroupID).delete()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
         dismiss(animated: true, completion: nil)
     }
@@ -183,7 +170,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     }
     
     @IBAction func backButtonPressed(_ sender: Any) {
-        event.clearCalendarCounter(eventID: event.eventID)
+        event.clearCalendarCounter(eventGroupID: event.eventGroupID)
         //removeListeners()
         dismiss(animated: true, completion: nil)
     }

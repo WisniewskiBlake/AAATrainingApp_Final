@@ -37,9 +37,6 @@ class NewGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollecti
     }
     
     
-    
-    
-    
     @IBOutlet weak var editAvatarButtonOutlet: UIButton!
     @IBOutlet weak var groupIconImageView: UIImageView!
     @IBOutlet weak var groupSubjectTextField: UITextField!

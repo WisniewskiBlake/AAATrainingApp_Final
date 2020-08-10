@@ -134,9 +134,9 @@ public class Event {
 //        reference(.Event).document(recent[kRECENTID] as! String).updateData(values)
 //    }
     
-    func clearCalendarCounter(eventID: String) {
+    func clearCalendarCounter(eventGroupID: String) {
         
-        reference(.Recent).whereField(kEVENTID, isEqualTo: eventID).getDocuments { (snapshot, error) in
+        reference(.Recent).whereField(kEVENTGROUPID, isEqualTo: eventID).getDocuments { (snapshot, error) in
             
             guard let snapshot = snapshot else { return }
             
@@ -146,7 +146,7 @@ public class Event {
                     
                     let currentRecent = recent.data() as NSDictionary
                     
-                    if currentRecent[kEVENTID] as? String == eventID {
+                    if currentRecent[kEVENTGROUPID] as? String == eventGroupID {
                         self.clearCalendarCounterItem(event: currentRecent)
                     }
                 }
