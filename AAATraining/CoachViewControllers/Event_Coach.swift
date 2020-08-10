@@ -150,7 +150,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     @IBAction func doneButtonPressed(_ sender: Any) {
         if textView.text != "" {
             if self.navigationItem.rightBarButtonItem?.title == "Update" {
-                event.updateEvent(eventGroupID: event.eventGroupID, eventOwnerID: event.eventOwnerID, eventText: event.eventText)
+                event.updateEvent(eventGroupID: event.eventGroupID, eventOwnerID: event.eventOwnerID, eventText: textView.text!)
             } else {
                 createEventForMembers()
             }
