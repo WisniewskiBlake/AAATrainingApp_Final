@@ -92,51 +92,13 @@ public class Event {
         
     }
 
-    func saveEvent(eventID : String) {
-        
-        reference(.Event).document(eventDictionary[kEVENTID] as! String).setData(eventDictionary as! [String:Any])
-    }
-
-    public func updateEvent(eventID: String, eventOwnerID: String, withValues: [String:Any]) {
-        reference(.Event).document(eventID).updateData(withValues)
-        
-//        reference(.Event).whereField(kEVENTACCOUNTTYPE, isEqualTo: "coach").getDocuments { (snapshot, error) in
+//    func saveEvent(eventID : String) {
 //
-//            guard let snapshot = snapshot else { return }
-//
-//            if !snapshot.isEmpty {
-//
-//                for event in snapshot.documents {
-//
-//                    let currentEvent = event.data() as NSDictionary
-//
-//                    self.updateEventItem(event: currentEvent)
-//                }
-//            }
-//        }
-        
-    }
-    
-//    func updateEventItem(event: NSDictionary) {
-//
-//        let helper = Helper()
-//
-//        //let date = helper.dateFormatter().string(from: Date())
-//
-//        var counter = event[kEVENTCOUNTER] as! Int
-//
-//        if event[kEVENTOWNERID] as? String != FUser.currentId() {
-//            counter += 1
-//        }
-//
-//        let values = [kEVENTTEXT : event.eventText, kEVENTCOUNTER : eventCounter] as [String : Any]
-//
-//        reference(.Event).document(recent[kRECENTID] as! String).updateData(values)
+//        reference(.Event).document(eventDictionary[kEVENTID] as! String).setData(eventDictionary as! [String:Any])
 //    }
-    
-    func clearCalendarCounter(eventGroupID: String) {
-        
-        reference(.Recent).whereField(kEVENTGROUPID, isEqualTo: eventID).getDocuments { (snapshot, error) in
+
+    public func updateEvent(eventGroupID: String, eventOwnerID: String, eventText : String) {
+        reference(.Event).whereField(kEVENTGROUPID, isEqualTo: eventGroupID).getDocuments { (snapshot, error) in
             
             guard let snapshot = snapshot else { return }
             
@@ -146,7 +108,39 @@ public class Event {
                     
                     let currentRecent = recent.data() as NSDictionary
                     
-                    if currentRecent[kEVENTGROUPID] as? String == eventGroupID {
+                    self.updateEventItem(event: currentRecent, eventText: eventText)
+                }
+            }
+        }
+        
+    }
+    
+    func updateEventItem(event: NSDictionary, eventText: String) {
+
+        var counter = event[kEVENTCOUNTER] as! Int
+
+        if event[kEVENTUSERID] as? String != FUser.currentId() {
+            counter += 1
+        }
+
+        let values = [kEVENTTEXT : eventText, kEVENTCOUNTER : counter] as [String : Any]
+
+        reference(.Event).document(event[kEVENTID] as! String).updateData(values)
+    }
+    
+    func clearCalendarCounter(eventGroupID: String, eventUserID: String) {
+        
+        reference(.Event).whereField(kEVENTGROUPID, isEqualTo: eventGroupID).getDocuments { (snapshot, error) in
+            
+            guard let snapshot = snapshot else { return }
+            
+            if !snapshot.isEmpty {
+                
+                for recent in snapshot.documents {
+                    
+                    let currentRecent = recent.data() as NSDictionary
+                    
+                    if currentRecent[kEVENTUSERID] as? String == FUser.currentId() {
                         self.clearCalendarCounterItem(event: currentRecent)
                     }
                 }
@@ -155,7 +149,7 @@ public class Event {
     }
     
     func clearCalendarCounterItem(event: NSDictionary) {
-        reference(.Event).document(event[kEVENTCOUNTER] as! String).updateData([kEVENTCOUNTER : 0])
+        reference(.Event).document(event[kEVENTID] as! String).updateData([kEVENTCOUNTER : 0])
     }
     
     

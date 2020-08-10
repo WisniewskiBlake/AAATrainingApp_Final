@@ -58,19 +58,24 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        event.clearCalendarCounter(eventGroupID: event.eventGroupID)
+        event.clearCalendarCounter(eventGroupID: event.eventGroupID, eventUserID : event.eventUserID)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        event.clearCalendarCounter(eventGroupID: event.eventGroupID)
+        event.clearCalendarCounter(eventGroupID: event.eventGroupID, eventUserID : event.eventUserID)
     }
     
     func createEvent(eventOwnerID: String, eventText: String, eventDate: String, eventAccountType: String, eventUserID: String, eventGroupID: String) {
         let localReference = reference(.Event).document()
         let eventId = localReference.documentID
         var event: [String : Any]!
+        var eventCounter = 0
         
-        event = [kEVENTID: eventId, kEVENTOWNERID: FUser.currentId(), kEVENTTEXT: eventText, kEVENTDATE: self.dateString, kEVENTACCOUNTTYPE: eventAccountType, kEVENTCOUNTER: 0, kEVENTUSERID: eventUserID, kEVENTGROUPID: eventGroupID] as [String:Any]
+        if eventUserID != eventOwnerID {
+            eventCounter = 1
+        }
+        
+        event = [kEVENTID: eventId, kEVENTOWNERID: FUser.currentId(), kEVENTTEXT: eventText, kEVENTDATE: self.dateString, kEVENTACCOUNTTYPE: eventAccountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: eventUserID, kEVENTGROUPID: eventGroupID] as [String:Any]
         
         localReference.setData(event)
         
@@ -144,7 +149,12 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     @IBAction func doneButtonPressed(_ sender: Any) {
         if textView.text != "" {
-            createEventForMembers()
+            if self.navigationItem.rightBarButtonItem?.title == "Update" {
+                event.updateEvent(eventGroupID: event.eventGroupID, eventOwnerID: event.eventOwnerID, eventText: event.eventText)
+            } else {
+                createEventForMembers()
+            }
+            
             //createEvent()
         } else {
             helper.showAlert(title: "Data Error", message: "Please fill in info.", in: self)
@@ -170,7 +180,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     }
     
     @IBAction func backButtonPressed(_ sender: Any) {
-        event.clearCalendarCounter(eventGroupID: event.eventGroupID)
+        event.clearCalendarCounter(eventGroupID: event.eventGroupID, eventUserID : event.eventUserID)
         //removeListeners()
         dismiss(animated: true, completion: nil)
     }
