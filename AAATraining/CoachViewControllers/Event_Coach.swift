@@ -35,7 +35,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     var event = Event()
     var accountType = ""
     
-    var allEventsWithGroupID: [Event] = []
+    var allEventsWithGroupID: [NSDictionary] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -150,9 +150,13 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
                 
                 for event in snapshot.documents {
                     
-                    //let currEvent = event.data() as NSDictionary
+                    let currEvent = event.data() as NSDictionary
                     
-                    self.allEventsWithGroupID.append(event)
+                    if currEvent[kEVENTGROUPID] as! String == self.event.eventGroupID {
+                        self.allEventsWithGroupID.append(currEvent)
+                    }
+                    
+                    
                    
                 }
             }
@@ -163,7 +167,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     @IBAction func deleteButtonPressed(_ sender: Any) {
         for eventGrp in allEventsWithGroupID {
-            reference(.Event).document(eventGrp.eventGroupID).delete()
+            reference(.Event).document(eventGrp[kEVENTID] as! String).delete()
         }
         
         
