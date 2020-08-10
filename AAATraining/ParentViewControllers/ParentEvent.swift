@@ -41,7 +41,16 @@ class ParentEvent: UIViewController, UITextViewDelegate, UINavigationControllerD
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        event.clearCalendarCounter(eventGroupID: event.eventGroupID, eventUserID : event.eventUserID)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        event.clearCalendarCounter(eventGroupID: event.eventGroupID, eventUserID : event.eventUserID)
+    }
+    
     @IBAction func backButtonPressed(_ sender: Any) {
+        event.clearCalendarCounter(eventGroupID: event.eventGroupID, eventUserID : event.eventUserID)
         dismiss(animated: true, completion: nil)
     }
     
