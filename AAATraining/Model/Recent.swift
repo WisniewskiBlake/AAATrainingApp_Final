@@ -77,7 +77,6 @@ func createRecentItem(userId: String, chatRoomId: String, members: [String], wit
     let date = helper.dateFormatter().string(from: Date())
     
     var recent: [String : Any]!
-
         
         //group
         

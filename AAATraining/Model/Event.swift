@@ -17,6 +17,7 @@ public class Event {
     var eventAccountType: String
     var eventCounter: Int
     var eventUserID: String
+    var eventGroupID: String
     
     
     
@@ -30,12 +31,13 @@ public class Event {
         eventAccountType = ""
         eventCounter = 0
         eventUserID = ""
-        eventDictionary = NSMutableDictionary(objects: [eventID, eventOwnerID, eventText, eventDate, eventAccountType, eventCounter, eventUserID], forKeys: [kEVENTID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying, kEVENTCOUNTER as NSCopying, kEVENTUSERID as NSCopying])
+        eventGroupID = ""
+        eventDictionary = NSMutableDictionary(objects: [eventID, eventOwnerID, eventText, eventDate, eventAccountType, eventCounter, eventUserID, eventGroupID], forKeys: [kEVENTID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying, kEVENTCOUNTER as NSCopying, kEVENTUSERID as NSCopying, kEVENTGROUPID as NSCopying])
     }
 
-    init(eventID: String, eventOwnerID: String, eventText: String, eventDate: String, eventAccountType: String, eventCounter: Int, eventUserID: String) {
+    init(eventID: String, eventOwnerID: String, eventText: String, eventDate: String, eventAccountType: String, eventCounter: Int, eventUserID: String, eventGroupID: String) {
 
-        eventDictionary = NSMutableDictionary(objects: [eventID, eventOwnerID, eventText, eventDate, eventAccountType, eventCounter, eventUserID], forKeys: [kEVENTID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying, kEVENTCOUNTER as NSCopying, kEVENTUSERID as NSCopying])
+        eventDictionary = NSMutableDictionary(objects: [eventID, eventOwnerID, eventText, eventDate, eventAccountType, eventCounter, eventUserID, eventGroupID], forKeys: [kEVENTID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying, kEVENTCOUNTER as NSCopying, kEVENTUSERID as NSCopying, kEVENTGROUPID as NSCopying])
         
         self.eventID = eventID
         self.eventOwnerID = eventOwnerID
@@ -44,6 +46,7 @@ public class Event {
         self.eventAccountType = eventAccountType
         self.eventCounter = eventCounter
         self.eventUserID = eventUserID
+        self.eventGroupID = eventGroupID
     }
     
     init(_dictionary: NSDictionary) {
@@ -78,13 +81,18 @@ public class Event {
         } else {
             eventUserID = ""
         }
+        if let egID = _dictionary[kEVENTGROUPID] {
+            eventGroupID = egID as! String
+        } else {
+            eventGroupID = ""
+        }
        
         
-        eventDictionary = NSMutableDictionary(objects: [eventID, eventOwnerID, eventText, eventDate, eventAccountType, eventCounter, eventUserID], forKeys: [kEVENTID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying, kEVENTCOUNTER as NSCopying, kEVENTUSERID as NSCopying])
+        eventDictionary = NSMutableDictionary(objects: [eventID, eventOwnerID, eventText, eventDate, eventAccountType, eventCounter, eventUserID, eventGroupID], forKeys: [kEVENTID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying, kEVENTCOUNTER as NSCopying, kEVENTUSERID as NSCopying, kEVENTGROUPID as NSCopying])
         
     }
 
-    func saveEvent() {
+    func saveEvent(eventID : String) {
         
         reference(.Event).document(eventDictionary[kEVENTID] as! String).setData(eventDictionary as! [String:Any])
     }

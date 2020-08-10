@@ -64,35 +64,31 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         event.clearCalendarCounter(eventID: event.eventID)
     }
     
-    func createEvent() {
+    func createEvent(eventOwnerID: String, eventText: String, eventDate: String, eventAccountType: String, eventUserID: String, eventGroupID: String) {
+        let localReference = reference(.Event).document()
+        let eventId = localReference.documentID
+        var event: [String : Any]!
         
-        let eventText = textView.text
+        event = [kEVENTID: eventId, kEVENTOWNERID: FUser.currentId(), kEVENTTEXT: eventText, kEVENTDATE: self.dateString, kEVENTACCOUNTTYPE: eventAccountType, kEVENTCOUNTER: 0, kEVENTUSERID: eventUserID, kEVENTGROUPID: eventGroupID] as [String:Any]
         
-        eventCounter += 1
-        
-        
-        if updateNeeded == true {
-                        
-            event.updateEvent(eventID: eventID, eventOwnerID: event.eventOwnerID, withValues: [kEVENTTEXT : eventText!, kEVENTCOUNTER : eventCounter])
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
-        } else {
-            let eventID = UUID().uuidString
-            let eventOwnerID = FUser.currentId()
-            let eventAccountType = FUser.currentUser()?.accountType
-            
-            //let eventDate = helper.dateFormatter().string(from: Date())
-            let event = Event(eventID: eventID, eventOwnerID: eventOwnerID, eventText: eventText!, eventDate: dateString, eventAccountType: eventAccountType!, eventCounter: 0)
-            event.saveEvent()
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
-        }
-        
+        localReference.setData(event)
         
     }
     
     func createEventForMembers() {
         var tempMembers = memberIds
+        let eventText = textView.text!
+        let eventOwnerID = FUser.currentId()
+        let eventAccountType = "coach"
+        let eventGroupID = UUID().uuidString
+        
+//        let localReference = reference(.Event).document()
+//        let eventId = localReference.documentID
                
-           reference(.Event).whereField(kACCOUNTTYPE, isEqualTo: "coach").getDocuments { (snapshot, error) in
+        
+        //NEED TO ADD EVENTGROUPID HERE NOT DATE, EVENTGROUPID WILL BE THE ID ALL USERS SHARE FOR AN EVENT (SYNONYMOUS WITH CHATROOMID), AND EVENTID WILL BE
+        //A UNIQUE IDENTIFIER FOR THE EVENT
+           reference(.Event).whereField(kEVENTDATE, isEqualTo: dateString).getDocuments { (snapshot, error) in
                
                guard let snapshot = snapshot else { return }
                
@@ -114,10 +110,21 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
                
                
                for userId in tempMembers {
+                self.createEvent(eventOwnerID: eventOwnerID, eventText: eventText, eventDate: self.dateString, eventAccountType: eventAccountType, eventUserID: userId, eventGroupID: eventGroupID)
+
+                //                    if userId != FUser.currentId() {
+//                        let event = Event(eventID: eventId, eventOwnerID: FUser.currentId(), eventText: eventText!, eventDate: self.dateString, eventAccountType: eventAccountType, eventCounter: 1, eventUserID: userId)
+//                        event.saveEvent(eventID : eventId)
+//                    } else {
+//                        let event = Event(eventID: eventId, eventOwnerID: FUser.currentId(), eventText: eventText!, eventDate: self.dateString, eventAccountType: eventAccountType, eventCounter: 0, eventUserID: userId)
+//                        event.saveEvent(eventID : eventId)
+//                    }
+                    
+                
+                
                    
-                   createRecentItem(userId: userId, chatRoomId: chatRoomId, members: members, withUserUserName: withUserUserName, type: type, users: users, avatarOfGroup: avatarOfGroup)
                }
-               
+               NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
            }
     }
     
@@ -150,7 +157,8 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     @IBAction func doneButtonPressed(_ sender: Any) {
         if textView.text != "" {
-            createEvent()
+            createEventForMembers()
+            //createEvent()
         } else {
             helper.showAlert(title: "Data Error", message: "Please fill in info.", in: self)
         }

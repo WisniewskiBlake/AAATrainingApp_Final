@@ -106,6 +106,7 @@ public let kEVENTACCOUNTTYPE = "eventAccountType"
 public let kEVENTDATE = "eventDate"
 public let kEVENTCOUNTER = "eventCounter"
 public let kEVENTUSERID = "eventUserID"
+public let kEVENTGROUPID = "eventGroupID"
 
 
 //recent

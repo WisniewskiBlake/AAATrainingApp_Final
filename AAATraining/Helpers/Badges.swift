@@ -104,7 +104,7 @@ func setCalendarBadges(controller: UITabBarController, accountType: String) {
                 controller.tabBar.items![2].badgeValue = nil
             }
         }
-    } else {
+    } else if accountType == "parent"{
         calendarBadgeCount { (badge) in
             
             if badge != 0 {
