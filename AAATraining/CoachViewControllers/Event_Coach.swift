@@ -30,15 +30,18 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     var updateNeeded: Bool = false
     
+    
+    
     var event = Event()
     var accountType = ""
     
-    
+    var allEventsWithGroupID: [Event] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         getAllMembers()
+        getAllEvents()
         cornerRadius(for: deleteButton)
 
         dateLabel.text = dateString
@@ -138,10 +141,32 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         }
     }
     
+    func getAllEvents() {
+        reference(.Event).whereField(kEVENTGROUPID, isEqualTo: event.eventGroupID).getDocuments { (snapshot, error) in
+        
+            guard let snapshot = snapshot else { return }
+        
+            if !snapshot.isEmpty {
+                
+                for event in snapshot.documents {
+                    
+                    //let currEvent = event.data() as NSDictionary
+                    
+                    self.allEventsWithGroupID.append(event)
+                   
+                }
+            }
+        }
+    }
+    
 
     
     @IBAction func deleteButtonPressed(_ sender: Any) {
-        reference(.Event).document(event.eventGroupID).delete()
+        for eventGrp in allEventsWithGroupID {
+            reference(.Event).document(eventGrp.eventGroupID).delete()
+        }
+        
+        
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
         dismiss(animated: true, completion: nil)
     }
