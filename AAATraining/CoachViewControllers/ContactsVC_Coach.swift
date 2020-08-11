@@ -39,6 +39,7 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     var membersOfGroupChat: [FUser] = []
     
     var cellTagArray: [[Int]] = []
+    var cellFullNameCheckArray: [String] = []
     
     
     let searchController = UISearchController(searchResultsController: nil)
@@ -227,6 +228,7 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     //MARK: TableViewDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         var locationArray: [Int] = []
         locationArray.append(indexPath.section)
         locationArray.append(indexPath.row)
@@ -236,6 +238,8 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
         } else {
             cellTagArray.append(locationArray)
         }
+        
+        
         
         //print(cellTagArray[0])
         print(indexPath)
@@ -253,16 +257,25 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
             
             userToChat = users![indexPath.row]
         }
-            if let cell = tableView.cellForRow(at: indexPath) {
-                let tag = cell.tag
-                intArray.append(tag)
-                if cell.accessoryType == .checkmark {
-                    cell.accessoryType = .none
-                } else {
-                    cell.accessoryType = .checkmark
-                }
+        
+//        if let cell = tableView.cellForRow(at: indexPath) {
+//
+//            if cell.accessoryType == .checkmark {
+//                cell.accessoryType = .none
+//            } else {
+//                cell.accessoryType = .checkmark
+//            }
+//        }
+        
+        let cell = tableView.cellForRow(at: indexPath) as! RosterCell_Coach
+        cellFullNameCheckArray.append(cell.fullNameLabel.text!)
+            if cell.accessoryType == .checkmark {
+                cell.accessoryType = .none
+            } else {
+                cell.accessoryType = .checkmark
             }
-        //appendCheckMark(cell: tableView, row: <#T##Int#>)
+        
+        
             
             //add/remove user from the array
             

@@ -20,6 +20,8 @@ class RosterCell_Coach: UITableViewCell {
     
     let tapGestureRecognizer = UITapGestureRecognizer()
     
+    var userFullName = ""
+    
     var indexPath: IndexPath!
     var delegate: RosterCell_CoachDelegate?
     
@@ -40,6 +42,7 @@ class RosterCell_Coach: UITableViewCell {
     func generateCellWith(fUser: FUser, indexPath: IndexPath) {
         let helper = Helper()
         self.indexPath = indexPath
+        self.userFullName = fUser.fullname
         
         self.fullNameLabel.text = fUser.firstname + " " + fUser.lastname
         
