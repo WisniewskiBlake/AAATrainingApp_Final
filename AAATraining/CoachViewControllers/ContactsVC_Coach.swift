@@ -196,11 +196,6 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
 //            cell.accessoryType = .none
 //        }
         
-        if cellTagArray.contains([indexPath.section, indexPath.row]) {
-            cell.accessoryType = .checkmark
-        } else {
-            cell.accessoryType = .none
-        }
         
         var user: FUser
         
@@ -219,6 +214,13 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
         
         cell.delegate = self
         cell.generateCellWith(fUser: user, indexPath: indexPath)
+        
+        print(cell.fullNameLabel.text!)
+        if cellTagArray.contains([indexPath.section, indexPath.row]) && cellFullNameCheckArray.contains(cell.fullNameLabel.text!) {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
         
         cell.tag = indexPath.row
         
