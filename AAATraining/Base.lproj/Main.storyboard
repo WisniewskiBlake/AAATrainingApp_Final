@@ -3408,31 +3408,9 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nDE-Gk-SBj">
-                                    <rect key="frame" x="65" y="358" width="30" height="32"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" secondItem="nDE-Gk-SBj" secondAttribute="height" multiplier="1:1" constant="-2" id="hkg-Qd-2f9"/>
-                                    </constraints>
-                                    <state key="normal" backgroundImage="Post.png">
-                                        <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
-                                    </state>
-                                    <state key="disabled">
-                                        <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </state>
-                                    <state key="selected">
-                                        <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </state>
-                                    <state key="highlighted">
-                                        <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </state>
-                                    <connections>
-                                        <segue destination="64k-JI-l87" kind="presentation" id="B2f-Lx-gY6"/>
-                                    </connections>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uFb-S7-WmJ">
-                                    <rect key="frame" x="270" y="358" width="30" height="32"/>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uFb-S7-WmJ">
+                                    <rect key="frame" x="266" y="355" width="35" height="35"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" backgroundImage="More.png">
                                         <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -3450,12 +3428,13 @@
                                         <action selector="moreButton_clicked:" destination="alf-MY-Jyr" eventType="touchUpInside" id="399-MS-W6q"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z7T-nn-ARC">
-                                    <rect key="frame" x="167" y="358" width="30" height="32"/>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nDE-Gk-SBj">
+                                    <rect key="frame" x="79" y="355" width="35" height="35"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <state key="normal" backgroundImage="Log.png">
+                                    <state key="normal" backgroundImage="Post.png">
                                         <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="medium"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
                                     </state>
                                     <state key="disabled">
                                         <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -3466,28 +3445,20 @@
                                     <state key="highlighted">
                                         <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
+                                    <connections>
+                                        <segue destination="64k-JI-l87" kind="presentation" id="B2f-Lx-gY6"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="bottom" secondItem="Z7T-nn-ARC" secondAttribute="bottom" constant="15" id="66g-f5-JVi"/>
                                 <constraint firstItem="6XA-NJ-5hD" firstAttribute="top" secondItem="RIx-gK-eFp" secondAttribute="top" constant="-20" id="8oh-i9-ikZ"/>
-                                <constraint firstAttribute="bottom" secondItem="uFb-S7-WmJ" secondAttribute="bottom" constant="15" id="AGM-ga-NLl"/>
-                                <constraint firstItem="nDE-Gk-SBj" firstAttribute="height" secondItem="uFb-S7-WmJ" secondAttribute="height" id="FY0-G9-zZr"/>
                                 <constraint firstAttribute="trailing" secondItem="6XA-NJ-5hD" secondAttribute="trailing" id="IvP-PH-vm3"/>
-                                <constraint firstAttribute="bottom" secondItem="nDE-Gk-SBj" secondAttribute="bottom" constant="15" id="UQg-WX-zFN"/>
-                                <constraint firstItem="nDE-Gk-SBj" firstAttribute="leading" secondItem="RIx-gK-eFp" secondAttribute="leading" constant="65" id="a36-NO-a8c"/>
                                 <constraint firstItem="L34-R9-IzN" firstAttribute="leading" secondItem="RIx-gK-eFp" secondAttribute="leading" constant="8" id="bfS-S5-pFI"/>
-                                <constraint firstItem="uFb-S7-WmJ" firstAttribute="leading" secondItem="Z7T-nn-ARC" secondAttribute="trailing" constant="73" id="djx-av-kJ0"/>
                                 <constraint firstItem="L34-R9-IzN" firstAttribute="top" secondItem="DOe-nI-Du7" secondAttribute="bottom" constant="15" id="hG9-UK-j53"/>
-                                <constraint firstAttribute="trailing" secondItem="uFb-S7-WmJ" secondAttribute="trailing" constant="75" id="is0-iq-74O"/>
                                 <constraint firstItem="DOe-nI-Du7" firstAttribute="top" secondItem="6XA-NJ-5hD" secondAttribute="bottom" constant="-76" id="jD0-QU-JnX"/>
-                                <constraint firstItem="Z7T-nn-ARC" firstAttribute="leading" secondItem="nDE-Gk-SBj" secondAttribute="trailing" constant="72" id="ltT-Cp-yaR"/>
-                                <constraint firstItem="nDE-Gk-SBj" firstAttribute="height" secondItem="Z7T-nn-ARC" secondAttribute="height" id="mlH-ZE-ts5"/>
                                 <constraint firstAttribute="trailing" secondItem="L34-R9-IzN" secondAttribute="trailing" constant="8" id="q82-pI-XWR"/>
-                                <constraint firstItem="nDE-Gk-SBj" firstAttribute="width" secondItem="Z7T-nn-ARC" secondAttribute="width" multiplier="0.987654" constant="0.37037999999999727" id="ubf-Ec-lKU"/>
                                 <constraint firstItem="6XA-NJ-5hD" firstAttribute="leading" secondItem="RIx-gK-eFp" secondAttribute="leading" id="uus-cV-Aty"/>
-                                <constraint firstItem="nDE-Gk-SBj" firstAttribute="width" secondItem="uFb-S7-WmJ" secondAttribute="width" id="ygA-3T-rhr"/>
                                 <constraint firstItem="DOe-nI-Du7" firstAttribute="centerX" secondItem="6XA-NJ-5hD" secondAttribute="centerX" id="ztg-mj-MVb"/>
                             </constraints>
                         </view>

@@ -190,12 +190,6 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! RosterCell_Coach
         
-        //if intArray doesnt contain the cell tag appended in did select row at, then set the accessory type to none
-        
-//        if !intArray.contains(cell.tag) {
-//            cell.accessoryType = .none
-//        }
-        
         
         var user: FUser
         
