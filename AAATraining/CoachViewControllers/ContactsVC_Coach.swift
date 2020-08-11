@@ -229,18 +229,6 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        var locationArray: [Int] = []
-        locationArray.append(indexPath.section)
-        locationArray.append(indexPath.row)
-        if cellTagArray.contains(locationArray) {
-            let index = cellTagArray.firstIndex(of: locationArray)!
-            cellTagArray.remove(at: index)
-        } else {
-            cellTagArray.append(locationArray)
-        }
-        
-        
-        
         //print(cellTagArray[0])
         print(indexPath)
         
@@ -268,7 +256,20 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
 //        }
         
         let cell = tableView.cellForRow(at: indexPath) as! RosterCell_Coach
-        cellFullNameCheckArray.append(cell.fullNameLabel.text!)
+        
+        
+        var locationArray: [Int] = []
+        locationArray.append(indexPath.section)
+        locationArray.append(indexPath.row)
+        if cellTagArray.contains(locationArray) && cellFullNameCheckArray.contains(cell.fullNameLabel.text!) {
+            let index = cellTagArray.firstIndex(of: locationArray)!
+            cellTagArray.remove(at: index)
+            cellFullNameCheckArray.remove(at: index)
+        } else {
+            cellTagArray.append(locationArray)
+            cellFullNameCheckArray.append(cell.fullNameLabel.text!)
+        }
+        
             if cell.accessoryType == .checkmark {
                 cell.accessoryType = .none
             } else {
