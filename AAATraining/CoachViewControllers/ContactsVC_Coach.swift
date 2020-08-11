@@ -38,7 +38,7 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     var memberIdsOfGroupChat: [String] = []
     var membersOfGroupChat: [FUser] = []
     
-    var cellTagArray: [Int] = []
+    var cellTagArray: [[Int]] = []
     
     let searchController = UISearchController(searchResultsController: nil)
     
@@ -219,8 +219,17 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     //MARK: TableViewDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var locationArray: [Int] = []
+        locationArray.append(indexPath.section)
+        locationArray.append(indexPath.row)
+        if cellTagArray.contains(locationArray) {
+            let index = cellTagArray.firstIndex(of: locationArray)!
+            cellTagArray.remove(at: index)
+        } else {
+            cellTagArray.append(locationArray)
+        }
         
-        cellTagArray.append(contentsOf: indexPath)
+        print(cellTagArray[0])
         print(indexPath)
         
         tableView.deselectRow(at: indexPath, animated: true)
