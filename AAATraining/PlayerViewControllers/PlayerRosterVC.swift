@@ -98,6 +98,8 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
                 query = reference(.User).whereField("accountType", isEqualTo: "player").order(by: kFIRSTNAME, descending: false)
            case ("coach"):
                query = reference(.User).whereField("accountType", isEqualTo: "coach").order(by: kFIRSTNAME, descending: false)
+            case ("parent"):
+                query = reference(.User).whereField("accountType", isEqualTo: "parent").order(by: kFIRSTNAME, descending: false)
            default:
                query = reference(.User).order(by: kFIRSTNAME, descending: false)
         }
