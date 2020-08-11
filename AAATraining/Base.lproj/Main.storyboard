@@ -3408,10 +3408,13 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uFb-S7-WmJ">
-                                    <rect key="frame" x="266" y="355" width="35" height="35"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uFb-S7-WmJ">
+                                    <rect key="frame" x="240" y="355" width="35" height="35"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="35" id="H6l-qy-r0U"/>
+                                        <constraint firstAttribute="width" constant="35" id="lZ0-Lc-qEh"/>
+                                    </constraints>
                                     <state key="normal" backgroundImage="More.png">
                                         <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
@@ -3428,10 +3431,13 @@
                                         <action selector="moreButton_clicked:" destination="alf-MY-Jyr" eventType="touchUpInside" id="399-MS-W6q"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nDE-Gk-SBj">
-                                    <rect key="frame" x="79" y="355" width="35" height="35"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nDE-Gk-SBj">
+                                    <rect key="frame" x="100" y="355" width="35" height="35"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="35" id="B13-kk-3iI"/>
+                                        <constraint firstAttribute="width" constant="35" id="rUR-Gm-jiO"/>
+                                    </constraints>
                                     <state key="normal" backgroundImage="Post.png">
                                         <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
@@ -3452,11 +3458,15 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
+                                <constraint firstAttribute="bottom" secondItem="uFb-S7-WmJ" secondAttribute="bottom" constant="15" id="4Ob-tJ-hbE"/>
                                 <constraint firstItem="6XA-NJ-5hD" firstAttribute="top" secondItem="RIx-gK-eFp" secondAttribute="top" constant="-20" id="8oh-i9-ikZ"/>
                                 <constraint firstAttribute="trailing" secondItem="6XA-NJ-5hD" secondAttribute="trailing" id="IvP-PH-vm3"/>
+                                <constraint firstItem="nDE-Gk-SBj" firstAttribute="leading" secondItem="RIx-gK-eFp" secondAttribute="leading" constant="100" id="Zwp-DX-eAL"/>
+                                <constraint firstAttribute="bottom" secondItem="nDE-Gk-SBj" secondAttribute="bottom" constant="15" id="aF0-Ep-GMv"/>
                                 <constraint firstItem="L34-R9-IzN" firstAttribute="leading" secondItem="RIx-gK-eFp" secondAttribute="leading" constant="8" id="bfS-S5-pFI"/>
                                 <constraint firstItem="L34-R9-IzN" firstAttribute="top" secondItem="DOe-nI-Du7" secondAttribute="bottom" constant="15" id="hG9-UK-j53"/>
                                 <constraint firstItem="DOe-nI-Du7" firstAttribute="top" secondItem="6XA-NJ-5hD" secondAttribute="bottom" constant="-76" id="jD0-QU-JnX"/>
+                                <constraint firstAttribute="trailing" secondItem="uFb-S7-WmJ" secondAttribute="trailing" constant="100" id="pRc-j2-ytq"/>
                                 <constraint firstAttribute="trailing" secondItem="L34-R9-IzN" secondAttribute="trailing" constant="8" id="q82-pI-XWR"/>
                                 <constraint firstItem="6XA-NJ-5hD" firstAttribute="leading" secondItem="RIx-gK-eFp" secondAttribute="leading" id="uus-cV-Aty"/>
                                 <constraint firstItem="DOe-nI-Du7" firstAttribute="centerX" secondItem="6XA-NJ-5hD" secondAttribute="centerX" id="ztg-mj-MVb"/>
