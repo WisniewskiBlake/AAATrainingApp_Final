@@ -32,7 +32,7 @@ class PlayerFeedVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        configureNavBar()
+        //configureNavBar()
         // dynamic cell height
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200
@@ -67,7 +67,7 @@ class PlayerFeedVC: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadPosts()
-        navigationController?.setNavigationBarHidden(true, animated: true)
+        //navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

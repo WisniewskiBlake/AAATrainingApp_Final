@@ -36,6 +36,8 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
             loadUsers(filter: "player")
         case 2:
             loadUsers(filter: "coach")
+        case 3:
+            loadUsers(filter: "parent")
         default:
             return
         }

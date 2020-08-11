@@ -29,6 +29,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     var limit = 10
     
     
+    
     let searchController = UISearchController(searchResultsController: nil)
     
     @IBAction func filterSegmentValueChanged(_ sender: UISegmentedControl) {
@@ -40,6 +41,8 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
             loadUsers(filter: "player")
         case 2:
             loadUsers(filter: "coach")
+        case 3:
+            loadUsers(filter: "parent")
         default:
             return
         }

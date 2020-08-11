@@ -38,6 +38,8 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     var memberIdsOfGroupChat: [String] = []
     var membersOfGroupChat: [FUser] = []
     
+    var cellTagArray: [Int] = []
+    
     let searchController = UISearchController(searchResultsController: nil)
     
     @IBAction func filterSegmentValueChanged(_ sender: UISegmentedControl) {
@@ -48,6 +50,8 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
             loadUsers(filter: "player")
         case 2:
             loadUsers(filter: "coach")
+        case 3:
+            loadUsers(filter: "parent")
         default:
             return
         }
@@ -177,9 +181,10 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
         }
         
     }
-
+     var i = 0
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+        print(i)
+        i += 1
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! RosterCell_Coach
         
         //if intArray doesnt contain the cell tag appended in did select row at, then set the accessory type to none
@@ -214,6 +219,9 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     //MARK: TableViewDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        cellTagArray.append(contentsOf: indexPath)
+        print(indexPath)
         
         tableView.deselectRow(at: indexPath, animated: true)
         
