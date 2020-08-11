@@ -40,6 +40,7 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     
     var cellTagArray: [[Int]] = []
     
+    
     let searchController = UISearchController(searchResultsController: nil)
     
     @IBAction func filterSegmentValueChanged(_ sender: UISegmentedControl) {
@@ -104,6 +105,8 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
                 query = reference(.User).whereField("accountType", isEqualTo: "player").order(by: kFIRSTNAME, descending: false)
            case ("coach"):
                query = reference(.User).whereField("accountType", isEqualTo: "coach").order(by: kFIRSTNAME, descending: false)
+            case ("parent"):
+                query = reference(.User).whereField("accountType", isEqualTo: "parent").order(by: kFIRSTNAME, descending: false)
            default:
                query = reference(.User).order(by: kFIRSTNAME, descending: false)
            }
@@ -181,10 +184,9 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
         }
         
     }
-     var i = 0
+     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print(i)
-        i += 1
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! RosterCell_Coach
         
         //if intArray doesnt contain the cell tag appended in did select row at, then set the accessory type to none
@@ -192,6 +194,12 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
 //        if !intArray.contains(cell.tag) {
 //            cell.accessoryType = .none
 //        }
+        
+        if cellTagArray.contains([indexPath.section, indexPath.row]) {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
         
         var user: FUser
         
@@ -229,7 +237,7 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
             cellTagArray.append(locationArray)
         }
         
-        print(cellTagArray[0])
+        //print(cellTagArray[0])
         print(indexPath)
         
         tableView.deselectRow(at: indexPath, animated: true)
