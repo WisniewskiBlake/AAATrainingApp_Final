@@ -33,5 +33,23 @@ class BaselineCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    func generateCellWith(baseline: Baseline, indexPath: IndexPath) {
+        let helper = Helper()
+        self.indexPath = indexPath
+           
+        self.fullnameLabel.text = post.postUserName
+        self.dateLabel.text = post.date
+        self.postTextLabel.text = post.text
+        self.dateLabel.text = post.date
+        self.dateLabel.text = post.date
+        self.dateLabel.text = post.date
+        self.dateLabel.text = post.date
+        self.dateLabel.text = post.date
+        self.dateLabel.text = post.date
+           
+           
+           
+    }
 
 }
