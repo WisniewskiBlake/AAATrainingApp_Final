@@ -80,8 +80,7 @@ public class Post {
     }
 
     public func updatePost(postID: String, withValues: [String:Any]) {
-        reference(.Post).document(postID).updateData(withValues)
-        
+        reference(.Post).document(postID).updateData(withValues)        
         
     }
     

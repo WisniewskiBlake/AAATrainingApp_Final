@@ -27,52 +27,93 @@ public class Baseline {
 
     init(baselineID: String, baselineOwnerID: String, height: String, weight: String, wingspan: String, vertical: String, yardDash: String, agility: String, pushUp: String, chinUp: String, mileRun: String, baselineDate: String) {
 
-        baselineDictionary = NSMutableDictionary(objects: [baselineID, baselineOwnerID, height, weight, wingspan, vertical, yardDash, agility, pushUp, chinUp, mileRun], forKeys: [kPOSTID as NSCopying, kPOSTOWNERID as NSCopying, kPOSTTEXT as NSCopying, kPOSTPICTURE as NSCopying, kPOSTUSERAVA as NSCopying, kPOSTUSERNAME as NSCopying])
+        baselineDictionary = NSMutableDictionary(objects: [baselineID, baselineOwnerID, height, weight, wingspan, vertical, yardDash, agility, pushUp, chinUp, mileRun], forKeys: [kBASELINEID as NSCopying, kBASELINEOWNERID as NSCopying, kBASELINEHEIGHT as NSCopying, kBASELINEWEIGHT as NSCopying, kWINGSPAN as NSCopying, kVERTICAL as NSCopying, kYARDDASH as NSCopying, kAGILITY as NSCopying, kPUSHUP as NSCopying, kCHINUP as NSCopying, kMILERUN as NSCopying])
         
-        self.postID = postID
-        self.ownerID = ownerID
-        self.text = text
-        self.picture = picture
-        self.date = date
-        self.postUserAva = postUserAva
-        self.postUserName = postUserName
+        self.baselineID = baselineID
+        self.baselineOwnerID = baselineOwnerID
+        self.height = height
+        self.weight = weight
+        self.wingspan = wingspan
+        self.vertical = vertical
+        self.yardDash = yardDash
+        self.agility = agility
+        self.pushUp = pushUp
+        self.chinUp = chinUp
+        self.mileRun = mileRun
+        self.baselineDate = baselineDate
     }
     
     init(_dictionary: NSDictionary) {
-        
-        
        //let helper = Helper()
-       postID = _dictionary[kPOSTID] as! String
-        ownerID = _dictionary[kOWNERID] as! String
+       baselineID = _dictionary[kBASELINEID] as! String
+       baselineOwnerID = _dictionary[kBASELINEOWNERID] as! String
        
-       
-       if let fname = _dictionary[kPOSTUSERNAME] {
-           postUserName = fname as! String
+       if let ht = _dictionary[kBASELINEHEIGHT] {
+           height = ht as! String
        } else {
-           postUserName = ""
+           height = ""
        }
-       if let txt = _dictionary[kPOSTTEXT] {
-           text = txt as! String
+       if let wt = _dictionary[kBASELINEWEIGHT] {
+           weight = wt as! String
        } else {
-           text = ""
+           weight = ""
        }
-       if let pic = _dictionary[kPOSTPICTURE] {
-           picture = pic as! String
+       if let wg = _dictionary[kWINGSPAN] {
+           wingspan = wg as! String
        } else {
-           picture = ""
+           wingspan = ""
        }
-       if let dt = _dictionary[kPOSTDATE] {
-           date = dt as! String
+       if let vt = _dictionary[kVERTICAL] {
+           vertical = vt as! String
        } else {
-           date = ""
+           vertical = ""
        }
-        if let ava = _dictionary[kPOSTUSERAVA] {
-            postUserAva = ava as! String
+        if let yd = _dictionary[kYARDDASH] {
+            yardDash = yd as! String
         } else {
-            postUserAva = ""
+            yardDash = ""
+        }
+        if let ag = _dictionary[kAGILITY] {
+            agility = ag as! String
+        } else {
+            agility = ""
+        }
+        if let pu = _dictionary[kPUSHUP] {
+            pushUp = pu as! String
+        } else {
+            pushUp = ""
+        }
+        if let cu = _dictionary[kCHINUP] {
+            chinUp = cu as! String
+        } else {
+            chinUp = ""
+        }
+        if let mr = _dictionary[kMILERUN] {
+            mileRun = mr as! String
+        } else {
+            mileRun = ""
+        }
+        if let bd = _dictionary[kBASELINEDATE] {
+            baselineDate = bd as! String
+        } else {
+            baselineDate = ""
         }
         
-        postDictionary = NSMutableDictionary(objects: [postID, ownerID, text, picture, postUserAva, postUserName], forKeys: [kPOSTID as NSCopying, kPOSTOWNERID as NSCopying, kPOSTTEXT as NSCopying, kPOSTPICTURE as NSCopying, kPOSTUSERAVA as NSCopying, kPOSTUSERNAME as NSCopying])
+        
+        baselineDictionary = NSMutableDictionary(objects: [baselineID, baselineOwnerID, height, weight, wingspan, vertical, agility, pushUp, chinUp, vertical, mileRun], forKeys: [kBASELINEID as NSCopying, kBASELINEOWNERID as NSCopying, kBASELINEHEIGHT as NSCopying, kBASELINEWEIGHT as NSCopying, kWINGSPAN as NSCopying, kYARDDASH as NSCopying, kAGILITY as NSCopying, kPUSHUP as NSCopying, kCHINUP as NSCopying, kMILERUN as NSCopying])
+        
+    }
+    
+    func saveBaseline() {
+        let helper = Helper()
+
+        let date = helper.dateFormatter().string(from: Date())
+        baselineDictionary[kBASELINEDATE] = date
+        reference(.Baseline).document(baselineDictionary[kBASELINEDATE] as! String).setData(baselineDictionary as! [String:Any])
+    }
+
+    public func updateBaseline(baselineID: String, withValues: [String:Any]) {
+        reference(.Baseline).document(baselineID).updateData(withValues)
         
     }
     
