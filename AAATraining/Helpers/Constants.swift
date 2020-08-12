@@ -111,6 +111,7 @@ public let kPUSHUP = "pushUp"
 public let kCHINUP = "chinUp"
 public let kMILERUN = "mileRun"
 public let kBASELINEDATE = "baselineDate"
+public let kBASELINEUSERNAME = "baselineUserName"
 
 //Events
 public let kEVENTS = "events"

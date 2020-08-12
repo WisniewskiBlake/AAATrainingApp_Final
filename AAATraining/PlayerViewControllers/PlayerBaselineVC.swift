@@ -14,9 +14,18 @@ import FirebaseFirestore
 import ProgressHUD
 
 class PlayerBaselineVC: UITableViewController {
+    
+    var allBaselines: [Baseline] = []
+    var recentListener: ListenerRegistration!
+    
+    let helper = Helper()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 400
+        
 
     }
 
