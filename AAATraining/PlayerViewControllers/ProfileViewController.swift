@@ -25,6 +25,10 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
     @IBOutlet weak var weightTextLabel: UILabel!
     @IBOutlet weak var numberTextLabel: UILabel!
     
+    @IBOutlet weak var baseLineButton: UIButton!
+    @IBOutlet weak var nutritionButton: UIButton!
+    
+    
     var profileIcon: UIImage?
     var coverIcon: UIImage?
     
@@ -59,9 +63,14 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
         configure_avaImageView()
         loadUser()
     }
-//    override func viewWillAppear(_ animated: Bool) {
-//        loadUser()
-//    }
+
+    @IBAction func baseLineButtonClicked(_ sender: Any) {
+        
+    }
+    
+    @IBAction func nutritionButtonClicked(_ sender: Any) {
+        
+    }
     
     // MARK: - Load User
     // loads all user related information to be shown in the header
