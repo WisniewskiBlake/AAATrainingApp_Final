@@ -21,22 +21,63 @@ class NewBaselineVC: UIViewController {
     @IBOutlet weak var mileText: UITextField!
     
     let baselineID = UUID().uuidString
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        cornerRadius(for: heightText)
+        cornerRadius(for: weightText)
+        cornerRadius(for: wingspanText)
+        cornerRadius(for: verticalText)
+        cornerRadius(for: dashText)
+        cornerRadius(for: agilityText)
+        cornerRadius(for: pushUptext)
+        cornerRadius(for: chinUpText)
+        cornerRadius(for: mileText)
+                
+        padding(for: heightText)
+        padding(for: weightText)
+        padding(for: wingspanText)
+        padding(for: verticalText)
+        padding(for: dashText)
+        padding(for: agilityText)
+        padding(for: pushUptext)
+        padding(for: chinUpText)
+        padding(for: mileText)
 
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func createBaseline() {
+        if heightText.text != "" && weightText.text != "" && wingspanText.text != "" && verticalText.text != "" && dashText.text != "" && agilityText.text != "" && pushUptext.text != "" && chinUpText.text != "" && mileText.text != "" {
+            
+            let fullName = FUser.currentUser()!.firstname + " " + FUser.currentUser()!.lastname
+            
+            let baseline = Baseline(baselineID: baselineID, baselineOwnerID: FUser.currentId(), height: heightText.text!, weight: weightText.text!, wingspan: wingspanText.text!, vertical: verticalText.text!, yardDash: dashText.text!, agility: agilityText.text!, pushUp: pushUptext.text!, chinUp: chinUpText.text!, mileRun: mileText.text!, baselineDate: "", userName: fullName)
+            
+            baseline.saveBaseline()
+            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createBaseline"), object: nil)
+            
+        } else {
+            Helper().showAlert(title: "Data Error", message: "Please fill in info.", in: self)
+        }
     }
-    */
 
+    
+   
+
+    // make corners rounded for any views (objects)
+    func cornerRadius(for view: UIView) {
+        view.layer.cornerRadius = 5
+        view.layer.masksToBounds = true
+    }
+    
+    // add blank view to the left side of the TextField (it'll act as a blank gap)
+    func padding(for textField: UITextField) {
+        let blankView = UIView.init(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
+        textField.leftView = blankView
+        textField.leftViewMode = .always
+    }
+    
 }
