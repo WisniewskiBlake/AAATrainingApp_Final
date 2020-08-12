@@ -66,11 +66,11 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
 
     @IBAction func baseLineButtonClicked(_ sender: Any) {
         let newBaselineVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PlayerBaselineVC") as! PlayerBaselineVC
-        //           let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "addMembersNav") as! UINavigationController
-        //           contactsVC.isGroup = isGroup
+       let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "baselineNav") as! UINavigationController
                 
                    
-                self.present(newBaselineVC, animated: true, completion: nil)
+        self.present(navigation, animated: true, completion: nil)
+   //     self.navigationController?.pushViewController(newGroupVC, animated: true)
     }
     
     @IBAction func nutritionButtonClicked(_ sender: Any) {

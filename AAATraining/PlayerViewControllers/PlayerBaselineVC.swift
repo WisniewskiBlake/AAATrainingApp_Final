@@ -27,7 +27,7 @@ class PlayerBaselineVC: UITableViewController {
         tableView.estimatedRowHeight = 400
         
         // add observers for notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(loadBaselines), name: NSNotification.Name(rawValue: "uploadBaseline"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadBaselines), name: NSNotification.Name(rawValue: "createBaseline"), object: nil)
         
         loadBaselines()
 
@@ -43,7 +43,7 @@ class PlayerBaselineVC: UITableViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        recentListener.remove()
+        //recentListener.remove()
     }
     
     // MARK: - Load Baselines
@@ -125,7 +125,8 @@ class PlayerBaselineVC: UITableViewController {
 //           contactsVC.isGroup = isGroup
         
            
-        self.present(newBaselineVC, animated: true, completion: nil)
+        //self.present(newBaselineVC, animated: true, completion: nil)
+        self.navigationController?.pushViewController(newGroupVC, animated: true)
     }
     
 

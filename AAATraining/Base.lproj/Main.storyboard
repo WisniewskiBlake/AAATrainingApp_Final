@@ -1270,22 +1270,27 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Gw-qR-0gP">
-                                    <rect key="frame" x="74" y="504" width="58" height="30"/>
+                                    <rect key="frame" x="8" y="514" width="359" height="30"/>
+                                    <color key="backgroundColor" red="0.1006183103" green="0.2956552207" blue="0.71825700999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="58" id="E4F-Ea-c4s"/>
-                                        <constraint firstAttribute="height" constant="30" id="ZeI-MO-zvk"/>
+                                        <constraint firstAttribute="width" constant="359" id="1kj-yg-GLw"/>
+                                        <constraint firstAttribute="height" constant="30" id="3fK-xJ-zqO"/>
                                     </constraints>
-                                    <state key="normal" title="Baseline"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <state key="normal" title="Baseline">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
                                     <connections>
                                         <action selector="baseLineButtonClicked:" destination="bOM-tb-b1G" eventType="touchUpInside" id="0ye-va-10P"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ulH-4C-eJi">
-                                    <rect key="frame" x="242" y="504" width="60" height="30"/>
+                                    <rect key="frame" x="8" y="552" width="359" height="30"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="60" id="I0s-6a-VTV"/>
-                                        <constraint firstAttribute="height" constant="30" id="dEH-lV-e2h"/>
+                                        <constraint firstAttribute="width" constant="359" id="TbG-LQ-jVT"/>
+                                        <constraint firstAttribute="height" constant="30" id="jVc-uR-b8J"/>
                                     </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <state key="normal" title="Nutrition"/>
                                     <connections>
                                         <action selector="nutritionButtonClicked:" destination="bOM-tb-b1G" eventType="touchUpInside" id="n4Z-Fr-LyH"/>
@@ -1295,8 +1300,8 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="cwU-Kz-Sf8" secondAttribute="trailing" constant="8" id="1iU-vh-r8V"/>
-                                <constraint firstItem="ulH-4C-eJi" firstAttribute="top" secondItem="MoE-DN-7vi" secondAttribute="bottom" constant="40.5" id="362-f9-9T1"/>
-                                <constraint firstItem="1Gw-qR-0gP" firstAttribute="top" secondItem="6qK-Wj-qXK" secondAttribute="bottom" constant="40.5" id="6Rr-Y6-J55"/>
+                                <constraint firstItem="ulH-4C-eJi" firstAttribute="top" secondItem="1Gw-qR-0gP" secondAttribute="bottom" constant="8" id="2yh-pN-PMJ"/>
+                                <constraint firstAttribute="bottom" secondItem="ulH-4C-eJi" secondAttribute="bottom" constant="119" id="8ew-FF-G2H"/>
                                 <constraint firstItem="6qK-Wj-qXK" firstAttribute="leading" secondItem="foz-FI-6b3" secondAttribute="leading" constant="88" id="8fR-Ch-52G"/>
                                 <constraint firstItem="NgA-x5-0FD" firstAttribute="height" secondItem="LYF-E7-Tfh" secondAttribute="height" id="9o0-X5-auc"/>
                                 <constraint firstAttribute="trailing" secondItem="epD-jS-ZUy" secondAttribute="trailing" id="AT6-Dr-RA1"/>
@@ -1305,11 +1310,10 @@
                                 <constraint firstItem="NgA-x5-0FD" firstAttribute="leading" secondItem="wfa-SX-Qon" secondAttribute="trailing" constant="4" id="CDR-Cb-qio"/>
                                 <constraint firstItem="crE-Wq-xST" firstAttribute="top" secondItem="epD-jS-ZUy" secondAttribute="bottom" constant="-76" id="Cm6-Aq-c2R"/>
                                 <constraint firstItem="epD-jS-ZUy" firstAttribute="leading" secondItem="foz-FI-6b3" secondAttribute="leading" id="CnQ-lZ-3Ew"/>
-                                <constraint firstItem="1Gw-qR-0gP" firstAttribute="leading" secondItem="foz-FI-6b3" secondAttribute="leading" constant="74" id="FkN-BY-lmE"/>
                                 <constraint firstItem="i5z-05-qxK" firstAttribute="leading" secondItem="foz-FI-6b3" secondAttribute="leading" constant="47" id="FtD-Fv-yYw"/>
                                 <constraint firstItem="6W6-fU-BkA" firstAttribute="top" secondItem="P9n-iG-von" secondAttribute="bottom" constant="23" id="ITv-Hh-Tjv"/>
-                                <constraint firstAttribute="trailing" secondItem="ulH-4C-eJi" secondAttribute="trailing" constant="73" id="KAR-L4-t99"/>
                                 <constraint firstItem="IL6-XD-iwN" firstAttribute="top" secondItem="cwU-Kz-Sf8" secondAttribute="bottom" constant="31.5" id="O1R-GH-1c8"/>
+                                <constraint firstAttribute="trailing" secondItem="1Gw-qR-0gP" secondAttribute="trailing" constant="8" id="Q31-Ks-pra"/>
                                 <constraint firstItem="i5z-05-qxK" firstAttribute="top" secondItem="gSF-OW-GkB" secondAttribute="bottom" constant="23" id="QVk-Oc-vLB"/>
                                 <constraint firstItem="LYF-E7-Tfh" firstAttribute="leading" secondItem="IL6-XD-iwN" secondAttribute="trailing" constant="4" id="Sw5-Yf-DPb"/>
                                 <constraint firstItem="6W6-fU-BkA" firstAttribute="height" secondItem="P9n-iG-von" secondAttribute="height" id="TPB-4T-sIs"/>
@@ -1321,8 +1325,10 @@
                                 <constraint firstItem="P9n-iG-von" firstAttribute="top" secondItem="cwU-Kz-Sf8" secondAttribute="bottom" constant="31.5" id="c26-DO-Mmp"/>
                                 <constraint firstItem="i5z-05-qxK" firstAttribute="height" secondItem="gSF-OW-GkB" secondAttribute="height" id="eal-Gw-Fnd"/>
                                 <constraint firstItem="NgA-x5-0FD" firstAttribute="top" secondItem="LYF-E7-Tfh" secondAttribute="bottom" constant="23" id="f7x-7u-4E2"/>
+                                <constraint firstItem="ulH-4C-eJi" firstAttribute="leading" secondItem="foz-FI-6b3" secondAttribute="leading" constant="8" id="fjF-4j-SO6"/>
                                 <constraint firstItem="LYF-E7-Tfh" firstAttribute="top" secondItem="cwU-Kz-Sf8" secondAttribute="bottom" constant="31.5" id="hCl-20-AWr"/>
                                 <constraint firstItem="wfa-SX-Qon" firstAttribute="top" secondItem="IL6-XD-iwN" secondAttribute="bottom" constant="23" id="hjn-g1-A7Q"/>
+                                <constraint firstAttribute="trailing" secondItem="ulH-4C-eJi" secondAttribute="trailing" constant="8" id="irK-tj-yyu"/>
                                 <constraint firstItem="6W6-fU-BkA" firstAttribute="leading" secondItem="i5z-05-qxK" secondAttribute="trailing" constant="4" id="jrd-zc-iaT"/>
                                 <constraint firstItem="epD-jS-ZUy" firstAttribute="top" secondItem="foz-FI-6b3" secondAttribute="top" constant="-20" id="l8Y-5g-K4O"/>
                                 <constraint firstItem="gSF-OW-GkB" firstAttribute="top" secondItem="cwU-Kz-Sf8" secondAttribute="bottom" constant="31.5" id="mjz-3l-9zu"/>
@@ -1333,6 +1339,7 @@
                                 <constraint firstItem="cwU-Kz-Sf8" firstAttribute="leading" secondItem="foz-FI-6b3" secondAttribute="leading" constant="8" id="uTS-w2-N8f"/>
                                 <constraint firstAttribute="trailing" secondItem="MoE-DN-7vi" secondAttribute="trailing" constant="88" id="vT1-4o-1Zy"/>
                                 <constraint firstItem="wfa-SX-Qon" firstAttribute="width" secondItem="IL6-XD-iwN" secondAttribute="width" id="xLB-nT-aJi"/>
+                                <constraint firstItem="1Gw-qR-0gP" firstAttribute="leading" secondItem="foz-FI-6b3" secondAttribute="leading" constant="8" id="yIY-mR-KBI"/>
                                 <constraint firstItem="gSF-OW-GkB" firstAttribute="leading" secondItem="foz-FI-6b3" secondAttribute="leading" constant="47" id="zuJ-28-Zzk"/>
                             </constraints>
                         </view>
@@ -1360,7 +1367,7 @@
                 </tapGestureRecognizer>
                 <tapGestureRecognizer id="uKl-LA-gpR"/>
             </objects>
-            <point key="canvasLocation" x="5310" y="100"/>
+            <point key="canvasLocation" x="5309.6000000000004" y="99.400299850074973"/>
         </scene>
         <!--Edit Stats-->
         <scene sceneID="nUr-VR-han">
@@ -1919,12 +1926,16 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Done" id="u4L-GM-tVh">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="doneButtonPressed:" destination="Orj-6N-KYY" id="BLC-cE-jJy"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="agilityText" destination="w7x-EQ-pN3" id="6Dm-kW-qix"/>
                         <outlet property="chinUpText" destination="P7G-yv-W8C" id="Vih-EJ-DXO"/>
                         <outlet property="dashText" destination="l9z-af-SHf" id="oHm-lP-Gvv"/>
+                        <outlet property="doneButton" destination="u4L-GM-tVh" id="Oih-La-jU7"/>
                         <outlet property="heightText" destination="GlG-Kd-A8Q" id="05Q-tx-tmA"/>
                         <outlet property="mileText" destination="DPS-vp-Pv1" id="v9f-R0-tXh"/>
                         <outlet property="pushUptext" destination="VoG-z5-JQF" id="tCj-7B-Xwm"/>
@@ -5321,7 +5332,7 @@
         <!--Navigation Controller-->
         <scene sceneID="9cZ-lI-9TD">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="VJC-7r-TPs" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="baselineNav" automaticallyAdjustsScrollViewInsets="NO" id="VJC-7r-TPs" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="gAS-MR-cHw">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>

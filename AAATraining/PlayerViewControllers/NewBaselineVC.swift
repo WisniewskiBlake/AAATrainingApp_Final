@@ -22,6 +22,8 @@ class NewBaselineVC: UIViewController {
     
     let baselineID = UUID().uuidString
         
+    @IBOutlet weak var doneButton: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,6 +49,11 @@ class NewBaselineVC: UIViewController {
 
         // Do any additional setup after loading the view.
     }
+    
+    @IBAction func doneButtonPressed(_ sender: Any) {
+        
+    }
+    
     
     func createBaseline() {
         if heightText.text != "" && weightText.text != "" && wingspanText.text != "" && verticalText.text != "" && dashText.text != "" && agilityText.text != "" && pushUptext.text != "" && chinUpText.text != "" && mileText.text != "" {
