@@ -120,7 +120,7 @@ class PlayerBaselineVC: UITableViewController {
     }
     
     @IBAction func composeButtonPressed(_ sender: Any) {
-        let newBaselineVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PlayerBaselineVC") as! PlayerBaselineVC
+        let newBaselineVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NewBaselineVC") as! NewBaselineVC
 //           let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "addMembersNav") as! UINavigationController
 //           contactsVC.isGroup = isGroup
         

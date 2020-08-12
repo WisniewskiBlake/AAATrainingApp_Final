@@ -9,7 +9,19 @@
 import UIKit
 
 class NewBaselineVC: UIViewController {
-
+    
+    @IBOutlet weak var heightText: UITextField!
+    @IBOutlet weak var weightText: UITextField!
+    @IBOutlet weak var wingspanText: UITextField!
+    @IBOutlet weak var verticalText: UITextField!
+    @IBOutlet weak var dashText: UITextField!
+    @IBOutlet weak var agilityText: UITextField!
+    @IBOutlet weak var pushUptext: UITextField!
+    @IBOutlet weak var chinUpText: UITextField!
+    @IBOutlet weak var mileText: UITextField!
+    
+    let baselineID = UUID().uuidString
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
