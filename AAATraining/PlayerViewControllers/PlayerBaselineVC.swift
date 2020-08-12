@@ -37,6 +37,8 @@ class PlayerBaselineVC: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadBaselines()
+        
+        tableView.tableFooterView = UIView()
         //navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
@@ -116,7 +118,19 @@ class PlayerBaselineVC: UITableViewController {
         return cell
         
     }
-
+    
+    @IBAction func composeButtonPressed(_ sender: Any) {
+        let newBaselineVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PlayerBaselineVC") as! PlayerBaselineVC
+//           let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "addMembersNav") as! UINavigationController
+//           contactsVC.isGroup = isGroup
+        
+           
+        self.present(newBaselineVC, animated: true, completion: nil)
+    }
     
 
+    @IBAction func backButtonPressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
 }

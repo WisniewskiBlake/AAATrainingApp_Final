@@ -61,6 +61,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
                 
                 for recent in sorted {
                     
+                    //CHANGE THIS IF YOU WANT TO CHANGE THE FACT THAT GROUPS ARENT CREATED/SHOWN UNLESS A MESSAGE IS SENT
                     if recent[kLASTMESSAGE] as! String != "" && recent[kCHATROOMID] != nil && recent[kRECENTID] != nil {
                         
                         self.recentChats.append(recent)
