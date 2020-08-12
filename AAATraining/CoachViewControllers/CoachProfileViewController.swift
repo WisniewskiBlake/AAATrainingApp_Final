@@ -162,36 +162,6 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             ProgressHUD.dismiss()
         }
         
-//        recentListener = reference(.Post).whereField(kPOSTOWNERID, isEqualTo: FUser.currentId()).order(by: kPOSTDATE, descending: true).addSnapshotListener({ (snapshot, error) in
-           
-           
-//           self.allPosts = []
-//            self.allPostsGrouped = [:]
-//
-//        guard let snapshot = snapshot else {  ProgressHUD.dismiss(); return }
-//
-//           if !snapshot.isEmpty {
-//
-//
-//               for postDictionary in snapshot.documents {
-//                let postDictionary = postDictionary.data() as NSDictionary
-//
-//                   if postDictionary[kPOSTTEXT] as! String != "" {
-//
-//                       let post = Post(_dictionary: postDictionary)
-//
-//                           self.allPosts.append(post)
-//                    print(self.allPosts)
-//                    }
-//                }
-//            self.tableView.reloadData()
-//            }
-//
-//              ProgressHUD.dismiss()
-//        })
-
-       
-        
     }
         
     // configuring the appearance of AvaImageView
@@ -267,29 +237,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
          cell.fullnameLabel.text = post.postUserName
 
          cell.postTextLabel.text = post.text
-        
-//        var date: Date!
-//
-//        if let created = posts[indexPath.row][kPOSTDATE] {
-//            if (created as! String).count != 14 {
-//                date = Date()
-//            } else {
-//                date = helper.dateFormatter().date(from: created as! String)!
-//            }
-//        } else {
-//            date = Date()
-//        }
-//        cell.dateLabel.text = helper.timeElapsed(date: date)
-//
-//
-//        cell.avaImageView.image = self.avaImageView.image
-//        cell.fullnameLabel.text = user!.firstname + " " + user!.lastname
-//
-//        cell.postTextLabel.text = posts[indexPath.row][kPOSTTEXT] as? String
-//
-//        //cell.commentsButton.tag = indexPath.row
-//        cell.optionsButton.tag = indexPath.row
-        
+
         return cell
         
     }
