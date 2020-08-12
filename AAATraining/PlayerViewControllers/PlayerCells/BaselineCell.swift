@@ -19,6 +19,7 @@ class BaselineCell: UITableViewCell {
     @IBOutlet weak var pushUpLabel: UILabel!
     @IBOutlet weak var chinUpLabel: UILabel!
     @IBOutlet weak var mileLabel: UILabel!
+    @IBOutlet weak var baselineDateLabel: UILabel!
     
     var indexPath: IndexPath!
     
@@ -35,18 +36,19 @@ class BaselineCell: UITableViewCell {
     }
     
     func generateCellWith(baseline: Baseline, indexPath: IndexPath) {
-        let helper = Helper()
+        
         self.indexPath = indexPath
            
-        self.fullnameLabel.text = post.postUserName
-        self.dateLabel.text = post.date
-        self.postTextLabel.text = post.text
-        self.dateLabel.text = post.date
-        self.dateLabel.text = post.date
-        self.dateLabel.text = post.date
-        self.dateLabel.text = post.date
-        self.dateLabel.text = post.date
-        self.dateLabel.text = post.date
+        self.heightLabel.text = baseline.height
+        self.weightLabel.text = baseline.weight
+        self.wingspanLabel.text = baseline.wingspan
+        self.verticalLabel.text = baseline.vertical
+        self.dashLabel.text = baseline.yardDash
+        self.agilityLabel.text = baseline.agility
+        self.pushUpLabel.text = baseline.pushUp
+        self.chinUpLabel.text = baseline.chinUp
+        self.mileLabel.text = baseline.mileRun
+        self.baselineDateLabel.text = baseline.baselineDate
            
            
            
