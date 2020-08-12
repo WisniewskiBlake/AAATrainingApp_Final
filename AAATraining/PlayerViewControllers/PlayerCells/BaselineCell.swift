@@ -9,6 +9,19 @@
 import UIKit
 
 class BaselineCell: UITableViewCell {
+    
+    @IBOutlet weak var heightLabel: UILabel!
+    @IBOutlet weak var weightLabel: UILabel!
+    @IBOutlet weak var wingspanLabel: UILabel!
+    @IBOutlet weak var verticalLabel: UILabel!
+    @IBOutlet weak var dashLabel: UILabel!
+    @IBOutlet weak var agilityLabel: UILabel!
+    @IBOutlet weak var pushUpLabel: UILabel!
+    @IBOutlet weak var chinUpLabel: UILabel!
+    @IBOutlet weak var mileLabel: UILabel!
+    
+    var indexPath: IndexPath!
+    
 
     override func awakeFromNib() {
         super.awakeFromNib()
