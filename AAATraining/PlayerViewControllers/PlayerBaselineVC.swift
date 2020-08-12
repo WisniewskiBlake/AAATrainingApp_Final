@@ -7,6 +7,11 @@
 //
 
 import UIKit
+import MediaPlayer
+import ImagePicker
+import Firebase
+import FirebaseFirestore
+import ProgressHUD
 
 class PlayerBaselineVC: UITableViewController {
 
