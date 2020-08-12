@@ -97,6 +97,21 @@ public let kPOSTDATE = "postDate"
 public let kPOSTUSERAVA = "postUserAva"
 public let kPOSTUSERNAME = "postUserName"
 
+//Baseline
+public let kBASELINES = "baselines"
+public let kBASELINEID = "baselineID"
+public let kBASELINEOWNERID = "baselineOwnerID"
+public let kBASELINEHEIGHT = "height"
+public let kBASELINEWEIGHT = "weight"
+public let kWINGSPAN = "wingspan"
+public let kVERTICAL = "vertical"
+public let kYARDDASH = "yardDash"
+public let kAGILITY = "agility"
+public let kPUSHUP = "pushUp"
+public let kCHINUP = "chinUp"
+public let kMILERUN = "mileRun"
+public let kBASELINEDATE = "baselineDate"
+
 //Events
 public let kEVENTS = "events"
 public let kEVENTID = "eventID"

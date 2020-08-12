@@ -11,7 +11,7 @@ import Firebase
 
 public class Baseline {
     var baselineID: String
-    var ownerID: String
+    var baselineOwnerID: String
     var height: String
     var weight: String
     var wingspan: String
@@ -21,13 +21,13 @@ public class Baseline {
     var pushUp: String
     var chinUp: String
     var mileRun: String
-    var date: String
+    var baselineDate: String
         
     let baselineDictionary: NSMutableDictionary
 
-    init(baselineID: String, ownerID: String, height: String, weight: String, wingspan: String, vertical: String, yardDash: String, agility: String, pushUp: String, chinUp: String, mileRun: String, date: String) {
+    init(baselineID: String, baselineOwnerID: String, height: String, weight: String, wingspan: String, vertical: String, yardDash: String, agility: String, pushUp: String, chinUp: String, mileRun: String, baselineDate: String) {
 
-        postDictionary = NSMutableDictionary(objects: [postID, ownerID, text, picture, postUserAva, postUserName], forKeys: [kPOSTID as NSCopying, kPOSTOWNERID as NSCopying, kPOSTTEXT as NSCopying, kPOSTPICTURE as NSCopying, kPOSTUSERAVA as NSCopying, kPOSTUSERNAME as NSCopying])
+        baselineDictionary = NSMutableDictionary(objects: [baselineID, baselineOwnerID, height, weight, wingspan, vertical, yardDash, agility, pushUp, chinUp, mileRun], forKeys: [kPOSTID as NSCopying, kPOSTOWNERID as NSCopying, kPOSTTEXT as NSCopying, kPOSTPICTURE as NSCopying, kPOSTUSERAVA as NSCopying, kPOSTUSERNAME as NSCopying])
         
         self.postID = postID
         self.ownerID = ownerID
