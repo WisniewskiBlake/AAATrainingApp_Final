@@ -19,6 +19,9 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     @IBOutlet weak var pictureImageView: UIImageView!
     @IBOutlet weak var pictureButton: UIButton!
     
+    var videoSelected: NSURL? = NSURL()
+    var pictureSelected: UIImage? = UIImage()
+    
     let postID = UUID().uuidString
     
     func createPost() {
@@ -115,10 +118,10 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        let video = info[UIImagePickerController.InfoKey.mediaURL] as? NSURL
-        let picture = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+        videoSelected = info[UIImagePickerController.InfoKey.mediaURL] as? NSURL
+        pictureSelected = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
         
-        displayMedia(picture: picture, video: video)
+        displayMedia(picture: pictureSelected, video: videoSelected)
         
         picker.dismiss(animated: true, completion: nil)
     }
