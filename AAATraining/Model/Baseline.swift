@@ -109,7 +109,7 @@ public class Baseline {
         
         
         
-        baselineDictionary = NSMutableDictionary(objects: [baselineID, baselineOwnerID, height, weight, wingspan, vertical, agility, pushUp, chinUp, vertical, mileRun, userName], forKeys: [kBASELINEID as NSCopying, kBASELINEOWNERID as NSCopying, kBASELINEHEIGHT as NSCopying, kBASELINEWEIGHT as NSCopying, kWINGSPAN as NSCopying, kYARDDASH as NSCopying, kAGILITY as NSCopying, kPUSHUP as NSCopying, kCHINUP as NSCopying, kMILERUN as NSCopying, kBASELINEUSERNAME as NSCopying])
+        baselineDictionary = NSMutableDictionary(objects: [baselineID, baselineOwnerID, height, weight, wingspan, vertical, agility, yardDash, pushUp, chinUp, mileRun, userName], forKeys: [kBASELINEID as NSCopying, kBASELINEOWNERID as NSCopying, kBASELINEHEIGHT as NSCopying, kBASELINEWEIGHT as NSCopying, kWINGSPAN as NSCopying, kVERTICAL as NSCopying, kAGILITY as NSCopying, kYARDDASH as NSCopying, kPUSHUP as NSCopying, kCHINUP as NSCopying, kMILERUN as NSCopying, kBASELINEUSERNAME as NSCopying])
         
     }
     

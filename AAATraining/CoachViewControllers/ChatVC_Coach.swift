@@ -468,6 +468,7 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
                
                self.navigationController?.pushViewController(mapView, animated: true)
 
+            
            case kVIDEO:
 
                let message = messages[indexPath.row]
@@ -588,7 +589,6 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
            }
            
            //send video
-           
            if let video = video {
                
                let videoData = NSData(contentsOfFile: video.path!)

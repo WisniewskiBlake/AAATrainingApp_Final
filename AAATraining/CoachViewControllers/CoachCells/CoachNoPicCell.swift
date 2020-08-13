@@ -55,3 +55,56 @@ class CoachNoPicCell: UITableViewCell {
     }
 
 }
+//NEED TO FIT THIS IN HERE WITH POTENTIAL TAP GESTURE RECOGNIZER
+
+//let messageDictionary = objectMessages[indexPath.row]
+//let messageType = messageDictionary[kTYPE] as! String
+//
+//switch messageType {
+//case kPICTURE:
+//
+//    let message = messages[indexPath.row]
+//
+//    let mediaItem = message.media as! JSQPhotoMediaItem
+//
+//    let photos = IDMPhoto.photos(withImages: [mediaItem.image!])
+//    let browser = IDMPhotoBrowser(photos: photos)
+//
+//    self.present(browser!, animated: true, completion: nil)
+//
+//case kLOCATION:
+//
+//    let message = messages[indexPath.row]
+//
+//    let mediaItem = message.media as! JSQLocationMediaItem
+//
+//    let mapView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
+//
+//    mapView.location = mediaItem.location
+//
+//    self.navigationController?.pushViewController(mapView, animated: true)
+//
+//
+//case kVIDEO:
+//
+//    let message = messages[indexPath.row]
+//
+//    let mediaItem = message.media as! VideoMessage
+//
+//    let player = AVPlayer(url: mediaItem.fileURL! as URL)
+//    let moviewPlayer = AVPlayerViewController()
+//
+//    let session = AVAudioSession.sharedInstance()
+//
+//    try! session.setCategory(.playAndRecord, mode: .default, options: .defaultToSpeaker)
+//
+//    moviewPlayer.player = player
+//
+//    self.present(moviewPlayer, animated: true) {
+//        moviewPlayer.player!.play()
+//    }
+//
+//default:
+//    print("unkown mess tapped")
+//
+//}

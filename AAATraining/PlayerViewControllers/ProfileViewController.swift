@@ -57,12 +57,22 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        cornerRadius(for: baseLineButton)
+        cornerRadius(for: nutritionButton)
+        
        // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadUser), name: NSNotification.Name(rawValue: "updateStats"), object: nil)
 
         configure_avaImageView()
         loadUser()
     }
+    
+    // executed after aligning the objects
+        override func viewDidLayoutSubviews() {
+            super.viewDidLayoutSubviews()
+            
+            //configure_nutritionButton(btn: nutritionButton)
+        }
 
     @IBAction func baseLineButtonClicked(_ sender: Any) {
         let newBaselineVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PlayerBaselineVC") as! PlayerBaselineVC
@@ -75,6 +85,19 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
     
     @IBAction func nutritionButtonClicked(_ sender: Any) {
         
+    }
+    
+    // make corners rounded for any views (objects)
+    func cornerRadius(for view: UIView) {
+        view.layer.cornerRadius = 5
+        view.layer.masksToBounds = true
+    }
+    
+    // add blank view to the left side of the TextField (it'll act as a blank gap)
+    func padding(for textField: UITextField) {
+        let blankView = UIView.init(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
+        textField.leftView = blankView
+        textField.leftViewMode = .always
     }
     
     // MARK: - Load User
@@ -128,6 +151,22 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
         showIconOptions()
     }
     
+    func configure_nutritionButton(btn: UIButton) {
+        // creating constant named 'border' of type layer which acts as a border frame
+        let border = CALayer()
+        border.borderColor = #colorLiteral(red: 0.01220451668, green: 0.2841129601, blue: 0.7098029256, alpha: 1)
+        border.borderWidth = 2
+        border.frame = CGRect(x: 0, y: 0, width: btn.frame.width, height: btn.frame.height)
+        
+        // assign border to the obj (button)
+        btn.layer.addSublayer(border)
+        
+        
+        // rounded corner
+        btn.layer.cornerRadius = 5
+        btn.layer.masksToBounds = true
+        
+    }
     
     // configuring the appearance of AvaImageView
     func configure_avaImageView() {

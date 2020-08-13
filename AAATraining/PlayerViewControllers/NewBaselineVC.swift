@@ -51,7 +51,7 @@ class NewBaselineVC: UIViewController {
     }
     
     @IBAction func doneButtonPressed(_ sender: Any) {
-        
+        createBaseline()
     }
     
     
@@ -65,6 +65,7 @@ class NewBaselineVC: UIViewController {
             baseline.saveBaseline()
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createBaseline"), object: nil)
+            dismiss(animated: true, completion: nil)
             
         } else {
             Helper().showAlert(title: "Data Error", message: "Please fill in info.", in: self)
@@ -85,6 +86,9 @@ class NewBaselineVC: UIViewController {
         let blankView = UIView.init(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
         textField.leftView = blankView
         textField.leftViewMode = .always
+    }
+    @IBAction func backButtonPressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
     
 }

@@ -17,6 +17,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     @IBOutlet weak var placeholderLabel: UILabel!
     @IBOutlet weak var postTextView: UITextView!
     @IBOutlet weak var pictureImageView: UIImageView!
+    @IBOutlet weak var pictureButton: UIButton!
     
     let postID = UUID().uuidString
     
@@ -32,8 +33,6 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
             Helper().showAlert(title: "Data Error", message: "Please fill in info.", in: self)
         }
     }
-    
-    
     
     // code obj
     var isPictureSelected = false
@@ -77,6 +76,90 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
         }
         fullnameLabel.text = "\((firstName).capitalized) \((lastName).capitalized)"
     }
+    
+    
+    @IBAction func pictureButtonClicked(_ sender: Any) {
+        let camera = Camera(delegate_: self)
+        
+        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+        let takePhotoOrVideo = UIAlertAction(title: "Camera", style: .default) { (action) in
+            camera.PresentMultyCamera(target: self, canEdit: false)
+        }
+        
+        let sharePhoto = UIAlertAction(title: "Photo Library", style: .default) { (action) in
+            
+            camera.PresentPhotoLibrary(target: self, canEdit: false)
+        }
+        
+        let shareVideo = UIAlertAction(title: "Video Library", style: .default) { (action) in
+            
+            camera.PresentVideoLibrary(target: self, canEdit: false)
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+        }
+        
+        takePhotoOrVideo.setValue(UIImage(named: "camera"), forKey: "image")
+        sharePhoto.setValue(UIImage(named: "picture"), forKey: "image")
+        shareVideo.setValue(UIImage(named: "video"), forKey: "image")
+        
+        optionMenu.addAction(takePhotoOrVideo)
+        optionMenu.addAction(sharePhoto)
+        optionMenu.addAction(shareVideo)
+        optionMenu.addAction(cancelAction)
+        
+
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        let video = info[UIImagePickerController.InfoKey.mediaURL] as? NSURL
+        let picture = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+        
+        displayMedia(picture: picture, video: video)
+        
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func displayMedia(picture: UIImage?, video: NSURL?) {
+        if let pic = picture {
+            pictureImageView.image = pic
+            
+            return
+        }
+        
+        //send video
+        if let video = video {
+            
+            let videoData = NSData(contentsOfFile: video.path!)
+            
+            let dataThumbnail = videoThumbnail(video: video).jpegData(compressionQuality: 0.3)
+            
+            let thumbImage = createThumbnailOfVideoFromRemoteUrl(url: video)
+            
+            pictureImageView.image = thumbImage
+            
+//            uploadVideo(video: videoData!, chatRoomId: chatRoomId, view: self.navigationController!.view) { (videoLink) in
+//
+//                if videoLink != nil {
+//
+//                    let ecryptedText = Encryption.encryptText(chatRoomId: self.chatRoomId, message: "[\(kVIDEO)]")
+//
+//                    outgoingMessage = OutgoingMessage(message: ecryptedText, video: videoLink!, thumbNail: dataThumbnail! as NSData, senderId: currentUser.objectId, senderName: currentUser.firstname, date: date, status: kDELIVERED, type: kVIDEO)
+//
+//                    JSQSystemSoundPlayer.jsq_playMessageSentSound()
+//                    self.finishSendingMessage()
+//
+//                    outgoingMessage?.sendMessage(chatRoomID: self.chatRoomId, messageDictionary: outgoingMessage!.messageDictionary, memberIds: self.memberIds, membersToPush: self.membersToPush)
+//
+//                }
+//            }
+            return
+        }
+    }
+    
+
             
     
     // tracks whenver textView gets changed
@@ -117,7 +200,22 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     }
     
     
-    
+    func createThumbnailOfVideoFromRemoteUrl(url: NSURL) -> UIImage? {
+        let asset = AVAsset(url: url as URL)
+        let assetImgGenerate = AVAssetImageGenerator(asset: asset)
+        assetImgGenerate.appliesPreferredTrackTransform = true
+        //Can set this to improve performance if target size is known before hand
+        //assetImgGenerate.maximumSize = CGSize(width,height)
+        let time = CMTimeMakeWithSeconds(1.0, preferredTimescale: 600)
+        do {
+            let img = try assetImgGenerate.copyCGImage(at: time, actualTime: nil)
+            let thumbnail = UIImage(cgImage: img)
+            return thumbnail
+        } catch {
+          print(error.localizedDescription)
+          return nil
+        }
+    }
     
 
 }

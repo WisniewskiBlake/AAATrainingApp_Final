@@ -23,7 +23,7 @@ class PlayerBaselineVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.rowHeight = UITableView.automaticDimension
+        //tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 400
         
         // add observers for notifications
@@ -38,51 +38,53 @@ class PlayerBaselineVC: UITableViewController {
         super.viewWillAppear(animated)
         loadBaselines()
         
-        tableView.tableFooterView = UIView()
+        //tableView.tableFooterView = UIView()
         //navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        //recentListener.remove()
+        recentListener.remove()
     }
     
     // MARK: - Load Baselines
     // loading posts from the server via@objc  PHP protocol
     @objc func loadBaselines() {
+        
         ProgressHUD.show()
         
-        var query: Query!
-        
-        query = reference(.Baseline).whereField(kBASELINEOWNERID, isEqualTo: FUser.currentId()).order(by: kBASELINEDATE, descending: true)
-        
-        query.getDocuments { (snapshot, error) in
-            self.allBaselines = []
+        recentListener = reference(.Baseline).whereField(kBASELINEOWNERID, isEqualTo: FUser.currentId()).order(by: kBASELINEDATE, descending: true).addSnapshotListener({ (snapshot, error) in
+                   
+                self.allBaselines = []
             
-            if error != nil {
-                print(error!.localizedDescription)
-                ProgressHUD.dismiss()
-                self.tableView.reloadData()
-                return
-            }
-            
-            guard let snapshot = snapshot else {
-                ProgressHUD.dismiss(); return
-            }
-            
-            if !snapshot.isEmpty {
-                
-                for baselineDictionary in snapshot.documents {
-                                let baselineDictionary = baselineDictionary.data() as NSDictionary
-                                let baseline = Baseline(_dictionary: baselineDictionary)
-                                   self.allBaselines.append(baseline)
-                                    print(self.allBaselines)
-                                    
+                if error != nil {
+                    print(error!.localizedDescription)
+                    ProgressHUD.dismiss()
+                    self.tableView.reloadData()
+                    return
                 }
-                self.tableView.reloadData()
-            
-            }
+                   guard let snapshot = snapshot else { ProgressHUD.dismiss(); return }
+
+                   if !snapshot.isEmpty {
+
+                       for baselineDictionary in snapshot.documents {
+                           
+                           let baselineDictionary = baselineDictionary.data() as NSDictionary
+                           
+                        let baseline = Baseline(_dictionary: baselineDictionary)
+                           
+                           self.allBaselines.append(baseline)
+                        print(self.allBaselines)
+                       }
+                       self.tableView.reloadData()
+                    
+                   }
             ProgressHUD.dismiss()
-        }
+               })
+        
+        
+        ProgressHUD.show()
+        
+
         
     }
 
@@ -96,6 +98,11 @@ class PlayerBaselineVC: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return allBaselines.count
+    }
+    
+    // heights of the cells
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
     
 
@@ -112,8 +119,20 @@ class PlayerBaselineVC: UITableViewController {
         date = helper.dateFormatter().date(from: baseline.baselineDate)
         
         cell.baselineDateLabel.text = helper.timeElapsed(date: date)
+        cell.heightLabel.text = baseline.height
+        print(baseline.height)
+        cell.weightLabel.text = baseline.weight
+        print(baseline.weight)
+        cell.wingspanLabel.text = baseline.wingspan
+        cell.verticalLabel.text = baseline.vertical
+        cell.dashLabel.text = baseline.yardDash
+        cell.agilityLabel.text = baseline.agility
+        print(baseline.agility)
+        cell.pushUpLabel.text = baseline.pushUp
+        cell.chinUpLabel.text = baseline.chinUp
+        cell.mileLabel.text = baseline.mileRun
                          
-        cell.generateCellWith(baseline: baseline, indexPath: indexPath)
+        //cell.generateCellWith(baseline: baseline, indexPath: indexPath)
          
         return cell
         
@@ -126,7 +145,7 @@ class PlayerBaselineVC: UITableViewController {
         
            
         //self.present(newBaselineVC, animated: true, completion: nil)
-        self.navigationController?.pushViewController(newGroupVC, animated: true)
+        self.navigationController?.pushViewController(newBaselineVC, animated: true)
     }
     
 

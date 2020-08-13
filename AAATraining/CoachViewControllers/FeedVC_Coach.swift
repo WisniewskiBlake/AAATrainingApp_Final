@@ -81,7 +81,7 @@ class FeedVC_Coach: UITableViewController {
         
         loadPosts()
        
-        navigationController?.setNavigationBarHidden(true, animated: true)
+        //navigationController?.setNavigationBarHidden(true, animated: true)
 
     }
     
