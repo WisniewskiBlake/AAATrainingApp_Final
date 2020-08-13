@@ -21,6 +21,9 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     
     var videoSelected: NSURL? = NSURL()
     var pictureSelected: UIImage? = UIImage()
+    // code obj
+    var isPictureSelected = false
+    var isVideoSelected = false
     
     let postID = UUID().uuidString
     
@@ -37,9 +40,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
         }
     }
     
-    // code obj
-    var isPictureSelected = false
-    var isVideoSelected = false
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -129,7 +130,8 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     func displayMedia(picture: UIImage?, video: NSURL?) {
         if let pic = picture {
             pictureImageView.image = pic
-            
+            isVideoSelected = false
+            isPictureSelected = true
             return
         }
         
@@ -143,11 +145,12 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
             let thumbImage = createThumbnailOfVideoFromRemoteUrl(url: video)
             
             pictureImageView.image = thumbImage
-            
-//            uploadVideo(video: videoData!, chatRoomId: chatRoomId, view: self.navigationController!.view) { (videoLink) in
-//
-//                if videoLink != nil {
-//
+            isPictureSelected = false
+            isVideoSelected = true
+            uploadPostVideo(video: videoData!, view: self.navigationController!.view) { (videoLink) in
+
+                if videoLink != nil {
+
 //                    let ecryptedText = Encryption.encryptText(chatRoomId: self.chatRoomId, message: "[\(kVIDEO)]")
 //
 //                    outgoingMessage = OutgoingMessage(message: ecryptedText, video: videoLink!, thumbNail: dataThumbnail! as NSData, senderId: currentUser.objectId, senderName: currentUser.firstname, date: date, status: kDELIVERED, type: kVIDEO)
@@ -156,9 +159,9 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
 //                    self.finishSendingMessage()
 //
 //                    outgoingMessage?.sendMessage(chatRoomID: self.chatRoomId, messageDictionary: outgoingMessage!.messageDictionary, memberIds: self.memberIds, membersToPush: self.membersToPush)
-//
-//                }
-//            }
+
+                }
+            }
             return
         }
     }
