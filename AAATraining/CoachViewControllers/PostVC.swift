@@ -151,14 +151,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
 
                 if videoLink != nil {
 
-//                    let ecryptedText = Encryption.encryptText(chatRoomId: self.chatRoomId, message: "[\(kVIDEO)]")
-//
-//                    outgoingMessage = OutgoingMessage(message: ecryptedText, video: videoLink!, thumbNail: dataThumbnail! as NSData, senderId: currentUser.objectId, senderName: currentUser.firstname, date: date, status: kDELIVERED, type: kVIDEO)
-//
-//                    JSQSystemSoundPlayer.jsq_playMessageSentSound()
-//                    self.finishSendingMessage()
-//
-//                    outgoingMessage?.sendMessage(chatRoomID: self.chatRoomId, messageDictionary: outgoingMessage!.messageDictionary, memberIds: self.memberIds, membersToPush: self.membersToPush)
+//                    Ωa
 
                 }
             }

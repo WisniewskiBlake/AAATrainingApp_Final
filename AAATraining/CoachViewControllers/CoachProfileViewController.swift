@@ -294,13 +294,24 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         // creating buttons for action sheet
         let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
             
-            // access/instantiate loginViewController
-            let loginvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+            
             
             FUser.logOutCurrentUser { (success) in
                 
                 if success {
-                    self.present(loginvc, animated: false, completion: nil)
+                    // Safe Push VC
+//                    if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC {
+//                        if let navigator = self.navigationController {
+//                            navigator.pushViewController(viewController, animated: true)
+//                        }
+//                    }
+                    
+                    // Safe Present
+                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+                    {
+                        self.present(vc, animated: true, completion: nil)
+                    }
+                    
                 }
                 
             }
