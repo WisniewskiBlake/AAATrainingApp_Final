@@ -79,6 +79,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     
     
     @IBAction func pictureButtonClicked(_ sender: Any) {
+        print("tapped")
         let camera = Camera(delegate_: self)
         
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -109,7 +110,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
         optionMenu.addAction(shareVideo)
         optionMenu.addAction(cancelAction)
         
-
+        self.present(optionMenu, animated: true, completion: nil)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

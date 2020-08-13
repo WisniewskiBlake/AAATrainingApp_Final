@@ -36,7 +36,7 @@ class FeedVC_Coach: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureNavBar()
+        //configureNavBar()
         // dynamic cell height
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200
