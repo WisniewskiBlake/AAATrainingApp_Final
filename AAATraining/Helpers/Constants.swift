@@ -96,6 +96,9 @@ public let kPOSTPICTURE = "postPicture"
 public let kPOSTDATE = "postDate"
 public let kPOSTUSERAVA = "postUserAva"
 public let kPOSTUSERNAME = "postUserName"
+public let kPOSTVIDEO = "postVideo"
+public let kPOSTTHUMBNAIL = "postThumbnail"
+
 
 //Baseline
 public let kBASELINES = "baselines"

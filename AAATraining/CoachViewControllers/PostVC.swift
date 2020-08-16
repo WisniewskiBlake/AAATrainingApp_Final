@@ -40,6 +40,44 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
         }
     }
     
+    @IBAction func shareButton_clicked(_ sender: Any) {
+            createPost()
+            dismiss(animated: true, completion: nil)
+
+        }
+        
+        func displayMedia(picture: UIImage?, video: NSURL?) {
+            if let pic = picture {
+                pictureImageView.image = pic
+                isVideoSelected = false
+                isPictureSelected = true
+                return
+            }
+            
+            //send video
+            if let video = video {
+                
+                let videoData = NSData(contentsOfFile: video.path!)
+                
+                let dataThumbnail = videoThumbnail(video: video).jpegData(compressionQuality: 0.3)
+                
+                let thumbImage = createThumbnailOfVideoFromRemoteUrl(url: video)
+                
+                pictureImageView.image = thumbImage
+                isPictureSelected = false
+                isVideoSelected = true
+                uploadPostVideo(video: videoData!, view: self.navigationController!.view) { (videoLink) in
+
+                    if videoLink != nil {
+
+    //                    Ωa
+
+                    }
+                }
+                return
+            }
+        }
+    
     
 
     override func viewDidLoad() {
@@ -127,37 +165,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
         picker.dismiss(animated: true, completion: nil)
     }
     
-    func displayMedia(picture: UIImage?, video: NSURL?) {
-        if let pic = picture {
-            pictureImageView.image = pic
-            isVideoSelected = false
-            isPictureSelected = true
-            return
-        }
-        
-        //send video
-        if let video = video {
-            
-            let videoData = NSData(contentsOfFile: video.path!)
-            
-            let dataThumbnail = videoThumbnail(video: video).jpegData(compressionQuality: 0.3)
-            
-            let thumbImage = createThumbnailOfVideoFromRemoteUrl(url: video)
-            
-            pictureImageView.image = thumbImage
-            isPictureSelected = false
-            isVideoSelected = true
-            uploadPostVideo(video: videoData!, view: self.navigationController!.view) { (videoLink) in
-
-                if videoLink != nil {
-
-//                    Ωa
-
-                }
-            }
-            return
-        }
-    }
+    
     
 
             
@@ -174,11 +182,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
         
     }
     
-    @IBAction func shareButton_clicked(_ sender: Any) {        
-        createPost()
-        dismiss(animated: true, completion: nil)
-
-    }
+    
     
     
     

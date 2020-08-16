@@ -40,8 +40,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         // dynamic cell height
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200
-        
-//        self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+
         
         // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "createPost"), object: nil)
@@ -51,10 +50,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         NotificationCenter.default.addObserver(self, selector: #selector(loadNewPosts), name: NSNotification.Name(rawValue: "uploadPost"), object: nil)
         
 
-
         configure_avaImageView()
         loadUser()
-//        loadPosts()
         
 
     }
@@ -63,9 +60,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        
-        
+                
         loadPosts()
         tableView.tableFooterView = UIView()
         // hide navigation bar on Home Pagex
@@ -74,7 +69,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        //recentListener.remove()
+        recentListener.remove()
     }
     
     // exec-d when new post is published

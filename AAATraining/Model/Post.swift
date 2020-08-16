@@ -17,12 +17,13 @@ public class Post {
     var date: String
     var postUserAva: String
     var postUserName: String
+    var video: String
     
     let postDictionary: NSMutableDictionary
 
-    init(postID: String, ownerID: String, text: String, picture: String, date: String, postUserAva: String, postUserName: String) {
+    init(postID: String, ownerID: String, text: String, picture: String, date: String, postUserAva: String, postUserName: String, video: String) {
 
-        postDictionary = NSMutableDictionary(objects: [postID, ownerID, text, picture, postUserAva, postUserName], forKeys: [kPOSTID as NSCopying, kPOSTOWNERID as NSCopying, kPOSTTEXT as NSCopying, kPOSTPICTURE as NSCopying, kPOSTUSERAVA as NSCopying, kPOSTUSERNAME as NSCopying])
+        postDictionary = NSMutableDictionary(objects: [postID, ownerID, text, picture, postUserAva, postUserName, video], forKeys: [kPOSTID as NSCopying, kPOSTOWNERID as NSCopying, kPOSTTEXT as NSCopying, kPOSTPICTURE as NSCopying, kPOSTUSERAVA as NSCopying, kPOSTUSERNAME as NSCopying, kPOSTVIDEO as NSCopying])
         
         self.postID = postID
         self.ownerID = ownerID
@@ -31,6 +32,7 @@ public class Post {
         self.date = date
         self.postUserAva = postUserAva
         self.postUserName = postUserName
+        self.video = video
     }
     
     init(_dictionary: NSDictionary) {
@@ -66,8 +68,13 @@ public class Post {
         } else {
             postUserAva = ""
         }
+        if let vid = _dictionary[kPOSTVIDEO] {
+            video = vid as! String
+        } else {
+            video = ""
+        }
         
-        postDictionary = NSMutableDictionary(objects: [postID, ownerID, text, picture, postUserAva, postUserName], forKeys: [kPOSTID as NSCopying, kPOSTOWNERID as NSCopying, kPOSTTEXT as NSCopying, kPOSTPICTURE as NSCopying, kPOSTUSERAVA as NSCopying, kPOSTUSERNAME as NSCopying])
+        postDictionary = NSMutableDictionary(objects: [postID, ownerID, text, picture, postUserAva, postUserName, video], forKeys: [kPOSTID as NSCopying, kPOSTOWNERID as NSCopying, kPOSTTEXT as NSCopying, kPOSTPICTURE as NSCopying, kPOSTUSERAVA as NSCopying, kPOSTUSERNAME as NSCopying, kPOSTVIDEO as NSCopying])
         
     }
 
