@@ -32,7 +32,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     let helper = Helper()
     let user = FUser.currentUser()
        
-    var recentListener: ListenerRegistration!
+    //var recentListener: ListenerRegistration!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +69,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        recentListener.remove()
+        //recentListener.remove()
     }
     
     // exec-d when new post is published
