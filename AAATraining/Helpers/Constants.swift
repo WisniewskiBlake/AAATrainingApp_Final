@@ -98,6 +98,7 @@ public let kPOSTUSERAVA = "postUserAva"
 public let kPOSTUSERNAME = "postUserName"
 public let kPOSTVIDEO = "postVideo"
 public let kPOSTTHUMBNAIL = "postThumbnail"
+public let kPOSTTYPE = "postType"
 
 
 //Baseline

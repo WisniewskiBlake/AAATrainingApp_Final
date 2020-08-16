@@ -12,6 +12,12 @@ import ImagePicker
 import Firebase
 import FirebaseFirestore
 import ProgressHUD
+import ProgressHUD
+import IQAudioRecorderController
+import IDMPhotoBrowser
+import AVFoundation
+import AVKit
+import JSQMessagesViewController
 
 class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
     
@@ -60,6 +66,24 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
     
     func didTapMediaImage(indexPath: IndexPath) {
         let post = allPosts[indexPath.row]
+        let postType = post.postType
+        
+        if postType == "video" {
+            let mediaItem = post.video
+            
+            let player = AVPlayer(url: URL(fileReferenceLiteralResourceName: mediaItem))
+            let moviewPlayer = AVPlayerViewController()
+            
+            let session = AVAudioSession.sharedInstance()
+            
+            try! session.setCategory(.playAndRecord, mode: .default, options: .defaultToSpeaker)
+
+            moviewPlayer.player = player
+            
+            self.present(moviewPlayer, animated: true) {
+                moviewPlayer.player!.play()
+            }
+        }
     }
     
    

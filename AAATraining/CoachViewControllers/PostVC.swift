@@ -19,21 +19,38 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     @IBOutlet weak var pictureImageView: UIImageView!
     @IBOutlet weak var pictureButton: UIButton!
     
-    var videoSelected: NSURL? = NSURL()
-    var pictureSelected: UIImage? = UIImage()
+    var videoPath: NSURL? = NSURL()
+    var picturePath: UIImage? = UIImage()
     // code obj
     var isPictureSelected = false
     var isVideoSelected = false
+    
+    
     
     let postID = UUID().uuidString
     
     func createPost() {
         if postTextView.text != "" {
-            let fullName = FUser.currentUser()!.firstname + " " + FUser.currentUser()!.lastname
-            let post = Post(postID: postID, ownerID: FUser.currentId(), text: postTextView.text, picture: "", date: "", postUserAva: FUser.currentUser()!.ava, postUserName: fullName)
+            if isVideoSelected {
+                let fullName = FUser.currentUser()!.firstname + " " + FUser.currentUser()!.lastname
+                let post = Post(postID: postID, ownerID: FUser.currentId(), text: postTextView.text, picture: "", date: "", postUserAva: FUser.currentUser()!.ava, postUserName: fullName, video: "", postType: "text")
+                
+                post.savePost()
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createPost"), object: nil)
+            } else if isPictureSelected {
+                let fullName = FUser.currentUser()!.firstname + " " + FUser.currentUser()!.lastname
+                let post = Post(postID: postID, ownerID: FUser.currentId(), text: postTextView.text, picture: "", date: "", postUserAva: FUser.currentUser()!.ava, postUserName: fullName, video: "", postType: "text")
+                
+                post.savePost()
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createPost"), object: nil)
+            } else {
+                let fullName = FUser.currentUser()!.firstname + " " + FUser.currentUser()!.lastname
+                let post = Post(postID: postID, ownerID: FUser.currentId(), text: postTextView.text, picture: "", date: "", postUserAva: FUser.currentUser()!.ava, postUserName: fullName, video: "", postType: "text")
+                
+                post.savePost()
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createPost"), object: nil)
+            }
             
-            post.savePost()
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createPost"), object: nil)
         }
         else {
             Helper().showAlert(title: "Data Error", message: "Please fill in info.", in: self)
@@ -157,10 +174,10 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        videoSelected = info[UIImagePickerController.InfoKey.mediaURL] as? NSURL
-        pictureSelected = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+        videoPath = info[UIImagePickerController.InfoKey.mediaURL] as? NSURL
+        picturePath = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
         
-        displayMedia(picture: pictureSelected, video: videoSelected)
+        displayMedia(picture: picturePath, video: videoPath)
         
         picker.dismiss(animated: true, completion: nil)
     }
