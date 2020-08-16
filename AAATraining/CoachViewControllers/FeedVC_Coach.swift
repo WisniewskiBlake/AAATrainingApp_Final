@@ -202,7 +202,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         if post.postType == "video" || post.postType == "picture" {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
             
-            let thumbImage = createThumbnailOfVideoFromRemoteUrl(url: NSURL(fileURLWithPath: post.video))
+            let thumbImage = createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: post.video)!)
                      
              var date: Date!
              

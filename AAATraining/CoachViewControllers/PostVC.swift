@@ -88,9 +88,6 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
             //send video
             if let video = video {
                 
-                let videoData = NSData(contentsOfFile: video.path!)
-                
-                let dataThumbnail = videoThumbnail(video: video).jpegData(compressionQuality: 0.3)
                 
                 let thumbImage = createThumbnailOfVideoFromRemoteUrl(url: video)
                 
