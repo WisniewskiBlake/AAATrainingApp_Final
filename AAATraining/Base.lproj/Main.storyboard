@@ -3714,9 +3714,12 @@
                                 <rect key="frame" x="20" y="271" width="335" height="276"/>
                                 <gestureRecognizers/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YKz-JH-ehO">
-                                <rect key="frame" x="323" y="85" width="36" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YKz-JH-ehO">
+                                <rect key="frame" x="305" y="81" width="50" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="7fz-Qg-Tji"/>
+                                    <constraint firstAttribute="height" constant="35" id="xcA-HM-Tif"/>
+                                </constraints>
                                 <state key="normal" title="Button" image="video.badge.plus" catalog="system"/>
                                 <connections>
                                     <action selector="pictureButtonClicked:" destination="41R-QL-2o6" eventType="touchUpInside" id="toT-rv-63M"/>
@@ -3728,6 +3731,7 @@
                             <constraint firstItem="7Fn-Fh-X2f" firstAttribute="leading" secondItem="s64-lb-SY3" secondAttribute="trailing" constant="-202" id="KZw-CA-zof"/>
                             <constraint firstItem="pxq-WT-FBV" firstAttribute="top" secondItem="7Fn-Fh-X2f" secondAttribute="bottom" constant="8" id="NPH-QF-4GB"/>
                             <constraint firstItem="JLh-Kz-aJs" firstAttribute="bottom" secondItem="pxq-WT-FBV" secondAttribute="bottom" constant="100" id="Omm-8u-VeJ"/>
+                            <constraint firstItem="JLh-Kz-aJs" firstAttribute="trailing" secondItem="YKz-JH-ehO" secondAttribute="trailing" constant="20" id="QtH-Mz-3KK"/>
                             <constraint firstItem="JLh-Kz-aJs" firstAttribute="trailing" secondItem="7Fn-Fh-X2f" secondAttribute="trailing" constant="20" id="SXX-GT-gQA"/>
                             <constraint firstItem="7Fn-Fh-X2f" firstAttribute="top" secondItem="cpD-Sm-ox3" secondAttribute="bottom" constant="20" id="THp-sB-4qz"/>
                             <constraint firstItem="iWW-rh-oYR" firstAttribute="leading" secondItem="cpD-Sm-ox3" secondAttribute="trailing" constant="8" symbolic="YES" id="UiG-0o-Dth"/>
@@ -3739,6 +3743,7 @@
                             <constraint firstItem="JLh-Kz-aJs" firstAttribute="trailing" secondItem="pxq-WT-FBV" secondAttribute="trailing" constant="20" id="qoo-NL-Zyy"/>
                             <constraint firstItem="cpD-Sm-ox3" firstAttribute="leading" secondItem="JLh-Kz-aJs" secondAttribute="leading" constant="20" id="uSQ-c7-e8e"/>
                             <constraint firstItem="s64-lb-SY3" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pNJ-YM-K6E" secondAttribute="leading" constant="20" symbolic="YES" id="vGb-If-Zj9"/>
+                            <constraint firstItem="YKz-JH-ehO" firstAttribute="top" secondItem="JLh-Kz-aJs" secondAttribute="top" constant="25" id="xmc-Pa-Q3O"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="JLh-Kz-aJs"/>
                     </view>

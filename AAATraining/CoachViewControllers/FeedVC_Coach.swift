@@ -176,13 +176,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         
     }
     
-
-    
-    
     // MARK: - Table view data source
-
-
-    
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
@@ -218,6 +212,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                      cell.avaImageView.image = avatarImage!.circleMasked
                  }
              }
+            
             cell.delegate = self
             cell.indexPath = indexPath
              cell.fullnameLabel.text = post.postUserName
@@ -244,11 +239,17 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                      cell.avaImageView.image = avatarImage!.circleMasked
                  }
              }
+            helper.imageFromData(pictureData: post.picture) { (picture) in
+
+                if picture != nil {
+
+                    cell.pictureImageView.image = picture
+                }
+            }
 
             cell.delegate = self
             cell.indexPath = indexPath
              cell.fullnameLabel.text = post.postUserName
-            cell.pictureImageView.image = post.picture.toImage()
              cell.postTextLabel.text = post.text
 
              return cell
