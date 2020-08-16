@@ -30,11 +30,10 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     let postID = UUID().uuidString
     
     func createPost() {
+        
         if postTextView.text != "" {
             if isVideoSelected {
                 let videoData = NSData(contentsOfFile: (videoPath?.path!)!)
-                            
-                            
                             
                 uploadPostVideo(video: videoData!, view: self.navigationController!.view) { (videoLink) in
 
@@ -51,11 +50,19 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
                 
             } else if isPictureSelected {
                 
-                let fullName = FUser.currentUser()!.firstname + " " + FUser.currentUser()!.lastname
-                let post = Post(postID: postID, ownerID: FUser.currentId(), text: postTextView.text, picture: "", date: "", postUserAva: FUser.currentUser()!.ava, postUserName: fullName, video: "", postType: "picture")
-                post.savePost()
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createPost"), object: nil)
+                uploadPostImage(image: picturePath!, view: self.navigationController!.view) { (picture) in
+
+                    if picture != nil {
+                        let fullName = FUser.currentUser()!.firstname + " " + FUser.currentUser()!.lastname
+                        let post = Post(postID: self.postID, ownerID: FUser.currentId(), text: self.postTextView.text, picture: picture!, date: "", postUserAva: FUser.currentUser()!.ava, postUserName: fullName, video: "", postType: "video")
+                        
+                        post.savePost()
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createPost"), object: nil)
+
+                    }
+                }
                 
+                return
             } else {
                 
                 let fullName = FUser.currentUser()!.firstname + " " + FUser.currentUser()!.lastname
@@ -63,6 +70,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
                 
                 post.savePost()
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createPost"), object: nil)
+                return
             }
             
         }
@@ -179,8 +187,8 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         videoPath = info[UIImagePickerController.InfoKey.mediaURL] as? NSURL
-        picturePath = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
-        
+        picturePath = info[UIImagePickerController.InfoKey(rawValue: convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage))] as? UIImage
+        //picturePath = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
         displayMedia(picture: picturePath, video: videoPath)
         
         picker.dismiss(animated: true, completion: nil)
@@ -243,6 +251,13 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     }
     
 
+}
+
+extension UIImage {
+    func toString() -> String? {
+        let data: Data? = self.pngData()
+        return data?.base64EncodedString(options: .endLineWithLineFeed)
+    }
 }
 
 // Helper function inserted by Swift 4.2 migrator.

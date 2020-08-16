@@ -244,17 +244,11 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                      cell.avaImageView.image = avatarImage!.circleMasked
                  }
              }
-            helper.imageFromData(pictureData: post.picture) { (picture) in
 
-                if picture != nil {
-
-                    cell.pictureImageView.image = picture
-                }
-            }
             cell.delegate = self
             cell.indexPath = indexPath
              cell.fullnameLabel.text = post.postUserName
-            
+            cell.pictureImageView.image = post.picture.toImage()
              cell.postTextLabel.text = post.text
 
              return cell
@@ -323,4 +317,13 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
     
     
 
+}
+
+extension String {
+    func toImage() -> UIImage? {
+        if let data = Data(base64Encoded: self, options: .ignoreUnknownCharacters){
+            return UIImage(data: data)
+        }
+        return nil
+    }
 }
