@@ -71,7 +71,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         if postType == "video" {
             let mediaItem = post.video
             
-            let player = AVPlayer(url: URL(fileReferenceLiteralResourceName: mediaItem))
+            let player = AVPlayer(url: Foundation.URL(string: mediaItem)!)
             let moviewPlayer = AVPlayerViewController()
             
             let session = AVAudioSession.sharedInstance()
@@ -218,7 +218,8 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                      cell.avaImageView.image = avatarImage!.circleMasked
                  }
              }
-             
+            cell.delegate = self
+            cell.indexPath = indexPath
              cell.fullnameLabel.text = post.postUserName
             cell.pictureImageView.image = thumbImage
              cell.postTextLabel.text = post.text

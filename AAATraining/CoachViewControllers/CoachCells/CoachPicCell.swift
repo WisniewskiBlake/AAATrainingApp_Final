@@ -36,7 +36,7 @@ class CoachPicCell: UITableViewCell {
        avaImageView.layer.cornerRadius = avaImageView.frame.width / 2
        avaImageView.clipsToBounds = true
         
-        tapGestureRecognizer.addTarget(self, action: #selector(self.avatarTap))
+        tapGestureRecognizer.addTarget(self, action: #selector(self.mediaTap))
         pictureImageView.isUserInteractionEnabled = true
         pictureImageView.addGestureRecognizer(tapGestureRecognizer)
     }
@@ -47,7 +47,7 @@ class CoachPicCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    @objc func avatarTap() {
+    @objc func mediaTap() {
         delegate!.didTapMediaImage(indexPath: indexPath)
     }
 
