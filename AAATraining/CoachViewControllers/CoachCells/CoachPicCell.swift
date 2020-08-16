@@ -28,6 +28,7 @@ class CoachPicCell: UITableViewCell {
     var delegate: CoachPicCellDelegate?
     
     let tapGestureRecognizer = UITapGestureRecognizer()
+    let tapGestureRecognizerPic = UITapGestureRecognizer()
     
 
     override func awakeFromNib() {
@@ -37,9 +38,9 @@ class CoachPicCell: UITableViewCell {
        avaImageView.layer.cornerRadius = avaImageView.frame.width / 2
        avaImageView.clipsToBounds = true
         
-        tapGestureRecognizer.addTarget(self, action: #selector(self.mediaTap))
+        tapGestureRecognizerPic.addTarget(self, action: #selector(self.mediaTap))
         pictureImageView.isUserInteractionEnabled = true
-        pictureImageView.addGestureRecognizer(tapGestureRecognizer)
+        pictureImageView.addGestureRecognizer(tapGestureRecognizerPic)
         
         tapGestureRecognizer.addTarget(self, action: #selector(self.mediaTap))
         playImageView.isUserInteractionEnabled = true

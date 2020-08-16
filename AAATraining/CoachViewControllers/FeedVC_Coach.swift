@@ -84,6 +84,18 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                 moviewPlayer.player!.play()
             }
         }
+        if postType == "picture" {
+            helper.imageFromData(pictureData: post.picture) { (picture) in
+
+                if picture != nil {
+                    let photos = IDMPhoto.photos(withImages: [picture as Any])
+                    let browser = IDMPhotoBrowser(photos: photos)
+                    
+                    self.present(browser!, animated: true, completion: nil)
+                }
+            }
+            
+        }
     }
     
    
@@ -195,6 +207,8 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         
         if post.postType == "video" {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
+            
+            cell.playImageView.isHidden = false
             
             let thumbImage = createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: post.video)!)
                      
