@@ -12,7 +12,7 @@ import ImagePicker
 import Firebase
 import FirebaseFirestore
 import ProgressHUD
-import ProgressHUD
+
 import IQAudioRecorderController
 import IDMPhotoBrowser
 import AVFoundation

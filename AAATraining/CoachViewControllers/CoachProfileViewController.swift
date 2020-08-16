@@ -12,8 +12,12 @@ import ImagePicker
 import Firebase
 import FirebaseFirestore
 import ProgressHUD
+import IQAudioRecorderController
+import IDMPhotoBrowser
+import AVFoundation
+import AVKit
 
-class CoachProfileViewController: UITableViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, ImagePickerDelegate {
+class CoachProfileViewController: UITableViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, ImagePickerDelegate, CoachPicCellDelegate {
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var avaImageView: UIImageView!
     @IBOutlet weak var fullnameLabel: UILabel!
@@ -185,6 +189,40 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         //showIconOptions()
     }
     
+    func didTapMediaImage(indexPath: IndexPath) {
+        let post = allPosts[indexPath.row]
+        let postType = post.postType
+        
+        if postType == "video" {
+            let mediaItem = post.video
+            
+            let player = AVPlayer(url: Foundation.URL(string: mediaItem)!)
+            let moviewPlayer = AVPlayerViewController()
+            
+            let session = AVAudioSession.sharedInstance()
+            
+            try! session.setCategory(.playAndRecord, mode: .default, options: .defaultToSpeaker)
+
+            moviewPlayer.player = player
+            
+            self.present(moviewPlayer, animated: true) {
+                moviewPlayer.player!.play()
+            }
+        }
+        if postType == "picture" {
+            helper.imageFromData(pictureData: post.picture) { (picture) in
+
+                if picture != nil {
+                    let photos = IDMPhoto.photos(withImages: [picture as Any])
+                    let browser = IDMPhotoBrowser(photos: photos)
+                    
+                    self.present(browser!, animated: true, completion: nil)
+                }
+            }
+            
+        }
+    }
+    
    
     
     // MARK: - Table view data source
@@ -206,21 +244,24 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     
     // cell config
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
-        
-        var post: Post
-        
-        var date: Date!
-        print(indexPath.row)
-        print(indexPath)
+                var post: Post
+                
         post = allPosts[indexPath.row]
         
-        date = helper.dateFormatter().date(from: post.date)
-        
-         cell.dateLabel.text = helper.timeElapsed(date: date)
-         
-         
-         
+        if post.postType == "video" {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
+            
+            cell.playImageView.isHidden = false
+            
+            let thumbImage = createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: post.video)!)
+                     
+             var date: Date!
+             
+             date = helper.dateFormatter().date(from: post.date)
+            
+             cell.dateLabel.text = helper.timeElapsed(date: date)
+                     
+             
              helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
 
                  if avatarImage != nil {
@@ -228,13 +269,88 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                      cell.avaImageView.image = avatarImage!.circleMasked
                  }
              }
-         
-         cell.fullnameLabel.text = post.postUserName
+            
+            cell.delegate = self
+            cell.indexPath = indexPath
+             cell.fullnameLabel.text = post.postUserName
+            cell.pictureImageView.image = thumbImage
+             cell.postTextLabel.text = post.text
 
-         cell.postTextLabel.text = post.text
+             return cell
+        } else if post.postType == "picture" {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
+            
+            cell.playImageView.isHidden = true
+           
+             var date: Date!
+             
+             date = helper.dateFormatter().date(from: post.date)
+            
+             cell.dateLabel.text = helper.timeElapsed(date: date)
+                     
+             
+             helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
 
-        return cell
-        
+                 if avatarImage != nil {
+
+                     cell.avaImageView.image = avatarImage!.circleMasked
+                 }
+             }
+            helper.imageFromData(pictureData: post.picture) { (picture) in
+
+                if picture != nil {
+
+                    cell.pictureImageView.image = picture
+                }
+            }
+
+            cell.delegate = self
+            cell.indexPath = indexPath
+             cell.fullnameLabel.text = post.postUserName
+             cell.postTextLabel.text = post.text
+
+             return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
+                     
+             var date: Date!
+             
+             date = helper.dateFormatter().date(from: post.date)
+            
+             cell.dateLabel.text = helper.timeElapsed(date: date)
+                     
+             
+             helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
+
+                 if avatarImage != nil {
+
+                     cell.avaImageView.image = avatarImage!.circleMasked
+                 }
+             }
+             
+             cell.fullnameLabel.text = post.postUserName
+
+             cell.postTextLabel.text = post.text
+
+             return cell
+        }
+    }
+    
+    func createThumbnailOfVideoFromRemoteUrl(url: NSURL) -> UIImage? {
+        let asset = AVAsset(url: url as URL)
+        let assetImgGenerate = AVAssetImageGenerator(asset: asset)
+        assetImgGenerate.appliesPreferredTrackTransform = true
+        //Can set this to improve performance if target size is known before hand
+        //assetImgGenerate.maximumSize = CGSize(width,height)
+        let time = CMTimeMakeWithSeconds(1.0, preferredTimescale: 600)
+        do {
+            let img = try assetImgGenerate.copyCGImage(at: time, actualTime: nil)
+            let thumbnail = UIImage(cgImage: img)
+            return thumbnail
+        } catch {
+          print(error.localizedDescription)
+          return nil
+        }
     }
     
     func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
