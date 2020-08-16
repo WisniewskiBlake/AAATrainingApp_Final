@@ -199,7 +199,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                 
         post = allPosts[indexPath.row]
         
-        if post.postType == "video" || post.postType == "picture" {
+        if post.postType == "video" {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
             
             let thumbImage = createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: post.video)!)
@@ -222,6 +222,39 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
             cell.indexPath = indexPath
              cell.fullnameLabel.text = post.postUserName
             cell.pictureImageView.image = thumbImage
+             cell.postTextLabel.text = post.text
+
+             return cell
+        } else if post.postType == "picture" {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
+            
+            cell.playImageView.isHidden = true
+           
+             var date: Date!
+             
+             date = helper.dateFormatter().date(from: post.date)
+            
+             cell.dateLabel.text = helper.timeElapsed(date: date)
+                     
+             
+             helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
+
+                 if avatarImage != nil {
+
+                     cell.avaImageView.image = avatarImage!.circleMasked
+                 }
+             }
+            helper.imageFromData(pictureData: post.picture) { (picture) in
+
+                if picture != nil {
+
+                    cell.pictureImageView.image = picture
+                }
+            }
+            cell.delegate = self
+            cell.indexPath = indexPath
+             cell.fullnameLabel.text = post.postUserName
+            
              cell.postTextLabel.text = post.text
 
              return cell

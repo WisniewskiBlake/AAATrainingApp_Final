@@ -19,6 +19,7 @@ class CoachPicCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var postTextLabel: UILabel!
     @IBOutlet weak var pictureImageView: UIImageView!
+    @IBOutlet weak var playImageView: UIImageView!
     
     @IBOutlet weak var numberComplete: UILabel!
     @IBOutlet weak var optionsButton: UIButton!
@@ -39,6 +40,10 @@ class CoachPicCell: UITableViewCell {
         tapGestureRecognizer.addTarget(self, action: #selector(self.mediaTap))
         pictureImageView.isUserInteractionEnabled = true
         pictureImageView.addGestureRecognizer(tapGestureRecognizer)
+        
+        tapGestureRecognizer.addTarget(self, action: #selector(self.mediaTap))
+        playImageView.isUserInteractionEnabled = true
+        playImageView.addGestureRecognizer(tapGestureRecognizer)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
