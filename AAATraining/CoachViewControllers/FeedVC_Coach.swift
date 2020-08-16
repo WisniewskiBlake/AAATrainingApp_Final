@@ -13,7 +13,7 @@ import Firebase
 import FirebaseFirestore
 import ProgressHUD
 
-class FeedVC_Coach: UITableViewController {
+class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
     
     // posts obj
     //
@@ -52,18 +52,15 @@ class FeedVC_Coach: UITableViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadPostsAfterDelete), name: NSNotification.Name(rawValue: "deletePost"), object: nil)
         
-//        NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "deleteUser"), object: nil)
-        
-//        NotificationCenter.default.addObserver(self, selector: #selector(deletePost), name: NSNotification.Name(rawValue: "deletePost"), object: nil)
-        
-        
+
         // run function
         loadPosts()
-        
 
     }
     
-    
+    func didTapMediaImage(indexPath: IndexPath) {
+        let post = allPosts[indexPath.row]
+    }
     
    
     
@@ -160,9 +157,7 @@ class FeedVC_Coach: UITableViewController {
     
     // MARK: - Table view data source
 
-    @IBAction func didTapCellMedia(_ sender: Any) {
-        
-    }
+
     
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -2824,9 +2824,6 @@
                                                 <constraint firstAttribute="width" constant="343" id="5OJ-XM-n9o"/>
                                                 <constraint firstAttribute="height" constant="307" id="QPM-1j-4c1"/>
                                             </constraints>
-                                            <connections>
-                                                <outletCollection property="gestureRecognizers" destination="Vtz-Ie-Six" appends="YES" id="nh9-9c-3RH"/>
-                                            </connections>
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e5c-AD-hHX">
                                             <rect key="frame" x="313" y="498" width="54" height="33"/>
@@ -2910,11 +2907,6 @@
                     </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CFj-yB-s0x" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="Vtz-Ie-Six">
-                    <connections>
-                        <action selector="didTapCellMedia:" destination="doT-ZS-dhL" id="bLh-1D-ZLd"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="4610" y="-3649"/>
         </scene>
