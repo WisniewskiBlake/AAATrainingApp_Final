@@ -2540,10 +2540,14 @@
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="C4d-rO-HFb">
                                             <rect key="frame" x="16" y="178.5" width="343" height="307"/>
+                                            <gestureRecognizers/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="307" id="J8P-Yn-WzS"/>
                                                 <constraint firstAttribute="width" constant="343" id="XaY-HL-oUr"/>
                                             </constraints>
+                                            <connections>
+                                                <outletCollection property="gestureRecognizers" destination="18i-Bs-jlR" appends="YES" id="Qzb-DV-nVK"/>
+                                            </connections>
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BDR-Ds-fxs">
                                             <rect key="frame" x="313" y="498" width="54" height="33"/>
@@ -2623,6 +2627,7 @@
                     <navigationItem key="navigationItem" title="Workout Feed" id="Dcy-LC-Qs7"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AJ7-6C-rg0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="18i-Bs-jlR"/>
             </objects>
             <point key="canvasLocation" x="5359" y="2812"/>
         </scene>
@@ -2814,10 +2819,14 @@
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wRF-fx-KHv">
                                             <rect key="frame" x="16" y="178.5" width="343" height="307"/>
+                                            <gestureRecognizers/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="343" id="5OJ-XM-n9o"/>
                                                 <constraint firstAttribute="height" constant="307" id="QPM-1j-4c1"/>
                                             </constraints>
+                                            <connections>
+                                                <outletCollection property="gestureRecognizers" destination="Vtz-Ie-Six" appends="YES" id="nh9-9c-3RH"/>
+                                            </connections>
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e5c-AD-hHX">
                                             <rect key="frame" x="313" y="498" width="54" height="33"/>
@@ -2901,6 +2910,11 @@
                     </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CFj-yB-s0x" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Vtz-Ie-Six">
+                    <connections>
+                        <action selector="didTapCellMedia:" destination="doT-ZS-dhL" id="bLh-1D-ZLd"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="4610" y="-3649"/>
         </scene>

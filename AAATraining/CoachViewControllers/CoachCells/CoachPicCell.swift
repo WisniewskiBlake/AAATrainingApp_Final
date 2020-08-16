@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol CoachPicCellDelegate {
+    func didTapAvatarImage(indexPath: IndexPath)
+}
+
 class CoachPicCell: UITableViewCell {
     
     @IBOutlet weak var avaImageView: UIImageView!
@@ -18,6 +22,11 @@ class CoachPicCell: UITableViewCell {
     
     @IBOutlet weak var numberComplete: UILabel!
     @IBOutlet weak var optionsButton: UIButton!
+    
+    var indexPath: IndexPath!
+    var delegate: CoachPicCellDelegate?
+    
+    let tapGestureRecognizer = UITapGestureRecognizer()
     
 
     override func awakeFromNib() {

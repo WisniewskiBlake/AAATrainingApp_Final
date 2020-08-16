@@ -160,6 +160,9 @@ class FeedVC_Coach: UITableViewController {
     
     // MARK: - Table view data source
 
+    @IBAction func didTapCellMedia(_ sender: Any) {
+        
+    }
     
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
