@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CoachPicCellDelegate {
-    func didTapAvatarImage(indexPath: IndexPath)
+    func didTapMediaImage(indexPath: IndexPath)
 }
 
 class CoachPicCell: UITableViewCell {
@@ -35,12 +35,20 @@ class CoachPicCell: UITableViewCell {
         // rounded corners
        avaImageView.layer.cornerRadius = avaImageView.frame.width / 2
        avaImageView.clipsToBounds = true
+        
+        tapGestureRecognizer.addTarget(self, action: #selector(self.avatarTap))
+        pictureImageView.isUserInteractionEnabled = true
+        pictureImageView.addGestureRecognizer(tapGestureRecognizer)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    @objc func avatarTap() {
+        delegate!.didTapMediaImage(indexPath: indexPath)
     }
 
 }
