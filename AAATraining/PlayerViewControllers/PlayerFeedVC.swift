@@ -13,7 +13,13 @@ import Firebase
 import FirebaseFirestore
 import ProgressHUD
 
-class PlayerFeedVC: UITableViewController {
+import IQAudioRecorderController
+import IDMPhotoBrowser
+import AVFoundation
+import AVKit
+import JSQMessagesViewController
+
+class PlayerFeedVC: UITableViewController, CoachPicCellDelegate {
     
     var allPosts: [Post] = []
        var recentListener: ListenerRegistration!
@@ -132,6 +138,40 @@ class PlayerFeedVC: UITableViewController {
              loadPosts()
      
          }
+    
+    func didTapMediaImage(indexPath: IndexPath) {
+        let post = allPosts[indexPath.row]
+        let postType = post.postType
+        
+        if postType == "video" {
+            let mediaItem = post.video
+            
+            let player = AVPlayer(url: Foundation.URL(string: mediaItem)!)
+            let moviewPlayer = AVPlayerViewController()
+            
+            let session = AVAudioSession.sharedInstance()
+            
+            try! session.setCategory(.playAndRecord, mode: .default, options: .defaultToSpeaker)
+
+            moviewPlayer.player = player
+            
+            self.present(moviewPlayer, animated: true) {
+                moviewPlayer.player!.play()
+            }
+        }
+        if postType == "picture" {
+            helper.imageFromData(pictureData: post.picture) { (picture) in
+
+                if picture != nil {
+                    let photos = IDMPhoto.photos(withImages: [picture as Any])
+                    let browser = IDMPhotoBrowser(photos: photos)
+                    
+                    self.present(browser!, animated: true, completion: nil)
+                }
+            }
+            
+        }
+    }
 
     // MARK: - Table view data source
 
@@ -146,36 +186,114 @@ class PlayerFeedVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
-            
             var post: Post
-            //let posts = self.allPosts[indexPath.row]
-            
+                    
             post = allPosts[indexPath.row]
             
-            var date: Date!
+            if post.postType == "video" {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
+                
+                cell.playImageView.isHidden = false
+                
+                let thumbImage = createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: post.video)!)
+                         
+                 var date: Date!
+                 
+                 date = helper.dateFormatter().date(from: post.date)
+                
+                 cell.dateLabel.text = helper.timeElapsed(date: date)
+                         
+                 
+                 helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
 
-            
-            date = helper.dateFormatter().date(from: post.date)
-           
-            cell.dateLabel.text = helper.timeElapsed(date: date)
-                        
-            
-                helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
+                     if avatarImage != nil {
 
-                    if avatarImage != nil {
+                         cell.avaImageView.image = avatarImage!.circleMasked
+                     }
+                 }
+                
+                cell.delegate = self
+                cell.indexPath = indexPath
+                 cell.fullnameLabel.text = post.postUserName
+                cell.pictureImageView.image = thumbImage
+                 cell.postTextLabel.text = post.text
 
-                        cell.avaImageView.image = avatarImage!.circleMasked
+                 return cell
+            } else if post.postType == "picture" {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
+                
+                cell.playImageView.isHidden = true
+               
+                 var date: Date!
+                 
+                 date = helper.dateFormatter().date(from: post.date)
+                
+                 cell.dateLabel.text = helper.timeElapsed(date: date)
+                         
+                 
+                 helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
+
+                     if avatarImage != nil {
+
+                         cell.avaImageView.image = avatarImage!.circleMasked
+                     }
+                 }
+                helper.imageFromData(pictureData: post.picture) { (picture) in
+
+                    if picture != nil {
+
+                        cell.pictureImageView.image = picture
                     }
                 }
-            
 
-            cell.fullnameLabel.text = post.postUserName
+                cell.delegate = self
+                cell.indexPath = indexPath
+                 cell.fullnameLabel.text = post.postUserName
+                 cell.postTextLabel.text = post.text
 
-            cell.postTextLabel.text = post.text
-    //
-            return cell
+                 return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
+                         
+                 var date: Date!
+                 
+                 date = helper.dateFormatter().date(from: post.date)
+                
+                 cell.dateLabel.text = helper.timeElapsed(date: date)
+                         
+                 
+                 helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
+
+                     if avatarImage != nil {
+
+                         cell.avaImageView.image = avatarImage!.circleMasked
+                     }
+                 }
+                 
+                 cell.fullnameLabel.text = post.postUserName
+
+                 cell.postTextLabel.text = post.text
+
+                 return cell
+            }
         }
+    
+    func createThumbnailOfVideoFromRemoteUrl(url: NSURL) -> UIImage? {
+        let asset = AVAsset(url: url as URL)
+        let assetImgGenerate = AVAssetImageGenerator(asset: asset)
+        assetImgGenerate.appliesPreferredTrackTransform = true
+        //Can set this to improve performance if target size is known before hand
+        //assetImgGenerate.maximumSize = CGSize(width,height)
+        let time = CMTimeMakeWithSeconds(1.0, preferredTimescale: 600)
+        do {
+            let img = try assetImgGenerate.copyCGImage(at: time, actualTime: nil)
+            let thumbnail = UIImage(cgImage: img)
+            return thumbnail
+        } catch {
+          print(error.localizedDescription)
+          return nil
+        }
+    }
     
     // MARK: - Scroll Did Scroll
     // executed always whenever tableView is scrolling

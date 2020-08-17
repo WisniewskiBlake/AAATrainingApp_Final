@@ -38,6 +38,8 @@ class CoachNoPicCell: UITableViewCell {
         let helper = Helper()
         self.indexPath = indexPath
         
+        
+        
         self.fullnameLabel.text = post.postUserName
         self.dateLabel.text = post.date
         self.postTextLabel.text = post.text

@@ -42,7 +42,7 @@ class CoachPicCell: UITableViewCell {
         pictureImageView.isUserInteractionEnabled = true
         pictureImageView.addGestureRecognizer(tapGestureRecognizerPic)
         
-        tapGestureRecognizer.addTarget(self, action: #selector(self.mediaTap))
+        tapGestureRecognizer.addTarget(self, action: #selector(self.mediaTap)) 
         playImageView.isUserInteractionEnabled = true
         playImageView.addGestureRecognizer(tapGestureRecognizer)
     }

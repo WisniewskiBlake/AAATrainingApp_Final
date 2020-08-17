@@ -435,22 +435,32 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, attributedTextForMessageBubbleTopLabelAt indexPath: IndexPath!) -> NSAttributedString! {
         let message = messages[indexPath.row]
+        let style = NSMutableParagraphStyle()
+        style.alignment = NSTextAlignment.right
+        let fullname = FUser.currentUser()?.fullname
+        print(fullname?.count)
+        let fullNameArr = fullname?.components(separatedBy: " ")
+        let firstname = fullNameArr?[0]
+        let lastname = fullNameArr?[1]
+        let firstCharIndex = lastname?.index(lastname!.startIndex, offsetBy: 1)
+        let lastnameCharacter = lastname?.substring(to: firstCharIndex!)
+        
+        
         switch message.senderId {
         case kCURRENTUSER:
             return nil
             
         default:
-            guard let senderDisplayName = message.senderDisplayName else {
-                assertionFailure()
-                return nil
-            }
-            return NSAttributedString(string: senderDisplayName)
+            senderDisplayName = firstname! + " " + lastnameCharacter!
+            return NSAttributedString(string: senderDisplayName, attributes: [.baselineOffset: 0.5, .paragraphStyle: style])
         }
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForMessageBubbleTopLabelAt indexPath: IndexPath!) -> CGFloat {
-        return 10
+        return 12
     }
+    
+    
        
        override func collectionView(_ collectionView: JSQMessagesCollectionView!, header headerView: JSQMessagesLoadEarlierHeaderView!, didTapLoadEarlierMessagesButton sender: UIButton!) {
            
