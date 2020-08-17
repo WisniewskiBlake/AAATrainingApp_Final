@@ -18,6 +18,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     @IBOutlet weak var postTextView: UITextView!
     @IBOutlet weak var pictureImageView: UIImageView!
     @IBOutlet weak var pictureButton: UIButton!
+    @IBOutlet weak var urlLinkTextField: UITextField!
     
     var videoPath: NSURL? = NSURL()
     var picturePath: UIImage? = UIImage()
