@@ -19,12 +19,13 @@ public class Post {
     var postUserName: String
     var video: String
     var postType: String
+    var postUrlLink: String
     
     let postDictionary: NSMutableDictionary
 
-    init(postID: String, ownerID: String, text: String, picture: String, date: String, postUserAva: String, postUserName: String, video: String, postType: String) {
+    init(postID: String, ownerID: String, text: String, picture: String, date: String, postUserAva: String, postUserName: String, video: String, postType: String, postUrlLink: String) {
         
-        postDictionary = NSMutableDictionary(objects: [postID, ownerID, text, picture, postUserAva, postUserName, video, postType], forKeys: [kPOSTID as NSCopying, kPOSTOWNERID as NSCopying, kPOSTTEXT as NSCopying, kPOSTPICTURE as NSCopying, kPOSTUSERAVA as NSCopying, kPOSTUSERNAME as NSCopying, kPOSTVIDEO as NSCopying, kPOSTTYPE as NSCopying])
+        postDictionary = NSMutableDictionary(objects: [postID, ownerID, text, picture, postUserAva, postUserName, video, postType, postUrlLink], forKeys: [kPOSTID as NSCopying, kPOSTOWNERID as NSCopying, kPOSTTEXT as NSCopying, kPOSTPICTURE as NSCopying, kPOSTUSERAVA as NSCopying, kPOSTUSERNAME as NSCopying, kPOSTVIDEO as NSCopying, kPOSTTYPE as NSCopying, kPOSTURLLINK as NSCopying])
         
         self.postID = postID
         self.ownerID = ownerID
@@ -35,6 +36,7 @@ public class Post {
         self.postUserName = postUserName
         self.video = video
         self.postType = postType
+        self.postUrlLink = postUrlLink
     }
     
     init(_dictionary: NSDictionary) {
@@ -80,8 +82,13 @@ public class Post {
         } else {
             postType = ""
         }
+        if let url = _dictionary[kPOSTURLLINK] {
+            postUrlLink = url as! String
+        } else {
+            postUrlLink = ""
+        }
         
-        postDictionary = NSMutableDictionary(objects: [postID, ownerID, text, picture, postUserAva, postUserName, video, postType], forKeys: [kPOSTID as NSCopying, kPOSTOWNERID as NSCopying, kPOSTTEXT as NSCopying, kPOSTPICTURE as NSCopying, kPOSTUSERAVA as NSCopying, kPOSTUSERNAME as NSCopying, kPOSTVIDEO as NSCopying, kPOSTTYPE as NSCopying])
+        postDictionary = NSMutableDictionary(objects: [postID, ownerID, text, picture, postUserAva, postUserName, video, postType, postUrlLink], forKeys: [kPOSTID as NSCopying, kPOSTOWNERID as NSCopying, kPOSTTEXT as NSCopying, kPOSTPICTURE as NSCopying, kPOSTUSERAVA as NSCopying, kPOSTUSERNAME as NSCopying, kPOSTVIDEO as NSCopying, kPOSTTYPE as NSCopying, kPOSTURLLINK as NSCopying])
         
     }
 

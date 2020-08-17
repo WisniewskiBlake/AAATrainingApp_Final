@@ -99,6 +99,7 @@ public let kPOSTUSERNAME = "postUserName"
 public let kPOSTVIDEO = "postVideo"
 public let kPOSTTHUMBNAIL = "postThumbnail"
 public let kPOSTTYPE = "postType"
+public let kPOSTURLLINK = "postUrlLink"
 
 
 //Baseline
