@@ -214,11 +214,13 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate {
                 
                 cell.delegate = self
                 cell.indexPath = indexPath
-                 cell.fullnameLabel.text = post.postUserName
+                cell.fullnameLabel.text = post.postUserName
                 cell.pictureImageView.image = thumbImage
-                 cell.postTextLabel.text = post.text
+                cell.postTextLabel.text = post.text
+                cell.urlTextView.text = post.postUrlLink
 
-                 return cell
+                return cell
+            
             } else if post.postType == "picture" {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
                 
@@ -247,10 +249,12 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate {
 
                 cell.delegate = self
                 cell.indexPath = indexPath
-                 cell.fullnameLabel.text = post.postUserName
-                 cell.postTextLabel.text = post.text
+                cell.fullnameLabel.text = post.postUserName
+                cell.postTextLabel.text = post.text
+                cell.urlTextView.text = post.postUrlLink
 
-                 return cell
+                return cell
+                
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
                          
@@ -272,6 +276,8 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate {
                  cell.fullnameLabel.text = post.postUserName
 
                  cell.postTextLabel.text = post.text
+                
+                 cell.urlTextView.text = post.postUrlLink
 
                  return cell
             }
