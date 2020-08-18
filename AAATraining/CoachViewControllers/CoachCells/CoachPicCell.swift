@@ -20,6 +20,7 @@ class CoachPicCell: UITableViewCell {
     @IBOutlet weak var postTextLabel: UILabel!
     @IBOutlet weak var pictureImageView: UIImageView!
     @IBOutlet weak var playImageView: UIImageView!
+    @IBOutlet weak var urlTextView: UITextView!
     
     @IBOutlet weak var numberComplete: UILabel!
     @IBOutlet weak var optionsButton: UIButton!

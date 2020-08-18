@@ -16,6 +16,7 @@ class CoachNoPicCell: UITableViewCell {
     @IBOutlet weak var postTextLabel: UILabel!
     @IBOutlet weak var numberCompleted: UILabel!
     @IBOutlet weak var optionsButton: UIButton!
+    @IBOutlet weak var urlTextView: UITextView!
     
     
     var indexPath: IndexPath!
