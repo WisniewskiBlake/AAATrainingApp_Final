@@ -85,10 +85,10 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
             }
         }
         if postType == "picture" {
-            helper.imageFromData(pictureData: post.picture) { (picture) in
-
-                if picture != nil {
-                    let photos = IDMPhoto.photos(withImages: [picture as Any])
+            downloadImage(imageUrl: post.picture) { (image) in
+                
+                if image != nil {
+                    let photos = IDMPhoto.photos(withImages: [image as Any])
                     let browser = IDMPhotoBrowser(photos: photos)
                     
                     self.present(browser!, animated: true, completion: nil)

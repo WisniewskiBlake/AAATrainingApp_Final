@@ -131,27 +131,7 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
     //MARK: UpdateUI
         
         func setCustomTitle() {
-//            leftBarButtonView.addSubview(backButton)
-//            leftBarButtonView.addSubview(avatarButton)
-//            leftBarButtonView.addSubview(titleLabel)
-//            leftBarButtonView.addSubview(subTitleLabel)
 
-    //        let infoButton = UIBarButtonItem(image: UIImage(named: "info"), style: .plain, target: self, action: #selector(self.infoButtonPressed))
-    //
-    //        self.navigationItem.rightBarButtonItem = infoButton
-            
-//            let backButton = UIBarButtonItem(image: UIImage(named: "Back"), style: .plain, target: self, action: #selector(self.backAction))
-//            backButton.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-//            self.navigationItem.leftBarButtonItem = backButton
-
-//            let leftBarButtonItem = UIBarButtonItem(customView: leftBarButtonView)
-//            self.navigationItem.leftBarButtonItems?.append(leftBarButtonItem)
-            
-//            if isGroup! {
-//                avatarButton.addTarget(self, action: #selector(self.showGroup), for: .touchUpInside)
-//            } else {
-//    //            avatarButton.addTarget(self, action: #selector(self.showUserProfile), for: .touchUpInside)
-//            }
             
             getUsersFromFirestore(withIds: memberIds) { (withUsers) in
                 
