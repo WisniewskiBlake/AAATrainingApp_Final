@@ -51,7 +51,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         setCalendarBadges(controller: self.tabBarController!, accountType: "coach")
         
         // add observers for notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(loadNewPosts), name: NSNotification.Name(rawValue: "uploadPost"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "createPost"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadAvaAfterUpload), name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
         // add observers for notifications
@@ -253,13 +253,13 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                      cell.avaImageView.image = avatarImage!.circleMasked
                  }
              }
-            helper.imageFromData(pictureData: post.picture) { (picture) in
-
-                if picture != nil {
-
-                    cell.pictureImageView.image = picture
+            downloadImage(imageUrl: post.picture) { (image) in
+                
+                if image != nil {
+                    cell.pictureImageView.image = image!
                 }
             }
+
 
             cell.delegate = self
             cell.indexPath = indexPath

@@ -50,12 +50,17 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
                 return
                 
             } else if isPictureSelected {
-                           
-                let fullName = FUser.currentUser()!.firstname + " " + FUser.currentUser()!.lastname
-                let post = Post(postID: self.postID, ownerID: FUser.currentId(), text: self.postTextView.text, picture: pictureToUpload!, date: "", postUserAva: FUser.currentUser()!.ava, postUserName: fullName, video: "", postType: "picture", postUrlLink: urlLinkTextField.text!)
                 
-                post.savePost()
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createPost"), object: nil)
+                uploadPostImage(image: pictureImageView.image!, view: self.navigationController!.view) { (pictureLink) in
+
+                    let fullName = FUser.currentUser()!.firstname + " " + FUser.currentUser()!.lastname
+                    let post = Post(postID: self.postID, ownerID: FUser.currentId(), text: self.postTextView.text, picture: pictureLink!, date: "", postUserAva: FUser.currentUser()!.ava, postUserName: fullName, video: "", postType: "picture", postUrlLink: self.urlLinkTextField.text!)
+                    
+                    post.savePost()
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createPost"), object: nil)
+                }
+                           
+                
 
                     
                 return

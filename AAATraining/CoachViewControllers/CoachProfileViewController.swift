@@ -81,6 +81,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
     }
     
+    
+    
     // MARK: - Load User
     // loads all user related information to be shown in the header
     @objc func loadUser() {
@@ -296,13 +298,13 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                      cell.avaImageView.image = avatarImage!.circleMasked
                  }
              }
-            helper.imageFromData(pictureData: post.picture) { (picture) in
-
-                if picture != nil {
-
-                    cell.pictureImageView.image = picture
+            downloadImage(imageUrl: post.picture) { (image) in
+                
+                if image != nil {
+                    cell.pictureImageView.image = image!
                 }
             }
+
 
             cell.delegate = self
             cell.indexPath = indexPath
