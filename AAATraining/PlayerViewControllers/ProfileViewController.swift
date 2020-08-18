@@ -30,6 +30,7 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
     @IBOutlet weak var moreButton: UIButton!
     
     
+    
     var profileIcon: UIImage?
     var coverIcon: UIImage?
     
@@ -56,7 +57,7 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
     var myFriends_avas = [UIImage]()
     
     var userForGuest = FUser()
-    
+    var user = FUser()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +67,7 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
         
        // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadUser), name: NSNotification.Name(rawValue: "updateStats"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadUserForGuest), name: NSNotification.Name(rawValue: "updateStatsAsGuest"), object: nil)
 
         configure_avaImageView()
         if FUser.currentUser()?.accountType == "player" {
@@ -76,7 +78,7 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
             loadUserForGuest()
             
         }
-    
+        
     }
     
     // executed after aligning the objects
@@ -180,45 +182,107 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
     // loads all user related information to be shown in the header
    @objc func loadUser() {
         let helper = Helper()
-        let user = FUser.currentUser()
+    var query: Query!
     
-        guard let firstName = user?.firstname, let lastName = user?.lastname, let avaPath = user?.ava, let coverPath = user?.cover, let height = user?.height, let weight = user?.weight, let position = user?.position, let number = user?.number else {
-               
-               return
+    query = reference(.User).whereField(kOBJECTID, isEqualTo: FUser.currentId())
+    
+    query.getDocuments { (snapshot, error) in
+        self.user = FUser()
+        
+        if error != nil {
+            print(error!.localizedDescription)
+            
+            return
         }
-        if coverPath != "" {
-            helper.imageFromData(pictureData: coverPath) { (coverImage) in
+        
+        guard let snapshot = snapshot else {
+            return
+        }
+        
+        if !snapshot.isEmpty {
+            
+            for userDoc in snapshot.documents {
+                let userDoc = userDoc.data() as NSDictionary
+                let userCurr = FUser(_dictionary: userDoc)
+                self.user = userCurr
                 
-                if coverImage != nil {
-                    coverImageView.image = coverImage!
-                    isCover = true
-                }
-            }
-        } else {
-            coverImageView.image = UIImage(named: "aaaCoverLogo.png")
-            isCover = false
-        }
+                
+                helper.imageFromData(pictureData: userCurr.cover) { (coverImage) in
     
-       // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
-       if avaPath != "" {
-           helper.imageFromData(pictureData: avaPath) { (avatarImage) in
-               
-               if avatarImage != nil {
-                   avaImageView.image = avatarImage!
-                   isAva = true
+                    if coverImage != nil {
+                        self.coverImageView.image = coverImage!
+                        self.isCover = true
+                    }
+                }
+                helper.imageFromData(pictureData: userCurr.ava) { (avatarImage) in
+    
+                   if avatarImage != nil {
+                        self.avaImageView.image = avatarImage!
+                        self.isAva = true
+                   }
                }
-           }
-       } else{
-           avaImageView.image = UIImage(named: "user.png")
-           isAva = false
-       }
-       
-       // assigning vars which we accessed from global var, to fullnameLabel
-       fullnameLabel.text = "\((firstName).capitalized) \((lastName).capitalized)"
-       heightTextLabel.text = "\((height).capitalized)" + "in."
-       weightTextLabel.text = "\((weight).capitalized)" + "lbs."
-       positionTextLabel.text = "\((position).capitalized)"
-       numberTextLabel.text = "\((number).capitalized)"
+                self.fullnameLabel.text = "\(String(describing: (userCurr.firstname).capitalized)) \((userCurr.lastname).capitalized)"
+                self.heightTextLabel.text = "\((userCurr.height).capitalized)" + "in."
+                self.weightTextLabel.text = "\((userCurr.weight).capitalized)" + "lbs."
+                self.positionTextLabel.text = "\((userCurr.position).capitalized)"
+                self.numberTextLabel.text = "\((userCurr.number).capitalized)"
+                                
+            }
+            
+        
+        }
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//        let user = FUser.currentUser()
+//
+//        guard let firstName = user?.firstname, let lastName = user?.lastname, let avaPath = user?.ava, let coverPath = user?.cover, let height = user?.height, let weight = user?.weight, let position = user?.position, let number = user?.number else {
+//
+//               return
+//        }
+//        if coverPath != "" {
+//            helper.imageFromData(pictureData: coverPath) { (coverImage) in
+//
+//                if coverImage != nil {
+//                    coverImageView.image = coverImage!
+//                    isCover = true
+//                }
+//            }
+//        } else {
+//            coverImageView.image = UIImage(named: "aaaCoverLogo.png")
+//            isCover = false
+//        }
+//
+//       // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
+//       if avaPath != "" {
+//           helper.imageFromData(pictureData: avaPath) { (avatarImage) in
+//
+//               if avatarImage != nil {
+//                   avaImageView.image = avatarImage!
+//                   isAva = true
+//               }
+//           }
+//       } else{
+//           avaImageView.image = UIImage(named: "user.png")
+//           isAva = false
+//       }
+//
+//       // assigning vars which we accessed from global var, to fullnameLabel
+//       fullnameLabel.text = "\((firstName).capitalized) \((lastName).capitalized)"
+//       heightTextLabel.text = "\((height).capitalized)" + "in."
+//       weightTextLabel.text = "\((weight).capitalized)" + "lbs."
+//       positionTextLabel.text = "\((position).capitalized)"
+//       numberTextLabel.text = "\((number).capitalized)"
        
    }
     

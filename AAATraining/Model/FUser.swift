@@ -543,6 +543,33 @@ func updateCurrentUserInFirestore(withValues : [String : Any], completion: @esca
     }
 }
 
+func updateUserInFirestore(objectID: String, withValues : [String : Any], completion: @escaping (_ error: Error?) -> Void) {
+    
+    let helper = Helper()
+    
+        
+    var tempWithValues = withValues
+    
+    let currentUserId = objectID
+    
+    let updatedAt = helper.dateFormatter().string(from: Date())
+    
+    tempWithValues[kUPDATEDAT] = updatedAt
+        
+    reference(.User).document(currentUserId).updateData(withValues) { (error) in
+        
+        if error != nil {
+            
+            completion(error)
+            return
+        }
+        
+        completion(error)
+    }
+        
+    
+}
+
 
 //MARK: OneSignal
 

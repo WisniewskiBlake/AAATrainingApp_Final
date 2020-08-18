@@ -153,11 +153,18 @@ class StatsVC: UIViewController {
     
     // updating bio by sending request to the server
     @objc func updateStats(stat: String, value: String) {
-        updateCurrentUserInFirestore(withValues: [stat : value]) { (success) in
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateStats"), object: nil)
+        if FUser.currentUser()?.accountType == "player" {
+            updateCurrentUserInFirestore(withValues: [stat : value]) { (success) in
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateStats"), object: nil)
+            }
+        } else {
+            updateUserInFirestore(objectID: userForGuest.objectId, withValues: [stat : value]) { (success) in
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateStatsAsGuest"), object: nil)
+            }
         }
         
-        self.dismiss(animated: true, completion: nil)
+        
+        dismiss(animated: true, completion: nil)
     }
     
     
