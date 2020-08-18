@@ -160,10 +160,10 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate {
             }
         }
         if postType == "picture" {
-            helper.imageFromData(pictureData: post.picture) { (picture) in
-
-                if picture != nil {
-                    let photos = IDMPhoto.photos(withImages: [picture as Any])
+            downloadImage(imageUrl: post.picture) { (image) in
+                
+                if image != nil {
+                    let photos = IDMPhoto.photos(withImages: [image as Any])
                     let browser = IDMPhotoBrowser(photos: photos)
                     
                     self.present(browser!, animated: true, completion: nil)
@@ -238,11 +238,10 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate {
                          cell.avaImageView.image = avatarImage!.circleMasked
                      }
                  }
-                helper.imageFromData(pictureData: post.picture) { (picture) in
-
-                    if picture != nil {
-
-                        cell.pictureImageView.image = picture
+                downloadImage(imageUrl: post.picture) { (image) in
+                    
+                    if image != nil {
+                        cell.pictureImageView.image = image!
                     }
                 }
 
