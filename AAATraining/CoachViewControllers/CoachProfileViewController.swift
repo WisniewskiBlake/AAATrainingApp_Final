@@ -279,9 +279,11 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             cell.fullnameLabel.text = post.postUserName
             cell.pictureImageView.image = thumbImage
             cell.postTextLabel.text = post.text
+            cell.urlTextView.text = post.postUrlLink
             cell.optionsButton.tag = indexPath.row
 
-             return cell
+            return cell
+            
         } else if post.postType == "picture" {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
             
@@ -313,9 +315,11 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             cell.indexPath = indexPath
             cell.fullnameLabel.text = post.postUserName
             cell.postTextLabel.text = post.text
+            cell.urlTextView.text = post.postUrlLink
             cell.optionsButton.tag = indexPath.row
 
              return cell
+            
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
                      
@@ -338,9 +342,12 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
 
              cell.postTextLabel.text = post.text
             
+             cell.urlTextView.text = post.postUrlLink
+            
              cell.optionsButton.tag = indexPath.row
             
              return cell
+            
         }
     }
     
