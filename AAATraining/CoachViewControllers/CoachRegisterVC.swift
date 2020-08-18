@@ -158,13 +158,13 @@ class CoachRegisterVC: UIViewController {
         
         FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "coach", birthday: "", cover: coverData, phoneNumber: phoneTextField.text!) { (error)  in
             
-                            if error != nil {
-                                ProgressHUD.dismiss()
-                                ProgressHUD.showError(error!.localizedDescription)
-                                return
-                            }            
-            
-                            self.goToApp()
+                if error != nil {
+                    ProgressHUD.dismiss()
+                    ProgressHUD.showError(error!.localizedDescription)
+                    return
+                }
+
+                self.goToApp()
             }
             
     }

@@ -76,6 +76,37 @@ public class FUser {
         
     }
     
+    init() {
+        objectId = ""
+        pushId = ""
+        
+        createdAt = Date()
+        updatedAt = Date()
+        
+        email = ""
+        firstname = ""
+        lastname = ""
+        fullname = ""
+        ava = ""
+        isOnline = true
+        
+        height = ""
+        weight = ""
+        position = ""
+        number = ""
+        
+        accountType = ""
+        birthday = ""
+        cover = ""
+        
+        
+        loginMethod = ""
+        phoneNumber = ""
+        
+        blockedUsers = []
+        contacts = []
+    }
+    
     
     
     init(_dictionary: NSDictionary) {
