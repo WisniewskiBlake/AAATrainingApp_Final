@@ -250,6 +250,8 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         if(user.accountType == "player") {
             let playerProfileVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
             playerProfileVC.userForGuest = user
+            self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            
             self.navigationController?.pushViewController(playerProfileVC, animated: true)
         }
 

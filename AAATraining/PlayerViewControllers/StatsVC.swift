@@ -26,6 +26,9 @@ class StatsVC: UIViewController {
     var dataSource = [String]()
     var cellText = "Select Stat"
     
+    var userForGuest = FUser()
+    
+    
     override func viewDidLoad() {
        super.viewDidLoad()
        tableView.delegate = self
@@ -37,7 +40,12 @@ class StatsVC: UIViewController {
         
         
         configure_avaImageView()
-        loadUser()
+        if FUser.currentUser()?.accountType == "player" {
+            loadUser()
+        } else {
+            loadUserForGuest()
+        }
+        
     }
     
     @IBAction func textFieldDidChange(_ sender: Any) {
@@ -88,9 +96,33 @@ class StatsVC: UIViewController {
         }
         
         fullnameLabel.text = "\((firstName).capitalized) \((lastName).capitalized)"
+                
+    }
+    
+    // loads all user related information to be shown in the header
+    func loadUserForGuest() {
+        let helper = Helper()
+        let user = userForGuest
+        // safe method of accessing user related information in glob var
+        let firstName = user.firstname
+        let lastName = user.lastname
+        let avaPath = user.ava
+        // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
+        if avaPath != "" {
+            helper.imageFromData(pictureData: avaPath) { (avatarImage) in
+                
+                if avatarImage != nil {
+                    avaImageView.image = avatarImage!
+                    
+                }
+            }
+        } else{
+            avaImageView.image = UIImage(named: "user.png")
+            
+        }
         
-        
-        
+        fullnameLabel.text = "\((firstName).capitalized) \((lastName).capitalized)"
+                
     }
     
     @IBAction func saveButton_clicked(_ sender: Any) {

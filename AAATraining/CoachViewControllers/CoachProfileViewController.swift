@@ -435,6 +435,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                     // Safe Present
                     if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
                     {
+                        vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: true, completion: nil)
                     }
                     

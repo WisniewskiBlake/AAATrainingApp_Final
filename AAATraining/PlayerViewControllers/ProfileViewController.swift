@@ -27,6 +27,7 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
     
     @IBOutlet weak var baseLineButton: UIButton!
     @IBOutlet weak var nutritionButton: UIButton!
+    @IBOutlet weak var moreButton: UIButton!
     
     
     var profileIcon: UIImage?
@@ -68,19 +69,37 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
 
         configure_avaImageView()
         if FUser.currentUser()?.accountType == "player" {
+            moreButton.isHidden = false
             loadUser()
         } else {
-            loadUserForGuest()            
+            moreButton.isHidden = true
+            loadUserForGuest()
+            
         }
     
     }
     
     // executed after aligning the objects
-        override func viewDidLayoutSubviews() {
-            super.viewDidLayoutSubviews()
-            
-            //configure_nutritionButton(btn: nutritionButton)
-        }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        //configure_nutritionButton(btn: nutritionButton)
+    }
+    
+    @IBAction func editButtonClicked(_ sender: Any) {
+        
+       let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "statsNav") as! UINavigationController
+        let statsVC = navigation.viewControllers.first as! StatsVC
+        //statsVC.modalPresentationStyle = .automatic
+        statsVC.userForGuest = userForGuest
+    
+       self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+       
+//       self.navigationController?.pushViewController(statsVC, animated: true)
+       self.present(navigation, animated: true, completion: nil)
+        
+    }
+    
 
     @IBAction func baseLineButtonClicked(_ sender: Any) {
         let newBaselineVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PlayerBaselineVC") as! PlayerBaselineVC

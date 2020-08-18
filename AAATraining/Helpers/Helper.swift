@@ -104,7 +104,7 @@ public class Helper {
         
         // accessing any ViewController from Main.storyboard via ID
         let newViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: identifier)
-        
+        newViewController.modalPresentationStyle = .fullScreen
         // presenting accessed ViewController
         vc.present(newViewController, animated: animated, completion: completion)
     }
