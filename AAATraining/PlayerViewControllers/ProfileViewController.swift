@@ -54,6 +54,8 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
     var myFriends = [NSDictionary?]()
     var myFriends_avas = [UIImage]()
     
+    var userForGuest = FUser()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

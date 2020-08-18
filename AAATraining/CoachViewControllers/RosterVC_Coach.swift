@@ -230,29 +230,30 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         return cell
     }
     
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let playerProfileVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
-//
-//        var user: FUser
-//
-//        if searchController.isActive && searchController.searchBar.text != "" {
-//
-//            user = filteredUsers[indexPath.row]
-//        } else {
-//
-//            let sectionTitle = self.sectionTitleList[indexPath.section]
-//
-//            let users = self.allUsersGroupped[sectionTitle]
-//
-//            user = users![indexPath.row]
-//        }
-//
-//        if(user.accountType == "player") {
-//            playerProfileVC.user = user
-//            self.navigationController?.pushViewController(playerProfileVC, animated: true)
-//        }
-//
-//    }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+
+        var user: FUser
+
+        if searchController.isActive && searchController.searchBar.text != "" {
+
+            user = filteredUsers[indexPath.row]
+        } else {
+
+            let sectionTitle = self.sectionTitleList[indexPath.section]
+
+            let users = self.allUsersGroupped[sectionTitle]
+
+            user = users![indexPath.row]
+        }
+
+        if(user.accountType == "player") {
+            let playerProfileVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+            playerProfileVC.userForGuest = user
+            self.navigationController?.pushViewController(playerProfileVC, animated: true)
+        }
+
+    }
     
     
     //MARK: TableView Delegate
