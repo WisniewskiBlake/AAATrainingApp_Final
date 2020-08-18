@@ -250,6 +250,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 
         post = allPosts[indexPath.row]
         
+        
+        
         if post.postType == "video" {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
             
@@ -274,9 +276,10 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             
             cell.delegate = self
             cell.indexPath = indexPath
-             cell.fullnameLabel.text = post.postUserName
+            cell.fullnameLabel.text = post.postUserName
             cell.pictureImageView.image = thumbImage
-             cell.postTextLabel.text = post.text
+            cell.postTextLabel.text = post.text
+            cell.optionsButton.tag = indexPath.row
 
              return cell
         } else if post.postType == "picture" {
@@ -308,8 +311,9 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
 
             cell.delegate = self
             cell.indexPath = indexPath
-             cell.fullnameLabel.text = post.postUserName
-             cell.postTextLabel.text = post.text
+            cell.fullnameLabel.text = post.postUserName
+            cell.postTextLabel.text = post.text
+            cell.optionsButton.tag = indexPath.row
 
              return cell
         } else {
@@ -333,7 +337,9 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
              cell.fullnameLabel.text = post.postUserName
 
              cell.postTextLabel.text = post.text
-
+            
+             cell.optionsButton.tag = indexPath.row
+            
              return cell
         }
     }
