@@ -40,7 +40,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
 
                     if videoLink != nil {
                         let fullName = FUser.currentUser()!.firstname + " " + FUser.currentUser()!.lastname
-                        let post = Post(postID: self.postID, ownerID: FUser.currentId(), text: self.postTextView.text, picture: "", date: "", postUserAva: FUser.currentUser()!.ava, postUserName: fullName, video: videoLink!, postType: "video")
+                        let post = Post(postID: self.postID, ownerID: FUser.currentId(), text: self.postTextView.text, picture: "", date: "", postUserAva: FUser.currentUser()!.ava, postUserName: fullName, video: videoLink!, postType: "video", postUrlLink: self.urlLinkTextField.text!)
                         
                         post.savePost()
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createPost"), object: nil)
@@ -52,7 +52,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
             } else if isPictureSelected {
                            
                 let fullName = FUser.currentUser()!.firstname + " " + FUser.currentUser()!.lastname
-                let post = Post(postID: self.postID, ownerID: FUser.currentId(), text: self.postTextView.text, picture: pictureToUpload!, date: "", postUserAva: FUser.currentUser()!.ava, postUserName: fullName, video: "", postType: "picture")
+                let post = Post(postID: self.postID, ownerID: FUser.currentId(), text: self.postTextView.text, picture: pictureToUpload!, date: "", postUserAva: FUser.currentUser()!.ava, postUserName: fullName, video: "", postType: "picture", postUrlLink: urlLinkTextField.text!)
                 
                 post.savePost()
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createPost"), object: nil)
@@ -62,7 +62,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
             } else {
                 
                 let fullName = FUser.currentUser()!.firstname + " " + FUser.currentUser()!.lastname
-                let post = Post(postID: postID, ownerID: FUser.currentId(), text: postTextView.text, picture: "", date: "", postUserAva: FUser.currentUser()!.ava, postUserName: fullName, video: "", postType: "text")
+                let post = Post(postID: postID, ownerID: FUser.currentId(), text: postTextView.text, picture: "", date: "", postUserAva: FUser.currentUser()!.ava, postUserName: fullName, video: "", postType: "text", postUrlLink: urlLinkTextField.text!)
                 
                 post.savePost()
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createPost"), object: nil)
