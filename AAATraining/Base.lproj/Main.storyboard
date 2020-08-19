@@ -2014,7 +2014,7 @@
             </objects>
             <point key="canvasLocation" x="9828" y="98.50074962518741"/>
         </scene>
-        <!--Edit Stats Here-->
+        <!--Edit Baseline-->
         <scene sceneID="wbS-xP-AZB">
             <objects>
                 <viewController storyboardIdentifier="EditBaselineVC" id="fk0-L1-khD" customClass="EditBaselineVC" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
@@ -2024,7 +2024,24 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="49c-4B-9cf"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Edit Stats Here" id="pse-b7-ekz"/>
+                    <navigationItem key="navigationItem" title="Edit Baseline" id="pse-b7-ekz">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="sny-BA-XBB">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="backButtonPressed:" destination="fk0-L1-khD" id="Za5-fB-d5p"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="l9X-PL-m0f">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="doneButtonPressed:" destination="fk0-L1-khD" id="nES-kD-6PB"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="backButton" destination="sny-BA-XBB" id="fij-Zg-lZf"/>
+                        <outlet property="doneButton" destination="l9X-PL-m0f" id="IYZ-nR-DXT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yNd-Mq-afd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
