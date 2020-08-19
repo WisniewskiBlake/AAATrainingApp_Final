@@ -85,7 +85,7 @@ class NewBaselineVC: UIViewController {
     
     // add blank view to the left side of the TextField (it'll act as a blank gap)
     func padding(for textField: UITextField) {
-        let blankView = UIView.init(frame: CGRect(x: 0, y: 0, width: 4, height: 23))
+        let blankView = UIView.init(frame: CGRect(x: 0, y: 0, width: 2, height: 25))
         textField.leftView = blankView
         textField.leftViewMode = .always
     }

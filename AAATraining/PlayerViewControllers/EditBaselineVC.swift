@@ -13,6 +13,9 @@ class EditBaselineVC: UIViewController {
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     
+    
+    var baselineToEdit = Baseline()
+    var userBeingViewed = FUser()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,12 +23,15 @@ class EditBaselineVC: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    @IBAction func doneButtonPressed(_ sender: Any) {
+    func editBaseline() {
         
     }
     
     
     
+    @IBAction func doneButtonPressed(_ sender: Any) {
+        editBaseline()
+    }
     
     @IBAction func backButtonPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -47,7 +53,7 @@ class EditBaselineVC: UIViewController {
     
     // add blank view to the left side of the TextField (it'll act as a blank gap)
     func padding(for textField: UITextField) {
-        let blankView = UIView.init(frame: CGRect(x: 0, y: 0, width: 4, height: 23))
+        let blankView = UIView.init(frame: CGRect(x: 0, y: 0, width: 2, height: 25))
         textField.leftView = blankView
         textField.leftViewMode = .always
     }

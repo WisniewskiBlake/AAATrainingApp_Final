@@ -45,6 +45,25 @@ public class Baseline {
         self.userName = userName
     }
     
+    init() {
+        self.baselineID = ""
+        self.baselineOwnerID = ""
+        self.height = ""
+        self.weight = ""
+        self.wingspan = ""
+        self.vertical = ""
+        self.yardDash = ""
+        self.agility = ""
+        self.pushUp = ""
+        self.chinUp = ""
+        self.mileRun = ""
+        self.baselineDate = ""
+        self.userName = ""
+        
+        self.baselineDictionary = [:]
+    }
+    
+    
     init(_dictionary: NSDictionary) {
        //let helper = Helper()
        baselineID = _dictionary[kBASELINEID] as! String
