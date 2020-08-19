@@ -32,6 +32,8 @@ class PlayerBaselineVC: UITableViewController {
         // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadBaselinesForGuest), name: NSNotification.Name(rawValue: "createBaseline"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(loadBaselinesForGuest), name: NSNotification.Name(rawValue: "createBaseline"), object: nil)
+        
         if FUser.currentUser()?.accountType == "player" {
             composeButton.isEnabled = false
             loadBaselines()
@@ -201,6 +203,18 @@ class PlayerBaselineVC: UITableViewController {
          
         return cell
         
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var baseline: Baseline
+        baseline = allBaselines[indexPath.row]
+        
+        let editBaselineVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditBaselineVC") as! EditBaselineVC
+        
+        editBaselineVC.baselineToEdit = baseline
+        
+        
+        self.navigationController?.pushViewController(editBaselineVC, animated: true)
     }
     
     @IBAction func composeButtonPressed(_ sender: Any) {

@@ -19,6 +19,7 @@ class StatsVC: UIViewController {
     @IBOutlet weak var statButton: UIButton!
     @IBOutlet weak var statTextField: UITextField!
     @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var changesLabel: UILabel!
     
     let transparentView = UIView()
     let tableView = UITableView()
@@ -41,8 +42,10 @@ class StatsVC: UIViewController {
         
         configure_avaImageView()
         if FUser.currentUser()?.accountType == "player" {
+            changesLabel.isHidden = false
             loadUser()
         } else {
+            changesLabel.isHidden = true
             loadUserForGuest()
         }
         

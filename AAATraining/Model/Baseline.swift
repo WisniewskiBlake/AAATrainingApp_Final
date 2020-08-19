@@ -28,7 +28,7 @@ public class Baseline {
 
     init(baselineID: String, baselineOwnerID: String, height: String, weight: String, wingspan: String, vertical: String, yardDash: String, agility: String, pushUp: String, chinUp: String, mileRun: String, baselineDate: String, userName: String) {
 
-        baselineDictionary = NSMutableDictionary(objects: [baselineID, baselineOwnerID, height, weight, wingspan, vertical, yardDash, agility, pushUp, chinUp, mileRun, userName], forKeys: [kBASELINEID as NSCopying, kBASELINEOWNERID as NSCopying, kBASELINEHEIGHT as NSCopying, kBASELINEWEIGHT as NSCopying, kWINGSPAN as NSCopying, kVERTICAL as NSCopying, kYARDDASH as NSCopying, kAGILITY as NSCopying, kPUSHUP as NSCopying, kCHINUP as NSCopying, kMILERUN as NSCopying, kBASELINEUSERNAME as NSCopying])
+        baselineDictionary = NSMutableDictionary(objects: [baselineID, baselineOwnerID, height, weight, wingspan, vertical, yardDash, agility, pushUp, chinUp, mileRun, baselineDate, userName], forKeys: [kBASELINEID as NSCopying, kBASELINEOWNERID as NSCopying, kBASELINEHEIGHT as NSCopying, kBASELINEWEIGHT as NSCopying, kWINGSPAN as NSCopying, kVERTICAL as NSCopying, kYARDDASH as NSCopying, kAGILITY as NSCopying, kPUSHUP as NSCopying, kCHINUP as NSCopying, kMILERUN as NSCopying, kBASELINEDATE as NSCopying, kBASELINEUSERNAME as NSCopying])
         
         self.baselineID = baselineID
         self.baselineOwnerID = baselineOwnerID
@@ -46,21 +46,21 @@ public class Baseline {
     }
     
     init() {
-        self.baselineID = ""
-        self.baselineOwnerID = ""
-        self.height = ""
-        self.weight = ""
-        self.wingspan = ""
-        self.vertical = ""
-        self.yardDash = ""
-        self.agility = ""
-        self.pushUp = ""
-        self.chinUp = ""
-        self.mileRun = ""
-        self.baselineDate = ""
-        self.userName = ""
+        baselineID = ""
+        baselineOwnerID = ""
+        height = ""
+        weight = ""
+        wingspan = ""
+        vertical = ""
+        yardDash = ""
+        agility = ""
+        pushUp = ""
+        chinUp = ""
+        mileRun = ""
+        baselineDate = ""
+        userName = ""
         
-        self.baselineDictionary = [:]
+        baselineDictionary = NSMutableDictionary(objects: [baselineID, baselineOwnerID, height, weight, wingspan, vertical, yardDash, agility, pushUp, chinUp, mileRun, baselineDate, userName], forKeys: [kBASELINEID as NSCopying, kBASELINEOWNERID as NSCopying, kBASELINEHEIGHT as NSCopying, kBASELINEWEIGHT as NSCopying, kWINGSPAN as NSCopying, kVERTICAL as NSCopying, kYARDDASH as NSCopying, kAGILITY as NSCopying, kPUSHUP as NSCopying, kCHINUP as NSCopying, kMILERUN as NSCopying, kBASELINEDATE as NSCopying, kBASELINEUSERNAME as NSCopying])
     }
     
     
@@ -128,21 +128,33 @@ public class Baseline {
         
         
         
-        baselineDictionary = NSMutableDictionary(objects: [baselineID, baselineOwnerID, height, weight, wingspan, vertical, agility, yardDash, pushUp, chinUp, mileRun, userName], forKeys: [kBASELINEID as NSCopying, kBASELINEOWNERID as NSCopying, kBASELINEHEIGHT as NSCopying, kBASELINEWEIGHT as NSCopying, kWINGSPAN as NSCopying, kVERTICAL as NSCopying, kAGILITY as NSCopying, kYARDDASH as NSCopying, kPUSHUP as NSCopying, kCHINUP as NSCopying, kMILERUN as NSCopying, kBASELINEUSERNAME as NSCopying])
+        baselineDictionary = NSMutableDictionary(objects: [baselineID, baselineOwnerID, height, weight, wingspan, vertical, agility, yardDash, pushUp, chinUp, mileRun, baselineDate, userName], forKeys: [kBASELINEID as NSCopying, kBASELINEOWNERID as NSCopying, kBASELINEHEIGHT as NSCopying, kBASELINEWEIGHT as NSCopying, kWINGSPAN as NSCopying, kVERTICAL as NSCopying, kAGILITY as NSCopying, kYARDDASH as NSCopying, kPUSHUP as NSCopying, kCHINUP as NSCopying, kMILERUN as NSCopying, kBASELINEDATE as NSCopying, kBASELINEUSERNAME as NSCopying])
         
+    }
+
+    func updateBaseline(baselineID: String, baseline: NSDictionary, height: String, weight: String, wingspan: String, vertical: String, yardDash: String, agility: String, pushUp: String, chinUp: String, mileRun: String) {
+
+        reference(.Baseline).whereField(kBASELINEID, isEqualTo: baselineID).getDocuments { (snapshot, error) in
+            
+            guard let snapshot = snapshot else { return }
+            
+            if !snapshot.isEmpty {
+                
+                for recent in snapshot.documents {
+                    
+                    let currentRecent = recent.data() as NSDictionary
+                    
+                    self.updateBaselineItem(baseline: currentRecent, height: height, weight: weight, wingspan: wingspan, vertical: vertical, yardDash: yardDash, agility: agility, pushUp: pushUp, chinUp: chinUp, mileRun: mileRun)
+                }
+            }
+        }
     }
     
-    func saveBaseline() {
-        let helper = Helper()
-
-        let date = helper.dateFormatter().string(from: Date())
-        baselineDictionary[kBASELINEDATE] = date
-        reference(.Baseline).document(baselineDictionary[kBASELINEDATE] as! String).setData(baselineDictionary as! [String:Any])
-    }
-
-    public func updateBaseline(baselineID: String, withValues: [String:Any]) {
-        reference(.Baseline).document(baselineID).updateData(withValues)
+    func updateBaselineItem(baseline: NSDictionary, height: String, weight: String, wingspan: String, vertical: String, yardDash: String, agility: String, pushUp: String, chinUp: String, mileRun: String) {
         
+        let values = [kBASELINEHEIGHT : height, kBASELINEWEIGHT : weight, kWINGSPAN : wingspan, kVERTICAL : vertical, kAGILITY : agility, kYARDDASH : yardDash, kPUSHUP : pushUp, kCHINUP : chinUp, kMILERUN : mileRun] as [String : Any]
+        
+        reference(.Baseline).document(baseline[kBASELINEID] as! String).updateData(values)
     }
     
 }

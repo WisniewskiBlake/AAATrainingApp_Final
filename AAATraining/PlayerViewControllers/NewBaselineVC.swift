@@ -20,7 +20,7 @@ class NewBaselineVC: UIViewController {
     @IBOutlet weak var chinUpText: UITextField!
     @IBOutlet weak var mileText: UITextField!
     
-    let baselineID = UUID().uuidString
+    //let baselineID = UUID().uuidString
     var userBeingViewed = FUser()
     var editBaseline = false
         
@@ -29,15 +29,15 @@ class NewBaselineVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        cornerRadius(for: heightText)
-        cornerRadius(for: weightText)
-        cornerRadius(for: wingspanText)
-        cornerRadius(for: verticalText)
-        cornerRadius(for: dashText)
-        cornerRadius(for: agilityText)
-        cornerRadius(for: pushUptext)
-        cornerRadius(for: chinUpText)
-        cornerRadius(for: mileText)
+//        cornerRadius(for: heightText)
+//        cornerRadius(for: weightText)
+//        cornerRadius(for: wingspanText)
+//        cornerRadius(for: verticalText)
+//        cornerRadius(for: dashText)
+//        cornerRadius(for: agilityText)
+//        cornerRadius(for: pushUptext)
+//        cornerRadius(for: chinUpText)
+//        cornerRadius(for: mileText)
                 
         padding(for: heightText)
         padding(for: weightText)
@@ -60,11 +60,17 @@ class NewBaselineVC: UIViewController {
     func createBaseline() {
         if heightText.text != "" && weightText.text != "" && wingspanText.text != "" && verticalText.text != "" && dashText.text != "" && agilityText.text != "" && pushUptext.text != "" && chinUpText.text != "" && mileText.text != "" {
             
-            let fullName = userBeingViewed.firstname + " " + userBeingViewed.lastname
+//            let fullName = userBeingViewed.firstname + " " + userBeingViewed.lastname
             
-            let baseline = Baseline(baselineID: baselineID, baselineOwnerID: userBeingViewed.objectId, height: heightText.text!, weight: weightText.text!, wingspan: wingspanText.text!, vertical: verticalText.text!, yardDash: dashText.text!, agility: agilityText.text!, pushUp: pushUptext.text!, chinUp: chinUpText.text!, mileRun: mileText.text!, baselineDate: "", userName: fullName)
+            let localReference = reference(.Baseline).document()
+            let baselineID = localReference.documentID
+            var baseline: [String : Any]!
+            let date = helper.dateFormatter().string(from: Date())
             
-            baseline.saveBaseline()
+            baseline = [kBASELINEID : baselineID, kBASELINEOWNERID : userBeingViewed.objectId, kBASELINEHEIGHT : heightText.text!, kBASELINEWEIGHT : weightText.text!, kWINGSPAN : wingspanText.text!, kVERTICAL : verticalText.text!, kAGILITY : agilityText.text!, kYARDDASH : dashText.text!, kPUSHUP : pushUptext.text!, kCHINUP : chinUpText.text!, kMILERUN : mileText.text!, kBASELINEDATE : date]
+
+            localReference.setData(baseline)
+
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createBaseline"), object: nil)
             dismiss(animated: true, completion: nil)
