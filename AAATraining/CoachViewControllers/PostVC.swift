@@ -253,6 +253,8 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
         }
     }
     
+    
+    
 
 }
 
