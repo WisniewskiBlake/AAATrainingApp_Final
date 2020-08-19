@@ -21,6 +21,8 @@ class NewBaselineVC: UIViewController {
     @IBOutlet weak var mileText: UITextField!
     
     let baselineID = UUID().uuidString
+    var userBeingViewed = FUser()
+    var editBaseline = false
         
     @IBOutlet weak var doneButton: UIBarButtonItem!
     
@@ -58,9 +60,9 @@ class NewBaselineVC: UIViewController {
     func createBaseline() {
         if heightText.text != "" && weightText.text != "" && wingspanText.text != "" && verticalText.text != "" && dashText.text != "" && agilityText.text != "" && pushUptext.text != "" && chinUpText.text != "" && mileText.text != "" {
             
-            let fullName = FUser.currentUser()!.firstname + " " + FUser.currentUser()!.lastname
+            let fullName = userBeingViewed.firstname + " " + userBeingViewed.lastname
             
-            let baseline = Baseline(baselineID: baselineID, baselineOwnerID: FUser.currentId(), height: heightText.text!, weight: weightText.text!, wingspan: wingspanText.text!, vertical: verticalText.text!, yardDash: dashText.text!, agility: agilityText.text!, pushUp: pushUptext.text!, chinUp: chinUpText.text!, mileRun: mileText.text!, baselineDate: "", userName: fullName)
+            let baseline = Baseline(baselineID: baselineID, baselineOwnerID: userBeingViewed.objectId, height: heightText.text!, weight: weightText.text!, wingspan: wingspanText.text!, vertical: verticalText.text!, yardDash: dashText.text!, agility: agilityText.text!, pushUp: pushUptext.text!, chinUp: chinUpText.text!, mileRun: mileText.text!, baselineDate: "", userName: fullName)
             
             baseline.saveBaseline()
             

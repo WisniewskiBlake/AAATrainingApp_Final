@@ -18,7 +18,10 @@ class PlayerBaselineVC: UITableViewController {
     var allBaselines: [Baseline] = []
     var recentListener: ListenerRegistration!
     
+    @IBOutlet weak var composeButton: UIBarButtonItem!
     let helper = Helper()
+    
+    var userBeingViewed = FUser()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,16 +30,34 @@ class PlayerBaselineVC: UITableViewController {
         tableView.estimatedRowHeight = 400
         
         // add observers for notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(loadBaselines), name: NSNotification.Name(rawValue: "createBaseline"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadBaselinesForGuest), name: NSNotification.Name(rawValue: "createBaseline"), object: nil)
         
-        loadBaselines()
+        if FUser.currentUser()?.accountType == "player" {
+            composeButton.isEnabled = false
+            loadBaselines()
+            
+        } else {
+            composeButton.isEnabled = true
+            loadBaselinesForGuest()
+            
+        }
+        
+        
 
     }
     
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadBaselines()
+        if FUser.currentUser()?.accountType == "player" {
+            composeButton.isEnabled = false
+            loadBaselines()
+            
+        } else {
+            composeButton.isEnabled = true
+            loadBaselinesForGuest()
+            
+        }
         
         //tableView.tableFooterView = UIView()
         //navigationController?.setNavigationBarHidden(true, animated: true)
@@ -44,6 +65,44 @@ class PlayerBaselineVC: UITableViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         recentListener.remove()
+    }
+    
+    @objc func loadBaselinesForGuest() {
+        
+        ProgressHUD.show()
+        
+        recentListener = reference(.Baseline).whereField(kBASELINEOWNERID, isEqualTo: userBeingViewed.objectId).order(by: kBASELINEDATE, descending: true).addSnapshotListener({ (snapshot, error) in
+                   
+                self.allBaselines = []
+            
+                if error != nil {
+                    print(error!.localizedDescription)
+                    ProgressHUD.dismiss()
+                    self.tableView.reloadData()
+                    return
+                }
+                   guard let snapshot = snapshot else { ProgressHUD.dismiss(); return }
+
+                   if !snapshot.isEmpty {
+
+                       for baselineDictionary in snapshot.documents {
+                           
+                           let baselineDictionary = baselineDictionary.data() as NSDictionary
+                           
+                        let baseline = Baseline(_dictionary: baselineDictionary)
+                           
+                           self.allBaselines.append(baseline)
+                        print(self.allBaselines)
+                       }
+                       self.tableView.reloadData()
+                    
+                   }
+            ProgressHUD.dismiss()
+               })
+        
+        
+        ProgressHUD.show()
+        
     }
     
     // MARK: - Load Baselines
@@ -111,14 +170,20 @@ class PlayerBaselineVC: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BaselineCell", for: indexPath) as! BaselineCell
         
         var baseline: Baseline
-        
-        var date: Date!
-        
         baseline = allBaselines[indexPath.row]
         
-        date = helper.dateFormatter().date(from: baseline.baselineDate)
+        //var date: Date!
+        var date: String?
         
-        cell.baselineDateLabel.text = helper.timeElapsed(date: date)
+        let currentDateFormater = helper.dateFormatter()
+        currentDateFormater.dateFormat = "MM/dd/YYYY"
+        
+        let baselineDate = helper.dateFormatter().date(from: baseline.baselineDate)
+        //cell.baselineDateLabel.text = helper.timeElapsed(date: date)
+        
+        date = currentDateFormater.string(from: baselineDate!)
+        cell.baselineDateLabel.text = date
+       
         cell.heightLabel.text = baseline.height
         print(baseline.height)
         cell.weightLabel.text = baseline.weight
@@ -143,6 +208,7 @@ class PlayerBaselineVC: UITableViewController {
 //           let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "addMembersNav") as! UINavigationController
 //           contactsVC.isGroup = isGroup
         
+        newBaselineVC.userBeingViewed = userBeingViewed
            
         //self.present(newBaselineVC, animated: true, completion: nil)
         self.navigationController?.pushViewController(newBaselineVC, animated: true)

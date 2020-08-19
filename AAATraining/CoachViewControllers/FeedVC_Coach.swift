@@ -212,11 +212,12 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
             
             let thumbImage = createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: post.video)!)
                      
-             var date: Date!
-             
-             date = helper.dateFormatter().date(from: post.date)
-            
-             cell.dateLabel.text = helper.timeElapsed(date: date)
+            var date: String?
+            let currentDateFormater = helper.dateFormatter()
+            currentDateFormater.dateFormat = "MM/dd/YYYY"
+            let postDate = helper.dateFormatter().date(from: post.date)
+            date = currentDateFormater.string(from: postDate!)
+            cell.dateLabel.text = date
                      
              
              helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
@@ -240,11 +241,12 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
             
             cell.playImageView.isHidden = true
            
-             var date: Date!
-             
-             date = helper.dateFormatter().date(from: post.date)
-            
-             cell.dateLabel.text = helper.timeElapsed(date: date)
+             var date: String?
+             let currentDateFormater = helper.dateFormatter()
+             currentDateFormater.dateFormat = "MM/dd/YYYY"
+             let postDate = helper.dateFormatter().date(from: post.date)
+             date = currentDateFormater.string(from: postDate!)
+             cell.dateLabel.text = date
                      
              
              helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
@@ -273,12 +275,17 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
                      
-             var date: Date!
-             
-             date = helper.dateFormatter().date(from: post.date)
-            
-             cell.dateLabel.text = helper.timeElapsed(date: date)
-                     
+//             var date: Date!
+//
+//             date = helper.dateFormatter().date(from: post.date)
+//
+//             cell.dateLabel.text = helper.timeElapsed(date: date)
+             var date: String?
+             let currentDateFormater = helper.dateFormatter()
+             currentDateFormater.dateFormat = "MM/dd/YYYY"
+             let postDate = helper.dateFormatter().date(from: post.date)
+             date = currentDateFormater.string(from: postDate!)
+             cell.dateLabel.text = date
              
              helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
 

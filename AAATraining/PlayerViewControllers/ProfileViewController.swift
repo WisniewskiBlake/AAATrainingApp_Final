@@ -56,7 +56,7 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
     var myFriends = [NSDictionary?]()
     var myFriends_avas = [UIImage]()
     
-    var userForGuest = FUser()
+    var userBeingViewed = FUser()
     var user = FUser()
     
     override func viewDidLoad() {
@@ -93,7 +93,7 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
        let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "statsNav") as! UINavigationController
         let statsVC = navigation.viewControllers.first as! StatsVC
         //statsVC.modalPresentationStyle = .automatic
-        statsVC.userForGuest = userForGuest
+        statsVC.userBeingViewed = userBeingViewed
     
        self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
        
@@ -104,10 +104,10 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
     
 
     @IBAction func baseLineButtonClicked(_ sender: Any) {
-        let newBaselineVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PlayerBaselineVC") as! PlayerBaselineVC
-       let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "baselineNav") as! UINavigationController
-                
-                   
+        let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "baselineNav") as! UINavigationController
+        let newBaselineVC = navigation.viewControllers.first as! PlayerBaselineVC
+        newBaselineVC.userBeingViewed = userBeingViewed
+        
         self.present(navigation, animated: true, completion: nil)
    //     self.navigationController?.pushViewController(newGroupVC, animated: true)
     }
@@ -130,17 +130,16 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
     }
     
     @objc func loadUserForGuest() {
-         let helper = Helper()
-         let user = userForGuest
+        let helper = Helper()
      
-        let firstName = user.firstname
-        let lastName = user.lastname
-        let avaPath = user.ava
-        let coverPath = user.cover
-        let height = user.height
-        let weight = user.weight
-        let position = user.position
-        let number = user.number
+        let firstName = userBeingViewed.firstname
+        let lastName = userBeingViewed.lastname
+        let avaPath = userBeingViewed.ava
+        let coverPath = userBeingViewed.cover
+        let height = userBeingViewed.height
+        let weight = userBeingViewed.weight
+        let position = userBeingViewed.position
+        let number = userBeingViewed.number
         
          if coverPath != "" {
              helper.imageFromData(pictureData: coverPath) { (coverImage) in
@@ -182,65 +181,57 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
     // loads all user related information to be shown in the header
    @objc func loadUser() {
         let helper = Helper()
-    var query: Query!
+        var query: Query!
     
-    query = reference(.User).whereField(kOBJECTID, isEqualTo: FUser.currentId())
+        query = reference(.User).whereField(kOBJECTID, isEqualTo: FUser.currentId())
     
-    query.getDocuments { (snapshot, error) in
-        self.user = FUser()
-        
-        if error != nil {
-            print(error!.localizedDescription)
+        query.getDocuments { (snapshot, error) in
+            self.user = FUser()
             
-            return
-        }
-        
-        guard let snapshot = snapshot else {
-            return
-        }
-        
-        if !snapshot.isEmpty {
-            
-            for userDoc in snapshot.documents {
-                let userDoc = userDoc.data() as NSDictionary
-                let userCurr = FUser(_dictionary: userDoc)
-                self.user = userCurr
+            if error != nil {
+                print(error!.localizedDescription)
                 
-                
-                helper.imageFromData(pictureData: userCurr.cover) { (coverImage) in
-    
-                    if coverImage != nil {
-                        self.coverImageView.image = coverImage!
-                        self.isCover = true
-                    }
-                }
-                helper.imageFromData(pictureData: userCurr.ava) { (avatarImage) in
-    
-                   if avatarImage != nil {
-                        self.avaImageView.image = avatarImage!
-                        self.isAva = true
-                   }
-               }
-                self.fullnameLabel.text = "\(String(describing: (userCurr.firstname).capitalized)) \((userCurr.lastname).capitalized)"
-                self.heightTextLabel.text = "\((userCurr.height).capitalized)" + "in."
-                self.weightTextLabel.text = "\((userCurr.weight).capitalized)" + "lbs."
-                self.positionTextLabel.text = "\((userCurr.position).capitalized)"
-                self.numberTextLabel.text = "\((userCurr.number).capitalized)"
-                                
+                return
             }
             
+            guard let snapshot = snapshot else {
+                return
+            }
+            
+            if !snapshot.isEmpty {
+                
+                for userDoc in snapshot.documents {
+                    let userDoc = userDoc.data() as NSDictionary
+                    let userCurr = FUser(_dictionary: userDoc)
+                    self.user = userCurr
+                    
+                    
+                    helper.imageFromData(pictureData: userCurr.cover) { (coverImage) in
         
-        }
+                        if coverImage != nil {
+                            self.coverImageView.image = coverImage!
+                            self.isCover = true
+                        }
+                    }
+                    helper.imageFromData(pictureData: userCurr.ava) { (avatarImage) in
+        
+                       if avatarImage != nil {
+                            self.avaImageView.image = avatarImage!
+                            self.isAva = true
+                       }
+                   }
+                    self.fullnameLabel.text = "\(String(describing: (userCurr.firstname).capitalized)) \((userCurr.lastname).capitalized)"
+                    self.heightTextLabel.text = "\((userCurr.height).capitalized)" + "in."
+                    self.weightTextLabel.text = "\((userCurr.weight).capitalized)" + "lbs."
+                    self.positionTextLabel.text = "\((userCurr.position).capitalized)"
+                    self.numberTextLabel.text = "\((userCurr.number).capitalized)"
+                                    
+                }
+                
+            
+            }
         
     }
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -409,14 +400,15 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
         
         // creating buttons for action sheet
         let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
-            
-            // access/instantiate loginViewController
-            let loginvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
-            
+                        
             FUser.logOutCurrentUser { (success) in
                 
                 if success {
-                    self.present(loginvc, animated: false, completion: nil)
+                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+                    {
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true, completion: nil)
+                    }
                 }
                 
             }

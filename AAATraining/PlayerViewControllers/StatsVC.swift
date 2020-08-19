@@ -26,7 +26,7 @@ class StatsVC: UIViewController {
     var dataSource = [String]()
     var cellText = "Select Stat"
     
-    var userForGuest = FUser()
+    var userBeingViewed = FUser()
     
     
     override func viewDidLoad() {
@@ -102,11 +102,11 @@ class StatsVC: UIViewController {
     // loads all user related information to be shown in the header
     func loadUserForGuest() {
         let helper = Helper()
-        let user = userForGuest
+        
         // safe method of accessing user related information in glob var
-        let firstName = user.firstname
-        let lastName = user.lastname
-        let avaPath = user.ava
+        let firstName = userBeingViewed.firstname
+        let lastName = userBeingViewed.lastname
+        let avaPath = userBeingViewed.ava
         // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
         if avaPath != "" {
             helper.imageFromData(pictureData: avaPath) { (avatarImage) in
@@ -158,7 +158,7 @@ class StatsVC: UIViewController {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateStats"), object: nil)
             }
         } else {
-            updateUserInFirestore(objectID: userForGuest.objectId, withValues: [stat : value]) { (success) in
+            updateUserInFirestore(objectID: userBeingViewed.objectId, withValues: [stat : value]) { (success) in
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateStatsAsGuest"), object: nil)
             }
         }

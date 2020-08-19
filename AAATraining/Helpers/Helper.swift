@@ -316,7 +316,7 @@ public class Helper {
             elapsed = "\(hours) \(hourText)"
         } else {
             let currentDateFormater = dateFormatter()
-            currentDateFormater.dateFormat = "dd/MM/YYYY"
+            currentDateFormater.dateFormat = "MM/dd/YYYY"
             
             elapsed = "\(currentDateFormater.string(from: date))"
         }
