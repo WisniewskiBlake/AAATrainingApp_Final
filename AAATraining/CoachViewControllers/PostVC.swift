@@ -30,7 +30,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     
     let postID = UUID().uuidString
     
-    func createPost() {        
+    func createPost() {
         if postTextView.text != "" {
             if isVideoSelected {
                 let videoData = NSData(contentsOfFile: (videoPath?.path!)!)
@@ -82,31 +82,28 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     @IBAction func shareButton_clicked(_ sender: Any) {
             createPost()
             dismiss(animated: true, completion: nil)
-
         }
         
-        func displayMedia(picture: UIImage?, video: NSURL?) {
-            if let pic = picture {
-                pictureImageView.image = pic
-                isVideoSelected = false
-                isPictureSelected = true
-                return
-            }
-            
-            //send video
-            if let video = video {
-                
-                
-                let thumbImage = createThumbnailOfVideoFromRemoteUrl(url: video)
-                
-                pictureImageView.image = thumbImage
-                isPictureSelected = false
-                isVideoSelected = true
-                
-                return
-            }
+    func displayMedia(picture: UIImage?, video: NSURL?) {
+        if let pic = picture {
+            pictureImageView.image = pic
+            isVideoSelected = false
+            isPictureSelected = true
+            return
         }
-    
+        
+        //send video
+        if let video = video {
+            
+            let thumbImage = createThumbnailOfVideoFromRemoteUrl(url: video)
+            
+            pictureImageView.image = thumbImage
+            isPictureSelected = false
+            isVideoSelected = true
+            
+            return
+        }
+    }
     
 
     override func viewDidLoad() {
@@ -203,14 +200,12 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     
     // tracks whenver textView gets changed
     func textViewDidChange(_ textView: UITextView) {
-        
         // if textview isn't empty -> there's some text in textView, show the label, otherwise -> hide
         if textView.text.isEmpty {
             placeholderLabel.isHidden = false
         } else {
             placeholderLabel.isHidden = true
         }
-        
     }
     
     
@@ -256,6 +251,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     
 
 }
+
 
 extension UIImage {
     func toString() -> String? {

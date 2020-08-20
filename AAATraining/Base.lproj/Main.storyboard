@@ -1542,6 +1542,7 @@
                                 </constraints>
                                 <state key="normal" title="Button" image="video.badge.plus" catalog="system"/>
                                 <connections>
+                                    <action selector="pictureButtonClicked:" destination="xTj-mL-qb3" eventType="touchUpInside" id="EmB-vn-u6t"/>
                                     <action selector="pictureButtonClicked:" destination="41R-QL-2o6" eventType="touchUpInside" id="wDp-52-J97"/>
                                 </connections>
                             </button>
@@ -6092,7 +6093,7 @@
         <!--Navigation Controller-->
         <scene sceneID="kWC-Hr-DkV">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lwj-xv-Qko" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="nutritionNav" automaticallyAdjustsScrollViewInsets="NO" id="lwj-xv-Qko" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="yZr-H8-1mc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
