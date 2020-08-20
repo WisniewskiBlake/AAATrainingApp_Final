@@ -20,11 +20,7 @@ import AVKit
 import JSQMessagesViewController
 
 class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
-    
-    // posts obj
-    //
-    //var posts: [NSDictionary] = []
-    // posts: NSDictionary() as! [String : [Post]]
+        
     var allPosts: [Post] = []
     var recentListener: ListenerRegistration!
     

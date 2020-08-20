@@ -30,8 +30,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     
     let postID = UUID().uuidString
     
-    func createPost() {
-        
+    func createPost() {        
         if postTextView.text != "" {
             if isVideoSelected {
                 let videoData = NSData(contentsOfFile: (videoPath?.path!)!)

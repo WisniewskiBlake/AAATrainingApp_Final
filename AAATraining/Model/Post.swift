@@ -40,12 +40,8 @@ public class Post {
     }
     
     init(_dictionary: NSDictionary) {
-        
-        
-       //let helper = Helper()
        postID = _dictionary[kPOSTID] as! String
-        ownerID = _dictionary[kOWNERID] as! String
-       
+       ownerID = _dictionary[kOWNERID] as! String
        
        if let fname = _dictionary[kPOSTUSERNAME] {
            postUserName = fname as! String
@@ -105,7 +101,5 @@ public class Post {
         
     }
     
-    //withValues : [String : Any], completion: @escaping (_ error: Error?) -> Void) {
     
-   
 }

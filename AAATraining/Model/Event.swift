@@ -92,10 +92,6 @@ public class Event {
         
     }
 
-//    func saveEvent(eventID : String) {
-//
-//        reference(.Event).document(eventDictionary[kEVENTID] as! String).setData(eventDictionary as! [String:Any])
-//    }
 
     public func updateEvent(eventGroupID: String, eventOwnerID: String, eventText : String) {
         reference(.Event).whereField(kEVENTGROUPID, isEqualTo: eventGroupID).getDocuments { (snapshot, error) in

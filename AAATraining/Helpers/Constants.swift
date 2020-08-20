@@ -101,6 +101,20 @@ public let kPOSTTHUMBNAIL = "postThumbnail"
 public let kPOSTTYPE = "postType"
 public let kPOSTURLLINK = "postUrlLink"
 
+//Nutrition
+public let kNUTRITIONPOSTS = "nutritionPosts"
+public let kNUTRITIONPOSTID = "nutritionPostID"
+public let kNUTRITIONPOSTOWNERID = "nutritionOwnerID"
+public let kNUTRITIONPOSTTEXT = "nutritionPostText"
+public let kNUTRITIONPOSTPICTURE = "nutritionPostPicture"
+public let kNUTRITIONPOSTDATE = "nutritionPostDate"
+public let kNUTRITIONPOSTUSERAVA = "nutritionPostUserAva"
+public let kNUTRITIONPOSTUSERNAME = "nutritionPostUserName"
+public let kNUTRITIONPOSTVIDEO = "nutritionPostVideo"
+public let kNUTRITIONPOSTTHUMBNAIL = "nutritionPostThumbnail"
+public let kNUTRITIONPOSTTYPE = "nutritionPostType"
+public let kNUTRITIONPOSTURLLINK = "nutritionPostUrlLink"
+
 
 //Baseline
 public let kBASELINES = "baselines"

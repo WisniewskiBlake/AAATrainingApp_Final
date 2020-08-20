@@ -68,6 +68,9 @@
 		B75AD64824CAF39C00DCC857 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AD64724CAF39B00DCC857 /* Camera.swift */; };
 		B75D0AE724BECD7000CF7943 /* PlayerRosterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75D0AE624BECD7000CF7943 /* PlayerRosterCell.swift */; };
 		B75D0AEB24BFC8D900CF7943 /* FeedVC_Coach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75D0AEA24BFC8D900CF7943 /* FeedVC_Coach.swift */; };
+		B7628BAC24EDB51A00BBDC97 /* NutritionFeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7628BAB24EDB51A00BBDC97 /* NutritionFeedVC.swift */; };
+		B7628BAE24EDB54400BBDC97 /* NutritionPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7628BAD24EDB54400BBDC97 /* NutritionPostVC.swift */; };
+		B771576824EDC865005834CA /* Nutrition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B771576724EDC865005834CA /* Nutrition.swift */; };
 		B796233F24E3823500AD3C8F /* Baseline.swift in Sources */ = {isa = PBXBuildFile; fileRef = B796233E24E3823500AD3C8F /* Baseline.swift */; };
 		B7B7578B249AB1E8000D0D8A /* AAAbackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B7B7578A249AB1E8000D0D8A /* AAAbackground.jpg */; };
 		B7B75791249AE11F000D0D8A /* logoBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B75790249AE11F000D0D8A /* logoBackground.png */; };
@@ -175,6 +178,9 @@
 		B75AD64724CAF39B00DCC857 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		B75D0AE624BECD7000CF7943 /* PlayerRosterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerRosterCell.swift; sourceTree = "<group>"; };
 		B75D0AEA24BFC8D900CF7943 /* FeedVC_Coach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedVC_Coach.swift; sourceTree = "<group>"; };
+		B7628BAB24EDB51A00BBDC97 /* NutritionFeedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionFeedVC.swift; sourceTree = "<group>"; };
+		B7628BAD24EDB54400BBDC97 /* NutritionPostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionPostVC.swift; sourceTree = "<group>"; };
+		B771576724EDC865005834CA /* Nutrition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nutrition.swift; sourceTree = "<group>"; };
 		B796233E24E3823500AD3C8F /* Baseline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Baseline.swift; sourceTree = "<group>"; };
 		B7B7578A249AB1E8000D0D8A /* AAAbackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = AAAbackground.jpg; path = ../../../Downloads/AAAbackground.jpg; sourceTree = "<group>"; };
 		B7B75790249AE11F000D0D8A /* logoBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logoBackground.png; path = ../../../Downloads/logoBackground.png; sourceTree = "<group>"; };
@@ -280,6 +286,7 @@
 				B70EDF1324CEAA6E00CC21F5 /* Post.swift */,
 				B70EDF1924D13EF400CC21F5 /* Event.swift */,
 				B796233E24E3823500AD3C8F /* Baseline.swift */,
+				B771576724EDC865005834CA /* Nutrition.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -431,6 +438,8 @@
 				B701BB8B24E37AE600FC88DC /* PlayerBaselineVC.swift */,
 				B701BB8D24E37B7E00FC88DC /* NewBaselineVC.swift */,
 				B701BB8F24E37BA400FC88DC /* EditBaselineVC.swift */,
+				B7628BAB24EDB51A00BBDC97 /* NutritionFeedVC.swift */,
+				B7628BAD24EDB54400BBDC97 /* NutritionPostVC.swift */,
 			);
 			path = PlayerViewControllers;
 			sourceTree = "<group>";
@@ -766,6 +775,7 @@
 				B70EDF2124D666EB00CC21F5 /* PlayerRecentChatVC.swift in Sources */,
 				B75AD63E24CAE80800DCC857 /* PhotoMediaItem.swift in Sources */,
 				B75AD64624CAEC7A00DCC857 /* BackgroundCollectionVC.swift in Sources */,
+				B7628BAC24EDB51A00BBDC97 /* NutritionFeedVC.swift in Sources */,
 				B70EDF1624D120C800CC21F5 /* Calendar_Coach.swift in Sources */,
 				B75AD63024CA945E00DCC857 /* IncomingMessages.swift in Sources */,
 				B70EDF1F24D1A5AA00CC21F5 /* ParentRegisterVC.swift in Sources */,
@@ -775,6 +785,7 @@
 				B75AD64824CAF39C00DCC857 /* Camera.swift in Sources */,
 				B75AD63C24CACF5200DCC857 /* GroupMemberCell_Coach.swift in Sources */,
 				B7C3BE0324BC735000086C27 /* PlayerRosterVC.swift in Sources */,
+				B771576824EDC865005834CA /* Nutrition.swift in Sources */,
 				B701BB9024E37BA400FC88DC /* EditBaselineVC.swift in Sources */,
 				B7F18C6624970084009BFA17 /* SceneDelegate.swift in Sources */,
 				B75AD62324C9944B00DCC857 /* RecentChatVC_Coach.swift in Sources */,
@@ -784,6 +795,7 @@
 				B7F18C9C24975B60009BFA17 /* LoginVC.swift in Sources */,
 				B75D0AEB24BFC8D900CF7943 /* FeedVC_Coach.swift in Sources */,
 				B7F8AFE924A45ABA00B315FD /* StatsVC.swift in Sources */,
+				B7628BAE24EDB54400BBDC97 /* NutritionPostVC.swift in Sources */,
 				B755107B249CAB7400598A30 /* Helper.swift in Sources */,
 				B70EDF0424CD40D400CC21F5 /* EditGroupVC_Coach.swift in Sources */,
 				B75AD63824CABA9F00DCC857 /* NewGroupVC_Coach.swift in Sources */,

@@ -220,8 +220,7 @@ class StatsVC: UIViewController {
     }
     
     // executed always when the Screen's White Space (anywhere excluding objects) tapped
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {        
         // end editing - hide keyboards
         self.view.endEditing(false)
     }

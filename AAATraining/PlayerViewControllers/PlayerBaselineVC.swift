@@ -209,12 +209,17 @@ class PlayerBaselineVC: UITableViewController {
         var baseline: Baseline
         baseline = allBaselines[indexPath.row]
         
-        let editBaselineVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditBaselineVC") as! EditBaselineVC
+        if FUser.currentUser()?.accountType != "player" {
+            let editBaselineVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditBaselineVC") as! EditBaselineVC
+            
+            editBaselineVC.baselineToEdit = baseline
+            
+            
+            self.navigationController?.pushViewController(editBaselineVC, animated: true)
+            
+        }
         
-        editBaselineVC.baselineToEdit = baseline
         
-        
-        self.navigationController?.pushViewController(editBaselineVC, animated: true)
     }
     
     @IBAction func composeButtonPressed(_ sender: Any) {
