@@ -251,7 +251,10 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
             let playerProfileVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
             playerProfileVC.userBeingViewed = user
             self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            //self.navigationController?.navigationBar.autoresizesSubviews = true
+            //self.navigationController?.navigationBar.insetsLayoutMarginsFromSafeArea = true
             
+            //self.navigationController?.edgesForExtendedLayout = UIRectEdge(rawValue: 0)
             self.navigationController?.pushViewController(playerProfileVC, animated: true)
         }
 

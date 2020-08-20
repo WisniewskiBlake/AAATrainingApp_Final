@@ -13,7 +13,7 @@ import Firebase
 import FirebaseFirestore
 import ProgressHUD
 
-class ProfileViewController: UITableViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, ImagePickerDelegate {
+class ProfileViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, ImagePickerDelegate {
     
     
 
@@ -25,15 +25,18 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
     @IBOutlet weak var weightTextLabel: UILabel!
     @IBOutlet weak var numberTextLabel: UILabel!
     
-    @IBOutlet weak var baseLineButton: UIButton!
-    @IBOutlet weak var nutritionButton: UIButton!
-    @IBOutlet weak var moreButton: UIButton!
+    @IBOutlet weak var baselineView: UIView!
+    @IBOutlet weak var nutritionView: UIView!
+    @IBOutlet weak var editView: UIView!
+    @IBOutlet weak var logoutView: UIView!
     
-    
+    let baselineTapGestureRecognizer = UITapGestureRecognizer()
+    let nutritionTapGestureRecognizer = UITapGestureRecognizer()
+    let editTapGestureRecognizer = UITapGestureRecognizer()
+    let logoutTapGestureRecognizer = UITapGestureRecognizer()
     
     var profileIcon: UIImage?
     var coverIcon: UIImage?
-    
     
     // code obj (to build logic of distinguishing tapped / shown Cover / Ava)
     var isCover = false
@@ -62,23 +65,46 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        cornerRadius(for: baseLineButton)
-        cornerRadius(for: nutritionButton)
-        
        // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadUser), name: NSNotification.Name(rawValue: "updateStats"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadUserForGuest), name: NSNotification.Name(rawValue: "updateStatsAsGuest"), object: nil)
+        
+        baselineTapGestureRecognizer.addTarget(self, action: #selector(self.baselineViewClicked))
+        baselineView.isUserInteractionEnabled = true
+        baselineView.addGestureRecognizer(baselineTapGestureRecognizer)
+        
+        nutritionTapGestureRecognizer.addTarget(self, action: #selector(self.nutritionViewClicked))
+        nutritionView.isUserInteractionEnabled = true
+        nutritionView.addGestureRecognizer(nutritionTapGestureRecognizer)
+        
+        editTapGestureRecognizer.addTarget(self, action: #selector(self.editViewClicked))
+        editView.isUserInteractionEnabled = true
+        editView.addGestureRecognizer(editTapGestureRecognizer)
+        
+        logoutTapGestureRecognizer.addTarget(self, action: #selector(self.logoutViewClicked))
+        logoutView.isUserInteractionEnabled = true
+        logoutView.addGestureRecognizer(logoutTapGestureRecognizer)
+        
 
         configure_avaImageView()
         if FUser.currentUser()?.accountType == "player" {
-            moreButton.isHidden = false
+            logoutView.isHidden = false
             loadUser()
         } else {
-            moreButton.isHidden = true
+            logoutView.isHidden = true
             loadUserForGuest()
             
         }
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if FUser.currentUser()?.accountType == "player" {
+            navigationController?.setNavigationBarHidden(true, animated: true)
+        }
+        
+        //navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     // executed after aligning the objects
@@ -88,38 +114,59 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
         //configure_nutritionButton(btn: nutritionButton)
     }
     
-    @IBAction func editButtonClicked(_ sender: Any) {
-        
-       let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "statsNav") as! UINavigationController
-        let statsVC = navigation.viewControllers.first as! StatsVC
-        //statsVC.modalPresentationStyle = .automatic
-        statsVC.userBeingViewed = userBeingViewed
-    
-       self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-       
-//       self.navigationController?.pushViewController(statsVC, animated: true)
-       self.present(navigation, animated: true, completion: nil)
-        
-    }
-    
-
-    @IBAction func baseLineButtonClicked(_ sender: Any) {
+    @objc func baselineViewClicked() {
         let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "baselineNav") as! UINavigationController
         let newBaselineVC = navigation.viewControllers.first as! PlayerBaselineVC
         newBaselineVC.userBeingViewed = userBeingViewed
         
         self.present(navigation, animated: true, completion: nil)
-   //     self.navigationController?.pushViewController(newGroupVC, animated: true)
     }
     
-    @IBAction func nutritionButtonClicked(_ sender: Any) {
-         let navigationNutrition = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "nutritionNav") as! UINavigationController
+    @objc func nutritionViewClicked() {
+        let navigationNutrition = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "nutritionNav") as! UINavigationController
          let nutritionVC = navigationNutrition.viewControllers.first as! NutritionFeedVC
         nutritionVC.accountType = FUser.currentUser()?.accountType
-        //let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NutritionFeedVC") as! NutritionFeedVC
-         
-         self.present(navigationNutrition, animated: true, completion: nil)
-         //self.navigationController?.pushViewController(navigation, animated: true)
+        
+        self.present(navigationNutrition, animated: true, completion: nil)
+    }
+    
+    @objc func editViewClicked() {
+        let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "statsNav") as! UINavigationController
+        let statsVC = navigation.viewControllers.first as! StatsVC
+        
+        statsVC.userBeingViewed = userBeingViewed
+    
+        self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+
+        self.present(navigation, animated: true, completion: nil)
+    }
+    
+    @objc func logoutViewClicked() {
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // creating buttons for action sheet
+        let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
+                        
+            FUser.logOutCurrentUser { (success) in
+                
+                if success {
+                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+                    {
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true, completion: nil)
+                    }
+                }
+            }
+        })
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        // add buttons to action sheet
+        sheet.addAction(logout)
+        sheet.addAction(cancel)
+        
+        // show action sheet
+        present(sheet, animated: true, completion: nil)
     }
     
     // make corners rounded for any views (objects)
@@ -287,23 +334,7 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
     @IBAction func avaImageView_tapped(_ sender: Any) {
         showIconOptions()
     }
-    
-    func configure_nutritionButton(btn: UIButton) {
-        // creating constant named 'border' of type layer which acts as a border frame
-        let border = CALayer()
-        border.borderColor = #colorLiteral(red: 0.01220451668, green: 0.2841129601, blue: 0.7098029256, alpha: 1)
-        border.borderWidth = 2
-        border.frame = CGRect(x: 0, y: 0, width: btn.frame.width, height: btn.frame.height)
-        
-        // assign border to the obj (button)
-        btn.layer.addSublayer(border)
-        
-        
-        // rounded corner
-        btn.layer.cornerRadius = 5
-        btn.layer.masksToBounds = true
-        
-    }
+
     
     // configuring the appearance of AvaImageView
     func configure_avaImageView() {
@@ -397,43 +428,7 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
    func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
        self.dismiss(animated: true, completion: nil)
    }
-    
-    
-    
-    @IBAction func moreButton_clicked(_ sender: Any) {
-        // creating action sheet
-        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        // creating buttons for action sheet
-        let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
-                        
-            FUser.logOutCurrentUser { (success) in
-                
-                if success {
-                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
-                    {
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true, completion: nil)
-                    }
-                }
-                
-            }
-            
-        })
-        
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        // add buttons to action sheet
-        sheet.addAction(logout)
-        sheet.addAction(cancel)
-        
-        // show action sheet
-        present(sheet, animated: true, completion: nil)
-    }
-    
-    
-    
-    
+
     
     
 }
