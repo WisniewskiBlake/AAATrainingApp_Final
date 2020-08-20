@@ -100,9 +100,9 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if FUser.currentUser()?.accountType == "player" {
-            navigationController?.setNavigationBarHidden(true, animated: true)
-        }
+//        if FUser.currentUser()?.accountType == "player" {
+//            navigationController?.setNavigationBarHidden(true, animated: true)
+//        }
         
         //navigationController?.setNavigationBarHidden(true, animated: true)
     }
