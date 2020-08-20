@@ -462,7 +462,6 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         // accessing indexPath of the button / cell
         let indexPathRow = optionButton.tag
         
-        
         // creating actionSheet
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         

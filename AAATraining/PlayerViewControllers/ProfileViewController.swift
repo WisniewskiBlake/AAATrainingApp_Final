@@ -113,7 +113,13 @@ class ProfileViewController: UITableViewController, UIImagePickerControllerDeleg
     }
     
     @IBAction func nutritionButtonClicked(_ sender: Any) {
-        
+         let navigationNutrition = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "nutritionNav") as! UINavigationController
+         let nutritionVC = navigationNutrition.viewControllers.first as! NutritionFeedVC
+        nutritionVC.accountType = FUser.currentUser()?.accountType
+        //let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NutritionFeedVC") as! NutritionFeedVC
+         
+         self.present(navigationNutrition, animated: true, completion: nil)
+         //self.navigationController?.pushViewController(navigation, animated: true)
     }
     
     // make corners rounded for any views (objects)

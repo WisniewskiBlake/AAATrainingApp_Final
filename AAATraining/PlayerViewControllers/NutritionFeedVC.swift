@@ -18,33 +18,320 @@ import AVFoundation
 import AVKit
 import JSQMessagesViewController
 
-class NutritionFeedVC: UITableViewController {
+class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
+    
+   var allPosts: [Nutrition] = []
+   var recentListener: ListenerRegistration!
+   
+   var avas = [UIImage]()
+   var pictures = [UIImage]()
+   var skip = 0
+   var limit = 25
+   var isLoading = false
+    var accountType: String? = ""
+
+   let helper = Helper()
+    
+    @IBOutlet weak var composeButton: UIBarButtonItem!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 200
+        
+        // add observers for notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(loadNutritionPosts), name: NSNotification.Name(rawValue: "createNutritionPost"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(loadAvaAfterUpload), name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
+        // add observers for notifications
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(loadNutritionPostsAfterDelete), name: NSNotification.Name(rawValue: "deleteNutritionPost"), object: nil)
+        
+        if accountType == "player" {
+            composeButton.isEnabled = false
+        }
        
+        loadNutritionPosts()
+        
+    }
+    
+    // pre-load func
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadNutritionPosts()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        recentListener.remove()
+    }
+    
+    // MARK: - Load Posts
+    @objc func loadNutritionPosts() {
+        ProgressHUD.show()
+        
+        recentListener = reference(.Nutrition).order(by: kNUTRITIONPOSTDATE, descending: true).addSnapshotListener({ (snapshot, error) in
+                   
+                self.allPosts = []
+            
+            if error != nil {
+                print(error!.localizedDescription)
+                ProgressHUD.dismiss()
+                self.tableView.reloadData()
+                return
+            }
+                   guard let snapshot = snapshot else { ProgressHUD.dismiss(); return }
+
+                   if !snapshot.isEmpty {
+
+                       for userDictionary in snapshot.documents {
+                           
+                           let userDictionary = userDictionary.data() as NSDictionary
+                           
+                        let post = Nutrition(_dictionary: userDictionary)
+                           
+                           self.allPosts.append(post)
+                        print(self.allPosts)
+                       }
+                       self.tableView.reloadData()
+                    
+                   }
+            ProgressHUD.dismiss()
+               })
+        
+    }
+    
+    // MARK: - Load Delete
+    @objc func loadNutritionPostsAfterDelete() {
+        loadNutritionPosts()
+    }
+    // MARK: - Load Ava
+    @objc func loadAvaAfterUpload() {
+        loadNutritionPosts()
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return 0
+       return allPosts.count
     }
     
-    @IBAction func composeButtonPressed(_ sender: Any) {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            
+            var post: Nutrition
+                    
+            post = allPosts[indexPath.row]
+            
+            if post.nutritionPostType == "video" {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
+                
+                cell.playImageView.isHidden = false
+                
+                let thumbImage = createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: post.nutritionVideo)!)
+                         
+                var date: String?
+                let currentDateFormater = helper.dateFormatter()
+                currentDateFormater.dateFormat = "MM/dd/YYYY"
+                let postDate = helper.dateFormatter().date(from: post.nutritionDate)
+                date = currentDateFormater.string(from: postDate!)
+                cell.dateLabel.text = date
+                         
+                 
+                 helper.imageFromData(pictureData: post.nutritionPostUserAva) { (avatarImage) in
+
+                     if avatarImage != nil {
+
+                         cell.avaImageView.image = avatarImage!.circleMasked
+                     }
+                 }
+                
+                cell.delegate = self
+                cell.indexPath = indexPath
+                cell.fullnameLabel.text = post.nutritionPostUserName
+                cell.pictureImageView.image = thumbImage
+                cell.postTextLabel.text = post.nutritionText
+                cell.urlTextView.text = post.nutritionPostUrlLink
+                cell.optionsButton.tag = indexPath.row
+
+                 return cell
+            } else if post.nutritionPostType == "picture" {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
+                
+                cell.playImageView.isHidden = true
+               
+                 var date: String?
+                 let currentDateFormater = helper.dateFormatter()
+                 currentDateFormater.dateFormat = "MM/dd/YYYY"
+                 let postDate = helper.dateFormatter().date(from: post.nutritionDate)
+                 date = currentDateFormater.string(from: postDate!)
+                 cell.dateLabel.text = date
+                         
+                 
+                 helper.imageFromData(pictureData: post.nutritionPostUserAva) { (avatarImage) in
+
+                     if avatarImage != nil {
+
+                         cell.avaImageView.image = avatarImage!.circleMasked
+                     }
+                 }
+                downloadImage(imageUrl: post.nutritionPicture) { (image) in
+                    
+                    if image != nil {
+                        cell.pictureImageView.image = image!
+                    }
+                }
+
+
+                cell.delegate = self
+                cell.indexPath = indexPath
+                cell.fullnameLabel.text = post.nutritionPostUserName
+                cell.postTextLabel.text = post.nutritionText
+                cell.urlTextView.text = post.nutritionPostUrlLink
+                cell.optionsButton.tag = indexPath.row
+                return cell
+                
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
+
+                 var date: String?
+                 let currentDateFormater = helper.dateFormatter()
+                 currentDateFormater.dateFormat = "MM/dd/YYYY"
+                 let postDate = helper.dateFormatter().date(from: post.nutritionDate)
+                 date = currentDateFormater.string(from: postDate!)
+                 cell.dateLabel.text = date
+                 
+                 helper.imageFromData(pictureData: post.nutritionPostUserAva) { (avatarImage) in
+
+                     if avatarImage != nil {
+
+                         cell.avaImageView.image = avatarImage!.circleMasked
+                     }
+                 }
+                 
+                 cell.fullnameLabel.text = post.nutritionPostUserName
+
+                 cell.postTextLabel.text = post.nutritionText
+
+                 cell.urlTextView.text = post.nutritionPostUrlLink
+                
+                cell.optionsButton.tag = indexPath.row
+                
+                 return cell
+            }
+            
+            
+    }
+    
+    @IBAction func deleteButtonClicked(_ optionButton: UIButton) {
+        // accessing indexPath of the button / cell
+        let indexPathRow = optionButton.tag
         
+        // creating actionSheet
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // creating Delete button
+        let delete = UIAlertAction(title: "Delete Post", style: .destructive) { (delete) in
+            self.deletePost(_: indexPathRow)
+        }
+        
+        // creating Cancel button
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        // assigning buttons to the sheet
+        alert.addAction(delete)
+        alert.addAction(cancel)
+        
+        // showing actionSheet
+        present(alert, animated: true, completion: nil)
+    }
+    
+    // MARK: - Delete Posts
+    // sends request to the server to delete the post
+    @objc func deletePost(_ row: Int) {
+        let post = allPosts[row]
+        
+        let postID = post.nutritionPostID
+        
+        reference(.Nutrition).document(postID).delete()
+                
+        self.allPosts.remove(at: row)
+        
+        // remove the cell itself from the tableView
+        let indexPath = IndexPath(row: row, section: 0)
+        tableView.beginUpdates()
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+        tableView.endUpdates()
+        tableView.reloadData()
+        
+    }
+    
+    
+    
+    func createThumbnailOfVideoFromRemoteUrl(url: NSURL) -> UIImage? {
+        let asset = AVAsset(url: url as URL)
+        let assetImgGenerate = AVAssetImageGenerator(asset: asset)
+        assetImgGenerate.appliesPreferredTrackTransform = true
+        //Can set this to improve performance if target size is known before hand
+        //assetImgGenerate.maximumSize = CGSize(width,height)
+        let time = CMTimeMakeWithSeconds(1.0, preferredTimescale: 600)
+        do {
+            let img = try assetImgGenerate.copyCGImage(at: time, actualTime: nil)
+            let thumbnail = UIImage(cgImage: img)
+            return thumbnail
+        } catch {
+          print(error.localizedDescription)
+          return nil
+        }
+    }
+    
+    func didTapMediaImage(indexPath: IndexPath) {
+        let post = allPosts[indexPath.row]
+        let postType = post.nutritionPostType
+        
+        if postType == "video" {
+            let mediaItem = post.nutritionVideo
+            
+            let player = AVPlayer(url: Foundation.URL(string: mediaItem)!)
+            let moviewPlayer = AVPlayerViewController()
+            
+            let session = AVAudioSession.sharedInstance()
+            
+            try! session.setCategory(.playAndRecord, mode: .default, options: .defaultToSpeaker)
+
+            moviewPlayer.player = player
+            
+            self.present(moviewPlayer, animated: true) {
+                moviewPlayer.player!.play()
+            }
+        }
+        if postType == "picture" {
+            downloadImage(imageUrl: post.nutritionPicture) { (image) in
+                
+                if image != nil {
+                    let photos = IDMPhoto.photos(withImages: [image as Any])
+                    let browser = IDMPhotoBrowser(photos: photos)
+                    
+                    self.present(browser!, animated: true, completion: nil)
+                }
+            }
+            
+        }
+    }
+    
+    @IBAction func composeButtonClicked(_ sender: Any) {
+        let nutritionPostVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NutritionPostVC") as! NutritionPostVC
+        self.navigationController?.pushViewController(nutritionPostVC, animated: true)
+    }
+    
+    @IBAction func backButtonClicked(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
     
 
-    @IBAction func backButtonPressed(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
     
 
 }

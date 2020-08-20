@@ -40,45 +40,45 @@ public class Nutrition {
     }
     
     init(_dictionary: NSDictionary) {
-       nutritionPostID = _dictionary[kPOSTID] as! String
-       nutritionOwnerID = _dictionary[kOWNERID] as! String
+       nutritionPostID = _dictionary[kNUTRITIONPOSTID] as! String
+       nutritionOwnerID = _dictionary[kNUTRITIONPOSTOWNERID] as! String
        
-       if let fname = _dictionary[kPOSTUSERNAME] {
+       if let fname = _dictionary[kNUTRITIONPOSTUSERNAME] {
            nutritionPostUserName = fname as! String
        } else {
            nutritionPostUserName = ""
        }
-       if let txt = _dictionary[kPOSTTEXT] {
+       if let txt = _dictionary[kNUTRITIONPOSTTEXT] {
            nutritionText = txt as! String
        } else {
            nutritionText = ""
        }
-       if let pic = _dictionary[kPOSTPICTURE] {
+       if let pic = _dictionary[kNUTRITIONPOSTPICTURE] {
            nutritionPicture = pic as! String
        } else {
            nutritionPicture = ""
        }
-       if let dt = _dictionary[kPOSTDATE] {
+       if let dt = _dictionary[kNUTRITIONPOSTDATE] {
            nutritionDate = dt as! String
        } else {
            nutritionDate = ""
        }
-        if let ava = _dictionary[kPOSTUSERAVA] {
+        if let ava = _dictionary[kNUTRITIONPOSTUSERAVA] {
             nutritionPostUserAva = ava as! String
         } else {
             nutritionPostUserAva = ""
         }
-        if let vid = _dictionary[kPOSTVIDEO] {
+        if let vid = _dictionary[kNUTRITIONPOSTVIDEO] {
             nutritionVideo = vid as! String
         } else {
             nutritionVideo = ""
         }
-        if let tp = _dictionary[kPOSTTYPE] {
+        if let tp = _dictionary[kNUTRITIONPOSTTYPE] {
             nutritionPostType = tp as! String
         } else {
             nutritionPostType = ""
         }
-        if let url = _dictionary[kPOSTURLLINK] {
+        if let url = _dictionary[kNUTRITIONPOSTURLLINK] {
             nutritionPostUrlLink = url as! String
         } else {
             nutritionPostUrlLink = ""

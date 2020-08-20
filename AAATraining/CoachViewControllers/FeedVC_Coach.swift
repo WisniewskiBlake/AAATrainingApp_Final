@@ -29,12 +29,8 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
     var skip = 0
     var limit = 25
     var isLoading = false
-    var liked = [Int]()
-    
-    var lastNames : [String] = []
  
     let helper = Helper()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -271,11 +267,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
                      
-//             var date: Date!
-//
-//             date = helper.dateFormatter().date(from: post.date)
-//
-//             cell.dateLabel.text = helper.timeElapsed(date: date)
+
              var date: String?
              let currentDateFormater = helper.dateFormatter()
              currentDateFormater.dateFormat = "MM/dd/YYYY"
