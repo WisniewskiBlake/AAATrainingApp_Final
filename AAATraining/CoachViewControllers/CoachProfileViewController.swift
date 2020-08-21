@@ -208,39 +208,40 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     // loading posts from the server via@objc  PHP protocol
     @objc func loadPosts() {
         ProgressHUD.show()
-        
-        var query: Query!
-        
-        query = reference(.Post).whereField(kPOSTOWNERID, isEqualTo: FUser.currentId()).order(by: kPOSTDATE, descending: true)
-        
-        query.getDocuments { (snapshot, error) in
-            self.allPosts = []
-            self.allPostsGrouped = [:]
+        DispatchQueue.main.async {
+            var query: Query!
             
-            if error != nil {
-                print(error!.localizedDescription)
-                ProgressHUD.dismiss()
-                self.tableView.reloadData()
-                return
-            }
+            query = reference(.Post).whereField(kPOSTOWNERID, isEqualTo: FUser.currentId()).order(by: kPOSTDATE, descending: true)
             
-            guard let snapshot = snapshot else {
-                ProgressHUD.dismiss(); return
-            }
-            
-            if !snapshot.isEmpty {
+            query.getDocuments { (snapshot, error) in
+                self.allPosts = []
+                self.allPostsGrouped = [:]
                 
-                for postDictionary in snapshot.documents {
-                                let postDictionary = postDictionary.data() as NSDictionary
-                                let post = Post(_dictionary: postDictionary)
-                                   self.allPosts.append(post)
-                                    print(self.allPosts)
-                                    
+                if error != nil {
+                    print(error!.localizedDescription)
+                    ProgressHUD.dismiss()
+                    self.tableView.reloadData()
+                    return
                 }
-                self.tableView.reloadData()
-            
+                
+                guard let snapshot = snapshot else {
+                    ProgressHUD.dismiss(); return
+                }
+                
+                if !snapshot.isEmpty {
+                    
+                    for postDictionary in snapshot.documents {
+                                    let postDictionary = postDictionary.data() as NSDictionary
+                                    let post = Post(_dictionary: postDictionary)
+                                       self.allPosts.append(post)
+                                        print(self.allPosts)
+                                        
+                    }
+                    self.tableView.reloadData()
+                
+                }
+                ProgressHUD.dismiss()
             }
-            ProgressHUD.dismiss()
         }
         
     }
@@ -330,101 +331,106 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 
         post = allPosts[indexPath.row]
         
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
         
         if post.postType == "video" {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
             
-            cell.playImageView.isHidden = false
-            
-            let thumbImage = createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: post.video)!)
-                     
-             var date: Date!
-             
-             date = helper.dateFormatter().date(from: post.date)
-            
-             cell.dateLabel.text = helper.timeElapsed(date: date)
-                     
-             
-             helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
+            DispatchQueue.main.async {
+                cell.playImageView.isHidden = false
+                
+                let thumbImage = self.createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: post.video)!)
+                         
+                 var date: Date!
+                 
+                date = self.helper.dateFormatter().date(from: post.date)
+                
+                cell.dateLabel.text = self.helper.timeElapsed(date: date)
+                         
+                 
+                self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
 
-                 if avatarImage != nil {
+                     if avatarImage != nil {
 
-                     cell.avaImageView.image = avatarImage!.circleMasked
+                         cell.avaImageView.image = avatarImage!.circleMasked
+                     }
                  }
-             }
+                
+                cell.delegate = self
+                cell.indexPath = indexPath
+                cell.fullnameLabel.text = post.postUserName
+                cell.pictureImageView.image = thumbImage
+                cell.postTextLabel.text = post.text
+                cell.urlTextView.text = post.postUrlLink
+                cell.optionsButton.tag = indexPath.row
+            }
             
-            cell.delegate = self
-            cell.indexPath = indexPath
-            cell.fullnameLabel.text = post.postUserName
-            cell.pictureImageView.image = thumbImage
-            cell.postTextLabel.text = post.text
-            cell.urlTextView.text = post.postUrlLink
-            cell.optionsButton.tag = indexPath.row
 
             return cell
             
         } else if post.postType == "picture" {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
             
-            cell.playImageView.isHidden = true
-           
-             var date: Date!
-             
-             date = helper.dateFormatter().date(from: post.date)
-            
-             cell.dateLabel.text = helper.timeElapsed(date: date)
-                     
-             
-             helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
-
-                 if avatarImage != nil {
-
-                     cell.avaImageView.image = avatarImage!.circleMasked
-                 }
-             }
-            downloadImage(imageUrl: post.picture) { (image) in
+            DispatchQueue.main.async {
+                cell.playImageView.isHidden = true
                 
-                if image != nil {
-                    cell.pictureImageView.image = image!
-                }
+                  var date: Date!
+                  
+                date = self.helper.dateFormatter().date(from: post.date)
+                 
+                cell.dateLabel.text = self.helper.timeElapsed(date: date)
+                          
+                  
+                self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
+
+                      if avatarImage != nil {
+
+                          cell.avaImageView.image = avatarImage!.circleMasked
+                      }
+                  }
+                 downloadImage(imageUrl: post.picture) { (image) in
+                     
+                     if image != nil {
+                         cell.pictureImageView.image = image!
+                     }
+                 }
+
+                 cell.delegate = self
+                 cell.indexPath = indexPath
+                 cell.fullnameLabel.text = post.postUserName
+                 cell.postTextLabel.text = post.text
+                 cell.urlTextView.text = post.postUrlLink
+                 cell.optionsButton.tag = indexPath.row
             }
-
-
-            cell.delegate = self
-            cell.indexPath = indexPath
-            cell.fullnameLabel.text = post.postUserName
-            cell.postTextLabel.text = post.text
-            cell.urlTextView.text = post.postUrlLink
-            cell.optionsButton.tag = indexPath.row
+            
 
              return cell
             
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
-                     
-             var date: Date!
-             
-             date = helper.dateFormatter().date(from: post.date)
-            
-             cell.dateLabel.text = helper.timeElapsed(date: date)
-                     
-             
-             helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
+             DispatchQueue.main.async {
+                var date: Date!
+                 
+                date = self.helper.dateFormatter().date(from: post.date)
+                
+                cell.dateLabel.text = self.helper.timeElapsed(date: date)
+                         
+                 
+                self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
 
-                 if avatarImage != nil {
+                     if avatarImage != nil {
 
-                     cell.avaImageView.image = avatarImage!.circleMasked
+                         cell.avaImageView.image = avatarImage!.circleMasked
+                     }
                  }
-             }
-             
-             cell.fullnameLabel.text = post.postUserName
+                 
+                 cell.fullnameLabel.text = post.postUserName
 
-             cell.postTextLabel.text = post.text
-            
-             cell.urlTextView.text = post.postUrlLink
-            
-             cell.optionsButton.tag = indexPath.row
+                 cell.postTextLabel.text = post.text
+                
+                 cell.urlTextView.text = post.postUrlLink
+                
+                 cell.optionsButton.tag = indexPath.row
+            }
+             
             
              return cell
             
