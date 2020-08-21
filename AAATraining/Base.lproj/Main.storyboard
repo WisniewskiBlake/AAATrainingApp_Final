@@ -4214,7 +4214,7 @@
         <!--Create Post-->
         <scene sceneID="pM1-m6-NxO">
             <objects>
-                <viewController id="41R-QL-2o6" customClass="PostVC" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PostVC" id="41R-QL-2o6" customClass="PostVC" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pNJ-YM-K6E">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -4794,8 +4794,12 @@
                     </refreshControl>
                     <connections>
                         <outlet property="avaImageView" destination="DOe-nI-Du7" id="Xmf-gy-oYk"/>
+                        <outlet property="baselineView" destination="W08-a0-xXG" id="3Wp-Jm-lC0"/>
                         <outlet property="coverImageView" destination="6XA-NJ-5hD" id="0ME-6s-dRX"/>
                         <outlet property="fullnameLabel" destination="L34-R9-IzN" id="FHl-4x-8xo"/>
+                        <outlet property="logoutView" destination="RtJ-tU-HXI" id="7wn-WW-8wK"/>
+                        <outlet property="nutritionView" destination="pJ5-rf-KEn" id="dKp-ac-EwI"/>
+                        <outlet property="postView" destination="uZp-FB-diD" id="Nfz-yx-2Dk"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NCW-l8-LD8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -5163,7 +5167,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7kI-fw-Qby" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6017" y="-204"/>
+            <point key="canvasLocation" x="6017" y="99"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="lY7-Ve-eWM">

@@ -18,9 +18,16 @@ import AVFoundation
 import AVKit
 
 class CoachProfileViewController: UITableViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, ImagePickerDelegate, CoachPicCellDelegate {
+    
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var avaImageView: UIImageView!
     @IBOutlet weak var fullnameLabel: UILabel!
+    
+    @IBOutlet weak var baselineView: UIView!
+    @IBOutlet weak var nutritionView: UIView!
+    @IBOutlet weak var postView: UIView!
+    @IBOutlet weak var logoutView: UIView!
+    
     var profileIcon: UIImage?
     var coverIcon: UIImage?
     
@@ -35,6 +42,11 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     
     let helper = Helper()
     let user = FUser.currentUser()
+    
+    let baselineTapGestureRecognizer = UITapGestureRecognizer()
+    let nutritionTapGestureRecognizer = UITapGestureRecognizer()
+    let postTapGestureRecognizer = UITapGestureRecognizer()
+    let logoutTapGestureRecognizer = UITapGestureRecognizer()
        
     //var recentListener: ListenerRegistration!
     
@@ -52,6 +64,22 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         NotificationCenter.default.addObserver(self, selector: #selector(loadUser), name: NSNotification.Name(rawValue: "updateUser"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadNewPosts), name: NSNotification.Name(rawValue: "uploadPost"), object: nil)
+        
+        baselineTapGestureRecognizer.addTarget(self, action: #selector(self.baselineViewClicked))
+        baselineView.isUserInteractionEnabled = true
+        baselineView.addGestureRecognizer(baselineTapGestureRecognizer)
+        
+        nutritionTapGestureRecognizer.addTarget(self, action: #selector(self.nutritionViewClicked))
+        nutritionView.isUserInteractionEnabled = true
+        nutritionView.addGestureRecognizer(nutritionTapGestureRecognizer)
+        
+        postTapGestureRecognizer.addTarget(self, action: #selector(self.postViewClicked))
+        postView.isUserInteractionEnabled = true
+        postView.addGestureRecognizer(postTapGestureRecognizer)
+        
+        logoutTapGestureRecognizer.addTarget(self, action: #selector(self.logoutViewClicked))
+        logoutView.isUserInteractionEnabled = true
+        logoutView.addGestureRecognizer(logoutTapGestureRecognizer)
         
 
         configure_avaImageView()
@@ -79,6 +107,61 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     // exec-d when new post is published
     @objc func loadNewPosts() {
         
+    }
+    
+    @objc func baselineViewClicked() {
+        let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "baselineNav") as! UINavigationController
+        let newBaselineVC = navigation.viewControllers.first as! PlayerBaselineVC
+        newBaselineVC.userBeingViewed = userBeingViewed
+        
+        self.present(navigation, animated: true, completion: nil)
+    }
+    
+    @objc func nutritionViewClicked() {
+        let navigationNutrition = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "nutritionNav") as! UINavigationController
+         let nutritionVC = navigationNutrition.viewControllers.first as! NutritionFeedVC
+        nutritionVC.accountType = FUser.currentUser()?.accountType
+        
+        self.present(navigationNutrition, animated: true, completion: nil)
+    }
+    
+    @objc func postViewClicked() {
+        let postVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "statsNav") as! UINavigationController
+        let statsVC = navigation.viewControllers.first as! StatsVC
+        
+        statsVC.userBeingViewed = userBeingViewed
+    
+        self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+
+        self.present(navigation, animated: true, completion: nil)
+    }
+    
+    @objc func logoutViewClicked() {
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // creating buttons for action sheet
+        let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
+                        
+            FUser.logOutCurrentUser { (success) in
+                
+                if success {
+                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+                    {
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true, completion: nil)
+                    }
+                }
+            }
+        })
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        // add buttons to action sheet
+        sheet.addAction(logout)
+        sheet.addAction(cancel)
+        
+        // show action sheet
+        present(sheet, animated: true, completion: nil)
     }
     
     
@@ -405,57 +488,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         let a = tableView.contentOffset.y - tableView.contentSize.height + 60
         let b = -tableView.frame.height
         
-//        if a > b && isLoading == false {
-//            //loadMore(offset: skip, limit: limit)
-//
-//        }
-        
     }
-    
-    // MARK: - More Clicked
-    @IBAction func moreButton_clicked(_ sender: Any) {
-        // creating action sheet
-        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        // creating buttons for action sheet
-        let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
-            
-            
-            
-            FUser.logOutCurrentUser { (success) in
-                
-                if success {
-                    // Safe Push VC
-//                    if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC {
-//                        if let navigator = self.navigationController {
-//                            navigator.pushViewController(viewController, animated: true)
-//                        }
-//                    }
-                    
-                    // Safe Present
-                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
-                    {
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true, completion: nil)
-                    }
-                    
-                }
-                
-            }
-            
-        })
-        
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        // add buttons to action sheet
-        sheet.addAction(logout)
-        sheet.addAction(cancel)
-        
-        // show action sheet
-        present(sheet, animated: true, completion: nil)
-    }
-    
-    
     
     // MARK: - Option Button Click
     @IBAction func optionsButton_clicked(_ optionButton: UIButton) {
@@ -491,9 +524,6 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         reference(.Post).document(postID ).delete()
                 
         self.allPosts.remove(at: row)
-        
-
-        
         
         // remove the cell itself from the tableView
         let indexPath = IndexPath(row: row, section: 0)
