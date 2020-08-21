@@ -205,13 +205,13 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         
         if post.postType == "video" {
             
-            var date: String?
-            let currentDateFormater = helper.dateFormatter()
-            currentDateFormater.dateFormat = "MM/dd/YYYY"
-            let postDate = helper.dateFormatter().date(from: post.date)
-            date = currentDateFormater.string(from: postDate!)
-            
             DispatchQueue.main.async {
+                
+                var date: String?
+                let currentDateFormater = self.helper.dateFormatter()
+                currentDateFormater.dateFormat = "MM/dd/YYYY"
+                let postDate = self.helper.dateFormatter().date(from: post.date)
+                date = currentDateFormater.string(from: postDate!)
                 self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
 
                     if avatarImage != nil {
@@ -228,7 +228,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                 cell.fullnameLabel.text = post.postUserName
                 cell.postTextLabel.text = post.text
                 cell.urlTextView.text = post.postUrlLink
-            }            
+            }
 
              return cell
             
