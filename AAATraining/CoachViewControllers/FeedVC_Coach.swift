@@ -205,6 +205,12 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         
         if post.postType == "video" {
             
+            var date: String?
+            let currentDateFormater = helper.dateFormatter()
+            currentDateFormater.dateFormat = "MM/dd/YYYY"
+            let postDate = helper.dateFormatter().date(from: post.date)
+            date = currentDateFormater.string(from: postDate!)
+            
             DispatchQueue.main.async {
                 self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
 
@@ -215,31 +221,24 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                 }
                 let thumbImage = self.createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: post.video)!)
                 cell.pictureImageView.image = thumbImage
-            }
+                cell.playImageView.isHidden = false
+                cell.dateLabel.text = date
+                cell.delegate = self
+                cell.indexPath = indexPath
+                cell.fullnameLabel.text = post.postUserName
+                cell.postTextLabel.text = post.text
+                cell.urlTextView.text = post.postUrlLink
+            }            
+
+             return cell
             
-            cell.playImageView.isHidden = false
+        } else if post.postType == "picture" {
             
-            
-                     
             var date: String?
             let currentDateFormater = helper.dateFormatter()
             currentDateFormater.dateFormat = "MM/dd/YYYY"
             let postDate = helper.dateFormatter().date(from: post.date)
             date = currentDateFormater.string(from: postDate!)
-            cell.dateLabel.text = date
-                     
-             
-            cell.delegate = self
-            cell.indexPath = indexPath
-            cell.fullnameLabel.text = post.postUserName
-            
-            cell.postTextLabel.text = post.text
-            cell.urlTextView.text = post.postUrlLink
-            
-            
-
-             return cell
-        } else if post.postType == "picture" {
             
             DispatchQueue.main.async {
                 self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
@@ -255,30 +254,27 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                         cell.pictureImageView.image = image!
                     }
                 }
+                cell.playImageView.isHidden = true
+                            
+                cell.dateLabel.text = date
+                 
+                cell.delegate = self
+                cell.indexPath = indexPath
+                cell.fullnameLabel.text = post.postUserName
+                cell.postTextLabel.text = post.text
+                cell.urlTextView.text = post.postUrlLink
             }
             
-            cell.playImageView.isHidden = true
-           
-             var date: String?
-             let currentDateFormater = helper.dateFormatter()
-             currentDateFormater.dateFormat = "MM/dd/YYYY"
-             let postDate = helper.dateFormatter().date(from: post.date)
-             date = currentDateFormater.string(from: postDate!)
-             cell.dateLabel.text = date
-                     
-             
-            cell.delegate = self
-            cell.indexPath = indexPath
-            cell.fullnameLabel.text = post.postUserName
-            cell.postTextLabel.text = post.text
-            cell.urlTextView.text = post.postUrlLink
-            
-            
-
             return cell
             
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
+            
+            var date: String?
+            let currentDateFormater = helper.dateFormatter()
+            currentDateFormater.dateFormat = "MM/dd/YYYY"
+            let postDate = helper.dateFormatter().date(from: post.date)
+            date = currentDateFormater.string(from: postDate!)
             
             DispatchQueue.main.async {
                 self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
@@ -288,24 +284,15 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                         cell.avaImageView.image = avatarImage!.circleMasked
                     }
                 }
+                cell.dateLabel.text = date
+                
+                cell.fullnameLabel.text = post.postUserName
+
+                cell.postTextLabel.text = post.text
+
+                cell.urlTextView.text = post.postUrlLink
             }
 
-             var date: String?
-             let currentDateFormater = helper.dateFormatter()
-             currentDateFormater.dateFormat = "MM/dd/YYYY"
-             let postDate = helper.dateFormatter().date(from: post.date)
-             date = currentDateFormater.string(from: postDate!)
-             cell.dateLabel.text = date
-             
-             
-             
-             cell.fullnameLabel.text = post.postUserName
-
-             cell.postTextLabel.text = post.text
-
-             cell.urlTextView.text = post.postUrlLink
-            
-            
             
              return cell
         }
