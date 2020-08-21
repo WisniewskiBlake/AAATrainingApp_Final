@@ -412,7 +412,6 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 date = self.helper.dateFormatter().date(from: post.date)
                 
                 cell.dateLabel.text = self.helper.timeElapsed(date: date)
-                         
                  
                 self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
 

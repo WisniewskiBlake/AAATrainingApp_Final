@@ -8,27 +8,39 @@
 
 import UIKit
 
-class AllBaselinesVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class AllBaselinesVC: UIViewController {
         
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var gridCollectionView: UICollectionView!
     
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-    }
+    @IBOutlet weak var gridLayout: StickyGridCollectionViewLayout!
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-       
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "data", for: indexPath) as? AllBaselinesCell
-        cell?.dataLabel.text = String(indexPath.row)
-        return cell!
-    }
 
 }
 
+extension AllBaselinesVC: UICollectionViewDataSource {
 
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 100
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 100
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AllBaselinesCell", for: indexPath) as? AllBaselinesCell else {
+            return UICollectionViewCell()
+        }
+
+        cell.dataLabel.text = "\(indexPath)"
+
+        return cell
+    }
+}
+
+extension AllBaselinesVC: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 100, height: 100)
+    }
+}
