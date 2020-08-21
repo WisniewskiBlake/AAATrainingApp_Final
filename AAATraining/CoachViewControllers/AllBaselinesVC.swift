@@ -23,8 +23,9 @@ class AllBaselinesVC: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "data", for: indexPath)
-        
+       
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "data", for: indexPath) as? AllBaselinesCell
+        cell?.dataLabel.text = String(indexPath.row)
         return cell
     }
 
