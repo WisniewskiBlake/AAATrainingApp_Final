@@ -26,7 +26,7 @@ class AllBaselinesVC: UIViewController, UICollectionViewDelegate, UICollectionVi
        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "data", for: indexPath) as? AllBaselinesCell
         cell?.dataLabel.text = String(indexPath.row)
-        return cell
+        return cell!
     }
 
 }
