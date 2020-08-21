@@ -4008,6 +4008,64 @@
             </objects>
             <point key="canvasLocation" x="4608.8000000000002" y="-1541.3793103448277"/>
         </scene>
+        <!--All BaselinesVC-->
+        <scene sceneID="FCI-PJ-yKh">
+            <objects>
+                <viewController storyboardIdentifier="AllBaselinesVC" id="9Wh-Ob-oA7" customClass="AllBaselinesVC" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vBG-lq-cat">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="DPe-kR-Zj4">
+                                <rect key="frame" x="0.0" y="56" width="375" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="PqI-BF-nZ6">
+                                    <size key="itemSize" width="99" height="75"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="data" id="Fdh-Us-FTf" customClass="AllBaselinesCell" customModule="AAATraining" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="99" height="75"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="2Re-Jm-EyN">
+                                            <rect key="frame" x="0.0" y="0.0" width="99" height="75"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pR0-cj-BiP">
+                                                    <rect key="frame" x="8" y="8" width="83" height="59"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="99" height="75"/>
+                                        <connections>
+                                            <outlet property="dataLabel" destination="pR0-cj-BiP" id="s4Y-E8-VXz"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="9Wh-Ob-oA7" id="4N3-Ug-wqb"/>
+                                    <outlet property="delegate" destination="9Wh-Ob-oA7" id="4KX-Oz-Uep"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="itG-Xn-zEy"/>
+                    </view>
+                    <connections>
+                        <outlet property="collectionView" destination="DPe-kR-Zj4" id="atP-o1-eAL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BfW-XL-iwm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5389.6000000000004" y="-1554.872563718141"/>
+        </scene>
         <!--Event-->
         <scene sceneID="0ec-Bz-lmL">
             <objects>

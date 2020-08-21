@@ -127,9 +127,6 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     
     @objc func postViewClicked() {
         let postNav = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "postNav") as! UINavigationController
-//        let statsVC = navigation.viewControllers.first as! StatsVC
-//
-//        statsVC.userBeingViewed = userBeingViewed
     
         self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 
