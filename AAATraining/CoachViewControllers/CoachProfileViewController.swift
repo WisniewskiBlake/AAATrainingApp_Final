@@ -110,11 +110,11 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     }
     
     @objc func baselineViewClicked() {
-        let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "baselineNav") as! UINavigationController
-        let newBaselineVC = navigation.viewControllers.first as! PlayerBaselineVC
-        newBaselineVC.userBeingViewed = userBeingViewed
-        
-        self.present(navigation, animated: true, completion: nil)
+//        let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "baselineNav") as! UINavigationController
+//        let newBaselineVC = navigation.viewControllers.first as! PlayerBaselineVC
+//        newBaselineVC.userBeingViewed = userBeingViewed
+//
+//        self.present(navigation, animated: true, completion: nil)
     }
     
     @objc func nutritionViewClicked() {
@@ -126,14 +126,14 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     }
     
     @objc func postViewClicked() {
-        let postVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "statsNav") as! UINavigationController
-        let statsVC = navigation.viewControllers.first as! StatsVC
-        
-        statsVC.userBeingViewed = userBeingViewed
+        let postNav = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "postNav") as! UINavigationController
+//        let statsVC = navigation.viewControllers.first as! StatsVC
+//
+//        statsVC.userBeingViewed = userBeingViewed
     
         self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 
-        self.present(navigation, animated: true, completion: nil)
+        self.present(postNav, animated: true, completion: nil)
     }
     
     @objc func logoutViewClicked() {
