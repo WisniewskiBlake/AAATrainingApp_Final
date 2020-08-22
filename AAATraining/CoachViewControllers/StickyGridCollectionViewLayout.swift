@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import Firebase
+import ProgressHUD
+import FirebaseFirestore
 
 class StickyGridCollectionViewLayout: UICollectionViewFlowLayout {
+    
     var stickyRowsCount = 0 {
             didSet {
                 invalidateLayout()
@@ -125,6 +129,7 @@ class StickyGridCollectionViewLayout: UICollectionViewFlowLayout {
         }
 
         private func columnsCount(in row: Int) -> Int {
+            //return 9
             return collectionView!.numberOfItems(inSection: row)
         }
 

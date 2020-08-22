@@ -60,14 +60,14 @@ class NewBaselineVC: UIViewController {
     func createBaseline() {
         if heightText.text != "" && weightText.text != "" && wingspanText.text != "" && verticalText.text != "" && dashText.text != "" && agilityText.text != "" && pushUptext.text != "" && chinUpText.text != "" && mileText.text != "" {
             
-//            let fullName = userBeingViewed.firstname + " " + userBeingViewed.lastname
+            let fullName = userBeingViewed.lastname + ", " + userBeingViewed.firstname
             
             let localReference = reference(.Baseline).document()
             let baselineID = localReference.documentID
             var baseline: [String : Any]!
             let date = helper.dateFormatter().string(from: Date())
             
-            baseline = [kBASELINEID : baselineID, kBASELINEOWNERID : userBeingViewed.objectId, kBASELINEHEIGHT : heightText.text!, kBASELINEWEIGHT : weightText.text!, kWINGSPAN : wingspanText.text!, kVERTICAL : verticalText.text!, kAGILITY : agilityText.text!, kYARDDASH : dashText.text!, kPUSHUP : pushUptext.text!, kCHINUP : chinUpText.text!, kMILERUN : mileText.text!, kBASELINEDATE : date]
+            baseline = [kBASELINEID : baselineID, kBASELINEOWNERID : userBeingViewed.objectId, kBASELINEHEIGHT : heightText.text!, kBASELINEWEIGHT : weightText.text!, kWINGSPAN : wingspanText.text!, kVERTICAL : verticalText.text!, kAGILITY : agilityText.text!, kYARDDASH : dashText.text!, kPUSHUP : pushUptext.text!, kCHINUP : chinUpText.text!, kMILERUN : mileText.text!, kBASELINEDATE : date, kBASELINEUSERNAME : fullName]
 
             localReference.setData(baseline)
 
