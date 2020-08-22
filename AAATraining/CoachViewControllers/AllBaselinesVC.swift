@@ -15,7 +15,7 @@ class AllBaselinesVC: UIViewController {
     
     var allBaselines: [Baseline] = []
     let helper = Helper()
-    var baselineData: [String] = ["Name", "Height", "Weight", "Wingspan", "Vertical", "20yd Dash", "Agility", "Push Ups", "Chin Ups", "Mile Time"]
+    var baselineData: [String] = ["Name", "Date", "Height", "Weight", "Wingspan", "Vertical", "20yd Dash", "Agility", "Push Ups", "Chin Ups", "Mile Time"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,10 +101,7 @@ extension AllBaselinesVC: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AllBaselinesCell", for: indexPath) as? AllBaselinesCell else {
             return UICollectionViewCell()
         }
-        print(indexPath)
         
-        print(indexPath.item)
-        print(indexPath.section)
         
         
         if indexPath.section == 0 {
@@ -121,34 +118,39 @@ extension AllBaselinesVC: UICollectionViewDataSource {
                 cell.dataLabel.text = allBaselines[indexPath.section].userName
                 cell.backgroundColor = gridLayout.isItemSticky(at: indexPath) ? .groupTableViewBackground : .white
             } else if indexPath.item == 1 {
-                cell.dataLabel.text = allBaselines[indexPath.section].height
+                var date: String?
+                let currentDateFormater = helper.dateFormatter()
+                currentDateFormater.dateFormat = "MM/dd/YYYY"
+                let baselineDate = helper.dateFormatter().date(from: allBaselines[indexPath.section].baselineDate)
+                date = currentDateFormater.string(from: baselineDate!)
+                cell.dataLabel.text = date
                 cell.backgroundColor = .white
             } else if indexPath.item == 2 {
-                cell.dataLabel.text = allBaselines[indexPath.section].weight                
+                cell.dataLabel.text = allBaselines[indexPath.section].height
                 cell.backgroundColor = .white
             } else if indexPath.item == 3 {
-                cell.dataLabel.text = allBaselines[indexPath.section].wingspan
+                cell.dataLabel.text = allBaselines[indexPath.section].weight
                 cell.backgroundColor = .white
             } else if indexPath.item == 4 {
-                cell.dataLabel.text = allBaselines[indexPath.section].vertical
+                cell.dataLabel.text = allBaselines[indexPath.section].wingspan
                 cell.backgroundColor = .white
             } else if indexPath.item == 5 {
-                cell.dataLabel.text = allBaselines[indexPath.section].yardDash
+                cell.dataLabel.text = allBaselines[indexPath.section].vertical
                 cell.backgroundColor = .white
             } else if indexPath.item == 6 {
-                cell.dataLabel.text = allBaselines[indexPath.section].agility
+                cell.dataLabel.text = allBaselines[indexPath.section].yardDash
                 cell.backgroundColor = .white
             } else if indexPath.item == 7 {
-                cell.dataLabel.text = allBaselines[indexPath.section].pushUp
+                cell.dataLabel.text = allBaselines[indexPath.section].agility
                 cell.backgroundColor = .white
             } else if indexPath.item == 8 {
-                cell.dataLabel.text = allBaselines[indexPath.section].chinUp
+                cell.dataLabel.text = allBaselines[indexPath.section].pushUp
                 cell.backgroundColor = .white
             } else if indexPath.item == 9 {
-                cell.dataLabel.text = allBaselines[indexPath.section].mileRun
+                cell.dataLabel.text = allBaselines[indexPath.section].chinUp
                 cell.backgroundColor = .white
-            } else {
-                cell.dataLabel.text = "\(indexPath)"
+            } else if indexPath.item == 10 {
+                cell.dataLabel.text = allBaselines[indexPath.section].mileRun
                 cell.backgroundColor = .white
             }
             
