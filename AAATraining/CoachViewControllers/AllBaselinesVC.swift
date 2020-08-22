@@ -10,10 +10,23 @@ import UIKit
 
 class AllBaselinesVC: UIViewController {
         
-    @IBOutlet weak var gridCollectionView: UICollectionView!
+    @IBOutlet weak var gridCollectionView: UICollectionView! {
+        didSet {
+            gridCollectionView.bounces = false
+        }
+    }
     
-    @IBOutlet weak var gridLayout: StickyGridCollectionViewLayout!
+    @IBOutlet weak var gridLayout: StickyGridCollectionViewLayout! {
+        didSet {
+            gridLayout.stickyRowsCount = 1
+            gridLayout.stickyColumnsCount = 1
+        }
+    }
     
+    
+    @IBAction func backButtonPressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
 
 }
 
@@ -33,7 +46,7 @@ extension AllBaselinesVC: UICollectionViewDataSource {
         }
 
         cell.dataLabel.text = "\(indexPath)"
-
+        cell.backgroundColor = gridLayout.isItemSticky(at: indexPath) ? .groupTableViewBackground : .white
         return cell
     }
 }
@@ -43,4 +56,6 @@ extension AllBaselinesVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 100, height: 100)
     }
+    
+    
 }

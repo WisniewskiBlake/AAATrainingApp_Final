@@ -3740,7 +3740,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="8186" y="-1682"/>
+            <point key="canvasLocation" x="9124" y="-1682.608695652174"/>
         </scene>
         <!--Group Chat-->
         <scene sceneID="IJ2-9X-0BF">
@@ -3772,7 +3772,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="08n-Dt-k7C" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10184.799999999999" y="-1684.4077961019491"/>
+            <point key="canvasLocation" x="11124" y="-1684.4077961019491"/>
         </scene>
         <!--Group Info-->
         <scene sceneID="gKz-5r-sfe">
@@ -3912,7 +3912,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XJo-I0-oU8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="11016.799999999999" y="-1680.8095952023989"/>
+            <point key="canvasLocation" x="11956" y="-1680.8095952023989"/>
         </scene>
         <!--Roster-->
         <scene sceneID="yw7-UA-o4j">
@@ -4008,7 +4008,7 @@
             </objects>
             <point key="canvasLocation" x="4608.8000000000002" y="-1541.3793103448277"/>
         </scene>
-        <!--All BaselinesVC-->
+        <!--All Baselines-->
         <scene sceneID="FCI-PJ-yKh">
             <objects>
                 <viewController storyboardIdentifier="AllBaselinesVC" id="9Wh-Ob-oA7" customClass="AllBaselinesVC" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
@@ -4016,9 +4016,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="WWT-Vl-Cmz">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="WWT-Vl-Cmz">
+                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="qQi-it-rVl" customClass="StickyGridCollectionViewLayout" customModule="StickyGridCollectionView_Starter" customModuleProvider="target">
                                     <size key="itemSize" width="50" height="50"/>
@@ -4050,7 +4049,6 @@
                                         </constraints>
                                         <connections>
                                             <outlet property="dataLabel" destination="HT9-lV-ehP" id="GYA-DL-faf"/>
-                                            <outlet property="titleLabel" destination="HT9-lV-ehP" id="2BJ-k8-5uF"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -4061,8 +4059,22 @@
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="WWT-Vl-Cmz" firstAttribute="top" secondItem="itG-Xn-zEy" secondAttribute="top" id="Msg-o8-cVc"/>
+                            <constraint firstItem="WWT-Vl-Cmz" firstAttribute="bottom" secondItem="itG-Xn-zEy" secondAttribute="bottom" id="Q0x-mm-1Z3"/>
+                            <constraint firstItem="WWT-Vl-Cmz" firstAttribute="trailing" secondItem="itG-Xn-zEy" secondAttribute="trailing" id="Wmp-mh-DTM"/>
+                            <constraint firstItem="WWT-Vl-Cmz" firstAttribute="leading" secondItem="itG-Xn-zEy" secondAttribute="leading" id="xOu-Sm-12a"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="itG-Xn-zEy"/>
                     </view>
+                    <navigationItem key="navigationItem" title="All Baselines" id="Hdc-Bv-Gjs">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="KCC-Vr-1n2">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="backButtonPressed:" destination="9Wh-Ob-oA7" id="NSf-hh-ylk"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="gridCollectionView" destination="WWT-Vl-Cmz" id="3QZ-Cc-MSp"/>
                         <outlet property="gridLayout" destination="qQi-it-rVl" id="qUk-EJ-5vm"/>
@@ -4070,7 +4082,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BfW-XL-iwm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5389.6000000000004" y="-1554.872563718141"/>
+            <point key="canvasLocation" x="6236" y="-1551"/>
         </scene>
         <!--Event-->
         <scene sceneID="0ec-Bz-lmL">
@@ -5376,7 +5388,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="srI-UI-F2G" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9343.2000000000007" y="-1684.4077961019491"/>
+            <point key="canvasLocation" x="10282.4" y="-1684.4077961019491"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Wb7-4k-erC">
@@ -5398,7 +5410,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qqi-MT-fpX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7273" y="-1684"/>
+            <point key="canvasLocation" x="8212" y="-1684.4077961019491"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="XmG-pa-ygc">
@@ -6408,6 +6420,28 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vXx-KI-rhI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="6017" y="803"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="B1A-fS-Qa6">
+            <objects>
+                <navigationController storyboardIdentifier="allBaselinesNav" automaticallyAdjustsScrollViewInsets="NO" id="Jnk-sx-ffz" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="PLY-3P-Lfu">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.1006183103" green="0.2956552207" blue="0.71825700999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="9Wh-Ob-oA7" kind="relationship" relationship="rootViewController" id="VKe-9f-wGC"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rtt-hw-a6Y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5396" y="-1551"/>
         </scene>
     </scenes>
     <resources>

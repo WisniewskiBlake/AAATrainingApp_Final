@@ -110,6 +110,12 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     }
     
     @objc func baselineViewClicked() {
+        let allBaselinesVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AllBaselinesVC") as! AllBaselinesVC
+        let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "allBaselinesNav") as! UINavigationController
+           
+        //allBaselinesVC.modalPresentationStyle = .none
+           
+        self.present(navigation, animated: true, completion: nil)
 //        let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "baselineNav") as! UINavigationController
 //        let newBaselineVC = navigation.viewControllers.first as! PlayerBaselineVC
 //        newBaselineVC.userBeingViewed = userBeingViewed
