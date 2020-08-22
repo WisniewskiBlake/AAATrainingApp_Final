@@ -110,17 +110,15 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     }
     
     @objc func baselineViewClicked() {
-        let allBaselinesVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AllBaselinesVC") as! AllBaselinesVC
+//        let allBaselinesVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AllBaselinesVC") as! AllBaselinesVC
+//        self.navigationController?.setNavigationBarHidden(true, animated: true)
+//        self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+//        self.navigationController?.navigationBar.isTranslucent = false
+//        self.navigationController?.pushViewController(allBaselinesVC, animated: true)
         let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "allBaselinesNav") as! UINavigationController
-           
-        //allBaselinesVC.modalPresentationStyle = .none
-           
+        
         self.present(navigation, animated: true, completion: nil)
-//        let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "baselineNav") as! UINavigationController
-//        let newBaselineVC = navigation.viewControllers.first as! PlayerBaselineVC
-//        newBaselineVC.userBeingViewed = userBeingViewed
-//
-//        self.present(navigation, animated: true, completion: nil)
+
     }
     
     @objc func nutritionViewClicked() {
