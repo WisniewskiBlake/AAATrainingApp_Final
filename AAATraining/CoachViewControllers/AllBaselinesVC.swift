@@ -102,17 +102,55 @@ extension AllBaselinesVC: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         print(indexPath)
-        print(indexPath.row)
+        
         print(indexPath.item)
         print(indexPath.section)
         
         
         if indexPath.section == 0 {
-            cell.dataLabel.text = baselineData[indexPath.row]
-            cell.backgroundColor = gridLayout.isItemSticky(at: indexPath) ? .groupTableViewBackground : .white
+            cell.dataLabel.text = baselineData[indexPath.item]
+            if gridLayout.isItemSticky(at: indexPath) {
+                cell.dataLabel.font = .boldSystemFont(ofSize: 17.0)
+                cell.backgroundColor = .groupTableViewBackground
+            }
+            
         } else {
-            cell.dataLabel.text = "\(indexPath)"
-            cell.backgroundColor = gridLayout.isItemSticky(at: indexPath) ? .groupTableViewBackground : .white
+            if indexPath.item == 0 {
+                cell.dataLabel.numberOfLines = 2
+                cell.dataLabel.text = allBaselines[indexPath.section].userName
+                cell.backgroundColor = gridLayout.isItemSticky(at: indexPath) ? .groupTableViewBackground : .white
+            } else if indexPath.item == 1 {
+                cell.dataLabel.text = allBaselines[indexPath.section].height
+                cell.backgroundColor = gridLayout.isItemSticky(at: indexPath) ? .groupTableViewBackground : .white
+            } else if indexPath.item == 2 {
+                cell.dataLabel.text = allBaselines[indexPath.section].weight
+                cell.backgroundColor = gridLayout.isItemSticky(at: indexPath) ? .groupTableViewBackground : .white
+            } else if indexPath.item == 3 {
+                cell.dataLabel.text = allBaselines[indexPath.section].wingspan
+                cell.backgroundColor = gridLayout.isItemSticky(at: indexPath) ? .groupTableViewBackground : .white
+            } else if indexPath.item == 4 {
+                cell.dataLabel.text = allBaselines[indexPath.section].vertical
+                cell.backgroundColor = gridLayout.isItemSticky(at: indexPath) ? .groupTableViewBackground : .white
+            } else if indexPath.item == 5 {
+                cell.dataLabel.text = allBaselines[indexPath.section].yardDash
+                cell.backgroundColor = gridLayout.isItemSticky(at: indexPath) ? .groupTableViewBackground : .white
+            } else if indexPath.item == 6 {
+                cell.dataLabel.text = allBaselines[indexPath.section].agility
+                cell.backgroundColor = gridLayout.isItemSticky(at: indexPath) ? .groupTableViewBackground : .white
+            } else if indexPath.item == 7 {
+                cell.dataLabel.text = allBaselines[indexPath.section].pushUp
+                cell.backgroundColor = gridLayout.isItemSticky(at: indexPath) ? .groupTableViewBackground : .white
+            } else if indexPath.item == 8 {
+                cell.dataLabel.text = allBaselines[indexPath.section].chinUp
+                cell.backgroundColor = gridLayout.isItemSticky(at: indexPath) ? .groupTableViewBackground : .white
+            } else if indexPath.item == 9 {
+                cell.dataLabel.text = allBaselines[indexPath.section].mileRun
+                cell.backgroundColor = gridLayout.isItemSticky(at: indexPath) ? .groupTableViewBackground : .white
+            } else {
+                cell.dataLabel.text = "\(indexPath)"
+                cell.backgroundColor = gridLayout.isItemSticky(at: indexPath) ? .groupTableViewBackground : .white
+            }
+            
         }
 
         
