@@ -6625,9 +6625,6 @@
                                                         <state key="normal" title="Continue">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
-                                                        <connections>
-                                                            <action selector="nameContinueClicked:" destination="zm7-l7-ZFi" eventType="touchUpInside" id="fxU-8m-uMX"/>
-                                                        </connections>
                                                     </button>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="City" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RIx-vL-K4q">
                                                         <rect key="frame" x="16" y="192" width="160" height="35"/>
@@ -6637,9 +6634,6 @@
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" autocorrectionType="no"/>
-                                                        <connections>
-                                                            <action selector="textFieldDidChange:" destination="zm7-l7-ZFi" eventType="editingChanged" id="1gE-j3-FOV"/>
-                                                        </connections>
                                                     </textField>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="State" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jdm-0e-1Dk">
                                                         <rect key="frame" x="199" y="192" width="160" height="35"/>
@@ -6693,9 +6687,6 @@
                                                         <state key="normal" title="Continue">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
-                                                        <connections>
-                                                            <action selector="phoneContinueClicked:" destination="zm7-l7-ZFi" eventType="touchUpInside" id="Fxp-bv-KdC"/>
-                                                        </connections>
                                                     </button>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RPM-11-GGh">
                                                         <rect key="frame" x="246" y="185" width="70" height="70"/>
@@ -6715,12 +6706,12 @@
                                                         <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mqh-OZ-xHp">
-                                                        <rect key="frame" x="59" y="201" width="82" height="39"/>
+                                                        <rect key="frame" x="59" y="201" width="98" height="39"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="39" id="IoF-PR-ty7"/>
-                                                            <constraint firstAttribute="width" constant="82" id="m9f-Zp-ypw"/>
+                                                            <constraint firstAttribute="width" constant="98" id="m9f-Zp-ypw"/>
                                                         </constraints>
-                                                        <state key="normal" title="Button"/>
+                                                        <state key="normal" title="Select Image"/>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -6729,11 +6720,11 @@
                                                     <constraint firstAttribute="trailing" secondItem="gth-im-Ptt" secondAttribute="trailing" constant="16" id="DE4-9Q-hP9"/>
                                                     <constraint firstItem="Mqh-OZ-xHp" firstAttribute="top" secondItem="i9V-3W-n48" secondAttribute="bottom" constant="27" id="J65-zP-1kg"/>
                                                     <constraint firstItem="i9V-3W-n48" firstAttribute="top" secondItem="gUE-oy-kIt" secondAttribute="top" constant="151" id="LbH-Tc-X2Q"/>
-                                                    <constraint firstItem="RPM-11-GGh" firstAttribute="leading" secondItem="Mqh-OZ-xHp" secondAttribute="trailing" constant="105" id="MFQ-VP-KRd"/>
+                                                    <constraint firstItem="RPM-11-GGh" firstAttribute="leading" secondItem="Mqh-OZ-xHp" secondAttribute="trailing" constant="89" id="MFQ-VP-KRd"/>
                                                     <constraint firstItem="Mqh-OZ-xHp" firstAttribute="leading" secondItem="gUE-oy-kIt" secondAttribute="leading" constant="59" id="Mo4-F5-RYk"/>
                                                     <constraint firstItem="gth-im-Ptt" firstAttribute="leading" secondItem="gUE-oy-kIt" secondAttribute="leading" constant="16" id="Pbl-4T-1Rd"/>
                                                     <constraint firstAttribute="trailing" secondItem="sP8-eX-q6Z" secondAttribute="trailing" constant="16" id="Tpz-7p-6H1"/>
-                                                    <constraint firstItem="RPM-11-GGh" firstAttribute="leading" secondItem="Mqh-OZ-xHp" secondAttribute="trailing" constant="105" id="Wgm-Bp-Pj1"/>
+                                                    <constraint firstItem="RPM-11-GGh" firstAttribute="leading" secondItem="Mqh-OZ-xHp" secondAttribute="trailing" constant="89" id="Wgm-Bp-Pj1"/>
                                                     <constraint firstItem="i9V-3W-n48" firstAttribute="leading" secondItem="gUE-oy-kIt" secondAttribute="leading" constant="16" id="aII-TB-635"/>
                                                     <constraint firstItem="gth-im-Ptt" firstAttribute="top" secondItem="sP8-eX-q6Z" secondAttribute="bottom" constant="19.5" id="hhV-YG-a7A"/>
                                                     <constraint firstAttribute="trailing" secondItem="i9V-3W-n48" secondAttribute="trailing" constant="16" id="iOk-Kc-vCq"/>
@@ -6773,7 +6764,7 @@
                                                             <action selector="finishButtonClicked:" destination="zm7-l7-ZFi" eventType="touchUpInside" id="9S5-6c-jXu"/>
                                                         </connections>
                                                     </button>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zxh-sK-UZJ">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="L3F9D4" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zxh-sK-UZJ">
                                                         <rect key="frame" x="16" y="194" width="343" height="57"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="57" id="vaw-81-dfE"/>
@@ -6868,18 +6859,24 @@
                     </view>
                     <size key="freeformSize" width="1500" height="587"/>
                     <connections>
+                        <outlet property="cityText" destination="RIx-vL-K4q" id="HjK-RH-bcC"/>
                         <outlet property="coachPassword_width" destination="iu4-WR-O39" id="SU6-oJ-dGy"/>
+                        <outlet property="codeLabel" destination="Zxh-sK-UZJ" id="g1O-8V-8P3"/>
                         <outlet property="contentView_width" destination="p7V-G9-6I2" id="pCW-9R-Cmf"/>
                         <outlet property="emailView_width" destination="o1B-qt-klV" id="37B-BE-zAW"/>
-                        <outlet property="finishButton" destination="xR7-ON-x05" id="0yd-Ei-Pui"/>
-                        <outlet property="firstNameTextField" destination="RIx-vL-K4q" id="vEJ-zE-20f"/>
+                        <outlet property="finishButton" destination="xR7-ON-x05" id="9mS-MO-fE1"/>
                         <outlet property="footerView" destination="PNX-1n-Rjr" id="Qbi-Dy-MzZ"/>
                         <outlet property="lastNameTextField" destination="Jdm-0e-1Dk" id="ca5-dj-kHx"/>
-                        <outlet property="nameContinueButton" destination="71a-dJ-9Bh" id="ppS-6u-jPc"/>
+                        <outlet property="locationContinueButton" destination="71a-dJ-9Bh" id="wjH-bg-w05"/>
+                        <outlet property="logoContinueButton" destination="gth-im-Ptt" id="OXk-Cs-N3C"/>
+                        <outlet property="logoImageView" destination="RPM-11-GGh" id="clw-OZ-MEj"/>
                         <outlet property="nameView_width" destination="u5y-lD-f5L" id="UdI-5Y-ly2"/>
                         <outlet property="passwordView_width" destination="c0E-gJ-ccQ" id="4L9-g3-pdL"/>
-                        <outlet property="phoneContinueButton" destination="gth-im-Ptt" id="IXV-L0-GaP"/>
                         <outlet property="scrollView" destination="OsK-CK-eIs" id="8b6-gS-wkD"/>
+                        <outlet property="selectImageButton" destination="Mqh-OZ-xHp" id="dqr-tB-v8h"/>
+                        <outlet property="stateText" destination="Jdm-0e-1Dk" id="Jnv-rh-L5q"/>
+                        <outlet property="teamNameContinueButton" destination="mpk-H7-xjt" id="OBP-pU-Kga"/>
+                        <outlet property="teamNameText" destination="mu0-22-iYv" id="gcG-KI-new"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c86-zg-ukn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

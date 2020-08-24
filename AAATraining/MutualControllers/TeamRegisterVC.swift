@@ -9,6 +9,23 @@
 import UIKit
 
 class TeamRegisterVC: UIViewController {
+    
+    @IBOutlet weak var teamNameText: UITextField!
+    @IBOutlet weak var teamNameContinueButton: UIButton!
+    
+    @IBOutlet weak var cityText: UITextField!
+    @IBOutlet weak var stateText: UITextField!
+    @IBOutlet weak var locationContinueButton: UIButton!
+    
+    @IBOutlet weak var selectImageButton: UIButton!
+    @IBOutlet weak var logoImageView: UIImageView!
+    @IBOutlet weak var logoContinueButton: UIButton!
+    
+    @IBOutlet weak var codeLabel: UILabel!
+    @IBOutlet weak var finishButton: UIButton!
+    
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,14 +34,6 @@ class TeamRegisterVC: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
