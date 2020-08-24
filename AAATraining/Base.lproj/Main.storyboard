@@ -6548,13 +6548,13 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VVb-hq-OcK">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Whats Your Email Address?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GCc-a1-iP1">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Whats Your Team Name?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GCc-a1-iP1">
                                                         <rect key="frame" x="16" y="151" width="343" height="23"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="19"/>
                                                         <color key="textColor" red="0.25926578039999998" green="0.40468230840000002" blue="0.69936054940000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your email will be used to log into the app." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4qS-0Q-vPE">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This name will be displayed in the app." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4qS-0Q-vPE">
                                                         <rect key="frame" x="16" y="251" width="343" height="18.5"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
@@ -6571,11 +6571,8 @@
                                                         <state key="normal" title="Continue">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
-                                                        <connections>
-                                                            <action selector="emailContinueClicked:" destination="zm7-l7-ZFi" eventType="touchUpInside" id="8K9-BY-GX2"/>
-                                                        </connections>
                                                     </button>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mu0-22-iYv">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Team Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mu0-22-iYv">
                                                         <rect key="frame" x="16" y="192" width="343" height="35"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
@@ -6583,9 +6580,6 @@
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
-                                                        <connections>
-                                                            <action selector="textFieldDidChange:" destination="zm7-l7-ZFi" eventType="editingChanged" id="oMg-mU-MEO"/>
-                                                        </connections>
                                                     </textField>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -6608,14 +6602,14 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oCG-yW-Ks3">
                                                 <rect key="frame" x="375" y="0.0" width="375" height="667"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's Your Name?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RCi-J2-fkM">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where Is Your Team Located?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RCi-J2-fkM">
                                                         <rect key="frame" x="16" y="151" width="343" height="23"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="19"/>
                                                         <color key="textColor" red="0.25926578039999998" green="0.40468230840000002" blue="0.69936054940000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Using your real name and be sure to delete any white spaces." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NSE-B1-Pgk">
-                                                        <rect key="frame" x="16" y="247" width="343" height="36"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This can be used to display teams near you." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NSE-B1-Pgk">
+                                                        <rect key="frame" x="16" y="251" width="343" height="18.5"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -6635,7 +6629,7 @@
                                                             <action selector="nameContinueClicked:" destination="zm7-l7-ZFi" eventType="touchUpInside" id="fxU-8m-uMX"/>
                                                         </connections>
                                                     </button>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RIx-vL-K4q">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="City" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RIx-vL-K4q">
                                                         <rect key="frame" x="16" y="192" width="160" height="35"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
@@ -6647,7 +6641,7 @@
                                                             <action selector="textFieldDidChange:" destination="zm7-l7-ZFi" eventType="editingChanged" id="1gE-j3-FOV"/>
                                                         </connections>
                                                     </textField>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jdm-0e-1Dk">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="State" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jdm-0e-1Dk">
                                                         <rect key="frame" x="199" y="192" width="160" height="35"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
@@ -6664,7 +6658,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="RCi-J2-fkM" secondAttribute="trailing" constant="16" id="0UA-Vw-tsN"/>
                                                     <constraint firstAttribute="trailing" secondItem="NSE-B1-Pgk" secondAttribute="trailing" constant="16" id="2Dp-R6-Aqz"/>
-                                                    <constraint firstItem="NSE-B1-Pgk" firstAttribute="top" secondItem="RIx-vL-K4q" secondAttribute="bottom" constant="20" id="6ex-qQ-pQ8"/>
+                                                    <constraint firstItem="NSE-B1-Pgk" firstAttribute="top" secondItem="RIx-vL-K4q" secondAttribute="bottom" constant="24" id="6ex-qQ-pQ8"/>
                                                     <constraint firstItem="Jdm-0e-1Dk" firstAttribute="width" secondItem="RIx-vL-K4q" secondAttribute="width" id="73c-88-l7D"/>
                                                     <constraint firstItem="Jdm-0e-1Dk" firstAttribute="leading" secondItem="RIx-vL-K4q" secondAttribute="trailing" constant="23" id="E9o-30-hMh"/>
                                                     <constraint firstItem="71a-dJ-9Bh" firstAttribute="leading" secondItem="oCG-yW-Ks3" secondAttribute="leading" constant="16" id="Kw0-fO-ClQ"/>
@@ -6677,13 +6671,13 @@
                                                     <constraint firstItem="RIx-vL-K4q" firstAttribute="top" secondItem="RCi-J2-fkM" secondAttribute="bottom" constant="18" id="nh8-Rx-x1X"/>
                                                     <constraint firstItem="RIx-vL-K4q" firstAttribute="leading" secondItem="oCG-yW-Ks3" secondAttribute="leading" constant="16" id="u2k-AT-zTr"/>
                                                     <constraint firstAttribute="width" constant="375" id="u5y-lD-f5L"/>
-                                                    <constraint firstItem="71a-dJ-9Bh" firstAttribute="top" secondItem="NSE-B1-Pgk" secondAttribute="bottom" constant="20" id="vK5-Cu-yb3"/>
+                                                    <constraint firstItem="71a-dJ-9Bh" firstAttribute="top" secondItem="NSE-B1-Pgk" secondAttribute="bottom" constant="33.5" id="vK5-Cu-yb3"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gUE-oy-kIt">
                                                 <rect key="frame" x="750" y="0.0" width="375" height="667"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Whats Your Phone Number?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i9V-3W-n48">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please Upload Team Logo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i9V-3W-n48">
                                                         <rect key="frame" x="16" y="151" width="343" height="23"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="19"/>
                                                         <color key="textColor" red="0.25926578039999998" green="0.40468230840000002" blue="0.69936054940000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -6736,7 +6730,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i1R-ma-yzH">
                                                 <rect key="frame" x="1125" y="0.0" width="375" height="667"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create A Password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W2r-LV-9t9">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Team Code" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W2r-LV-9t9">
                                                         <rect key="frame" x="16" y="151" width="343" height="23"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="19"/>
                                                         <color key="textColor" red="0.25926578039999998" green="0.40468230840000002" blue="0.69936054940000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -6823,7 +6817,7 @@
                                     <constraint firstItem="8vz-xk-V35" firstAttribute="top" secondItem="OsK-CK-eIs" secondAttribute="top" id="Dbj-7h-O57"/>
                                     <constraint firstAttribute="trailing" secondItem="8vz-xk-V35" secondAttribute="trailing" id="Mu6-Y4-GVk"/>
                                     <constraint firstItem="8vz-xk-V35" firstAttribute="leading" secondItem="OsK-CK-eIs" secondAttribute="leading" id="llT-g2-9b8"/>
-                                    <constraint firstAttribute="bottom" secondItem="8vz-xk-V35" secondAttribute="bottom" id="mB8-Eu-cng"/>
+                                    <constraint firstAttribute="bottom" secondItem="8vz-xk-V35" secondAttribute="bottom" constant="-80" id="mB8-Eu-cng"/>
                                 </constraints>
                             </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PNX-1n-Rjr">
@@ -6863,8 +6857,6 @@
                     <connections>
                         <outlet property="coachPassword_width" destination="iu4-WR-O39" id="SU6-oJ-dGy"/>
                         <outlet property="contentView_width" destination="p7V-G9-6I2" id="pCW-9R-Cmf"/>
-                        <outlet property="emailContinueButton" destination="mpk-H7-xjt" id="kuT-6g-YoI"/>
-                        <outlet property="emailTextField" destination="mu0-22-iYv" id="vwP-Ot-sia"/>
                         <outlet property="emailView_width" destination="o1B-qt-klV" id="37B-BE-zAW"/>
                         <outlet property="finishButton" destination="xR7-ON-x05" id="0yd-Ei-Pui"/>
                         <outlet property="firstNameTextField" destination="RIx-vL-K4q" id="vEJ-zE-20f"/>
