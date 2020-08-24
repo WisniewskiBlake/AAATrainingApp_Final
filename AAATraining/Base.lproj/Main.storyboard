@@ -6695,36 +6695,13 @@
                                                             <action selector="phoneContinueClicked:" destination="zm7-l7-ZFi" eventType="touchUpInside" id="Fxp-bv-KdC"/>
                                                         </connections>
                                                     </button>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone Ex: 9891234567" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wjI-eZ-I9g">
-                                                        <rect key="frame" x="16" y="194" width="343" height="35"/>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="35" id="FWO-ir-UKy"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
-                                                        <connections>
-                                                            <action selector="textFieldDidChange:" destination="zm7-l7-ZFi" eventType="editingChanged" id="5Kq-4G-DL9"/>
-                                                        </connections>
-                                                    </textField>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Your phone number will be used for in app messaging." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U0v-oI-MAV">
-                                                        <rect key="frame" x="16" y="247" width="343" height="36"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                                        <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
-                                                        <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </label>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstItem="wjI-eZ-I9g" firstAttribute="top" secondItem="i9V-3W-n48" secondAttribute="bottom" constant="20" id="1g2-oP-HCc"/>
                                                     <constraint firstItem="i9V-3W-n48" firstAttribute="top" secondItem="gUE-oy-kIt" secondAttribute="top" constant="151" id="LbH-Tc-X2Q"/>
                                                     <constraint firstItem="i9V-3W-n48" firstAttribute="leading" secondItem="gUE-oy-kIt" secondAttribute="leading" constant="16" id="aII-TB-635"/>
-                                                    <constraint firstItem="wjI-eZ-I9g" firstAttribute="leading" secondItem="gUE-oy-kIt" secondAttribute="leading" constant="16" id="h8a-Kf-sLc"/>
                                                     <constraint firstAttribute="trailing" secondItem="i9V-3W-n48" secondAttribute="trailing" constant="16" id="iOk-Kc-vCq"/>
                                                     <constraint firstAttribute="width" constant="375" id="o1B-qt-klV"/>
-                                                    <constraint firstAttribute="trailing" secondItem="wjI-eZ-I9g" secondAttribute="trailing" constant="16" id="wlY-3D-kb0"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i1R-ma-yzH">
@@ -6867,7 +6844,6 @@
                         <outlet property="passwordTextField" destination="6HU-vz-ITj" id="o8j-ef-xNi"/>
                         <outlet property="passwordView_width" destination="c0E-gJ-ccQ" id="4L9-g3-pdL"/>
                         <outlet property="phoneContinueButton" destination="gth-im-Ptt" id="IXV-L0-GaP"/>
-                        <outlet property="phoneTextField" destination="wjI-eZ-I9g" id="bwz-Em-LwJ"/>
                         <outlet property="scrollView" destination="OsK-CK-eIs" id="8b6-gS-wkD"/>
                     </connections>
                 </viewController>
