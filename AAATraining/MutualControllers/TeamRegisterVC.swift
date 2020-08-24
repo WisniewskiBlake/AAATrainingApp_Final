@@ -23,6 +23,8 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBOutlet weak var codeLabel: UILabel!
     @IBOutlet weak var finishButton: UIButton!
+    @IBOutlet weak var copyToClipButton: UIButton!
+    
     
     @IBOutlet weak var haveAccountButton: UIButton!
     @IBOutlet weak var footerView: UIView!
@@ -48,6 +50,22 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         nameView_width.constant = self.view.frame.width
         emailView_width.constant = self.view.frame.width
         passwordView_width.constant = self.view.frame.width
+        
+        cornerRadius(for: teamNameText)
+        cornerRadius(for: cityText)
+        cornerRadius(for: stateText)
+        
+        cornerRadius(for: teamNameContinueButton)
+        cornerRadius(for: locationContinueButton)
+        cornerRadius(for: logoContinueButton)
+        cornerRadius(for: finishButton)
+        cornerRadius(for: copyToClipButton)
+        
+        padding(for: teamNameText)
+        padding(for: cityText)
+        padding(for: stateText)
+        
+        configure_footerView()
     }
    
     
@@ -94,6 +112,18 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
 //            }
     }
     
+    @IBAction func copyToClipClicked(_ sender: Any) {
+        
+    }
+    
+    
+    func goToApp() {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+        {
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
     
    @IBAction func selectImageButtonClicked(_ sender: Any) {
        print("tapped")
@@ -165,6 +195,28 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         textField.leftView = blankView
         textField.leftViewMode = .always
     }
+    
+    @IBAction func textFieldDidChange(_ textField: UITextField) {
+        let helper = Helper()
+        
+        // logic for Email TextField
+        if textField == teamNameText {
+
+            if helper.isValid(name: teamNameText.text!) {
+                teamNameContinueButton.isHidden = false
+            }
+            
+        // logic for First Name or Last Name TextFields
+        } else if textField == cityText || textField == stateText {
+            
+            // check fullname validation
+            if helper.isValid(name: cityText.text!) && helper.isValid(name: cityText.text!) {
+                locationContinueButton.isHidden = false
+            }
+                    
+        }
+    }
+    
     
     
 }

@@ -50,15 +50,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     var skip = 0
     var limit = 10
     var isLoading = false
-    var liked = [Int]()
-    
-    // color obj
-    let likeColor = UIColor(red: 28/255, green: 165/255, blue: 252/255, alpha: 1)
-    
-    // friends obj
-    var myFriends = [NSDictionary?]()
-    var myFriends_avas = [UIImage]()
-    
+
     var userBeingViewed = FUser()
     var user = FUser()
     

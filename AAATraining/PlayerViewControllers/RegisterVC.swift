@@ -54,8 +54,7 @@ class RegisterVC: UIViewController {
         contentView_width.constant = self.view.frame.width * 4
         emailView_width.constant = self.view.frame.width
         nameView_width.constant = self.view.frame.width
-        passwordView_width.constant = self.view.frame.width
-        
+        passwordView_width.constant = self.view.frame.width        
         genderView_width.constant = self.view.frame.width
         
         // make corners of the objects rounded
