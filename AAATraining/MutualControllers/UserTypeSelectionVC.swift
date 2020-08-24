@@ -42,6 +42,8 @@ class UserTypeSelectionVC: UIViewController {
     }
     
     @IBAction func nextButtonPressed(_ sender: Any) {
+        self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        self.navigationController?.navigationBar.isTranslucent = false
         if viewToGoTo == "PlayerRegister" {
             let pRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PlayerRegister") as! RegisterVC
             

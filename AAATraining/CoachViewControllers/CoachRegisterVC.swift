@@ -32,23 +32,10 @@ class CoachRegisterVC: UIViewController {
     @IBOutlet weak var emailContinueButton: UIButton!
     @IBOutlet weak var passwordContinueButton: UIButton!
     
-    
-    
-    
     @IBOutlet weak var footerView: UIView!
-    
-    var email: String!
-    var password: String!
-    let height = "123456789"
-    let weight = "123456789"
-    let position = "coach"
-    let number = "123456789"
-    var id: Any!
-    var birthday: Any!
+   
     var cover = UIImage(named: "aaaCoverLogo.png")
     
-    
-    var accountType = "2"
 
     override func viewDidLoad() {
         super.viewDidLoad()

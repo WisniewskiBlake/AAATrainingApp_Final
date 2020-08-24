@@ -91,12 +91,10 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
             isPictureSelected = true
             return
         }
-        
         //send video
         if let video = video {
             
             let thumbImage = createThumbnailOfVideoFromRemoteUrl(url: video)
-            
             pictureImageView.image = thumbImage
             isPictureSelected = false
             isVideoSelected = true
@@ -208,18 +206,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
         }
     }
     
-    
-    
-    
-    
-    
-    
-    @IBAction func addPicture_clicked(_ sender: Any) {
-        //showActionSheet()
-    }
-    
-    
-    
+   
     // exec whenever the screen has been tapped
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         postTextView.resignFirstResponder()
@@ -247,9 +234,6 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
         }
     }
     
-    
-    
-
 }
 
 

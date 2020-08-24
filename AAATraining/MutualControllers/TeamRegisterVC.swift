@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TeamRegisterVC: UIViewController {
+class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var teamNameText: UITextField!
     @IBOutlet weak var teamNameContinueButton: UIButton!
@@ -25,33 +25,145 @@ class TeamRegisterVC: UIViewController {
     @IBOutlet weak var finishButton: UIButton!
     
     @IBOutlet weak var haveAccountButton: UIButton!
+    @IBOutlet weak var footerView: UIView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
+    @IBOutlet weak var emailView_width: NSLayoutConstraint!
+    @IBOutlet weak var nameView_width: NSLayoutConstraint!
+    @IBOutlet weak var passwordView_width: NSLayoutConstraint!
+    @IBOutlet weak var coachPassword_width: NSLayoutConstraint!
+    @IBOutlet weak var contentView_width: NSLayoutConstraint!
     
+    var isPictureSelected = false
+    var isVideoSelected = true
+    
+    var picturePath: UIImage? = UIImage()
+    var pictureToUpload: String? = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
+        contentView_width.constant = self.view.frame.width * 4
+        coachPassword_width.constant = self.view.frame.width
+        nameView_width.constant = self.view.frame.width
+        emailView_width.constant = self.view.frame.width
+        passwordView_width.constant = self.view.frame.width
     }
-    
-    @IBAction func selectImageButtonClicked(_ sender: Any) {
-        
-    }
+   
     
     @IBAction func teamNameContinueClicked(_ sender: Any) {
+        let position = CGPoint(x: self.view.frame.width, y: 0)
+        scrollView.setContentOffset(position, animated: true)
         
+        // show keyboard of next TextField
+        if cityText.text!.isEmpty {
+            cityText.becomeFirstResponder()
+        } else if stateText.text!.isEmpty {
+            stateText.becomeFirstResponder()
+        } else if cityText.text!.isEmpty == false && stateText.text!.isEmpty == false {
+            cityText.resignFirstResponder()
+            stateText.resignFirstResponder()
+        }
     }
     
     @IBAction func locationContinueClicked(_ sender: Any) {
-        
+        let position = CGPoint(x: self.view.frame.width * 2, y: 0)
+        scrollView.setContentOffset(position, animated: true)
     }
     
+    
     @IBAction func logoContinueClicked(_ sender: Any) {
-        
+        let position = CGPoint(x: self.view.frame.width * 3, y: 0)
+        scrollView.setContentOffset(position, animated: true)
     }
     
     @IBAction func finishContinueClicked(_ sender: Any) {
+//        let avatar = getAvatar()
+//        let coverIMG = cover?.jpegData(compressionQuality: 0.7)
+//        let coverData = coverIMG!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+//
+//        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "coach", birthday: "", cover: coverData, phoneNumber: phoneTextField.text!) { (error)  in
+//
+//                if error != nil {
+//                    ProgressHUD.dismiss()
+//                    ProgressHUD.showError(error!.localizedDescription)
+//                    return
+//                }
+//
+//                self.goToApp()
+//            }
+    }
+    
+    
+   @IBAction func selectImageButtonClicked(_ sender: Any) {
+       print("tapped")
+       let camera = Camera(delegate_: self)
+       
+       let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+       let takePhotoOrVideo = UIAlertAction(title: "Camera", style: .default) { (action) in
+           camera.PresentMultyCamera(target: self, canEdit: false)
+       }
+       
+       let sharePhoto = UIAlertAction(title: "Photo Library", style: .default) { (action) in
+           
+           camera.PresentPhotoLibrary(target: self, canEdit: false)
+       }
+
+       let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+       }
+       
+       takePhotoOrVideo.setValue(UIImage(named: "camera"), forKey: "image")
+       sharePhoto.setValue(UIImage(named: "picture"), forKey: "image")
+       
+       optionMenu.addAction(takePhotoOrVideo)
+       optionMenu.addAction(sharePhoto)
+       optionMenu.addAction(cancelAction)
+       
+       self.present(optionMenu, animated: true, completion: nil)
+   }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+                
+        picturePath = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+        let pictureData = picturePath?.jpegData(compressionQuality: 0.4)!
+        pictureToUpload = pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+        displayMedia(picture: picturePath)
         
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func displayMedia(picture: UIImage?) {
+        if let pic = picture {
+            logoImageView.image = pic
+            isVideoSelected = false
+            isPictureSelected = true
+            return
+        }
+    }
+    
+    // configuring the appearance of the footerView
+    func configure_footerView() {
+        // adding the line at the top of the footerView
+        let topLine = CALayer()
+        topLine.borderWidth = 1
+        topLine.borderColor = UIColor.lightGray.cgColor
+        topLine.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 1)
+        
+        footerView.layer.addSublayer(topLine)
+    }
+    
+    // make corners rounded for any views (objects)
+    func cornerRadius(for view: UIView) {
+        view.layer.cornerRadius = 5
+        view.layer.masksToBounds = true
+    }
+    
+    // add blank view to the left side of the TextField (it'll act as a blank gap)
+    func padding(for textField: UITextField) {
+        let blankView = UIView.init(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
+        textField.leftView = blankView
+        textField.leftViewMode = .always
     }
     
     

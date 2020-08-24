@@ -15,7 +15,7 @@ class RegisterVC: UIViewController {
     @IBOutlet weak var emailView_width: NSLayoutConstraint!
     @IBOutlet weak var nameView_width: NSLayoutConstraint!
     @IBOutlet weak var passwordView_width: NSLayoutConstraint!
-    @IBOutlet weak var birthdayView_width: NSLayoutConstraint!
+    
     @IBOutlet weak var genderView_width: NSLayoutConstraint!
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -24,7 +24,7 @@ class RegisterVC: UIViewController {
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var birthdayTextField: UITextField!
+    
     @IBOutlet weak var phoneTextField: UITextField!
     
     @IBOutlet weak var heightTextField: UITextField!
@@ -35,7 +35,7 @@ class RegisterVC: UIViewController {
     @IBOutlet weak var emailContinueButton: UIButton!
     @IBOutlet weak var fullnameContinueButton: UIButton!
     @IBOutlet weak var passwordContinueButton: UIButton!
-    @IBOutlet weak var birthdayContinueButton: UIButton!    
+        
     @IBOutlet weak var statsContinueButton: UIButton!
     
     @IBOutlet weak var footerView: UIView!
@@ -51,11 +51,11 @@ class RegisterVC: UIViewController {
         super.viewDidLoad()
 
         // adjust width of the views to the screen of the device
-        contentView_width.constant = self.view.frame.width * 5
+        contentView_width.constant = self.view.frame.width * 4
         emailView_width.constant = self.view.frame.width
         nameView_width.constant = self.view.frame.width
         passwordView_width.constant = self.view.frame.width
-        birthdayView_width.constant = self.view.frame.width
+        
         genderView_width.constant = self.view.frame.width
         
         // make corners of the objects rounded
@@ -63,7 +63,7 @@ class RegisterVC: UIViewController {
         cornerRadius(for: firstNameTextField)
         cornerRadius(for: lastNameTextField)
         cornerRadius(for: passwordTextField)
-        cornerRadius(for: birthdayTextField)
+        
         cornerRadius(for: heightTextField)
         cornerRadius(for: weightTextField)
         cornerRadius(for: positionTextField)
@@ -73,7 +73,7 @@ class RegisterVC: UIViewController {
         cornerRadius(for: emailContinueButton)
         cornerRadius(for: fullnameContinueButton)
         cornerRadius(for: passwordContinueButton)
-        cornerRadius(for: birthdayContinueButton)
+        
         cornerRadius(for: statsContinueButton)
         
         // apply padding to the textFields
@@ -81,7 +81,7 @@ class RegisterVC: UIViewController {
         padding(for: firstNameTextField)
         padding(for: lastNameTextField)
         padding(for: passwordTextField)
-        padding(for: birthdayTextField)
+        
         padding(for: heightTextField)
         padding(for: weightTextField)
         padding(for: positionTextField)
@@ -90,14 +90,7 @@ class RegisterVC: UIViewController {
         
         // run function of configuration
         configure_footerView()
-        
-        // creating, configuring and implementing datePicker into BirthdayTextField
-        datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
-        datePicker.maximumDate = Calendar.current.date(byAdding: .year, value: -5, to: Date())
-        datePicker.addTarget(self, action: #selector(self.datePickerDidChange(_:)), for: .valueChanged)
-        birthdayTextField.inputView = datePicker
-               
+                       
         // implementation of Swipe Gesture
         let swipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handle(_:)))
         swipe.direction = .right
@@ -164,22 +157,9 @@ class RegisterVC: UIViewController {
         let position = CGPoint(x: self.view.frame.width * 3, y: 0)
         scrollView.setContentOffset(position, animated: true)
         
-        // show keyboard of next TextField
-        if birthdayTextField.text!.isEmpty {
-            birthdayTextField.becomeFirstResponder()
-        } else if birthdayTextField.text!.isEmpty == false {
-            birthdayTextField.resignFirstResponder()
-        }
-    }
-    
-    @IBAction func birthdayContinueButton_clicked(_ sender: Any) {
-        // move scrollView horizontally (by X to the 4x WIDTH as a pointer)
-        let position = CGPoint(x: self.view.frame.width * 4, y: 0)
-        scrollView.setContentOffset(position, animated: true)
         
-        // hide keyboard when Continue button on Birthday Page is clicked
-        birthdayTextField.resignFirstResponder()
     }
+   
     
     @IBAction func statsContinueButton_clicked(_ sender: Any) {
         
@@ -264,26 +244,26 @@ class RegisterVC: UIViewController {
     }
     
     // func will be executed whenever any date is selected
-    @objc func datePickerDidChange(_ datePicker: UIDatePicker) {
-        
-        // declaring the format to be used in TextField while presenting the date
-        let formatter = DateFormatter()
-        formatter.dateStyle = DateFormatter.Style.medium
-        birthdayTextField.text = formatter.string(from: datePicker.date)
-        
-        // declaring the format of date, then to place a dummy date into this format
-        let compareDateFormatter = DateFormatter()
-        compareDateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
-        let compareDate = compareDateFormatter.date(from: "2011/01/01 00:01")
-        
-        // IF logic. If user is older than 5 years, show Continue Button
-        if datePicker.date < compareDate! {
-            birthdayContinueButton.isHidden = false
-        } else {
-            birthdayContinueButton.isHidden = true
-        }
-        
-    }
+//    @objc func datePickerDidChange(_ datePicker: UIDatePicker) {
+//
+//        // declaring the format to be used in TextField while presenting the date
+//        let formatter = DateFormatter()
+//        formatter.dateStyle = DateFormatter.Style.medium
+//        birthdayTextField.text = formatter.string(from: datePicker.date)
+//
+//        // declaring the format of date, then to place a dummy date into this format
+//        let compareDateFormatter = DateFormatter()
+//        compareDateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
+//        let compareDate = compareDateFormatter.date(from: "2011/01/01 00:01")
+//
+//        // IF logic. If user is older than 5 years, show Continue Button
+//        if datePicker.date < compareDate! {
+//            birthdayContinueButton.isHidden = false
+//        } else {
+//            birthdayContinueButton.isHidden = true
+//        }
+//
+//    }
     
     // called once Swiped to the direction Right ->
     @objc func handle(_ gesture: UISwipeGestureRecognizer) {
