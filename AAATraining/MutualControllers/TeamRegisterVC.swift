@@ -24,16 +24,35 @@ class TeamRegisterVC: UIViewController {
     @IBOutlet weak var codeLabel: UILabel!
     @IBOutlet weak var finishButton: UIButton!
     
+    @IBOutlet weak var haveAccountButton: UIButton!
     
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        
     }
     
-
-
-
+    @IBAction func selectImageButtonClicked(_ sender: Any) {
+        
+    }
+    
+    @IBAction func teamNameContinueClicked(_ sender: Any) {
+        
+    }
+    
+    @IBAction func locationContinueClicked(_ sender: Any) {
+        
+    }
+    
+    @IBAction func logoContinueClicked(_ sender: Any) {
+        
+    }
+    
+    @IBAction func finishContinueClicked(_ sender: Any) {
+        
+    }
+    
+    
 }
