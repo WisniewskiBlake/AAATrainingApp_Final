@@ -25,7 +25,6 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var finishButton: UIButton!
     @IBOutlet weak var copyToClipButton: UIButton!
     
-    
     @IBOutlet weak var haveAccountButton: UIButton!
     @IBOutlet weak var footerView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -41,6 +40,8 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     var picturePath: UIImage? = UIImage()
     var pictureToUpload: String? = ""
+    
+    var teamLoginCode = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +67,9 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         padding(for: stateText)
         
         configure_footerView()
+        
+        teamLoginCode = randomString(length: 6)
+        codeLabel.text = teamLoginCode
     }
    
     
@@ -217,6 +221,9 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
     }
     
-    
+    func randomString(length: Int) -> String {
+        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return String((0..<length).map{ _ in letters.randomElement()! })
+    }
     
 }
