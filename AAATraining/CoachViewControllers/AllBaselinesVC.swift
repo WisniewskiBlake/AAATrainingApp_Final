@@ -21,6 +21,8 @@ class AllBaselinesVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(loadBaselines), name: NSNotification.Name(rawValue: "createBaseline"), object: nil)
+        
         loadBaselines()
     }
         
@@ -37,7 +39,7 @@ class AllBaselinesVC: UIViewController {
         }
     }
     
-    func loadBaselines() {
+    @objc func loadBaselines() {
         ProgressHUD.show()
         
         var query: Query!
@@ -210,7 +212,7 @@ extension AllBaselinesVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //check that cell isnt in row 1
-        if indexPath.item != 0 {
+        if indexPath.section != 0 {
             //get the base that is in the row that the cell is in
             var baselineOwnerID = allBaselines[indexPath.section].baselineOwnerID
             loadUserClicked(objectID: baselineOwnerID)
