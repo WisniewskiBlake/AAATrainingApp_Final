@@ -135,13 +135,9 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         calendar.formatter.dateFormat = "EEEE, MM-dd-YYYY"
         let dateString = calendar.formatter.string(from: date)
         let values = Calendar.current.dateComponents([Calendar.Component.month, Calendar.Component.year], from: self.calendar.currentPage)
-        let range = Calendar.current.range(of: Calendar.Component.day, in: Calendar.Component.month, for: self.calendar.currentPage)
-        let timeInterval = date.timeIntervalSince1970
         
         if allEventDates.contains(dateString) || date == calendar.today {
-              
             return #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-            
         } else if date.get(.month) != values.month{
             return #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         }
