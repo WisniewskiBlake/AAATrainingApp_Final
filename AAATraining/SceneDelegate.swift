@@ -147,7 +147,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
         var top = self.window?.rootViewController
                 
-        
+        if #available(iOS 13.0, *) {
+            window?.rootViewController?.overrideUserInterfaceStyle = .light
+            window?.overrideUserInterfaceStyle = .light
+        }
         
         while top?.presentedViewController != nil {
             top = top?.presentedViewController

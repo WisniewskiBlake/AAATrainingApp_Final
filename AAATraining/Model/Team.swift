@@ -10,10 +10,11 @@ import Foundation
 import Firebase
 
 public class Team {
-    var teamID: String
-    var teamLoginCode: String
-    var teamName: String
-    var teamLogo: String
-        
-    let teamDictionary: NSMutableDictionary
+//    var teamID: String
+//    var teamLoginCode: String
+//    var teamName: String
+//    var teamLogo: String
+//    var teamColors?
+//
+//    let teamDictionary: NSMutableDictionary
 }

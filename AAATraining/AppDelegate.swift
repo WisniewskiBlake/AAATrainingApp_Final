@@ -41,32 +41,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         //UINavigationBar.appearance().tintColor = UIColor.white
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
         
-//        self.voioRegistration()
-//
-//        self.push = Sinch.managedPush(with: .development)
-//        self.push.delegate = self
-//        self.push.setDesiredPushTypeAutomatically()
-//
-//        func userDidLogin(userId: String) {
-//            self.push.registerUserNotificationSettings()
-//            self.initSinchWithUserId(userId: userId)
-//            self.startOneSignal()
-//        }
+        if #available(iOS 13.0, *) {
+            window?.overrideUserInterfaceStyle = .light
+            window?.rootViewController?.overrideUserInterfaceStyle = .light
+        }
         
-//        NotificationCenter.default.addObserver(forName: NSNotification.Name(USER_DID_LOGIN_NOTIFICATION), object: nil, queue: nil) { (note) in
-//
-//            let userId = note.userInfo![kUSERID] as! String
-//            UserDefaults.standard.set(userId, forKey: kUSERID)
-//            UserDefaults.standard.synchronize()
-//
-//            userDidLogin(userId: userId)
-//        }
-
         OneSignal.initWithLaunchOptions(launchOptions, appId: kONESIGNALAPPID)
         
-        
-
-
         
         
         return true
