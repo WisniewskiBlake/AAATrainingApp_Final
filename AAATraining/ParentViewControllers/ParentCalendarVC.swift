@@ -24,6 +24,9 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     
     var countArray = [String]()
     
+    @IBOutlet weak var logoutView: UIView!
+    let logoutTapGestureRecognizer = UITapGestureRecognizer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,6 +50,10 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         
         newEventColorLabel.layer.cornerRadius = newEventColorLabel.frame.width / 2
         newEventColorLabel.clipsToBounds = true
+        
+        logoutTapGestureRecognizer.addTarget(self, action: #selector(self.logoutViewClicked))
+        logoutView.isUserInteractionEnabled = true
+        logoutView.addGestureRecognizer(logoutTapGestureRecognizer)
         
     }
     
@@ -149,6 +156,34 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
         calendar.reloadData()
+    }
+    
+    @objc func logoutViewClicked() {
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // creating buttons for action sheet
+        let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
+                        
+            FUser.logOutCurrentUser { (success) in
+                
+                if success {
+                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+                    {
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true, completion: nil)
+                    }
+                }
+            }
+        })
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        // add buttons to action sheet
+        sheet.addAction(logout)
+        sheet.addAction(cancel)
+        
+        // show action sheet
+        present(sheet, animated: true, completion: nil)
     }
     
 
