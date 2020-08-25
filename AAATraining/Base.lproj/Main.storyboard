@@ -4502,7 +4502,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nutritionIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Cga-qF-XGY">
-                                            <rect key="frame" x="0.0" y="-9" width="50" height="38"/>
+                                            <rect key="frame" x="0.0" y="1" width="50" height="28"/>
                                             <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="50" id="HkU-QS-ek6"/>
@@ -5090,7 +5090,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nutritionIcon" translatesAutoresizingMaskIntoConstraints="NO" id="CdB-n4-8Ng">
-                                        <rect key="frame" x="0.0" y="-9" width="50" height="38"/>
+                                        <rect key="frame" x="0.0" y="1" width="50" height="28"/>
                                         <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="38" id="p1V-gH-Hvv"/>
@@ -5618,9 +5618,6 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1aO-8d-OrG">
                                         <rect key="frame" x="0.0" y="0.0" width="1500" height="667"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.10000000149011612" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="meijerBackground.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="fAn-ai-Aye">
-                                                <rect key="frame" x="-274" y="0.0" width="2048" height="795"/>
-                                            </imageView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uye-eN-UuD">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                                 <subviews>
@@ -5877,7 +5874,6 @@
                                             <constraint firstAttribute="height" constant="667" id="5wG-gx-v1k"/>
                                             <constraint firstAttribute="bottom" secondItem="Uvh-Xo-f33" secondAttribute="bottom" id="CyK-Vm-Z6N"/>
                                             <constraint firstAttribute="bottom" secondItem="FMu-De-0My" secondAttribute="bottom" id="HQV-cF-cDd"/>
-                                            <constraint firstAttribute="trailing" secondItem="fAn-ai-Aye" secondAttribute="trailing" constant="-274" id="Ha1-al-FYW"/>
                                             <constraint firstItem="OGJ-cB-smT" firstAttribute="leading" secondItem="Uvh-Xo-f33" secondAttribute="trailing" id="J1G-V4-JXT"/>
                                             <constraint firstAttribute="bottom" secondItem="uye-eN-UuD" secondAttribute="bottom" id="WYD-vD-tKY"/>
                                             <constraint firstItem="uye-eN-UuD" firstAttribute="leading" secondItem="1aO-8d-OrG" secondAttribute="leading" id="ZbI-Pc-9Mh"/>
@@ -5890,7 +5886,6 @@
                                             <constraint firstItem="FMu-De-0My" firstAttribute="leading" secondItem="uye-eN-UuD" secondAttribute="trailing" id="weE-so-UW8"/>
                                             <constraint firstItem="FMu-De-0My" firstAttribute="leading" secondItem="uye-eN-UuD" secondAttribute="trailing" id="x3p-ia-R4x"/>
                                             <constraint firstItem="FMu-De-0My" firstAttribute="top" secondItem="1aO-8d-OrG" secondAttribute="top" id="ytJ-Co-Y3j"/>
-                                            <constraint firstItem="fAn-ai-Aye" firstAttribute="leading" secondItem="1aO-8d-OrG" secondAttribute="leading" constant="-274" id="zin-wk-Nkj"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -5927,11 +5922,9 @@
                             <constraint firstItem="7pk-SK-PUa" firstAttribute="top" secondItem="drt-kq-eli" secondAttribute="top" id="9DT-Qv-Ufl"/>
                             <constraint firstItem="d5H-NX-WDW" firstAttribute="bottom" secondItem="hTx-Lw-2h1" secondAttribute="bottom" id="ESR-a7-rhY"/>
                             <constraint firstItem="7pk-SK-PUa" firstAttribute="leading" secondItem="hTx-Lw-2h1" secondAttribute="leading" id="GT9-fR-KKV"/>
-                            <constraint firstItem="fAn-ai-Aye" firstAttribute="bottom" secondItem="hTx-Lw-2h1" secondAttribute="bottom" constant="208" id="Hhw-mS-lMb"/>
                             <constraint firstItem="d5H-NX-WDW" firstAttribute="leading" secondItem="hTx-Lw-2h1" secondAttribute="leading" id="LgV-WZ-FVu"/>
                             <constraint firstItem="d5H-NX-WDW" firstAttribute="trailing" secondItem="hTx-Lw-2h1" secondAttribute="trailing" id="N3R-sX-Aw2"/>
                             <constraint firstItem="7pk-SK-PUa" firstAttribute="bottom" secondItem="hTx-Lw-2h1" secondAttribute="bottom" id="juO-GN-FNM"/>
-                            <constraint firstItem="fAn-ai-Aye" firstAttribute="top" secondItem="hTx-Lw-2h1" secondAttribute="top" id="wEP-jT-kH6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hTx-Lw-2h1"/>
                     </view>
@@ -6866,7 +6859,6 @@
         <image name="info" width="25" height="25"/>
         <image name="logoBackground.png" width="810" height="540"/>
         <image name="logoutBtn" width="25" height="25"/>
-        <image name="meijerBackground.jpg" width="2048" height="1536"/>
         <image name="nutritionIcon" width="25" height="25"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
         <image name="profile" width="25" height="25"/>
