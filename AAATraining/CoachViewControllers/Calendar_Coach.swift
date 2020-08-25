@@ -33,6 +33,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         calendar.appearance.todayColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         calendar.appearance.headerTitleColor = #colorLiteral(red: 0.1006183103, green: 0.2956552207, blue: 0.71825701, alpha: 1)
         calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:22)
+        //calendar.placeholderType = .none
         
         loadEvents()
         
@@ -133,20 +134,37 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
         calendar.formatter.dateFormat = "EEEE, MM-dd-YYYY"
         let dateString = calendar.formatter.string(from: date)
-       
+        let values = Calendar.current.dateComponents([Calendar.Component.month, Calendar.Component.year], from: self.calendar.currentPage)
+        let range = Calendar.current.range(of: Calendar.Component.day, in: Calendar.Component.month, for: self.calendar.currentPage)
+        let timeInterval = date.timeIntervalSince1970
         
         if allEventDates.contains(dateString) || date == calendar.today {
               
             return #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-             
             
-        } else {
+        } else if date.get(.month) != values.month{
+            return #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        }
+        else {
             return calendar.appearance.titleDefaultColor
         }
+    }
+    
+    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
+        calendar.reloadData()
     }
     
     
     
 
 
+}
+extension Date {
+    func get(_ components: Calendar.Component..., calendar: Calendar = Calendar.current) -> DateComponents {
+        return calendar.dateComponents(Set(components), from: self)
+    }
+
+    func get(_ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
+        return calendar.component(component, from: self)
+    }
 }
