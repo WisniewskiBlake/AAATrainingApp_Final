@@ -25,12 +25,15 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
    
    var avas = [UIImage]()
    var pictures = [UIImage]()
+   var postDatesArray: [String] = []
    var skip = 0
    var limit = 25
    var isLoading = false
-    var accountType: String? = ""
+   var accountType: String? = ""
 
    let helper = Helper()
+   let currentDateFormater = Helper().dateFormatter()
+   
     
     @IBOutlet weak var composeButton: UIBarButtonItem!
     
@@ -52,6 +55,9 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
         if accountType == "player" {
             composeButton.isEnabled = false
         }
+        
+        
+        currentDateFormater.dateFormat = "MM/dd/YYYY"
        
         loadNutritionPosts()
         
@@ -72,7 +78,10 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
         
         recentListener = reference(.Nutrition).order(by: kNUTRITIONPOSTDATE, descending: true).addSnapshotListener({ (snapshot, error) in
                    
-                self.allPosts = []
+            self.allPosts = []
+            self.postDatesArray = []
+            self.avas = []
+            self.pictures = []
             
             if error != nil {
                 print(error!.localizedDescription)
@@ -91,7 +100,28 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
                         let post = Nutrition(_dictionary: userDictionary)
                            
                            self.allPosts.append(post)
-                        print(self.allPosts)
+                        self.helper.imageFromData(pictureData: post.nutritionPostUserAva) { (avatarImage) in
+
+                            if avatarImage != nil {
+                                self.avas.append(avatarImage!.circleMasked!)
+                            }
+                        }
+                        if post.nutritionPicture != "" {
+                            downloadImage(imageUrl: post.nutritionPicture) { (image) in
+                                
+                                if image != nil {
+                                    self.pictures.append(image!)
+                                }
+                            }
+                        } else if post.nutritionVideo != "" {
+                            let thumbImage = self.createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: post.nutritionVideo)!)
+                            self.pictures.append(thumbImage!)
+                        } else {
+                            self.pictures.append(UIImage())
+                        }
+                        let postDate = self.helper.dateFormatter().date(from: post.nutritionDate)
+                        self.postDatesArray.append(self.currentDateFormater.string(from: postDate!))
+                        
                        }
                        self.tableView.reloadData()
                     
@@ -125,118 +155,82 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
             var post: Nutrition
                     
             post = allPosts[indexPath.row]
+        
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
             
             if post.nutritionPostType == "video" {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
                 
-                cell.playImageView.isHidden = false
-                
-                let thumbImage = createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: post.nutritionVideo)!)
-                         
-                var date: String?
-                let currentDateFormater = helper.dateFormatter()
-                currentDateFormater.dateFormat = "MM/dd/YYYY"
-                let postDate = helper.dateFormatter().date(from: post.nutritionDate)
-                date = currentDateFormater.string(from: postDate!)
-                cell.dateLabel.text = date
-                         
-                 
-                 helper.imageFromData(pictureData: post.nutritionPostUserAva) { (avatarImage) in
-
-                     if avatarImage != nil {
-
-                         cell.avaImageView.image = avatarImage!.circleMasked
-                     }
-                 }
-                
-                cell.delegate = self
-                cell.indexPath = indexPath
-                cell.fullnameLabel.text = post.nutritionPostUserName
-                cell.pictureImageView.image = thumbImage
-                cell.postTextLabel.text = post.nutritionText
-                cell.urlTextView.text = post.nutritionPostUrlLink
-                cell.optionsButton.tag = indexPath.row
-                
-                if FUser.currentUser()?.accountType == "player" {
-                    cell.optionsButton.isHidden = true
-                }
-
-                 return cell
-            } else if post.nutritionPostType == "picture" {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
-                
-                cell.playImageView.isHidden = true
-               
-                 var date: String?
-                 let currentDateFormater = helper.dateFormatter()
-                 currentDateFormater.dateFormat = "MM/dd/YYYY"
-                 let postDate = helper.dateFormatter().date(from: post.nutritionDate)
-                 date = currentDateFormater.string(from: postDate!)
-                 cell.dateLabel.text = date
-                         
-                 
-                 helper.imageFromData(pictureData: post.nutritionPostUserAva) { (avatarImage) in
-
-                     if avatarImage != nil {
-
-                         cell.avaImageView.image = avatarImage!.circleMasked
-                     }
-                 }
-                downloadImage(imageUrl: post.nutritionPicture) { (image) in
+                DispatchQueue.main.async {
                     
-                    if image != nil {
-                        cell.pictureImageView.image = image!
+                    cell.playImageView.isHidden = false
+                    cell.dateLabel.text = self.postDatesArray[indexPath.row]
+                    cell.avaImageView.image = self.avas[indexPath.row]
+                    
+                    cell.delegate = self
+                    cell.indexPath = indexPath
+                    cell.fullnameLabel.text = post.nutritionPostUserName
+                    cell.pictureImageView.image = self.pictures[indexPath.row]
+                    cell.postTextLabel.text = post.nutritionText
+                    cell.urlTextView.text = post.nutritionPostUrlLink
+                    cell.optionsButton.tag = indexPath.row
+                    
+                    if FUser.currentUser()?.accountType == "player" {
+                        cell.optionsButton.isHidden = true
                     }
                 }
-
-
-                cell.delegate = self
-                cell.indexPath = indexPath
-                cell.fullnameLabel.text = post.nutritionPostUserName
-                cell.postTextLabel.text = post.nutritionText
-                cell.urlTextView.text = post.nutritionPostUrlLink
-                cell.optionsButton.tag = indexPath.row
                 
-                if FUser.currentUser()?.accountType == "player" {
-                    cell.optionsButton.isHidden = true
+                 return cell
+                
+            } else if post.nutritionPostType == "picture" {
+                DispatchQueue.main.async {
+                    
+                    cell.playImageView.isHidden = true
+                    cell.dateLabel.text = self.postDatesArray[indexPath.row]
+                    
+                    cell.avaImageView.image = self.avas[indexPath.row]
+                    cell.pictureImageView.image = self.pictures[indexPath.row]
+                    
+                    cell.delegate = self
+                    cell.indexPath = indexPath
+                    cell.fullnameLabel.text = post.nutritionPostUserName
+                    cell.postTextLabel.text = post.nutritionText
+                    cell.urlTextView.text = post.nutritionPostUrlLink
+                    cell.optionsButton.tag = indexPath.row
+                    
+                    if FUser.currentUser()?.accountType == "player" {
+                        cell.optionsButton.isHidden = true
+                    }
                 }
                 
                 return cell
                 
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
-
-                 var date: String?
-                 let currentDateFormater = helper.dateFormatter()
-                 currentDateFormater.dateFormat = "MM/dd/YYYY"
-                 let postDate = helper.dateFormatter().date(from: post.nutritionDate)
-                 date = currentDateFormater.string(from: postDate!)
-                 cell.dateLabel.text = date
-                 
-                 helper.imageFromData(pictureData: post.nutritionPostUserAva) { (avatarImage) in
-
-                     if avatarImage != nil {
-
-                         cell.avaImageView.image = avatarImage!.circleMasked
-                     }
-                 }
-                 
-                 cell.fullnameLabel.text = post.nutritionPostUserName
-
-                 cell.postTextLabel.text = post.nutritionText
-
-                 cell.urlTextView.text = post.nutritionPostUrlLink
                 
-                cell.optionsButton.tag = indexPath.row
-                
-                if FUser.currentUser()?.accountType == "player" {
-                    cell.optionsButton.isHidden = true
+                DispatchQueue.main.async {
+                    
+                    cell.dateLabel.text = self.postDatesArray[indexPath.row]
+                    
+                    cell.avaImageView.image = self.avas[indexPath.row]
+                    
+                    cell.fullnameLabel.text = post.nutritionPostUserName
+
+                    cell.postTextLabel.text = post.nutritionText
+
+                    cell.urlTextView.text = post.nutritionPostUrlLink
+                    
+                    cell.optionsButton.tag = indexPath.row
+                    
+                    if FUser.currentUser()?.accountType == "player" {
+                        cell.optionsButton.isHidden = true
+                    }
+                    
+                    
                 }
                 
                  return cell
+                
             }
-            
-            
     }
     
     @IBAction func deleteButtonClicked(_ optionButton: UIButton) {
