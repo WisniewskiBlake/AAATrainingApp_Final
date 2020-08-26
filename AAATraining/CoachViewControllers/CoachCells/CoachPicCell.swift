@@ -44,6 +44,10 @@ class CoachPicCell: UITableViewCell {
         tapGestureRecognizer.addTarget(self, action: #selector(self.mediaTap)) 
         playImageView.isUserInteractionEnabled = true
         playImageView.addGestureRecognizer(tapGestureRecognizer)
+        
+        tapGestureRecognizerPic.addTarget(self, action: #selector(self.mediaTap))
+        pictureImageView.isUserInteractionEnabled = true
+        pictureImageView.addGestureRecognizer(tapGestureRecognizerPic)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

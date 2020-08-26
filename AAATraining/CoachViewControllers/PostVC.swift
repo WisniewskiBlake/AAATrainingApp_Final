@@ -26,6 +26,8 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     var isPictureSelected = false
     var isVideoSelected = false
     
+    var postImage: UIImage?
+    
     var pictureToUpload: String? = ""
     
     let postID = UUID().uuidString
@@ -50,14 +52,16 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
                 
             } else if isPictureSelected {
                 
-                uploadPostImage(image: pictureImageView.image!, view: self.navigationController!.view) { (pictureLink) in
+                
+                
+//                uploadPostImage(image: pictureImageView.image!, view: self.navigationController!.view) { (pictureLink) in
 
                     let fullName = FUser.currentUser()!.firstname + " " + FUser.currentUser()!.lastname
-                    let post = Post(postID: self.postID, ownerID: FUser.currentId(), text: self.postTextView.text, picture: pictureLink!, date: "", postUserAva: FUser.currentUser()!.ava, postUserName: fullName, video: "", postType: "picture", postUrlLink: self.urlLinkTextField.text!)
+                    let post = Post(postID: self.postID, ownerID: FUser.currentId(), text: self.postTextView.text, picture: self.pictureToUpload!, date: "", postUserAva: FUser.currentUser()!.ava, postUserName: fullName, video: "", postType: "picture", postUrlLink: self.urlLinkTextField.text!)
                     
                     post.savePost()
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createPost"), object: nil)
-                }
+                //}
                            
                 
 
@@ -182,7 +186,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         videoPath = info[UIImagePickerController.InfoKey.mediaURL] as? NSURL
-        //picturePath = info[UIImagePickerController.InfoKey(rawValue: convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage))] as? UIImage
+        
         picturePath = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
         let pictureData = picturePath?.jpegData(compressionQuality: 0.4)!
         pictureToUpload = pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))

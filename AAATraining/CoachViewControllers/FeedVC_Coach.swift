@@ -27,6 +27,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
     var avas = [UIImage]()
     var pictures = [UIImage]()
     var postDatesArray: [String] = []
+    //var thumbImage = UIImage()
     var skip = 0
     var limit = 25
     var isLoading = false
@@ -80,10 +81,10 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
             }
         }
         if postType == "picture" {
-            downloadImage(imageUrl: post.picture) { (image) in
-                
-                if image != nil {
-                    let photos = IDMPhoto.photos(withImages: [image as Any])
+            self.helper.imageFromData(pictureData: post.picture) { (pictureImage) in
+
+                if pictureImage != nil {
+                    let photos = IDMPhoto.photos(withImages: [pictureImage as Any])
                     let browser = IDMPhotoBrowser(photos: photos)
                     
                     self.present(browser!, animated: true, completion: nil)
@@ -120,7 +121,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
     @objc func loadPosts() {
         ProgressHUD.show()
         
-        DispatchQueue.main.async {
+        //DispatchQueue.main.async {
             self.recentListener = reference(.Post).order(by: kPOSTDATE, descending: true).addSnapshotListener({ (snapshot, error) in
                    
             self.allPosts = []
@@ -152,15 +153,18 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                                 }
                             }
                             if post.picture != "" {
-                                downloadImage(imageUrl: post.picture) { (image) in
-                                    
-                                    if image != nil {
-                                        self.pictures.append(image!)
+                                self.helper.imageFromData(pictureData: post.picture) { (pictureImage) in
+
+                                    if pictureImage != nil {
+                                        self.pictures.append(pictureImage!)
                                     }
                                 }
+
                             } else if post.video != "" {
-                                let thumbImage = self.createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: post.video)!)
-                                self.pictures.append(thumbImage!)
+                                if let thumbImage = self.createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: post.video)!) {
+                                    self.pictures.append(thumbImage)
+                                }
+                                
                             } else {
                                 self.pictures.append(UIImage())
                             }
@@ -172,7 +176,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                    }
             ProgressHUD.dismiss()
                })
-        }
+        //}
         
     }
     
@@ -242,77 +246,80 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var post: Post
-                
-        post = allPosts[indexPath.row]
         
         let cellPic = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
         
+        if allPosts.count > 0 {
+            post = allPosts[indexPath.row]
 
-        if post.postType == "video" {
-            
-            cellPic.avaImageView.image = self.avas[indexPath.row]
-            cellPic.pictureImageView.image = self.pictures[indexPath.row]
-            cellPic.playImageView.isHidden = false
-            
-            cellPic.postTextLabel.numberOfLines = 0
-            cellPic.postTextLabel.text = post.text
-            //DispatchQueue.main.async {
-                cellPic.dateLabel.text = self.postDatesArray[indexPath.row]
+            if post.postType == "video" {
                 
+                cellPic.avaImageView.image = self.avas[indexPath.row]
+                cellPic.pictureImageView.image = self.pictures[indexPath.row]
+                cellPic.playImageView.isHidden = false
                 
-                cellPic.delegate = self
-                cellPic.indexPath = indexPath
-                cellPic.fullnameLabel.text = post.postUserName
-                
-                cellPic.urlTextView.text = post.postUrlLink
-            //}
+                cellPic.postTextLabel.numberOfLines = 0
+                cellPic.postTextLabel.text = post.text
+                //DispatchQueue.main.async {
+                    cellPic.dateLabel.text = self.postDatesArray[indexPath.row]
+                    
+                    
+                    cellPic.delegate = self
+                    cellPic.indexPath = indexPath
+                    cellPic.fullnameLabel.text = post.postUserName
+                    
+                    cellPic.urlTextView.text = post.postUrlLink
+                //}
 
-             return cellPic
-            
-        } else if post.postType == "picture" {
-            
-            cellPic.avaImageView.image = self.avas[indexPath.row]
-            cellPic.pictureImageView.image = self.pictures[indexPath.row]
-            
-            cellPic.postTextLabel.numberOfLines = 0
-            cellPic.postTextLabel.text = post.text
-            
-            //DispatchQueue.main.async {
+                 return cellPic
                 
+            } else if post.postType == "picture" {
                 
-                cellPic.playImageView.isHidden = true
-                            
-                cellPic.dateLabel.text = self.postDatesArray[indexPath.row]
-                cellPic.delegate = self
-                cellPic.indexPath = indexPath
-                cellPic.fullnameLabel.text = post.postUserName
+                cellPic.avaImageView.image = self.avas[indexPath.row]
+                cellPic.pictureImageView.image = self.pictures[indexPath.row]
                 
-                cellPic.urlTextView.text = post.postUrlLink
-            //}
-            
-            return cellPic
-            
-        } else {
-            let cellNoPic = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
-            
-            cellNoPic.postTextLabel.numberOfLines = 0
-            cellNoPic.postTextLabel.text = post.text
-            
-            //DispatchQueue.main.async {
+                cellPic.postTextLabel.numberOfLines = 0
+                cellPic.postTextLabel.text = post.text
                 
-                cellNoPic.avaImageView.image = self.avas[indexPath.row]
+                //DispatchQueue.main.async {
+                    
+                    
+                    cellPic.playImageView.isHidden = true
+                                
+                    cellPic.dateLabel.text = self.postDatesArray[indexPath.row]
+                    cellPic.delegate = self
+                    cellPic.indexPath = indexPath
+                    cellPic.fullnameLabel.text = post.postUserName
+                    
+                    cellPic.urlTextView.text = post.postUrlLink
+                //}
                 
-                cellNoPic.dateLabel.text = self.postDatesArray[indexPath.row]
+                return cellPic
                 
-                cellNoPic.fullnameLabel.text = post.postUserName
+            } else {
+                let cellNoPic = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
+                
+                cellNoPic.postTextLabel.numberOfLines = 0
+                cellNoPic.postTextLabel.text = post.text
+                
+                //DispatchQueue.main.async {
+                    
+                    cellNoPic.avaImageView.image = self.avas[indexPath.row]
+                    
+                    cellNoPic.dateLabel.text = self.postDatesArray[indexPath.row]
+                    
+                    cellNoPic.fullnameLabel.text = post.postUserName
 
-                cellNoPic.urlTextView.text = post.postUrlLink
-            //}
-                             
-             return cellNoPic
+                    cellNoPic.urlTextView.text = post.postUrlLink
+                //}
+                                 
+                 return cellNoPic
+            }
         }
+                
         
         
+        return cellPic
         
     }
     
