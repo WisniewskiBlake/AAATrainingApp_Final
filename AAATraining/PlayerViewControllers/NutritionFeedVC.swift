@@ -178,6 +178,7 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
                     }
                 }
                 
+                
                  return cell
                 
             } else if post.nutritionPostType == "picture" {
