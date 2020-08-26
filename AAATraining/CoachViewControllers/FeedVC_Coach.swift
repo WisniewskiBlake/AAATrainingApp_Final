@@ -26,11 +26,13 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
     
     var avas = [UIImage]()
     var pictures = [UIImage]()
+    var postDatesArray: [String] = []
     var skip = 0
     var limit = 25
     var isLoading = false
  
     let helper = Helper()
+    let currentDateFormater = Helper().dateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,10 +52,11 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadPostsAfterDelete), name: NSNotification.Name(rawValue: "deletePost"), object: nil)
         
+        currentDateFormater.dateFormat = "MM/dd/YYYY"
 
         // run function
         loadPosts()
-        //createImages()
+        
     }
     
     func didTapMediaImage(indexPath: IndexPath) {
@@ -105,8 +108,6 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         super.viewWillAppear(animated)
         
         loadPosts()
-       
-        //navigationController?.setNavigationBarHidden(true, animated: true)
 
     }
     
@@ -125,6 +126,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
             self.allPosts = []
             self.avas = []
             self.pictures = []
+            self.postDatesArray = []
             
             if error != nil {
                 print(error!.localizedDescription)
@@ -162,6 +164,8 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                             } else {
                                 self.pictures.append(UIImage())
                             }
+                        let postDate = self.helper.dateFormatter().date(from: post.date)
+                        self.postDatesArray.append(self.currentDateFormater.string(from: postDate!))
                        }
                        self.tableView.reloadData()
                     
@@ -214,86 +218,79 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         return 1
     }
     
+//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        var post: Post
+//        post = allPosts[indexPath.row]
+//
+//        if post.postType == "video" || post.postType == "picture" {
+//            return 470
+//        } else {
+//            return 156
+//        }
+//
+//
+//    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var post: Post
                 
         post = allPosts[indexPath.row]
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
+        let cellPic = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
         
 
         if post.postType == "video" {
-            
             DispatchQueue.main.async {
+                cellPic.dateLabel.text = self.postDatesArray[indexPath.row]
+                cellPic.avaImageView.image = self.avas[indexPath.row]
                 
-                var date: String?
-                let currentDateFormater = self.helper.dateFormatter()
-                currentDateFormater.dateFormat = "MM/dd/YYYY"
-                let postDate = self.helper.dateFormatter().date(from: post.date)
-                date = currentDateFormater.string(from: postDate!)
-                cell.avaImageView.image = self.avas[indexPath.row]
+                cellPic.pictureImageView.image = self.pictures[indexPath.row]
+                cellPic.playImageView.isHidden = false
                 
-                
-                cell.pictureImageView.image = self.pictures[indexPath.row]
-                cell.playImageView.isHidden = false
-                cell.dateLabel.text = date
-                cell.delegate = self
-                cell.indexPath = indexPath
-                cell.fullnameLabel.text = post.postUserName
-                cell.postTextLabel.text = post.text
-                cell.urlTextView.text = post.postUrlLink
+                cellPic.delegate = self
+                cellPic.indexPath = indexPath
+                cellPic.fullnameLabel.text = post.postUserName
+                cellPic.postTextLabel.text = post.text
+                cellPic.urlTextView.text = post.postUrlLink
             }
-             return cell
+
+             return cellPic
             
         } else if post.postType == "picture" {
-            
-            var date: String?
-            let currentDateFormater = helper.dateFormatter()
-            currentDateFormater.dateFormat = "MM/dd/YYYY"
-            let postDate = helper.dateFormatter().date(from: post.date)
-            date = currentDateFormater.string(from: postDate!)
-            
             DispatchQueue.main.async {
-                cell.avaImageView.image = self.avas[indexPath.row]
-                cell.pictureImageView.image = self.pictures[indexPath.row]
+                cellPic.avaImageView.image = self.avas[indexPath.row]
+                cellPic.pictureImageView.image = self.pictures[indexPath.row]
                 
-                cell.playImageView.isHidden = true
+                cellPic.playImageView.isHidden = true
                             
-                cell.dateLabel.text = date
-                cell.delegate = self
-                cell.indexPath = indexPath
-                cell.fullnameLabel.text = post.postUserName
-                cell.postTextLabel.text = post.text
-                cell.urlTextView.text = post.postUrlLink
+                cellPic.dateLabel.text = self.postDatesArray[indexPath.row]
+                cellPic.delegate = self
+                cellPic.indexPath = indexPath
+                cellPic.fullnameLabel.text = post.postUserName
+                cellPic.postTextLabel.text = post.text
+                cellPic.urlTextView.text = post.postUrlLink
             }
             
-            return cell
+            return cellPic
             
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
-            
-            var date: String?
-            let currentDateFormater = helper.dateFormatter()
-            currentDateFormater.dateFormat = "MM/dd/YYYY"
-            let postDate = helper.dateFormatter().date(from: post.date)
-            date = currentDateFormater.string(from: postDate!)
-            
+            let cellNoPic = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
             DispatchQueue.main.async {
-
-                cell.avaImageView.image = self.avas[indexPath.row]
+                cellNoPic.avaImageView.image = self.avas[indexPath.row]
                 
-                cell.dateLabel.text = date
+                cellNoPic.dateLabel.text = self.postDatesArray[indexPath.row]
                 
-                cell.fullnameLabel.text = post.postUserName
+                cellNoPic.fullnameLabel.text = post.postUserName
 
-                cell.postTextLabel.text = post.text
+                cellNoPic.postTextLabel.text = post.text
 
-                cell.urlTextView.text = post.postUrlLink
+                cellNoPic.urlTextView.text = post.postUrlLink
             }
-            
-             return cell
+                             
+             return cellNoPic
         }
+        
         
         
     }

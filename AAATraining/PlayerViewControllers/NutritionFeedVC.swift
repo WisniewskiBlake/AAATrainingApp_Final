@@ -56,7 +56,6 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
             composeButton.isEnabled = false
         }
         
-        
         currentDateFormater.dateFormat = "MM/dd/YYYY"
        
         loadNutritionPosts()
@@ -97,30 +96,30 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
                            
                            let userDictionary = userDictionary.data() as NSDictionary
                            
-                        let post = Nutrition(_dictionary: userDictionary)
+                           let post = Nutrition(_dictionary: userDictionary)
                            
                            self.allPosts.append(post)
-                        self.helper.imageFromData(pictureData: post.nutritionPostUserAva) { (avatarImage) in
+                           self.helper.imageFromData(pictureData: post.nutritionPostUserAva) { (avatarImage) in
 
-                            if avatarImage != nil {
-                                self.avas.append(avatarImage!.circleMasked!)
-                            }
-                        }
-                        if post.nutritionPicture != "" {
-                            downloadImage(imageUrl: post.nutritionPicture) { (image) in
-                                
-                                if image != nil {
-                                    self.pictures.append(image!)
+                                if avatarImage != nil {
+                                    self.avas.append(avatarImage!.circleMasked!)
                                 }
                             }
-                        } else if post.nutritionVideo != "" {
-                            let thumbImage = self.createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: post.nutritionVideo)!)
-                            self.pictures.append(thumbImage!)
-                        } else {
-                            self.pictures.append(UIImage())
-                        }
-                        let postDate = self.helper.dateFormatter().date(from: post.nutritionDate)
-                        self.postDatesArray.append(self.currentDateFormater.string(from: postDate!))
+                            if post.nutritionPicture != "" {
+                                downloadImage(imageUrl: post.nutritionPicture) { (image) in
+                                    
+                                    if image != nil {
+                                        self.pictures.append(image!)
+                                    }
+                                }
+                            } else if post.nutritionVideo != "" {
+                                let thumbImage = self.createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: post.nutritionVideo)!)
+                                self.pictures.append(thumbImage!)
+                            } else {
+                                self.pictures.append(UIImage())
+                            }
+                            let postDate = self.helper.dateFormatter().date(from: post.nutritionDate)
+                            self.postDatesArray.append(self.currentDateFormater.string(from: postDate!))
                         
                        }
                        self.tableView.reloadData()
