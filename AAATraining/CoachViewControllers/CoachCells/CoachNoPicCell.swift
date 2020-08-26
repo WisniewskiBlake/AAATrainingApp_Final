@@ -27,6 +27,7 @@ class CoachNoPicCell: UITableViewCell {
         // rounded corners
         avaImageView.layer.cornerRadius = avaImageView.frame.width / 2
         avaImageView.clipsToBounds = true
+        urlTextView.textContainerInset = .zero
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

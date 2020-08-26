@@ -261,7 +261,6 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                 cell.playImageView.isHidden = true
                             
                 cell.dateLabel.text = date
-                 
                 cell.delegate = self
                 cell.indexPath = indexPath
                 cell.fullnameLabel.text = post.postUserName
@@ -281,13 +280,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
             date = currentDateFormater.string(from: postDate!)
             
             DispatchQueue.main.async {
-//                self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
-//
-//                    if avatarImage != nil {
-//
-//                        cell.avaImageView.image = avatarImage!.circleMasked
-//                    }
-//                }
+
                 cell.avaImageView.image = self.avas[indexPath.row]
                 
                 cell.dateLabel.text = date

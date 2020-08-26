@@ -39,7 +39,7 @@ class CoachPicCell: UITableViewCell {
        avaImageView.layer.cornerRadius = avaImageView.frame.width / 2
        avaImageView.clipsToBounds = true
         
-        
+        urlTextView.textContainerInset = .zero
         
         tapGestureRecognizer.addTarget(self, action: #selector(self.mediaTap)) 
         playImageView.isUserInteractionEnabled = true
