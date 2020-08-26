@@ -53,7 +53,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
 
         // run function
         loadPosts()
-
+        //createImages()
     }
     
     func didTapMediaImage(indexPath: IndexPath) {
@@ -123,6 +123,8 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
             self.recentListener = reference(.Post).order(by: kPOSTDATE, descending: true).addSnapshotListener({ (snapshot, error) in
                    
             self.allPosts = []
+            self.avas = []
+            self.pictures = []
             
             if error != nil {
                 print(error!.localizedDescription)
@@ -138,10 +140,28 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                            
                            let userDictionary = userDictionary.data() as NSDictionary
                            
-                        let post = Post(_dictionary: userDictionary)
+                            let post = Post(_dictionary: userDictionary)
                            
-                           self.allPosts.append(post)
-                        print(self.allPosts)
+                            self.allPosts.append(post)
+                            self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
+
+                                if avatarImage != nil {
+                                    self.avas.append(avatarImage!.circleMasked!)
+                                }
+                            }
+                            if post.picture != "" {
+                                downloadImage(imageUrl: post.picture) { (image) in
+                                    
+                                    if image != nil {
+                                        self.pictures.append(image!)
+                                    }
+                                }
+                            } else if post.video != "" {
+                                let thumbImage = self.createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: post.video)!)
+                                self.pictures.append(thumbImage!)
+                            } else {
+                                self.pictures.append(UIImage())
+                            }
                        }
                        self.tableView.reloadData()
                     
@@ -149,8 +169,6 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
             ProgressHUD.dismiss()
                })
         }
-        
-        
         
     }
     
@@ -183,6 +201,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
     @objc func loadMore() {
         
     }
+
     
     // MARK: - Table view data source
 
@@ -203,6 +222,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
         
+
         if post.postType == "video" {
             
             DispatchQueue.main.async {
@@ -212,15 +232,10 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                 currentDateFormater.dateFormat = "MM/dd/YYYY"
                 let postDate = self.helper.dateFormatter().date(from: post.date)
                 date = currentDateFormater.string(from: postDate!)
-                self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
-
-                    if avatarImage != nil {
-
-                        cell.avaImageView.image = avatarImage!.circleMasked
-                    }
-                }
-                let thumbImage = self.createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: post.video)!)
-                cell.pictureImageView.image = thumbImage
+                cell.avaImageView.image = self.avas[indexPath.row]
+                
+                
+                cell.pictureImageView.image = self.pictures[indexPath.row]
                 cell.playImageView.isHidden = false
                 cell.dateLabel.text = date
                 cell.delegate = self
@@ -229,7 +244,6 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                 cell.postTextLabel.text = post.text
                 cell.urlTextView.text = post.postUrlLink
             }
-
              return cell
             
         } else if post.postType == "picture" {
@@ -241,19 +255,9 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
             date = currentDateFormater.string(from: postDate!)
             
             DispatchQueue.main.async {
-                self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
-
-                     if avatarImage != nil {
-
-                         cell.avaImageView.image = avatarImage!.circleMasked
-                     }
-                 }
-                downloadImage(imageUrl: post.picture) { (image) in
-                    
-                    if image != nil {
-                        cell.pictureImageView.image = image!
-                    }
-                }
+                cell.avaImageView.image = self.avas[indexPath.row]
+                cell.pictureImageView.image = self.pictures[indexPath.row]
+                
                 cell.playImageView.isHidden = true
                             
                 cell.dateLabel.text = date
@@ -277,13 +281,15 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
             date = currentDateFormater.string(from: postDate!)
             
             DispatchQueue.main.async {
-                self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
-
-                    if avatarImage != nil {
-
-                        cell.avaImageView.image = avatarImage!.circleMasked
-                    }
-                }
+//                self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
+//
+//                    if avatarImage != nil {
+//
+//                        cell.avaImageView.image = avatarImage!.circleMasked
+//                    }
+//                }
+                cell.avaImageView.image = self.avas[indexPath.row]
+                
                 cell.dateLabel.text = date
                 
                 cell.fullnameLabel.text = post.postUserName
@@ -292,7 +298,6 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
 
                 cell.urlTextView.text = post.postUrlLink
             }
-
             
              return cell
         }
