@@ -249,26 +249,36 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         
 
         if post.postType == "video" {
+            
+            cellPic.avaImageView.image = self.avas[indexPath.row]
+            cellPic.pictureImageView.image = self.pictures[indexPath.row]
+            cellPic.playImageView.isHidden = false
+            
+            cellPic.postTextLabel.numberOfLines = 0
+            cellPic.postTextLabel.text = post.text
             //DispatchQueue.main.async {
                 cellPic.dateLabel.text = self.postDatesArray[indexPath.row]
-                cellPic.avaImageView.image = self.avas[indexPath.row]
                 
-                cellPic.pictureImageView.image = self.pictures[indexPath.row]
-                cellPic.playImageView.isHidden = false
                 
                 cellPic.delegate = self
                 cellPic.indexPath = indexPath
                 cellPic.fullnameLabel.text = post.postUserName
-                cellPic.postTextLabel.text = post.text
+                
                 cellPic.urlTextView.text = post.postUrlLink
             //}
 
              return cellPic
             
         } else if post.postType == "picture" {
+            
+            cellPic.avaImageView.image = self.avas[indexPath.row]
+            cellPic.pictureImageView.image = self.pictures[indexPath.row]
+            
+            cellPic.postTextLabel.numberOfLines = 0
+            cellPic.postTextLabel.text = post.text
+            
             //DispatchQueue.main.async {
-                cellPic.avaImageView.image = self.avas[indexPath.row]
-                cellPic.pictureImageView.image = self.pictures[indexPath.row]
+                
                 
                 cellPic.playImageView.isHidden = true
                             
@@ -276,7 +286,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                 cellPic.delegate = self
                 cellPic.indexPath = indexPath
                 cellPic.fullnameLabel.text = post.postUserName
-                cellPic.postTextLabel.text = post.text
+                
                 cellPic.urlTextView.text = post.postUrlLink
             //}
             
@@ -284,16 +294,17 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
             
         } else {
             let cellNoPic = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
+            
+            cellNoPic.postTextLabel.numberOfLines = 0
+            cellNoPic.postTextLabel.text = post.text
+            
             //DispatchQueue.main.async {
-                cellNoPic.postTextLabel.numberOfLines = 0
                 
                 cellNoPic.avaImageView.image = self.avas[indexPath.row]
                 
                 cellNoPic.dateLabel.text = self.postDatesArray[indexPath.row]
                 
                 cellNoPic.fullnameLabel.text = post.postUserName
-
-                cellNoPic.postTextLabel.text = post.text
 
                 cellNoPic.urlTextView.text = post.postUrlLink
             //}

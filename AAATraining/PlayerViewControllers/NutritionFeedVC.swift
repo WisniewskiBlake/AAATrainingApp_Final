@@ -42,7 +42,7 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
         super.viewDidLoad()
         
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 200
+        tableView.estimatedRowHeight = 300
         
         // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadNutritionPosts), name: NSNotification.Name(rawValue: "createNutritionPost"), object: nil)
@@ -140,6 +140,14 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
     }
 
     // MARK: - Table view data source
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -158,56 +166,61 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
             
             if post.nutritionPostType == "video" {
-                
-                DispatchQueue.main.async {
+                cell.pictureImageView.image = self.pictures[indexPath.row]
+                cell.avaImageView.image = self.avas[indexPath.row]
+                cell.postTextLabel.text = post.nutritionText
+                //DispatchQueue.main.async {
                     
                     cell.playImageView.isHidden = false
                     cell.dateLabel.text = self.postDatesArray[indexPath.row]
-                    cell.avaImageView.image = self.avas[indexPath.row]
+                    
                     
                     cell.delegate = self
                     cell.indexPath = indexPath
                     cell.fullnameLabel.text = post.nutritionPostUserName
-                    cell.pictureImageView.image = self.pictures[indexPath.row]
-                    cell.postTextLabel.text = post.nutritionText
+                    
+                    
                     cell.urlTextView.text = post.nutritionPostUrlLink
                     cell.optionsButton.tag = indexPath.row
                     
                     if FUser.currentUser()?.accountType == "player" {
                         cell.optionsButton.isHidden = true
                     }
-                }
+                //}
                 
                 
                  return cell
                 
             } else if post.nutritionPostType == "picture" {
-                DispatchQueue.main.async {
-                    
-                    cell.playImageView.isHidden = true
-                    cell.dateLabel.text = self.postDatesArray[indexPath.row]
-                    
+                //DispatchQueue.main.async {
                     cell.avaImageView.image = self.avas[indexPath.row]
                     cell.pictureImageView.image = self.pictures[indexPath.row]
+                    cell.playImageView.isHidden = true
+                    cell.dateLabel.text = self.postDatesArray[indexPath.row]
+                    cell.postTextLabel.text = post.nutritionText
+                    
+                    
                     
                     cell.delegate = self
                     cell.indexPath = indexPath
                     cell.fullnameLabel.text = post.nutritionPostUserName
-                    cell.postTextLabel.text = post.nutritionText
+                    
                     cell.urlTextView.text = post.nutritionPostUrlLink
                     cell.optionsButton.tag = indexPath.row
                     
                     if FUser.currentUser()?.accountType == "player" {
                         cell.optionsButton.isHidden = true
                     }
-                }
+                //}
                 
                 return cell
                 
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
                 
-                DispatchQueue.main.async {
+                cell.postTextLabel.text = post.nutritionText
+                
+                //DispatchQueue.main.async {
                     
                     cell.dateLabel.text = self.postDatesArray[indexPath.row]
                     
@@ -215,7 +228,7 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
                     
                     cell.fullnameLabel.text = post.nutritionPostUserName
 
-                    cell.postTextLabel.text = post.nutritionText
+                    
 
                     cell.urlTextView.text = post.nutritionPostUrlLink
                     
@@ -226,7 +239,7 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
                     }
                     
                     
-                }
+                //}
                 
                  return cell
                 
