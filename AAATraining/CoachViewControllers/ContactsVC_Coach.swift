@@ -86,6 +86,7 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     }
     
     @IBAction func nextButtonPressed(_ sender: Any) {
+        
         let newGroupVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newGroupView") as! NewGroupVC_Coach
         //let newGroupVC = NewGroupVC_Coach()
         newGroupVC.memberIds = memberIdsOfGroupChat
@@ -111,7 +112,6 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
            default:
                query = reference(.User).order(by: kFIRSTNAME, descending: false)
            }
-        
            
            query.getDocuments { (snapshot, error) in
                
@@ -290,7 +290,7 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
                 membersOfGroupChat.append(userToChat)
             }
             
-            self.navigationItem.rightBarButtonItem?.isEnabled = memberIdsOfGroupChat.count > 0
+            self.navigationItem.rightBarButtonItem?.isEnabled = memberIdsOfGroupChat.count > 1
         
         
     }
