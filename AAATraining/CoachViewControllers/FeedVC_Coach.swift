@@ -39,7 +39,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         //configureNavBar()
         // dynamic cell height
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 200
+        tableView.estimatedRowHeight = 300
         
         setBadges(controller: self.tabBarController!, accountType: "coach")       
         setCalendarBadges(controller: self.tabBarController!, accountType: "coach")
@@ -231,6 +231,14 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
 //
 //    }
     
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var post: Post
@@ -241,7 +249,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         
 
         if post.postType == "video" {
-            DispatchQueue.main.async {
+            //DispatchQueue.main.async {
                 cellPic.dateLabel.text = self.postDatesArray[indexPath.row]
                 cellPic.avaImageView.image = self.avas[indexPath.row]
                 
@@ -253,12 +261,12 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                 cellPic.fullnameLabel.text = post.postUserName
                 cellPic.postTextLabel.text = post.text
                 cellPic.urlTextView.text = post.postUrlLink
-            }
+            //}
 
              return cellPic
             
         } else if post.postType == "picture" {
-            DispatchQueue.main.async {
+            //DispatchQueue.main.async {
                 cellPic.avaImageView.image = self.avas[indexPath.row]
                 cellPic.pictureImageView.image = self.pictures[indexPath.row]
                 
@@ -270,13 +278,15 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                 cellPic.fullnameLabel.text = post.postUserName
                 cellPic.postTextLabel.text = post.text
                 cellPic.urlTextView.text = post.postUrlLink
-            }
+            //}
             
             return cellPic
             
         } else {
             let cellNoPic = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
-            DispatchQueue.main.async {
+            //DispatchQueue.main.async {
+                cellNoPic.postTextLabel.numberOfLines = 0
+                
                 cellNoPic.avaImageView.image = self.avas[indexPath.row]
                 
                 cellNoPic.dateLabel.text = self.postDatesArray[indexPath.row]
@@ -286,7 +296,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                 cellNoPic.postTextLabel.text = post.text
 
                 cellNoPic.urlTextView.text = post.postUrlLink
-            }
+            //}
                              
              return cellNoPic
         }
