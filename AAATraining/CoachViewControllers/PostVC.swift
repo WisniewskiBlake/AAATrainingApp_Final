@@ -40,8 +40,11 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
                 uploadPostVideo(video: videoData!, view: self.navigationController!.view) { (videoLink) in
 
                     if videoLink != nil {
+                        let thumbImage = self.createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: videoLink!)!)
+                        let pictureData = thumbImage?.jpegData(compressionQuality: 0.4)!
+                        let thumbToUpload = pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
                         let fullName = FUser.currentUser()!.firstname + " " + FUser.currentUser()!.lastname
-                        let post = Post(postID: self.postID, ownerID: FUser.currentId(), text: self.postTextView.text, picture: "", date: "", postUserAva: FUser.currentUser()!.ava, postUserName: fullName, video: videoLink!, postType: "video", postUrlLink: self.urlLinkTextField.text!)
+                        let post = Post(postID: self.postID, ownerID: FUser.currentId(), text: self.postTextView.text, picture: thumbToUpload!, date: "", postUserAva: FUser.currentUser()!.ava, postUserName: fullName, video: videoLink!, postType: "video", postUrlLink: self.urlLinkTextField.text!)
                         
                         post.savePost()
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createPost"), object: nil)

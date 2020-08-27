@@ -161,8 +161,12 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                                 }
 
                             } else if post.video != "" {
-                                if let thumbImage = self.createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: post.video)!) {
-                                    self.pictures.append(thumbImage)
+                                
+                                self.helper.imageFromData(pictureData: post.picture) { (pictureImage) in
+
+                                    if pictureImage != nil {
+                                        self.pictures.append(pictureImage!)
+                                    }
                                 }
                                 
                             } else {
@@ -174,7 +178,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                        self.tableView.reloadData()
                     
                    }
-            ProgressHUD.dismiss()
+                ProgressHUD.dismiss()
                })
         //}
         
