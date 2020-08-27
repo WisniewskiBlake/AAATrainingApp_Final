@@ -185,104 +185,80 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             var post: Post
-                    
-            post = allPosts[indexPath.row]
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
-            if post.postType == "video" {
-                
-                DispatchQueue.main.async {
-                    cell.playImageView.isHidden = false
-                    let thumbImage = self.createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: post.video)!)
-                     var date: String?
-                    let currentDateFormater = self.helper.dateFormatter()
-                     currentDateFormater.dateFormat = "MM/dd/YYYY"
-                    let postDate = self.helper.dateFormatter().date(from: post.date)
-                     date = currentDateFormater.string(from: postDate!)
-                     cell.dateLabel.text = date
-                     
-                    self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
-
-                         if avatarImage != nil {
-
-                             cell.avaImageView.image = avatarImage!.circleMasked
-                         }
-                     }
-                    
-                    cell.delegate = self
-                    cell.indexPath = indexPath
-                    cell.fullnameLabel.text = post.postUserName
-                    cell.pictureImageView.image = thumbImage
-                    cell.postTextLabel.text = post.text
-                    cell.urlTextView.text = post.postUrlLink
-                }
-                
-
-                return cell
             
-            } else if post.postType == "picture" {
-                
-                DispatchQueue.main.async {
-                    cell.playImageView.isHidden = true
+            let cellPic = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
+            
+            if allPosts.count > 0 {
+                post = allPosts[indexPath.row]
+
+                if post.postType == "video" {
                     
-                      var date: String?
-                    let currentDateFormater = self.helper.dateFormatter()
-                      currentDateFormater.dateFormat = "MM/dd/YYYY"
-                    let postDate = self.helper.dateFormatter().date(from: post.date)
-                      date = currentDateFormater.string(from: postDate!)
-                      cell.dateLabel.text = date
-                      
-                    self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
-
-                          if avatarImage != nil {
-
-                              cell.avaImageView.image = avatarImage!.circleMasked
-                          }
-                      }
-                     downloadImage(imageUrl: post.picture) { (image) in
-                         
-                         if image != nil {
-                             cell.pictureImageView.image = image!
-                         }
-                     }
-
-                     cell.delegate = self
-                     cell.indexPath = indexPath
-                     cell.fullnameLabel.text = post.postUserName
-                     cell.postTextLabel.text = post.text
-                     cell.urlTextView.text = post.postUrlLink
-                }
-                
-
-                return cell
-                
-            } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
-                
-                DispatchQueue.main.async {
-                    var date: String?
-                    let currentDateFormater = self.helper.dateFormatter()
-                     currentDateFormater.dateFormat = "MM/dd/YYYY"
-                    let postDate = self.helper.dateFormatter().date(from: post.date)
-                     date = currentDateFormater.string(from: postDate!)
-                     cell.dateLabel.text = date
-                     
-                    self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
-
-                         if avatarImage != nil {
-                             cell.avaImageView.image = avatarImage!.circleMasked
-                         }
-                     }
-                     
-                     cell.fullnameLabel.text = post.postUserName
-
-                     cell.postTextLabel.text = post.text
+                    cellPic.avaImageView.image = self.avas[indexPath.row]
+                    cellPic.pictureImageView.image = self.pictures[indexPath.row]
+                    cellPic.playImageView.isHidden = false
                     
-                     cell.urlTextView.text = post.postUrlLink
-                }
-                 
+                    cellPic.postTextLabel.numberOfLines = 0
+                    cellPic.postTextLabel.text = post.text
+                    //DispatchQueue.main.async {
+                        cellPic.dateLabel.text = self.postDatesArray[indexPath.row]
+                        
+                        
+                        cellPic.delegate = self
+                        cellPic.indexPath = indexPath
+                        cellPic.fullnameLabel.text = post.postUserName
+                        
+                        cellPic.urlTextView.text = post.postUrlLink
+                    //}
 
-                 return cell
+                     return cellPic
+                    
+                } else if post.postType == "picture" {
+                    
+                    cellPic.avaImageView.image = self.avas[indexPath.row]
+                    cellPic.pictureImageView.image = self.pictures[indexPath.row]
+                    
+                    cellPic.postTextLabel.numberOfLines = 0
+                    cellPic.postTextLabel.text = post.text
+                    
+                    //DispatchQueue.main.async {
+                        
+                        
+                        cellPic.playImageView.isHidden = true
+                                    
+                        cellPic.dateLabel.text = self.postDatesArray[indexPath.row]
+                        cellPic.delegate = self
+                        cellPic.indexPath = indexPath
+                        cellPic.fullnameLabel.text = post.postUserName
+                        
+                        cellPic.urlTextView.text = post.postUrlLink
+                    //}
+                    
+                    return cellPic
+                    
+                } else {
+                    let cellNoPic = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
+                    
+                    cellNoPic.postTextLabel.numberOfLines = 0
+                    cellNoPic.postTextLabel.text = post.text
+                    
+                    //DispatchQueue.main.async {
+                        
+                        cellNoPic.avaImageView.image = self.avas[indexPath.row]
+                        
+                        cellNoPic.dateLabel.text = self.postDatesArray[indexPath.row]
+                        
+                        cellNoPic.fullnameLabel.text = post.postUserName
+
+                        cellNoPic.urlTextView.text = post.postUrlLink
+                    //}
+                                     
+                     return cellNoPic
+                }
             }
+                    
+            
+            
+            return cellPic
         }
     
     func createThumbnailOfVideoFromRemoteUrl(url: NSURL) -> UIImage? {
