@@ -41,8 +41,7 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 300
+        configureUI()
         
         // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadNutritionPosts), name: NSNotification.Name(rawValue: "createNutritionPost"), object: nil)
@@ -55,8 +54,6 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
         if accountType == "player" {
             composeButton.isEnabled = false
         }
-        
-        currentDateFormater.dateFormat = "MM/dd/YYYY"
        
         loadNutritionPosts()
         
@@ -69,6 +66,22 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
     }
     override func viewWillDisappear(_ animated: Bool) {
         recentListener.remove()
+    }
+    
+    func configureUI() {
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 300
+                
+        currentDateFormater.dateFormat = "MM/dd/YYYY"
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+    }
+    
+    @objc func handleRefresh() {
+        loadNutritionPosts()
+        self.refreshControl?.endRefreshing()
     }
     
     // MARK: - Load Posts
@@ -101,26 +114,32 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
                            self.allPosts.append(post)
                            self.helper.imageFromData(pictureData: post.nutritionPostUserAva) { (avatarImage) in
 
-                                if avatarImage != nil {
-                                    self.avas.append(avatarImage!.circleMasked!)
-                                }
-                            }
-                            if post.nutritionPicture != "" {
-                                downloadImage(imageUrl: post.nutritionPicture) { (image) in
-                                    
-                                    if image != nil {
-                                        self.pictures.append(image!)
-                                    }
-                                }
-                            } else if post.nutritionVideo != "" {
-                                let thumbImage = self.createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: post.nutritionVideo)!)
-                                self.pictures.append(thumbImage!)
-                            } else {
-                                self.pictures.append(UIImage())
-                            }
-                            let postDate = self.helper.dateFormatter().date(from: post.nutritionDate)
-                            self.postDatesArray.append(self.currentDateFormater.string(from: postDate!))
-                        
+                                   if avatarImage != nil {
+                                       self.avas.append(avatarImage!.circleMasked!)
+                                   }
+                               }
+                               if post.nutritionPicture != "" {
+                                   self.helper.imageFromData(pictureData: post.nutritionPicture) { (pictureImage) in
+
+                                       if pictureImage != nil {
+                                           self.pictures.append(pictureImage!)
+                                       }
+                                   }
+
+                               } else if post.nutritionVideo != "" {
+                                   
+                                   self.helper.imageFromData(pictureData: post.nutritionPicture) { (pictureImage) in
+
+                                       if pictureImage != nil {
+                                           self.pictures.append(pictureImage!)
+                                       }
+                                   }
+                                   
+                               } else {
+                                   self.pictures.append(UIImage())
+                               }
+                           let postDate = self.helper.dateFormatter().date(from: post.nutritionDate)
+                           self.postDatesArray.append(self.currentDateFormater.string(from: postDate!))
                        }
                        self.tableView.reloadData()
                     
@@ -163,87 +182,77 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
                     
             post = allPosts[indexPath.row]
         
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
+            let cellPic = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
             
-            if post.nutritionPostType == "video" {
-                cell.pictureImageView.image = self.pictures[indexPath.row]
-                cell.avaImageView.image = self.avas[indexPath.row]
-                cell.postTextLabel.text = post.nutritionText
-                //DispatchQueue.main.async {
-                    
-                    cell.playImageView.isHidden = false
-                    cell.dateLabel.text = self.postDatesArray[indexPath.row]
-                    
-                    
-                    cell.delegate = self
-                    cell.indexPath = indexPath
-                    cell.fullnameLabel.text = post.nutritionPostUserName
-                    
-                    
-                    cell.urlTextView.text = post.nutritionPostUrlLink
-                    cell.optionsButton.tag = indexPath.row
-                    
-                    if FUser.currentUser()?.accountType == "player" {
-                        cell.optionsButton.isHidden = true
-                    }
-                //}
-                
-                
-                 return cell
-                
-            } else if post.nutritionPostType == "picture" {
-                //DispatchQueue.main.async {
-                    cell.avaImageView.image = self.avas[indexPath.row]
-                    cell.pictureImageView.image = self.pictures[indexPath.row]
-                    cell.playImageView.isHidden = true
-                    cell.dateLabel.text = self.postDatesArray[indexPath.row]
-                    cell.postTextLabel.text = post.nutritionText
-                    
-                    
-                    
-                    cell.delegate = self
-                    cell.indexPath = indexPath
-                    cell.fullnameLabel.text = post.nutritionPostUserName
-                    
-                    cell.urlTextView.text = post.nutritionPostUrlLink
-                    cell.optionsButton.tag = indexPath.row
-                    
-                    if FUser.currentUser()?.accountType == "player" {
-                        cell.optionsButton.isHidden = true
-                    }
-                //}
-                
-                return cell
-                
-            } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
-                
-                cell.postTextLabel.text = post.nutritionText
-                
-                //DispatchQueue.main.async {
-                    
-                    cell.dateLabel.text = self.postDatesArray[indexPath.row]
-                    
-                    cell.avaImageView.image = self.avas[indexPath.row]
-                    
-                    cell.fullnameLabel.text = post.nutritionPostUserName
+            if allPosts.count > 0 {
+                post = allPosts[indexPath.row]
 
+                if post.nutritionPostType == "video" {
                     
+                    cellPic.avaImageView.image = self.avas[indexPath.row]
+                    cellPic.pictureImageView.image = self.pictures[indexPath.row]
+                    cellPic.playImageView.isHidden = false
+                    
+                    cellPic.postTextLabel.numberOfLines = 0
+                    cellPic.postTextLabel.text = post.nutritionText
+                    //DispatchQueue.main.async {
+                        cellPic.dateLabel.text = self.postDatesArray[indexPath.row]
+                        
+                        
+                        cellPic.delegate = self
+                        cellPic.indexPath = indexPath
+                        cellPic.fullnameLabel.text = post.nutritionPostUserName
+                        
+                        cellPic.urlTextView.text = post.nutritionPostUrlLink
+                    //}
 
-                    cell.urlTextView.text = post.nutritionPostUrlLink
+                     return cellPic
                     
-                    cell.optionsButton.tag = indexPath.row
+                } else if post.nutritionPostType == "picture" {
                     
-                    if FUser.currentUser()?.accountType == "player" {
-                        cell.optionsButton.isHidden = true
-                    }
+                    cellPic.avaImageView.image = self.avas[indexPath.row]
+                    cellPic.pictureImageView.image = self.pictures[indexPath.row]
                     
+                    cellPic.postTextLabel.numberOfLines = 0
+                    cellPic.postTextLabel.text = post.nutritionText
                     
-                //}
-                
-                 return cell
-                
+                    //DispatchQueue.main.async {
+                        
+                        
+                        cellPic.playImageView.isHidden = true
+                                    
+                        cellPic.dateLabel.text = self.postDatesArray[indexPath.row]
+                        cellPic.delegate = self
+                        cellPic.indexPath = indexPath
+                        cellPic.fullnameLabel.text = post.nutritionPostUserName
+                        
+                        cellPic.urlTextView.text = post.nutritionPostUrlLink
+                    //}
+                    
+                    return cellPic
+                    
+                } else {
+                    let cellNoPic = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
+                    
+                    cellNoPic.postTextLabel.numberOfLines = 0
+                    cellNoPic.postTextLabel.text = post.nutritionText
+                    
+                    //DispatchQueue.main.async {
+                        
+                        cellNoPic.avaImageView.image = self.avas[indexPath.row]
+                        
+                        cellNoPic.dateLabel.text = self.postDatesArray[indexPath.row]
+                        
+                        cellNoPic.fullnameLabel.text = post.nutritionPostUserName
+
+                        cellNoPic.urlTextView.text = post.nutritionPostUrlLink
+                    //}
+                                     
+                     return cellNoPic
+                }
             }
+                 
+            return cellPic
     }
     
     @IBAction func deleteButtonClicked(_ optionButton: UIButton) {
@@ -289,24 +298,7 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
         
     }
     
-    
-    
-    func createThumbnailOfVideoFromRemoteUrl(url: NSURL) -> UIImage? {
-        let asset = AVAsset(url: url as URL)
-        let assetImgGenerate = AVAssetImageGenerator(asset: asset)
-        assetImgGenerate.appliesPreferredTrackTransform = true
-        //Can set this to improve performance if target size is known before hand
-        //assetImgGenerate.maximumSize = CGSize(width,height)
-        let time = CMTimeMakeWithSeconds(1.0, preferredTimescale: 600)
-        do {
-            let img = try assetImgGenerate.copyCGImage(at: time, actualTime: nil)
-            let thumbnail = UIImage(cgImage: img)
-            return thumbnail
-        } catch {
-          print(error.localizedDescription)
-          return nil
-        }
-    }
+
     
     func didTapMediaImage(indexPath: IndexPath) {
         let post = allPosts[indexPath.row]
@@ -329,10 +321,10 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
             }
         }
         if postType == "picture" {
-            downloadImage(imageUrl: post.nutritionPicture) { (image) in
-                
-                if image != nil {
-                    let photos = IDMPhoto.photos(withImages: [image as Any])
+            self.helper.imageFromData(pictureData: post.nutritionPicture) { (pictureImage) in
+
+                if pictureImage != nil {
+                    let photos = IDMPhoto.photos(withImages: [pictureImage as Any])
                     let browser = IDMPhotoBrowser(photos: photos)
                     
                     self.present(browser!, animated: true, completion: nil)
