@@ -67,6 +67,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "uploadPost"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "deletePost"), object: nil)
+        
         baselineTapGestureRecognizer.addTarget(self, action: #selector(self.baselineViewClicked))
         baselineView.isUserInteractionEnabled = true
         baselineView.addGestureRecognizer(baselineTapGestureRecognizer)
@@ -529,6 +531,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         tableView.deleteRows(at: [indexPath], with: .automatic)
         tableView.endUpdates()
         tableView.reloadData()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "deletePost"), object: nil)
         
     }
     
