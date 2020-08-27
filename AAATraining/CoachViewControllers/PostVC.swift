@@ -178,7 +178,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
         sharePhoto.setValue(UIImage(named: "picture"), forKey: "image")
         shareVideo.setValue(UIImage(named: "video"), forKey: "image")
         
-        optionMenu.addAction(takePhotoOrVideo)
+//        optionMenu.addAction(takePhotoOrVideo)
         optionMenu.addAction(sharePhoto)
         optionMenu.addAction(shareVideo)
         optionMenu.addAction(cancelAction)

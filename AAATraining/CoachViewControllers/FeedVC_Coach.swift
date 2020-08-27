@@ -37,13 +37,8 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //configureNavBar()
-        // dynamic cell height
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 300
         
-        setBadges(controller: self.tabBarController!, accountType: "coach")       
-        setCalendarBadges(controller: self.tabBarController!, accountType: "coach")
+        configureUI()
         
         // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "createPost"), object: nil)
@@ -53,11 +48,30 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadPostsAfterDelete), name: NSNotification.Name(rawValue: "deletePost"), object: nil)
         
-        currentDateFormater.dateFormat = "MM/dd/YYYY"
+        
 
         // run function
         loadPosts()
         
+    }
+    
+    func configureUI() {
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 300
+        
+        setBadges(controller: self.tabBarController!, accountType: "coach")
+        setCalendarBadges(controller: self.tabBarController!, accountType: "coach")
+        
+        currentDateFormater.dateFormat = "MM/dd/YYYY"
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+    }
+    
+    @objc func handleRefresh() {
+        loadPosts()
+        self.refreshControl?.endRefreshing()
     }
     
     func didTapMediaImage(indexPath: IndexPath) {
