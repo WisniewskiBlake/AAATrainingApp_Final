@@ -213,12 +213,6 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
     
     }
     
-    // MARK: - Load More
-    // loading more posts from the server via PHP protocol
-    @objc func loadMore() {
-        
-    }
-
     
     // MARK: - Table view data source
 
@@ -230,19 +224,6 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-    
-//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        var post: Post
-//        post = allPosts[indexPath.row]
-//
-//        if post.postType == "video" || post.postType == "picture" {
-//            return 470
-//        } else {
-//            return 156
-//        }
-//
-//
-//    }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return UITableView.automaticDimension
@@ -335,18 +316,18 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
     
     // MARK: - Scroll Did Scroll
     // executed always whenever tableView is scrolling
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        // load more posts when the scroll is about to reach the bottom AND currently is not loading (posts)
-        let a = tableView.contentOffset.y - tableView.contentSize.height + 60
-        let b = -tableView.frame.height
-        
-        if a > b && isLoading == false {
-            loadMore()
-
-        }
-        
-    }
+//    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//
+//        // load more posts when the scroll is about to reach the bottom AND currently is not loading (posts)
+//        let a = tableView.contentOffset.y - tableView.contentSize.height + 60
+//        let b = -tableView.frame.height
+//
+//        if a > b && isLoading == false {
+//            loadMore()
+//
+//        }
+//
+//    }
 
     
     

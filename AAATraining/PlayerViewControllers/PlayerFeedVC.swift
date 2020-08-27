@@ -26,6 +26,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate {
        
        var avas = [UIImage]()
        var pictures = [UIImage]()
+       var postDatesArray: [String] = []
        var skip = 0
        var limit = 25
        var isLoading = false
@@ -34,20 +35,15 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate {
        var lastNames : [String] = []
     
        let helper = Helper()
+       let currentDateFormater = Helper().dateFormatter()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        //configureNavBar()
-        // dynamic cell height
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 200
         
-        setBadges(controller: self.tabBarController!, accountType: "player")
-        setCalendarBadges(controller: self.tabBarController!, accountType: "player")
+        configureUI()
         
         // add observers for notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(loadNewPosts), name: NSNotification.Name(rawValue: "uploadPost"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadNewPosts), name: NSNotification.Name(rawValue: "createPost"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadAvaAfterUpload), name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
         // add observers for notifications
@@ -55,17 +51,10 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(loadPostsAfterDelete), name: NSNotification.Name(rawValue: "deletePost"), object: nil)
         
     
-        
-        
         // run function
         loadPosts()
     }
     
-    func configureNavBar() {
-        let imageView = UIImageView(image: UIImage(named: "aaaLogo.png"))
-        imageView.contentMode = .scaleAspectFit
-        navigationItem.titleView = imageView
-    }
     
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
@@ -78,13 +67,69 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate {
         recentListener.remove()
     }
     
+    func configureUI() {
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 300
+        
+        setBadges(controller: self.tabBarController!, accountType: "player")
+        setCalendarBadges(controller: self.tabBarController!, accountType: "player")
+        
+        currentDateFormater.dateFormat = "MM/dd/YYYY"
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+    }
+    
+    @objc func handleRefresh() {
+        loadPosts()
+        self.refreshControl?.endRefreshing()
+    }
+    
+    func didTapMediaImage(indexPath: IndexPath) {
+        let post = allPosts[indexPath.row]
+        let postType = post.postType
+        
+        if postType == "video" {
+            let mediaItem = post.video
+            
+            let player = AVPlayer(url: Foundation.URL(string: mediaItem)!)
+            let moviewPlayer = AVPlayerViewController()
+            
+            let session = AVAudioSession.sharedInstance()
+            
+            try! session.setCategory(.playAndRecord, mode: .default, options: .defaultToSpeaker)
+
+            moviewPlayer.player = player
+            
+            self.present(moviewPlayer, animated: true) {
+                moviewPlayer.player!.play()
+            }
+        }
+        if postType == "picture" {
+            self.helper.imageFromData(pictureData: post.picture) { (pictureImage) in
+
+                if pictureImage != nil {
+                    let photos = IDMPhoto.photos(withImages: [pictureImage as Any])
+                    let browser = IDMPhotoBrowser(photos: photos)
+                    
+                    self.present(browser!, animated: true, completion: nil)
+                }
+            }
+            
+        }
+    }
+    
     // MARK: - Load Posts
     @objc func loadPosts() {
         ProgressHUD.show()
-        DispatchQueue.main.async {
+        
             self.recentListener = reference(.Post).order(by: kPOSTDATE, descending: true).addSnapshotListener({ (snapshot, error) in
                    
-                    self.allPosts = []
+                self.allPosts = []
+                self.avas = []
+                self.pictures = []
+                self.postDatesArray = []
             
             if error != nil {
                 print(error!.localizedDescription)
@@ -100,17 +145,44 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate {
                            
                            let userDictionary = userDictionary.data() as NSDictionary
                            
-                        let post = Post(_dictionary: userDictionary)
+                           let post = Post(_dictionary: userDictionary)
                            
                            self.allPosts.append(post)
-                        print(self.allPosts)
+                        self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
+
+                                if avatarImage != nil {
+                                    self.avas.append(avatarImage!.circleMasked!)
+                                }
+                            }
+                            if post.picture != "" {
+                                self.helper.imageFromData(pictureData: post.picture) { (pictureImage) in
+
+                                    if pictureImage != nil {
+                                        self.pictures.append(pictureImage!)
+                                    }
+                                }
+
+                            } else if post.video != "" {
+                                
+                                self.helper.imageFromData(pictureData: post.picture) { (pictureImage) in
+
+                                    if pictureImage != nil {
+                                        self.pictures.append(pictureImage!)
+                                    }
+                                }
+                                
+                            } else {
+                                self.pictures.append(UIImage())
+                            }
+                        let postDate = self.helper.dateFormatter().date(from: post.date)
+                        self.postDatesArray.append(self.currentDateFormater.string(from: postDate!))
                        }
                        self.tableView.reloadData()
                     
                    }
             ProgressHUD.dismiss()
             })
-        }
+        
     }
     
     // MARK: - Load New
@@ -137,39 +209,6 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate {
      
          }
     
-    func didTapMediaImage(indexPath: IndexPath) {
-        let post = allPosts[indexPath.row]
-        let postType = post.postType
-        
-        if postType == "video" {
-            let mediaItem = post.video
-            
-            let player = AVPlayer(url: Foundation.URL(string: mediaItem)!)
-            let moviewPlayer = AVPlayerViewController()
-            
-            let session = AVAudioSession.sharedInstance()
-            
-            try! session.setCategory(.playAndRecord, mode: .default, options: .defaultToSpeaker)
-
-            moviewPlayer.player = player
-            
-            self.present(moviewPlayer, animated: true) {
-                moviewPlayer.player!.play()
-            }
-        }
-        if postType == "picture" {
-            downloadImage(imageUrl: post.picture) { (image) in
-                
-                if image != nil {
-                    let photos = IDMPhoto.photos(withImages: [image as Any])
-                    let browser = IDMPhotoBrowser(photos: photos)
-                    
-                    self.present(browser!, animated: true, completion: nil)
-                }
-            }
-            
-        }
-    }
 
     // MARK: - Table view data source
 
@@ -181,6 +220,14 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return allPosts.count
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -264,25 +311,17 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate {
     
     // MARK: - Scroll Did Scroll
     // executed always whenever tableView is scrolling
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        // load more posts when the scroll is about to reach the bottom AND currently is not loading (posts)
-        let a = tableView.contentOffset.y - tableView.contentSize.height + 60
-        let b = -tableView.frame.height
-        
-        if a > b && isLoading == false {
-            loadMore()
-
-        }
-        
-    }
-    
-    // MARK: - Load More
-    // loading more posts from the server via PHP protocol
-    @objc func loadMore() {
-        
-    }
-
-    
+//    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        
+//        // load more posts when the scroll is about to reach the bottom AND currently is not loading (posts)
+//        let a = tableView.contentOffset.y - tableView.contentSize.height + 60
+//        let b = -tableView.frame.height
+//        
+//        if a > b && isLoading == false {
+//            loadMore()
+//
+//        }
+//        
+//    }
 
 }
