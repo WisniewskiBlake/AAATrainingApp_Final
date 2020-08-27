@@ -14,6 +14,7 @@ import PushKit
 import OneSignal
 import FirebaseAuth
 import Sinch
+import FirebaseFirestore
 
 
 @UIApplicationMain
@@ -34,7 +35,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // Override point for customization after application launch.
         
         FirebaseApp.configure()
-        
+        let settings = FirestoreSettings()
+        settings.isPersistenceEnabled = false
+        let db = Firestore.firestore()
+        db.settings = settings
 
         
         UINavigationBar.appearance().barTintColor = #colorLiteral(red: 0.1006183103, green: 0.2956552207, blue: 0.71825701, alpha: 1)

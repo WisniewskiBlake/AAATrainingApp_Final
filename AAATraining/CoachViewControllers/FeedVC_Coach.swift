@@ -111,7 +111,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        loadPosts()
+        //loadPosts()
 
     }
     
@@ -125,7 +125,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         ProgressHUD.show()
         
         //DispatchQueue.main.async {
-            self.recentListener = reference(.Post).order(by: kPOSTDATE, descending: true).addSnapshotListener({ (snapshot, error) in
+        self.recentListener = reference(.Post).order(by: kPOSTDATE, descending: true).limit(to: 100).addSnapshotListener({ (snapshot, error) in
                    
             self.allPosts = []
             self.avas = []

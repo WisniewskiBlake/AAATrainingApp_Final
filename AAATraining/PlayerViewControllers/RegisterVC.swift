@@ -242,27 +242,7 @@ class RegisterVC: UIViewController {
         }
     }
     
-    // func will be executed whenever any date is selected
-//    @objc func datePickerDidChange(_ datePicker: UIDatePicker) {
-//
-//        // declaring the format to be used in TextField while presenting the date
-//        let formatter = DateFormatter()
-//        formatter.dateStyle = DateFormatter.Style.medium
-//        birthdayTextField.text = formatter.string(from: datePicker.date)
-//
-//        // declaring the format of date, then to place a dummy date into this format
-//        let compareDateFormatter = DateFormatter()
-//        compareDateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
-//        let compareDate = compareDateFormatter.date(from: "2011/01/01 00:01")
-//
-//        // IF logic. If user is older than 5 years, show Continue Button
-//        if datePicker.date < compareDate! {
-//            birthdayContinueButton.isHidden = false
-//        } else {
-//            birthdayContinueButton.isHidden = true
-//        }
-//
-//    }
+
     
     // called once Swiped to the direction Right ->
     @objc func handle(_ gesture: UISwipeGestureRecognizer) {

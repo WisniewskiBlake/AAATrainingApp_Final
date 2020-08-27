@@ -59,7 +59,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate {
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadPosts()
+        //loadPosts()
         //navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
@@ -124,7 +124,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate {
     @objc func loadPosts() {
         ProgressHUD.show()
         
-            self.recentListener = reference(.Post).order(by: kPOSTDATE, descending: true).addSnapshotListener({ (snapshot, error) in
+            self.recentListener = reference(.Post).order(by: kPOSTDATE, descending: true).limit(to: 100).addSnapshotListener({ (snapshot, error) in
                    
                 self.allPosts = []
                 self.avas = []
@@ -312,16 +312,16 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate {
     // MARK: - Scroll Did Scroll
     // executed always whenever tableView is scrolling
 //    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        
+//
 //        // load more posts when the scroll is about to reach the bottom AND currently is not loading (posts)
 //        let a = tableView.contentOffset.y - tableView.contentSize.height + 60
 //        let b = -tableView.frame.height
-//        
+//
 //        if a > b && isLoading == false {
 //            loadMore()
 //
 //        }
-//        
+//
 //    }
 
 }

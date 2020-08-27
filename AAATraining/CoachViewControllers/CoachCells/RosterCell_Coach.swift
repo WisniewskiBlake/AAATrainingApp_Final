@@ -48,10 +48,13 @@ class RosterCell_Coach: UITableViewCell {
         
         if fUser.accountType == "player" {
             self.infoLabel.text = fUser.position.capitalized + ", #" + fUser.number
+            self.accessoryType = .disclosureIndicator
         } else if fUser.accountType == "coach" {
             self.infoLabel.text = "Coach"
+            self.accessoryType = .none
         } else {
             self.infoLabel.text = ""
+            self.accessoryType = .none
         }
         
         

@@ -62,7 +62,7 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadNutritionPosts()
+        //loadNutritionPosts()
     }
     override func viewWillDisappear(_ animated: Bool) {
         recentListener.remove()
@@ -88,7 +88,7 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
     @objc func loadNutritionPosts() {
         ProgressHUD.show()
         
-        recentListener = reference(.Nutrition).order(by: kNUTRITIONPOSTDATE, descending: true).addSnapshotListener({ (snapshot, error) in
+        recentListener = reference(.Nutrition).order(by: kNUTRITIONPOSTDATE, descending: true).limit(to: 100).addSnapshotListener({ (snapshot, error) in
                    
             self.allPosts = []
             self.postDatesArray = []
