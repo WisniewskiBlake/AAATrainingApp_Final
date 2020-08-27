@@ -41,7 +41,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
 
                     if videoLink != nil {
                         let thumbImage = self.createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: videoLink!)!)
-                        let pictureData = thumbImage?.jpegData(compressionQuality: 0.4)!
+                        let pictureData = thumbImage?.jpegData(compressionQuality: 0.3)!
                         let thumbToUpload = pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
                         let fullName = FUser.currentUser()!.firstname + " " + FUser.currentUser()!.lastname
                         let post = Post(postID: self.postID, ownerID: FUser.currentId(), text: self.postTextView.text, picture: thumbToUpload!, date: "", postUserAva: FUser.currentUser()!.ava, postUserName: fullName, video: videoLink!, postType: "video", postUrlLink: self.urlLinkTextField.text!)
@@ -54,7 +54,6 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
                 return
                 
             } else if isPictureSelected {
-                
                 
                 
 //                uploadPostImage(image: pictureImageView.image!, view: self.navigationController!.view) { (pictureLink) in
@@ -191,7 +190,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
         videoPath = info[UIImagePickerController.InfoKey.mediaURL] as? NSURL
         
         picturePath = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
-        let pictureData = picturePath?.jpegData(compressionQuality: 0.4)!
+        let pictureData = picturePath?.jpegData(compressionQuality: 0.3)!
         pictureToUpload = pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         displayMedia(picture: picturePath, video: videoPath)
         
