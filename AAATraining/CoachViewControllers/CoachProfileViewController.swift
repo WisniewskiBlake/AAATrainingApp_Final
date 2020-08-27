@@ -438,24 +438,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
              return cell
             
         }
-    }
+    }   
     
-    func createThumbnailOfVideoFromRemoteUrl(url: NSURL) -> UIImage? {
-        let asset = AVAsset(url: url as URL)
-        let assetImgGenerate = AVAssetImageGenerator(asset: asset)
-        assetImgGenerate.appliesPreferredTrackTransform = true
-        //Can set this to improve performance if target size is known before hand
-        //assetImgGenerate.maximumSize = CGSize(width,height)
-        let time = CMTimeMakeWithSeconds(1.0, preferredTimescale: 600)
-        do {
-            let img = try assetImgGenerate.copyCGImage(at: time, actualTime: nil)
-            let thumbnail = UIImage(cgImage: img)
-            return thumbnail
-        } catch {
-          print(error.localizedDescription)
-          return nil
-        }
-    }
     
     func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
         if images.count > 0 {
