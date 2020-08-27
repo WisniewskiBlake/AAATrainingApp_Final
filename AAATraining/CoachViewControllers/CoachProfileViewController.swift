@@ -38,10 +38,15 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     var posts: [NSDictionary] = []
     var filteredPosts: [NSDictionary] = []
     var allPostsGrouped = NSDictionary() as! [String : [Post]]
+    
     var allPosts: [Post] = []
+    var avas = [UIImage]()
+    var pictures = [UIImage]()
+    var postDatesArray: [String] = []
     
     let helper = Helper()
     let user = FUser.currentUser()
+    let currentDateFormater = Helper().dateFormatter()
     
     let baselineTapGestureRecognizer = UITapGestureRecognizer()
     let nutritionTapGestureRecognizer = UITapGestureRecognizer()
@@ -53,17 +58,14 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // dynamic cell height
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 200
-
+        configureUI()
         
         // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "createPost"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadUser), name: NSNotification.Name(rawValue: "updateUser"), object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(loadNewPosts), name: NSNotification.Name(rawValue: "uploadPost"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "uploadPost"), object: nil)
         
         baselineTapGestureRecognizer.addTarget(self, action: #selector(self.baselineViewClicked))
         baselineView.isUserInteractionEnabled = true
@@ -99,14 +101,54 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         navigationController?.setNavigationBarHidden(true, animated: true)
         
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        //recentListener.remove()
+   func configureUI() {
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 300
+               
+        currentDateFormater.dateFormat = "MM/dd/YYYY"
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        tableView.refreshControl = refreshControl
     }
     
-    // exec-d when new post is published
-    @objc func loadNewPosts() {
+    @objc func handleRefresh() {
+        loadPosts()
+        self.refreshControl?.endRefreshing()
+    }
+    
+    func didTapMediaImage(indexPath: IndexPath) {
+        let post = allPosts[indexPath.row]
+        let postType = post.postType
         
+        if postType == "video" {
+            let mediaItem = post.video
+            
+            let player = AVPlayer(url: Foundation.URL(string: mediaItem)!)
+            let moviewPlayer = AVPlayerViewController()
+            
+            let session = AVAudioSession.sharedInstance()
+            
+            try! session.setCategory(.playAndRecord, mode: .default, options: .defaultToSpeaker)
+
+            moviewPlayer.player = player
+            
+            self.present(moviewPlayer, animated: true) {
+                moviewPlayer.player!.play()
+            }
+        }
+        if postType == "picture" {
+            self.helper.imageFromData(pictureData: post.picture) { (pictureImage) in
+
+                if pictureImage != nil {
+                    let photos = IDMPhoto.photos(withImages: [pictureImage as Any])
+                    let browser = IDMPhotoBrowser(photos: photos)
+                    
+                    self.present(browser!, animated: true, completion: nil)
+                }
+            }
+            
+        }
     }
     
     @objc func baselineViewClicked() {
@@ -219,6 +261,9 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             
             query.getDocuments { (snapshot, error) in
                 self.allPosts = []
+                self.avas = []
+                self.pictures = []
+                self.postDatesArray = []
                 self.allPostsGrouped = [:]
                 
                 if error != nil {
@@ -235,10 +280,38 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 if !snapshot.isEmpty {
                     
                     for postDictionary in snapshot.documents {
-                                    let postDictionary = postDictionary.data() as NSDictionary
-                                    let post = Post(_dictionary: postDictionary)
-                                       self.allPosts.append(post)
-                                        print(self.allPosts)
+                        let postDictionary = postDictionary.data() as NSDictionary
+                        let post = Post(_dictionary: postDictionary)
+                        
+                        self.allPosts.append(post)
+                        self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
+
+                            if avatarImage != nil {
+                                self.avas.append(avatarImage!.circleMasked!)
+                            }
+                        }
+                        if post.picture != "" {
+                                self.helper.imageFromData(pictureData: post.picture) { (pictureImage) in
+
+                                    if pictureImage != nil {
+                                        self.pictures.append(pictureImage!)
+                                    }
+                                }
+
+                            } else if post.video != "" {
+                                
+                                self.helper.imageFromData(pictureData: post.picture) { (pictureImage) in
+
+                                    if pictureImage != nil {
+                                        self.pictures.append(pictureImage!)
+                                    }
+                                }
+                                
+                            } else {
+                                self.pictures.append(UIImage())
+                            }
+                        let postDate = self.helper.dateFormatter().date(from: post.date)
+                        self.postDatesArray.append(self.currentDateFormater.string(from: postDate!))
                                         
                     }
                     self.tableView.reloadData()
@@ -276,42 +349,6 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         //showIconOptions()
     }
     
-    func didTapMediaImage(indexPath: IndexPath) {
-        let post = allPosts[indexPath.row]
-        let postType = post.postType
-        
-        if postType == "video" {
-            let mediaItem = post.video
-            
-            let player = AVPlayer(url: Foundation.URL(string: mediaItem)!)
-            let moviewPlayer = AVPlayerViewController()
-            
-            let session = AVAudioSession.sharedInstance()
-            
-            try! session.setCategory(.playAndRecord, mode: .default, options: .defaultToSpeaker)
-
-            moviewPlayer.player = player
-            
-            self.present(moviewPlayer, animated: true) {
-                moviewPlayer.player!.play()
-            }
-        }
-        if postType == "picture" {
-            downloadImage(imageUrl: post.picture) { (image) in
-                
-                if image != nil {
-                    let photos = IDMPhoto.photos(withImages: [image as Any])
-                    let browser = IDMPhotoBrowser(photos: photos)
-                    
-                    self.present(browser!, animated: true, completion: nil)
-                }
-            }
-            
-        }
-    }
-    
-   
-    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -324,121 +361,92 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         return allPosts.count
     }
     
-    // heights of the cells
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     
     // cell config
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-                var post: Post
+        var post: Post
                 
-        post = allPosts[indexPath.row]
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
-        
-        if post.postType == "video" {
+            let cellPic = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
             
-            DispatchQueue.main.async {
-                cell.playImageView.isHidden = false
-                
-                let thumbImage = self.createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: post.video)!)
-                         
-                 var date: Date!
-                 
-                date = self.helper.dateFormatter().date(from: post.date)
-                
-                cell.dateLabel.text = self.helper.timeElapsed(date: date)
-                         
-                 
-                self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
+            if allPosts.count > 0 {
+                post = allPosts[indexPath.row]
 
-                     if avatarImage != nil {
+                if post.postType == "video" {
+                    
+                    cellPic.avaImageView.image = self.avas[indexPath.row]
+                    cellPic.pictureImageView.image = self.pictures[indexPath.row]
+                    cellPic.playImageView.isHidden = false
+                    
+                    cellPic.postTextLabel.numberOfLines = 0
+                    cellPic.postTextLabel.text = post.text
+                    //DispatchQueue.main.async {
+                        cellPic.dateLabel.text = self.postDatesArray[indexPath.row]
+                        
+                        
+                        cellPic.delegate = self
+                        cellPic.indexPath = indexPath
+                        cellPic.fullnameLabel.text = post.postUserName
+                        
+                        cellPic.urlTextView.text = post.postUrlLink
+                    //}
 
-                         cell.avaImageView.image = avatarImage!.circleMasked
-                     }
-                 }
-                
-                cell.delegate = self
-                cell.indexPath = indexPath
-                cell.fullnameLabel.text = post.postUserName
-                cell.pictureImageView.image = thumbImage
-                cell.postTextLabel.text = post.text
-                cell.urlTextView.text = post.postUrlLink
-                cell.optionsButton.tag = indexPath.row
+                     return cellPic
+                    
+                } else if post.postType == "picture" {
+                    
+                    cellPic.avaImageView.image = self.avas[indexPath.row]
+                    cellPic.pictureImageView.image = self.pictures[indexPath.row]
+                    
+                    cellPic.postTextLabel.numberOfLines = 0
+                    cellPic.postTextLabel.text = post.text
+                    
+                    //DispatchQueue.main.async {
+                        
+                        
+                        cellPic.playImageView.isHidden = true
+                                    
+                        cellPic.dateLabel.text = self.postDatesArray[indexPath.row]
+                        cellPic.delegate = self
+                        cellPic.indexPath = indexPath
+                        cellPic.fullnameLabel.text = post.postUserName
+                        
+                        cellPic.urlTextView.text = post.postUrlLink
+                    //}
+                    
+                    return cellPic
+                    
+                } else {
+                    let cellNoPic = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
+                    
+                    cellNoPic.postTextLabel.numberOfLines = 0
+                    cellNoPic.postTextLabel.text = post.text
+                    
+                    //DispatchQueue.main.async {
+                        
+                        cellNoPic.avaImageView.image = self.avas[indexPath.row]
+                        
+                        cellNoPic.dateLabel.text = self.postDatesArray[indexPath.row]
+                        
+                        cellNoPic.fullnameLabel.text = post.postUserName
+
+                        cellNoPic.urlTextView.text = post.postUrlLink
+                    //}
+                                     
+                     return cellNoPic
+                }
             }
+                    
             
-
-            return cell
             
-        } else if post.postType == "picture" {
-            
-            DispatchQueue.main.async {
-                cell.playImageView.isHidden = true
-                
-                  var date: Date!
-                  
-                date = self.helper.dateFormatter().date(from: post.date)
-                 
-                cell.dateLabel.text = self.helper.timeElapsed(date: date)
-                          
-                  
-                self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
-
-                      if avatarImage != nil {
-
-                          cell.avaImageView.image = avatarImage!.circleMasked
-                      }
-                  }
-                 downloadImage(imageUrl: post.picture) { (image) in
-                     
-                     if image != nil {
-                         cell.pictureImageView.image = image!
-                     }
-                 }
-
-                 cell.delegate = self
-                 cell.indexPath = indexPath
-                 cell.fullnameLabel.text = post.postUserName
-                 cell.postTextLabel.text = post.text
-                 cell.urlTextView.text = post.postUrlLink
-                 cell.optionsButton.tag = indexPath.row
-            }
-            
-
-             return cell
-            
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
-             DispatchQueue.main.async {
-                var date: Date!
-                 
-                date = self.helper.dateFormatter().date(from: post.date)
-                
-                cell.dateLabel.text = self.helper.timeElapsed(date: date)
-                 
-                self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
-
-                     if avatarImage != nil {
-
-                         cell.avaImageView.image = avatarImage!.circleMasked
-                     }
-                 }
-                 
-                 cell.fullnameLabel.text = post.postUserName
-
-                 cell.postTextLabel.text = post.text
-                
-                 cell.urlTextView.text = post.postUrlLink
-                
-                 cell.optionsButton.tag = indexPath.row
-            }
-             
-            
-             return cell
-            
-        }
-    }   
+            return cellPic
+    }
     
     
     func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {

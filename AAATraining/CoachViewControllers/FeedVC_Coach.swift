@@ -107,15 +107,6 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
             
         }
     }
-    
-   
-    
-    func configureNavBar() {
-        let imageView = UIImageView(image: UIImage(named: "aaaLogo.png"))        
-        imageView.contentMode = .scaleAspectFit
-        navigationItem.titleView = imageView
-    }
-    
 
     
     // pre-load func
@@ -341,24 +332,6 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         
     }
     
-    func createThumbnailOfVideoFromRemoteUrl(url: NSURL) -> UIImage? {
-        let asset = AVAsset(url: url as URL)
-        let assetImgGenerate = AVAssetImageGenerator(asset: asset)
-        assetImgGenerate.appliesPreferredTrackTransform = true
-        //Can set this to improve performance if target size is known before hand
-        //assetImgGenerate.maximumSize = CGSize(width,height)
-        let time = CMTimeMakeWithSeconds(1.0, preferredTimescale: 600)
-        do {
-            let img = try assetImgGenerate.copyCGImage(at: time, actualTime: nil)
-            let thumbnail = UIImage(cgImage: img)
-            return thumbnail
-        } catch {
-          print(error.localizedDescription)
-          return nil
-        }
-    }
-    
-
     
     // MARK: - Scroll Did Scroll
     // executed always whenever tableView is scrolling
