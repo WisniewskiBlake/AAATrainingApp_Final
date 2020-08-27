@@ -48,14 +48,11 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
                         
                         post.savePost()
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createPost"), object: nil)
-
                     }
                 }
                 return
                 
             } else if isPictureSelected {
-                
-                
 //                uploadPostImage(image: pictureImageView.image!, view: self.navigationController!.view) { (pictureLink) in
 
                     let fullName = FUser.currentUser()!.firstname + " " + FUser.currentUser()!.lastname
@@ -63,11 +60,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
                     
                     post.savePost()
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createPost"), object: nil)
-                //}
-                           
-                
 
-                    
                 return
             } else {
                 
@@ -198,8 +191,6 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     }
     
     
-    
-
             
     
     // tracks whenver textView gets changed

@@ -52,8 +52,11 @@ class NutritionPostVC: UIViewController, UITextViewDelegate, UIImagePickerContro
                 uploadPostVideo(video: videoData!, view: self.navigationController!.view) { (videoLink) in
 
                     if videoLink != nil {
+                        let thumbImage = self.createThumbnailOfVideoFromRemoteUrl(url: NSURL(string: videoLink!)!)
+                        let pictureData = thumbImage?.jpegData(compressionQuality: 0.3)!
+                        let thumbToUpload = pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
                         let fullName = FUser.currentUser()!.firstname + " " + FUser.currentUser()!.lastname
-                        let nutritionPost = Nutrition(nutritionPostID: self.nutritionPostID, nutritionOwnerID: FUser.currentId(), nutritionText: self.postTextView.text, nutritionPicture: "", nutritionDate: "", nutritionPostUserAva: FUser.currentUser()!.ava, nutritionPostUserName: fullName, nutritionVideo: videoLink!, nutritionPostType: "video", nutritionPostUrlLink: self.urlLinkTextField.text!)
+                        let nutritionPost = Nutrition(nutritionPostID: self.nutritionPostID, nutritionOwnerID: FUser.currentId(), nutritionText: self.postTextView.text, nutritionPicture: thumbToUpload!, nutritionDate: "", nutritionPostUserAva: FUser.currentUser()!.ava, nutritionPostUserName: fullName, nutritionVideo: videoLink!, nutritionPostType: "video", nutritionPostUrlLink: self.urlLinkTextField.text!)
                         
                         nutritionPost.savePost()
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createNutritionPost"), object: nil)
@@ -63,15 +66,13 @@ class NutritionPostVC: UIViewController, UITextViewDelegate, UIImagePickerContro
                 return
                 
             } else if isPictureSelected {
-                
-                uploadPostImage(image: pictureImageView.image!, view: self.navigationController!.view) { (pictureLink) in
 
                     let fullName = FUser.currentUser()!.firstname + " " + FUser.currentUser()!.lastname
-                    let nutritionPost = Nutrition(nutritionPostID: self.nutritionPostID, nutritionOwnerID: FUser.currentId(), nutritionText: self.postTextView.text, nutritionPicture: pictureLink!, nutritionDate: "", nutritionPostUserAva: FUser.currentUser()!.ava, nutritionPostUserName: fullName, nutritionVideo: "", nutritionPostType: "picture", nutritionPostUrlLink: self.urlLinkTextField.text!)
+                    let nutritionPost = Nutrition(nutritionPostID: self.nutritionPostID, nutritionOwnerID: FUser.currentId(), nutritionText: self.postTextView.text, nutritionPicture: self.pictureToUpload!, nutritionDate: "", nutritionPostUserAva: FUser.currentUser()!.ava, nutritionPostUserName: fullName, nutritionVideo: "", nutritionPostType: "picture", nutritionPostUrlLink: self.urlLinkTextField.text!)
                     
                     nutritionPost.savePost()
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createNutritionPost"), object: nil)
-                }
+                
                        
                 return
             } else {
@@ -148,7 +149,7 @@ class NutritionPostVC: UIViewController, UITextViewDelegate, UIImagePickerContro
         sharePhoto.setValue(UIImage(named: "picture"), forKey: "image")
         shareVideo.setValue(UIImage(named: "video"), forKey: "image")
         
-        optionMenu.addAction(takePhotoOrVideo)
+        //optionMenu.addAction(takePhotoOrVideo)
         optionMenu.addAction(sharePhoto)
         optionMenu.addAction(shareVideo)
         optionMenu.addAction(cancelAction)
@@ -157,29 +158,12 @@ class NutritionPostVC: UIViewController, UITextViewDelegate, UIImagePickerContro
     }
     
     
-    func createThumbnailOfVideoFromRemoteUrl(url: NSURL) -> UIImage? {
-        let asset = AVAsset(url: url as URL)
-        let assetImgGenerate = AVAssetImageGenerator(asset: asset)
-        assetImgGenerate.appliesPreferredTrackTransform = true
-        //Can set this to improve performance if target size is known before hand
-        //assetImgGenerate.maximumSize = CGSize(width,height)
-        let time = CMTimeMakeWithSeconds(1.0, preferredTimescale: 600)
-        do {
-            let img = try assetImgGenerate.copyCGImage(at: time, actualTime: nil)
-            let thumbnail = UIImage(cgImage: img)
-            return thumbnail
-        } catch {
-          print(error.localizedDescription)
-          return nil
-        }
-    }
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         videoPath = info[UIImagePickerController.InfoKey.mediaURL] as? NSURL
-        //picturePath = info[UIImagePickerController.InfoKey(rawValue: convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage))] as? UIImage
+        
         picturePath = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
-        let pictureData = picturePath?.jpegData(compressionQuality: 0.4)!
+        let pictureData = picturePath?.jpegData(compressionQuality: 0.3)!
         pictureToUpload = pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         displayMedia(picture: picturePath, video: videoPath)
         
@@ -212,6 +196,23 @@ class NutritionPostVC: UIViewController, UITextViewDelegate, UIImagePickerContro
             placeholderLabel.isHidden = false
         } else {
             placeholderLabel.isHidden = true
+        }
+    }
+    
+    func createThumbnailOfVideoFromRemoteUrl(url: NSURL) -> UIImage? {
+        let asset = AVAsset(url: url as URL)
+        let assetImgGenerate = AVAssetImageGenerator(asset: asset)
+        assetImgGenerate.appliesPreferredTrackTransform = true
+        //Can set this to improve performance if target size is known before hand
+        //assetImgGenerate.maximumSize = CGSize(width,height)
+        let time = CMTimeMakeWithSeconds(1.0, preferredTimescale: 600)
+        do {
+            let img = try assetImgGenerate.copyCGImage(at: time, actualTime: nil)
+            let thumbnail = UIImage(cgImage: img)
+            return thumbnail
+        } catch {
+          print(error.localizedDescription)
+          return nil
         }
     }
     
