@@ -196,16 +196,17 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
                     cellPic.postTextLabel.numberOfLines = 0
                     cellPic.postTextLabel.text = post.nutritionText
                     //DispatchQueue.main.async {
-                        cellPic.dateLabel.text = self.postDatesArray[indexPath.row]
-                        
-                        
-                        cellPic.delegate = self
-                        cellPic.indexPath = indexPath
-                        cellPic.fullnameLabel.text = post.nutritionPostUserName
-                        
-                        cellPic.urlTextView.text = post.nutritionPostUrlLink
-                    //}
-
+                    cellPic.dateLabel.text = self.postDatesArray[indexPath.row]
+                    
+                    
+                    cellPic.delegate = self
+                    cellPic.indexPath = indexPath
+                    cellPic.fullnameLabel.text = post.nutritionPostUserName
+                    
+                    cellPic.urlTextView.text = post.nutritionPostUrlLink
+                //}
+                    cellPic.optionsButton.tag = indexPath.row
+                    
                      return cellPic
                     
                 } else if post.nutritionPostType == "picture" {
@@ -219,15 +220,16 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
                     //DispatchQueue.main.async {
                         
                         
-                        cellPic.playImageView.isHidden = true
-                                    
-                        cellPic.dateLabel.text = self.postDatesArray[indexPath.row]
-                        cellPic.delegate = self
-                        cellPic.indexPath = indexPath
-                        cellPic.fullnameLabel.text = post.nutritionPostUserName
-                        
-                        cellPic.urlTextView.text = post.nutritionPostUrlLink
+                    cellPic.playImageView.isHidden = true
+                                
+                    cellPic.dateLabel.text = self.postDatesArray[indexPath.row]
+                    cellPic.delegate = self
+                    cellPic.indexPath = indexPath
+                    cellPic.fullnameLabel.text = post.nutritionPostUserName
+                    
+                    cellPic.urlTextView.text = post.nutritionPostUrlLink
                     //}
+                    cellPic.optionsButton.tag = indexPath.row
                     
                     return cellPic
                     
@@ -239,15 +241,16 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
                     
                     //DispatchQueue.main.async {
                         
-                        cellNoPic.avaImageView.image = self.avas[indexPath.row]
-                        
-                        cellNoPic.dateLabel.text = self.postDatesArray[indexPath.row]
-                        
-                        cellNoPic.fullnameLabel.text = post.nutritionPostUserName
+                    cellNoPic.avaImageView.image = self.avas[indexPath.row]
+                    
+                    cellNoPic.dateLabel.text = self.postDatesArray[indexPath.row]
+                    
+                    cellNoPic.fullnameLabel.text = post.nutritionPostUserName
 
-                        cellNoPic.urlTextView.text = post.nutritionPostUrlLink
-                    //}
-                                     
+                    cellNoPic.urlTextView.text = post.nutritionPostUrlLink
+                //}
+                    cellNoPic.optionsButton.tag = indexPath.row
+                    
                      return cellNoPic
                 }
             }

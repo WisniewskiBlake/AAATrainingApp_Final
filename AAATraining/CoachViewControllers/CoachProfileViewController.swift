@@ -396,7 +396,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                         
                         cellPic.urlTextView.text = post.postUrlLink
                     //}
-
+                        cellPic.optionsButton.tag = indexPath.row
                      return cellPic
                     
                 } else if post.postType == "picture" {
@@ -419,7 +419,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                         
                         cellPic.urlTextView.text = post.postUrlLink
                     //}
-                    
+                    cellPic.optionsButton.tag = indexPath.row
                     return cellPic
                     
                 } else {
@@ -438,7 +438,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
 
                         cellNoPic.urlTextView.text = post.postUrlLink
                     //}
-                                     
+                     cellNoPic.optionsButton.tag = indexPath.row
                      return cellNoPic
                 }
             }
@@ -480,13 +480,13 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     
     // MARK: - Scroll Did Scroll
     // executed always whenever tableView is scrolling
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        // load more posts when the scroll is about to reach the bottom AND currently is not loading (posts)
-        let a = tableView.contentOffset.y - tableView.contentSize.height + 60
-        let b = -tableView.frame.height
-        
-    }
+//    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//
+//        // load more posts when the scroll is about to reach the bottom AND currently is not loading (posts)
+//        let a = tableView.contentOffset.y - tableView.contentSize.height + 60
+//        let b = -tableView.frame.height
+//
+//    }
     
     // MARK: - Option Button Click
     @IBAction func optionsButton_clicked(_ optionButton: UIButton) {
