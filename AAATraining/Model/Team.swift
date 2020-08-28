@@ -46,5 +46,15 @@ public class Team {
         
     }
     
+    func saveTeam() {
+
+        reference(.Team).document(teamDictionary[kTEAMID] as! String).setData(teamDictionary as! [String:Any])
+        
+    }
+    
+    class func updateTeam(teamID: String, withValues: [String:Any]) {
+        reference(.Team).document(teamID).updateData(withValues)
+    }
+    
     
 }
