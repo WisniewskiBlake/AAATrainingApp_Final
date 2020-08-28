@@ -42,6 +42,13 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     var pictureToUpload: String? = ""
     
     var teamLoginCode = ""
+    var loginString = ""
+    var randomInt = 0
+    
+    var teamColorOne = ""
+    var teamColorTwo = ""
+    var teamColorThree = ""
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,7 +75,18 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         configure_footerView()
         
-        teamLoginCode = randomString(length: 6)
+        randomInt = Int.random(in: 1..<9)
+        loginString = randomString(length: 2)
+        
+        teamLoginCode.append(contentsOf: loginString)
+        teamLoginCode.append(contentsOf: String(randomInt))
+        
+        randomInt = Int.random(in: 1..<9)
+        loginString = randomString(length: 2)
+        
+        teamLoginCode.append(contentsOf: loginString)
+        teamLoginCode.append(contentsOf: String(randomInt))
+        
         codeLabel.text = teamLoginCode
     }
    
@@ -103,7 +121,9 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
 //        let avatar = getAvatar()
 //        let coverIMG = cover?.jpegData(compressionQuality: 0.7)
 //        let coverData = coverIMG!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-//
+        
+        let team = Team(teamID: teamLoginCode, teamName: teamNameText.text!, teamLogo: self.pictureToUpload!, teamMemberIDs: [""], teamCity: cityText.text!, teamState: stateText.text!, teamColorOne: String, teamColorTwo: String, teamColorThree: String)
+        
 //        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "coach", birthday: "", cover: coverData, phoneNumber: phoneTextField.text!) { (error)  in
 //
 //                if error != nil {
@@ -150,7 +170,7 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
        takePhotoOrVideo.setValue(UIImage(named: "camera"), forKey: "image")
        sharePhoto.setValue(UIImage(named: "picture"), forKey: "image")
        
-       optionMenu.addAction(takePhotoOrVideo)
+       //optionMenu.addAction(takePhotoOrVideo)
        optionMenu.addAction(sharePhoto)
        optionMenu.addAction(cancelAction)
        
