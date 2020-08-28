@@ -165,8 +165,8 @@ class RegisterVC: UIViewController {
         let avatar = getAvatar()
         let coverIMG = cover?.jpegData(compressionQuality: 0.7)
         let coverData = coverIMG!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-        
-        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: self.heightTextField.text!, weight: self.weightTextField.text!, position: self.positionTextField.text!, number: self.numberTextField.text!, accountType: "player", birthday: "", cover: coverData, phoneNumber: phoneTextField.text!) { (error)  in
+                
+        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: self.heightTextField.text!, weight: self.weightTextField.text!, position: self.positionTextField.text!, number: self.numberTextField.text!, accountType: "player", birthday: "", cover: coverData, phoneNumber: phoneTextField.text!, userTeamID: "", userTeamColorOne: "", userTeamColorTwo: "", userTeamColorThree: "") { (error)  in
             
                             if error != nil {
                                 ProgressHUD.dismiss()

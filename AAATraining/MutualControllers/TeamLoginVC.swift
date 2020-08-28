@@ -32,7 +32,11 @@ class TeamLoginVC: UIViewController {
     }
     
     @objc func registerTeamClicked() {
-        
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamRegisterVC") as? TeamRegisterVC
+        {
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+        }
     }
 
 

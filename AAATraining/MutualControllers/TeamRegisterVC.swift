@@ -45,13 +45,13 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     var loginString = ""
     var randomInt = 0
     
-    var teamColorOne = ""
-    var teamColorTwo = ""
-    var teamColorThree = ""
+    var teamColorOne: String?
+    var teamColorTwo: String?
+    var teamColorThree: String?
     
-    var uiColorOne: UIColor
-    var uiColorTwo: UIColor
-    var uiColorThree: UIColor
+    var uiColorOne: UIColor?
+    var uiColorTwo: UIColor?
+    var uiColorThree: UIColor?
     
 
     override func viewDidLoad() {
@@ -126,18 +126,20 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
 //        let coverIMG = cover?.jpegData(compressionQuality: 0.7)
 //        let coverData = coverIMG!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         
-        let team = Team(teamID: teamLoginCode, teamName: teamNameText.text!, teamLogo: self.pictureToUpload!, teamMemberIDs: [""], teamCity: cityText.text!, teamState: stateText.text!, teamColorOne: String, teamColorTwo: String, teamColorThree: String)
+        let team = Team(teamID: teamLoginCode, teamName: teamNameText.text!, teamLogo: self.pictureToUpload!, teamMemberIDs: [""], teamCity: cityText.text!, teamState: stateText.text!, teamColorOne: teamColorOne!, teamColorTwo: teamColorTwo!, teamColorThree: teamColorThree!)
         
-//        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "coach", birthday: "", cover: coverData, phoneNumber: phoneTextField.text!) { (error)  in
-//
-//                if error != nil {
-//                    ProgressHUD.dismiss()
-//                    ProgressHUD.showError(error!.localizedDescription)
-//                    return
-//                }
-//
-//                self.goToApp()
-//            }
+        team.saveTeam()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createTeam"), object: nil)
+        self.goToApp()
+        //self.goToLogin()
+
+    }
+    
+    func goToLogin() {
+        let helper = Helper()
+        
+        // go to TabBar
+        helper.instantiateViewController(identifier: "LoginVC", animated: true, by: self, completion: nil)
     }
     
     @IBAction func copyToClipClicked(_ sender: Any) {
@@ -188,18 +190,18 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         
         picturePath.getColors { colors in
-          uiColorOne = colors.background
-          uiColorTwo = colors.primary
-          uiColorThree = colors.secondary
+            self.uiColorOne = colors?.background
+            self.uiColorTwo = colors?.primary
+            self.uiColorThree = colors?.secondary
             
           //detailLabel.textColor = colors.detail
-          teamColorOne = uiColorOne.htmlRGBColor
-          teamColorTwo = uiColorTwo.htmlRGBColor
-          teamColorThree = uiColorThree.htmlRGBColor
+            self.teamColorOne = self.uiColorOne?.htmlRGBColor
+            self.teamColorTwo = self.uiColorTwo?.htmlRGBColor
+            self.teamColorThree = self.uiColorThree?.htmlRGBColor
         }
         
-        let pictureData = picturePath?.jpegData(compressionQuality: 0.4)!
-        pictureToUpload = pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+        let pictureData = picturePath.jpegData(compressionQuality: 0.4)!
+        pictureToUpload = pictureData.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         displayMedia(picture: picturePath)
         
         picker.dismiss(animated: true, completion: nil)

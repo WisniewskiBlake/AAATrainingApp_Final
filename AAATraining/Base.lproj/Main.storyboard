@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="khG-9V-29r">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -42,43 +42,45 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Code? Register Team Here" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sIT-Dd-6aX">
-                                <rect key="frame" x="72" y="322" width="230" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="EJ6-ti-ece"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ceF-aX-wPQ">
-                                <rect key="frame" x="16" y="378" width="343" height="30"/>
+                                <rect key="frame" x="16" y="334" width="343" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="XqW-am-o8a"/>
+                                    <constraint firstAttribute="height" constant="30" id="Rjw-Jn-V4U"/>
+                                    <constraint firstAttribute="width" constant="343" id="Xbn-xH-Kx9"/>
                                 </constraints>
                                 <state key="normal" title="Continue"/>
                                 <connections>
                                     <action selector="continueButtonClicked:" destination="khG-9V-29r" eventType="touchUpInside" id="Hfo-Xq-zEB"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Code? Register Team Here" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sIT-Dd-6aX">
+                                <rect key="frame" x="72" y="416" width="230" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="VPt-Kp-URW"/>
+                                    <constraint firstAttribute="width" constant="230" id="loA-Zn-ONQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="g5F-1w-cv3" firstAttribute="trailing" secondItem="sIT-Dd-6aX" secondAttribute="trailing" constant="73" id="2oW-IX-EMO"/>
-                            <constraint firstItem="ceF-aX-wPQ" firstAttribute="leading" secondItem="g5F-1w-cv3" secondAttribute="leading" constant="16" id="BLy-gd-RQd"/>
+                            <constraint firstItem="g5F-1w-cv3" firstAttribute="trailing" secondItem="sIT-Dd-6aX" secondAttribute="trailing" constant="73" id="I1b-Cd-BGu"/>
                             <constraint firstItem="3tm-Vr-kuh" firstAttribute="top" secondItem="g5F-1w-cv3" secondAttribute="top" constant="20" id="ISX-Af-ePs"/>
+                            <constraint firstItem="ceF-aX-wPQ" firstAttribute="leading" secondItem="g5F-1w-cv3" secondAttribute="leading" constant="16" id="Lu4-tS-rSR"/>
+                            <constraint firstItem="sIT-Dd-6aX" firstAttribute="top" secondItem="ceF-aX-wPQ" secondAttribute="bottom" constant="52" id="No0-J7-qaO"/>
                             <constraint firstItem="nWj-9f-QEb" firstAttribute="top" secondItem="AxL-ei-hS7" secondAttribute="bottom" constant="61" id="PVe-R8-tcY"/>
-                            <constraint firstItem="g5F-1w-cv3" firstAttribute="trailing" secondItem="ceF-aX-wPQ" secondAttribute="trailing" constant="16" id="QTf-MI-sd3"/>
                             <constraint firstItem="g5F-1w-cv3" firstAttribute="trailing" secondItem="3tm-Vr-kuh" secondAttribute="trailing" constant="16" id="Y3K-VD-8o7"/>
+                            <constraint firstItem="ceF-aX-wPQ" firstAttribute="top" secondItem="nWj-9f-QEb" secondAttribute="bottom" constant="64" id="YMq-Zf-Lu3"/>
                             <constraint firstItem="AxL-ei-hS7" firstAttribute="top" secondItem="3tm-Vr-kuh" secondAttribute="bottom" constant="83" id="cEs-bM-PXa"/>
                             <constraint firstItem="3tm-Vr-kuh" firstAttribute="leading" secondItem="g5F-1w-cv3" secondAttribute="leading" constant="16" id="cfm-vp-Ueb"/>
                             <constraint firstItem="AxL-ei-hS7" firstAttribute="leading" secondItem="g5F-1w-cv3" secondAttribute="leading" constant="16" id="dM9-Zs-4fC"/>
                             <constraint firstItem="nWj-9f-QEb" firstAttribute="leading" secondItem="g5F-1w-cv3" secondAttribute="leading" constant="72" id="gSg-XP-diW"/>
-                            <constraint firstItem="sIT-Dd-6aX" firstAttribute="top" secondItem="nWj-9f-QEb" secondAttribute="bottom" constant="52" id="gw1-xk-ggv"/>
                             <constraint firstItem="g5F-1w-cv3" firstAttribute="trailing" secondItem="AxL-ei-hS7" secondAttribute="trailing" constant="16" id="itu-qP-7h5"/>
                             <constraint firstItem="g5F-1w-cv3" firstAttribute="trailing" secondItem="nWj-9f-QEb" secondAttribute="trailing" constant="73" id="nUX-Zc-KX0"/>
-                            <constraint firstItem="ceF-aX-wPQ" firstAttribute="top" secondItem="sIT-Dd-6aX" secondAttribute="bottom" constant="35" id="nst-WW-sov"/>
-                            <constraint firstItem="sIT-Dd-6aX" firstAttribute="leading" secondItem="g5F-1w-cv3" secondAttribute="leading" constant="72" id="vZk-LP-gPO"/>
+                            <constraint firstItem="sIT-Dd-6aX" firstAttribute="leading" secondItem="g5F-1w-cv3" secondAttribute="leading" constant="72" id="ufi-06-2e0"/>
+                            <constraint firstItem="g5F-1w-cv3" firstAttribute="trailing" secondItem="ceF-aX-wPQ" secondAttribute="trailing" constant="16" id="xEW-ip-vUM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="g5F-1w-cv3"/>
                     </view>
@@ -4532,7 +4534,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nutritionIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Cga-qF-XGY">
-                                            <rect key="frame" x="0.0" y="-9" width="50" height="38"/>
+                                            <rect key="frame" x="0.0" y="1" width="50" height="28"/>
                                             <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="50" id="HkU-QS-ek6"/>
@@ -5122,7 +5124,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nutritionIcon" translatesAutoresizingMaskIntoConstraints="NO" id="CdB-n4-8Ng">
-                                        <rect key="frame" x="0.0" y="-9" width="50" height="38"/>
+                                        <rect key="frame" x="0.0" y="1" width="50" height="28"/>
                                         <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="38" id="p1V-gH-Hvv"/>
@@ -6641,7 +6643,6 @@
                                                         <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                                         <connections>
                                                             <action selector="textFieldDidChange:" destination="zm7-l7-ZFi" eventType="editingChanged" id="CcE-gv-kdW"/>
-                                                            <action selector="textFieldDidChange:" destination="zm7-l7-ZFi" eventType="editingDidEnd" id="oBS-Xk-RmS"/>
                                                         </connections>
                                                     </textField>
                                                 </subviews>
@@ -6674,7 +6675,7 @@
                                                         <color key="textColor" red="0.25926578039999998" green="0.40468230840000002" blue="0.69936054940000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gth-im-Ptt">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gth-im-Ptt">
                                                         <rect key="frame" x="16" y="309" width="343" height="35"/>
                                                         <color key="backgroundColor" red="0.14039075370000001" green="0.29558742049999998" blue="0.71822762490000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
@@ -6782,7 +6783,7 @@
                                                             <action selector="copyToClipClicked:" destination="zm7-l7-ZFi" eventType="touchUpInside" id="Sgr-Mx-JhU"/>
                                                         </connections>
                                                     </button>
-                                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xR7-ON-x05">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xR7-ON-x05">
                                                         <rect key="frame" x="16" y="331" width="343" height="35"/>
                                                         <color key="backgroundColor" red="0.14039075370000001" green="0.29558742049999998" blue="0.71822762490000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
@@ -6793,7 +6794,6 @@
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="finishButtonClicked:" destination="zm7-l7-ZFi" eventType="touchUpInside" id="9S5-6c-jXu"/>
                                                             <action selector="finishContinueClicked:" destination="zm7-l7-ZFi" eventType="touchUpInside" id="Kl8-eo-q0i"/>
                                                         </connections>
                                                     </button>
@@ -6853,9 +6853,9 @@
                                 <rect key="frame" x="0.0" y="510" width="1500" height="77"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ymx-XG-AL5">
-                                        <rect key="frame" x="663" y="18.5" width="174" height="30"/>
+                                        <rect key="frame" x="677.5" y="18.5" width="145" height="30"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                        <state key="normal" title="Already have an account?">
+                                        <state key="normal" title="Already have a team?">
                                             <color key="titleColor" red="0.25926578039999998" green="0.40468230840000002" blue="0.69936054940000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                     </button>
@@ -6891,7 +6891,6 @@
                         <outlet property="finishButton" destination="xR7-ON-x05" id="9mS-MO-fE1"/>
                         <outlet property="footerView" destination="PNX-1n-Rjr" id="piC-RZ-J7P"/>
                         <outlet property="haveAccountButton" destination="ymx-XG-AL5" id="yM3-1I-lZP"/>
-                        <outlet property="lastNameTextField" destination="Jdm-0e-1Dk" id="ca5-dj-kHx"/>
                         <outlet property="locationContinueButton" destination="71a-dJ-9Bh" id="wjH-bg-w05"/>
                         <outlet property="logoContinueButton" destination="gth-im-Ptt" id="OXk-Cs-N3C"/>
                         <outlet property="logoImageView" destination="RPM-11-GGh" id="clw-OZ-MEj"/>
