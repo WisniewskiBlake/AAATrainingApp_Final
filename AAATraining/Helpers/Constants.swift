@@ -24,15 +24,12 @@ public let USER_DID_LOGIN_NOTIFICATION = "UserDidLoginNotification"
 public let APP_STARTED_NOTIFICATION = "AppStartedNotification"
 
 
-
 //IDS and Keys
 public let kFILEREFERENCE = "gs://aaatrainingapp-be3e5.appspot.com"
 public let kONESIGNALAPPID = ""
 public let kSINCHKEY = ""
 public let kSINCHSECRET = ""
 public let kAPPURL = ""
-
-
 
 //Firebase Headers
 public let kUSER_PATH = "User"
@@ -44,6 +41,10 @@ public let kCALL_PATH = "Call"
 
 //FUser
 public let kOBJECTID = "objectId"
+public let kUSERTEAMID = "userTeamID"
+public let kUSERTEAMCOLORONE = "userTeamColorOne"
+public let kUSERTEAMCOLORTWO = "userTeamColorTwo"
+public let kUSERTEAMCOLORTHREE = "userTeamColorThree"
 public let kCREATEDAT = "createdAt"
 public let kUPDATEDAT = "updatedAt"
 public let kEMAIL = "email"
@@ -68,7 +69,6 @@ public let kPHONE = "phone"
 public let kLOGINMETHOD = "loginMethod"
 public let kPUSHID = "pushId"
 
-
 public let kISONLINE = "isOnline"
 public let kVERIFICATIONCODE = "firebase_verification"
 
@@ -76,8 +76,6 @@ public let kVERIFICATIONCODE = "firebase_verification"
 public let kBLOCKEDUSERID = "blockedUserId"
 
 
-
-//
 public let kBACKGROUBNDIMAGE = "backgroundImage"
 public let kSHOWAVATAR = "showAvatar"
 public let kPASSWORDPROTECT = "passwordProtect"
@@ -142,6 +140,18 @@ public let kEVENTDATE = "eventDate"
 public let kEVENTCOUNTER = "eventCounter"
 public let kEVENTUSERID = "eventUserID"
 public let kEVENTGROUPID = "eventGroupID"
+
+public let kTEAMS = "teams"
+public let kTEAMID = "teamID"
+public let kTEAMNAME = "teamName"
+//public let kTEAMCODE = "teamCode"
+public let kTEAMCITY = "teamCity"
+public let kTEAMSTATE = "teamState"
+public let kTEAMLOGO = "teamLogo"
+public let kTEAMMEMBERIDS = "teamMemberIDs"
+public let kTEAMCOLORONE = "teamColorOne"
+public let kTEAMCOLORTWO = "teamColorTwo"
+public let kTEAMCOLORTHREE = "teamColorThree"
 
 
 //recent

@@ -35,6 +35,12 @@ public class FUser {
     var birthday: String
     var cover: String
     
+    var userTeamID: String
+    var userTeamColorOne: String
+    var userTeamColorTwo: String
+    var userTeamColorThree: String
+    
+    
     
     
     var contacts: [String]
@@ -43,7 +49,7 @@ public class FUser {
     
     //MARK: Initializers
     
-    init(_objectId: String, _pushId: String?, _createdAt: Date, _updatedAt: Date, _email: String, _firstname: String, _lastname: String, _avatar: String = "", _loginMethod: String, _phoneNumber: String, _height: String, _weight: String, _position: String, _number: String, _accountType: String, _birthday: String, _cover: String) {
+    init(_objectId: String, _pushId: String?, _createdAt: Date, _updatedAt: Date, _email: String, _firstname: String, _lastname: String, _avatar: String = "", _loginMethod: String, _phoneNumber: String, _height: String, _weight: String, _position: String, _number: String, _accountType: String, _birthday: String, _cover: String, _userTeamID: String, _userTeamColorOne: String, _userTeamColorTwo: String, _userTeamColorThree: String) {
         
         objectId = _objectId
         pushId = _pushId
@@ -66,6 +72,11 @@ public class FUser {
         accountType = _accountType
         birthday = _birthday
         cover = _cover
+        
+        userTeamID = _userTeamID
+        userTeamColorOne = _userTeamColorOne
+        userTeamColorTwo = _userTeamColorTwo
+        userTeamColorThree = _userTeamColorThree
         
         
         loginMethod = _loginMethod
@@ -99,6 +110,10 @@ public class FUser {
         birthday = ""
         cover = ""
         
+        userTeamID = ""
+        userTeamColorOne = ""
+        userTeamColorTwo = ""
+        userTeamColorThree = ""
         
         loginMethod = ""
         phoneNumber = ""
@@ -214,6 +229,26 @@ public class FUser {
             cover = cvr as! String
         } else {
             cover = ""
+        }
+        if let tmID = _dictionary[kUSERTEAMID] {
+            userTeamID = tmID as! String
+        } else {
+            userTeamID = ""
+        }
+        if let tCO = _dictionary[kUSERTEAMCOLORONE] {
+            userTeamColorOne = tCO as! String
+        } else {
+            userTeamColorOne = ""
+        }
+        if let tCT = _dictionary[kUSERTEAMCOLORTWO] {
+            userTeamColorTwo = tCT as! String
+        } else {
+            userTeamColorTwo = ""
+        }
+        if let tCTH = _dictionary[kUSERTEAMCOLORTHREE] {
+            userTeamColorThree = tCTH as! String
+        } else {
+            userTeamColorThree = ""
         }
      }
     

@@ -82,26 +82,6 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
             createPost()
             dismiss(animated: true, completion: nil)
         }
-        
-    func displayMedia(picture: UIImage?, video: NSURL?) {
-        if let pic = picture {
-            pictureImageView.image = pic
-            isVideoSelected = false
-            isPictureSelected = true
-            return
-        }
-        //send video
-        if let video = video {
-            
-            let thumbImage = createThumbnailOfVideoFromRemoteUrl(url: video)
-            pictureImageView.image = thumbImage
-            isPictureSelected = false
-            isVideoSelected = true
-            
-            return
-        }
-    }
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -176,6 +156,25 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
         optionMenu.addAction(cancelAction)
         
         self.present(optionMenu, animated: true, completion: nil)
+    }
+    
+    func displayMedia(picture: UIImage?, video: NSURL?) {
+        if let pic = picture {
+            pictureImageView.image = pic
+            isVideoSelected = false
+            isPictureSelected = true
+            return
+        }
+        //send video
+        if let video = video {
+            
+            let thumbImage = createThumbnailOfVideoFromRemoteUrl(url: video)
+            pictureImageView.image = thumbImage
+            isPictureSelected = false
+            isVideoSelected = true
+            
+            return
+        }
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

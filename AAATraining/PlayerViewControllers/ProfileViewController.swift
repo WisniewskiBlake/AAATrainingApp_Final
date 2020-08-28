@@ -277,50 +277,9 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
             }
         
     }
-    
-    
-    
-//        let user = FUser.currentUser()
-//
-//        guard let firstName = user?.firstname, let lastName = user?.lastname, let avaPath = user?.ava, let coverPath = user?.cover, let height = user?.height, let weight = user?.weight, let position = user?.position, let number = user?.number else {
-//
-//               return
-//        }
-//        if coverPath != "" {
-//            helper.imageFromData(pictureData: coverPath) { (coverImage) in
-//
-//                if coverImage != nil {
-//                    coverImageView.image = coverImage!
-//                    isCover = true
-//                }
-//            }
-//        } else {
-//            coverImageView.image = UIImage(named: "aaaCoverLogo.png")
-//            isCover = false
-//        }
-//
-//       // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
-//       if avaPath != "" {
-//           helper.imageFromData(pictureData: avaPath) { (avatarImage) in
-//
-//               if avatarImage != nil {
-//                   avaImageView.image = avatarImage!
-//                   isAva = true
-//               }
-//           }
-//       } else{
-//           avaImageView.image = UIImage(named: "user.png")
-//           isAva = false
-//       }
-//
-//       // assigning vars which we accessed from global var, to fullnameLabel
-//       fullnameLabel.text = "\((firstName).capitalized) \((lastName).capitalized)"
-//       heightTextLabel.text = "\((height).capitalized)" + "in."
-//       weightTextLabel.text = "\((weight).capitalized)" + "lbs."
-//       positionTextLabel.text = "\((position).capitalized)"
-//       numberTextLabel.text = "\((number).capitalized)"
+
        
-   }
+    }
     
     
     @IBAction func avaImageView_tapped(_ sender: Any) {

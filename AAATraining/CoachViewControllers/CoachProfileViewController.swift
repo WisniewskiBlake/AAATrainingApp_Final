@@ -30,6 +30,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     
     var profileIcon: UIImage?
     var coverIcon: UIImage?
+    var picturePath: UIImage? = UIImage()
+    var pictureToUpload: String? = ""
     
     // code obj (to build logic of distinguishing tapped / shown Cover / Ava)
     var isCover = false
@@ -64,6 +66,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "createPost"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadUser), name: NSNotification.Name(rawValue: "updateUser"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "changeProPic"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "uploadPost"), object: nil)
         
@@ -154,11 +158,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     }
     
     @objc func baselineViewClicked() {
-//        let allBaselinesVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AllBaselinesVC") as! AllBaselinesVC
-//        self.navigationController?.setNavigationBarHidden(true, animated: true)
-//        self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-//        self.navigationController?.navigationBar.isTranslucent = false
-//        self.navigationController?.pushViewController(allBaselinesVC, animated: true)
+
         let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "allBaselinesNav") as! UINavigationController
         
         self.present(navigation, animated: true, completion: nil)
@@ -291,6 +291,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                             if avatarImage != nil {
                                 self.avas.append(avatarImage!.circleMasked!)
                             }
+                            
                         }
                         if post.picture != "" {
                                 self.helper.imageFromData(pictureData: post.picture) { (pictureImage) in
@@ -298,6 +299,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                                     if pictureImage != nil {
                                         self.pictures.append(pictureImage!)
                                     }
+                                    
                                 }
 
                             } else if post.video != "" {
@@ -344,7 +346,93 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     
     // MARK: - Images tapped
     @IBAction func avaImageView_tapped(_ sender: Any) {
+//        let camera = Camera(delegate_: self)
+//
+//        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+//
+//        let takePhotoOrVideo = UIAlertAction(title: "Camera", style: .default) { (action) in
+//            camera.PresentMultyCamera(target: self, canEdit: false)
+//        }
+//
+//        let sharePhoto = UIAlertAction(title: "Photo Library", style: .default) { (action) in
+//
+//            camera.PresentPhotoLibrary(target: self, canEdit: false)
+//        }
+//
+//        let shareVideo = UIAlertAction(title: "Video Library", style: .default) { (action) in
+//
+//            camera.PresentVideoLibrary(target: self, canEdit: false)
+//        }
+//
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+//        }
+//
+//        takePhotoOrVideo.setValue(UIImage(named: "camera"), forKey: "image")
+//        sharePhoto.setValue(UIImage(named: "picture"), forKey: "image")
+//        shareVideo.setValue(UIImage(named: "video"), forKey: "image")
+//
+////        optionMenu.addAction(takePhotoOrVideo)
+//        optionMenu.addAction(sharePhoto)
+//        //optionMenu.addAction(shareVideo)
+//        optionMenu.addAction(cancelAction)
+//
+//        self.present(optionMenu, animated: true, completion: nil)
+        
         showIconOptions()
+    }
+    
+    
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+
+        profileIcon = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+
+        let pictureData = profileIcon?.jpegData(compressionQuality: 0.4)!
+        let avatar = pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+
+
+        self.avaImageView.image = profileIcon
+
+        updateCurrentUserInFirestore(withValues: [kAVATAR : avatar!]) { (success) in
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changeProPic"), object: nil)
+        }
+        if !allPosts.isEmpty {
+            for post in allPosts {
+
+                post.updatePost(postID: post.postID, withValues: [kPOSTUSERAVA : avatar!])
+            }
+
+        }
+
+        loadPosts()
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    
+    func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+        if images.count > 0 {
+
+            self.profileIcon = images.first!
+            self.avaImageView.image = self.profileIcon!
+            //self.editAvatarButtonOutlet.isHidden = false
+
+            let avatarData = profileIcon?.jpegData(compressionQuality: 0.4)!
+            let avatar = avatarData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+            updateCurrentUserInFirestore(withValues: [kAVATAR : avatar!]) { (success) in
+
+            }
+            if !allPosts.isEmpty {
+                for post in allPosts {
+
+                    post.updatePost(postID: post.postID, withValues: [kPOSTUSERAVA : avatar!])
+                }
+
+            }
+
+        }
+        loadPosts()
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func coverImageView_tapped(_ sender: Any) {
@@ -403,6 +491,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                     
                 } else if post.postType == "picture" {
                     
+                    
                     cellPic.avaImageView.image = self.avas[indexPath.row]
                     cellPic.pictureImageView.image = self.pictures[indexPath.row]
                     
@@ -431,14 +520,14 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                     cellNoPic.postTextLabel.text = post.text
                     
                     //DispatchQueue.main.async {
+                    
+                    cellNoPic.avaImageView.image = self.avas[indexPath.row]
                         
-                        cellNoPic.avaImageView.image = self.avas[indexPath.row]
-                        
-                        cellNoPic.dateLabel.text = self.postDatesArray[indexPath.row]
-                        
-                        cellNoPic.fullnameLabel.text = post.postUserName
+                    cellNoPic.dateLabel.text = self.postDatesArray[indexPath.row]
+                    
+                    cellNoPic.fullnameLabel.text = post.postUserName
 
-                        cellNoPic.urlTextView.text = post.postUrlLink
+                    cellNoPic.urlTextView.text = post.postUrlLink
                     //}
                      cellNoPic.optionsButton.tag = indexPath.row
                      return cellNoPic
@@ -451,30 +540,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     }
     
     
-    func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
-        if images.count > 0 {
-            
-            self.profileIcon = images.first!
-            self.avaImageView.image = self.profileIcon!
-            //self.editAvatarButtonOutlet.isHidden = false
-            
-            let avatarData = profileIcon?.jpegData(compressionQuality: 0.4)!
-            let avatar = avatarData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-            updateCurrentUserInFirestore(withValues: [kAVATAR : avatar!]) { (success) in
-                
-            }
-            if !allPosts.isEmpty {
-                for post in allPosts {
-                    
-                    post.updatePost(postID: post.postID, withValues: [kPOSTUSERAVA : avatar!])
-                }
-                
-            }
-            
-        }
-        loadPosts()
-        self.dismiss(animated: true, completion: nil)
-    }
+    
     
     
     
@@ -539,9 +605,9 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    
-    
+
+
+
     func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -552,11 +618,18 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
        func showIconOptions() {
 
            let optionMenu = UIAlertController(title: "Choose Profile Picture", message: nil, preferredStyle: .actionSheet)
+        
+       
+        //            camera.PresentPhotoLibrary(target: self, canEdit: false)
+       
 
            let takePhotoActio = UIAlertAction(title: "Choose Photo", style: .default) { (alert) in
-
-               let imagePicker = ImagePickerController()
+            //UIImagePickerController.SourceType = .photoLibrary
+            let imagePicker = ImagePickerController()
+            
                imagePicker.delegate = self
+               //imagePicker.sourceType = .photoLibrary
+            
                imagePicker.imageLimit = 1
 
                self.present(imagePicker, animated: true, completion: nil)

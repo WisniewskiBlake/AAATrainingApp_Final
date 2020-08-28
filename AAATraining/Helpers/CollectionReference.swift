@@ -21,6 +21,7 @@ enum FCollectionReference: String {
     case Event
     case Baseline
     case Nutrition
+    case Team
 }
 
 
