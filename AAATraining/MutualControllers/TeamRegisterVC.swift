@@ -38,7 +38,7 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     var isPictureSelected = false
     var isVideoSelected = true
     
-    var picturePath: UIImage? = UIImage()
+    var picturePath: UIImage = UIImage()
     var pictureToUpload: String? = ""
     
     var teamLoginCode = ""
@@ -48,6 +48,10 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     var teamColorOne = ""
     var teamColorTwo = ""
     var teamColorThree = ""
+    
+    var uiColorOne: UIColor
+    var uiColorTwo: UIColor
+    var uiColorThree: UIColor
     
 
     override func viewDidLoad() {
@@ -179,7 +183,21 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
                 
-        picturePath = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+        picturePath = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+        
+        
+        
+        picturePath.getColors { colors in
+          uiColorOne = colors.background
+          uiColorTwo = colors.primary
+          uiColorThree = colors.secondary
+            
+          //detailLabel.textColor = colors.detail
+          teamColorOne = uiColorOne.htmlRGBColor
+          teamColorTwo = uiColorTwo.htmlRGBColor
+          teamColorThree = uiColorThree.htmlRGBColor
+        }
+        
         let pictureData = picturePath?.jpegData(compressionQuality: 0.4)!
         pictureToUpload = pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         displayMedia(picture: picturePath)
