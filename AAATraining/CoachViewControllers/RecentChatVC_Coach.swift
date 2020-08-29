@@ -12,17 +12,13 @@ import FirebaseFirestore
 class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewDataSource, RecentChatCell_CoachDelegate, UISearchResultsUpdating {
    
     @IBOutlet weak var tableView: UITableView!
-    
-    
-    
+        
     var recentChats: [NSDictionary] = []
     var filteredChats: [NSDictionary] = []
     
     var recentListener: ListenerRegistration!
     
-    let searchController = UISearchController(searchResultsController: nil)
-
-    
+    let searchController = UISearchController(searchResultsController: nil)    
     
     override func viewDidLoad() {
         super.viewDidLoad()
