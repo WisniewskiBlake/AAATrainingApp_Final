@@ -52,6 +52,8 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         
         tableView.separatorColor = UIColor.clear
         
+        self.setLeftAlignedNavigationItemTitle(text: "Team Feed", color: .white, margin: 12)
+        
         // run function
         loadPosts()
         

@@ -30,7 +30,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
 
         calendar.delegate = self
-        calendar.appearance.todayColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        calendar.appearance.todayColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         calendar.appearance.headerTitleColor = #colorLiteral(red: 0.1006183103, green: 0.2956552207, blue: 0.71825701, alpha: 1)
         calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:22)
         //calendar.placeholderType = .none
@@ -43,7 +43,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         newEventColorLabel.layer.cornerRadius = newEventColorLabel.frame.width / 2
         newEventColorLabel.clipsToBounds = true
         
-        self.setLeftAlignedNavigationItemTitle(text: "Calendar", color: .white, margin: 30)
+        self.setLeftAlignedNavigationItemTitle(text: "Calendar", color: .white, margin: 12)
         
     }
     
@@ -169,12 +169,21 @@ extension UIViewController
     func setLeftAlignedNavigationItemTitle(text: String,
                                            color: UIColor,
                                            margin left: CGFloat)
+        
     {
+
+        
         let titleLabel = UILabel()
         titleLabel.textColor = color
         titleLabel.text = text
         titleLabel.textAlignment = .left
-        titleLabel.font = UIFont(name: <#T##String#>, size: 21)
+        //titleLabel.font = UIFont(name: "PaladinsLaser", size: 19)
+        titleLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 24)
+//        titleLabel.font = UIFont(name: "Paladins", size: 29)
+//        titleLabel.font = UIFont(name: "Paladins3D", size: 29)
+        //titleLabel.font = UIFont(name: "PaladinsCondensed", size: 29)
+        //titleLabel.font = UIFont(name: "Spantaran", size: 29)
+        
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         self.navigationItem.titleView = titleLabel
