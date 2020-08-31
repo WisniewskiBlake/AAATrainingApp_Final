@@ -50,6 +50,8 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadPostsAfterDelete), name: NSNotification.Name(rawValue: "deletePost"), object: nil)
         
+        tableView.separatorColor = UIColor.clear
+        
         // run function
         loadPosts()
         
@@ -107,12 +109,22 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
             
         }
     }
+    
+    @IBAction func composeButtonClicked(_ sender: Any) {
+        let postNav = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "postNav") as! UINavigationController
+        
+            self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+
+            self.present(postNav, animated: true, completion: nil)
+    }
+    
 
     
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        tableView.tableFooterView = UIView()
         //loadPosts()
 
     }
@@ -239,6 +251,12 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         
         let cellPic = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
         
+//        let bottomBorder = CALayer()
+//
+//        bottomBorder.frame = CGRect(x: 0.0, y: 43.0, width: cellPic.contentView.frame.size.width, height: 1.0)
+//        bottomBorder.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+//        cellPic.contentView.layer.addSublayer(bottomBorder)
+        
         if allPosts.count > 0 {
             post = allPosts[indexPath.row]
 
@@ -287,7 +305,14 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                 return cellPic
                 
             } else {
-                let cellNoPic = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
+                let cellNoPic = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as!
+                CoachNoPicCell
+                
+//                let bottomBorder = CALayer()
+//
+//                bottomBorder.frame = CGRect(x: 0.0, y: 43.0, width: cellNoPic.contentView.frame.size.width, height: 1.0)
+//                bottomBorder.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+//                cellNoPic.contentView.layer.addSublayer(bottomBorder)
                 
                 cellNoPic.postTextLabel.numberOfLines = 0
                 cellNoPic.postTextLabel.text = post.text

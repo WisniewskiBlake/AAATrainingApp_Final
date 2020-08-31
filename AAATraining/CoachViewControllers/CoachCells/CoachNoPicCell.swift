@@ -27,9 +27,19 @@ class CoachNoPicCell: UITableViewCell {
         // rounded corners
         avaImageView.layer.cornerRadius = avaImageView.frame.width / 2
         avaImageView.clipsToBounds = true
-        
-        
+                
         urlTextView.textContainerInset = .zero
+        
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+//        let mScreenSize = UIScreen.main.bounds
+//        let mSeparatorHeight = CGFloat(5.0) // Change height of speatator as you want
+//        let mAddSeparator = UIView.init(frame: CGRect(x: 0, y: self.frame.size.height, width: mScreenSize.width, height: mSeparatorHeight))
+//        mAddSeparator.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) // Change backgroundColor of separator
+//        self.addSubview(mAddSeparator)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

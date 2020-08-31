@@ -61,6 +61,8 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate {
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        tableView.tableFooterView = UIView()
         //loadPosts()
         //navigationController?.setNavigationBarHidden(true, animated: true)
     }

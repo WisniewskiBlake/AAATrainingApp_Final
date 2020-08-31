@@ -43,6 +43,9 @@ class LoginVC: UIViewController {
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    
+    var teamID: String = ""
+    
     //
 //    var loginRef: DatabaseReference!
     
@@ -63,9 +66,6 @@ class LoginVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        // declaring notification observation in order to catch UIKeyboardWillShow / UIKeyboardWillHide Notification
-        
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)        
     }
@@ -79,21 +79,21 @@ class LoginVC: UIViewController {
      }
     
     @IBAction func loginButton_clicked(_ sender: Any) {
-          // accessing Helper Class that stores multi-used functions
-                let helper = Helper()
-                
-                // 1st Varification: if etnered text in EmailTextField doesn't match our expression/rule, show alert
-                if helper.isValid(email: emailTextField.text!) == false {
-                    helper.showAlert(title: "Invalid Email", message: "Please enter registered Email address", in: self)
-                    return
-                    
-                // 2nd Varification: if password is less than 6 chars, then return do not executed further
-                } else if passwordTextField.text!.count < 6 {
-                    helper.showAlert(title: "Invalid Password", message: "Password must contain at least 6 characters", in: self)
-                    return
-                }
-                
-            loginUser()
+      // accessing Helper Class that stores multi-used functions
+        let helper = Helper()
+        
+        // 1st Varification: if etnered text in EmailTextField doesn't match our expression/rule, show alert
+        if helper.isValid(email: emailTextField.text!) == false {
+            helper.showAlert(title: "Invalid Email", message: "Please enter registered Email address", in: self)
+            return
+            
+        // 2nd Varification: if password is less than 6 chars, then return do not executed further
+        } else if passwordTextField.text!.count < 6 {
+            helper.showAlert(title: "Invalid Password", message: "Password must contain at least 6 characters", in: self)
+            return
+        }
+            
+        loginUser()
       }
     
 //    @IBAction func registerButtonClicked(_ sender: Any) {
@@ -103,33 +103,98 @@ class LoginVC: UIViewController {
 //        self.navigationController?.pushViewController(navController, animated: true)
 //    }
     
+//    func loadTeam() {
+//        //this will load the team and set the current user defaults to team color and logo
+//        ProgressHUD.show()
+//
+//            var query: Query!
+//
+//            query = reference(.Team).whereField(kTEAMID, isEqualTo: FUser.currentId()).order(by: kPOSTDATE, descending: true)
+//
+//            query.getDocuments { (snapshot, error) in
+//                self.allPosts = []
+//                self.avas = []
+//                self.pictures = []
+//                self.postDatesArray = []
+//                self.allPostsGrouped = [:]
+//
+//                if error != nil {
+//                    print(error!.localizedDescription)
+//                    ProgressHUD.dismiss()
+//                    self.tableView.reloadData()
+//                    return
+//                }
+//
+//                guard let snapshot = snapshot else {
+//                    ProgressHUD.dismiss(); return
+//                }
+//
+//                if !snapshot.isEmpty {
+//
+//                    for postDictionary in snapshot.documents {
+//                        let postDictionary = postDictionary.data() as NSDictionary
+//                        let post = Post(_dictionary: postDictionary)
+//
+//                        self.allPosts.append(post)
+//                        self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
+//
+//                            if avatarImage != nil {
+//                                self.avas.append(avatarImage!.circleMasked!)
+//                            }
+//
+//                        }
+//                        if post.picture != "" {
+//                                self.helper.imageFromData(pictureData: post.picture) { (pictureImage) in
+//
+//                                    if pictureImage != nil {
+//                                        self.pictures.append(pictureImage!)
+//                                    }
+//
+//                                }
+//
+//                            } else if post.video != "" {
+//
+//                                self.helper.imageFromData(pictureData: post.picture) { (pictureImage) in
+//
+//                                    if pictureImage != nil {
+//                                        self.pictures.append(pictureImage!)
+//                                    }
+//                                }
+//
+//                            } else {
+//                                self.pictures.append(UIImage())
+//                            }
+//                        let postDate = self.helper.dateFormatter().date(from: post.date)
+//                        self.postDatesArray.append(self.currentDateFormater.string(from: postDate!))
+//
+//                    }
+//                    self.tableView.reloadData()
+//
+//                }
+//                ProgressHUD.dismiss()
+//            }
+//
+//    }
             
+        // sending request to the server for proceeding Log In
+        func loginUser() {
             
-            // sending request to the server for proceeding Log In
-            func loginUser() {
+            FUser.loginUserWith(email: emailTextField.text!, password: passwordTextField.text!) { (error) in
                 
-                
-                FUser.loginUserWith(email: emailTextField.text!, password: passwordTextField.text!) { (error) in
-                    
-                    if error != nil {
-                        ProgressHUD.showError(error!.localizedDescription)
-                        return
-                    }
-                    
-                    print(FUser.currentId())
-                    self.goToApp()
-                    
-                    
+                if error != nil {
+                    ProgressHUD.showError(error!.localizedDescription)
+                    return
                 }
                 
-                print(FUser.currentUser()?.accountType)
-               
+                print(FUser.currentId())
+                self.goToApp()
                 
-                
-                            
-                        
                 
             }
+            
+            print(FUser.currentUser()?.accountType)
+            
+        }
     
     func goToApp() {
         
@@ -156,7 +221,6 @@ class LoginVC: UIViewController {
         func goToCoach() {
             
             let helper = Helper()
-            
             
             // go to TabBar
             helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)

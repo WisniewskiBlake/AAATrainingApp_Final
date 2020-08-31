@@ -150,6 +150,7 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     func goToApp() {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
         {
+            vc.teamID = teamLoginCode
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         }
