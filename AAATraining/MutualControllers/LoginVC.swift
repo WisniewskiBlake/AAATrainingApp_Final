@@ -44,8 +44,10 @@ class LoginVC: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
+    let helper = Helper()
+    
     var teamID: String = ""
-    var team: Team
+    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "")
     
     //
 //    var loginRef: DatabaseReference!
@@ -104,12 +106,14 @@ class LoginVC: UIViewController {
 //        self.navigationController?.pushViewController(navController, animated: true)
 //    }
     
-    func loadTeam() {
+    func configureUI() {
         //this will load the team and set the current user defaults to team color and logo   
-        team.getTeam(teamID: self.teamID) { (teamReturned) in
-            
-            self.team = teamReturned
-            
+        self.helper.imageFromData(pictureData: team.teamLogo) { (teamImage) in
+
+            if teamImage != nil {
+                logo.image = teamImage
+                logoBackground.backgroundColor = UIColor(hexString: team.teamColorOne)
+            }
         }
 
     }

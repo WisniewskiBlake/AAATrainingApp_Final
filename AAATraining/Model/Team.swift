@@ -92,6 +92,8 @@ public class Team {
        } else {
            teamColorThree = ""
        }
+        
+        teamDictionary = NSMutableDictionary(objects: [teamID, teamName, teamLogo, teamMemberIDs, teamCity, teamState, teamColorOne, teamColorTwo, teamColorThree], forKeys: [kTEAMID as NSCopying, kTEAMNAME as NSCopying, kTEAMLOGO as NSCopying, kTEAMMEMBERIDS as NSCopying, kTEAMCITY as NSCopying, kTEAMSTATE as NSCopying, kTEAMCOLORONE as NSCopying, kTEAMCOLORTWO as NSCopying, kTEAMCOLORTHREE as NSCopying])
        
     }
     
@@ -105,15 +107,15 @@ public class Team {
             
             if snapshot.exists {
                 
-                
-                
                 let team = Team(_dictionary: snapshot.data()! as NSDictionary)
                 
                 completion(team)
                 
                 
             } else {
-                completion(usersArray)
+                let team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "")
+                
+                completion(team)
             }
             
             

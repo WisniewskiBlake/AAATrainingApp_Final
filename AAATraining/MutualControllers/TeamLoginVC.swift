@@ -16,6 +16,9 @@ class TeamLoginVC: UIViewController {
     @IBOutlet weak var teamCodeText: UITextField!
     @IBOutlet weak var registerTeamLabel: UILabel!
     @IBOutlet weak var continueButton: UIButton!
+    let helper = Helper()
+    
+    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "")
     
     let registerTeamTapGestureRecognizer = UITapGestureRecognizer()
 
@@ -28,7 +31,27 @@ class TeamLoginVC: UIViewController {
     }
     
     @IBAction func continueButtonClicked(_ sender: Any) {
+        team.getTeam(teamID: teamCodeText.text!) { (teamReturned) in
+            if teamReturned.teamID != "" {
+                self.team = teamReturned
+                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+                {
+                    vc.team = self.team
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true, completion: nil)
+                }
+            } else {
+                self.helper.showAlert(title: "Invadlid ID", message: "Team ID does not exist!", in: self)
+            }
+            
+            
+        }
+    }
+    
+    func loadTeam() {
+        //this will load the team and set the current user defaults to team color and logo
         
+
     }
     
     @objc func registerTeamClicked() {
