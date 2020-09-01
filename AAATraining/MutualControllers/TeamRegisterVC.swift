@@ -53,7 +53,8 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     var uiColorTwo: UIColor?
     var uiColorThree: UIColor?
     
-
+    let helper = Helper()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -143,7 +144,9 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     @IBAction func copyToClipClicked(_ sender: Any) {
-        
+        let pasteboard = UIPasteboard.general
+        pasteboard.string = codeLabel.text
+        self.helper.showAlert(title: "Copied!", message: "Team code copied to clipboard.", in: self)
     }
     
     
@@ -193,7 +196,9 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         picturePath.getColors { colors in
             self.uiColorOne = colors?.background
             self.uiColorTwo = colors?.primary
-            self.uiColorThree = colors?.secondary
+            self.uiColorThree = colors?.detail
+            
+            
             
           //detailLabel.textColor = colors.detail
             self.teamColorOne = self.uiColorOne?.htmlRGBaColor
@@ -261,6 +266,20 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
                 locationContinueButton.isHidden = false
             }
                     
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        // end editing - hide keyboards
+        self.view.endEditing(false)
+    }
+    
+    @IBAction func haveTeamClicked(_ sender: Any) {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamLoginVC") as? TeamLoginVC
+        {
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
         }
     }
     

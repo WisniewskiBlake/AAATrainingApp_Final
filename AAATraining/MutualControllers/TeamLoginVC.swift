@@ -43,7 +43,7 @@ class TeamLoginVC: UIViewController {
                     }
                 } else {
                     self.helper.showAlert(title: "Invadlid ID", message: "Team ID does not exist!", in: self)
-                }                
+                }
             }
         } else {
             self.helper.showAlert(title: "Invadlid ID", message: "Team ID does not exist!", in: self)
@@ -60,7 +60,7 @@ class TeamLoginVC: UIViewController {
     @objc func registerTeamClicked() {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamRegisterVC") as? TeamRegisterVC
         {
-            vc.modalPresentationStyle = .fullScreen
+            vc.modalPresentationStyle = .automatic
             self.present(vc, animated: true, completion: nil)
         }
     }

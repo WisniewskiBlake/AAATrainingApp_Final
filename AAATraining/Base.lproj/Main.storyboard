@@ -102,8 +102,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoBackground.png" translatesAutoresizingMaskIntoConstraints="NO" id="660-ty-t8W">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="660-ty-t8W">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="230"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="230" id="3ez-2P-c7K"/>
                                 </constraints>
@@ -154,13 +155,13 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zby-oh-UfM">
                                 <rect key="frame" x="16" y="381" width="343" height="43"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="43" id="Am4-K0-t1a"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
                                 <state key="normal" title="Login">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
                                     <action selector="loginButton_clicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DvD-UA-csb"/>
@@ -1388,7 +1389,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hBM-Vi-2Ks" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8256.7999999999993" y="802.848575712144"/>
+            <point key="canvasLocation" x="9196" y="802.848575712144"/>
         </scene>
         <!--Nutrition Feed-->
         <scene sceneID="fEu-vW-phq">
@@ -1633,7 +1634,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u3I-Ux-hsp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6733.6000000000004" y="796.55172413793105"/>
+            <point key="canvasLocation" x="7672.8000000000002" y="796.55172413793105"/>
         </scene>
         <!--Baseline Stats-->
         <scene sceneID="4kd-Nr-0NM">
@@ -2583,7 +2584,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sLk-A5-XCk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5309.6000000000004" y="799.2503748125938"/>
+            <point key="canvasLocation" x="6248.8000000000002" y="799.2503748125938"/>
         </scene>
         <!--Chats-->
         <scene sceneID="D9s-LM-fC3">
@@ -4556,7 +4557,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nutritionIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Cga-qF-XGY">
-                                            <rect key="frame" x="0.0" y="-9" width="50" height="38"/>
+                                            <rect key="frame" x="0.0" y="1" width="50" height="28"/>
                                             <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="50" id="HkU-QS-ek6"/>
@@ -5146,7 +5147,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nutritionIcon" translatesAutoresizingMaskIntoConstraints="NO" id="CdB-n4-8Ng">
-                                        <rect key="frame" x="0.0" y="-9" width="50" height="38"/>
+                                        <rect key="frame" x="0.0" y="1" width="50" height="28"/>
                                         <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="38" id="p1V-gH-Hvv"/>
@@ -5333,7 +5334,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lOW-ie-frz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4609" y="801"/>
+            <point key="canvasLocation" x="5548" y="800.14992503748135"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="bJj-uh-0nh">
@@ -5549,7 +5550,7 @@
         <!--Navigation Controller-->
         <scene sceneID="uI0-8d-6O2">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="3Bc-fd-Egn" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="userSelectionNav" automaticallyAdjustsScrollViewInsets="NO" id="3Bc-fd-Egn" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="HHu-ax-6Ln">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -6006,7 +6007,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y7w-uZ-SnV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2272" y="763"/>
+            <point key="canvasLocation" x="3211.1999999999998" y="762.36881559220399"/>
         </scene>
         <!--Chats-->
         <scene sceneID="DiC-jE-HUj">
@@ -6493,7 +6494,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6vT-Hd-hrT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7534" y="803"/>
+            <point key="canvasLocation" x="8472.7999999999993" y="802.848575712144"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="kWC-Hr-DkV">
@@ -6515,7 +6516,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vXx-KI-rhI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6017" y="803"/>
+            <point key="canvasLocation" x="6956" y="802.848575712144"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="B1A-fS-Qa6">
@@ -6718,10 +6719,10 @@
                                                             <constraint firstAttribute="height" constant="70" id="gCV-eq-pEc"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The team logo be changed at anytime in the app." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sP8-eX-q6Z">
-                                                        <rect key="frame" x="16" y="271" width="343" height="18.5"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The app will extract team colors from image, they can be changed later in settings." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sP8-eX-q6Z">
+                                                        <rect key="frame" x="16" y="263" width="343" height="38"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="18.5" id="x5N-0X-nfz"/>
+                                                            <constraint firstAttribute="height" constant="38" id="x5N-0X-nfz"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
@@ -6752,9 +6753,9 @@
                                                     <constraint firstAttribute="trailing" secondItem="sP8-eX-q6Z" secondAttribute="trailing" constant="16" id="Tpz-7p-6H1"/>
                                                     <constraint firstItem="RPM-11-GGh" firstAttribute="leading" secondItem="Mqh-OZ-xHp" secondAttribute="trailing" constant="89" id="Wgm-Bp-Pj1"/>
                                                     <constraint firstItem="i9V-3W-n48" firstAttribute="leading" secondItem="gUE-oy-kIt" secondAttribute="leading" constant="16" id="aII-TB-635"/>
-                                                    <constraint firstItem="gth-im-Ptt" firstAttribute="top" secondItem="sP8-eX-q6Z" secondAttribute="bottom" constant="19.5" id="hhV-YG-a7A"/>
+                                                    <constraint firstItem="gth-im-Ptt" firstAttribute="top" secondItem="sP8-eX-q6Z" secondAttribute="bottom" constant="8" id="hhV-YG-a7A"/>
                                                     <constraint firstAttribute="trailing" secondItem="i9V-3W-n48" secondAttribute="trailing" constant="16" id="iOk-Kc-vCq"/>
-                                                    <constraint firstItem="sP8-eX-q6Z" firstAttribute="top" secondItem="RPM-11-GGh" secondAttribute="bottom" constant="16" id="is7-RB-6al"/>
+                                                    <constraint firstItem="sP8-eX-q6Z" firstAttribute="top" secondItem="RPM-11-GGh" secondAttribute="bottom" constant="8" id="is7-RB-6al"/>
                                                     <constraint firstItem="RPM-11-GGh" firstAttribute="top" secondItem="i9V-3W-n48" secondAttribute="bottom" constant="11" id="kI1-GI-t4w"/>
                                                     <constraint firstAttribute="width" constant="375" id="o1B-qt-klV"/>
                                                     <constraint firstItem="sP8-eX-q6Z" firstAttribute="leading" secondItem="gUE-oy-kIt" secondAttribute="leading" constant="16" id="rl2-rH-v1d"/>
@@ -6764,13 +6765,13 @@
                                                 <rect key="frame" x="1125" y="0.0" width="375" height="667"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Team Code" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W2r-LV-9t9">
-                                                        <rect key="frame" x="16" y="151" width="343" height="23"/>
+                                                        <rect key="frame" x="16" y="128" width="343" height="23"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="19"/>
                                                         <color key="textColor" red="0.25926578039999998" green="0.40468230840000002" blue="0.69936054940000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copy to clipboard or screenshot the code to share!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x4X-iu-lgp">
-                                                        <rect key="frame" x="16" y="252" width="343" height="18.5"/>
+                                                        <rect key="frame" x="16" y="229" width="343" height="18.5"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="343" id="FIX-k9-rjg"/>
                                                             <constraint firstAttribute="height" constant="18.5" id="R5L-fY-Kx5"/>
@@ -6781,7 +6782,7 @@
                                                         <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="L3F9D4" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zxh-sK-UZJ">
-                                                        <rect key="frame" x="16" y="194" width="343" height="40"/>
+                                                        <rect key="frame" x="16" y="171" width="343" height="40"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="343" id="HNx-YA-MB1"/>
@@ -6793,7 +6794,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BQw-RF-ggd">
-                                                        <rect key="frame" x="16" y="288" width="343" height="35"/>
+                                                        <rect key="frame" x="16" y="265" width="343" height="35"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="35" id="edJ-08-o9m"/>
                                                         </constraints>
@@ -6806,7 +6807,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xR7-ON-x05">
-                                                        <rect key="frame" x="16" y="331" width="343" height="35"/>
+                                                        <rect key="frame" x="16" y="308" width="343" height="35"/>
                                                         <color key="backgroundColor" red="0.14039075370000001" green="0.29558742049999998" blue="0.71822762490000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="35" id="5Yd-wI-HcW"/>
@@ -6824,7 +6825,7 @@
                                                 <constraints>
                                                     <constraint firstItem="Zxh-sK-UZJ" firstAttribute="top" secondItem="W2r-LV-9t9" secondAttribute="bottom" constant="20" id="1p5-iQ-zuR"/>
                                                     <constraint firstItem="x4X-iu-lgp" firstAttribute="leading" secondItem="i1R-ma-yzH" secondAttribute="leading" constant="16" id="1wX-ax-THk"/>
-                                                    <constraint firstItem="W2r-LV-9t9" firstAttribute="top" secondItem="i1R-ma-yzH" secondAttribute="top" constant="151" id="4AO-GF-4ev"/>
+                                                    <constraint firstItem="W2r-LV-9t9" firstAttribute="top" secondItem="i1R-ma-yzH" secondAttribute="top" constant="128" id="4AO-GF-4ev"/>
                                                     <constraint firstItem="xR7-ON-x05" firstAttribute="top" secondItem="BQw-RF-ggd" secondAttribute="bottom" constant="8" id="4Et-se-zGg"/>
                                                     <constraint firstAttribute="trailing" secondItem="xR7-ON-x05" secondAttribute="trailing" constant="16" id="Hg4-tC-r3D"/>
                                                     <constraint firstAttribute="trailing" secondItem="x4X-iu-lgp" secondAttribute="trailing" constant="16" id="L66-UR-t3c"/>
@@ -6880,6 +6881,9 @@
                                         <state key="normal" title="Already have a team?">
                                             <color key="titleColor" red="0.25926578039999998" green="0.40468230840000002" blue="0.69936054940000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="haveTeamClicked:" destination="zm7-l7-ZFi" eventType="touchUpInside" id="cCf-yT-Iay"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -6902,6 +6906,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="oxP-tG-RBC"/>
                     </view>
+                    <navigationItem key="navigationItem" id="LG1-qM-5tP"/>
                     <size key="freeformSize" width="1500" height="587"/>
                     <connections>
                         <outlet property="cityText" destination="RIx-vL-K4q" id="HjK-RH-bcC"/>
@@ -6927,7 +6932,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c86-zg-ukn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-211.19999999999999" y="766.86656671664173"/>
+            <point key="canvasLocation" x="728" y="766.86656671664173"/>
         </scene>
     </scenes>
     <resources>
@@ -6948,7 +6953,6 @@
         <image name="feed_selected" width="25" height="25"/>
         <image name="groupIcon" width="99.5" height="99"/>
         <image name="info" width="25" height="25"/>
-        <image name="logoBackground.png" width="810" height="540"/>
         <image name="logoutBtn" width="25" height="25"/>
         <image name="nutritionIcon" width="25" height="25"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>

@@ -105,22 +105,23 @@ class LoginVC: UIViewController {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserTypeSelectionVC") as? UserTypeSelectionVC
         {
             vc.team = self.team
-            vc.modalPresentationStyle = .automatic
+            vc.modalPresentationStyle = .popover
             self.present(vc, animated: true, completion: nil)
         }
     }
 
     
     func configureUI() {
-        //this will load the team and set the current user defaults to team color and logo   
+        //this will load the team and set the current user defaults to team color and logo
         self.helper.imageFromData(pictureData: team.teamLogo) { (teamImage) in
             
-            var newColor = UIColor(hexString: team.teamColorOne)
-
+            
             if teamImage != nil {
                 logo.image = teamImage
-                logoBackground.backgroundColor = UIColor(hexString: team.teamColorOne)
+                //logoBackground.backgroundColor = UIColor(hexString: team.teamColorOne)
                 loginBtn.backgroundColor = UIColor(hexString: team.teamColorOne)
+                registerCoachBtn.setTitleColor(UIColor.darkGray, for: .normal)
+                forgotPassBtn.setTitleColor(UIColor.darkGray, for: .normal)
             }
         }
 
@@ -157,21 +158,32 @@ class LoginVC: UIViewController {
             ProgressHUD.show("Login...")
             self.goToPlayer()
             
+        } else if FUser.currentUser()?.accountType == "parent" {
+            ProgressHUD.show("Login...")
+            self.goToParent()
+            
         }
     }
         
-        func goToCoach() {
-            
-            let helper = Helper()
-            // go to TabBar
-            helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
-        }
+    func goToCoach() {
+        
+        let helper = Helper()
+        // go to TabBar
+        helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
+    }
     
     func goToPlayer() {
         
         let helper = Helper()
         // go to TabBar
         helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
+    }
+    
+    func goToParent() {
+        
+        let helper = Helper()
+        // go to TabBar
+        helper.instantiateViewController(identifier: "ParentTabBar", animated: true, by: self, completion: nil)
     }
     
     // executed always when the Screen's White Space (anywhere excluding objects) tapped
@@ -289,7 +301,7 @@ class LoginVC: UIViewController {
     func configure_registerButton(btn: UIButton) {
         // creating constant named 'border' of type layer which acts as a border frame
         let border = CALayer()
-        border.borderColor = #colorLiteral(red: 0.01220451668, green: 0.2841129601, blue: 0.7098029256, alpha: 1)
+        border.borderColor = UIColor(hexString: team.teamColorOne)?.cgColor
         border.borderWidth = 2
         border.frame = CGRect(x: 0, y: 0, width: btn.frame.width, height: btn.frame.height)
         
@@ -306,7 +318,7 @@ class LoginVC: UIViewController {
     func configure_registerCoachButton(btn: UIButton) {
         // creating constant named 'border' of type layer which acts as a border frame
         let border = CALayer()
-        border.borderColor = #colorLiteral(red: 0.01220451668, green: 0.2841129601, blue: 0.7098029256, alpha: 1)
+        border.borderColor = UIColor(hexString: team.teamColorOne)?.cgColor
         border.borderWidth = 2
         border.frame = CGRect(x: 0, y: 0, width: btn.frame.width, height: btn.frame.height)
         
