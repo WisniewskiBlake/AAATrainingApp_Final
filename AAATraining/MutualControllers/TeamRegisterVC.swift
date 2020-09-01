@@ -132,7 +132,7 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         let team = Team(teamID: teamLoginCode, teamName: teamNameText.text!, teamLogo: self.pictureToUpload!, teamMemberIDs: [""], teamCity: cityText.text!, teamState: stateText.text!, teamColorOne: teamColorOne!, teamColorTwo: teamColorTwo!, teamColorThree: teamColorThree!)
         
         team.saveTeam()
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createTeam"), object: nil)        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createTeam"), object: nil)
         sceneDelegate.tintColor = UIColor(hexString: team.teamColorOne)
         self.goToApp(teamToLoad: team)
         //self.goToLogin()
@@ -196,7 +196,7 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         
         
-        picturePath.getColors { colors in
+        picturePath.getColors(quality: UIImageColorsQuality(rawValue: CGFloat(100))!) { colors in
             self.uiColorOne = colors?.background
             self.uiColorTwo = colors?.primary
             self.uiColorThree = colors?.detail

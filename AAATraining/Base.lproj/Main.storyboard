@@ -352,20 +352,20 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter Account Creation Password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZk-D2-C5T">
-                                                        <rect key="frame" x="16" y="151" width="343" height="23"/>
+                                                        <rect key="frame" x="16" y="136" width="343" height="23"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="19"/>
                                                         <color key="textColor" red="0.25926578039999998" green="0.40468230840000002" blue="0.69936054940000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This password is needed in order to create Coach accounts." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lGc-Ya-bMR">
-                                                        <rect key="frame" x="16" y="247" width="343" height="36"/>
+                                                        <rect key="frame" x="16" y="232" width="343" height="36"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </label>
                                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DFw-wX-0LA">
-                                                        <rect key="frame" x="16" y="303" width="343" height="35"/>
+                                                        <rect key="frame" x="16" y="288" width="343" height="35"/>
                                                         <color key="backgroundColor" red="0.14039075370000001" green="0.29558742049999998" blue="0.71822762490000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="35" id="yP5-C0-Uet"/>
@@ -379,13 +379,13 @@
                                                         </connections>
                                                     </button>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CY8-zb-A79">
-                                                        <rect key="frame" x="16" y="192" width="343" height="35"/>
+                                                        <rect key="frame" x="16" y="177" width="343" height="35"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="35" id="QtR-gB-Rbh"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                        <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                                                         <connections>
                                                             <action selector="textFieldDidChange:" destination="Lz1-PB-y5L" eventType="editingChanged" id="UqF-sx-xqK"/>
                                                         </connections>
@@ -395,7 +395,7 @@
                                                 <constraints>
                                                     <constraint firstItem="HZk-D2-C5T" firstAttribute="leading" secondItem="FfL-Lp-XnK" secondAttribute="leading" constant="16" id="0ST-Sg-ivK"/>
                                                     <constraint firstAttribute="trailing" secondItem="CY8-zb-A79" secondAttribute="trailing" constant="16" id="9SE-o8-Cyy"/>
-                                                    <constraint firstItem="HZk-D2-C5T" firstAttribute="top" secondItem="FfL-Lp-XnK" secondAttribute="top" constant="151" id="HjG-qE-erq"/>
+                                                    <constraint firstItem="HZk-D2-C5T" firstAttribute="top" secondItem="FfL-Lp-XnK" secondAttribute="top" constant="136" id="HjG-qE-erq"/>
                                                     <constraint firstAttribute="trailing" secondItem="lGc-Ya-bMR" secondAttribute="trailing" constant="16" id="MrE-ed-3Gd"/>
                                                     <constraint firstAttribute="trailing" secondItem="DFw-wX-0LA" secondAttribute="trailing" constant="16" id="R0V-Mp-Rd5"/>
                                                     <constraint firstItem="DFw-wX-0LA" firstAttribute="leading" secondItem="FfL-Lp-XnK" secondAttribute="leading" constant="16" id="SbZ-Lp-Hpp"/>
@@ -412,20 +412,20 @@
                                                 <rect key="frame" x="375" y="0.0" width="375" height="667"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's Your Name?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9KT-iY-J9L">
-                                                        <rect key="frame" x="16" y="151" width="343" height="23"/>
+                                                        <rect key="frame" x="16" y="135" width="343" height="23"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="19"/>
                                                         <color key="textColor" red="0.25926578039999998" green="0.40468230840000002" blue="0.69936054940000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Using your real name and be sure to delete any white spaces." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W7H-XK-SCY">
-                                                        <rect key="frame" x="16" y="247" width="343" height="36"/>
+                                                        <rect key="frame" x="16" y="231" width="343" height="36"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </label>
                                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gj9-qG-FEx">
-                                                        <rect key="frame" x="16" y="303" width="343" height="35"/>
+                                                        <rect key="frame" x="16" y="287" width="343" height="35"/>
                                                         <color key="backgroundColor" red="0.14039075370000001" green="0.29558742049999998" blue="0.71822762490000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="35" id="anp-SC-YRZ"/>
@@ -439,25 +439,25 @@
                                                         </connections>
                                                     </button>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lFn-DH-NHd">
-                                                        <rect key="frame" x="16" y="192" width="160" height="35"/>
+                                                        <rect key="frame" x="16" y="176" width="160" height="35"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="35" id="PzS-hO-hfV"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
                                                         <connections>
                                                             <action selector="textFieldDidChange:" destination="Lz1-PB-y5L" eventType="editingChanged" id="JYy-gb-hkd"/>
                                                         </connections>
                                                     </textField>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tEN-WN-UdQ">
-                                                        <rect key="frame" x="199" y="192" width="160" height="35"/>
+                                                        <rect key="frame" x="199" y="176" width="160" height="35"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="35" id="BKb-QT-XRb"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
                                                         <connections>
                                                             <action selector="textFieldDidChange:" destination="Lz1-PB-y5L" eventType="editingChanged" id="ojh-bC-95P"/>
                                                         </connections>
@@ -479,7 +479,7 @@
                                                     <constraint firstItem="lFn-DH-NHd" firstAttribute="top" secondItem="9KT-iY-J9L" secondAttribute="bottom" constant="18" id="cAC-ak-yaV"/>
                                                     <constraint firstItem="lFn-DH-NHd" firstAttribute="leading" secondItem="uiS-4b-DRp" secondAttribute="leading" constant="16" id="fAr-EW-gDB"/>
                                                     <constraint firstItem="Gj9-qG-FEx" firstAttribute="top" secondItem="W7H-XK-SCY" secondAttribute="bottom" constant="20" id="kOU-6v-qJy"/>
-                                                    <constraint firstItem="9KT-iY-J9L" firstAttribute="top" secondItem="uiS-4b-DRp" secondAttribute="top" constant="151" id="lzf-bF-4dJ"/>
+                                                    <constraint firstItem="9KT-iY-J9L" firstAttribute="top" secondItem="uiS-4b-DRp" secondAttribute="top" constant="135" id="lzf-bF-4dJ"/>
                                                     <constraint firstItem="Gj9-qG-FEx" firstAttribute="leading" secondItem="uiS-4b-DRp" secondAttribute="leading" constant="16" id="rgH-eO-MWU"/>
                                                 </constraints>
                                             </view>
@@ -487,13 +487,13 @@
                                                 <rect key="frame" x="750" y="0.0" width="375" height="667"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Whats Your Email And Phone?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J4v-67-dwQ">
-                                                        <rect key="frame" x="16" y="151" width="343" height="23"/>
+                                                        <rect key="frame" x="16" y="135" width="343" height="23"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="19"/>
                                                         <color key="textColor" red="0.25926578039999998" green="0.40468230840000002" blue="0.69936054940000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b4p-nI-6ra">
-                                                        <rect key="frame" x="16" y="303" width="343" height="35"/>
+                                                        <rect key="frame" x="16" y="287" width="343" height="35"/>
                                                         <color key="backgroundColor" red="0.14039075370000001" green="0.29558742049999998" blue="0.71822762490000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="343" id="AUt-JI-kiG"/>
@@ -508,25 +508,25 @@
                                                         </connections>
                                                     </button>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter your Email address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UHI-oF-BmO">
-                                                        <rect key="frame" x="16" y="192" width="343" height="35"/>
+                                                        <rect key="frame" x="16" y="176" width="343" height="35"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="35" id="9wa-co-rtv"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
                                                         <connections>
                                                             <action selector="textFieldDidChange:" destination="Lz1-PB-y5L" eventType="editingChanged" id="YTE-xj-9AE"/>
                                                         </connections>
                                                     </textField>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone Ex: 9891234567" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DrH-12-kJb">
-                                                        <rect key="frame" x="16" y="246" width="343" height="35"/>
+                                                        <rect key="frame" x="16" y="230" width="343" height="35"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="35" id="Nm1-QV-qgz"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                         <connections>
                                                             <action selector="textFieldDidChange:" destination="Lz1-PB-y5L" eventType="editingChanged" id="yhw-94-dIt"/>
                                                         </connections>
@@ -542,7 +542,7 @@
                                                     <constraint firstItem="DrH-12-kJb" firstAttribute="leading" secondItem="sFv-bd-Pbu" secondAttribute="leading" constant="16" id="RWv-po-iUf"/>
                                                     <constraint firstItem="b4p-nI-6ra" firstAttribute="top" secondItem="DrH-12-kJb" secondAttribute="bottom" constant="22" id="eaU-tL-oCH"/>
                                                     <constraint firstAttribute="trailing" secondItem="b4p-nI-6ra" secondAttribute="trailing" constant="16" id="g0s-bl-D9m"/>
-                                                    <constraint firstItem="J4v-67-dwQ" firstAttribute="top" secondItem="sFv-bd-Pbu" secondAttribute="top" constant="151" id="izF-kq-mND"/>
+                                                    <constraint firstItem="J4v-67-dwQ" firstAttribute="top" secondItem="sFv-bd-Pbu" secondAttribute="top" constant="135" id="izF-kq-mND"/>
                                                     <constraint firstAttribute="trailing" secondItem="DrH-12-kJb" secondAttribute="trailing" constant="16" id="tTF-z2-w2h"/>
                                                     <constraint firstAttribute="trailing" secondItem="UHI-oF-BmO" secondAttribute="trailing" constant="16" id="trW-dK-PZP"/>
                                                     <constraint firstItem="DrH-12-kJb" firstAttribute="top" secondItem="UHI-oF-BmO" secondAttribute="bottom" constant="19" id="v0s-ti-gbP"/>
@@ -553,20 +553,20 @@
                                                 <rect key="frame" x="1125" y="0.0" width="375" height="667"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create A Password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lmE-hT-vlv">
-                                                        <rect key="frame" x="16" y="151" width="343" height="23"/>
+                                                        <rect key="frame" x="16" y="135" width="343" height="23"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="19"/>
                                                         <color key="textColor" red="0.25926578039999998" green="0.40468230840000002" blue="0.69936054940000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter a combination of at least six numbers, letters and punctuation marks (like ! and &amp;)." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qeX-2k-w1l">
-                                                        <rect key="frame" x="16" y="247" width="343" height="36"/>
+                                                        <rect key="frame" x="16" y="231" width="343" height="36"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ekz-o1-FL3">
-                                                        <rect key="frame" x="16" y="192" width="343" height="35"/>
+                                                        <rect key="frame" x="16" y="176" width="343" height="35"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="35" id="6Lj-KC-s7E"/>
@@ -578,7 +578,7 @@
                                                         </connections>
                                                     </textField>
                                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AO2-Ow-nLm">
-                                                        <rect key="frame" x="16" y="303" width="343" height="35"/>
+                                                        <rect key="frame" x="16" y="287" width="343" height="35"/>
                                                         <color key="backgroundColor" red="0.14039075370000001" green="0.29558742049999998" blue="0.71822762490000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="35" id="JGk-IM-NuK"/>
@@ -603,7 +603,7 @@
                                                     <constraint firstItem="qeX-2k-w1l" firstAttribute="top" secondItem="Ekz-o1-FL3" secondAttribute="bottom" constant="20" id="Uee-YK-huq"/>
                                                     <constraint firstItem="Ekz-o1-FL3" firstAttribute="top" secondItem="lmE-hT-vlv" secondAttribute="bottom" constant="18" id="Wv5-Ua-cJ8"/>
                                                     <constraint firstAttribute="trailing" secondItem="Ekz-o1-FL3" secondAttribute="trailing" constant="16" id="XXG-M6-q3D"/>
-                                                    <constraint firstItem="lmE-hT-vlv" firstAttribute="top" secondItem="vjN-Pl-KU2" secondAttribute="top" constant="151" id="dEU-au-4Q3"/>
+                                                    <constraint firstItem="lmE-hT-vlv" firstAttribute="top" secondItem="vjN-Pl-KU2" secondAttribute="top" constant="135" id="dEU-au-4Q3"/>
                                                     <constraint firstItem="lmE-hT-vlv" firstAttribute="leading" secondItem="vjN-Pl-KU2" secondAttribute="leading" constant="16" id="ert-pD-bvu"/>
                                                     <constraint firstAttribute="trailing" secondItem="qeX-2k-w1l" secondAttribute="trailing" constant="16" id="twF-Ap-pwW"/>
                                                     <constraint firstItem="AO2-Ow-nLm" firstAttribute="top" secondItem="qeX-2k-w1l" secondAttribute="bottom" constant="20" id="w9Y-nb-hbU"/>
@@ -741,7 +741,7 @@
                                                             <constraint firstAttribute="height" constant="35" id="BaL-7b-8QY"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
                                                         <connections>
                                                             <action selector="textFieldDidChange:" destination="pbD-KU-4y7" eventType="editingChanged" id="boB-ab-v6i"/>
                                                         </connections>
@@ -753,7 +753,7 @@
                                                             <constraint firstAttribute="height" constant="35" id="2eP-O3-tUQ"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
                                                         <connections>
                                                             <action selector="textFieldDidChange:" destination="pbD-KU-4y7" eventType="editingChanged" id="oeX-aU-UzG"/>
                                                         </connections>
@@ -815,7 +815,7 @@
                                                             <constraint firstAttribute="height" constant="35" id="Sqy-2X-O9C"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="done"/>
                                                         <connections>
                                                             <action selector="textFieldDidChange:" destination="pbD-KU-4y7" eventType="editingChanged" id="My2-0F-avE"/>
                                                         </connections>
@@ -827,7 +827,7 @@
                                                             <constraint firstAttribute="height" constant="35" id="Dmh-k8-TjM"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="done"/>
                                                         <connections>
                                                             <action selector="textFieldDidChange:" destination="pbD-KU-4y7" eventType="editingChanged" id="7yA-xu-i15"/>
                                                         </connections>
@@ -892,7 +892,7 @@
                                                             <constraint firstAttribute="height" constant="35" id="3Xe-xI-dWl"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                        <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                                                         <connections>
                                                             <action selector="textFieldDidChange:" destination="pbD-KU-4y7" eventType="editingChanged" id="fUF-fK-aUB"/>
                                                         </connections>
@@ -946,7 +946,7 @@
                                                             <constraint firstAttribute="width" constant="130" id="oJY-Ow-Xr3"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                                                     </textField>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Weight" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XMJ-Yg-zgo">
                                                         <rect key="frame" x="43" y="243" width="130" height="34"/>
@@ -956,7 +956,7 @@
                                                             <constraint firstAttribute="width" constant="130" id="9HY-Cl-gQX"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                                                         <connections>
                                                             <action selector="textFieldDidChange:" destination="pbD-KU-4y7" eventType="editingChanged" id="97R-f4-Oo7"/>
                                                         </connections>
@@ -969,7 +969,7 @@
                                                             <constraint firstAttribute="width" constant="130" id="Ehf-kf-Bxp"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                         <connections>
                                                             <action selector="textFieldDidChange:" destination="pbD-KU-4y7" eventType="editingChanged" id="q3V-XR-WLJ"/>
                                                         </connections>
@@ -990,7 +990,7 @@
                                                             <constraint firstAttribute="width" constant="130" id="dDK-sx-dWr"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                                                         <connections>
                                                             <action selector="textFieldDidChange:" destination="pbD-KU-4y7" eventType="editingChanged" id="1oi-Wq-vXG"/>
                                                         </connections>
@@ -5711,7 +5711,7 @@
                                                             <constraint firstAttribute="height" constant="35" id="PFa-jt-Lno"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                         <connections>
                                                             <action selector="textFieldDidChange:" destination="t5H-gz-0An" eventType="editingChanged" id="DjH-UT-kbK"/>
                                                         </connections>
@@ -5771,7 +5771,7 @@
                                                             <constraint firstAttribute="height" constant="35" id="BkH-mh-xtq"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
                                                         <connections>
                                                             <action selector="textFieldDidChange:" destination="t5H-gz-0An" eventType="editingChanged" id="izE-9s-DyF"/>
                                                         </connections>
@@ -5783,7 +5783,7 @@
                                                             <constraint firstAttribute="height" constant="35" id="49o-gn-PaX"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
                                                         <connections>
                                                             <action selector="textFieldDidChange:" destination="t5H-gz-0An" eventType="editingChanged" id="Ead-qD-Q3E"/>
                                                         </connections>
@@ -5837,7 +5837,7 @@
                                                             <constraint firstAttribute="height" constant="35" id="Eft-Bp-tNu"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                         <connections>
                                                             <action selector="textFieldDidChange:" destination="t5H-gz-0An" eventType="editingChanged" id="3YL-x3-ysV"/>
                                                         </connections>
@@ -5885,7 +5885,7 @@
                                                             <constraint firstAttribute="height" constant="35" id="1gW-aT-vjU"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
+                                                        <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES" textContentType="password"/>
                                                         <connections>
                                                             <action selector="textFieldDidChange:" destination="t5H-gz-0An" eventType="editingChanged" id="7K3-Sm-0v7"/>
                                                         </connections>

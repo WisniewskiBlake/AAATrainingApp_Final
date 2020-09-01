@@ -9,7 +9,7 @@
 import UIKit
 import ProgressHUD
 
-class ParentRegisterVC: UIViewController {
+class ParentRegisterVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var coachPassword_width: NSLayoutConstraint!
     @IBOutlet weak var nameView_width: NSLayoutConstraint!
@@ -68,13 +68,28 @@ class ParentRegisterVC: UIViewController {
         padding(for: firstNameTextField)
         padding(for: lastNameTextField)
         padding(for: passwordTextField)
-        
         padding(for: phoneTextField)
+        
+        self.emailTextField.delegate = self
+        self.firstNameTextField.delegate = self
+        self.lastNameTextField.delegate = self
+        self.passwordTextField.delegate = self
+        self.phoneTextField.delegate = self
+        
         
         configure_footerView()
         
+        configureButtons()
+        
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
         navigationItem.leftBarButtonItem?.tintColor = UIColor.white
+    }
+    
+    func configureButtons() {
+        emailContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
+        nameContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
+        phoneContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
+        finishButton.backgroundColor = UIColor(hexString: team.teamColorOne)
     }
     
     // make corners rounded for any views (objects)
@@ -146,7 +161,7 @@ class ParentRegisterVC: UIViewController {
         let coverIMG = cover?.jpegData(compressionQuality: 0.7)
         let coverData = coverIMG!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         
-        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "parent", birthday: "", cover: coverData, phoneNumber: phoneTextField.text!, userTeamID: "", userTeamColorOne: "", userTeamColorTwo: "", userTeamColorThree: "") { (error)  in
+        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "parent", birthday: "", cover: coverData, phoneNumber: phoneTextField.text!, userTeamID: team.teamID, userTeamColorOne: team.teamColorOne, userTeamColorTwo: team.teamColorTwo, userTeamColorThree: team.teamColorThree) { (error)  in
             
                             if error != nil {
                                 ProgressHUD.dismiss()
@@ -175,6 +190,11 @@ class ParentRegisterVC: UIViewController {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
         // go to TabBar
         helper.instantiateViewController(identifier: "ParentTabBar", animated: true, by: self, completion: nil)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
     
     

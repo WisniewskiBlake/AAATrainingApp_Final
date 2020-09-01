@@ -9,7 +9,7 @@
 import UIKit
 import ProgressHUD
 
-class RegisterVC: UIViewController {
+class RegisterVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var contentView_width: NSLayoutConstraint!
     @IBOutlet weak var emailView_width: NSLayoutConstraint!
@@ -89,6 +89,16 @@ class RegisterVC: UIViewController {
         padding(for: numberTextField)
         padding(for: phoneTextField)
         
+        self.emailTextField.delegate = self
+        self.firstNameTextField.delegate = self
+        self.lastNameTextField.delegate = self
+        self.passwordTextField.delegate = self
+        self.heightTextField.delegate = self
+        self.weightTextField.delegate = self
+        self.positionTextField.delegate = self
+        self.numberTextField.delegate = self
+        self.phoneTextField.delegate = self
+        
         // run function of configuration
         configure_footerView()
                        
@@ -97,6 +107,15 @@ class RegisterVC: UIViewController {
         swipe.direction = .right
         self.view.addGestureRecognizer(swipe)
         
+        configureButtons()
+        
+    }
+    
+    func configureButtons() {
+        emailContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
+        fullnameContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
+        passwordContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
+        statsContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
     }
     
     // make corners rounded for any views (objects)
@@ -168,7 +187,7 @@ class RegisterVC: UIViewController {
         let coverIMG = cover?.jpegData(compressionQuality: 0.7)
         let coverData = coverIMG!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
                 
-        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: self.heightTextField.text!, weight: self.weightTextField.text!, position: self.positionTextField.text!, number: self.numberTextField.text!, accountType: "player", birthday: "", cover: coverData, phoneNumber: phoneTextField.text!, userTeamID: "", userTeamColorOne: "", userTeamColorTwo: "", userTeamColorThree: "") { (error)  in
+        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: self.heightTextField.text!, weight: self.weightTextField.text!, position: self.positionTextField.text!, number: self.numberTextField.text!, accountType: "player", birthday: "", cover: coverData, phoneNumber: phoneTextField.text!, userTeamID: team.teamID, userTeamColorOne: team.teamColorOne, userTeamColorTwo: team.teamColorTwo, userTeamColorThree: team.teamColorThree) { (error)  in
             
                             if error != nil {
                                 ProgressHUD.dismiss()
@@ -244,6 +263,10 @@ class RegisterVC: UIViewController {
         }
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
 
     
     // called once Swiped to the direction Right ->
