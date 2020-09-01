@@ -55,6 +55,8 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         navigationItem.largeTitleDisplayMode = .never
         tableView.tableFooterView = UIView()
         
+        self.setLeftAlignedNavigationItemTitle(text: "Roster", color: .white, margin: 12)
+        
         navigationItem.searchController = searchController
         
         searchController.searchResultsUpdater = self

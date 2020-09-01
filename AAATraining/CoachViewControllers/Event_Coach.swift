@@ -43,6 +43,8 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         getAllMembers()
         getAllEvents()
         cornerRadius(for: deleteButton)
+        
+        self.setLeftAlignedNavigationItemTitle(text: "Event", color: .white, margin: 12)
 
         dateLabel.text = dateString
         textView.text = event.eventText

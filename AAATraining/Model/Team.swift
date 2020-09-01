@@ -46,6 +46,81 @@ public class Team {
         
     }
     
+    init(_dictionary: NSDictionary) {
+       
+       teamID = _dictionary[kTEAMID] as! String
+       
+       if let tName = _dictionary[kTEAMNAME] {
+           teamName = tName as! String
+       } else {
+           teamName = ""
+       }
+       if let logo = _dictionary[kTEAMLOGO] {
+           teamLogo = logo as! String
+       } else {
+           teamLogo = ""
+       }
+       if let members = _dictionary[kTEAMMEMBERIDS] {
+           teamMemberIDs = members as! [String]
+       } else {
+           teamMemberIDs = []
+       }
+       
+       if let city = _dictionary[kTEAMCITY] {
+           teamCity = city as! String
+       } else {
+           teamCity = ""
+       }
+       if let state = _dictionary[kTEAMSTATE] {
+           teamState = state as! String
+       } else {
+           teamState = ""
+       }
+       if let colorOne = _dictionary[kTEAMCOLORONE] {
+           teamColorOne = colorOne as! String
+       } else {
+           teamColorOne = ""
+       }
+       
+       if let colorTwo = _dictionary[kTEAMCOLORTWO] {
+           teamColorTwo = colorTwo as! String
+       } else {
+           teamColorTwo = ""
+       }
+       if let colorThree = _dictionary[kTEAMCOLORTHREE] {
+           teamColorThree = colorThree as! String
+       } else {
+           teamColorThree = ""
+       }
+       
+    }
+    
+    func getTeam(teamID: String, completion: @escaping (_ team: Team) -> Void) {
+        
+        
+        
+        reference(.Team).document(teamID).getDocument { (snapshot, error) in
+            
+            guard let snapshot = snapshot else {  return }
+            
+            if snapshot.exists {
+                
+                
+                
+                let team = Team(_dictionary: snapshot.data()! as NSDictionary)
+                
+                completion(team)
+                
+                
+            } else {
+                completion(usersArray)
+            }
+            
+            
+            
+        }
+    }
+    
     func saveTeam() {
 
         reference(.Team).document(teamDictionary[kTEAMID] as! String).setData(teamDictionary as! [String:Any])

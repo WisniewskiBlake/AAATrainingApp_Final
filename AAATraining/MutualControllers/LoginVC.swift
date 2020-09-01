@@ -45,6 +45,7 @@ class LoginVC: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     
     var teamID: String = ""
+    var team: Team
     
     //
 //    var loginRef: DatabaseReference!
@@ -103,78 +104,15 @@ class LoginVC: UIViewController {
 //        self.navigationController?.pushViewController(navController, animated: true)
 //    }
     
-//    func loadTeam() {
-//        //this will load the team and set the current user defaults to team color and logo
-//        ProgressHUD.show()
-//
-//            var query: Query!
-//
-//            query = reference(.Team).whereField(kTEAMID, isEqualTo: FUser.currentId()).order(by: kPOSTDATE, descending: true)
-//
-//            query.getDocuments { (snapshot, error) in
-//                self.allPosts = []
-//                self.avas = []
-//                self.pictures = []
-//                self.postDatesArray = []
-//                self.allPostsGrouped = [:]
-//
-//                if error != nil {
-//                    print(error!.localizedDescription)
-//                    ProgressHUD.dismiss()
-//                    self.tableView.reloadData()
-//                    return
-//                }
-//
-//                guard let snapshot = snapshot else {
-//                    ProgressHUD.dismiss(); return
-//                }
-//
-//                if !snapshot.isEmpty {
-//
-//                    for postDictionary in snapshot.documents {
-//                        let postDictionary = postDictionary.data() as NSDictionary
-//                        let post = Post(_dictionary: postDictionary)
-//
-//                        self.allPosts.append(post)
-//                        self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
-//
-//                            if avatarImage != nil {
-//                                self.avas.append(avatarImage!.circleMasked!)
-//                            }
-//
-//                        }
-//                        if post.picture != "" {
-//                                self.helper.imageFromData(pictureData: post.picture) { (pictureImage) in
-//
-//                                    if pictureImage != nil {
-//                                        self.pictures.append(pictureImage!)
-//                                    }
-//
-//                                }
-//
-//                            } else if post.video != "" {
-//
-//                                self.helper.imageFromData(pictureData: post.picture) { (pictureImage) in
-//
-//                                    if pictureImage != nil {
-//                                        self.pictures.append(pictureImage!)
-//                                    }
-//                                }
-//
-//                            } else {
-//                                self.pictures.append(UIImage())
-//                            }
-//                        let postDate = self.helper.dateFormatter().date(from: post.date)
-//                        self.postDatesArray.append(self.currentDateFormater.string(from: postDate!))
-//
-//                    }
-//                    self.tableView.reloadData()
-//
-//                }
-//                ProgressHUD.dismiss()
-//            }
-//
-//    }
+    func loadTeam() {
+        //this will load the team and set the current user defaults to team color and logo   
+        team.getTeam(teamID: self.teamID) { (teamReturned) in
+            
+            self.team = teamReturned
+            
+        }
+
+    }
             
         // sending request to the server for proceeding Log In
         func loginUser() {
