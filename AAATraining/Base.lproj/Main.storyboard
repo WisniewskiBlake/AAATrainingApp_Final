@@ -203,7 +203,7 @@
                                     <color key="titleColor" red="0.14039075370000001" green="0.29558742049999998" blue="0.71822762490000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="3Bc-fd-Egn" kind="presentation" id="9Sq-Gx-9Og"/>
+                                    <action selector="registerButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fNa-Y4-bQh"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -267,13 +267,13 @@
         <!--User Type SelectionVC-->
         <scene sceneID="ZkN-Co-ebJ">
             <objects>
-                <viewController storyboardIdentifier="UserTypeSelection" id="jy3-Yi-Aj1" customClass="UserTypeSelectionVC" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserTypeSelectionVC" id="jy3-Yi-Aj1" customClass="UserTypeSelectionVC" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="97l-BM-H7A">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sv4-mC-0X3">
-                                <rect key="frame" x="16" y="183" width="343" height="42"/>
+                                <rect key="frame" x="16" y="171" width="343" height="42"/>
                                 <color key="backgroundColor" red="0.1006183103" green="0.2956552207" blue="0.71825700999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="IkT-aX-LMA"/>
@@ -288,7 +288,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's Your Account Type?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KiZ-O6-Raw">
-                                <rect key="frame" x="16" y="140" width="343" height="23"/>
+                                <rect key="frame" x="16" y="128" width="343" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="343" id="FDw-iX-BCC"/>
                                     <constraint firstAttribute="height" constant="23" id="kOd-ZE-ujp"/>
@@ -5552,7 +5552,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="3Bc-fd-Egn" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="HHu-ax-6Ln">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.1006183103" green="0.2956552207" blue="0.71825700999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>

@@ -32,6 +32,8 @@ class ParentRegisterVC: UIViewController {
     
     @IBOutlet weak var footerView: UIView!
     
+    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "")
+    
     var email: String!
     var password: String!
     let height = "123456789"

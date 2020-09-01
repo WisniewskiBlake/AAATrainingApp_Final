@@ -44,6 +44,8 @@ class RegisterVC: UIViewController {
     var datePicker: UIDatePicker!
     var cover = UIImage(named: "aaaCoverLogo.png")
     
+    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "")
+    
     var accountType = 1
     
 

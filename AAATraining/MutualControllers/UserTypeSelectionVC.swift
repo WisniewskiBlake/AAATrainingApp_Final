@@ -27,6 +27,8 @@ class UserTypeSelectionVC: UIViewController {
     var dataSource = [String]()
     var cellText = "Select Here"
     var viewToGoTo = ""
+    
+    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "")
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -101,12 +101,15 @@ class LoginVC: UIViewController {
         loginUser()
       }
     
-//    @IBAction func registerButtonClicked(_ sender: Any) {
-//        let cRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserTypeSelection") as! UserTypeSelectionVC
-//        let navController = UINavigationController(rootViewController: cRegisterVC)
-//
-//        self.navigationController?.pushViewController(navController, animated: true)
-//    }
+    @IBAction func registerButtonClicked(_ sender: Any) {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserTypeSelectionVC") as? UserTypeSelectionVC
+        {
+            vc.team = self.team
+            vc.modalPresentationStyle = .automatic
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+
     
     func configureUI() {
         //this will load the team and set the current user defaults to team color and logo   
@@ -142,7 +145,6 @@ class LoginVC: UIViewController {
         print(FUser.currentId())
         print(FUser.currentUser()?.accountType)
         print(FUser.currentUser()?.height)
-        
         
         if FUser.currentUser()?.accountType == "coach" {
             ProgressHUD.show("Login...")
