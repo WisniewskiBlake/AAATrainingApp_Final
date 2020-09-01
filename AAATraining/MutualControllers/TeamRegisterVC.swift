@@ -130,7 +130,7 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         team.saveTeam()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createTeam"), object: nil)
-        self.goToApp()
+        self.goToApp(teamToLoad: team)
         //self.goToLogin()
 
     }
@@ -147,10 +147,10 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     
-    func goToApp() {
+    func goToApp(teamToLoad: Team) {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
         {
-            vc.teamID = teamLoginCode
+            vc.team = teamToLoad
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         }
@@ -196,9 +196,11 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
             self.uiColorThree = colors?.secondary
             
           //detailLabel.textColor = colors.detail
-            self.teamColorOne = self.uiColorOne?.htmlRGBColor
-            self.teamColorTwo = self.uiColorTwo?.htmlRGBColor
-            self.teamColorThree = self.uiColorThree?.htmlRGBColor
+            self.teamColorOne = self.uiColorOne?.htmlRGBaColor
+            self.teamColorTwo = self.uiColorTwo?.htmlRGBaColor
+            self.teamColorThree = self.uiColorThree?.htmlRGBaColor
+            
+
         }
         
         let pictureData = picturePath.jpegData(compressionQuality: 0.4)!

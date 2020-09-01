@@ -31,21 +31,24 @@ class TeamLoginVC: UIViewController {
     }
     
     @IBAction func continueButtonClicked(_ sender: Any) {
-        team.getTeam(teamID: teamCodeText.text!) { (teamReturned) in
-            if teamReturned.teamID != "" {
-                self.team = teamReturned
-                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
-                {
-                    vc.team = self.team
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true, completion: nil)
-                }
-            } else {
-                self.helper.showAlert(title: "Invadlid ID", message: "Team ID does not exist!", in: self)
+        if teamCodeText.text != "" {
+            team.getTeam(teamID: teamCodeText.text!) { (teamReturned) in
+                if teamReturned.teamID != "" {
+                    self.team = teamReturned
+                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+                    {
+                        vc.team = self.team
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true, completion: nil)
+                    }
+                } else {
+                    self.helper.showAlert(title: "Invadlid ID", message: "Team ID does not exist!", in: self)
+                }                
             }
-            
-            
+        } else {
+            self.helper.showAlert(title: "Invadlid ID", message: "Team ID does not exist!", in: self)
         }
+        
     }
     
     func loadTeam() {

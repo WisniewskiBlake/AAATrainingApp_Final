@@ -8,6 +8,8 @@
 
 import Foundation
 import Firebase
+import FirebaseAuth
+import FirebaseFirestore
 
 public class Team {
     //if ever i need to make a "team owner" all I have to do is when team register is clicked, say "enter user credentials or create account" then

@@ -48,17 +48,17 @@ class UserTypeSelectionVC: UIViewController {
         self.navigationController?.navigationBar.isTranslucent = false
         if viewToGoTo == "PlayerRegister" {
             let pRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PlayerRegister") as! RegisterVC
-            
+            pRegisterVC.team = self.team
             
             self.navigationController?.pushViewController(pRegisterVC, animated: true)
         } else if viewToGoTo == "ParentRegister" {
             let newGroupVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ParentRegister") as! ParentRegisterVC
-            
+            newGroupVC.team = self.team
             
             self.navigationController?.pushViewController(newGroupVC, animated: true)
         } else if viewToGoTo == "CoachRegister" {
             let cRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoachRegister") as! CoachRegisterVC
-            
+            cRegisterVC.team = self.team
             
             self.navigationController?.pushViewController(cRegisterVC, animated: true)
         }

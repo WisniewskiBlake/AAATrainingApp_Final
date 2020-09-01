@@ -36,6 +36,7 @@ class CoachRegisterVC: UIViewController {
    
     var cover = UIImage(named: "aaaCoverLogo.png")
     
+    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "")
 
     override func viewDidLoad() {
         super.viewDidLoad()

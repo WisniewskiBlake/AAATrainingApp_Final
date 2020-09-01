@@ -114,6 +114,8 @@ class LoginVC: UIViewController {
     func configureUI() {
         //this will load the team and set the current user defaults to team color and logo   
         self.helper.imageFromData(pictureData: team.teamLogo) { (teamImage) in
+            
+            var newColor = UIColor(hexString: team.teamColorOne)
 
             if teamImage != nil {
                 logo.image = teamImage
