@@ -11,6 +11,7 @@ import Firebase
 
 public class Nutrition {
     var nutritionPostID: String
+    var nutritionTeamID: String
     var nutritionOwnerID: String
     var nutritionText: String
     var nutritionPicture: String
@@ -23,11 +24,12 @@ public class Nutrition {
     
     let nutritionPostDictionary: NSMutableDictionary
     
-    init(nutritionPostID: String, nutritionOwnerID: String, nutritionText: String, nutritionPicture: String, nutritionDate: String, nutritionPostUserAva: String, nutritionPostUserName: String, nutritionVideo: String, nutritionPostType: String, nutritionPostUrlLink: String) {
+    init(nutritionPostID: String, nutritionTeamID: String, nutritionOwnerID: String, nutritionText: String, nutritionPicture: String, nutritionDate: String, nutritionPostUserAva: String, nutritionPostUserName: String, nutritionVideo: String, nutritionPostType: String, nutritionPostUrlLink: String) {
         
-        nutritionPostDictionary = NSMutableDictionary(objects: [nutritionPostID, nutritionOwnerID, nutritionText, nutritionPicture, nutritionPostUserAva, nutritionPostUserName, nutritionVideo, nutritionPostType, nutritionPostUrlLink], forKeys: [kNUTRITIONPOSTID as NSCopying, kNUTRITIONPOSTOWNERID as NSCopying, kNUTRITIONPOSTTEXT as NSCopying, kNUTRITIONPOSTPICTURE as NSCopying, kNUTRITIONPOSTUSERAVA as NSCopying, kNUTRITIONPOSTUSERNAME as NSCopying, kNUTRITIONPOSTVIDEO as NSCopying, kNUTRITIONPOSTTYPE as NSCopying, kNUTRITIONPOSTURLLINK as NSCopying])
+        nutritionPostDictionary = NSMutableDictionary(objects: [nutritionPostID, nutritionTeamID, nutritionOwnerID, nutritionText, nutritionPicture, nutritionPostUserAva, nutritionPostUserName, nutritionVideo, nutritionPostType, nutritionPostUrlLink], forKeys: [kNUTRITIONPOSTID as NSCopying, kNUTRITIONTEAMID as NSCopying, kNUTRITIONPOSTOWNERID as NSCopying, kNUTRITIONPOSTTEXT as NSCopying, kNUTRITIONPOSTPICTURE as NSCopying, kNUTRITIONPOSTUSERAVA as NSCopying, kNUTRITIONPOSTUSERNAME as NSCopying, kNUTRITIONPOSTVIDEO as NSCopying, kNUTRITIONPOSTTYPE as NSCopying, kNUTRITIONPOSTURLLINK as NSCopying])
         
         self.nutritionPostID = nutritionPostID
+        self.nutritionTeamID = nutritionTeamID
         self.nutritionOwnerID = nutritionOwnerID
         self.nutritionText = nutritionText
         self.nutritionPicture = nutritionPicture
@@ -41,6 +43,7 @@ public class Nutrition {
     
     init(_dictionary: NSDictionary) {
        nutritionPostID = _dictionary[kNUTRITIONPOSTID] as! String
+        nutritionTeamID = _dictionary[kNUTRITIONTEAMID] as! String
        nutritionOwnerID = _dictionary[kNUTRITIONPOSTOWNERID] as! String
        
        if let fname = _dictionary[kNUTRITIONPOSTUSERNAME] {
@@ -84,7 +87,7 @@ public class Nutrition {
             nutritionPostUrlLink = ""
         }
         
-        nutritionPostDictionary = NSMutableDictionary(objects: [nutritionPostID, nutritionOwnerID, nutritionText, nutritionPicture, nutritionPostUserAva, nutritionPostUserName, nutritionVideo, nutritionPostType, nutritionPostUrlLink], forKeys: [kNUTRITIONPOSTID as NSCopying, kNUTRITIONPOSTOWNERID as NSCopying, kNUTRITIONPOSTTEXT as NSCopying, kNUTRITIONPOSTPICTURE as NSCopying, kNUTRITIONPOSTUSERAVA as NSCopying, kNUTRITIONPOSTUSERNAME as NSCopying, kNUTRITIONPOSTVIDEO as NSCopying, kNUTRITIONPOSTTYPE as NSCopying, kNUTRITIONPOSTURLLINK as NSCopying])
+        nutritionPostDictionary = NSMutableDictionary(objects: [nutritionPostID, nutritionTeamID, nutritionOwnerID, nutritionText, nutritionPicture, nutritionPostUserAva, nutritionPostUserName, nutritionVideo, nutritionPostType, nutritionPostUrlLink], forKeys: [kNUTRITIONPOSTID as NSCopying, kNUTRITIONTEAMID as NSCopying, kNUTRITIONPOSTOWNERID as NSCopying, kNUTRITIONPOSTTEXT as NSCopying, kNUTRITIONPOSTPICTURE as NSCopying, kNUTRITIONPOSTUSERAVA as NSCopying, kNUTRITIONPOSTUSERNAME as NSCopying, kNUTRITIONPOSTVIDEO as NSCopying, kNUTRITIONPOSTTYPE as NSCopying, kNUTRITIONPOSTURLLINK as NSCopying])
         
     }
     

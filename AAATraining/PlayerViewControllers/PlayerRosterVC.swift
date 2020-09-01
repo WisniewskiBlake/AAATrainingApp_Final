@@ -55,6 +55,8 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationItem.searchController = searchController
         
+        self.setLeftAlignedNavigationItemTitle(text: "Roster", color: .white, margin: 12)
+        
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         definesPresentationContext = true
@@ -95,11 +97,11 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
            
            switch filter {
             case "player":
-                query = reference(.User).whereField("accountType", isEqualTo: "player").order(by: kFIRSTNAME, descending: false)
+                query = reference(.User).whereField("accountType", isEqualTo: "player").whereField(kUSERTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).order(by: kFIRSTNAME, descending: false)
            case ("coach"):
-               query = reference(.User).whereField("accountType", isEqualTo: "coach").order(by: kFIRSTNAME, descending: false)
+               query = reference(.User).whereField("accountType", isEqualTo: "coach").whereField(kUSERTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).order(by: kFIRSTNAME, descending: false)
             case ("parent"):
-                query = reference(.User).whereField("accountType", isEqualTo: "parent").order(by: kFIRSTNAME, descending: false)
+                query = reference(.User).whereField("accountType", isEqualTo: "parent").whereField(kUSERTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).order(by: kFIRSTNAME, descending: false)
            default:
                query = reference(.User).order(by: kFIRSTNAME, descending: false)
         }

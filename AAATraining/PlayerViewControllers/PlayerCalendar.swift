@@ -34,8 +34,8 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
         NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
 
         calendar.delegate = self
-        calendar.appearance.todayColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
-        calendar.appearance.headerTitleColor = #colorLiteral(red: 0.1006183103, green: 0.2956552207, blue: 0.71825701, alpha: 1)
+        calendar.appearance.todayColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        calendar.appearance.headerTitleColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:22)
         loadEvents()
         
@@ -46,6 +46,8 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
         
         newEventColorLabel.layer.cornerRadius = newEventColorLabel.frame.width / 2
         newEventColorLabel.clipsToBounds = true
+        
+        self.setLeftAlignedNavigationItemTitle(text: "Calendar", color: .white, margin: 12)
     }
     
     // pre-load func
@@ -60,7 +62,7 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
     
     @objc func loadEvents() {
         ProgressHUD.show()
-        recentListener = reference(.Event).addSnapshotListener({ (snapshot, error) in
+        recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).addSnapshotListener({ (snapshot, error) in
                            
             self.allEvents = []
             self.allEventDates = []
@@ -105,11 +107,11 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
         
         if allEventDates.contains(dateString) && Int(countArray[index])! >= 1 {
               
-            return #colorLiteral(red: 0.9044845104, green: 0.09804645926, blue: 0.1389197409, alpha: 1)
+            return UIColor.gray
              
             
         } else if allEventDates.contains(dateString) && Int(countArray[index])! == 0 {
-            return #colorLiteral(red: 0.1006183103, green: 0.2956552207, blue: 0.71825701, alpha: 1)
+            return UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         }  else {
             return nil
         }

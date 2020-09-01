@@ -103,7 +103,7 @@ public let kPOSTURLLINK = "postUrlLink"
 //Nutrition
 public let kNUTRITIONPOSTS = "nutritionPosts"
 public let kNUTRITIONPOSTID = "nutritionPostID"
-public let kNUTRITIONPOSTTEAMID = "nutritionPostTeamID"
+public let kNUTRITIONTEAMID = "nutritionPostTeamID"
 public let kNUTRITIONPOSTOWNERID = "nutritionOwnerID"
 public let kNUTRITIONPOSTTEXT = "nutritionPostText"
 public let kNUTRITIONPOSTPICTURE = "nutritionPostPicture"

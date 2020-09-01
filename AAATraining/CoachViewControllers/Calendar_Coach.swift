@@ -123,10 +123,10 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         }
         
         if allEventDates.contains(dateString) && Int(countArray[index])! >= 1 {
-            return #colorLiteral(red: 0.9044845104, green: 0.09804645926, blue: 0.1389197409, alpha: 1)
+            return UIColor.gray
             
         } else if allEventDates.contains(dateString) && Int(countArray[index])! == 0 {
-            return #colorLiteral(red: 0.1006183103, green: 0.2956552207, blue: 0.71825701, alpha: 1)
+            return UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         }  else {
             return nil
         }

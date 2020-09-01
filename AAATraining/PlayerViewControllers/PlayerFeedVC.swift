@@ -53,6 +53,8 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "changeProPic"), object: nil)
         
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
+        self.setLeftAlignedNavigationItemTitle(text: "Team Feed", color: .white, margin: 12)
     
         // run function
         loadPosts()
@@ -129,7 +131,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate {
     @objc func loadPosts() {
         ProgressHUD.show()
         
-            self.recentListener = reference(.Post).order(by: kPOSTDATE, descending: true).limit(to: 100).addSnapshotListener({ (snapshot, error) in
+            self.recentListener = reference(.Post).whereField(kPOSTTEAMID, isEqualTo: FUser.currentUser()?.userTeamID as Any).order(by: kPOSTDATE, descending: true).limit(to: 100).addSnapshotListener({ (snapshot, error) in
                    
                 self.allPosts = []
                 self.avas = []

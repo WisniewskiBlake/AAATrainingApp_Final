@@ -190,8 +190,9 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             FUser.logOutCurrentUser { (success) in
                 
                 if success {
-                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamLoginVC") as? TeamLoginVC
                     {
+                        
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: true, completion: nil)
                     }

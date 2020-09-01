@@ -41,11 +41,13 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
 
         calendar.delegate = self
-        calendar.appearance.todayColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
-        calendar.appearance.headerTitleColor = #colorLiteral(red: 0.1006183103, green: 0.2956552207, blue: 0.71825701, alpha: 1)
+        calendar.appearance.todayColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        calendar.appearance.headerTitleColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:22)
         
         loadEvents()
+        
+        self.setLeftAlignedNavigationItemTitle(text: "Calendar", color: .white, margin: 12)
         
         eventColorLabel.layer.cornerRadius = eventColorLabel.frame.width / 2
         eventColorLabel.clipsToBounds = true
@@ -70,7 +72,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     
     @objc func loadEvents() {
         ProgressHUD.show()
-        recentListener = reference(.Event).addSnapshotListener({ (snapshot, error) in
+        recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).addSnapshotListener({ (snapshot, error) in
                            
             self.allEvents = []
             self.allEventDates = []
@@ -133,9 +135,9 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         }
         
         if allEventDates.contains(dateString) && Int(countArray[index])! >= 1 {
-            return #colorLiteral(red: 0.9044845104, green: 0.09804645926, blue: 0.1389197409, alpha: 1)
+            return UIColor.gray
         } else if allEventDates.contains(dateString) && Int(countArray[index])! == 0 {
-            return #colorLiteral(red: 0.1006183103, green: 0.2956552207, blue: 0.71825701, alpha: 1)
+            return UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         }  else {
             return nil
         }
@@ -169,7 +171,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
             FUser.logOutCurrentUser { (success) in
                 
                 if success {
-                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamLoginVC") as? TeamLoginVC
                     {
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: true, completion: nil)

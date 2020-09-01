@@ -35,6 +35,7 @@ class PlayerBaselineVC: UITableViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(loadBaselinesForGuest), name: NSNotification.Name(rawValue: "createBaseline"), object: nil)
         
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        self.setLeftAlignedNavigationItemTitle(text: "Baselines", color: .white, margin: 12)
         
         if FUser.currentUser()?.accountType == "player" {
             composeButton.isEnabled = false
