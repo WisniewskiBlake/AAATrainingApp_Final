@@ -56,6 +56,8 @@ class LoginVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureUI()
+        
         // caching all values of constraints
         logoBackground_height_cache = logoBackground_height.constant
         logo_height_cache = logo_height.constant
@@ -113,6 +115,7 @@ class LoginVC: UIViewController {
             if teamImage != nil {
                 logo.image = teamImage
                 logoBackground.backgroundColor = UIColor(hexString: team.teamColorOne)
+                loginBtn.backgroundColor = UIColor(hexString: team.teamColorOne)
             }
         }
 
@@ -130,12 +133,7 @@ class LoginVC: UIViewController {
                 
                 print(FUser.currentId())
                 self.goToApp()
-                
-                
             }
-            
-            print(FUser.currentUser()?.accountType)
-            
         }
     
     func goToApp() {
@@ -151,8 +149,6 @@ class LoginVC: UIViewController {
             self.goToCoach()
             
 
-            
-
         } else if FUser.currentUser()?.accountType == "player" {
             ProgressHUD.show("Login...")
             self.goToPlayer()
@@ -163,21 +159,15 @@ class LoginVC: UIViewController {
         func goToCoach() {
             
             let helper = Helper()
-            
             // go to TabBar
             helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
-            
-            
         }
     
     func goToPlayer() {
         
         let helper = Helper()
-        
-//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
         // go to TabBar
         helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
-        
     }
     
     // executed always when the Screen's White Space (anywhere excluding objects) tapped
