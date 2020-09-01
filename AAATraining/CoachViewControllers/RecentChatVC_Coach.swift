@@ -27,12 +27,13 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
+        
         let attrs = [
             NSAttributedString.Key.foregroundColor: UIColor.white,
-            NSAttributedString.Key.font: UIFont(name: "PROGRESSPERSONALUSE", size: 24)!
+            NSAttributedString.Key.font: UIFont(name: "PROGRESSPERSONALUSE", size: 34)!
         ]
         
-        navigationController?.navigationBar.titleTextAttributes = attrs
+        navigationController?.navigationBar.largeTitleTextAttributes = attrs
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = true
         
@@ -40,6 +41,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
+        
         
         definesPresentationContext = true
         

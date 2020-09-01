@@ -39,6 +39,8 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
         calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:22)
         loadEvents()
         
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
         eventColorLabel.layer.cornerRadius = eventColorLabel.frame.width / 2
         eventColorLabel.clipsToBounds = true
         

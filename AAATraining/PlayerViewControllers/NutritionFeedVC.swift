@@ -51,6 +51,8 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadNutritionPostsAfterDelete), name: NSNotification.Name(rawValue: "deleteNutritionPost"), object: nil)
         
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
         if accountType == "player" {
             composeButton.isEnabled = false
         }

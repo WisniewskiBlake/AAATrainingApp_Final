@@ -52,7 +52,7 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
         
         navigationItem.largeTitleDisplayMode = .never
         tableView.tableFooterView = UIView()
-        
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationItem.searchController = searchController
         
         searchController.searchResultsUpdater = self

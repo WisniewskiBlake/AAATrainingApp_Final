@@ -38,7 +38,7 @@ class StatsVC: UIViewController {
         
         padding(for: statTextField)
         cornerRadius(for: statButton)
-        
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         
         configure_avaImageView()
         if FUser.currentUser()?.accountType == "player" {

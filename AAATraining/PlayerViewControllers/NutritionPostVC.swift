@@ -32,6 +32,8 @@ class NutritionPostVC: UIViewController, UITextViewDelegate, UIImagePickerContro
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
 
         loadUser()
     }

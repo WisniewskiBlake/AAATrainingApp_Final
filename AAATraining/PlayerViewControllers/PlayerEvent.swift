@@ -29,6 +29,7 @@ class PlayerEvent: UIViewController, UITextViewDelegate, UINavigationControllerD
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         dateLabel.text = dateString
         textView.text = event.eventText
         if event.eventText != "" {

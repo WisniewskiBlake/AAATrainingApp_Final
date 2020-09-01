@@ -25,7 +25,16 @@ class ParentRecentChat: UIViewController, UITableViewDelegate, UITableViewDataSo
         super.viewDidLoad()
 
          navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.1006183103, green: 0.2956552207, blue: 0.71825701, alpha: 1)
+        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        
+        
+        let attrs = [
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font: UIFont(name: "PROGRESSPERSONALUSE", size: 34)!
+        ]
+        
+        navigationController?.navigationBar.largeTitleTextAttributes = attrs
         
           navigationItem.searchController = searchController
           navigationItem.hidesSearchBarWhenScrolling = true

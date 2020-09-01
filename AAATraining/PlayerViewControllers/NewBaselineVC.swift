@@ -49,6 +49,7 @@ class NewBaselineVC: UIViewController {
         padding(for: chinUpText)
         padding(for: mileText)
 
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         // Do any additional setup after loading the view.
     }
     
