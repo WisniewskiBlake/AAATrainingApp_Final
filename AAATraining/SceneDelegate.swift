@@ -42,7 +42,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
     }
     
     
-    
+    var tintColor = UINavigationBar.appearance().barTintColor
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     var window: UIWindow?

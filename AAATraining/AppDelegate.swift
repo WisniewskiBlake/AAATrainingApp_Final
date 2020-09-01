@@ -20,7 +20,7 @@ import FirebaseFirestore
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate, PKPushRegistryDelegate, SINClientDelegate, SINCallClientDelegate, SINManagedPushDelegate {
     
-    
+    var tintColor = UINavigationBar.appearance().barTintColor
 
     var window: UIWindow?
     var authListener: AuthStateDidChangeListenerHandle?
@@ -55,6 +55,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         
         return true
+    }
+    
+    func setTint() {
+        
+    }
+    
+    func getTint() {
+        
     }
 
     // MARK: UISceneSession Lifecycle

@@ -55,6 +55,8 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     let helper = Helper()
     
+    var sceneDelegate = UIApplication.shared.delegate as! SceneDelegate
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -130,7 +132,8 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         let team = Team(teamID: teamLoginCode, teamName: teamNameText.text!, teamLogo: self.pictureToUpload!, teamMemberIDs: [""], teamCity: cityText.text!, teamState: stateText.text!, teamColorOne: teamColorOne!, teamColorTwo: teamColorTwo!, teamColorThree: teamColorThree!)
         
         team.saveTeam()
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createTeam"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createTeam"), object: nil)        
+        sceneDelegate.tintColor = UIColor(hexString: team.teamColorOne)
         self.goToApp(teamToLoad: team)
         //self.goToLogin()
 
