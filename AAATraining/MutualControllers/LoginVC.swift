@@ -102,12 +102,13 @@ class LoginVC: UIViewController {
       }
     
     @IBAction func registerButtonClicked(_ sender: Any) {
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserTypeSelectionVC") as? UserTypeSelectionVC
-        {
-            vc.team = self.team
-            vc.modalPresentationStyle = .popover
-            self.present(vc, animated: true, completion: nil)
-        }
+
+        
+        let navigationSelection = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "userSelectionNav") as! UINavigationController
+         let selectionVC = navigationSelection.viewControllers.first as! UserTypeSelectionVC
+        selectionVC.team = self.team
+
+        self.present(navigationSelection, animated: true, completion: nil)
     }
 
     

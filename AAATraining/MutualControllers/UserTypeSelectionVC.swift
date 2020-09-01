@@ -38,10 +38,19 @@ class UserTypeSelectionVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UserSelectionCellClass.self, forCellReuseIdentifier: "Cell")
-        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
-        navigationItem.leftBarButtonItem?.tintColor = UIColor.white
+        
+        //navigationItem.leftBarButtonItem?.tintColor = UIColor.white
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+           super.viewWillAppear(animated)
+           
+        //this works to change the bar tint color of any navigation controller
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: team.teamColorOne)
+        accountTypeButton.backgroundColor = UIColor(hexString: team.teamColorOne)
+           
+       }
     
     @IBAction func nextButtonPressed(_ sender: Any) {
         self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)

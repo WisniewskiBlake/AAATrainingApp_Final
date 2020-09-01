@@ -61,7 +61,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).      
         
         
-        UINavigationBar.appearance().barTintColor = #colorLiteral(red: 0.1006183103, green: 0.2956552207, blue: 0.71825701, alpha: 1)
+        //UINavigationBar.appearance().barTintColor = #colorLiteral(red: 0.1006183103, green: 0.2956552207, blue: 0.71825701, alpha: 1)
         //UINavigationBar.appearance().tintColor = UIColor.white
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
         
