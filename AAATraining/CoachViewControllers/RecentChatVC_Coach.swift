@@ -24,14 +24,26 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
 
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        
+        let attrs = [
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font: UIFont(name: "PROGRESSPERSONALUSE", size: 24)!
+        ]
+        
+        navigationController?.navigationBar.titleTextAttributes = attrs
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = true
         
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
+        
         definesPresentationContext = true
         
-        setTableViewHeader()
+        //setTableViewHeader()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -285,7 +297,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
 
             let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 30))
     
-            let buttonView = UIView(frame: CGRect(x: 0, y: 5, width: tableView.frame.width, height: 25))
+            let buttonView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 25))
             let groupButton = UIButton(frame: CGRect(x: tableView.frame.width - 40, y: 0, width: 30, height: 20))
             groupButton.addTarget(self, action: #selector(self.createNewGroupButtonPressed), for: .touchUpInside)
             //groupButton.setTitle("New Group", for: .normal)

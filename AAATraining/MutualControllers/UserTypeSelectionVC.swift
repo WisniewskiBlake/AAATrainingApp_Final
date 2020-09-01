@@ -48,6 +48,7 @@ class UserTypeSelectionVC: UIViewController {
            
         //this works to change the bar tint color of any navigation controller
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: team.teamColorOne)
+        
         accountTypeButton.backgroundColor = UIColor(hexString: team.teamColorOne)
            
        }

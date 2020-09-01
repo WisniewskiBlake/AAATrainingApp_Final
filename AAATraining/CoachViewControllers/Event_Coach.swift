@@ -44,7 +44,9 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         getAllEvents()
         cornerRadius(for: deleteButton)
         
-        self.setLeftAlignedNavigationItemTitle(text: "Event", color: .white, margin: 12)
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
+        //self.setLeftAlignedNavigationItemTitle(text: "Event", color: .white, margin: 12)
 
         dateLabel.text = dateString
         textView.text = event.eventText
@@ -80,7 +82,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             eventCounter = 1
         }
         
-        event = [kEVENTID: eventId, kEVENTOWNERID: FUser.currentId(), kEVENTTEXT: eventText, kEVENTDATE: self.dateString, kEVENTACCOUNTTYPE: eventAccountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: eventUserID, kEVENTGROUPID: eventGroupID] as [String:Any]
+        event = [kEVENTID: eventId, kEVENTTEAMID: FUser.currentUser()?.userTeamID, kEVENTOWNERID: FUser.currentId(), kEVENTTEXT: eventText, kEVENTDATE: self.dateString, kEVENTACCOUNTTYPE: eventAccountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: eventUserID, kEVENTGROUPID: eventGroupID] as [String:Any]
         
         localReference.setData(event)
         

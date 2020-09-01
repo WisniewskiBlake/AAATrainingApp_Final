@@ -50,7 +50,7 @@ class EditGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollect
 //        groupImageView.addGestureRecognizer(iconTapGesture)
         
 //        setupUI()
-        
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         updateParticipantsLabel()
     }
     

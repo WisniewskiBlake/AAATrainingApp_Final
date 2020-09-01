@@ -165,7 +165,7 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
         loadUserDefaults()
         
         JSQMessagesCollectionViewCell.registerMenuAction(#selector(delete))
-        
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
 //        navigationItem.largeTitleDisplayMode = .never
 //        navigationController?.navigationBar.barTintColor = UIColor.white
         

@@ -23,6 +23,8 @@ class AllBaselinesVC: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadBaselines), name: NSNotification.Name(rawValue: "createBaseline"), object: nil)
         
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
         loadBaselines()
     }
         

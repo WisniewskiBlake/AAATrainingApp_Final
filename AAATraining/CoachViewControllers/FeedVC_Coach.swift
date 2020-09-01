@@ -66,6 +66,8 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         setBadges(controller: self.tabBarController!, accountType: "coach")
         setCalendarBadges(controller: self.tabBarController!, accountType: "coach")
         
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
         currentDateFormater.dateFormat = "MM/dd/YYYY"
         
         let refreshControl = UIRefreshControl()
@@ -141,7 +143,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         ProgressHUD.show()
         
         //DispatchQueue.main.async {
-        self.recentListener = reference(.Post).order(by: kPOSTDATE, descending: true).limit(to: 100).addSnapshotListener({ (snapshot, error) in
+        self.recentListener = reference(.Post).whereField(kPOSTTEAMID, isEqualTo: FUser.currentUser()?.userTeamID as Any).order(by: kPOSTDATE, descending: true).limit(to: 100).addSnapshotListener({ (snapshot, error) in
                    
             self.allPosts = []
             self.avas = []

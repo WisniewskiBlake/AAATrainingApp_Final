@@ -67,6 +67,8 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
         
         navigationItem.searchController = searchController
         
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
 //        let backItem = UIBarButtonItem()
 //        backItem.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 //        navigationItem.backBarButtonItem = backItem
