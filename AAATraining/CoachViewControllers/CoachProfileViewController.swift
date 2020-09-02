@@ -182,9 +182,9 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     }
     
     @objc func logoutViewClicked() {
-        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let sheet = UIAlertController(title: "Team Login Code: " + FUser.currentUser()!.userTeamID, message: nil, preferredStyle: .actionSheet)
         
-        let teamID = UIAlertAction(title: "Team Login Code: " + FUser.currentUser()!.userTeamID, style: .default, handler: nil)
+        
         
         let colorPicker = UIAlertAction(title: "Choose App Theme", style: .default, handler: { (action) in
                         
@@ -216,7 +216,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         // add buttons to action sheet
-        sheet.addAction(teamID)
+        
         sheet.addAction(colorPicker)
         sheet.addAction(logout)
         sheet.addAction(cancel)

@@ -68,17 +68,8 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         setBadges(controller: self.tabBarController!, accountType: "coach")
         setCalendarBadges(controller: self.tabBarController!, accountType: "coach")
         
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-//        self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-//        self.navigationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "create"), style: .plain, target: self, action: #selector(composeTapped))
-//        self.navigationController?.navigationItem.rightBarButtonItem?.tintColor = .white
-//        
-//        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "create"), style: .plain, target: self, action: #selector(composeTapped))
-//        navigationItem.rightBarButtonItem?.tintColor = .white
-//        
-//        
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "create"), style: .plain, target: self, action: #selector(composeTapped))
-//        self.navigationItem.rightBarButtonItem?.tintColor = .white
+        
+
         
         
         currentDateFormater.dateFormat = "MM/dd/YYYY"
@@ -144,7 +135,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         tableView.tableFooterView = UIView()
         //loadPosts()
 

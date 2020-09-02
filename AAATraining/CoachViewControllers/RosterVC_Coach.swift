@@ -49,13 +49,22 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tableView.tableFooterView = UIView()
+        // hide navigation bar on Home Pagex
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         navigationItem.largeTitleDisplayMode = .never
         tableView.tableFooterView = UIView()
         
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
         
         self.setLeftAlignedNavigationItemTitle(text: "Roster", color: .white, margin: 12)
         

@@ -52,7 +52,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "changeProPic"), object: nil)
         
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
         
         self.setLeftAlignedNavigationItemTitle(text: "Team Feed", color: .white, margin: 12)
     
@@ -64,7 +64,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate {
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         tableView.tableFooterView = UIView()
         //loadPosts()
         //navigationController?.setNavigationBarHidden(true, animated: true)

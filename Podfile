@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+# platform :ios, '10.0'
 
 target 'AAATraining' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -26,6 +26,8 @@ pod 'OneSignal'
 pod 'SinchRTC'
 
 pod 'FSCalendar'
+
+pod "Colorful", "~> 3.0"
 
 
   # Pods for AAATraining
