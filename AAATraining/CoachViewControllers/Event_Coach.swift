@@ -72,7 +72,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         event.clearCalendarCounter(eventGroupID: event.eventGroupID, eventUserID : event.eventUserID)
     }
     
-    func createEvent(eventOwnerID: String, eventText: String, eventDate: String, eventAccountType: String, eventUserID: String, eventGroupID: String) {
+    func createEvent(eventOwnerID: String, eventTeamID: String, eventText: String, eventDate: String, eventAccountType: String, eventUserID: String, eventGroupID: String) {
         let localReference = reference(.Event).document()
         let eventId = localReference.documentID
         var event: [String : Any]!
@@ -82,7 +82,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             eventCounter = 1
         }
         
-        event = [kEVENTID: eventId, kEVENTTEAMID: FUser.currentUser()?.userTeamID, kEVENTOWNERID: FUser.currentId(), kEVENTTEXT: eventText, kEVENTDATE: self.dateString, kEVENTACCOUNTTYPE: eventAccountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: eventUserID, kEVENTGROUPID: eventGroupID] as [String:Any]
+        event = [kEVENTID: eventId, kEVENTTEAMID: eventTeamID, kEVENTOWNERID: FUser.currentId(), kEVENTTEXT: eventText, kEVENTDATE: self.dateString, kEVENTACCOUNTTYPE: eventAccountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: eventUserID, kEVENTGROUPID: eventGroupID] as [String:Any]
         
         localReference.setData(event)
         
@@ -120,7 +120,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
                
                
                for userId in tempMembers {
-                self.createEvent(eventOwnerID: eventOwnerID, eventText: eventText, eventDate: self.dateString, eventAccountType: eventAccountType, eventUserID: userId, eventGroupID: eventGroupID)
+                self.createEvent(eventOwnerID: eventOwnerID, eventTeamID: FUser.currentUser()!.userTeamID, eventText: eventText, eventDate: self.dateString, eventAccountType: eventAccountType, eventUserID: userId, eventGroupID: eventGroupID)
 
                }
                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)

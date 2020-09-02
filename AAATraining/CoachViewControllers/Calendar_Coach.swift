@@ -34,6 +34,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         calendar.delegate = self
         calendar.appearance.todayColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         calendar.appearance.headerTitleColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        calendar.appearance.weekdayTextColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:22)
         //calendar.placeholderType = .none
         
@@ -79,10 +80,18 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                     
                    let eventDictionary = eventDictionary.data() as NSDictionary
                    let event = Event(_dictionary: eventDictionary)
-                   self.allEvents.append(event)
-                   if event.eventUserID == FUser.currentId() {
+//                   self.allEvents.append(event)
+//                   if event.eventUserID == FUser.currentId() {
+//                        self.allEventDates.append(event.eventDate)
+//                        self.countArray.append(String(event.eventCounter))
+//                    }
+                    if event.eventTeamID == FUser.currentUser()?.userTeamID {
+                        self.allEvents.append(event)
                         self.allEventDates.append(event.eventDate)
-                        self.countArray.append(String(event.eventCounter))
+                       if event.eventUserID == FUser.currentId() {
+                            
+                            self.countArray.append(String(event.eventCounter))
+                        }
                     }
                 
                }
@@ -123,7 +132,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         }
         
         if allEventDates.contains(dateString) && Int(countArray[index])! >= 1 {
-            return UIColor.gray
+            return UIColor.yellow
             
         } else if allEventDates.contains(dateString) && Int(countArray[index])! == 0 {
             return UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
