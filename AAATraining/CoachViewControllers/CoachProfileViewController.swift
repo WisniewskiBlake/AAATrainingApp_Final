@@ -36,6 +36,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     // code obj (to build logic of distinguishing tapped / shown Cover / Ava)
     var isCover = false
     var isAva = false
+    var imageViewTapped = ""
     
     var posts: [NSDictionary] = []
     var filteredPosts: [NSDictionary] = []
@@ -54,6 +55,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     let nutritionTapGestureRecognizer = UITapGestureRecognizer()
     let postTapGestureRecognizer = UITapGestureRecognizer()
     let logoutTapGestureRecognizer = UITapGestureRecognizer()
+    let coverTapGestureRecognizer = UITapGestureRecognizer()
        
     //var recentListener: ListenerRegistration!
     
@@ -88,6 +90,10 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         logoutTapGestureRecognizer.addTarget(self, action: #selector(self.logoutViewClicked))
         logoutView.isUserInteractionEnabled = true
         logoutView.addGestureRecognizer(logoutTapGestureRecognizer)
+        
+        coverTapGestureRecognizer.addTarget(self, action: #selector(self.coverViewClicked))
+        coverImageView.isUserInteractionEnabled = true
+        coverImageView.addGestureRecognizer(coverTapGestureRecognizer)
         
 
         configure_avaImageView()
@@ -157,6 +163,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         }
     }
     
+    
+    
     @objc func baselineViewClicked() {
 
         let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "allBaselinesNav") as! UINavigationController
@@ -186,7 +194,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
         
         
-        let colorPicker = UIAlertAction(title: "Choose App Theme", style: .default, handler: { (action) in
+        let colorPicker = UIAlertAction(title: "Choose App Color Theme", style: .default, handler: { (action) in
                         
             
             let navigationColorPicker = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ColorPickerNav") as! UINavigationController
@@ -358,98 +366,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         avaImageView.layer.masksToBounds = true
         avaImageView.clipsToBounds = true
     }
-   
-    
-    // MARK: - Images tapped
-    @IBAction func avaImageView_tapped(_ sender: Any) {
-//        let camera = Camera(delegate_: self)
-//
-//        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-//
-//        let takePhotoOrVideo = UIAlertAction(title: "Camera", style: .default) { (action) in
-//            camera.PresentMultyCamera(target: self, canEdit: false)
-//        }
-//
-//        let sharePhoto = UIAlertAction(title: "Photo Library", style: .default) { (action) in
-//
-//            camera.PresentPhotoLibrary(target: self, canEdit: false)
-//        }
-//
-//        let shareVideo = UIAlertAction(title: "Video Library", style: .default) { (action) in
-//
-//            camera.PresentVideoLibrary(target: self, canEdit: false)
-//        }
-//
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
-//        }
-//
-//        takePhotoOrVideo.setValue(UIImage(named: "camera"), forKey: "image")
-//        sharePhoto.setValue(UIImage(named: "picture"), forKey: "image")
-//        shareVideo.setValue(UIImage(named: "video"), forKey: "image")
-//
-////        optionMenu.addAction(takePhotoOrVideo)
-//        optionMenu.addAction(sharePhoto)
-//        //optionMenu.addAction(shareVideo)
-//        optionMenu.addAction(cancelAction)
-//
-//        self.present(optionMenu, animated: true, completion: nil)
-        
-        showIconOptions()
-    }
-    
-    
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 
-        profileIcon = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
-
-        let pictureData = profileIcon?.jpegData(compressionQuality: 0.4)!
-        let avatar = pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-
-
-        self.avaImageView.image = profileIcon
-
-        updateCurrentUserInFirestore(withValues: [kAVATAR : avatar!]) { (success) in
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changeProPic"), object: nil)
-        }
-        if !allPosts.isEmpty {
-            for post in allPosts {
-
-                post.updatePost(postID: post.postID, withValues: [kPOSTUSERAVA : avatar!])
-            }
-
-        }
-
-        loadPosts()
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
-    
-    
-    func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
-        if images.count > 0 {
-
-            self.profileIcon = images.first!
-            self.avaImageView.image = self.profileIcon!
-            //self.editAvatarButtonOutlet.isHidden = false
-
-            let avatarData = profileIcon?.jpegData(compressionQuality: 0.4)!
-            let avatar = avatarData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-            updateCurrentUserInFirestore(withValues: [kAVATAR : avatar!]) { (success) in
-
-            }
-            if !allPosts.isEmpty {
-                for post in allPosts {
-
-                    post.updatePost(postID: post.postID, withValues: [kPOSTUSERAVA : avatar!])
-                }
-
-            }
-
-        }
-        loadPosts()
-        self.dismiss(animated: true, completion: nil)
-    }
     
     @IBAction func coverImageView_tapped(_ sender: Any) {
         //showIconOptions()
@@ -625,6 +542,157 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
 
 
     func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func coverViewClicked() {
+
+        imageViewTapped = "cover"
+        
+        showActionSheet()
+    }
+    
+    // MARK: - Images tapped
+    @IBAction func avaImageView_tapped(_ sender: Any) {
+        
+        imageViewTapped = "ava"
+        showActionSheet()
+        //showIconOptions()
+    }
+    
+    func showActionSheet() {
+        
+        // declaring action sheet
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // declaring library button
+        let library = UIAlertAction(title: "Photo Library", style: .default) { (action) in
+            
+            // checking availability of photo library
+            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+                self.showPicker(with: .photoLibrary)
+            }
+            
+        }
+        // declaring cancel button
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
+        // adding buttons to the sheet
+        sheet.addAction(library)
+        sheet.addAction(cancel)
+        
+        // present action sheet to the user finally
+        self.present(sheet, animated: true, completion: nil)
+        
+    }
+    
+    func showPicker(with source: UIImagePickerController.SourceType) {
+        
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true
+        picker.sourceType = source
+        present(picker, animated: true, completion: nil)
+        
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        let image = info[UIImagePickerController.InfoKey(rawValue: convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage))] as? UIImage
+        
+        // based on the trigger we are assigning selected pictures to the appropriated imageView
+        if imageViewTapped == "cover" {
+            
+            // assign selected image to CoverImageView
+            self.coverImageView.image = image
+            
+            // upload image to the server
+            //self.uploadImage(from: self.coverImageView)
+            
+        } else if imageViewTapped == "ava" {
+            
+            
+            // assign selected image to AvaImageView
+            self.avaImageView.image = image
+            
+            // refresh global variable storing the user's profile pic
+            let pictureData = image?.jpegData(compressionQuality: 0.4)!
+            let avatar = pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+            
+            
+            //FUser.currentUser().ava = self.avaImageView.image
+            
+            updateCurrentUserInFirestore(withValues: [kAVATAR : avatar!]) { (success) in
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changeProPic"), object: nil)
+            }
+            if !allPosts.isEmpty {
+                for post in allPosts {
+    
+                    post.updatePost(postID: post.postID, withValues: [kPOSTUSERAVA : avatar!])
+                }
+    
+            }
+            
+            self.loadPosts()
+            
+        }
+        
+        // completion handler, to communicate to the project that images has been selected (enable delete button)
+        dismiss(animated: true) {
+            if self.imageViewTapped == "cover" {
+                self.isCover = true
+            } else if self.imageViewTapped == "ava" {
+                self.isAva = true
+            }
+        }
+
+//        profileIcon = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+//
+//        let pictureData = profileIcon?.jpegData(compressionQuality: 0.4)!
+//        let avatar = pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+//
+//
+//        self.avaImageView.image = profileIcon
+//
+//        updateCurrentUserInFirestore(withValues: [kAVATAR : avatar!]) { (success) in
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changeProPic"), object: nil)
+//        }
+//        if !allPosts.isEmpty {
+//            for post in allPosts {
+//
+//                post.updatePost(postID: post.postID, withValues: [kPOSTUSERAVA : avatar!])
+//            }
+//
+//        }
+//
+//        loadPosts()
+//        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    
+    func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+        if images.count > 0 {
+
+            self.profileIcon = images.first!
+            self.avaImageView.image = self.profileIcon!
+            //self.editAvatarButtonOutlet.isHidden = false
+
+            let avatarData = profileIcon?.jpegData(compressionQuality: 0.4)!
+            let avatar = avatarData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+            updateCurrentUserInFirestore(withValues: [kAVATAR : avatar!]) { (success) in
+
+            }
+            if !allPosts.isEmpty {
+                for post in allPosts {
+
+                    post.updatePost(postID: post.postID, withValues: [kPOSTUSERAVA : avatar!])
+                }
+
+            }
+
+        }
+        loadPosts()
         self.dismiss(animated: true, completion: nil)
     }
     

@@ -78,7 +78,10 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
     var showAvatars = true
     var firstLoad: Bool?
     
-    var outgoingBubble = JSQMessagesBubbleImageFactory()?.outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleRed())
+//    var outgoingBubble = JSQMessagesBubbleImageFactory()?.outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleRed())
+    
+    var outgoingBubble = JSQMessagesBubbleImageFactory()?.outgoingMessagesBubbleImage(with: UIColor(hexString: FUser.currentUser()!.userTeamColorOne))
+    
     
     var incomingBubble = JSQMessagesBubbleImageFactory()?.outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
     

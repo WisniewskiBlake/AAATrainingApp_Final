@@ -45,6 +45,7 @@ class ParentRecentChat: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         loadRecentChats()
     //    self.tableView.reloadData()
         tableView.tableFooterView = UIView()

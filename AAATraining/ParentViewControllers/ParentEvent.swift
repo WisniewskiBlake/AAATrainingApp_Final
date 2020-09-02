@@ -42,6 +42,7 @@ class ParentEvent: UIViewController, UITextViewDelegate, UINavigationControllerD
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         event.clearCalendarCounter(eventGroupID: event.eventGroupID, eventUserID : event.eventUserID)
     }
     
