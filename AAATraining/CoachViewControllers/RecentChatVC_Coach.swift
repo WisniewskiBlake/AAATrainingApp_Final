@@ -27,6 +27,8 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
         
         let attrs = [
             NSAttributedString.Key.foregroundColor: UIColor.white,
@@ -37,7 +39,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = true
         
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
         
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false

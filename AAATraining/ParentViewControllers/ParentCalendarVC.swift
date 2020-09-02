@@ -165,6 +165,8 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     @objc func logoutViewClicked() {
         let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
+        let teamID = UIAlertAction(title: FUser.currentUser()?.userTeamID, style: .default, handler: nil)
+        
         // creating buttons for action sheet
         let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
                         
@@ -183,6 +185,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         // add buttons to action sheet
+        sheet.addAction(teamID)
         sheet.addAction(logout)
         sheet.addAction(cancel)
         

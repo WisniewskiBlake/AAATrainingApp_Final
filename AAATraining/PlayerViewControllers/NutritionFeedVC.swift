@@ -64,7 +64,10 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //loadNutritionPosts()
+        
+        tableView.tableFooterView = UIView()
+        //loadPosts()
+
     }
     override func viewWillDisappear(_ animated: Bool) {
         recentListener.remove()

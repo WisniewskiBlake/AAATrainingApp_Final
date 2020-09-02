@@ -181,6 +181,8 @@ extension UIViewController
         titleLabel.textAlignment = .left
         //titleLabel.font = UIFont(name: "PaladinsLaser", size: 19)
         titleLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 24)
+        //titleLabel.backgroundColor = .black
+        
 //        titleLabel.font = UIFont(name: "Paladins", size: 29)
 //        titleLabel.font = UIFont(name: "Paladins3D", size: 29)
         //titleLabel.font = UIFont(name: "PaladinsCondensed", size: 29)
@@ -190,17 +192,20 @@ extension UIViewController
         
         self.navigationItem.titleView = titleLabel
         
+        
+        
         guard let containerView = self.navigationItem.titleView?.superview else { return }
         
         // NOTE: This always seems to be 0. Huh??
-        let leftBarItemWidth = self.navigationItem.leftBarButtonItems?.reduce(0, { $0 + $1.width })
+        //let leftBarItemWidth = self.navigationItem.leftBarButtonItems?.reduce(0, { $0 + $1.width })
+        let leftBarItemWidth = self.navigationItem.leftBarButtonItems?.reduce(0, { $0 + $1.width/2 })
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor),
             titleLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
             titleLabel.leftAnchor.constraint(equalTo: containerView.leftAnchor,
                                              constant: (leftBarItemWidth ?? 0) + left),
-            titleLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor)
+            titleLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -100)
         ])
     }
 }

@@ -32,6 +32,8 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
 
         NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "createEvent"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
 
         calendar.delegate = self
         calendar.appearance.todayColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
@@ -39,7 +41,7 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
         calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:22)
         loadEvents()
         
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
         
         eventColorLabel.layer.cornerRadius = eventColorLabel.frame.width / 2
         eventColorLabel.clipsToBounds = true
@@ -107,7 +109,7 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
         
         if allEventDates.contains(dateString) && Int(countArray[index])! >= 1 {
               
-            return UIColor.gray
+            return UIColor.darkGray
              
             
         } else if allEventDates.contains(dateString) && Int(countArray[index])! == 0 {
