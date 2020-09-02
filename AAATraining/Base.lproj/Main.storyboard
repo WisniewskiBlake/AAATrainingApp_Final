@@ -1121,7 +1121,7 @@
             </objects>
             <point key="canvasLocation" x="2572" y="99"/>
         </scene>
-        <!--Color PickerVC-->
+        <!--Color Picker-->
         <scene sceneID="dQn-EM-aaI">
             <objects>
                 <viewController storyboardIdentifier="ColorPickerVC" id="n7a-yf-jqM" customClass="ColorPickerVC" customModule="AAATraining" customModuleProvider="target" sceneMemberID="viewController">
@@ -1131,10 +1131,18 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="uGm-Bk-VKK"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Color Picker" id="mLn-vU-16j">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="ers-CV-a37">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="backButtonPressed:" destination="n7a-yf-jqM" id="w9j-9U-LaU"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Zf-n3-977" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4332" y="96"/>
+            <point key="canvasLocation" x="5288.8000000000002" y="3683.2083958020994"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="ip0-xe-B0W">
@@ -6968,6 +6976,28 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c86-zg-ukn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="728" y="766.86656671664173"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="lK0-cx-fCJ">
+            <objects>
+                <navigationController storyboardIdentifier="ColorPickerNav" automaticallyAdjustsScrollViewInsets="NO" id="Aug-Ts-Shv" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Wnw-zu-tlR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.1006183103" green="0.2956552207" blue="0.71825700999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="n7a-yf-jqM" kind="relationship" relationship="rootViewController" id="nl9-W0-DvX"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Or3-97-Uxm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4349.6000000000004" y="3682.3088455772117"/>
         </scene>
     </scenes>
     <resources>
