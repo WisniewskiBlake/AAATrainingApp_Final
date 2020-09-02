@@ -195,7 +195,6 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         picturePath = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
         
         
-        
         picturePath.getColors(quality: UIImageColorsQuality(rawValue: CGFloat(100))!) { colors in
             self.uiColorOne = colors?.background
             self.uiColorTwo = colors?.primary

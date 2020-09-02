@@ -52,9 +52,18 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        //navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
+        if searchController.isActive {
+            navigationController?.navigationBar.tintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        } else {
+            navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        }
+        
         tableView.tableFooterView = UIView()
         // hide navigation bar on Home Pagex
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
         
     }
     

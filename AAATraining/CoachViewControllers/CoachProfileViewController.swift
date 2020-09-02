@@ -30,7 +30,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     
     var profileIcon: UIImage?
     var coverIcon: UIImage?
-    var picturePath: UIImage? = UIImage()
+    
     var pictureToUpload: String? = ""
     
     // code obj (to build logic of distinguishing tapped / shown Cover / Ava)
@@ -41,6 +41,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     var posts: [NSDictionary] = []
     var filteredPosts: [NSDictionary] = []
     var allPostsGrouped = NSDictionary() as! [String : [Post]]
+    var picturePath: UIImage = UIImage()
     
     var allPosts: [Post] = []
     var avas = [UIImage]()
@@ -50,6 +51,14 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     let helper = Helper()
     let user = FUser.currentUser()
     let currentDateFormater = Helper().dateFormatter()
+    
+    var uiColorOne: UIColor?
+    var uiColorTwo: UIColor?
+    var uiColorThree: UIColor?
+    
+    var teamColorOne: String?
+    var teamColorTwo: String?
+    var teamColorThree: String?
     
     let baselineTapGestureRecognizer = UITapGestureRecognizer()
     let nutritionTapGestureRecognizer = UITapGestureRecognizer()
@@ -194,7 +203,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
         
         
-        let colorPicker = UIAlertAction(title: "Choose App Color Theme", style: .default, handler: { (action) in
+        let colorPicker = UIAlertAction(title: "Choose Color Theme", style: .default, handler: { (action) in
                         
             
             let navigationColorPicker = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ColorPickerNav") as! UINavigationController
@@ -241,24 +250,48 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
         let helper = Helper()
         let user = FUser.currentUser()
+        
+        
+        reference(.Team).document(FUser.currentUser()!.userTeamID).getDocument { (snapshot, error) in
+        
+            guard let snapshot = snapshot else {  return }
+            
+            if snapshot.exists {
+                
+                let team = Team(_dictionary: snapshot.data()! as NSDictionary)
+                
+                helper.imageFromData(pictureData: team.teamLogo) { (coverImage) in
+                    
+                    if coverImage != nil {
+                        self.coverImageView.image = coverImage!
+                        self.isCover = true
+                    }
+                }
+                
+                
+            } else {
+                self.coverImageView.image = UIImage(named: "HomeCover.jpg")
+                self.isCover = false
+            }
+        }
    
-        guard let firstName = user?.firstname, let lastName = user?.lastname, let avaPath = user?.ava, let coverPath = user?.cover else {
+        guard let firstName = user?.firstname, let lastName = user?.lastname, let avaPath = user?.ava else {
                
                return
         }
            
-           if coverPath != "" {
-               helper.imageFromData(pictureData: coverPath) { (coverImage) in
-                   
-                   if coverImage != nil {
-                       coverImageView.image = coverImage!
-                       isCover = true
-                   }
-               }
-           } else {
-               coverImageView.image = UIImage(named: "aaaCoverLogo.png")
-               isCover = false
-           }
+//           if coverPath != "" {
+//               helper.imageFromData(pictureData: coverPath) { (coverImage) in
+//
+//                   if coverImage != nil {
+//                       coverImageView.image = coverImage!
+//                       isCover = true
+//                   }
+//               }
+//           } else {
+//               coverImageView.image = UIImage(named: "aaaCoverLogo.png")
+//               isCover = false
+//           }
             if avaPath != "" {                
                 helper.imageFromData(pictureData: avaPath) { (avatarImage) in
                     
@@ -597,8 +630,10 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+                
         
         let image = info[UIImagePickerController.InfoKey(rawValue: convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage))] as? UIImage
+        //picturePath = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
         
         // based on the trigger we are assigning selected pictures to the appropriated imageView
         if imageViewTapped == "cover" {
@@ -606,8 +641,29 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             // assign selected image to CoverImageView
             self.coverImageView.image = image
             
-            // upload image to the server
-            //self.uploadImage(from: self.coverImageView)
+            let pictureData = image?.jpegData(compressionQuality: 0.5)!
+            let cover = pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+
+
+//            picturePath.getColors(quality: UIImageColorsQuality(rawValue: CGFloat(100))!) { colors in
+//                self.uiColorOne = colors?.background
+//                self.uiColorTwo = colors?.primary
+//                self.uiColorThree = colors?.detail
+//
+//
+//
+//              //detailLabel.textColor = colors.detail
+//                self.teamColorOne = self.uiColorOne?.htmlRGBaColor
+//                self.teamColorTwo = self.uiColorTwo?.htmlRGBaColor
+//                self.teamColorThree = self.uiColorThree?.htmlRGBaColor
+//
+//
+//            }
+            
+//            reference(.Team).document(FUser.currentUser()!.userTeamID).updateData([kTEAMLOGO : cover!, kTEAMCOLORONE : teamColorOne!, kTEAMCOLORTWO : teamColorTwo!, kTEAMCOLORTHREE : teamColorThree!])
+            self.loadUser()
+            Team.updateTeam(teamID: FUser.currentUser()!.userTeamID, withValues: [kTEAMLOGO : cover!])
+            
             
         } else if imageViewTapped == "ava" {
             
@@ -623,7 +679,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             //FUser.currentUser().ava = self.avaImageView.image
             
             updateCurrentUserInFirestore(withValues: [kAVATAR : avatar!]) { (success) in
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changeProPic"), object: nil)
+                //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changeProPic"), object: nil)
             }
             if !allPosts.isEmpty {
                 for post in allPosts {

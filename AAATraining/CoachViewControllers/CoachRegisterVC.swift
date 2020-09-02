@@ -41,7 +41,7 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        contentView_width.constant = self.view.frame.width * 4
+        contentView_width.constant = self.view.frame.width * 3
         coachPassword_width.constant = self.view.frame.width
         nameView_width.constant = self.view.frame.width
         emailView_width.constant = self.view.frame.width
@@ -130,7 +130,7 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func fullnameContinue_clicked(_ sender: Any) {
-        let position = CGPoint(x: self.view.frame.width * 2, y: 0)
+        let position = CGPoint(x: self.view.frame.width, y: 0)
         scrollView.setContentOffset(position, animated: true)
         
         // show keyboard of next TextField
@@ -143,7 +143,7 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func emailContinue_clicked(_ sender: Any) {
-        let position = CGPoint(x: self.view.frame.width * 3, y: 0)
+        let position = CGPoint(x: self.view.frame.width * 2, y: 0)
         scrollView.setContentOffset(position, animated: true)
         
         // show keyboard of next TextField

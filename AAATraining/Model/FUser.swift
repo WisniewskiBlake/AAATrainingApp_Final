@@ -605,6 +605,26 @@ func updateUserInFirestore(objectID: String, withValues : [String : Any], comple
     
 }
 
+//func updateUsersCoverInFirestore(teamID: String, withValues : [String : Any], completion: @escaping (_ error: Error?) -> Void) {
+//    
+//    let currentTeamId = teamID
+//    
+//    reference(.User).document().updateData(<#T##fields: [AnyHashable : Any]##[AnyHashable : Any]#>).
+//    
+//    reference(.User).document(currentTeamId).updateData(withValues) { (error) in
+//        
+//        if error != nil {
+//            
+//            completion(error)
+//            return
+//        }
+//        
+//        completion(error)
+//    }
+//        
+//    
+//}
+
 
 //MARK: OneSignal
 

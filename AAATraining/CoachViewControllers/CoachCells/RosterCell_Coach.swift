@@ -46,9 +46,12 @@ class RosterCell_Coach: UITableViewCell {
         
         self.fullNameLabel.text = fUser.firstname + " " + fUser.lastname
         
-        if fUser.accountType == "player" {
+        if fUser.accountType == "player" && FUser.currentUser()?.accountType == "coach" {
             self.infoLabel.text = fUser.position.capitalized + ", #" + fUser.number
             self.accessoryType = .disclosureIndicator
+        } else if fUser.accountType == "player" && FUser.currentUser()?.accountType == "player" {
+            self.infoLabel.text = fUser.position.capitalized + ", #" + fUser.number
+            self.accessoryType = .none
         } else if fUser.accountType == "coach" {
             self.infoLabel.text = "Coach"
             self.accessoryType = .none
