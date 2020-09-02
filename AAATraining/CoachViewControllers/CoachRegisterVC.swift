@@ -11,7 +11,7 @@ import ProgressHUD
 
 class CoachRegisterVC: UIViewController, UITextFieldDelegate {
     
-    @IBOutlet weak var coachPassword_width: NSLayoutConstraint!
+    //@IBOutlet weak var coachPassword_width: NSLayoutConstraint!
     @IBOutlet weak var nameView_width: NSLayoutConstraint!
     @IBOutlet weak var emailView_width: NSLayoutConstraint!
     @IBOutlet weak var passwordView_width: NSLayoutConstraint!
@@ -19,7 +19,7 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
     
-    @IBOutlet weak var coachPasswordTextField: UITextField!
+    //@IBOutlet weak var coachPasswordTextField: UITextField!
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
@@ -27,7 +27,7 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var phoneTextField: UITextField!
     
    
-    @IBOutlet weak var coachPasswordContinueButton: UIButton!
+    //@IBOutlet weak var coachPasswordContinueButton: UIButton!
     @IBOutlet weak var fullnameContinueButton: UIButton!
     @IBOutlet weak var emailContinueButton: UIButton!
     @IBOutlet weak var passwordContinueButton: UIButton!
@@ -42,12 +42,12 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
 
         contentView_width.constant = self.view.frame.width * 3
-        coachPassword_width.constant = self.view.frame.width
+        //coachPassword_width.constant = self.view.frame.width
         nameView_width.constant = self.view.frame.width
         emailView_width.constant = self.view.frame.width
         passwordView_width.constant = self.view.frame.width
         
-        cornerRadius(for: coachPasswordTextField)
+        //cornerRadius(for: coachPasswordTextField)
         cornerRadius(for: firstNameTextField)
         cornerRadius(for: lastNameTextField)
         cornerRadius(for: emailTextField)
@@ -57,16 +57,16 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate {
         cornerRadius(for: emailContinueButton)
         cornerRadius(for: fullnameContinueButton)
         cornerRadius(for: passwordContinueButton)
-        cornerRadius(for: coachPasswordContinueButton)
+        //cornerRadius(for: coachPasswordContinueButton)
         
         padding(for: emailTextField)
         padding(for: firstNameTextField)
         padding(for: lastNameTextField)
         padding(for: passwordTextField)
-        padding(for: coachPasswordTextField)
+        //padding(for: coachPasswordTextField)
         padding(for: phoneTextField)
         
-        self.coachPasswordTextField.delegate = self
+        //self.coachPasswordTextField.delegate = self
         self.firstNameTextField.delegate = self
         self.lastNameTextField.delegate = self
         self.emailTextField.delegate = self
@@ -86,7 +86,7 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate {
         emailContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
         fullnameContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
         passwordContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
-        coachPasswordContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
+        //coachPasswordContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
     }
     
     // make corners rounded for any views (objects)
@@ -205,15 +205,16 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate {
         let helper = Helper()
         
         // logic for Email TextField
-        if textField == coachPasswordTextField {
-            
-            // check email validation
-            if coachPasswordTextField.text!.count >= 6 {
-                coachPasswordContinueButton.isHidden = false
-            }
-            
-        // logic for First Name or Last Name TextFields
-        } else if textField == firstNameTextField || textField == lastNameTextField {
+//        if textField == coachPasswordTextField {
+//
+//            // check email validation
+//            if coachPasswordTextField.text!.count >= 6 {
+//                coachPasswordContinueButton.isHidden = false
+//            }
+//
+//        // logic for First Name or Last Name TextFields
+//        }
+        if textField == firstNameTextField || textField == lastNameTextField {
             
             // check fullname validation
             if helper.isValid(name: firstNameTextField.text!) && helper.isValid(name: lastNameTextField.text!) {

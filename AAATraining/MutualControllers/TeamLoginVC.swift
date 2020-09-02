@@ -11,7 +11,7 @@ import Firebase
 import FirebaseFirestore
 import ProgressHUD
 
-class TeamLoginVC: UIViewController {
+class TeamLoginVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var teamCodeText: UITextField!
     @IBOutlet weak var registerTeamLabel: UILabel!
@@ -28,6 +28,8 @@ class TeamLoginVC: UIViewController {
         registerTeamTapGestureRecognizer.addTarget(self, action: #selector(self.registerTeamClicked))
         registerTeamLabel.isUserInteractionEnabled = true
         registerTeamLabel.addGestureRecognizer(registerTeamTapGestureRecognizer)
+        
+        self.teamCodeText.delegate = self
     }
     
     @IBAction func continueButtonClicked(_ sender: Any) {
@@ -55,6 +57,11 @@ class TeamLoginVC: UIViewController {
         //this will load the team and set the current user defaults to team color and logo
         
 
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
     
     @objc func registerTeamClicked() {
