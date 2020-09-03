@@ -129,7 +129,13 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     }
     
     func createEventsForNewObserver(event: Event) {
-        
+        let localReference = reference(.Event).document()
+        let eventId = localReference.documentID
+        var event: [String : Any]!
+        var eventCounter = 0
+        event = [kEVENTID: eventId, kEVENTTEAMID: event.eventTeamID, kEVENTOWNERID: event.eventOwnerID, kEVENTTEXT: event.eventText, kEVENTDATE: event.eventDate, kEVENTACCOUNTTYPE: FUser.currentUser().accountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: FUser.currentId(), kEVENTGROUPID: event.eventGroupID] as [String:Any]
+
+        localReference.setData(event)
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
