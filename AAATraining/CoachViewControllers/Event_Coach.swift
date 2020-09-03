@@ -47,7 +47,6 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         
         //self.setLeftAlignedNavigationItemTitle(text: "Event", color: .white, margin: 12)
-
         dateLabel.text = dateString
         textView.text = event.eventText
         if event.eventText != "" {
@@ -87,6 +86,8 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         localReference.setData(event)
         
     }
+    
+    //get all events with the same teamID as current user, sort by event id and create new events for current user. The number of new events to be created will be determined by how many indexes in until the next eventUserID starts
     
     func createEventForMembers() {
         var tempMembers = memberIds
@@ -223,6 +224,5 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         view.layer.cornerRadius = 5
         view.layer.masksToBounds = true
     }
-    
 
 }

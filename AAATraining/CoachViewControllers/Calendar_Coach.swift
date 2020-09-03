@@ -87,9 +87,9 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
 //                    }
                     if event.eventTeamID == FUser.currentUser()?.userTeamID {
                         self.allEvents.append(event)
-                        self.allEventDates.append(event.eventDate)
+                        
                        if event.eventUserID == FUser.currentId() {
-                            
+                            self.allEventDates.append(event.eventDate)
                             self.countArray.append(String(event.eventCounter))
                         }
                     }
@@ -139,6 +139,8 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         }  else {
             return nil
         }
+        
+         
     }
     
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {

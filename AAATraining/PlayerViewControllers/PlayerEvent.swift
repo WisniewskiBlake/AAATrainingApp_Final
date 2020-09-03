@@ -48,7 +48,6 @@ class PlayerEvent: UIViewController, UITextViewDelegate, UINavigationControllerD
         event.clearCalendarCounter(eventGroupID: event.eventGroupID, eventUserID : event.eventUserID)
     }
     
-
     
     @IBAction func backButtonPressed(_ sender: Any) {
         event.clearCalendarCounter(eventGroupID: event.eventGroupID, eventUserID : event.eventUserID)

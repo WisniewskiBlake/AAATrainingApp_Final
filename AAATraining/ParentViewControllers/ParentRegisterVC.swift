@@ -159,7 +159,7 @@ class ParentRegisterVC: UIViewController, UITextFieldDelegate {
     @IBAction func finishButtonClicked(_ sender: Any) {
         let avatar = getAvatar()
         let coverIMG = cover?.jpegData(compressionQuality: 0.7)
-        let coverData = coverIMG!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+        _ = coverIMG!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         
         FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "parent", birthday: "", cover: team.teamLogo, phoneNumber: phoneTextField.text!, userTeamID: team.teamID, userTeamColorOne: team.teamColorOne, userTeamColorTwo: team.teamColorTwo, userTeamColorThree: team.teamColorThree) { (error)  in
             
