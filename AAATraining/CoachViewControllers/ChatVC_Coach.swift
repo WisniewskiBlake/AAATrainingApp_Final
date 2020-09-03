@@ -194,7 +194,7 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
         loadMessages()
         
         self.senderId = FUser.currentId()
-        self.senderDisplayName = FUser.currentUser()!.firstname
+        self.senderDisplayName = FUser.currentUser()!.fullname
         
         
         //fix for Ipgone x
@@ -419,23 +419,33 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, attributedTextForMessageBubbleTopLabelAt indexPath: IndexPath!) -> NSAttributedString! {
         let message = messages[indexPath.row]
         let style = NSMutableParagraphStyle()
-        style.alignment = NSTextAlignment.right
-        let fullname = FUser.currentUser()?.fullname
-        print(fullname?.count)
-        let fullNameArr = fullname?.components(separatedBy: " ")
-        let firstname = fullNameArr?[0]
-        let lastname = fullNameArr?[1]
-        let firstCharIndex = lastname?.index(lastname!.startIndex, offsetBy: 1)
-        let lastnameCharacter = lastname?.substring(to: firstCharIndex!)
+        style.alignment = NSTextAlignment.left
+        style.paragraphSpacingBefore = CGFloat(0)
+        style.firstLineHeadIndent = CGFloat(0)
+        style.headIndent = CGFloat(0)
+        
+        
+        let fullname = message.senderDisplayName
+        
+        var padding = 0.0;
+        
+        //let fullNameArr = fullname?.components(separatedBy: " ")
+//        let firstname = fullNameArr?[0]
+//        let lastname = fullNameArr?[1]
+//        let firstCharIndex = lastname?.index(lastname!.startIndex, offsetBy: 1)
+//        let lastnameCharacter = lastname?.substring(to: firstCharIndex!)
+        
         
         
         switch message.senderId {
-        case kCURRENTUSER:
+        case FUser.currentId():
             return nil
-            
+            //return NSAttributedString(string: senderDisplayName, attributes: [.baselineOffset: 0.5, .paragraphStyle: style])
+
         default:
-            senderDisplayName = firstname! + " " + lastnameCharacter!
-            return NSAttributedString(string: senderDisplayName, attributes: [.baselineOffset: 0.5, .paragraphStyle: style])
+            return NSAttributedString(string: fullname!, attributes: [.paragraphStyle : style])
+            //senderDisplayName = firstname! + " " + lastnameCharacter!
+            //return NSAttributedString(string: senderDisplayName, attributes: [.baselineOffset: 0.5, .paragraphStyle: style])
         }
     }
     

@@ -18,7 +18,7 @@ class OutgoingMessage {
     //text message
     init(message: String, senderId: String, senderName: String, date: Date, status: String, type: String) {
         
-        messageDictionary = NSMutableDictionary(objects: [message, senderId, senderName, helper.dateFormatter().string(from: date), status, type], forKeys: [kMESSAGE as NSCopying, kSENDERID as NSCopying, kSENDERNAME as NSCopying, kDATE as NSCopying, kSTATUS as NSCopying, kTYPE as NSCopying])
+        messageDictionary = NSMutableDictionary(objects: [message, senderId, FUser.currentUser()?.fullname, helper.dateFormatter().string(from: date), status, type], forKeys: [kMESSAGE as NSCopying, kSENDERID as NSCopying, kSENDERNAME as NSCopying, kDATE as NSCopying, kSTATUS as NSCopying, kTYPE as NSCopying])
     }
 
     //picture message
