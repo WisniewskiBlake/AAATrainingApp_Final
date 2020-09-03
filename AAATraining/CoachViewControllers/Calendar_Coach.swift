@@ -23,6 +23,9 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     var allEventDates: [String] = []
     var countArray = [String]()
     
+    var eventsToCopy: [Event] = []
+    var isNewObserver: Bool = true
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,11 +64,14 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
     @objc func loadEvents() {
         ProgressHUD.show()
-        recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).addSnapshotListener({ (snapshot, error) in
+        recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).order(by: kEVENTUSERID).addSnapshotListener({ (snapshot, error) in
                            
             self.allEvents = []
             self.allEventDates = []
             self.countArray = []
+            self.eventsToCopy = []
+            
+            var i = 0
                         
             if error != nil {
                 print(error!.localizedDescription)
@@ -87,20 +93,43 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
 //                    }
                     if event.eventTeamID == FUser.currentUser()?.userTeamID {
                         self.allEvents.append(event)
-                        
+                        i += 1
                        if event.eventUserID == FUser.currentId() {
                             self.allEventDates.append(event.eventDate)
                             self.countArray.append(String(event.eventCounter))
-                        }
+                            self.isNewObserver = false
+                       } else {
+                            
+                            if i == 1 {
+                                self.eventsToCopy.append(event)
+                            } else if i > 1 {
+                                if self.allEvents[i - 1].eventUserID == event.eventUserID {
+                                    self.eventsToCopy.append(event)
+                                }
+                            }
+                            
+                       }
                     }
                 
                }
-               self.calendar.reloadData()
+                if self.isNewObserver == true {
+                    for event in self.eventsToCopy {
+                        self.createEventsForNewObserver(event: event)
+                    }
+                    self.calendar.reloadData()
+                } else {
+                    self.calendar.reloadData()
+                }
+                               
             
            }
             self.calendar.reloadData()
             ProgressHUD.dismiss()
         })
+    }
+    
+    func createEventsForNewObserver(event: Event) {
+        
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
