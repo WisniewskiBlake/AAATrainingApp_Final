@@ -278,6 +278,7 @@
 		B7DEBF5624F34CBC00D179C4 /* TeamLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamLoginVC.swift; sourceTree = "<group>"; };
 		B7DEBF5824F363D000D179C4 /* TeamRegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamRegisterVC.swift; sourceTree = "<group>"; };
 		B7DEBF5A24F3B32C00D179C4 /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
+		B7EA82E22500C33300824BC7 /* AAATraining.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AAATraining.entitlements; sourceTree = "<group>"; };
 		B7F18C6024970084009BFA17 /* AAATraining.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AAATraining.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7F18C6324970084009BFA17 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B7F18C6524970084009BFA17 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -527,6 +528,7 @@
 		B7F18C6224970084009BFA17 /* AAATraining */ = {
 			isa = PBXGroup;
 			children = (
+				B7EA82E22500C33300824BC7 /* AAATraining.entitlements */,
 				B70EDF1D24D1A58800CC21F5 /* ParentViewControllers */,
 				B7C3BDFD24BC630C00086C27 /* fonts */,
 				B75AD62E24CA93FB00DCC857 /* Helpers */,
@@ -1189,12 +1191,13 @@
 			baseConfigurationReference = 1BA4F70ACE38F2C36523BC95 /* Pods-AAATraining.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AAATraining/AAATraining.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = AAATraining/Assets.xcassets;
 				DEVELOPMENT_TEAM = Z2A427979Q;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				INFOPLIST_FILE = AAATraining/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1214,12 +1217,13 @@
 			baseConfigurationReference = CD5219FAAED33CBF8A7745C6 /* Pods-AAATraining.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AAATraining/AAATraining.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = AAATraining/Assets.xcassets;
 				DEVELOPMENT_TEAM = Z2A427979Q;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				INFOPLIST_FILE = AAATraining/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

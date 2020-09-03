@@ -25,6 +25,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
     var eventsToCopy: [Event] = []
     var isNewObserver: Bool = true
+    var eventToCopyUserID: String = ""
     
 
     override func viewDidLoad() {
@@ -70,6 +71,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
             self.allEventDates = []
             self.countArray = []
             self.eventsToCopy = []
+            self.eventToCopyUserID = ""
             
             var i = 0
                         
@@ -102,8 +104,9 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                             
                             if i == 1 {
                                 self.eventsToCopy.append(event)
+                                self.eventToCopyUserID = event.eventUserID
                             } else if i > 1 {
-                                if self.allEvents[i - 1].eventUserID == event.eventUserID {
+                                if self.eventToCopyUserID == event.eventUserID {
                                     self.eventsToCopy.append(event)
                                 }
                             }
@@ -113,6 +116,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                 
                }
                 if self.isNewObserver == true {
+                    //self.isNewObserver = false
                     for event in self.eventsToCopy {
                         self.createEventsForNewObserver(event: event)
                     }
@@ -131,11 +135,11 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     func createEventsForNewObserver(event: Event) {
         let localReference = reference(.Event).document()
         let eventId = localReference.documentID
-        var event: [String : Any]!
-        var eventCounter = 0
-        event = [kEVENTID: eventId, kEVENTTEAMID: event.eventTeamID, kEVENTOWNERID: event.eventOwnerID, kEVENTTEXT: event.eventText, kEVENTDATE: event.eventDate, kEVENTACCOUNTTYPE: FUser.currentUser().accountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: FUser.currentId(), kEVENTGROUPID: event.eventGroupID] as [String:Any]
+        var eventToUpload: [String : Any]!
+        let eventCounter = 0
+        eventToUpload = [kEVENTID: eventId, kEVENTTEAMID: event.eventTeamID, kEVENTOWNERID: event.eventOwnerID, kEVENTTEXT: event.eventText, kEVENTDATE: event.eventDate, kEVENTACCOUNTTYPE: FUser.currentUser()?.accountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: FUser.currentId(), kEVENTGROUPID: event.eventGroupID] as [String:Any]
 
-        localReference.setData(event)
+        localReference.setData(eventToUpload)
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
