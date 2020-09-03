@@ -24,6 +24,10 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
     var recentListener: ListenerRegistration!
     var allEventDates: [String] = []
     
+    var eventsToCopy: [Event] = []
+    var isNewObserver: Bool = true
+    var eventToCopyUserID: String = ""
+    
         
     var countArray = [String]()
     
@@ -69,6 +73,10 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
             self.allEvents = []
             self.allEventDates = []
             self.countArray = []
+            self.eventsToCopy = []
+            self.eventToCopyUserID = ""
+            
+            var i = 0
             
             if error != nil {
                 print(error!.localizedDescription)
@@ -83,21 +91,60 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
                     
                    let eventDictionary = eventDictionary.data() as NSDictionary
                    let event = Event(_dictionary: eventDictionary)
-                   self.allEvents.append(event)
-                    if event.eventUserID == FUser.currentId() {
-                        self.allEventDates.append(event.eventDate)
-                        self.countArray.append(String(event.eventCounter))
+                    if event.eventTeamID == FUser.currentUser()?.userTeamID {
+                        self.allEvents.append(event)
+                        i += 1
+                       if event.eventUserID == FUser.currentId() {
+                            self.allEventDates.append(event.eventDate)
+                            self.countArray.append(String(event.eventCounter))
+                            self.isNewObserver = false
+                       } else {
+                            
+                            if i == 1 {
+                                self.eventsToCopy.append(event)
+                                self.eventToCopyUserID = event.eventUserID
+                            } else if i > 1 {
+                                if self.eventToCopyUserID == event.eventUserID {
+                                    self.eventsToCopy.append(event)
+                                }
+                            }
+                            
+                       }
                     }
+//                   self.allEvents.append(event)
+//                    if event.eventUserID == FUser.currentId() {
+//                        self.allEventDates.append(event.eventDate)
+//                        self.countArray.append(String(event.eventCounter))
+//                    }
                    
                     
                 
                }
-               self.calendar.reloadData()
+                if self.isNewObserver == true {
+                    //self.isNewObserver = false
+                    for event in self.eventsToCopy {
+                        self.createEventsForNewObserver(event: event)
+                    }
+                    self.calendar.reloadData()
+                } else {
+                    self.calendar.reloadData()
+                }
+               //self.calendar.reloadData()
             
            }
             self.calendar.reloadData()
             ProgressHUD.dismiss()
         })
+    }
+    
+    func createEventsForNewObserver(event: Event) {
+        let localReference = reference(.Event).document()
+        let eventId = localReference.documentID
+        var eventToUpload: [String : Any]!
+        let eventCounter = 0
+        eventToUpload = [kEVENTID: eventId, kEVENTTEAMID: event.eventTeamID, kEVENTOWNERID: event.eventOwnerID, kEVENTTEXT: event.eventText, kEVENTDATE: event.eventDate, kEVENTACCOUNTTYPE: FUser.currentUser()?.accountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: FUser.currentId(), kEVENTGROUPID: event.eventGroupID] as [String:Any]
+
+        localReference.setData(eventToUpload)
     }
     
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
@@ -109,7 +156,7 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
         
         if allEventDates.contains(dateString) && Int(countArray[index])! >= 1 {
               
-            return UIColor.darkGray
+            return #colorLiteral(red: 0.05476168428, green: 0.06671469682, blue: 1, alpha: 1)
              
             
         } else if allEventDates.contains(dateString) && Int(countArray[index])! == 0 {

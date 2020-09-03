@@ -38,7 +38,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         calendar.delegate = self
         calendar.appearance.todayColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         calendar.appearance.headerTitleColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        calendar.appearance.weekdayTextColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        //calendar.appearance.weekdayTextColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:22)
         //calendar.placeholderType = .none
         
@@ -171,7 +171,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         }
         
         if allEventDates.contains(dateString) && Int(countArray[index])! >= 1 {
-            return UIColor.yellow
+            return #colorLiteral(red: 0.05476168428, green: 0.06671469682, blue: 1, alpha: 1)
             
         } else if allEventDates.contains(dateString) && Int(countArray[index])! == 0 {
             return UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
