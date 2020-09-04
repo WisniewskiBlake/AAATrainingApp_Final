@@ -11,6 +11,7 @@ import Firebase
 
 public class Baseline {
     var baselineID: String
+    var baselineTeamID: String
     var baselineOwnerID: String
     var height: String
     var weight: String
@@ -26,11 +27,12 @@ public class Baseline {
         
     let baselineDictionary: NSMutableDictionary
 
-    init(baselineID: String, baselineOwnerID: String, height: String, weight: String, wingspan: String, vertical: String, yardDash: String, agility: String, pushUp: String, chinUp: String, mileRun: String, baselineDate: String, userName: String) {
+    init(baselineID: String, baselineTeamID: String, baselineOwnerID: String, height: String, weight: String, wingspan: String, vertical: String, yardDash: String, agility: String, pushUp: String, chinUp: String, mileRun: String, baselineDate: String, userName: String) {
 
-        baselineDictionary = NSMutableDictionary(objects: [baselineID, baselineOwnerID, height, weight, wingspan, vertical, yardDash, agility, pushUp, chinUp, mileRun, baselineDate, userName], forKeys: [kBASELINEID as NSCopying, kBASELINEOWNERID as NSCopying, kBASELINEHEIGHT as NSCopying, kBASELINEWEIGHT as NSCopying, kWINGSPAN as NSCopying, kVERTICAL as NSCopying, kYARDDASH as NSCopying, kAGILITY as NSCopying, kPUSHUP as NSCopying, kCHINUP as NSCopying, kMILERUN as NSCopying, kBASELINEDATE as NSCopying, kBASELINEUSERNAME as NSCopying])
+        baselineDictionary = NSMutableDictionary(objects: [baselineID, baselineTeamID, baselineOwnerID, height, weight, wingspan, vertical, yardDash, agility, pushUp, chinUp, mileRun, baselineDate, userName], forKeys: [kBASELINEID as NSCopying, kBASELINETEAMID as NSCopying, kBASELINEOWNERID as NSCopying, kBASELINEHEIGHT as NSCopying, kBASELINEWEIGHT as NSCopying, kWINGSPAN as NSCopying, kVERTICAL as NSCopying, kYARDDASH as NSCopying, kAGILITY as NSCopying, kPUSHUP as NSCopying, kCHINUP as NSCopying, kMILERUN as NSCopying, kBASELINEDATE as NSCopying, kBASELINEUSERNAME as NSCopying])
         
         self.baselineID = baselineID
+        self.baselineTeamID = baselineTeamID
         self.baselineOwnerID = baselineOwnerID
         self.height = height
         self.weight = weight
@@ -43,10 +45,12 @@ public class Baseline {
         self.mileRun = mileRun
         self.baselineDate = baselineDate
         self.userName = userName
+        
     }
     
     init() {
         baselineID = ""
+        baselineTeamID = ""
         baselineOwnerID = ""
         height = ""
         weight = ""
@@ -60,13 +64,14 @@ public class Baseline {
         baselineDate = ""
         userName = ""
         
-        baselineDictionary = NSMutableDictionary(objects: [baselineID, baselineOwnerID, height, weight, wingspan, vertical, yardDash, agility, pushUp, chinUp, mileRun, baselineDate, userName], forKeys: [kBASELINEID as NSCopying, kBASELINEOWNERID as NSCopying, kBASELINEHEIGHT as NSCopying, kBASELINEWEIGHT as NSCopying, kWINGSPAN as NSCopying, kVERTICAL as NSCopying, kYARDDASH as NSCopying, kAGILITY as NSCopying, kPUSHUP as NSCopying, kCHINUP as NSCopying, kMILERUN as NSCopying, kBASELINEDATE as NSCopying, kBASELINEUSERNAME as NSCopying])
+        baselineDictionary = NSMutableDictionary(objects: [baselineID, baselineTeamID, baselineOwnerID, height, weight, wingspan, vertical, yardDash, agility, pushUp, chinUp, mileRun, baselineDate, userName], forKeys: [kBASELINEID as NSCopying, kBASELINETEAMID as NSCopying, kBASELINEOWNERID as NSCopying, kBASELINEHEIGHT as NSCopying, kBASELINEWEIGHT as NSCopying, kWINGSPAN as NSCopying, kVERTICAL as NSCopying, kYARDDASH as NSCopying, kAGILITY as NSCopying, kPUSHUP as NSCopying, kCHINUP as NSCopying, kMILERUN as NSCopying, kBASELINEDATE as NSCopying, kBASELINEUSERNAME as NSCopying])
     }
     
     
     init(_dictionary: NSDictionary) {
        //let helper = Helper()
        baselineID = _dictionary[kBASELINEID] as! String
+       baselineTeamID = _dictionary[kBASELINETEAMID] as! String
        baselineOwnerID = _dictionary[kBASELINEOWNERID] as! String
        
        if let ht = _dictionary[kBASELINEHEIGHT] {
@@ -128,7 +133,7 @@ public class Baseline {
         
         
         
-        baselineDictionary = NSMutableDictionary(objects: [baselineID, baselineOwnerID, height, weight, wingspan, vertical, agility, yardDash, pushUp, chinUp, mileRun, baselineDate, userName], forKeys: [kBASELINEID as NSCopying, kBASELINEOWNERID as NSCopying, kBASELINEHEIGHT as NSCopying, kBASELINEWEIGHT as NSCopying, kWINGSPAN as NSCopying, kVERTICAL as NSCopying, kAGILITY as NSCopying, kYARDDASH as NSCopying, kPUSHUP as NSCopying, kCHINUP as NSCopying, kMILERUN as NSCopying, kBASELINEDATE as NSCopying, kBASELINEUSERNAME as NSCopying])
+        baselineDictionary = NSMutableDictionary(objects: [baselineID, baselineTeamID, baselineTeamID, baselineOwnerID, height, weight, wingspan, vertical, agility, yardDash, pushUp, chinUp, mileRun, baselineDate, userName], forKeys: [kBASELINEID as NSCopying, kBASELINETEAMID as NSCopying, kBASELINEOWNERID as NSCopying, kBASELINEHEIGHT as NSCopying, kBASELINEWEIGHT as NSCopying, kWINGSPAN as NSCopying, kVERTICAL as NSCopying, kAGILITY as NSCopying, kYARDDASH as NSCopying, kPUSHUP as NSCopying, kCHINUP as NSCopying, kMILERUN as NSCopying, kBASELINEDATE as NSCopying, kBASELINEUSERNAME as NSCopying])
         
     }
 

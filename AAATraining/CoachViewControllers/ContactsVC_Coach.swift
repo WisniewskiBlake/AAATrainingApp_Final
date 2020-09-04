@@ -112,7 +112,7 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
             case ("parent"):
                 query = reference(.User).whereField("accountType", isEqualTo: "parent").whereField(kUSERTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).order(by: kFIRSTNAME, descending: false)
            default:
-               query = reference(.User).order(by: kFIRSTNAME, descending: false)
+               query = reference(.User).whereField(kUSERTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).order(by: kFIRSTNAME, descending: false)
            }
            
            query.getDocuments { (snapshot, error) in

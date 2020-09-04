@@ -45,7 +45,7 @@ class AllBaselinesVC: UIViewController {
         ProgressHUD.show()
         
         var query: Query!
-        query = reference(.Baseline).order(by: kBASELINEUSERNAME, descending: false)
+        query = reference(.Baseline).whereField(kBASELINETEAMID, isEqualTo: FUser.currentUser()?.userTeamID).order(by: kBASELINEUSERNAME, descending: false)
         query.getDocuments { (snapshot, error) in
             
             self.allBaselines = []
@@ -71,7 +71,6 @@ class AllBaselinesVC: UIViewController {
                     let userDictionary = userDictionary.data() as NSDictionary
                     let baseline = Baseline(_dictionary: userDictionary)
                     
-                    
                     self.allBaselines.append(baseline)
                     
                 }
@@ -89,7 +88,7 @@ class AllBaselinesVC: UIViewController {
         ProgressHUD.show()
         var query: Query!
         
-         query = reference(.User).whereField("objectId", isEqualTo: objectID)
+        query = reference(.User).whereField("objectId", isEqualTo: objectID)
         
         query.getDocuments { (snapshot, error) in
             

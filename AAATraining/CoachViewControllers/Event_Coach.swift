@@ -99,7 +99,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         
         //NEED TO ADD EVENTGROUPID HERE NOT DATE, EVENTGROUPID WILL BE THE ID ALL USERS SHARE FOR AN EVENT (SYNONYMOUS WITH CHATROOMID), AND EVENTID WILL BE
         //A UNIQUE IDENTIFIER FOR THE EVENT
-           reference(.Event).whereField(kEVENTDATE, isEqualTo: dateString).getDocuments { (snapshot, error) in
+        reference(.Event).whereField(kEVENTDATE, isEqualTo: dateString).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).getDocuments { (snapshot, error) in
                
                guard let snapshot = snapshot else { return }
                
@@ -129,7 +129,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     }
     
     func getAllMembers() {
-        reference(.User).getDocuments { (snapshot, error) in
+        reference(.User).whereField(kUSERTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).getDocuments { (snapshot, error) in
         
             guard let snapshot = snapshot else { return }
         

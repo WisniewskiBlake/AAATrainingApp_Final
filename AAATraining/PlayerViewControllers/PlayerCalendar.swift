@@ -157,7 +157,6 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
         if allEventDates.contains(dateString) && Int(countArray[index])! >= 1 {
               
             return #colorLiteral(red: 0.05476168428, green: 0.06671469682, blue: 1, alpha: 1)
-             
             
         } else if allEventDates.contains(dateString) && Int(countArray[index])! == 0 {
             return UIColor(hexString: FUser.currentUser()!.userTeamColorOne)

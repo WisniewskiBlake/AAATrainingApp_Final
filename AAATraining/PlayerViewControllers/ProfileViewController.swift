@@ -232,7 +232,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         // assigning vars which we accessed from global var, to fullnameLabel
         fullnameLabel.text = "\((firstName).capitalized) \((lastName).capitalized)"
         heightTextLabel.text = "\((height).capitalized)" + "in."
-        weightTextLabel.text = "\((weight).capitalized)" + "lbs."
+        weightTextLabel.text = "\((weight).capitalized)" + "lb."
         positionTextLabel.text = "\((position).capitalized)"
         numberTextLabel.text = "\((number).capitalized)"
         

@@ -55,7 +55,7 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     let helper = Helper()
     
-    var sceneDelegate = UIApplication.shared.delegate as! SceneDelegate
+    //var sceneDelegate = UIApplication.shared.delegate as! SceneDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -133,7 +133,7 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         team.saveTeam()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createTeam"), object: nil)
-        sceneDelegate.tintColor = UIColor(hexString: team.teamColorOne)
+        //sceneDelegate.tintColor = UIColor(hexString: team.teamColorOne)
         self.goToApp(teamToLoad: team)
         //self.goToLogin()
 
@@ -157,6 +157,7 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
         {
             vc.team = teamToLoad
+            vc.teamID = teamToLoad.teamID
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         }

@@ -68,7 +68,7 @@ class NewBaselineVC: UIViewController {
             var baseline: [String : Any]!
             let date = helper.dateFormatter().string(from: Date())
             
-            baseline = [kBASELINEID : baselineID, kBASELINEOWNERID : userBeingViewed.objectId, kBASELINEHEIGHT : heightText.text!, kBASELINEWEIGHT : weightText.text!, kWINGSPAN : wingspanText.text!, kVERTICAL : verticalText.text!, kAGILITY : agilityText.text!, kYARDDASH : dashText.text!, kPUSHUP : pushUptext.text!, kCHINUP : chinUpText.text!, kMILERUN : mileText.text!, kBASELINEDATE : date, kBASELINEUSERNAME : fullName]
+            baseline = [kBASELINEID : baselineID, kBASELINETEAMID : FUser.currentUser()?.userTeamID, kBASELINEOWNERID : userBeingViewed.objectId, kBASELINEHEIGHT : heightText.text!, kBASELINEWEIGHT : weightText.text!, kWINGSPAN : wingspanText.text!, kVERTICAL : verticalText.text!, kAGILITY : agilityText.text!, kYARDDASH : dashText.text!, kPUSHUP : pushUptext.text!, kCHINUP : chinUpText.text!, kMILERUN : mileText.text!, kBASELINEDATE : date, kBASELINEUSERNAME : fullName]
 
             localReference.setData(baseline)
 

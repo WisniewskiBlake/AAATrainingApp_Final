@@ -131,16 +131,34 @@ class LoginVC: UIViewController {
         // sending request to the server for proceeding Log In
         func loginUser() {
             
-            FUser.loginUserWith(email: emailTextField.text!, password: passwordTextField.text!) { (error) in
+            let helper = Helper()
+            
+            reference(.User).whereField(kUSERTEAMID, isEqualTo: self.teamID).getDocuments { (snapshot, error) in
                 
-                if error != nil {
-                    ProgressHUD.showError(error!.localizedDescription)
+                guard let snapshot = snapshot else { return }
+                
+                if !snapshot.isEmpty {
+                    FUser.loginUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!) { (error) in
+                        
+                        if error != nil {
+                            ProgressHUD.showError(error!.localizedDescription)
+                            return
+                        }
+                        
+                        print(FUser.currentId())
+                        self.goToApp()
+                    }
+                    
+                } else {
+                    helper.showAlert(title: "Invalid Credentials", message: "Email does not belong to this team.", in: self)
                     return
                 }
+
                 
-                print(FUser.currentId())
-                self.goToApp()
             }
+            
+            
+            
         }
     
     func goToApp() {
