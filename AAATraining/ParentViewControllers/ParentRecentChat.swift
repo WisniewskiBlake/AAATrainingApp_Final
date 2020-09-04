@@ -89,7 +89,17 @@ class ParentRecentChat: UIViewController, UITableViewDelegate, UITableViewDataSo
         if searchController.isActive && searchController.searchBar.text != "" {
             return filteredChats.count
         } else {
-           return recentChats.count
+           if recentChats.count == 0 {
+               var emptyLabelOne = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
+               emptyLabelOne.text = "Chats will appear if you've been added to a group!"
+               emptyLabelOne.textAlignment = NSTextAlignment.center
+               self.tableView.backgroundView = emptyLabelOne
+               self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+               return 0
+           } else {
+               self.tableView.backgroundView = nil
+               return recentChats.count
+           }
         }
     }
     

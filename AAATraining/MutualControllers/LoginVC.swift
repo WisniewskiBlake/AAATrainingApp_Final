@@ -133,7 +133,7 @@ class LoginVC: UIViewController {
             
             let helper = Helper()
             
-            reference(.User).whereField(kUSERTEAMID, isEqualTo: self.teamID).getDocuments { (snapshot, error) in
+            reference(.User).whereField(kUSERTEAMID, isEqualTo: self.team.teamID).getDocuments { (snapshot, error) in
                 
                 guard let snapshot = snapshot else { return }
                 

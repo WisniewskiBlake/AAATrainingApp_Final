@@ -142,7 +142,7 @@ class AllBaselinesVC: UIViewController {
 extension AllBaselinesVC: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return allBaselines.count
+        return allBaselines.count + 1
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -165,42 +165,43 @@ extension AllBaselinesVC: UICollectionViewDataSource {
             cell.dataLabel.font = .systemFont(ofSize: 17.0)
             if indexPath.item == 0 {
                 cell.dataLabel.numberOfLines = 2
-                cell.dataLabel.text = allBaselines[indexPath.section].userName
+                print(indexPath.section)
+                cell.dataLabel.text = allBaselines[indexPath.section - 1].userName
                 cell.backgroundColor = gridLayout.isItemSticky(at: indexPath) ? .groupTableViewBackground : .white
             } else if indexPath.item == 1 {
                 var date: String?
                 let currentDateFormater = helper.dateFormatter()
                 currentDateFormater.dateFormat = "MM/dd/yy"
-                let baselineDate = helper.dateFormatter().date(from: allBaselines[indexPath.section].baselineDate)
+                let baselineDate = helper.dateFormatter().date(from: allBaselines[indexPath.section - 1].baselineDate)
                 date = currentDateFormater.string(from: baselineDate!)
                 cell.dataLabel.text = date
                 cell.backgroundColor = .white
             } else if indexPath.item == 2 {
-                cell.dataLabel.text = allBaselines[indexPath.section].height
+                cell.dataLabel.text = allBaselines[indexPath.section - 1].height
                 cell.backgroundColor = .white
             } else if indexPath.item == 3 {
-                cell.dataLabel.text = allBaselines[indexPath.section].weight
+                cell.dataLabel.text = allBaselines[indexPath.section - 1].weight
                 cell.backgroundColor = .white
             } else if indexPath.item == 4 {
-                cell.dataLabel.text = allBaselines[indexPath.section].wingspan
+                cell.dataLabel.text = allBaselines[indexPath.section - 1].wingspan
                 cell.backgroundColor = .white
             } else if indexPath.item == 5 {
-                cell.dataLabel.text = allBaselines[indexPath.section].vertical
+                cell.dataLabel.text = allBaselines[indexPath.section - 1].vertical
                 cell.backgroundColor = .white
             } else if indexPath.item == 6 {
-                cell.dataLabel.text = allBaselines[indexPath.section].yardDash
+                cell.dataLabel.text = allBaselines[indexPath.section - 1].yardDash
                 cell.backgroundColor = .white
             } else if indexPath.item == 7 {
-                cell.dataLabel.text = allBaselines[indexPath.section].agility
+                cell.dataLabel.text = allBaselines[indexPath.section - 1].agility
                 cell.backgroundColor = .white
             } else if indexPath.item == 8 {
-                cell.dataLabel.text = allBaselines[indexPath.section].pushUp
+                cell.dataLabel.text = allBaselines[indexPath.section - 1].pushUp
                 cell.backgroundColor = .white
             } else if indexPath.item == 9 {
-                cell.dataLabel.text = allBaselines[indexPath.section].chinUp
+                cell.dataLabel.text = allBaselines[indexPath.section - 1].chinUp
                 cell.backgroundColor = .white
             } else if indexPath.item == 10 {
-                cell.dataLabel.text = allBaselines[indexPath.section].mileRun
+                cell.dataLabel.text = allBaselines[indexPath.section - 1].mileRun
                 cell.backgroundColor = .white
             }
             //could get rid of all the if else statements

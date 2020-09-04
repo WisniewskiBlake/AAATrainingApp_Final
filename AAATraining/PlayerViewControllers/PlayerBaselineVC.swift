@@ -161,7 +161,18 @@ class PlayerBaselineVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return allBaselines.count
+        if allBaselines.count == 0 {
+            var emptyLabelOne = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
+            emptyLabelOne.text = "Nothing to show!"
+            emptyLabelOne.textAlignment = NSTextAlignment.center
+            self.tableView.backgroundView = emptyLabelOne
+            self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+            return 0
+        } else {
+            self.tableView.backgroundView = nil
+            return allBaselines.count
+        }
+        
     }
     
     // heights of the cells

@@ -30,7 +30,7 @@ class ColorPickerVC: UIViewController {
         updateColorSpaceText()
         handleColorChanged(picker: colorPicker)
         
-        label.text = "Please Close and Re-Open The App For Changes To Take Effect!"
+        label.text = "Please close/re-open the app for changes to take affect!"
     }
     
     @IBAction func backButtonPressed(_ sender: Any) {
