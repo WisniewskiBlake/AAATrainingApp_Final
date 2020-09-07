@@ -4484,7 +4484,7 @@
                                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Paste Optional URL Link" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dim-tA-5gd">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Paste Optional URL Link Here" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dim-tA-5gd">
                                         <rect key="frame" x="0.0" y="171" width="375" height="54"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="375" id="h0f-ev-Am0"/>
@@ -4504,13 +4504,13 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's your message?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s64-lb-SY3">
-                                        <rect key="frame" x="20" y="82" width="230" height="24"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What do you want to say?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s64-lb-SY3">
+                                        <rect key="frame" x="20" y="82" width="256" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="9QU-f6-Kjb"/>
-                                            <constraint firstAttribute="width" constant="230" id="GQG-I7-Tc8"/>
+                                            <constraint firstAttribute="width" constant="256" id="GQG-I7-Tc8"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -4529,7 +4529,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstItem="2LK-FY-KxZ" firstAttribute="leading" secondItem="bVn-hr-uoq" secondAttribute="leading" id="0H5-XB-2X3"/>
-                                    <constraint firstItem="7Fn-Fh-X2f" firstAttribute="leading" secondItem="s64-lb-SY3" secondAttribute="trailing" constant="-230" id="13Q-KX-TaW"/>
+                                    <constraint firstItem="7Fn-Fh-X2f" firstAttribute="leading" secondItem="s64-lb-SY3" secondAttribute="trailing" constant="-256" id="13Q-KX-TaW"/>
                                     <constraint firstItem="Dim-tA-5gd" firstAttribute="leading" secondItem="bVn-hr-uoq" secondAttribute="leading" id="BDl-wn-tRo"/>
                                     <constraint firstItem="7Fn-Fh-X2f" firstAttribute="leading" secondItem="bVn-hr-uoq" secondAttribute="leading" constant="20" id="Czv-o4-onQ"/>
                                     <constraint firstAttribute="trailing" secondItem="7Fn-Fh-X2f" secondAttribute="trailing" constant="20" id="Dzr-dz-kur"/>
@@ -4626,7 +4626,8 @@
                         <outlet property="pictureImageView" destination="pxq-WT-FBV" id="MVk-Wx-1bi"/>
                         <outlet property="placeholderLabel" destination="s64-lb-SY3" id="iVz-PH-apj"/>
                         <outlet property="postTextView" destination="7Fn-Fh-X2f" id="7CC-W9-fd0"/>
-                        <outlet property="splitterLabel" destination="MDR-br-i91" id="LEP-qL-2fz"/>
+                        <outlet property="splitterLabel" destination="MDR-br-i91" id="K8p-21-Pyo"/>
+                        <outlet property="splitterLabelTwo" destination="2LK-FY-KxZ" id="THI-wl-D5M"/>
                         <outlet property="urlLinkTextField" destination="Dim-tA-5gd" id="yPU-Y3-8Lp"/>
                     </connections>
                 </viewController>

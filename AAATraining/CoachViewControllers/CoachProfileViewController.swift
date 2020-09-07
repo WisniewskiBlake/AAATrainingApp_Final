@@ -192,6 +192,9 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     
     @objc func postViewClicked() {
         let postNav = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "postNav") as! UINavigationController
+        
+        
+        postNav.modalPresentationStyle = .fullScreen
     
         self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 

@@ -20,6 +20,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     @IBOutlet weak var pictureButton: UIButton!
     @IBOutlet weak var urlLinkTextField: UITextField!
     @IBOutlet weak var splitterLabel: UILabel!
+    @IBOutlet weak var splitterLabelTwo: UILabel!
     
     var videoPath: NSURL? = NSURL()
     var picturePath: UIImage? = UIImage()
@@ -39,15 +40,16 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
          navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
          navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
-        pictureButton.tintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        splitterLabel.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        pictureButton.tintColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+        splitterLabel.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+        splitterLabelTwo.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
          loadUser()
      }
      
      override func viewWillAppear(_ animated: Bool) {
          super.viewWillAppear(animated)
          
-        pictureButton.tintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        pictureButton.tintColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
          self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
          navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
          navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
