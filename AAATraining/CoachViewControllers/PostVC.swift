@@ -32,6 +32,23 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     
     let postID = UUID().uuidString
     
+    override func viewDidLoad() {
+         super.viewDidLoad()
+         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+         navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+         loadUser()
+     }
+     
+     override func viewWillAppear(_ animated: Bool) {
+         super.viewWillAppear(animated)
+         
+         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+         navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+         
+     }
+    
     func createPost() {
         if postTextView.text != "" {
             if isVideoSelected {
@@ -83,11 +100,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
             dismiss(animated: true, completion: nil)
         }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        loadUser()
-    }
+ 
     
     // loaded after adjusting the layouts
     override func viewDidLayoutSubviews() {

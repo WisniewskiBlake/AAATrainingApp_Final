@@ -307,28 +307,37 @@
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Coach: Can create posts, chats, events, and player baselines. Can change team logo." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aN4-Fd-MIb">
-                                <rect key="frame" x="16" y="277" width="343" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coach - Read/Write to: Team feed, chats, calendar, roster, nutrition, baselines, team logo, profile, and other profiles." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aN4-Fd-MIb">
+                                <rect key="frame" x="16" y="353" width="343" height="54"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="54" id="HD8-7i-Ewz"/>
+                                    <constraint firstAttribute="width" constant="343" id="YY3-wT-iKY"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                 <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Please use your real name. If Continue does not show, data entered is invalid." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KSy-2Z-D7Q">
-                                <rect key="frame" x="16" y="379" width="343" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Player - Read: Team feed, chats, calendar, roster, nutrition, baselines, and profile. Write: Profile." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KSy-2Z-D7Q">
+                                <rect key="frame" x="16" y="415" width="343" height="36"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="343" id="Qmc-br-JP3"/>
+                                    <constraint firstAttribute="height" constant="36" id="kX9-nY-TFb"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                 <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Player: " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5y5-GB-VNu">
-                                <rect key="frame" x="16" y="321" width="343" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parent - Read: Calendar and chats." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5y5-GB-VNu">
+                                <rect key="frame" x="16" y="459" width="343" height="21"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="YF3-rI-QsU"/>
+                                    <constraint firstAttribute="width" constant="343" id="pDw-Da-x19"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                 <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -338,11 +347,20 @@
                         <color key="backgroundColor" red="0.91337895390000001" green="0.92143708469999996" blue="0.93379235270000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="e3K-Cc-yGV" firstAttribute="trailing" secondItem="KiZ-O6-Raw" secondAttribute="trailing" constant="16" id="5Us-cZ-MCx"/>
+                            <constraint firstItem="5y5-GB-VNu" firstAttribute="top" secondItem="KSy-2Z-D7Q" secondAttribute="bottom" constant="8" id="B77-2j-2oP"/>
+                            <constraint firstItem="KSy-2Z-D7Q" firstAttribute="leading" secondItem="e3K-Cc-yGV" secondAttribute="leading" constant="16" id="DnF-KV-td7"/>
                             <constraint firstItem="e3K-Cc-yGV" firstAttribute="trailing" secondItem="Sv4-mC-0X3" secondAttribute="trailing" constant="16" id="Hvw-Xc-hb6"/>
+                            <constraint firstItem="e3K-Cc-yGV" firstAttribute="trailing" secondItem="aN4-Fd-MIb" secondAttribute="trailing" constant="16" id="OnM-Vy-c9T"/>
                             <constraint firstItem="Sv4-mC-0X3" firstAttribute="top" secondItem="KiZ-O6-Raw" secondAttribute="bottom" constant="20" id="VFm-jw-xvZ"/>
                             <constraint firstItem="KiZ-O6-Raw" firstAttribute="top" secondItem="e3K-Cc-yGV" secondAttribute="top" constant="84" id="ZcE-TK-ccU"/>
+                            <constraint firstItem="e3K-Cc-yGV" firstAttribute="trailing" secondItem="KSy-2Z-D7Q" secondAttribute="trailing" constant="16" id="bUH-ko-IMT"/>
                             <constraint firstItem="KiZ-O6-Raw" firstAttribute="leading" secondItem="e3K-Cc-yGV" secondAttribute="leading" constant="16" id="bx7-7o-umz"/>
+                            <constraint firstItem="KSy-2Z-D7Q" firstAttribute="top" secondItem="aN4-Fd-MIb" secondAttribute="bottom" constant="8" id="drd-n9-Pnz"/>
+                            <constraint firstItem="e3K-Cc-yGV" firstAttribute="trailing" secondItem="5y5-GB-VNu" secondAttribute="trailing" constant="16" id="gYW-ct-LRH"/>
+                            <constraint firstItem="aN4-Fd-MIb" firstAttribute="leading" secondItem="e3K-Cc-yGV" secondAttribute="leading" constant="16" id="joy-q8-LRg"/>
                             <constraint firstItem="Sv4-mC-0X3" firstAttribute="leading" secondItem="e3K-Cc-yGV" secondAttribute="leading" constant="16" id="rgu-hL-l2X"/>
+                            <constraint firstItem="aN4-Fd-MIb" firstAttribute="top" secondItem="Sv4-mC-0X3" secondAttribute="bottom" constant="140" id="vRf-N5-t6y"/>
+                            <constraint firstItem="5y5-GB-VNu" firstAttribute="leading" secondItem="e3K-Cc-yGV" secondAttribute="leading" constant="16" id="wv0-x3-uP6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="e3K-Cc-yGV"/>
                     </view>
@@ -368,7 +386,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ng0-e4-scJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="486" y="100"/>
+            <point key="canvasLocation" x="485.60000000000002" y="99.400299850074973"/>
         </scene>
         <!--Coach RegisterVC-->
         <scene sceneID="N2P-oC-Vao">
@@ -6819,15 +6837,15 @@
                                                             <action selector="logoContinueClicked:" destination="zm7-l7-ZFi" eventType="touchUpInside" id="T59-p9-xVA"/>
                                                         </connections>
                                                     </button>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HomeCover.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="RPM-11-GGh">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HomeCover.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="RPM-11-GGh">
                                                         <rect key="frame" x="246" y="185" width="70" height="70"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="70" id="5hZ-Gt-4vH"/>
                                                             <constraint firstAttribute="height" constant="70" id="gCV-eq-pEc"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The app will extract team colors from image, they can be changed later in settings." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sP8-eX-q6Z">
-                                                        <rect key="frame" x="16" y="263" width="343" height="38"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="This logo can be changed later in profile settings." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sP8-eX-q6Z">
+                                                        <rect key="frame" x="16" y="263" width="343" height="24"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="38" id="x5N-0X-nfz"/>
                                                         </constraints>
@@ -7039,7 +7057,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c86-zg-ukn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-414" y="761"/>
+            <point key="canvasLocation" x="-414.39999999999998" y="760.56971514242889"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="lK0-cx-fCJ">
