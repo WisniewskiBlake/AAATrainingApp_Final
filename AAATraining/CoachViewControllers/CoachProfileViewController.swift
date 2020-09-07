@@ -199,9 +199,16 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     }
     
     @objc func logoutViewClicked() {
-        let sheet = UIAlertController(title: "Team Login Code: " + FUser.currentUser()!.userTeamID, message: nil, preferredStyle: .actionSheet)
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        
+        let copyCode = UIAlertAction(title: "Copy Team Code: " + FUser.currentUser()!.userTeamID, style: .default, handler: { (action) in
+                        
+            let pasteboard = UIPasteboard.general
+            pasteboard.string = FUser.currentUser()!.userTeamID
+            self.helper.showAlert(title: "Copied!", message: "Team code copied to clipboard.", in: self)
+                
+            
+        })
         
         let colorPicker = UIAlertAction(title: "Choose Color Theme", style: .default, handler: { (action) in
                         
@@ -240,7 +247,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         // add buttons to action sheet
-        
+        sheet.addAction(copyCode)
         sheet.addAction(colorPicker)
         sheet.addAction(changeLogo)
         sheet.addAction(logout)
