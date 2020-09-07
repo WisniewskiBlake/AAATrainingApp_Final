@@ -52,7 +52,8 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         
         tableView.separatorColor = UIColor.clear
         
-        
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         
         self.setLeftAlignedNavigationItemTitle(text: "Team Feed", color: .white, margin: 12)
         
@@ -136,6 +137,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         tableView.tableFooterView = UIView()
         //loadPosts()
 

@@ -52,7 +52,10 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
         
         navigationItem.largeTitleDisplayMode = .never
         tableView.tableFooterView = UIView()
+        
+        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
         navigationItem.searchController = searchController
         
         self.setLeftAlignedNavigationItemTitle(text: "Roster", color: .white, margin: 12)
@@ -62,6 +65,24 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
         definesPresentationContext = true
         loadUsers(filter: "")
     }
+    
+        override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+            
+            self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+            navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+            navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+    //        if searchController.isActive {
+    //            navigationController?.navigationBar.tintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+    //        } else {
+    //            navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+    //        }
+            
+            tableView.tableFooterView = UIView()
+            // hide navigation bar on Home Pagex
+            
+            
+        }
     
     // MARK: - Search Bar
     fileprivate func splitDataIntoSection() {

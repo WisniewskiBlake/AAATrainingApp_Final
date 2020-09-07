@@ -54,6 +54,8 @@ class NewGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollecti
 
         //navigationItem.largeTitleDisplayMode = .never
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
         groupIconImageView.isUserInteractionEnabled = true
         groupIconImageView.addGestureRecognizer(iconTapGesture)
         

@@ -52,6 +52,8 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(loadNutritionPostsAfterDelete), name: NSNotification.Name(rawValue: "deleteNutritionPost"), object: nil)
         
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
         if accountType == "player" {
             composeButton.isEnabled = false
@@ -64,6 +66,10 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
         tableView.tableFooterView = UIView()
         //loadPosts()
@@ -178,7 +184,18 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       return allPosts.count
+       
+        if allPosts.count == 0 {
+            var emptyLabelOne = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
+            emptyLabelOne.text = "Created posts will appear here!"
+            emptyLabelOne.textAlignment = NSTextAlignment.center
+            self.tableView.backgroundView = emptyLabelOne
+            self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+            return 0
+        } else {
+            self.tableView.backgroundView = nil
+            return allPosts.count
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

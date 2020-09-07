@@ -24,6 +24,7 @@ class ColorPickerVC: UIViewController {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
 
         colorPicker.addTarget(self, action: #selector(self.handleColorChanged(picker:)), for: .valueChanged)
         colorPicker.set(color: UIColor(displayP3Red: 1.0, green: 1.0, blue: 0, alpha: 1), colorSpace: colorSpace)

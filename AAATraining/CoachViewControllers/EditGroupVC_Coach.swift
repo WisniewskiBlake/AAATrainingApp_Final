@@ -51,6 +51,7 @@ class EditGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollect
         
 //        setupUI()
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         updateParticipantsLabel()
     }
     

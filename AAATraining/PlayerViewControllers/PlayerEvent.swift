@@ -30,6 +30,7 @@ class PlayerEvent: UIViewController, UITextViewDelegate, UINavigationControllerD
         super.viewDidLoad()
 
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         dateLabel.text = dateString
         textView.text = event.eventText
         if event.eventText != "" {
@@ -42,6 +43,8 @@ class PlayerEvent: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     override func viewWillAppear(_ animated: Bool) {
         event.clearCalendarCounter(eventGroupID: event.eventGroupID, eventUserID : event.eventUserID)
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

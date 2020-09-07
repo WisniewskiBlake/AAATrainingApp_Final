@@ -50,6 +50,7 @@ class NewBaselineVC: UIViewController {
         padding(for: mileText)
 
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         // Do any additional setup after loading the view.
     }
     

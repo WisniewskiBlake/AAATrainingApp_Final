@@ -120,6 +120,8 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
     
     override func viewWillAppear(_ animated: Bool) {
         clearRecentCounter(chatRoomId: chatRoomId)
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -169,6 +171,7 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
         
         JSQMessagesCollectionViewCell.registerMenuAction(#selector(delete))
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
 //        navigationItem.largeTitleDisplayMode = .never
 //        navigationController?.navigationBar.barTintColor = UIColor.white
         

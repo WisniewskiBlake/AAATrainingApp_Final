@@ -68,6 +68,7 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
         navigationItem.searchController = searchController
         
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         
 //        let backItem = UIBarButtonItem()
 //        backItem.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -80,6 +81,9 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         
         //to remove empty cell lines
         tableView.tableFooterView = UIView()

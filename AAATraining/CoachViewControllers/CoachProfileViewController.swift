@@ -414,7 +414,18 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return allPosts.count
+        
+        if allPosts.count == 0 {
+            var emptyLabelOne = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
+            emptyLabelOne.text = "Created posts will appear here!"
+            emptyLabelOne.textAlignment = NSTextAlignment.center
+            self.tableView.backgroundView = emptyLabelOne
+            self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+            return 0
+        } else {
+            self.tableView.backgroundView = nil
+            return allPosts.count
+        }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
