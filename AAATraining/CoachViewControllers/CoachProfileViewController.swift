@@ -215,6 +215,13 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             
         })
         
+        let changeLogo = UIAlertAction(title: "Change Team Logo", style: .default, handler: { (action) in
+                        
+            self.coverViewClicked()
+                
+            
+        })
+        
         // creating buttons for action sheet
         let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
                         
@@ -235,6 +242,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         // add buttons to action sheet
         
         sheet.addAction(colorPicker)
+        sheet.addAction(changeLogo)
         sheet.addAction(logout)
         sheet.addAction(cancel)
         
@@ -252,46 +260,46 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         let user = FUser.currentUser()
         
         
-        reference(.Team).document(FUser.currentUser()!.userTeamID).getDocument { (snapshot, error) in
-        
-            guard let snapshot = snapshot else {  return }
-            
-            if snapshot.exists {
-                
-                let team = Team(_dictionary: snapshot.data()! as NSDictionary)
-                
-                helper.imageFromData(pictureData: team.teamLogo) { (coverImage) in
-                    
-                    if coverImage != nil {
-                        self.coverImageView.image = coverImage!
-                        self.isCover = true
-                    }
-                }
-                
-                
-            } else {
-                self.coverImageView.image = UIImage(named: "HomeCover.jpg")
-                self.isCover = false
-            }
-        }
+//        reference(.Team).document(FUser.currentUser()!.userTeamID).getDocument { (snapshot, error) in
+//
+//            guard let snapshot = snapshot else {  return }
+//
+//            if snapshot.exists {
+//
+//                let team = Team(_dictionary: snapshot.data()! as NSDictionary)
+//
+//                helper.imageFromData(pictureData: team.teamLogo) { (coverImage) in
+//
+//                    if coverImage != nil {
+//                        self.coverImageView.image = coverImage!
+//                        self.isCover = true
+//                    }
+//                }
+//
+//
+//            } else {
+//                self.coverImageView.image = UIImage(named: "HomeCover.jpg")
+//                self.isCover = false
+//            }
+//        }
    
-        guard let firstName = user?.firstname, let lastName = user?.lastname, let avaPath = user?.ava else {
+        guard let firstName = user?.firstname, let lastName = user?.lastname, let avaPath = user?.ava, let coverPath = user?.cover else {
                
                return
         }
            
-//           if coverPath != "" {
-//               helper.imageFromData(pictureData: coverPath) { (coverImage) in
-//
-//                   if coverImage != nil {
-//                       coverImageView.image = coverImage!
-//                       isCover = true
-//                   }
-//               }
-//           } else {
-//               coverImageView.image = UIImage(named: "aaaCoverLogo.png")
-//               isCover = false
-//           }
+           if coverPath != "" {
+               helper.imageFromData(pictureData: coverPath) { (coverImage) in
+
+                   if coverImage != nil {
+                       coverImageView.image = coverImage!
+                       isCover = true
+                   }
+               }
+           } else {
+               coverImageView.image = UIImage(named: "HomeCover.jpg")
+               isCover = false
+           }
             if avaPath != "" {                
                 helper.imageFromData(pictureData: avaPath) { (avatarImage) in
                     
@@ -416,7 +424,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         // #warning Incomplete implementation, return the number of rows
         
         if allPosts.count == 0 {
-            var emptyLabelOne = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
+            var emptyLabelOne = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: 25))
             emptyLabelOne.text = "Created posts will appear here!"
             emptyLabelOne.textAlignment = NSTextAlignment.center
             self.tableView.backgroundView = emptyLabelOne
@@ -652,7 +660,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             // assign selected image to CoverImageView
             self.coverImageView.image = image
             
-            let pictureData = image?.jpegData(compressionQuality: 0.5)!
+            let pictureData = image?.jpegData(compressionQuality: 0.4)!
             let cover = pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
 
 
@@ -672,8 +680,13 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
 //            }
             
 //            reference(.Team).document(FUser.currentUser()!.userTeamID).updateData([kTEAMLOGO : cover!, kTEAMCOLORONE : teamColorOne!, kTEAMCOLORTWO : teamColorTwo!, kTEAMCOLORTHREE : teamColorThree!])
-            self.loadUser()
+            updateCurrentUserInFirestore(withValues: [kCOVER : cover!]) { (success) in
+                //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changeProPic"), object: nil)
+                self.loadUser()
+            }
             Team.updateTeam(teamID: FUser.currentUser()!.userTeamID, withValues: [kTEAMLOGO : cover!])
+//            self.loadUser()
+            
             
             
         } else if imageViewTapped == "ava" {
