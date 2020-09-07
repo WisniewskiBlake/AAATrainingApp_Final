@@ -75,6 +75,19 @@ class LoginVC: UIViewController, UITextViewDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)        
     }
     
+    // make corners rounded for any views (objects)
+    func cornerRadius(for view: UIView) {
+        view.layer.cornerRadius = 5
+        view.layer.masksToBounds = true
+    }
+    
+    // add blank view to the left side of the TextField (it'll act as a blank gap)
+    func padding(for textField: UITextField) {
+        let blankView = UIView.init(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
+        textField.leftView = blankView
+        textField.leftViewMode = .always
+    }
+    
     
     // executed EVERYTIME when view did disappear from the screen
     override func viewDidDisappear(_ animated: Bool) {
@@ -113,6 +126,12 @@ class LoginVC: UIViewController, UITextViewDelegate {
 
     
     func configureUI() {
+        
+        padding(for: emailTextField)
+        padding(for: passwordTextField)
+        cornerRadius(for: emailTextField)
+        cornerRadius(for: passwordTextField)
+        
         //this will load the team and set the current user defaults to team color and logo
         self.helper.imageFromData(pictureData: team.teamLogo) { (teamImage) in
             

@@ -219,6 +219,7 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     // exec whenever the screen has been tapped
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         postTextView.resignFirstResponder()
+        urlLinkTextField.resignFirstResponder()
     }
     
     @IBAction func cancelButton_clicked(_ sender: Any) {
