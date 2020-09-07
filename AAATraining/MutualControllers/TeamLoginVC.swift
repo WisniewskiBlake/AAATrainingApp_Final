@@ -24,6 +24,8 @@ class TeamLoginVC: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        configure_continueBtn()
 
         registerTeamTapGestureRecognizer.addTarget(self, action: #selector(self.registerTeamClicked))
         registerTeamLabel.isUserInteractionEnabled = true
@@ -53,6 +55,12 @@ class TeamLoginVC: UIViewController, UITextFieldDelegate {
         
     }
     
+    func configure_continueBtn() {
+        continueButton.layer.cornerRadius = 5
+        continueButton.layer.masksToBounds = true
+        //loginButton.isEnabled = false
+    }
+    
     func loadTeam() {
         //this will load the team and set the current user defaults to team color and logo
         
@@ -70,6 +78,11 @@ class TeamLoginVC: UIViewController, UITextFieldDelegate {
             vc.modalPresentationStyle = .automatic
             self.present(vc, animated: true, completion: nil)
         }
+    }
+    
+    // exec whenever the screen has been tapped
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        teamCodeText.resignFirstResponder()
     }
 
 

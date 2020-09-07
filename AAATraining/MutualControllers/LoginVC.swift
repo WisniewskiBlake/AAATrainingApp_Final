@@ -11,7 +11,7 @@ import ProgressHUD
 import FirebaseFirestore
 import Firebase
 
-class LoginVC: UIViewController {
+class LoginVC: UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var logo: UIImageView!
     @IBOutlet weak var logo_height: NSLayoutConstraint!
