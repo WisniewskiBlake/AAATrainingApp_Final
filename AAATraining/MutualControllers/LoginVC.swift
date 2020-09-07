@@ -120,9 +120,12 @@ class LoginVC: UIViewController {
             if teamImage != nil {
                 logo.image = teamImage
                 //logoBackground.backgroundColor = UIColor(hexString: team.teamColorOne)
-                loginBtn.backgroundColor = UIColor(hexString: team.teamColorOne)
-                registerCoachBtn.setTitleColor(UIColor.darkGray, for: .normal)
-                forgotPassBtn.setTitleColor(UIColor.darkGray, for: .normal)
+//                loginBtn.backgroundColor = UIColor(hexString: team.teamColorOne)
+//                registerCoachBtn.setTitleColor(UIColor.darkGray, for: .normal)
+//                forgotPassBtn.setTitleColor(UIColor.darkGray, for: .normal)
+                loginBtn.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+                registerCoachBtn.setTitleColor(#colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), for: .normal)
+                forgotPassBtn.setTitleColor(#colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), for: .normal)
             }
         }
 
@@ -317,27 +320,28 @@ class LoginVC: UIViewController {
        rightLineView.layer.addSublayer(rightLine)
     }
     
-    func configure_registerButton(btn: UIButton) {
-        // creating constant named 'border' of type layer which acts as a border frame
-        let border = CALayer()
-        border.borderColor = UIColor(hexString: team.teamColorOne)?.cgColor
-        border.borderWidth = 2
-        border.frame = CGRect(x: 0, y: 0, width: btn.frame.width, height: btn.frame.height)
-        
-        // assign border to the obj (button)
-        btn.layer.addSublayer(border)
-        
-        
-        // rounded corner
-        btn.layer.cornerRadius = 5
-        btn.layer.masksToBounds = true
-        
-    }
+//    func configure_registerButton(btn: UIButton) {
+//        // creating constant named 'border' of type layer which acts as a border frame
+//        let border = CALayer()
+//        border.borderColor = UIColor(hexString: team.teamColorOne)?.cgColor
+//        border.borderWidth = 2
+//        border.frame = CGRect(x: 0, y: 0, width: btn.frame.width, height: btn.frame.height)
+//
+//        // assign border to the obj (button)
+//        btn.layer.addSublayer(border)
+//
+//
+//        // rounded corner
+//        btn.layer.cornerRadius = 5
+//        btn.layer.masksToBounds = true
+//
+//    }
     
     func configure_registerCoachButton(btn: UIButton) {
         // creating constant named 'border' of type layer which acts as a border frame
         let border = CALayer()
-        border.borderColor = UIColor(hexString: team.teamColorOne)?.cgColor
+//        border.borderColor = UIColor(hexString: team.teamColorOne)?.cgColor
+        border.borderColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
         border.borderWidth = 2
         border.frame = CGRect(x: 0, y: 0, width: btn.frame.width, height: btn.frame.height)
         
