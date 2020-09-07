@@ -213,6 +213,7 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         let pictureData = picturePath.jpegData(compressionQuality: 0.4)!
         pictureToUpload = pictureData.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+        logoContinueButton.isHidden = false
         displayMedia(picture: picturePath)
         
         picker.dismiss(animated: true, completion: nil)
@@ -265,7 +266,7 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         } else if textField == cityText || textField == stateText {
             
             // check fullname validation
-            if helper.isValid(name: cityText.text!) && helper.isValid(name: cityText.text!) {
+            if helper.isValid(name: cityText.text!) && helper.isValid(name: stateText.text!) {
                 locationContinueButton.isHidden = false
             }
                     
