@@ -83,10 +83,15 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate {
     }
     
     func configureButtons() {
-        emailContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
-        fullnameContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
-        passwordContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
+//        emailContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
+//        fullnameContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
+//        passwordContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
         //coachPasswordContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
+        
+        emailContinueButton.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+        fullnameContinueButton.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+        passwordContinueButton.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+        
     }
     
     // make corners rounded for any views (objects)

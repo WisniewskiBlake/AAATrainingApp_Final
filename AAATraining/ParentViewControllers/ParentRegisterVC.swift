@@ -86,10 +86,14 @@ class ParentRegisterVC: UIViewController, UITextFieldDelegate {
     }
     
     func configureButtons() {
-        emailContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
-        nameContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
-        phoneContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
-        finishButton.backgroundColor = UIColor(hexString: team.teamColorOne)
+//        emailContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
+//        nameContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
+//        phoneContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
+//        finishButton.backgroundColor = UIColor(hexString: team.teamColorOne)
+        emailContinueButton.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+        nameContinueButton.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+        phoneContinueButton.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+        finishButton.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
     }
     
     // make corners rounded for any views (objects)
