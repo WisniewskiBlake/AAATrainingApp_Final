@@ -340,11 +340,7 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if teamType != "" {
-            
-        }
-        
-        if oneSelected != true {
+        if teamType == "" {
             tableView.deselectRow(at: indexPath, animated: true)
             
             teamType = dataSource[indexPath.row]
@@ -369,11 +365,47 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
                 cell!.accessoryType = .checkmark
             }
             
-            locationContinueButton.isEnabled = cellTagArray.count == 1
-            oneSelected == true
-        } else {
             
+            oneSelected = true
+        } else if teamType == dataSource[indexPath.row] {
+            tableView.deselectRow(at: indexPath, animated: true)
+            
+            teamType = dataSource[indexPath.row]
+            
+            let cell = tableView.cellForRow(at: indexPath)
+            
+            var locationArray: [Int] = []
+            locationArray.append(indexPath.section)
+            locationArray.append(indexPath.row)
+            if cellTagArray.contains(locationArray) {
+                let index = cellTagArray.firstIndex(of: locationArray)!
+                cellTagArray.remove(at: index)
+                
+            } else {
+                cellTagArray.append(locationArray)
+                
+            }
+            
+            if cell!.accessoryType == .checkmark {
+                cell!.accessoryType = .none
+                } else {
+                cell!.accessoryType = .checkmark
+            }
+            
+            teamType = ""
+            oneSelected = false
+            
+        } else {
+            oneSelected = false
         }
+        
+        if oneSelected == true {
+            locationContinueButton.isEnabled = true
+        } else {
+            locationContinueButton.isEnabled = true
+        }
+        
+
         
         
 
