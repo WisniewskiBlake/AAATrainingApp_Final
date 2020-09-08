@@ -29,12 +29,13 @@ public class Team {
     var teamColorOne: String
     var teamColorTwo: String
     var teamColorThree: String
+    var teamType: String
 
     let teamDictionary: NSMutableDictionary
     
-    init(teamID: String, teamName: String, teamLogo: String, teamMemberIDs: [String], teamCity: String, teamState: String, teamColorOne: String, teamColorTwo: String, teamColorThree: String) {
+    init(teamID: String, teamName: String, teamLogo: String, teamMemberIDs: [String], teamCity: String, teamState: String, teamColorOne: String, teamColorTwo: String, teamColorThree: String, teamType: String) {
         
-        teamDictionary = NSMutableDictionary(objects: [teamID, teamName, teamLogo, teamMemberIDs, teamCity, teamState, teamColorOne, teamColorTwo, teamColorThree], forKeys: [kTEAMID as NSCopying, kTEAMNAME as NSCopying, kTEAMLOGO as NSCopying, kTEAMMEMBERIDS as NSCopying, kTEAMCITY as NSCopying, kTEAMSTATE as NSCopying, kTEAMCOLORONE as NSCopying, kTEAMCOLORTWO as NSCopying, kTEAMCOLORTHREE as NSCopying])
+        teamDictionary = NSMutableDictionary(objects: [teamID, teamName, teamLogo, teamMemberIDs, teamCity, teamState, teamColorOne, teamColorTwo, teamColorThree, teamType], forKeys: [kTEAMID as NSCopying, kTEAMNAME as NSCopying, kTEAMLOGO as NSCopying, kTEAMMEMBERIDS as NSCopying, kTEAMCITY as NSCopying, kTEAMSTATE as NSCopying, kTEAMCOLORONE as NSCopying, kTEAMCOLORTWO as NSCopying, kTEAMCOLORTHREE as NSCopying, kTEAMTYPE as NSCopying])
         
         self.teamID = teamID
         self.teamName = teamName
@@ -45,6 +46,7 @@ public class Team {
         self.teamColorOne = teamColorOne
         self.teamColorTwo = teamColorTwo
         self.teamColorThree = teamColorThree
+        self.teamType = teamType
         
     }
     
@@ -94,8 +96,13 @@ public class Team {
        } else {
            teamColorThree = ""
        }
+        if let tType = _dictionary[kTEAMTYPE] {
+            teamType = tType as! String
+        } else {
+            teamType = ""
+        }
         
-        teamDictionary = NSMutableDictionary(objects: [teamID, teamName, teamLogo, teamMemberIDs, teamCity, teamState, teamColorOne, teamColorTwo, teamColorThree], forKeys: [kTEAMID as NSCopying, kTEAMNAME as NSCopying, kTEAMLOGO as NSCopying, kTEAMMEMBERIDS as NSCopying, kTEAMCITY as NSCopying, kTEAMSTATE as NSCopying, kTEAMCOLORONE as NSCopying, kTEAMCOLORTWO as NSCopying, kTEAMCOLORTHREE as NSCopying])
+        teamDictionary = NSMutableDictionary(objects: [teamID, teamName, teamLogo, teamMemberIDs, teamCity, teamState, teamColorOne, teamColorTwo, teamColorThree, teamType], forKeys: [kTEAMID as NSCopying, kTEAMNAME as NSCopying, kTEAMLOGO as NSCopying, kTEAMMEMBERIDS as NSCopying, kTEAMCITY as NSCopying, kTEAMSTATE as NSCopying, kTEAMCOLORONE as NSCopying, kTEAMCOLORTWO as NSCopying, kTEAMCOLORTHREE as NSCopying, kTEAMTYPE as NSCopying])
        
     }
     
@@ -115,7 +122,7 @@ public class Team {
                 
                 
             } else {
-                let team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "")
+                let team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
                 
                 completion(team)
             }

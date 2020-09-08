@@ -25,7 +25,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        navigationController?.navigationBar.tintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         
         
         
@@ -57,6 +57,31 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     //    self.tableView.reloadData()
         tableView.tableFooterView = UIView()
     }
+    
+    //MARK: Custom tableViewHeader
+        
+        func setTableViewHeader() {
+
+            let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 30))
+    
+            let buttonView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 25))
+            let groupButton = UIButton(frame: CGRect(x: tableView.frame.width - 40, y: 0, width: 30, height: 20))
+            groupButton.addTarget(self, action: #selector(self.createNewGroupButtonPressed), for: .touchUpInside)
+            //groupButton.setTitle("New Group", for: .normal)
+            groupButton.setImage(UIImage(named: "create"), for: .normal)
+            //let buttonColor = #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)
+            //groupButton.setTitleColor(buttonColor, for: .normal)
+    
+    
+            let lineView = UIView(frame: CGRect(x: 0, y: headerView.frame.height - 1, width: tableView.frame.width, height: 1))
+            lineView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+    
+            buttonView.addSubview(groupButton)
+            headerView.addSubview(buttonView)
+            headerView.addSubview(lineView)
+    
+            tableView.tableHeaderView = headerView
+        }
     
     override func viewWillDisappear(_ animated: Bool) {
         recentListener.remove()
@@ -307,30 +332,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
 //        self.navigationController?.pushViewController(profileVC, animated: true)
 //    }
     
-     //MARK: Custom tableViewHeader
-        
-        func setTableViewHeader() {
-
-            let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 30))
-    
-            let buttonView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 25))
-            let groupButton = UIButton(frame: CGRect(x: tableView.frame.width - 40, y: 0, width: 30, height: 20))
-            groupButton.addTarget(self, action: #selector(self.createNewGroupButtonPressed), for: .touchUpInside)
-            //groupButton.setTitle("New Group", for: .normal)
-            groupButton.setImage(UIImage(named: "create"), for: .normal)
-            //let buttonColor = #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)
-            //groupButton.setTitleColor(buttonColor, for: .normal)
-    
-    
-            let lineView = UIView(frame: CGRect(x: 0, y: headerView.frame.height - 1, width: tableView.frame.width, height: 1))
-            lineView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-    
-            buttonView.addSubview(groupButton)
-            headerView.addSubview(buttonView)
-            headerView.addSubview(lineView)
-    
-            tableView.tableHeaderView = headerView
-        }
+     
     
 
 }

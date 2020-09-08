@@ -52,8 +52,17 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         
         tableView.separatorColor = UIColor.clear
         
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+//        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+//        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+//
+//        navigationController?.navigationBar.prefersLargeTitles = true
+//        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+//        let attrs = [
+//            NSAttributedString.Key.foregroundColor: UIColor.white,
+//            NSAttributedString.Key.font: UIFont(name: "PROGRESSPERSONALUSE", size: 26)!
+//        ]
+//
+//        navigationController?.navigationBar.largeTitleTextAttributes = attrs
         
         self.setLeftAlignedNavigationItemTitle(text: "Team Feed", color: .white, margin: 12)
         
