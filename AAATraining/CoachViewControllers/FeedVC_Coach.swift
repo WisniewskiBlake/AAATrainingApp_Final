@@ -24,6 +24,12 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
     var allPosts: [Post] = []
     var recentListener: ListenerRegistration!
     
+    @IBOutlet weak var titleView: UIView!
+    @IBOutlet weak var teamImageView: UIImageView!
+    @IBOutlet weak var teamNameLabel: UILabel!
+    @IBOutlet weak var teamFeedTextLabel: UILabel!
+    
+    
     var avas = [UIImage]()
     var pictures = [UIImage]()
     var postDatesArray: [String] = []
@@ -31,6 +37,8 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
     var skip = 0
     var limit = 25
     var isLoading = false
+    
+    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
  
     let helper = Helper()
     let currentDateFormater = Helper().dateFormatter()
@@ -50,7 +58,6 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadPostsAfterDelete), name: NSNotification.Name(rawValue: "deletePost"), object: nil)
         
-        tableView.separatorColor = UIColor.clear
         
 //        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
 //        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
@@ -78,6 +85,48 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         setBadges(controller: self.tabBarController!, accountType: "coach")
         setCalendarBadges(controller: self.tabBarController!, accountType: "coach")
         
+        tableView.separatorColor = UIColor.clear
+        
+        titleView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        titleView.alpha = 1.0
+        
+        teamImageView.layer.cornerRadius = teamImageView.frame.width / 2
+        teamImageView.clipsToBounds = true
+        
+        teamFeedTextLabel.text = "Team Feed"
+        teamFeedTextLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 27)!
+        
+        team.getTeam(teamID: FUser.currentUser()!.userTeamID) { (teamReturned) in
+            if teamReturned.teamID != "" {
+                self.team = teamReturned
+                if self.team.teamLogo != "" {
+                    self.helper.imageFromData(pictureData: self.team.teamLogo) { (coverImage) in
+
+                        if coverImage != nil {
+                            self.teamImageView.image = coverImage
+                        }
+                    }
+                } else {
+                    self.teamImageView.image = UIImage(named: "HomeCover.jpg")
+                    
+                }
+                self.teamNameLabel.text = self.team.teamName
+            } else {
+                self.teamImageView.image = UIImage(named: "HomeCover.jpg")
+            }
+        }
+        
+        
+        
+        
+        teamNameLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 27)!
+        
+        
+        
+        
+        
+        self.navigationController?.view.addSubview(self.titleView)
+        //self.titleView.frame.size.height = (self.navigationController?.view.bounds.height)!
         
 
         

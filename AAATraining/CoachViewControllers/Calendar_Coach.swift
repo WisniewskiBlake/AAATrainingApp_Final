@@ -14,9 +14,10 @@ import ProgressHUD
 
 class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance {
     
-    @IBOutlet weak var newEventColorLabel: UILabel!
-    @IBOutlet weak var eventColorLabel: UILabel!
+//    @IBOutlet weak var newEventColorLabel: UILabel!
+//    @IBOutlet weak var eventColorLabel: UILabel!
     @IBOutlet var calendar: FSCalendar!
+    @IBOutlet weak var cooperWaxLogo: UIImageView!
     
     var allEvents: [Event] = []
     var recentListener: ListenerRegistration!
@@ -26,6 +27,8 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     var eventsToCopy: [Event] = []
     var isNewObserver: Bool = true
     var eventToCopyUserID: String = ""
+    
+
     
 
     override func viewDidLoad() {
@@ -45,11 +48,11 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         
         loadEvents()
         
-        eventColorLabel.layer.cornerRadius = eventColorLabel.frame.width / 2
-        eventColorLabel.clipsToBounds = true
-        
-        newEventColorLabel.layer.cornerRadius = newEventColorLabel.frame.width / 2
-        newEventColorLabel.clipsToBounds = true
+//        eventColorLabel.layer.cornerRadius = eventColorLabel.frame.width / 2
+//        eventColorLabel.clipsToBounds = true
+//
+//        newEventColorLabel.layer.cornerRadius = newEventColorLabel.frame.width / 2
+//        newEventColorLabel.clipsToBounds = true
         
         self.setLeftAlignedNavigationItemTitle(text: "Calendar", color: .white, margin: 12)
         
@@ -60,11 +63,30 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         super.viewWillAppear(animated)
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        loadTeamType()
         
        loadEvents()
     }
     override func viewWillDisappear(_ animated: Bool) {
         recentListener.remove()
+    }
+    
+    func loadTeamType() {
+        var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
+        
+        team.getTeam(teamID: FUser.currentUser()!.userTeamID) { (teamReturned) in
+            if teamReturned.teamID != "" {
+                team = teamReturned
+                if team.teamType == "Hockey" {
+                    self.cooperWaxLogo.isHidden = false
+                } else {
+                    self.cooperWaxLogo.isHidden = true
+                }
+                    
+            } else {
+                
+            }
+        }
     }
     
     @objc func loadEvents() {
