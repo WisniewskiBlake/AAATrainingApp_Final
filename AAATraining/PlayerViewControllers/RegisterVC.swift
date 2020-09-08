@@ -44,7 +44,7 @@ class RegisterVC: UIViewController, UITextFieldDelegate {
     var datePicker: UIDatePicker!
     var cover = UIImage(named: "aaaCoverLogo.png")
     
-    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "")
+    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
     
     var accountType = 1
     

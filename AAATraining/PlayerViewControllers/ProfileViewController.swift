@@ -243,6 +243,28 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
    @objc func loadUser() {
         let helper = Helper()
         var query: Query!
+        var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
+        
+        team.getTeam(teamID: FUser.currentUser()!.userTeamID) { (teamReturned) in
+            if teamReturned.teamID != "" {
+                team = teamReturned
+                if team.teamLogo != "" {
+                    helper.imageFromData(pictureData: team.teamLogo) { (coverImage) in
+
+                        if coverImage != nil {
+                            self.coverImageView.image = coverImage!
+                            self.isCover = true
+                        }
+                    }
+                } else {
+                    self.coverImageView.image = UIImage(named: "HomeCover.jpg")
+                    self.isCover = false
+                }
+            } else {
+                self.coverImageView.image = UIImage(named: "HomeCover.jpg")
+                self.isCover = false
+            }
+        }
     
         query = reference(.User).whereField(kOBJECTID, isEqualTo: FUser.currentId())
     
@@ -265,15 +287,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
                     let userDoc = userDoc.data() as NSDictionary
                     let userCurr = FUser(_dictionary: userDoc)
                     self.user = userCurr
-                    
-                    
-                    helper.imageFromData(pictureData: userCurr.cover) { (coverImage) in
-        
-                        if coverImage != nil {
-                            self.coverImageView.image = coverImage!
-                            self.isCover = true
-                        }
-                    }
+
                     helper.imageFromData(pictureData: userCurr.ava) { (avatarImage) in
         
                        if avatarImage != nil {

@@ -32,7 +32,7 @@ class ParentRegisterVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var footerView: UIView!
     
-    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "")
+    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
     
     var email: String!
     var password: String!

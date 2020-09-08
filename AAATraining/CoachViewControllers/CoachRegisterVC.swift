@@ -36,7 +36,7 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate {
    
     var cover = UIImage(named: "aaaCoverLogo.png")
     
-    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "")
+    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
 
     override func viewDidLoad() {
         super.viewDidLoad()
