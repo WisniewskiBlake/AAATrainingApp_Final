@@ -366,7 +366,7 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
             }
             
             
-            oneSelected = true
+            locationContinueButton.isHidden = false
         } else if teamType == dataSource[indexPath.row] {
             tableView.deselectRow(at: indexPath, animated: true)
             
@@ -393,17 +393,13 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
             }
             
             teamType = ""
-            oneSelected = false
+            locationContinueButton.isHidden = true
             
         } else {
             oneSelected = false
         }
         
-        if oneSelected == true {
-            locationContinueButton.isEnabled = true
-        } else {
-            locationContinueButton.isEnabled = true
-        }
+ 
         
 
         
