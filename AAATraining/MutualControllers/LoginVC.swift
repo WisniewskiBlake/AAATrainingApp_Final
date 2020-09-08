@@ -47,7 +47,7 @@ class LoginVC: UIViewController, UITextViewDelegate {
     let helper = Helper()
     
     var teamID: String = ""
-    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "")
+    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
     
     //
 //    var loginRef: DatabaseReference!

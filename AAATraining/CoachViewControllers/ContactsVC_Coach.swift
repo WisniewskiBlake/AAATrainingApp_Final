@@ -44,22 +44,6 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     
     let searchController = UISearchController(searchResultsController: nil)
     
-    @IBAction func filterSegmentValueChanged(_ sender: UISegmentedControl) {
-        switch sender.selectedSegmentIndex {
-        case 0:
-            loadUsers(filter: "")
-        case 1:
-            loadUsers(filter: "player")
-        case 2:
-            loadUsers(filter: "coach")
-        case 3:
-            loadUsers(filter: "parent")
-        default:
-            return
-        }
-    }
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -89,6 +73,21 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
         tableView.tableFooterView = UIView()
         
         loadUsers(filter: "")
+    }
+    
+    @IBAction func filterSegmentValueChanged(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            loadUsers(filter: "")
+        case 1:
+            loadUsers(filter: "player")
+        case 2:
+            loadUsers(filter: "coach")
+        case 3:
+            loadUsers(filter: "parent")
+        default:
+            return
+        }
     }
     
     @IBAction func nextButtonPressed(_ sender: Any) {

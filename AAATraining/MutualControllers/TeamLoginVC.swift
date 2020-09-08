@@ -16,9 +16,8 @@ class TeamLoginVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var teamCodeText: UITextField!
     @IBOutlet weak var registerTeamLabel: UILabel!
     @IBOutlet weak var continueButton: UIButton!
-    let helper = Helper()
-    
-    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "")
+    let helper = Helper()   
+    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
     
     let registerTeamTapGestureRecognizer = UITapGestureRecognizer()
 

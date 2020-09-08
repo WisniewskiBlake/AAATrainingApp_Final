@@ -12,7 +12,7 @@ class TeamTypeSelectionCellClass: UITableViewCell {
     
 }
 
-class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var teamNameText: UITextField!
     @IBOutlet weak var teamNameContinueButton: UIButton!
@@ -37,14 +37,13 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var passwordView_width: NSLayoutConstraint!
     @IBOutlet weak var coachPassword_width: NSLayoutConstraint!
     @IBOutlet weak var contentView_width: NSLayoutConstraint!
+
     
-    @IBOutlet weak var teamTypeButton: UIButton!
-    let transparentView = UIView()
-    let tableView = UITableView()
-    var selectedButton = UIButton()
-    var dataSource = [String]()
+    var dataSource = ["Archery", "Basketball", "Baseball", "Bowling", "Curling", "Cricket", "Cycling", "Diving", "Football", "Golf", "Gymnastics", "Hockey", "Kayaking", "Lacrosse", "MMA", "Martial Arts", "Rowing", "Rugby", "Running", "Skateboarding", "Skiing", "Snowboarding", "Soccer", "Softball", "Surfing", "Swimming", "Table Tennis", "Tennis", "Track", "Triathlon", "Volleyball", "Wakeboarding", "Weight Loss", "Wrestling", "Yoga", "Other"]
     var cellText = "Select Type..."
     var teamType = ""
+    var oneSelected = false
+    var cellTagArray: [[Int]] = []
     
     
     
@@ -109,20 +108,12 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         codeLabel.text = teamLoginCode
         
-        cornerRadius(for: teamTypeButton)
         
-        tableView.delegate = self
-        tableView.dataSource = self
         
-        tableView.register(TeamTypeSelectionCellClass.self, forCellReuseIdentifier: "TypeCell")
+        //tableView.register(TeamTypeSelectionCellClass.self, forCellReuseIdentifier: "TypeCell")
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-               super.viewWillAppear(animated)
 
-            teamTypeButton.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
-               
-    }
    
     
     @IBAction func teamNameContinueClicked(_ sender: Any) {
@@ -130,14 +121,11 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         scrollView.setContentOffset(position, animated: true)
         
         // show keyboard of next TextField
-//        if cityText.text!.isEmpty {
-//            cityText.becomeFirstResponder()
-//        } else if stateText.text!.isEmpty {
-//            stateText.becomeFirstResponder()
-//        } else if cityText.text!.isEmpty == false && stateText.text!.isEmpty == false {
-//            cityText.resignFirstResponder()
-//            stateText.resignFirstResponder()
-//        }
+        if teamNameText.text!.isEmpty {
+            teamNameText.becomeFirstResponder()
+        } else if teamNameText.text!.isEmpty == false {
+            teamNameText.resignFirstResponder()
+        }
     }
     
     
@@ -323,56 +311,7 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         return String((0..<length).map{ _ in letters.randomElement()! })
     }
     
-    func checkButtonText() {
-        if cellText != "Select Type..." {
-            locationContinueButton.isEnabled = true
-            teamType = teamTypeButton.titleLabel!.text!
-        }
-    }
-    
-    @IBAction func teamTypeButtonPressed(_ sender: Any) {
-        dataSource = ["Player", "Parent", "Coach"]
-        selectedButton = teamTypeButton
-        addTransparentView(frames: teamTypeButton.frame)
-    }
-    
-    func addTransparentView(frames: CGRect) {
-        let keyWindow = UIApplication.shared.connectedScenes
-        .filter({$0.activationState == .foregroundActive})
-        .map({$0 as? UIWindowScene})
-        .compactMap({$0})
-        .first?.windows
-        .filter({$0.isKeyWindow}).first
-        
-        transparentView.frame = keyWindow?.frame ?? self.view.frame
-        self.view.addSubview(transparentView)
-        
-        tableView.frame = CGRect(x: frames.origin.x, y: frames.origin.y + frames.height, width: frames.width, height: 0)
-        self.view.addSubview(tableView)
-        tableView.layer.cornerRadius = 5
-        
-        transparentView.backgroundColor = UIColor.black.withAlphaComponent(0.9)
-        tableView.reloadData()
-        let tapgesture = UITapGestureRecognizer(target: self, action: #selector(removeTransparentView))
-        transparentView.addGestureRecognizer(tapgesture)
-        transparentView.alpha = 0
-        UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseInOut, animations: {
-            self.transparentView.alpha = 0.5
-            self.tableView.frame = CGRect(x: frames.origin.x, y: frames.origin.y + frames.height + 5, width: frames.width, height: CGFloat(self.dataSource.count * 50))
-        }, completion: nil)
-    }
-    
-    @objc func removeTransparentView() {
-        let frames = selectedButton.frame
-        UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseInOut, animations: {
-            self.transparentView.alpha = 0
-            self.tableView.frame = CGRect(x: frames.origin.x, y: frames.origin.y + frames.height, width: frames.width, height: 0)
-        }, completion: nil)
-    }
-    
-}
-extension TeamRegisterVC: UITableViewDelegate, UITableViewDataSource {
-    
+
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource.count
@@ -380,8 +319,18 @@ extension TeamRegisterVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "TypeCell", for: indexPath)
         cell.textLabel?.text = dataSource[indexPath.row]
+        
+        if cellTagArray.contains([indexPath.section, indexPath.row]) {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
+        
+        cell.tag = indexPath.row
+        
         return cell
     }
     
@@ -390,11 +339,49 @@ extension TeamRegisterVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedButton.setTitle(dataSource[indexPath.row], for: .normal)
-        removeTransparentView()
-        cellText = dataSource[indexPath.row]
-        checkButtonText()
+        
+        if teamType != "" {
+            
+        }
+        
+        if oneSelected != true {
+            tableView.deselectRow(at: indexPath, animated: true)
+            
+            teamType = dataSource[indexPath.row]
+            
+            let cell = tableView.cellForRow(at: indexPath)
+            
+            var locationArray: [Int] = []
+            locationArray.append(indexPath.section)
+            locationArray.append(indexPath.row)
+            if cellTagArray.contains(locationArray) {
+                let index = cellTagArray.firstIndex(of: locationArray)!
+                cellTagArray.remove(at: index)
+                
+            } else {
+                cellTagArray.append(locationArray)
+                
+            }
+            
+            if cell!.accessoryType == .checkmark {
+                cell!.accessoryType = .none
+                } else {
+                cell!.accessoryType = .checkmark
+            }
+            
+            locationContinueButton.isEnabled = cellTagArray.count == 1
+            oneSelected == true
+        } else {
+            
+        }
+        
+        
+
     }
+    
+
+    
     
     
 }
+
