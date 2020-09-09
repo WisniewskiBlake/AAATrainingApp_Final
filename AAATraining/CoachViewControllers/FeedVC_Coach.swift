@@ -110,7 +110,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         getMembers()
         configureUI()
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.9133789539, green: 0.9214370847, blue: 0.9337923527, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         tableView.tableFooterView = view
         
         //loadPosts()
@@ -142,7 +142,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         teamImageView.clipsToBounds = true
         
         teamFeedTextLabel.text = "Team Feed"
-        teamFeedTextLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 27)!
+        teamFeedTextLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 28)!
         teamNameLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 17)!
         
         team.getTeam(teamID: FUser.currentUser()!.userTeamID) { (teamReturned) in

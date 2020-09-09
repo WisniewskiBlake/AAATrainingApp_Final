@@ -20,53 +20,54 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     
     let searchController = UISearchController(searchResultsController: nil)
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        tableView.tableFooterView = view
-        
-        configureUI()
-        
-        //setTableViewHeader()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        loadRecentChats()
-        let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        tableView.tableFooterView = view
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        fillContentGap:
-        if let tableFooterView = tableView.tableFooterView {
-            /// The expected height for the footer under autolayout.
-            let footerHeight = tableFooterView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-            /// The amount of empty space to fill with the footer view.
-            let gapHeight: CGFloat = tableView.bounds.height - tableView.adjustedContentInset.top - tableView.adjustedContentInset.bottom - tableView.contentSize.height
-            // Ensure there is space to be filled
-            guard gapHeight.rounded() > 0 else { break fillContentGap }
-            // Fill the gap
-            tableFooterView.frame.size.height = gapHeight + footerHeight
-        }
-    }
+
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
-    func configureUI () {
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+
         
+        
+        self.tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        //loadRecentChats()
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        tableView.tableFooterView = view
+        self.tableView.tableFooterView = view
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        loadRecentChats()
+        configureUI()
+
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        fillContentGap:
+        if let tableFooterView = self.tableView.tableFooterView {
+            /// The expected height for the footer under autolayout.
+            let footerHeight = tableFooterView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+            /// The amount of empty space to fill with the footer view.
+            let gapHeight: CGFloat = self.tableView.bounds.height - self.tableView.adjustedContentInset.top - self.tableView.adjustedContentInset.bottom - self.tableView.contentSize.height
+            // Ensure there is space to be filled
+            guard gapHeight.rounded() > 0 else { break fillContentGap }
+            // Fill the gap
+            tableFooterView.frame.size.height = gapHeight + footerHeight
+        }
+        
+    }
+    
+    
+    
+    func configureUI () {
         
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
@@ -86,32 +87,10 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         searchController.obscuresBackgroundDuringPresentation = false
         
         definesPresentationContext = true
-    }
-    
-    //MARK: Custom tableViewHeader
         
-        func setTableViewHeader() {
+        self.tableView.reloadData()
+    }
 
-            let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 30))
-    
-            let buttonView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 25))
-            let groupButton = UIButton(frame: CGRect(x: tableView.frame.width - 40, y: 0, width: 30, height: 20))
-            groupButton.addTarget(self, action: #selector(self.createNewGroupButtonPressed), for: .touchUpInside)
-            //groupButton.setTitle("New Group", for: .normal)
-            groupButton.setImage(UIImage(named: "create"), for: .normal)
-            //let buttonColor = #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)
-            //groupButton.setTitleColor(buttonColor, for: .normal)
-    
-    
-            let lineView = UIView(frame: CGRect(x: 0, y: headerView.frame.height - 1, width: tableView.frame.width, height: 1))
-            lineView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-    
-            buttonView.addSubview(groupButton)
-            headerView.addSubview(buttonView)
-            headerView.addSubview(lineView)
-    
-            tableView.tableHeaderView = headerView
-        }
     
     override func viewWillDisappear(_ animated: Bool) {
         recentListener.remove()
@@ -145,7 +124,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
                 
                 self.tableView.reloadData()
             }
-
+            self.tableView.reloadData()
         })
 
     }
@@ -159,21 +138,23 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+        
+        
         if searchController.isActive && searchController.searchBar.text != "" {
             return filteredChats.count
         } else {
-            if recentChats.count == 0 {
-                var emptyLabelOne = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
-                emptyLabelOne.text = "Created chats will appear here!"
-                emptyLabelOne.textAlignment = NSTextAlignment.center
-                self.tableView.backgroundView = emptyLabelOne
-                self.tableView.backgroundView?.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-                self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-                return 0
-            } else {
-                self.tableView.backgroundView = nil
+//            if recentChats.count == 0 {
+//                var emptyLabelOne = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
+//                emptyLabelOne.text = "Created chats will appear here!"
+//                emptyLabelOne.textAlignment = NSTextAlignment.center
+//                self.tableView.backgroundView = emptyLabelOne
+//                self.tableView.backgroundView?.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+//                self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+//                return 0
+//            } else {
+//                self.tableView.backgroundView = nil
                 return recentChats.count
-            }
+ //           }
         }
 
     }
@@ -291,31 +272,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     
        
        func didTapAvatarImage(indexPath: IndexPath) {
-//           var recentChat: NSDictionary!
-//
-//           if searchController.isActive && searchController.searchBar.text != "" {
-//               recentChat = filteredChats[indexPath.row]
-//           } else {
-//               recentChat = recentChats[indexPath.row]
-//           }
-//
-//           if recentChat[kTYPE] as! String == kPRIVATE {
-//
-//               reference(.User).document(recentChat[kWITHUSERUSERID] as! String).getDocument { (snapshot, error) in
-//
-//                   guard let snapshot = snapshot else { return }
-//
-//                   if snapshot.exists {
-//
-//                       let userDictionary = snapshot.data() as! NSDictionary
-//
-//                       let tempUser = FUser(_dictionary: userDictionary)
-//
-//                       self.showUserProfile(user: tempUser)
-//                   }
-//
-//               }
-//           }
+
        }
        
        //MARK: Search controller functions
@@ -355,13 +312,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
-//    func showUserProfile(user: FUser) {
-//
-//        let profileVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "profileView") as! ProfileViewTableViewController
-//
-//        profileVC.user = user
-//        self.navigationController?.pushViewController(profileVC, animated: true)
-//    }
+
     
      
     
