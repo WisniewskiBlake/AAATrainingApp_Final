@@ -592,9 +592,11 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
         let postID = post.postID
         
-        reference(.Post).document(postID ).delete()
+        reference(.Post).document(postID).delete()
                 
         self.allPosts.remove(at: row)
+        
+        
         
         // remove the cell itself from the tableView
         let indexPath = IndexPath(row: row, section: 0)

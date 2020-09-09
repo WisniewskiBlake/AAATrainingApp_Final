@@ -47,7 +47,10 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         super.viewDidLoad()
         
         configureUI()
+
         
+       
+        //self.tableView.tableFooterView!.backgroundColor = #colorLiteral(red: 0.9133789539, green: 0.9214370847, blue: 0.9337923527, alpha: 1)
         // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "createPost"), object: nil)
         
@@ -56,27 +59,54 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(loadAvaAfterUpload), name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
         // add observers for notifications
         
-        NotificationCenter.default.addObserver(self, selector: #selector(loadPostsAfterDelete), name: NSNotification.Name(rawValue: "deletePost"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "deletePost"), object: nil)
         
         
-//        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-//        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
 //
 //        navigationController?.navigationBar.prefersLargeTitles = true
 //        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-//        let attrs = [
-//            NSAttributedString.Key.foregroundColor: UIColor.white,
-//            NSAttributedString.Key.font: UIFont(name: "PROGRESSPERSONALUSE", size: 26)!
-//        ]
-//
-//        navigationController?.navigationBar.largeTitleTextAttributes = attrs
-        
-        self.setLeftAlignedNavigationItemTitle(text: "Team Feed", color: .white, margin: 12)
         
         // run function
         loadPosts()
         
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        fillContentGap:
+        if let tableFooterView = tableView.tableFooterView {
+            /// The expected height for the footer under autolayout.
+            let footerHeight = tableFooterView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+            /// The amount of empty space to fill with the footer view.
+            let gapHeight: CGFloat = tableView.bounds.height - tableView.adjustedContentInset.top - tableView.adjustedContentInset.bottom - tableView.contentSize.height
+            // Ensure there is space to be filled
+            guard gapHeight.rounded() > 0 else { break fillContentGap }
+            // Fill the gap
+            tableFooterView.frame.size.height = gapHeight + footerHeight
+        }
+    }
+    
+    
+    // pre-load func
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureUI()
+        let view = UIView()
+        view.backgroundColor = #colorLiteral(red: 0.9133789539, green: 0.9214370847, blue: 0.9337923527, alpha: 1)
+        //view.backgroundColor?.withAlphaComponent(CGFloat(1.0))
+        tableView.tableFooterView = view
+        
+        loadPosts()
+
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        recentListener.remove()
+    }
+    
+    
     
     func configureUI() {
         tableView.rowHeight = UITableView.automaticDimension
@@ -85,6 +115,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         setBadges(controller: self.tabBarController!, accountType: "coach")
         setCalendarBadges(controller: self.tabBarController!, accountType: "coach")
         
+        tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         tableView.separatorColor = UIColor.clear
         
         titleView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
@@ -94,7 +125,8 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         teamImageView.clipsToBounds = true
         
         teamFeedTextLabel.text = "Team Feed"
-        teamFeedTextLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 27)!
+        teamFeedTextLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 25)!
+        teamNameLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 16)!
         
         team.getTeam(teamID: FUser.currentUser()!.userTeamID) { (teamReturned) in
             if teamReturned.teamID != "" {
@@ -119,13 +151,14 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         
         
         
-        teamNameLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 27)!
+        
         
         
         
         
         
         self.navigationController?.view.addSubview(self.titleView)
+        self.navigationController?.navigationBar.layer.zPosition = 0;
         //self.titleView.frame.size.height = (self.navigationController?.view.bounds.height)!
         
 
@@ -191,19 +224,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
     
 
     
-    // pre-load func
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        tableView.tableFooterView = UIView()
-        //loadPosts()
-
-    }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        recentListener.remove()
-    }
     
     
     // MARK: - Load Posts
@@ -211,7 +232,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         ProgressHUD.show()
         
         //DispatchQueue.main.async {
-        self.recentListener = reference(.Post).whereField(kPOSTTEAMID, isEqualTo: FUser.currentUser()?.userTeamID as Any).order(by: kPOSTDATE, descending: true).limit(to: 100).addSnapshotListener({ (snapshot, error) in
+        recentListener = reference(.Post).whereField(kPOSTTEAMID, isEqualTo: FUser.currentUser()?.userTeamID as Any).order(by: kPOSTDATE, descending: true).limit(to: 100).addSnapshotListener({ (snapshot, error) in
                    
             self.allPosts = []
             self.avas = []
@@ -421,21 +442,17 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         
     }
     
-    
-    // MARK: - Scroll Did Scroll
-    // executed always whenever tableView is scrolling
-//    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//
-//        // load more posts when the scroll is about to reach the bottom AND currently is not loading (posts)
-//        let a = tableView.contentOffset.y - tableView.contentSize.height + 60
-//        let b = -tableView.frame.height
-//
-//        if a > b && isLoading == false {
-//            loadMore()
-//
-//        }
-//
+//    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 500))
+//        footerView.backgroundColor = #colorLiteral(red: 0.9133789539, green: 0.9214370847, blue: 0.9337923527, alpha: 1)
+//        return footerView
 //    }
+//    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//        return 500
+//    }
+    
+
+
 
     
     
@@ -450,3 +467,4 @@ extension String {
         return nil
     }
 }
+
