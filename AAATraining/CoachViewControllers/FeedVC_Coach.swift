@@ -19,7 +19,7 @@ import AVFoundation
 import AVKit
 import JSQMessagesViewController
 
-class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
+class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
         
     var allPosts: [Post] = []
     var allUsers: [FUser] = []
@@ -50,11 +50,12 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
     
     let moreTapGestureRecognizer = UITapGestureRecognizer()
     let postTapGestureRecognizer = UITapGestureRecognizer()
+    let teamImageTapGestureRecognizer = UITapGestureRecognizer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureUI()
+        getMembers()
 
         NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "createPost"), object: nil)
         
@@ -73,12 +74,16 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         postImageView.isUserInteractionEnabled = true
         postImageView.addGestureRecognizer(postTapGestureRecognizer)
         
+        teamImageTapGestureRecognizer.addTarget(self, action: #selector(self.teamImageViewClicked))
+        teamImageView.isUserInteractionEnabled = true
+        teamImageView.addGestureRecognizer(teamImageTapGestureRecognizer)
+        
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
 
         
         // run functions
-        getMembers()
+        
         loadPosts()
         
     }
@@ -102,13 +107,13 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        getMembers()
         configureUI()
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 0.9133789539, green: 0.9214370847, blue: 0.9337923527, alpha: 1)
-        //view.backgroundColor?.withAlphaComponent(CGFloat(1.0))
         tableView.tableFooterView = view
         
-        loadPosts()
+        //loadPosts()
 
     }
     
@@ -131,14 +136,14 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         titleView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         titleView.alpha = 1.0
         
-        membersTextLabel.text = String(allUsers.count) + " Team Members"
+        
         
         teamImageView.layer.cornerRadius = teamImageView.frame.width / 2
         teamImageView.clipsToBounds = true
         
         teamFeedTextLabel.text = "Team Feed"
-        teamFeedTextLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 25)!
-        teamNameLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 16)!
+        teamFeedTextLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 27)!
+        teamNameLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 17)!
         
         team.getTeam(teamID: FUser.currentUser()!.userTeamID) { (teamReturned) in
             if teamReturned.teamID != "" {
@@ -169,6 +174,10 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         tableView.refreshControl = refreshControl
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     func getMembers() {
         ProgressHUD.show()
         
@@ -181,8 +190,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                 print(error!.localizedDescription)
                 ProgressHUD.dismiss()
              self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
-                 self.isLoading = false
-                self.tableView.reloadData()
+                 
                 return
             }
             
@@ -203,10 +211,12 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                     self.allUsers.append(fUser)
                     
                 }
+                self.membersTextLabel.text = String(self.allUsers.count) + " Team Members"
 
             }
             ProgressHUD.dismiss()
         }
+        
     }
     
     @objc func handleRefresh() {
@@ -222,12 +232,67 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
             self.present(postNav, animated: true, completion: nil)
     }
     
+    @objc func teamImageViewClicked() {
+        showActionSheet()
+    }
+    
     @objc func moreImageViewClicked() {
-        let postNav = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "postNav") as! UINavigationController
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-            self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-
-            self.present(postNav, animated: true, completion: nil)
+        let copyCode = UIAlertAction(title: "Copy Team Code: " + FUser.currentUser()!.userTeamID, style: .default, handler: { (action) in
+                        
+            let pasteboard = UIPasteboard.general
+            pasteboard.string = FUser.currentUser()!.userTeamID
+            self.helper.showAlert(title: "Copied!", message: "Team code copied to clipboard.", in: self)
+                
+            
+        })
+        
+        let colorPicker = UIAlertAction(title: "Choose Color Theme", style: .default, handler: { (action) in
+                        
+            
+            let navigationColorPicker = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ColorPickerNav") as! UINavigationController
+             //let colorPickerVC = navigationColorPicker.viewControllers.first as! ColorPickerVC
+            
+            
+            self.present(navigationColorPicker, animated: true, completion: nil)
+                
+            
+        })
+        
+        let changeLogo = UIAlertAction(title: "Change Team Logo", style: .default, handler: { (action) in
+                        
+            self.teamImageViewClicked()
+                
+            
+        })
+        
+        // creating buttons for action sheet
+        let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
+                        
+            FUser.logOutCurrentUser { (success) in
+                
+                if success {
+                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamLoginVC") as? TeamLoginVC
+                    {
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true, completion: nil)
+                    }
+                }
+            }
+        })
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        // add buttons to action sheet
+        sheet.addAction(copyCode)
+        sheet.addAction(colorPicker)
+        sheet.addAction(changeLogo)
+        sheet.addAction(logout)
+        sheet.addAction(cancel)
+        
+        // show action sheet
+        present(sheet, animated: true, completion: nil)
     }
     
     func didTapMediaImage(indexPath: IndexPath) {
@@ -331,6 +396,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                        self.tableView.reloadData()
                     
                    }
+            self.tableView.reloadData()
                 ProgressHUD.dismiss()
                })
         //}
@@ -396,15 +462,12 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         
         var post: Post
         
-        let cellPic = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
         
-//        let bottomBorder = CALayer()
-//
-//        bottomBorder.frame = CGRect(x: 0.0, y: 43.0, width: cellPic.contentView.frame.size.width, height: 1.0)
-//        bottomBorder.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-//        cellPic.contentView.layer.addSublayer(bottomBorder)
+        let cellPic = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
+
         
         if allPosts.count > 0 {
+            
             post = allPosts[indexPath.row]
 
             if post.postType == "video" {
@@ -429,6 +492,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                  return cellPic
                 
             } else if post.postType == "picture" {
+                let cellPic = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
                 
                 cellPic.avaImageView.image = self.avas[indexPath.row]
                 cellPic.pictureImageView.image = self.pictures[indexPath.row]
@@ -485,14 +549,76 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         
     }
     
-//    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 500))
-//        footerView.backgroundColor = #colorLiteral(red: 0.9133789539, green: 0.9214370847, blue: 0.9337923527, alpha: 1)
-//        return footerView
-//    }
-//    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        return 500
-//    }
+func showActionSheet() {
+    
+    // declaring action sheet
+    let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    
+    // declaring library button
+    let library = UIAlertAction(title: "Photo Library", style: .default) { (action) in
+        
+        // checking availability of photo library
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            self.showPicker(with: .photoLibrary)
+        }
+        
+    }
+    // declaring cancel button
+    let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
+    // adding buttons to the sheet
+    sheet.addAction(library)
+    sheet.addAction(cancel)
+    
+    // present action sheet to the user finally
+    self.present(sheet, animated: true, completion: nil)
+    
+}
+    
+    func showPicker(with source: UIImagePickerController.SourceType) {
+        
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true
+        picker.sourceType = source
+        present(picker, animated: true, completion: nil)
+        
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+                    
+            
+            let image = info[UIImagePickerController.InfoKey(rawValue: convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage))] as? UIImage
+            //picturePath = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+            
+            // based on the trigger we are assigning selected pictures to the appropriated imageView
+            
+                
+                // assign selected image to CoverImageView
+                self.teamImageView.image = image
+                
+                let pictureData = image?.jpegData(compressionQuality: 0.4)!
+                let cover = pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+
+
+                updateCurrentUserInFirestore(withValues: [kCOVER : cover!]) { (success) in
+                    
+                    
+                }
+                Team.updateTeam(teamID: FUser.currentUser()!.userTeamID, withValues: [kTEAMLOGO : cover!])
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changeTeamLogo"), object: nil)
+                
+                
+                
+            
+            
+            // completion handler, to communicate to the project that images has been selected (enable delete button)
+            dismiss(animated: true) {
+                
+            }
+
+    
+        }
     
 
 
@@ -500,6 +626,16 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
     
     
 
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+    return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+    return input.rawValue
 }
 
 extension String {

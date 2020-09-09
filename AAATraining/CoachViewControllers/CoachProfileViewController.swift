@@ -84,6 +84,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "deletePost"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(loadUser), name: NSNotification.Name(rawValue: "changeTeamLogo"), object: nil)
+        
         baselineTapGestureRecognizer.addTarget(self, action: #selector(self.baselineViewClicked))
         baselineView.isUserInteractionEnabled = true
         baselineView.addGestureRecognizer(baselineTapGestureRecognizer)
@@ -685,23 +687,6 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             let pictureData = image?.jpegData(compressionQuality: 0.4)!
             let cover = pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
 
-
-//            picturePath.getColors(quality: UIImageColorsQuality(rawValue: CGFloat(100))!) { colors in
-//                self.uiColorOne = colors?.background
-//                self.uiColorTwo = colors?.primary
-//                self.uiColorThree = colors?.detail
-//
-//
-//
-//              //detailLabel.textColor = colors.detail
-//                self.teamColorOne = self.uiColorOne?.htmlRGBaColor
-//                self.teamColorTwo = self.uiColorTwo?.htmlRGBaColor
-//                self.teamColorThree = self.uiColorThree?.htmlRGBaColor
-//
-//
-//            }
-            
-//            reference(.Team).document(FUser.currentUser()!.userTeamID).updateData([kTEAMLOGO : cover!, kTEAMCOLORONE : teamColorOne!, kTEAMCOLORTWO : teamColorTwo!, kTEAMCOLORTHREE : teamColorThree!])
             updateCurrentUserInFirestore(withValues: [kCOVER : cover!]) { (success) in
                 //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changeProPic"), object: nil)
                 self.loadUser()

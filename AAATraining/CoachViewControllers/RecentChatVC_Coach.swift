@@ -22,30 +22,12 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        navigationController?.navigationBar.tintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         
+        let view = UIView()
+        view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        tableView.tableFooterView = view
         
-        
-        
-        let attrs = [
-            NSAttributedString.Key.foregroundColor: UIColor.white,
-            NSAttributedString.Key.font: UIFont(name: "PROGRESSPERSONALUSE", size: 34)!
-        ]
-        
-        navigationController?.navigationBar.largeTitleTextAttributes = attrs
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = true
-        
-        
-        
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        
-        
-        definesPresentationContext = true
+        configureUI()
         
         //setTableViewHeader()
     }
@@ -54,8 +36,56 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         loadRecentChats()
-    //    self.tableView.reloadData()
-        tableView.tableFooterView = UIView()
+        let view = UIView()
+        view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        tableView.tableFooterView = view
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        fillContentGap:
+        if let tableFooterView = tableView.tableFooterView {
+            /// The expected height for the footer under autolayout.
+            let footerHeight = tableFooterView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+            /// The amount of empty space to fill with the footer view.
+            let gapHeight: CGFloat = tableView.bounds.height - tableView.adjustedContentInset.top - tableView.adjustedContentInset.bottom - tableView.contentSize.height
+            // Ensure there is space to be filled
+            guard gapHeight.rounded() > 0 else { break fillContentGap }
+            // Fill the gap
+            tableFooterView.frame.size.height = gapHeight + footerHeight
+        }
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    func configureUI () {
+        
+        tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
+        let view = UIView()
+        view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        tableView.tableFooterView = view
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.tintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
+        let attrs = [
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font: UIFont(name: "PROGRESSPERSONALUSE", size: 29)!
+        ]
+        
+        navigationController?.navigationBar.largeTitleTextAttributes = attrs
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = true
+        
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        
+        definesPresentationContext = true
     }
     
     //MARK: Custom tableViewHeader
@@ -137,6 +167,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
                 emptyLabelOne.text = "Created chats will appear here!"
                 emptyLabelOne.textAlignment = NSTextAlignment.center
                 self.tableView.backgroundView = emptyLabelOne
+                self.tableView.backgroundView?.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
                 self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
                 return 0
             } else {

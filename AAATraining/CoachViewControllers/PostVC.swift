@@ -34,6 +34,8 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
     
     let postID = UUID().uuidString
     
+    var image: UIImage? = UIImage()
+    
     override func viewDidLoad() {
          super.viewDidLoad()
          self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
@@ -154,9 +156,18 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
         }
         
         let sharePhoto = UIAlertAction(title: "Photo Library", style: .default) { (action) in
-            
-            camera.PresentPhotoLibrary(target: self, canEdit: false)
-        }
+                   
+                   // checking availability of photo library
+                   if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+                       self.showPicker(with: .photoLibrary)
+                   }
+                   
+            }
+        
+//        let sharePhoto = UIAlertAction(title: "Photo Library", style: .default) { (action) in
+//
+//            camera.PresentPhotoLibrary(target: self, canEdit: false)
+//        }
         
         let shareVideo = UIAlertAction(title: "Video Library", style: .default) { (action) in
             
@@ -197,12 +208,25 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
         }
     }
     
+    func showPicker(with source: UIImagePickerController.SourceType) {
+        
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true
+        picker.sourceType = source
+        present(picker, animated: true, completion: nil)
+        
+    }
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         videoPath = info[UIImagePickerController.InfoKey.mediaURL] as? NSURL
         
+        image = info[UIImagePickerController.InfoKey(rawValue: convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage))] as? UIImage
+        
         picturePath = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
-        let pictureData = picturePath?.jpegData(compressionQuality: 0.3)!
+        
+        let pictureData = image?.jpegData(compressionQuality: 0.3)!
         pictureToUpload = pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         displayMedia(picture: picturePath, video: videoPath)
         
