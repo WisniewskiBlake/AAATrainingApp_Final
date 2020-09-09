@@ -23,34 +23,60 @@ class PlayerRecentChatVC: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
-        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        
-        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        
-        let attrs = [
-            NSAttributedString.Key.foregroundColor: UIColor.white,
-            NSAttributedString.Key.font: UIFont(name: "PROGRESSPERSONALUSE", size: 34)!
-        ]
-        
-        navigationController?.navigationBar.largeTitleTextAttributes = attrs
-       navigationItem.searchController = searchController
-       navigationItem.hidesSearchBarWhenScrolling = true
-       
-       searchController.searchResultsUpdater = self
-       searchController.obscuresBackgroundDuringPresentation = false
-       definesPresentationContext = true
+        self.tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        //loadRecentChats()
+        let view = UIView()
+        view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        self.tableView.tableFooterView = view
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         
         loadRecentChats()
+        configureUI()
     //    self.tableView.reloadData()
-        tableView.tableFooterView = UIView()
+        //tableView.tableFooterView = UIView()
+    }
+    
+    func configureUI() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+         
+         navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+         
+         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+         
+         let attrs = [
+             NSAttributedString.Key.foregroundColor: UIColor.white,
+             NSAttributedString.Key.font: UIFont(name: "PROGRESSPERSONALUSE", size: 34)!
+         ]
+         
+         navigationController?.navigationBar.largeTitleTextAttributes = attrs
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = true
+        
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        definesPresentationContext = true
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        fillContentGap:
+        if let tableFooterView = self.tableView.tableFooterView {
+            /// The expected height for the footer under autolayout.
+            let footerHeight = tableFooterView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+            /// The amount of empty space to fill with the footer view.
+            let gapHeight: CGFloat = self.tableView.bounds.height - self.tableView.adjustedContentInset.top - self.tableView.adjustedContentInset.bottom - self.tableView.contentSize.height
+            // Ensure there is space to be filled
+            guard gapHeight.rounded() > 0 else { break fillContentGap }
+            // Fill the gap
+            tableFooterView.frame.size.height = gapHeight + footerHeight
+        }
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -83,7 +109,7 @@ class PlayerRecentChatVC: UIViewController, UITableViewDelegate, UITableViewData
                 
                 self.tableView.reloadData()
             }
-
+            self.tableView.reloadData()
         })
 
     }
@@ -92,17 +118,17 @@ class PlayerRecentChatVC: UIViewController, UITableViewDelegate, UITableViewData
         if searchController.isActive && searchController.searchBar.text != "" {
             return filteredChats.count
         } else {
-            if recentChats.count == 0 {
-                var emptyLabelOne = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
-                emptyLabelOne.text = "Chats will appear if you've been added to a group!"
-                emptyLabelOne.textAlignment = NSTextAlignment.center
-                self.tableView.backgroundView = emptyLabelOne
-                self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-                return 0
-            } else {
-                self.tableView.backgroundView = nil
+//            if recentChats.count == 0 {
+//                var emptyLabelOne = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
+//                emptyLabelOne.text = "Chats will appear if you've been added to a group!"
+//                emptyLabelOne.textAlignment = NSTextAlignment.center
+//                self.tableView.backgroundView = emptyLabelOne
+//                self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+//                return 0
+//            } else {
+//                self.tableView.backgroundView = nil
                 return recentChats.count
-            }
+//            }
            
         }
     }
@@ -204,16 +230,7 @@ class PlayerRecentChatVC: UIViewController, UITableViewDelegate, UITableViewData
         //navigationController?.pushViewController(chatVC, animated: true)
     }
     
-//    func selectUserForChat(isGroup: Bool) {
-//
-//           let contactsVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "contactsView") as! ContactsVC_Coach
-//           let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "addMembersNav") as! UINavigationController
-//           contactsVC.isGroup = isGroup
-//
-//
-//           self.present(navigation, animated: true, completion: nil)
-//           //self.navigationController?.pushViewController(contactsVC, animated: true)
-//    }
+
     
     //MARK: Search controller functions
           

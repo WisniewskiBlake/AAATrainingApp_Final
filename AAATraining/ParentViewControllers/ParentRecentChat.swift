@@ -23,8 +23,43 @@ class ParentRecentChat: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-         navigationController?.navigationBar.prefersLargeTitles = true
+        
+        self.tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        //loadRecentChats()
+        let view = UIView()
+        view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        self.tableView.tableFooterView = view
+         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        loadRecentChats()
+        configureUI()
+    //    self.tableView.reloadData()
+        //tableView.tableFooterView = UIView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        fillContentGap:
+        if let tableFooterView = self.tableView.tableFooterView {
+            /// The expected height for the footer under autolayout.
+            let footerHeight = tableFooterView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+            /// The amount of empty space to fill with the footer view.
+            let gapHeight: CGFloat = self.tableView.bounds.height - self.tableView.adjustedContentInset.top - self.tableView.adjustedContentInset.bottom - self.tableView.contentSize.height
+            // Ensure there is space to be filled
+            guard gapHeight.rounded() > 0 else { break fillContentGap }
+            // Fill the gap
+            tableFooterView.frame.size.height = gapHeight + footerHeight
+        }
+        
+    }
+    
+    func configureUI() {
+        navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -43,15 +78,6 @@ class ParentRecentChat: UIViewController, UITableViewDelegate, UITableViewDataSo
           searchController.searchResultsUpdater = self
           searchController.obscuresBackgroundDuringPresentation = false
           definesPresentationContext = true
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        loadRecentChats()
-    //    self.tableView.reloadData()
-        tableView.tableFooterView = UIView()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -83,7 +109,7 @@ class ParentRecentChat: UIViewController, UITableViewDelegate, UITableViewDataSo
                 
                 self.tableView.reloadData()
             }
-
+            self.tableView.reloadData()
         })
 
     }
@@ -92,17 +118,17 @@ class ParentRecentChat: UIViewController, UITableViewDelegate, UITableViewDataSo
         if searchController.isActive && searchController.searchBar.text != "" {
             return filteredChats.count
         } else {
-           if recentChats.count == 0 {
-               var emptyLabelOne = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
-               emptyLabelOne.text = "Chats will appear if you've been added to a group!"
-               emptyLabelOne.textAlignment = NSTextAlignment.center
-               self.tableView.backgroundView = emptyLabelOne
-               self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-               return 0
-           } else {
-               self.tableView.backgroundView = nil
+//           if recentChats.count == 0 {
+//               var emptyLabelOne = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
+//               emptyLabelOne.text = "Chats will appear if you've been added to a group!"
+//               emptyLabelOne.textAlignment = NSTextAlignment.center
+//               self.tableView.backgroundView = emptyLabelOne
+//               self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+//               return 0
+//           } else {
+//               self.tableView.backgroundView = nil
                return recentChats.count
-           }
+ //          }
         }
     }
     
