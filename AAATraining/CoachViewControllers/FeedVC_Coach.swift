@@ -22,12 +22,17 @@ import JSQMessagesViewController
 class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         
     var allPosts: [Post] = []
+    var allUsers: [FUser] = []
     var recentListener: ListenerRegistration!
     
     @IBOutlet weak var titleView: UIView!
     @IBOutlet weak var teamImageView: UIImageView!
     @IBOutlet weak var teamNameLabel: UILabel!
     @IBOutlet weak var teamFeedTextLabel: UILabel!
+    @IBOutlet weak var membersTextLabel: UILabel!
+    
+    @IBOutlet weak var moreImageView: UIImageView!
+    @IBOutlet weak var postImageView: UIImageView!
     
     
     var avas = [UIImage]()
@@ -43,15 +48,14 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
     let helper = Helper()
     let currentDateFormater = Helper().dateFormatter()
     
+    let moreTapGestureRecognizer = UITapGestureRecognizer()
+    let postTapGestureRecognizer = UITapGestureRecognizer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureUI()
 
-        
-       
-        //self.tableView.tableFooterView!.backgroundColor = #colorLiteral(red: 0.9133789539, green: 0.9214370847, blue: 0.9337923527, alpha: 1)
-        // add observers for notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "createPost"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "changeProPic"), object: nil)
@@ -61,14 +65,20 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "deletePost"), object: nil)
         
+        moreTapGestureRecognizer.addTarget(self, action: #selector(self.moreImageViewClicked))
+        moreImageView.isUserInteractionEnabled = true
+        moreImageView.addGestureRecognizer(moreTapGestureRecognizer)
+        
+        postTapGestureRecognizer.addTarget(self, action: #selector(self.postImageViewClicked))
+        postImageView.isUserInteractionEnabled = true
+        postImageView.addGestureRecognizer(postTapGestureRecognizer)
         
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-//
-//        navigationController?.navigationBar.prefersLargeTitles = true
-//        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+
         
-        // run function
+        // run functions
+        getMembers()
         loadPosts()
         
     }
@@ -121,6 +131,8 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         titleView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         titleView.alpha = 1.0
         
+        membersTextLabel.text = String(allUsers.count) + " Team Members"
+        
         teamImageView.layer.cornerRadius = teamImageView.frame.width / 2
         teamImageView.clipsToBounds = true
         
@@ -147,22 +159,8 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
                 self.teamImageView.image = UIImage(named: "HomeCover.jpg")
             }
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         self.navigationController?.view.addSubview(self.titleView)
         self.navigationController?.navigationBar.layer.zPosition = 0;
-        //self.titleView.frame.size.height = (self.navigationController?.view.bounds.height)!
-        
-
-        
         
         currentDateFormater.dateFormat = "MM/dd/YYYY"
         
@@ -171,13 +169,65 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
         tableView.refreshControl = refreshControl
     }
     
+    func getMembers() {
+        ProgressHUD.show()
+        
+        var query = reference(.User).whereField(kUSERTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).order(by: kFIRSTNAME, descending: false)
+        query.getDocuments { (snapshot, error) in
+            
+            self.allUsers = []
+            
+            if error != nil {
+                print(error!.localizedDescription)
+                ProgressHUD.dismiss()
+             self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
+                 self.isLoading = false
+                self.tableView.reloadData()
+                return
+            }
+            
+            guard let snapshot = snapshot else {
+             self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
+             self.isLoading = false
+                ProgressHUD.dismiss(); return
+            }
+            
+            if !snapshot.isEmpty {
+                
+                for userDictionary in snapshot.documents {
+                    
+                    let userDictionary = userDictionary.data() as NSDictionary
+                    let fUser = FUser(_dictionary: userDictionary)
+                    
+                    
+                    self.allUsers.append(fUser)
+                    
+                }
+
+            }
+            ProgressHUD.dismiss()
+        }
+    }
+    
     @objc func handleRefresh() {
         loadPosts()
         self.refreshControl?.endRefreshing()
     }
     
-    @objc func composeTapped() {
+    @objc func postImageViewClicked() {
+        let postNav = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "postNav") as! UINavigationController
         
+            self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+
+            self.present(postNav, animated: true, completion: nil)
+    }
+    
+    @objc func moreImageViewClicked() {
+        let postNav = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "postNav") as! UINavigationController
+        
+            self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+
+            self.present(postNav, animated: true, completion: nil)
     }
     
     func didTapMediaImage(indexPath: IndexPath) {
@@ -213,14 +263,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate {
             
         }
     }
-    
-    @IBAction func composeButtonClicked(_ sender: Any) {
-        let postNav = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "postNav") as! UINavigationController
-        
-            self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 
-            self.present(postNav, animated: true, completion: nil)
-    }
     
 
     
