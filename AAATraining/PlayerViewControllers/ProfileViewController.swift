@@ -14,6 +14,18 @@ import FirebaseFirestore
 import ProgressHUD
 
 class ProfileViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, ImagePickerDelegate {
+    func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+        
+    }
+    
+    func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+        
+    }
+    
+    func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
+        
+    }
+    
     
     
 
@@ -34,6 +46,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     let nutritionTapGestureRecognizer = UITapGestureRecognizer()
     let editTapGestureRecognizer = UITapGestureRecognizer()
     let logoutTapGestureRecognizer = UITapGestureRecognizer()
+    let avaTapGestureRecognizer = UITapGestureRecognizer()
     
     var profileIcon: UIImage?
     var coverIcon: UIImage?
@@ -77,8 +90,25 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         logoutView.isUserInteractionEnabled = true
         logoutView.addGestureRecognizer(logoutTapGestureRecognizer)
         
+        avaTapGestureRecognizer.addTarget(self, action: #selector(self.avaViewClicked))
+        avaImageView.isUserInteractionEnabled = true
+        avaImageView.addGestureRecognizer(avaTapGestureRecognizer)
+        
 
         configure_avaImageView()
+//        if FUser.currentUser()?.accountType == "player" {
+//            logoutView.isHidden = false
+//            loadUser()
+//        } else {
+//            logoutView.isHidden = true
+//            loadUserForGuest()
+//
+//        }
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         if FUser.currentUser()?.accountType == "player" {
             logoutView.isHidden = false
             loadUser()
@@ -87,16 +117,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
             loadUserForGuest()
             
         }
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        if FUser.currentUser()?.accountType == "player" {
-//            navigationController?.setNavigationBarHidden(true, animated: true)
-//        }
-        
-        //navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     // executed after aligning the objects
@@ -310,10 +330,13 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
 
        
     }
+
     
-    
-    @IBAction func avaImageView_tapped(_ sender: Any) {
-        showIconOptions()
+    @objc func avaViewClicked() {
+
+        imageViewTapped = "cover"
+        
+        showActionSheet()
     }
 
     
@@ -334,81 +357,74 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     }
 
     
-    func showIconOptions() {
+    func showActionSheet() {
+        
+        // declaring action sheet
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // declaring library button
+        let library = UIAlertAction(title: "Photo Library", style: .default) { (action) in
+            
+            // checking availability of photo library
+            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+                self.showPicker(with: .photoLibrary)
+            }
+            
+        }
+        // declaring cancel button
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
 
-       let optionMenu = UIAlertController(title: "Choose Profile Picture", message: nil, preferredStyle: .actionSheet)
-
-       let takePhotoActio = UIAlertAction(title: "Choose Photo", style: .default) { (alert) in
-
-           let imagePicker = ImagePickerController()
-           imagePicker.delegate = self
-           imagePicker.imageLimit = 1
-
-           self.present(imagePicker, animated: true, completion: nil)
-       }
-
-       let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (alert) in
-
-       }
-
-       if profileIcon != nil {
-
-           let resetAction = UIAlertAction(title: "Reset", style: .default) { (alert) in
-
-               self.profileIcon = nil
-               self.avaImageView.image = UIImage(named: "user.png")
-               //self.editAvatarButtonOutlet.isHidden = true
-           }
-           optionMenu.addAction(resetAction)
-       }
-
-       optionMenu.addAction(takePhotoActio)
-       optionMenu.addAction(cancelAction)
-
-       if ( UI_USER_INTERFACE_IDIOM() == .pad )
-       {
-           if let currentPopoverpresentioncontroller = optionMenu.popoverPresentationController{
-
-//               currentPopoverpresentioncontroller.sourceView = editAvatarButtonOutlet
-//               currentPopoverpresentioncontroller.sourceRect = editAvatarButtonOutlet.bounds
-
-
-               currentPopoverpresentioncontroller.permittedArrowDirections = .up
-               self.present(optionMenu, animated: true, completion: nil)
-           }
-       } else {
-           self.present(optionMenu, animated: true, completion: nil)
-       }
-
-   }
+        // adding buttons to the sheet
+        sheet.addAction(library)
+        sheet.addAction(cancel)
+        
+        // present action sheet to the user finally
+        self.present(sheet, animated: true, completion: nil)
+        
+    }
     
+    func showPicker(with source: UIImagePickerController.SourceType) {
+        
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true
+        picker.sourceType = source
+        present(picker, animated: true, completion: nil)
+        
+    }
     
-   func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
-       self.dismiss(animated: true, completion: nil)
-   }
-   
-   func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
-        if images.count > 0 {
-                  
-                  self.profileIcon = images.first!
-                  self.avaImageView.image = self.profileIcon!
-                  //self.editAvatarButtonOutlet.isHidden = false
-                  
-                  let avatarData = profileIcon?.jpegData(compressionQuality: 0.4)!
-                  let avatar = avatarData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-                  updateCurrentUserInFirestore(withValues: [kAVATAR : avatar!]) { (success) in
-                      
-                  }
-                  
-                  
-              }
-              
-              self.dismiss(animated: true, completion: nil)
-   }
-   
-   func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
-       self.dismiss(animated: true, completion: nil)
-   }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+                    
+            
+            let image = info[UIImagePickerController.InfoKey(rawValue: convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage))] as? UIImage
+            let picturePath = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+            
+                // assign selected image to AvaImageView
+                self.avaImageView.image = picturePath
+                
+                // refresh global variable storing the user's profile pic
+                let pictureData = image?.jpegData(compressionQuality: 0.4)!
+                let avatar = pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+                
+                
+                //FUser.currentUser().ava = self.avaImageView.image
+                
+                updateCurrentUserInFirestore(withValues: [kAVATAR : avatar!]) { (success) in
+                    //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changeProPic"), object: nil)
+                }
+
+            
+            // completion handler, to communicate to the project that images has been selected (enable delete button)
+            dismiss(animated: true) {
+                if self.imageViewTapped == "cover" {
+                    self.isCover = true
+                } else if self.imageViewTapped == "ava" {
+                    self.isAva = true
+                }
+            }
+
+
+        }
 
     
     

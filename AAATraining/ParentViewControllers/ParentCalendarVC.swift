@@ -38,6 +38,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         
         
         setBadges(controller: self.tabBarController!, accountType: "coach")
+        //setCalendarBadges(controller: self.tabBarController!, accountType: "parent")
         //commenting this out because notifications for parent calendar will only be seen by different color button
         //setCalendarBadges(controller: self.tabBarController!, accountType: "coach")
         

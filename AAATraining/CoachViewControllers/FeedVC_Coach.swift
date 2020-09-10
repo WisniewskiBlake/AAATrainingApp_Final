@@ -113,7 +113,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         getMembers()
         configureUI()
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         tableView.tableFooterView = view
         
         //loadPosts()
@@ -450,6 +450,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
             self.tableView.tableFooterView!.addSubview(emptyLabelOne)
             return 0
         } else {
+            emptyLabelOne.text = ""
             emptyLabelOne.removeFromSuperview()
             
             return allPosts.count

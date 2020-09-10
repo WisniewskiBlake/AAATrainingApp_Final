@@ -21,14 +21,18 @@ class ParentRecentChat: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     let searchController = UISearchController(searchResultsController: nil)
     
+    var emptyLabelOne = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
         //loadRecentChats()
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         self.tableView.tableFooterView = view
+        
+        emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -125, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
          
     }
     
@@ -38,6 +42,7 @@ class ParentRecentChat: UIViewController, UITableViewDelegate, UITableViewDataSo
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         loadRecentChats()
         configureUI()
+        
     //    self.tableView.reloadData()
         //tableView.tableFooterView = UIView()
     }
@@ -64,6 +69,11 @@ class ParentRecentChat: UIViewController, UITableViewDelegate, UITableViewDataSo
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
+        self.tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
+        if emptyLabelOne.text == "Created chats will appear here!" {
+            emptyLabelOne.text = ""
+        }
         
         let attrs = [
             NSAttributedString.Key.foregroundColor: UIColor.white,
@@ -115,20 +125,23 @@ class ParentRecentChat: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        
         if searchController.isActive && searchController.searchBar.text != "" {
             return filteredChats.count
         } else {
-//           if recentChats.count == 0 {
-//               var emptyLabelOne = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
-//               emptyLabelOne.text = "Chats will appear if you've been added to a group!"
-//               emptyLabelOne.textAlignment = NSTextAlignment.center
-//               self.tableView.backgroundView = emptyLabelOne
-//               self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-//               return 0
-//           } else {
-//               self.tableView.backgroundView = nil
-               return recentChats.count
- //          }
+            if recentChats.count == 0 {
+                
+                emptyLabelOne.text = "Created chats will appear here!"
+                
+                emptyLabelOne.textAlignment = NSTextAlignment.center
+                self.tableView.tableFooterView!.addSubview(emptyLabelOne)
+                return 0
+            } else {
+                emptyLabelOne.text = ""
+                emptyLabelOne.removeFromSuperview()
+                return recentChats.count
+            }
         }
     }
     

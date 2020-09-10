@@ -20,6 +20,8 @@ class PlayerRecentChatVC: UIViewController, UITableViewDelegate, UITableViewData
     
     let searchController = UISearchController(searchResultsController: nil)
     
+    var emptyLabelOne = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -28,6 +30,8 @@ class PlayerRecentChatVC: UIViewController, UITableViewDelegate, UITableViewData
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         self.tableView.tableFooterView = view
+        
+        emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -115, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,6 +52,10 @@ class PlayerRecentChatVC: UIViewController, UITableViewDelegate, UITableViewData
          
          navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
          self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
+        if emptyLabelOne.text == "Created chats will appear here!" {
+            emptyLabelOne.text = ""
+        }
          
          let attrs = [
              NSAttributedString.Key.foregroundColor: UIColor.white,
@@ -115,21 +123,22 @@ class PlayerRecentChatVC: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         if searchController.isActive && searchController.searchBar.text != "" {
             return filteredChats.count
         } else {
-//            if recentChats.count == 0 {
-//                var emptyLabelOne = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
-//                emptyLabelOne.text = "Chats will appear if you've been added to a group!"
-//                emptyLabelOne.textAlignment = NSTextAlignment.center
-//                self.tableView.backgroundView = emptyLabelOne
-//                self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-//                return 0
-//            } else {
-//                self.tableView.backgroundView = nil
+            if recentChats.count == 0 {
+                
+                emptyLabelOne.text = "Created chats will appear here!"
+                
+                emptyLabelOne.textAlignment = NSTextAlignment.center
+                self.tableView.tableFooterView!.addSubview(emptyLabelOne)
+                return 0
+            } else {
+                emptyLabelOne.text = ""
+                emptyLabelOne.removeFromSuperview()
                 return recentChats.count
-//            }
-           
+            }
         }
     }
     

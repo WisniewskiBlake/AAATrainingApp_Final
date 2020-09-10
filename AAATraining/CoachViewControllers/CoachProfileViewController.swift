@@ -108,7 +108,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
 
         configure_avaImageView()
-        loadUser()
+        
         
 
     }
@@ -117,7 +117,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-                
+        loadUser()
         loadPosts()
         tableView.tableFooterView = UIView()
         // hide navigation bar on Home Pagex

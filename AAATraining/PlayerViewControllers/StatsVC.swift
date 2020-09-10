@@ -47,7 +47,7 @@ class StatsVC: UIViewController {
             changesLabel.isHidden = false
             loadUser()
         } else {
-            changesLabel.isHidden = true
+            changesLabel.isHidden = false
             loadUserForGuest()
         }
         

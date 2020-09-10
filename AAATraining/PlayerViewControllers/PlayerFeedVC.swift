@@ -39,6 +39,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
 
    var isLoading = false
 
+    var emptyLabelOne = UILabel()
     
     var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
     
@@ -72,12 +73,12 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         moreImageView.isUserInteractionEnabled = true
         moreImageView.addGestureRecognizer(moreTapGestureRecognizer)
         
-        
+        emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -150, width: view.bounds.size.width, height: view.bounds.size.height))
         
         
     
         // run function
-        loadPosts()
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -99,6 +100,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        loadPosts()
         getMembers()
         configureUI()
         
@@ -399,7 +401,17 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return allPosts.count
+         if allPosts.count == 0 {                   
+                   emptyLabelOne.text = "Created posts will appear here!"
+                   emptyLabelOne.textAlignment = NSTextAlignment.center
+                   self.tableView.tableFooterView!.addSubview(emptyLabelOne)
+                   return 0
+               } else {
+                    emptyLabelOne.text = ""
+                   emptyLabelOne.removeFromSuperview()
+                   
+                   return allPosts.count
+               }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
