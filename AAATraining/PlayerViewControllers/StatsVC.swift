@@ -54,7 +54,7 @@ class StatsVC: UIViewController {
     }
     
     @IBAction func textFieldDidChange(_ sender: Any) {
-        if statTextField.text!.isEmpty == false && cellText != "Select Stat"  {
+        if statTextField.text!.isEmpty == false  {
             saveButton.isEnabled = true
         }
     }

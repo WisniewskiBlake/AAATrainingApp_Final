@@ -13,7 +13,7 @@ class ParentRegisterVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var coachPassword_width: NSLayoutConstraint!
     @IBOutlet weak var nameView_width: NSLayoutConstraint!
-    @IBOutlet weak var emailView_width: NSLayoutConstraint!
+    //@IBOutlet weak var emailView_width: NSLayoutConstraint!
     @IBOutlet weak var passwordView_width: NSLayoutConstraint!
     @IBOutlet weak var contentView_width: NSLayoutConstraint!
     
@@ -22,12 +22,12 @@ class ParentRegisterVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
-    @IBOutlet weak var phoneTextField: UITextField!
+    //@IBOutlet weak var phoneTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
     @IBOutlet weak var emailContinueButton: UIButton!
     @IBOutlet weak var nameContinueButton: UIButton!
-    @IBOutlet weak var phoneContinueButton: UIButton!
+    //@IBOutlet weak var phoneContinueButton: UIButton!
     @IBOutlet weak var finishButton: UIButton!
     
     @IBOutlet weak var footerView: UIView!
@@ -47,34 +47,34 @@ class ParentRegisterVC: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        contentView_width.constant = self.view.frame.width * 4
+        contentView_width.constant = self.view.frame.width * 3
         coachPassword_width.constant = self.view.frame.width
         nameView_width.constant = self.view.frame.width
-        emailView_width.constant = self.view.frame.width
+        //emailView_width.constant = self.view.frame.width
         passwordView_width.constant = self.view.frame.width
         
         cornerRadius(for: firstNameTextField)
         cornerRadius(for: lastNameTextField)
         cornerRadius(for: emailTextField)
         cornerRadius(for: passwordTextField)
-        cornerRadius(for: phoneTextField)
+        //cornerRadius(for: phoneTextField)
         
         cornerRadius(for: emailContinueButton)
         cornerRadius(for: nameContinueButton)
-        cornerRadius(for: phoneContinueButton)
+        //cornerRadius(for: phoneContinueButton)
         cornerRadius(for: finishButton)
         
         padding(for: emailTextField)
         padding(for: firstNameTextField)
         padding(for: lastNameTextField)
         padding(for: passwordTextField)
-        padding(for: phoneTextField)
+        //padding(for: phoneTextField)
         
         self.emailTextField.delegate = self
         self.firstNameTextField.delegate = self
         self.lastNameTextField.delegate = self
         self.passwordTextField.delegate = self
-        self.phoneTextField.delegate = self
+        //self.phoneTextField.delegate = self
         
         
         configure_footerView()
@@ -92,7 +92,7 @@ class ParentRegisterVC: UIViewController, UITextFieldDelegate {
 //        finishButton.backgroundColor = UIColor(hexString: team.teamColorOne)
         emailContinueButton.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
         nameContinueButton.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
-        phoneContinueButton.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+        //phoneContinueButton.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
         finishButton.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
     }
     
@@ -141,24 +141,20 @@ class ParentRegisterVC: UIViewController, UITextFieldDelegate {
         scrollView.setContentOffset(position, animated: true)
         
         // show keyboard of next TextField
-        if phoneTextField.text!.isEmpty {
-            phoneTextField.becomeFirstResponder()
-        } else if phoneTextField.text!.isEmpty == false {
-            phoneTextField.resignFirstResponder()
-        }
-    }
-    
-    @IBAction func phoneContinueClicked(_ sender: Any) {
-        let position = CGPoint(x: self.view.frame.width * 3, y: 0)
-        scrollView.setContentOffset(position, animated: true)
-        
-        // show keyboard of next TextField
         if passwordTextField.text!.isEmpty {
             passwordTextField.becomeFirstResponder()
         } else if passwordTextField.text!.isEmpty == false {
             passwordTextField.resignFirstResponder()
         }
     }
+    
+//    @IBAction func phoneContinueClicked(_ sender: Any) {
+//        let position = CGPoint(x: self.view.frame.width * 3, y: 0)
+//        scrollView.setContentOffset(position, animated: true)
+//
+//        // show keyboard of next TextField
+//
+//    }
     
     @IBAction func finishButtonClicked(_ sender: Any) {
         let avatar = getAvatar()
@@ -167,7 +163,7 @@ class ParentRegisterVC: UIViewController, UITextFieldDelegate {
         
         let defaultTeamColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1).htmlRGBaColor
         
-        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "parent", birthday: "", cover: team.teamLogo, phoneNumber: phoneTextField.text!, userTeamID: team.teamID, userTeamColorOne: defaultTeamColor, userTeamColorTwo: team.teamColorTwo, userTeamColorThree: team.teamColorThree) { (error)  in
+        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "parent", birthday: "", cover: team.teamLogo, phoneNumber: "", userTeamID: team.teamID, userTeamColorOne: defaultTeamColor, userTeamColorTwo: team.teamColorTwo, userTeamColorThree: team.teamColorThree) { (error)  in
             
                             if error != nil {
                                 ProgressHUD.dismiss()
@@ -224,14 +220,8 @@ class ParentRegisterVC: UIViewController, UITextFieldDelegate {
                 nameContinueButton.isHidden = false
             }
             
-        // logic for Password TextField
-        } else if textField == phoneTextField {
-            
-            // check email validation
-            if helper.isValid(phone: phoneTextField.text!) {
-                phoneContinueButton.isHidden = false
-            }
-            
+        
+         
         // logic for First Name or Last Name TextFields
         } else if textField == passwordTextField {
             

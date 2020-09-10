@@ -29,9 +29,6 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
-        
-        
         self.tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         //loadRecentChats()
         let view = UIView()
@@ -143,18 +140,17 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         if searchController.isActive && searchController.searchBar.text != "" {
             return filteredChats.count
         } else {
-//            if recentChats.count == 0 {
-//                var emptyLabelOne = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
-//                emptyLabelOne.text = "Created chats will appear here!"
-//                emptyLabelOne.textAlignment = NSTextAlignment.center
-//                self.tableView.backgroundView = emptyLabelOne
-//                self.tableView.backgroundView?.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-//                self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-//                return 0
-//            } else {
-//                self.tableView.backgroundView = nil
+            if recentChats.count == 0 {
+                var emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -115, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
+                emptyLabelOne.text = "Created chats will appear here!"
+                
+                emptyLabelOne.textAlignment = NSTextAlignment.center
+                self.tableView.tableFooterView!.addSubview(emptyLabelOne)
+                return 0
+            } else {
+                self.tableView.backgroundView = nil
                 return recentChats.count
- //           }
+            }
         }
 
     }

@@ -229,6 +229,10 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
                 //}
                     cellPic.optionsButton.tag = indexPath.row
                     
+                    if accountType == "player" {
+                        cellPic.optionsButton.isHidden = true
+                    }
+                    
                      return cellPic
                     
                 } else if post.nutritionPostType == "picture" {
@@ -253,6 +257,10 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
                     //}
                     cellPic.optionsButton.tag = indexPath.row
                     
+                    if accountType == "player" {
+                        cellPic.optionsButton.isHidden = true
+                    }
+                    
                     return cellPic
                     
                 } else {
@@ -272,6 +280,10 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
                     cellNoPic.urlTextView.text = post.nutritionPostUrlLink
                 //}
                     cellNoPic.optionsButton.tag = indexPath.row
+                    
+                    if accountType == "player" {
+                        cellNoPic.optionsButton.isHidden = true
+                    }
                     
                      return cellNoPic
                 }

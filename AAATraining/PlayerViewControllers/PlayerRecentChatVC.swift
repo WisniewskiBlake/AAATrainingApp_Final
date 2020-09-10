@@ -26,7 +26,7 @@ class PlayerRecentChatVC: UIViewController, UITableViewDelegate, UITableViewData
         self.tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         //loadRecentChats()
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         self.tableView.tableFooterView = view
     }
     
@@ -51,7 +51,7 @@ class PlayerRecentChatVC: UIViewController, UITableViewDelegate, UITableViewData
          
          let attrs = [
              NSAttributedString.Key.foregroundColor: UIColor.white,
-             NSAttributedString.Key.font: UIFont(name: "PROGRESSPERSONALUSE", size: 34)!
+             NSAttributedString.Key.font: UIFont(name: "PROGRESSPERSONALUSE", size: 29)!
          ]
          
          navigationController?.navigationBar.largeTitleTextAttributes = attrs

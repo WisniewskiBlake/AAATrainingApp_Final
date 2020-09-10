@@ -14,9 +14,11 @@ import ProgressHUD
 
 class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance {
     
-    @IBOutlet weak var newEventColorLabel: UILabel!
-    @IBOutlet weak var eventColorLabel: UILabel!
+    //@IBOutlet weak var newEventColorLabel: UILabel!
+    //@IBOutlet weak var eventColorLabel: UILabel!
     @IBOutlet weak var calendar: FSCalendar!
+    @IBOutlet weak var cooperWaxLogo: UIImageView!
+    
     
     var allEvents: [Event] = []
     var recentListener: ListenerRegistration!
@@ -55,11 +57,11 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         
         self.setLeftAlignedNavigationItemTitle(text: "Calendar", color: .white, margin: 12)
         
-        eventColorLabel.layer.cornerRadius = eventColorLabel.frame.width / 2
-        eventColorLabel.clipsToBounds = true
-        
-        newEventColorLabel.layer.cornerRadius = newEventColorLabel.frame.width / 2
-        newEventColorLabel.clipsToBounds = true
+//        eventColorLabel.layer.cornerRadius = eventColorLabel.frame.width / 2
+//        eventColorLabel.clipsToBounds = true
+//
+//        newEventColorLabel.layer.cornerRadius = newEventColorLabel.frame.width / 2
+//        newEventColorLabel.clipsToBounds = true
         
         logoutTapGestureRecognizer.addTarget(self, action: #selector(self.logoutViewClicked))
         logoutView.isUserInteractionEnabled = true
@@ -74,10 +76,29 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        loadTeamType()
        loadEvents()
     }
     override func viewWillDisappear(_ animated: Bool) {
         recentListener.remove()
+    }
+    
+    func loadTeamType() {
+        var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
+        
+        team.getTeam(teamID: FUser.currentUser()!.userTeamID) { (teamReturned) in
+            if teamReturned.teamID != "" {
+                team = teamReturned
+                if team.teamType == "Hockey" {
+                    self.cooperWaxLogo.isHidden = false
+                } else {
+                    self.cooperWaxLogo.isHidden = true
+                }
+                    
+            } else {
+                
+            }
+        }
     }
     
     @objc func loadEvents() {

@@ -24,7 +24,7 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var phoneTextField: UITextField!
+    //@IBOutlet weak var phoneTextField: UITextField!
     
    
     //@IBOutlet weak var coachPasswordContinueButton: UIButton!
@@ -52,7 +52,7 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate {
         cornerRadius(for: lastNameTextField)
         cornerRadius(for: emailTextField)
         cornerRadius(for: passwordTextField)
-        cornerRadius(for: phoneTextField)
+        //cornerRadius(for: phoneTextField)
         
         cornerRadius(for: emailContinueButton)
         cornerRadius(for: fullnameContinueButton)
@@ -64,14 +64,14 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate {
         padding(for: lastNameTextField)
         padding(for: passwordTextField)
         //padding(for: coachPasswordTextField)
-        padding(for: phoneTextField)
+        //padding(for: phoneTextField)
         
         //self.coachPasswordTextField.delegate = self
         self.firstNameTextField.delegate = self
         self.lastNameTextField.delegate = self
         self.emailTextField.delegate = self
         self.passwordTextField.delegate = self
-        self.phoneTextField.delegate = self
+        //self.phoneTextField.delegate = self
         
         configure_footerView()
         
@@ -164,7 +164,7 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate {
         let avatar = getAvatar()
         let defaultTeamColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1).htmlRGBaColor
         
-        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "coach", birthday: "", cover: team.teamLogo, phoneNumber: phoneTextField.text!, userTeamID: team.teamID, userTeamColorOne: defaultTeamColor, userTeamColorTwo: team.teamColorTwo, userTeamColorThree: team.teamColorThree) { (error)  in
+        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "coach", birthday: "", cover: team.teamLogo, phoneNumber: "", userTeamID: team.teamID, userTeamColorOne: defaultTeamColor, userTeamColorTwo: team.teamColorTwo, userTeamColorThree: team.teamColorThree) { (error)  in
             
                 if error != nil {
                     ProgressHUD.dismiss()
@@ -228,10 +228,10 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate {
             }
             
         // logic for Password TextField
-        } else if textField == emailTextField || textField == phoneTextField {
+        } else if textField == emailTextField {
             
             // check email validation
-            if helper.isValid(email: emailTextField.text!) && helper.isValid(phone: phoneTextField.text!) {
+            if helper.isValid(email: emailTextField.text!) {
                 emailContinueButton.isHidden = false
             }
             

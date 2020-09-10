@@ -38,12 +38,13 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     var avas = [UIImage]()
     var pictures = [UIImage]()
     var postDatesArray: [String] = []
-    //var thumbImage = UIImage()
-    var skip = 0
-    var limit = 25
+
+
     var isLoading = false
     
     var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
+    
+    var emptyLabelOne = UILabel()
  
     let helper = Helper()
     let currentDateFormater = Helper().dateFormatter()
@@ -81,10 +82,11 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
 
+        emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -150, width: view.bounds.size.width, height: view.bounds.size.height))
         
         // run functions
         
-        loadPosts()
+        
         
     }
     
@@ -107,6 +109,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        loadPosts()
         getMembers()
         configureUI()
         let view = UIView()
@@ -142,7 +145,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         teamImageView.clipsToBounds = true
         
         teamFeedTextLabel.text = "Team Feed"
-        teamFeedTextLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 28)!
+        teamFeedTextLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 29)!
         teamNameLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 17)!
         
         team.getTeam(teamID: FUser.currentUser()!.userTeamID) { (teamReturned) in
@@ -172,6 +175,8 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
         tableView.refreshControl = refreshControl
+        
+
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -396,7 +401,11 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
                        self.tableView.reloadData()
                     
                    }
-            self.tableView.reloadData()
+                
+               
+                self.tableView.reloadData()
+
+                
                 ProgressHUD.dismiss()
                })
         //}
@@ -433,15 +442,16 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
 //        return allPosts.count
+
         if allPosts.count == 0 {
-            var emptyLabelOne = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
+            
             emptyLabelOne.text = "Created posts will appear here!"
             emptyLabelOne.textAlignment = NSTextAlignment.center
-            self.tableView.backgroundView = emptyLabelOne
-            self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+            self.tableView.tableFooterView!.addSubview(emptyLabelOne)
             return 0
         } else {
-            self.tableView.backgroundView = nil
+            emptyLabelOne.removeFromSuperview()
+            
             return allPosts.count
         }
     }

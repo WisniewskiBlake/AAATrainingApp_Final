@@ -25,7 +25,7 @@ class RegisterVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
-    @IBOutlet weak var phoneTextField: UITextField!
+    //@IBOutlet weak var phoneTextField: UITextField!
     
     @IBOutlet weak var heightTextField: UITextField!
     @IBOutlet weak var weightTextField: UITextField!
@@ -69,7 +69,7 @@ class RegisterVC: UIViewController, UITextFieldDelegate {
         cornerRadius(for: weightTextField)
         cornerRadius(for: positionTextField)
         cornerRadius(for: numberTextField)
-        cornerRadius(for: phoneTextField)
+        //cornerRadius(for: phoneTextField)
         
         cornerRadius(for: emailContinueButton)
         cornerRadius(for: fullnameContinueButton)
@@ -87,7 +87,7 @@ class RegisterVC: UIViewController, UITextFieldDelegate {
         padding(for: weightTextField)
         padding(for: positionTextField)
         padding(for: numberTextField)
-        padding(for: phoneTextField)
+        //padding(for: phoneTextField)
         
         self.emailTextField.delegate = self
         self.firstNameTextField.delegate = self
@@ -97,7 +97,7 @@ class RegisterVC: UIViewController, UITextFieldDelegate {
         self.weightTextField.delegate = self
         self.positionTextField.delegate = self
         self.numberTextField.delegate = self
-        self.phoneTextField.delegate = self
+        //self.phoneTextField.delegate = self
         
         // run function of configuration
         configure_footerView()
@@ -191,7 +191,7 @@ class RegisterVC: UIViewController, UITextFieldDelegate {
         let avatar = getAvatar()
         let defaultTeamColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1).htmlRGBaColor
                 
-        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: self.heightTextField.text!, weight: self.weightTextField.text!, position: self.positionTextField.text!, number: self.numberTextField.text!, accountType: "player", birthday: "", cover: team.teamLogo, phoneNumber: phoneTextField.text!, userTeamID: team.teamID, userTeamColorOne: defaultTeamColor, userTeamColorTwo: team.teamColorTwo, userTeamColorThree: team.teamColorThree) { (error)  in
+        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: self.heightTextField.text!, weight: self.weightTextField.text!, position: self.positionTextField.text!, number: self.numberTextField.text!, accountType: "player", birthday: "", cover: team.teamLogo, phoneNumber: "", userTeamID: team.teamID, userTeamColorOne: defaultTeamColor, userTeamColorTwo: team.teamColorTwo, userTeamColorThree: team.teamColorThree) { (error)  in
             
                             if error != nil {
                                 ProgressHUD.dismiss()
@@ -238,10 +238,10 @@ class RegisterVC: UIViewController, UITextFieldDelegate {
         let helper = Helper()
         
         // logic for Email TextField
-        if textField == emailTextField || textField == phoneTextField {
+        if textField == emailTextField {
             
             // check email validation
-            if helper.isValid(email: emailTextField.text!) && helper.isValid(phone: phoneTextField.text!) {
+            if helper.isValid(email: emailTextField.text!) {
                 emailContinueButton.isHidden = false
             }
             

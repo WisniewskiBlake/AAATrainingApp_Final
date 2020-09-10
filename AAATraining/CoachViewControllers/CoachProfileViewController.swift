@@ -676,13 +676,13 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 
         
         let image = info[UIImagePickerController.InfoKey(rawValue: convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage))] as? UIImage
-        //picturePath = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+        let picturePath = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
         
         // based on the trigger we are assigning selected pictures to the appropriated imageView
         if imageViewTapped == "cover" {
             
             // assign selected image to CoverImageView
-            self.coverImageView.image = image
+            self.coverImageView.image = picturePath
             
             let pictureData = image?.jpegData(compressionQuality: 0.4)!
             let cover = pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
@@ -700,7 +700,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             
             
             // assign selected image to AvaImageView
-            self.avaImageView.image = image
+            self.avaImageView.image = picturePath
             
             // refresh global variable storing the user's profile pic
             let pictureData = image?.jpegData(compressionQuality: 0.4)!
