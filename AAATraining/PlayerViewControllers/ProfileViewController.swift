@@ -222,17 +222,27 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         let position = userBeingViewed.position
         let number = userBeingViewed.number
         
-         if coverPath != "" {
-             helper.imageFromData(pictureData: coverPath) { (coverImage) in
-                 
-                 if coverImage != nil {
-                     coverImageView.image = coverImage!
-                     isCover = true
+         var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
+         
+         team.getTeam(teamID: FUser.currentUser()!.userTeamID) { (teamReturned) in
+             if teamReturned.teamID != "" {
+                 team = teamReturned
+                 if team.teamLogo != "" {
+                     helper.imageFromData(pictureData: team.teamLogo) { (coverImage) in
+
+                         if coverImage != nil {
+                             self.coverImageView.image = coverImage!
+                             self.isCover = true
+                         }
+                     }
+                 } else {
+                     self.coverImageView.image = UIImage(named: "HomeCover.jpg")
+                     self.isCover = false
                  }
+             } else {
+                 self.coverImageView.image = UIImage(named: "HomeCover.jpg")
+                 self.isCover = false
              }
-         } else {
-             coverImageView.image = UIImage(named: "aaaCoverLogo.png")
-             isCover = false
          }
      
         // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)

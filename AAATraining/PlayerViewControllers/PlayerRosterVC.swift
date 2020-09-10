@@ -154,10 +154,10 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
                        
                        let userDictionary = userDictionary.data() as NSDictionary
                        let fUser = FUser(_dictionary: userDictionary)
-                       
-                       if fUser.objectId != FUser.currentId() {
-                           self.allUsers.append(fUser)
-                       }
+                       self.allUsers.append(fUser)
+//                       if fUser.objectId != FUser.currentId() {
+//                           self.allUsers.append(fUser)
+//                       }
                    }
                    
                    self.splitDataIntoSection()
