@@ -144,9 +144,9 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         teamImageView.layer.cornerRadius = teamImageView.frame.width / 2
         teamImageView.clipsToBounds = true
         
-        teamFeedTextLabel.text = "Team Feed"
+        teamFeedTextLabel.text = "TEAM FEED"
         teamFeedTextLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 29)!
-        teamNameLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 17)!
+        //teamNameLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 16)!
         
         team.getTeam(teamID: FUser.currentUser()!.userTeamID) { (teamReturned) in
             if teamReturned.teamID != "" {
