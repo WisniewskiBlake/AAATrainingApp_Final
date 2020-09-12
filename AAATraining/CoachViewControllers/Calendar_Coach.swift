@@ -20,9 +20,11 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
 
     
     var allEvents: [Event] = []
+    var upcomingEvents: [Event] = []
     var recentListener: ListenerRegistration!
     var allEventDates: [String] = []
     var countArray = [String]()
+    var dateToCheckForUpcoming: [String] = []
     
     var eventsToCopy: [Event] = []
     var isNewObserver: Bool = true
@@ -115,11 +117,9 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                     
                    let eventDictionary = eventDictionary.data() as NSDictionary
                    let event = Event(_dictionary: eventDictionary)
-//                   self.allEvents.append(event)
-//                   if event.eventUserID == FUser.currentId() {
-//                        self.allEventDates.append(event.eventDate)
-//                        self.countArray.append(String(event.eventCounter))
-//                    }
+
+                    
+                    
                     if event.eventTeamID == FUser.currentUser()?.userTeamID {
                         self.allEvents.append(event)
                         i += 1
@@ -149,11 +149,16 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                     }
                     self.calendar.reloadData()
                 } else {
+                    //compare the strings of todays date and allEvents.dateForUpcomingComparison
+                    //if allEvents.dateForUpcomingComparison comes after todays date, append that date to upComingEvents
+                    //populate table with upcomingEvents
+                    print(self.calendar.today)
                     self.calendar.reloadData()
                 }
                                
             
            }
+            //may not need to reload here to speed up time
             self.calendar.reloadData()
             ProgressHUD.dismiss()
         })
@@ -173,19 +178,24 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         calendar.formatter.dateFormat = "EEEE, MM-dd-YYYY"
         let dateString = calendar.formatter.string(from: date)
         
+        calendar.formatter.dateFormat = "YYYY-MM-dd"
+        let dateForUpcomingComparison = calendar.formatter.string(from: date)
+        
         let eventVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as! Event_Coach
         let navController = UINavigationController(rootViewController: eventVC)
         
         for event in allEvents {
             if event.eventDate == dateString {
                 eventVC.updateNeeded = true
-                eventVC.event = event                                
+                eventVC.event = event
+                eventVC.dateForUpcomingComparison = dateForUpcomingComparison
                 //event.clearCalendarCounter(eventGroupID: event.eventGroupID, eventUserID: event.eventUserID)
             }
         }
         
         eventVC.hidesBottomBarWhenPushed = true
         eventVC.dateString = dateString
+        eventVC.dateForUpcomingComparison = dateForUpcomingComparison
         
         self.navigationController?.present(navController, animated: true, completion: nil)
     }
@@ -213,7 +223,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         calendar.formatter.dateFormat = "EEEE, MM-dd-YYYY"
         let dateString = calendar.formatter.string(from: date)
         let values = Calendar.current.dateComponents([Calendar.Component.month, Calendar.Component.year], from: self.calendar.currentPage)
-        
+        print(dateString)
         if allEventDates.contains(dateString) || date == calendar.today {
             return #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         } else if date.get(.month) != values.month{

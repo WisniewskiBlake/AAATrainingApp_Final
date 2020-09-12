@@ -41,9 +41,11 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     var allEventsWithGroupID: [NSDictionary] = []
     
+    var dateForUpcomingComparison: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print(dateForUpcomingComparison)
         getAllMembers()
         getAllEvents()
         cornerRadius(for: deleteButton)

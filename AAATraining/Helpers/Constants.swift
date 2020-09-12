@@ -147,6 +147,7 @@ public let kEVENTGROUPID = "eventGroupID"
 public let kEVENTTITLE = "eventTitle"
 public let kEVENTSTART = "eventStart"
 public let kEVENTEND = "eventEnd"
+public let kEVENTDATEFORUPCOMINGCOMPARISON = "dateForUpcomingComparison"
 
 public let kTEAMS = "teams"
 public let kTEAMID = "teamID"
