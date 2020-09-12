@@ -19,7 +19,9 @@ public class Event {
     var eventCounter: Int
     var eventUserID: String
     var eventGroupID: String
-    
+    var eventTitle: String
+    var eventStart: String
+    var eventEnd: String
     
     
     let eventDictionary: NSMutableDictionary
@@ -34,12 +36,16 @@ public class Event {
         eventCounter = 0
         eventUserID = ""
         eventGroupID = ""
-        eventDictionary = NSMutableDictionary(objects: [eventID, eventTeamID, eventOwnerID, eventText, eventDate, eventAccountType, eventCounter, eventUserID, eventGroupID], forKeys: [kEVENTID as NSCopying, kEVENTTEAMID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying, kEVENTCOUNTER as NSCopying, kEVENTUSERID as NSCopying, kEVENTGROUPID as NSCopying])
+        eventTitle = ""
+        eventStart = ""
+        eventEnd = ""
+        
+        eventDictionary = NSMutableDictionary(objects: [eventID, eventTeamID, eventOwnerID, eventText, eventDate, eventAccountType, eventCounter, eventUserID, eventGroupID, eventTitle, eventStart, eventEnd], forKeys: [kEVENTID as NSCopying, kEVENTTEAMID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying, kEVENTCOUNTER as NSCopying, kEVENTUSERID as NSCopying, kEVENTGROUPID as NSCopying, kEVENTTITLE as NSCopying, kEVENTSTART as NSCopying, kEVENTEND as NSCopying])
     }
 
-    init(eventID: String, eventTeamID: String, eventOwnerID: String, eventText: String, eventDate: String, eventAccountType: String, eventCounter: Int, eventUserID: String, eventGroupID: String) {
+    init(eventID: String, eventTeamID: String, eventOwnerID: String, eventText: String, eventDate: String, eventAccountType: String, eventCounter: Int, eventUserID: String, eventGroupID: String, eventTitle: String, eventStart: String, eventEnd: String) {
 
-        eventDictionary = NSMutableDictionary(objects: [eventID, eventTeamID, eventOwnerID, eventText, eventDate, eventAccountType, eventCounter, eventUserID, eventGroupID], forKeys: [kEVENTID as NSCopying, kEVENTTEAMID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying, kEVENTCOUNTER as NSCopying, kEVENTUSERID as NSCopying, kEVENTGROUPID as NSCopying])
+        eventDictionary = NSMutableDictionary(objects: [eventID, eventTeamID, eventOwnerID, eventText, eventDate, eventAccountType, eventCounter, eventUserID, eventGroupID, eventTitle, eventStart, eventEnd], forKeys: [kEVENTID as NSCopying, kEVENTTEAMID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying, kEVENTCOUNTER as NSCopying, kEVENTUSERID as NSCopying, kEVENTGROUPID as NSCopying, kEVENTTITLE as NSCopying, kEVENTSTART as NSCopying, kEVENTEND as NSCopying])
         
         self.eventID = eventID
         self.eventTeamID = eventTeamID
@@ -50,6 +56,9 @@ public class Event {
         self.eventCounter = eventCounter
         self.eventUserID = eventUserID
         self.eventGroupID = eventGroupID
+        self.eventTitle = eventTitle
+        self.eventStart = eventStart
+        self.eventEnd = eventEnd
     }
     
     init(_dictionary: NSDictionary) {
@@ -90,9 +99,24 @@ public class Event {
         } else {
             eventGroupID = ""
         }
+        if let eT = _dictionary[kEVENTTITLE] {
+            eventTitle = eT as! String
+        } else {
+            eventTitle = ""
+        }
+        if let eS = _dictionary[kEVENTSTART] {
+            eventStart = eS as! String
+        } else {
+            eventStart = ""
+        }
+        if let eE = _dictionary[kEVENTEND] {
+            eventEnd = eE as! String
+        } else {
+            eventEnd = ""
+        }
        
         
-        eventDictionary = NSMutableDictionary(objects: [eventID, eventTeamID, eventOwnerID, eventText, eventDate, eventAccountType, eventCounter, eventUserID, eventGroupID], forKeys: [kEVENTID as NSCopying, kEVENTTEAMID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying, kEVENTCOUNTER as NSCopying, kEVENTUSERID as NSCopying, kEVENTGROUPID as NSCopying])
+        eventDictionary = NSMutableDictionary(objects: [eventID, eventTeamID, eventOwnerID, eventText, eventDate, eventAccountType, eventCounter, eventUserID, eventGroupID, eventTitle, eventStart, eventEnd], forKeys: [kEVENTID as NSCopying, kEVENTTEAMID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying, kEVENTCOUNTER as NSCopying, kEVENTUSERID as NSCopying, kEVENTGROUPID as NSCopying, kEVENTTITLE as NSCopying, kEVENTSTART as NSCopying, kEVENTEND as NSCopying])
         
     }
 

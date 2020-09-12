@@ -20,6 +20,12 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var placeHolderLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
+    @IBOutlet weak var eventTitleText: UITextField!
+    @IBOutlet weak var eventStartText: UITextField!
+    @IBOutlet weak var eventEndText: UITextField!
+    
+    
+    
     
     var memberIds: [String] = []
     var allMembers: [FUser] = []
@@ -50,6 +56,10 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         //self.setLeftAlignedNavigationItemTitle(text: "Event", color: .white, margin: 12)
         dateLabel.text = dateString
         textView.text = event.eventText
+        eventTitleText.text = event.eventTitle
+        eventStartText.text = event.eventStart
+        eventEndText.text = event.eventEnd
+        
         if event.eventText != "" {
             placeHolderLabel.isHidden = true
         } else {
@@ -74,7 +84,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         event.clearCalendarCounter(eventGroupID: event.eventGroupID, eventUserID : event.eventUserID)
     }
     
-    func createEvent(eventOwnerID: String, eventTeamID: String, eventText: String, eventDate: String, eventAccountType: String, eventUserID: String, eventGroupID: String) {
+    func createEvent(eventOwnerID: String, eventTeamID: String, eventText: String, eventDate: String, eventAccountType: String, eventUserID: String, eventGroupID: String, eventTitle: String, eventStart: String, eventEnd: String) {
         let localReference = reference(.Event).document()
         let eventId = localReference.documentID
         var event: [String : Any]!
@@ -98,6 +108,9 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         let eventOwnerID = FUser.currentId()
         let eventAccountType = "coach"
         let eventGroupID = UUID().uuidString
+        let eventTitle = eventTitleText.text!
+        let eventStart = eventStartText.text
+        let eventEnd = eventEndText.text
         
         
         //NEED TO ADD EVENTGROUPID HERE NOT DATE, EVENTGROUPID WILL BE THE ID ALL USERS SHARE FOR AN EVENT (SYNONYMOUS WITH CHATROOMID), AND EVENTID WILL BE
@@ -124,7 +137,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
                
                
                for userId in tempMembers {
-                self.createEvent(eventOwnerID: eventOwnerID, eventTeamID: FUser.currentUser()!.userTeamID, eventText: eventText, eventDate: self.dateString, eventAccountType: eventAccountType, eventUserID: userId, eventGroupID: eventGroupID)
+                self.createEvent(eventOwnerID: eventOwnerID, eventTeamID: FUser.currentUser()!.userTeamID, eventText: eventText, eventDate: self.dateString, eventAccountType: eventAccountType, eventUserID: userId, eventGroupID: eventGroupID, eventTitle: eventTitle, eventStart: eventStart!, eventEnd: eventEnd!)
 
                }
                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
@@ -185,7 +198,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     
     @IBAction func doneButtonPressed(_ sender: Any) {
-        if textView.text != "" {
+        if eventTitleText.text != "" && eventStartText.text != "" && eventEndText.text != "" {
             if self.navigationItem.rightBarButtonItem?.title == "Update" {
                 event.updateEvent(eventGroupID: event.eventGroupID, eventOwnerID: event.eventOwnerID, eventText: textView.text!)
             } else {
