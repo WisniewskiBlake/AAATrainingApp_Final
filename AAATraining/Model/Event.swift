@@ -121,7 +121,7 @@ public class Event {
     }
 
 
-    public func updateEvent(eventGroupID: String, eventOwnerID: String, eventText : String) {
+    public func updateEvent(eventGroupID: String, eventOwnerID: String, eventText : String, eventTitle: String, eventStart: String, eventEnd: String) {
         reference(.Event).whereField(kEVENTGROUPID, isEqualTo: eventGroupID).getDocuments { (snapshot, error) in
             
             guard let snapshot = snapshot else { return }
@@ -132,14 +132,14 @@ public class Event {
                     
                     let currentRecent = recent.data() as NSDictionary
                     
-                    self.updateEventItem(event: currentRecent, eventText: eventText)
+                    self.updateEventItem(event: currentRecent, eventText: eventText, eventTitle: eventTitle, eventStart: eventStart, eventEnd: eventEnd)
                 }
             }
         }
         
     }
     
-    func updateEventItem(event: NSDictionary, eventText: String) {
+    func updateEventItem(event: NSDictionary, eventText: String, eventTitle: String, eventStart: String, eventEnd: String) {
 
         var counter = event[kEVENTCOUNTER] as! Int
 
@@ -147,7 +147,7 @@ public class Event {
             counter += 1
         }
 
-        let values = [kEVENTTEXT : eventText, kEVENTCOUNTER : counter] as [String : Any]
+        let values = [kEVENTTEXT : eventText, kEVENTCOUNTER : counter, kEVENTTITLE : eventTitle, kEVENTSTART : eventStart, kEVENTEND : eventEnd] as [String : Any]
 
         reference(.Event).document(event[kEVENTID] as! String).updateData(values)
     }

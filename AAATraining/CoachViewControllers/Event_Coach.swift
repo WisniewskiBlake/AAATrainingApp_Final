@@ -94,7 +94,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             eventCounter = 1
         }
         
-        event = [kEVENTID: eventId, kEVENTTEAMID: eventTeamID, kEVENTOWNERID: FUser.currentId(), kEVENTTEXT: eventText, kEVENTDATE: self.dateString, kEVENTACCOUNTTYPE: eventAccountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: eventUserID, kEVENTGROUPID: eventGroupID] as [String:Any]
+        event = [kEVENTID: eventId, kEVENTTEAMID: eventTeamID, kEVENTOWNERID: FUser.currentId(), kEVENTTEXT: eventText, kEVENTDATE: self.dateString, kEVENTACCOUNTTYPE: eventAccountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: eventUserID, kEVENTGROUPID: eventGroupID, kEVENTTITLE: eventTitle, kEVENTSTART: eventStart, kEVENTEND: eventEnd] as [String:Any]
         
         localReference.setData(event)
         
@@ -200,7 +200,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     @IBAction func doneButtonPressed(_ sender: Any) {
         if eventTitleText.text != "" && eventStartText.text != "" && eventEndText.text != "" {
             if self.navigationItem.rightBarButtonItem?.title == "Update" {
-                event.updateEvent(eventGroupID: event.eventGroupID, eventOwnerID: event.eventOwnerID, eventText: textView.text!)
+                event.updateEvent(eventGroupID: event.eventGroupID, eventOwnerID: event.eventOwnerID, eventText: textView.text!, eventTitle: eventTitleText.text!, eventStart: eventStartText.text!, eventEnd: eventEndText.text!)
             } else {
                 createEventForMembers()
             }
