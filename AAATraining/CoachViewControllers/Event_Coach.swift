@@ -36,8 +36,6 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     var updateNeeded: Bool = false
     
-    
-    
     var event = Event()
     var accountType = ""
     
@@ -223,6 +221,10 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         }
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
     
     // exec whenever the screen has been tapped
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

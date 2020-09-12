@@ -18,6 +18,9 @@ class PlayerEvent: UIViewController, UITextViewDelegate, UINavigationControllerD
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var placeHolderLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var eventTitleText: UITextField!
+    @IBOutlet weak var eventStartText: UITextField!
+    @IBOutlet weak var eventEndText: UITextField!
     
     var dateString: String = ""
     let formatter = DateFormatter()
@@ -33,6 +36,9 @@ class PlayerEvent: UIViewController, UITextViewDelegate, UINavigationControllerD
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         dateLabel.text = dateString
         textView.text = event.eventText
+        eventTitleText.text = event.eventTitle
+        eventStartText.text = event.eventStart
+        eventEndText.text = event.eventEnd
         if event.eventText != "" {
             placeHolderLabel.isHidden = true
         } else {
