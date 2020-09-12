@@ -28,7 +28,8 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     var isNewObserver: Bool = true
     var eventToCopyUserID: String = ""
     
-
+    @IBOutlet weak var tableView: UITableView!
+    
     
 
     override func viewDidLoad() {
