@@ -8,11 +8,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="GillSans-Bold.otf">
-            <string>GigaSans-Bold</string>
-        </array>
         <array key="Locomotype  GigaSansMedium.otf">
             <string>GigaSans-Medium</string>
+        </array>
+        <array key="Locomotype  GigaSansRegular.otf">
+            <string>GigaSans-Regular</string>
         </array>
     </customFonts>
     <scenes>
@@ -24,16 +24,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="lockerRoomLogo (2).png" translatesAutoresizingMaskIntoConstraints="NO" id="UhG-vr-9LD">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="230"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="lockrRoomLogo (1).png" translatesAutoresizingMaskIntoConstraints="NO" id="UhG-vr-9LD">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="252"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="230" id="B3T-L7-o8e"/>
+                                    <constraint firstAttribute="height" constant="252" id="B3T-L7-o8e"/>
                                     <constraint firstAttribute="width" constant="375" id="CGF-k9-egC"/>
                                 </constraints>
                                 <viewLayoutGuide key="safeArea" id="chL-aZ-F1a"/>
                             </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nWj-9f-QEb">
-                                <rect key="frame" x="72.5" y="343" width="230" height="34"/>
+                                <rect key="frame" x="72.5" y="375" width="230" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="230" id="OVh-T1-N8U"/>
                                     <constraint firstAttribute="height" constant="34" id="Vqe-VK-Ttk"/>
@@ -41,69 +41,53 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" returnKeyType="done"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please Enter Your Team Code:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AxL-ei-hS7">
-                                <rect key="frame" x="16" y="265" width="343" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="PQX-UE-BQ2"/>
-                                    <constraint firstAttribute="width" constant="343" id="zPu-kv-B2v"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="GigaSans-Medium" family="Giga Sans" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ceF-aX-wPQ">
-                                <rect key="frame" x="16" y="435" width="343" height="40"/>
-                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="frame" x="16" y="467" width="343" height="40"/>
+                                <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="343" id="IB5-FW-ySf"/>
                                     <constraint firstAttribute="height" constant="40" id="MuO-c9-hbD"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
                                 <state key="normal" title="Continue">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
                                     <action selector="continueButtonClicked:" destination="khG-9V-29r" eventType="touchUpInside" id="Hfo-Xq-zEB"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No Code? Register Team Here" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sIT-Dd-6aX">
-                                <rect key="frame" x="75" y="504" width="230" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Code? Register Team Here" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sIT-Dd-6aX">
+                                <rect key="frame" x="75" y="546" width="230" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="2Qd-si-2Hi"/>
                                     <constraint firstAttribute="width" constant="230" id="C17-e7-Pht"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="GigaSans-Regular" family="Giga Sans" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="L O C K E R" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Nf-BX-djh">
-                                <rect key="frame" x="0.0" y="542" width="375" height="53"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.82092786815068497" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name="GigaSans-Bold" family="Giga Sans" pointSize="48"/>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="R O O M" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iuN-gI-mt3">
-                                <rect key="frame" x="0.0" y="594" width="375" height="53"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.82092786819999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name="GigaSans-Bold" family="Giga Sans" pointSize="48"/>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please Enter Your Team Code:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AxL-ei-hS7">
+                                <rect key="frame" x="19" y="306" width="343" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="PQX-UE-BQ2"/>
+                                    <constraint firstAttribute="width" constant="343" id="zPu-kv-B2v"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="GigaSans-Medium" family="Giga Sans" pointSize="18"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="nWj-9f-QEb" firstAttribute="top" secondItem="AxL-ei-hS7" secondAttribute="bottom" constant="57" id="0qY-Bp-tKd"/>
+                            <constraint firstItem="nWj-9f-QEb" firstAttribute="top" secondItem="AxL-ei-hS7" secondAttribute="bottom" constant="48" id="0qY-Bp-tKd"/>
                             <constraint firstItem="ceF-aX-wPQ" firstAttribute="centerX" secondItem="g5F-1w-cv3" secondAttribute="centerX" id="7oq-j6-dQT"/>
-                            <constraint firstItem="sIT-Dd-6aX" firstAttribute="centerX" secondItem="g5F-1w-cv3" secondAttribute="centerX" id="EcG-td-TqU"/>
-                            <constraint firstItem="g5F-1w-cv3" firstAttribute="trailing" secondItem="AxL-ei-hS7" secondAttribute="trailing" constant="16" id="ISw-Kl-Egp"/>
-                            <constraint firstItem="AxL-ei-hS7" firstAttribute="top" secondItem="UhG-vr-9LD" secondAttribute="bottom" constant="35" id="U61-ti-YNn"/>
+                            <constraint firstItem="sIT-Dd-6aX" firstAttribute="centerX" secondItem="g5F-1w-cv3" secondAttribute="centerX" constant="2.5" id="EcG-td-TqU"/>
+                            <constraint firstItem="g5F-1w-cv3" firstAttribute="trailing" secondItem="AxL-ei-hS7" secondAttribute="trailing" constant="13" id="ISw-Kl-Egp"/>
+                            <constraint firstItem="AxL-ei-hS7" firstAttribute="top" secondItem="UhG-vr-9LD" secondAttribute="bottom" constant="54" id="U61-ti-YNn"/>
                             <constraint firstItem="UhG-vr-9LD" firstAttribute="leading" secondItem="g5F-1w-cv3" secondAttribute="leading" id="bps-Zs-gWD"/>
                             <constraint firstItem="nWj-9f-QEb" firstAttribute="centerX" secondItem="g5F-1w-cv3" secondAttribute="centerX" id="jtd-2F-K6b"/>
-                            <constraint firstItem="AxL-ei-hS7" firstAttribute="leading" secondItem="g5F-1w-cv3" secondAttribute="leading" constant="16" id="pif-7W-dYn"/>
-                            <constraint firstItem="sIT-Dd-6aX" firstAttribute="top" secondItem="ceF-aX-wPQ" secondAttribute="bottom" constant="47" id="sI2-4U-fYj"/>
+                            <constraint firstItem="AxL-ei-hS7" firstAttribute="leading" secondItem="g5F-1w-cv3" secondAttribute="leading" constant="19" id="pif-7W-dYn"/>
+                            <constraint firstItem="sIT-Dd-6aX" firstAttribute="top" secondItem="ceF-aX-wPQ" secondAttribute="bottom" constant="39" id="sI2-4U-fYj"/>
                             <constraint firstItem="UhG-vr-9LD" firstAttribute="top" secondItem="Nnq-ka-LIR" secondAttribute="top" id="u0h-gx-6HS"/>
                             <constraint firstItem="ceF-aX-wPQ" firstAttribute="top" secondItem="nWj-9f-QEb" secondAttribute="bottom" constant="58" id="ukX-TX-Az0"/>
                             <constraint firstItem="UhG-vr-9LD" firstAttribute="trailing" secondItem="g5F-1w-cv3" secondAttribute="trailing" id="wFN-Ug-dn8"/>
@@ -4782,7 +4766,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nutritionIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Cga-qF-XGY">
-                                            <rect key="frame" x="0.0" y="-6" width="50" height="35"/>
+                                            <rect key="frame" x="0.0" y="4" width="50" height="25"/>
                                             <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="50" id="HkU-QS-ek6"/>
@@ -5378,7 +5362,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nutritionIcon" translatesAutoresizingMaskIntoConstraints="NO" id="CdB-n4-8Ng">
-                                        <rect key="frame" x="0.0" y="-7" width="50" height="36"/>
+                                        <rect key="frame" x="0.0" y="3" width="50" height="26"/>
                                         <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36" id="p1V-gH-Hvv"/>
@@ -7059,7 +7043,7 @@
         <image name="feed_selected" width="25" height="25"/>
         <image name="groupIcon" width="99.5" height="99"/>
         <image name="info" width="25" height="25"/>
-        <image name="lockerRoomLogo (2).png" width="281.25" height="172.5"/>
+        <image name="lockrRoomLogo (1).png" width="281.25" height="187.5"/>
         <image name="more" width="25" height="25"/>
         <image name="moreVert" width="25" height="25"/>
         <image name="nutritionIcon" width="25" height="25"/>
