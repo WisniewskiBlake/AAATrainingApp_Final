@@ -657,6 +657,20 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         sheet.addAction(library)
         sheet.addAction(cancel)
         
+//        if ( UI_USER_INTERFACE_IDIOM() == .pad )
+//        {
+//            if let currentPopoverpresentioncontroller = sheet.popoverPresentationController{
+//
+//                currentPopoverpresentioncontroller.sourceView = self.inputToolbar.contentView.leftBarButtonItem
+//                currentPopoverpresentioncontroller.sourceRect = self.inputToolbar.contentView.leftBarButtonItem.bounds
+//
+//                currentPopoverpresentioncontroller.permittedArrowDirections = .up
+//                self.present(sheet, animated: true, completion: nil)
+//            }
+//        }else{
+//            self.present(sheet, animated: true, completion: nil)
+//        }
+        
         // present action sheet to the user finally
         self.present(sheet, animated: true, completion: nil)
         

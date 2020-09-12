@@ -17,7 +17,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
 //    @IBOutlet weak var newEventColorLabel: UILabel!
 //    @IBOutlet weak var eventColorLabel: UILabel!
     @IBOutlet var calendar: FSCalendar!
-    @IBOutlet weak var cooperWaxLogo: UIImageView!
+
     
     var allEvents: [Event] = []
     var recentListener: ListenerRegistration!
@@ -77,11 +77,11 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         team.getTeam(teamID: FUser.currentUser()!.userTeamID) { (teamReturned) in
             if teamReturned.teamID != "" {
                 team = teamReturned
-                if team.teamType == "Hockey" {
-                    self.cooperWaxLogo.isHidden = false
-                } else {
-                    self.cooperWaxLogo.isHidden = true
-                }
+//                if team.teamType == "Hockey" {
+//                    self.cooperWaxLogo.isHidden = false
+//                } else {
+//                    self.cooperWaxLogo.isHidden = true
+//                }
                     
             } else {
                 

@@ -11,10 +11,8 @@ import JSQMessagesViewController
 
 class IncomingMessage {
     
-    let helper = Helper()
-    
     var collectionView: JSQMessagesCollectionView
-    
+    let helper = Helper()
     
     init(collectionView_: JSQMessagesCollectionView) {
         collectionView = collectionView_

@@ -31,6 +31,11 @@ class TeamLoginVC: UIViewController, UITextFieldDelegate {
         registerTeamLabel.addGestureRecognizer(registerTeamTapGestureRecognizer)
         
         self.teamCodeText.delegate = self
+        
+        for family in UIFont.familyNames.sorted() {
+            let names = UIFont.fontNames(forFamilyName: family)
+            print("Family: \(family) Font names: \(names)")
+        }
     }
     
     @IBAction func continueButtonClicked(_ sender: Any) {

@@ -83,7 +83,7 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
     var outgoingBubble = JSQMessagesBubbleImageFactory()?.outgoingMessagesBubbleImage(with: UIColor(hexString: FUser.currentUser()!.userTeamColorOne))
     
     
-    var incomingBubble = JSQMessagesBubbleImageFactory()?.outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
+    var incomingBubble = JSQMessagesBubbleImageFactory()?.incomingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
     
     
     @IBAction func backButtonPressed(_ sender: Any) {
@@ -587,8 +587,8 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
            if let text = text {
                
                let ecryptedText = Encryption.encryptText(chatRoomId: chatRoomId, message: text)
-                   
-               outgoingMessage = OutgoingMessage(message: ecryptedText, senderId: currentUser.objectId, senderName: currentUser.firstname, date: date, status: kDELIVERED, type: kTEXT)
+                    //+ " " + currentUser.lastname
+            outgoingMessage = OutgoingMessage(message: ecryptedText, senderId: currentUser.objectId, senderName: currentUser.firstname + " " + currentUser.lastname, date: date, status: kDELIVERED, type: kTEXT)
            }
            
            //picture message
@@ -601,7 +601,7 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
                        
                        let ecryptedText = Encryption.encryptText(chatRoomId: self.chatRoomId, message: "[\(kPICTURE)]")
                        
-                       outgoingMessage = OutgoingMessage(message: ecryptedText, pictureLink: imageLink!, senderId: currentUser.objectId, senderName: currentUser.firstname, date: date, status: kDELIVERED, type: kPICTURE)
+                       outgoingMessage = OutgoingMessage(message: ecryptedText, pictureLink: imageLink!, senderId: currentUser.objectId, senderName: currentUser.firstname + " " + currentUser.lastname, date: date, status: kDELIVERED, type: kPICTURE)
                        
                        JSQSystemSoundPlayer.jsq_playMessageSentSound()
                        self.finishSendingMessage()
@@ -626,7 +626,7 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
                        
                        let ecryptedText = Encryption.encryptText(chatRoomId: self.chatRoomId, message: "[\(kVIDEO)]")
                        
-                       outgoingMessage = OutgoingMessage(message: ecryptedText, video: videoLink!, thumbNail: dataThumbnail! as NSData, senderId: currentUser.objectId, senderName: currentUser.firstname, date: date, status: kDELIVERED, type: kVIDEO)
+                       outgoingMessage = OutgoingMessage(message: ecryptedText, video: videoLink!, thumbNail: dataThumbnail! as NSData, senderId: currentUser.objectId, senderName: currentUser.firstname + " " + currentUser.lastname, date: date, status: kDELIVERED, type: kVIDEO)
                        
                        JSQSystemSoundPlayer.jsq_playMessageSentSound()
                        self.finishSendingMessage()
@@ -650,7 +650,7 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
                        let ecryptedText = Encryption.encryptText(chatRoomId: self.chatRoomId, message: "[\(kAUDIO)]")
 
                        
-                       outgoingMessage = OutgoingMessage(message: ecryptedText, audio: audioLink!, senderId: currentUser.objectId, senderName: currentUser.firstname, date: date, status: kDELIVERED, type: kAUDIO)
+                       outgoingMessage = OutgoingMessage(message: ecryptedText, audio: audioLink!, senderId: currentUser.objectId, senderName: currentUser.firstname + " " + currentUser.lastname, date: date, status: kDELIVERED, type: kAUDIO)
                        
                        JSQSystemSoundPlayer.jsq_playMessageSentSound()
                        self.finishSendingMessage()
