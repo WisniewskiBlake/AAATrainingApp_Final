@@ -27,6 +27,10 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     var eventsToCopy: [Event] = []
     var isNewObserver: Bool = true
     var eventToCopyUserID: String = ""
+    var today: String = ""
+    var upcomingEvents: [Event] = []
+    
+    
     
     var countArray = [String]()
     
@@ -54,7 +58,11 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         calendar.appearance.headerTitleColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:22)
         
-        loadEvents()
+        //loadEvents()
+        
+        let todayDate = self.calendar!.today! as Date
+        self.calendar.formatter.dateFormat = "YYYY-MM-dd"
+        today = calendar.formatter.string(from: todayDate)
         
         self.setLeftAlignedNavigationItemTitle(text: "Calendar", color: .white, margin: 12)
         
@@ -77,7 +85,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        loadTeamType()
+        //loadTeamType()
        loadEvents()
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -104,13 +112,14 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     
     @objc func loadEvents() {
         ProgressHUD.show()
-        recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).addSnapshotListener({ (snapshot, error) in
+        recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).order(by: kEVENTUSERID).addSnapshotListener({ (snapshot, error) in
                            
             self.allEvents = []
             self.allEventDates = []
             self.countArray = []
             self.eventsToCopy = []
             self.eventToCopyUserID = ""
+            self.upcomingEvents = []
             
             var i = 0
                         
@@ -176,7 +185,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         let eventId = localReference.documentID
         var eventToUpload: [String : Any]!
         let eventCounter = 0
-        eventToUpload = [kEVENTID: eventId, kEVENTTEAMID: event.eventTeamID, kEVENTOWNERID: event.eventOwnerID, kEVENTTEXT: event.eventText, kEVENTDATE: event.eventDate, kEVENTACCOUNTTYPE: FUser.currentUser()?.accountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: FUser.currentId(), kEVENTGROUPID: event.eventGroupID] as [String:Any]
+        eventToUpload = [kEVENTID: eventId, kEVENTTEAMID: event.eventTeamID, kEVENTOWNERID: event.eventOwnerID, kEVENTTEXT: event.eventText, kEVENTDATE: event.eventDate, kEVENTACCOUNTTYPE: FUser.currentUser()?.accountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: FUser.currentId(), kEVENTGROUPID: event.eventGroupID, kEVENTTITLE: event.eventTitle, kEVENTSTART: event.eventStart, kEVENTEND: event.eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: event.dateForUpcomingComparison] as [String:Any]
 
         localReference.setData(eventToUpload)
     }

@@ -37,7 +37,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "createEvent"), object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "createEvent"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
         
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
@@ -125,7 +125,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                    let eventDictionary = eventDictionary.data() as NSDictionary
                    let event = Event(_dictionary: eventDictionary)
                     
-                    if event.dateForUpcomingComparison > self.today {
+                    if event.dateForUpcomingComparison > self.today && event.eventUserID == FUser.currentId() {
                         self.upcomingEvents.append(event)
                     }
                     
@@ -157,6 +157,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                     //self.isNewObserver = false
                     for event in self.eventsToCopy {
                         self.createEventsForNewObserver(event: event)
+                        
                     }
                     self.calendar.reloadData()
                 } else {
@@ -168,7 +169,11 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
             
            }
             //may not need to reload here to speed up time
-            print(self.upcomingEvents.count)
+            for event in self.upcomingEvents {
+                print(event.eventID)
+                
+            }
+            
             self.calendar.reloadData()
             ProgressHUD.dismiss()
         })
@@ -210,10 +215,14 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         self.navigationController?.present(navController, animated: true, completion: nil)
     }
     
-//    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return allEvents.count / upcomingEvents.count
-//
-//    }
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if self.isNewObserver == true {
+            
+        }
+        return allEvents.count / upcomingEvents.count
+
+    }
 //
 //    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //

@@ -96,7 +96,7 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
     
     @objc func loadEvents() {
         ProgressHUD.show()
-        recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).addSnapshotListener({ (snapshot, error) in
+        recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).order(by: kEVENTUSERID).addSnapshotListener({ (snapshot, error) in
                            
             self.allEvents = []
             self.allEventDates = []
@@ -160,6 +160,7 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
         })
     }
     
+    //when a new observer opens the view this is called twice
     func createEventsForNewObserver(event: Event) {
         let localReference = reference(.Event).document()
         let eventId = localReference.documentID
