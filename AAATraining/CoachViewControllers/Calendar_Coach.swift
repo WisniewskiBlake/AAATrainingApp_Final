@@ -29,6 +29,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     var eventsToCopy: [Event] = []
     var isNewObserver: Bool = true
     var eventToCopyUserID: String = ""
+    var today: String = ""
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -49,13 +50,16 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:22)
         //calendar.placeholderType = .none
         
-        loadEvents()
+        //loadEvents()
         
 //        eventColorLabel.layer.cornerRadius = eventColorLabel.frame.width / 2
 //        eventColorLabel.clipsToBounds = true
 //
 //        newEventColorLabel.layer.cornerRadius = newEventColorLabel.frame.width / 2
 //        newEventColorLabel.clipsToBounds = true
+        let todayDate = self.calendar!.today! as Date
+        self.calendar.formatter.dateFormat = "YYYY-MM-dd"
+        today = calendar.formatter.string(from: todayDate)
         
         self.setLeftAlignedNavigationItemTitle(text: "Calendar", color: .white, margin: 12)
         
@@ -66,7 +70,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         super.viewWillAppear(animated)
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        loadTeamType()
+        //loadTeamType()
         
        loadEvents()
     }
@@ -101,6 +105,9 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
             self.countArray = []
             self.eventsToCopy = []
             self.eventToCopyUserID = ""
+            self.upcomingEvents = []
+            
+            
             
             var i = 0
                         
@@ -117,18 +124,22 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                     
                    let eventDictionary = eventDictionary.data() as NSDictionary
                    let event = Event(_dictionary: eventDictionary)
-
                     
+                    if event.dateForUpcomingComparison > self.today {
+                        self.upcomingEvents.append(event)
+                    }
                     
+                    //if the user and event grabbed have same teamID, append it to all events
                     if event.eventTeamID == FUser.currentUser()?.userTeamID {
                         self.allEvents.append(event)
                         i += 1
+                        //if the event that has the same teamID belongs to an existing user, append the date and count
                        if event.eventUserID == FUser.currentId() {
                             self.allEventDates.append(event.eventDate)
                             self.countArray.append(String(event.eventCounter))
                             self.isNewObserver = false
                        } else {
-                            
+                            //else if the first event grabbed does not belong to an existing user, then append it to eventsToCopy
                             if i == 1 {
                                 self.eventsToCopy.append(event)
                                 self.eventToCopyUserID = event.eventUserID
@@ -149,16 +160,15 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                     }
                     self.calendar.reloadData()
                 } else {
-                    //compare the strings of todays date and allEvents.dateForUpcomingComparison
-                    //if allEvents.dateForUpcomingComparison comes after todays date, append that date to upComingEvents
-                    //populate table with upcomingEvents
-                    print(self.calendar.today)
+                    
+                    
                     self.calendar.reloadData()
                 }
                                
             
            }
             //may not need to reload here to speed up time
+            print(self.upcomingEvents.count)
             self.calendar.reloadData()
             ProgressHUD.dismiss()
         })
@@ -169,7 +179,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         let eventId = localReference.documentID
         var eventToUpload: [String : Any]!
         let eventCounter = 0
-        eventToUpload = [kEVENTID: eventId, kEVENTTEAMID: event.eventTeamID, kEVENTOWNERID: event.eventOwnerID, kEVENTTEXT: event.eventText, kEVENTDATE: event.eventDate, kEVENTACCOUNTTYPE: FUser.currentUser()?.accountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: FUser.currentId(), kEVENTGROUPID: event.eventGroupID] as [String:Any]
+        eventToUpload = [kEVENTID: eventId, kEVENTTEAMID: event.eventTeamID, kEVENTOWNERID: event.eventOwnerID, kEVENTTEXT: event.eventText, kEVENTDATE: event.eventDate, kEVENTACCOUNTTYPE: FUser.currentUser()?.accountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: FUser.currentId(), kEVENTGROUPID: event.eventGroupID, kEVENTTITLE: event.eventTitle, kEVENTSTART: event.eventStart, kEVENTEND: event.eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: event.dateForUpcomingComparison] as [String:Any]
 
         localReference.setData(eventToUpload)
     }
@@ -200,6 +210,31 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         self.navigationController?.present(navController, animated: true, completion: nil)
     }
     
+//    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return allEvents.count / upcomingEvents.count
+//
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "TypeCell", for: indexPath)
+//        cell.textLabel?.text = dataSource[indexPath.row]
+//
+//        if cellTagArray.contains([indexPath.section, indexPath.row]) {
+//            cell.accessoryType = .checkmark
+//        } else {
+//            cell.accessoryType = .none
+//        }
+//
+//        cell.tag = indexPath.row
+//
+//        return cell
+//    }
+//
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 50
+//    }
+    
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
         calendar.formatter.dateFormat = "EEEE, MM-dd-YYYY"
         let dateString = calendar.formatter.string(from: date)
@@ -223,7 +258,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         calendar.formatter.dateFormat = "EEEE, MM-dd-YYYY"
         let dateString = calendar.formatter.string(from: date)
         let values = Calendar.current.dateComponents([Calendar.Component.month, Calendar.Component.year], from: self.calendar.currentPage)
-        print(dateString)
+        //print(dateString)
         if allEventDates.contains(dateString) || date == calendar.today {
             return #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         } else if date.get(.month) != values.month{

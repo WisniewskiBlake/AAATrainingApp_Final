@@ -94,7 +94,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             eventCounter = 1
         }
         
-        event = [kEVENTID: eventId, kEVENTTEAMID: eventTeamID, kEVENTOWNERID: FUser.currentId(), kEVENTTEXT: eventText, kEVENTDATE: self.dateString, kEVENTACCOUNTTYPE: eventAccountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: eventUserID, kEVENTGROUPID: eventGroupID, kEVENTTITLE: eventTitle, kEVENTSTART: eventStart, kEVENTEND: eventEnd] as [String:Any]
+        event = [kEVENTID: eventId, kEVENTTEAMID: eventTeamID, kEVENTOWNERID: FUser.currentId(), kEVENTTEXT: eventText, kEVENTDATE: self.dateString, kEVENTACCOUNTTYPE: eventAccountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: eventUserID, kEVENTGROUPID: eventGroupID, kEVENTTITLE: eventTitle, kEVENTSTART: eventStart, kEVENTEND: eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: dateForUpcomingComparison] as [String:Any]
         
         localReference.setData(event)
         
@@ -212,6 +212,8 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         dismiss(animated: true, completion: nil)
         
     }
+    
+    
     
     
     func textViewDidChange(_ textView: UITextView) {

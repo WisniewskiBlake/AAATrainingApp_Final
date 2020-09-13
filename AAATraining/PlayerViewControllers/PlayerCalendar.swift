@@ -28,6 +28,8 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
     var eventsToCopy: [Event] = []
     var isNewObserver: Bool = true
     var eventToCopyUserID: String = ""
+    var today: String = ""
+    var upcomingEvents: [Event] = []
     
         
     var countArray = [String]()
@@ -45,9 +47,11 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
         calendar.appearance.todayColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         calendar.appearance.headerTitleColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:22)
-        loadEvents()
+        //loadEvents()
         
-        
+        let todayDate = self.calendar!.today! as Date
+        self.calendar.formatter.dateFormat = "YYYY-MM-dd"
+        today = calendar.formatter.string(from: todayDate)
         
 //        eventColorLabel.layer.cornerRadius = eventColorLabel.frame.width / 2
 //        eventColorLabel.clipsToBounds = true
@@ -65,7 +69,7 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         
-        loadTeamType()
+        //loadTeamType()
        loadEvents()
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -99,6 +103,7 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
             self.countArray = []
             self.eventsToCopy = []
             self.eventToCopyUserID = ""
+            self.upcomingEvents = []
             
             var i = 0
             
@@ -135,13 +140,7 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
                             
                        }
                     }
-//                   self.allEvents.append(event)
-//                    if event.eventUserID == FUser.currentId() {
-//                        self.allEventDates.append(event.eventDate)
-//                        self.countArray.append(String(event.eventCounter))
-//                    }
-                   
-                    
+
                 
                }
                 if self.isNewObserver == true {
@@ -166,7 +165,7 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
         let eventId = localReference.documentID
         var eventToUpload: [String : Any]!
         let eventCounter = 0
-        eventToUpload = [kEVENTID: eventId, kEVENTTEAMID: event.eventTeamID, kEVENTOWNERID: event.eventOwnerID, kEVENTTEXT: event.eventText, kEVENTDATE: event.eventDate, kEVENTACCOUNTTYPE: FUser.currentUser()?.accountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: FUser.currentId(), kEVENTGROUPID: event.eventGroupID] as [String:Any]
+        eventToUpload = [kEVENTID: eventId, kEVENTTEAMID: event.eventTeamID, kEVENTOWNERID: event.eventOwnerID, kEVENTTEXT: event.eventText, kEVENTDATE: event.eventDate, kEVENTACCOUNTTYPE: FUser.currentUser()?.accountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: FUser.currentId(), kEVENTGROUPID: event.eventGroupID, kEVENTTITLE: event.eventTitle, kEVENTSTART: event.eventStart, kEVENTEND: event.eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: event.dateForUpcomingComparison] as [String:Any]
 
         localReference.setData(eventToUpload)
     }
