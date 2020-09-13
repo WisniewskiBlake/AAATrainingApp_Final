@@ -12,7 +12,7 @@ import Firebase
 import FirebaseFirestore
 import ProgressHUD
 
-class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance {
+class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance, UITableViewDelegate, UITableViewDataSource {
     
 //    @IBOutlet weak var newEventColorLabel: UILabel!
 //    @IBOutlet weak var eventColorLabel: UILabel!
@@ -73,6 +73,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         //loadTeamType()
         
        loadEvents()
+       self.tableView.reloadData()
     }
     override func viewWillDisappear(_ animated: Bool) {
         recentListener.remove()
@@ -159,6 +160,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                         self.createEventsForNewObserver(event: event)
                         
                     }
+                    
                     self.calendar.reloadData()
                 } else {
                     
@@ -174,6 +176,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                 
             }
             
+            print(self.upcomingEvents.count)
             self.calendar.reloadData()
             ProgressHUD.dismiss()
         })
@@ -215,31 +218,32 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         self.navigationController?.present(navController, animated: true, completion: nil)
     }
     
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+   public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if self.isNewObserver == true {
-            
-        }
-        return allEvents.count / upcomingEvents.count
+//        if self.isNewObserver == true {
+//
+//        }
+        //print(upcomingEvents.count)
+        return upcomingEvents.count
 
     }
 //
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "TypeCell", for: indexPath)
-//        cell.textLabel?.text = dataSource[indexPath.row]
-//
-//        if cellTagArray.contains([indexPath.section, indexPath.row]) {
-//            cell.accessoryType = .checkmark
-//        } else {
-//            cell.accessoryType = .none
-//        }
-//
-//        cell.tag = indexPath.row
-//
-//        return cell
-//    }
-//
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CalendarCell", for: indexPath) as! CalendarCell
+        cell.textLabel?.text = upcomingEvents[indexPath.row].eventText
+        cell.eventTimeLabel?.text = upcomingEvents[indexPath.row].eventStart + " - " + upcomingEvents[indexPath.row].eventEnd
+        cell.eventTitleLabel?.text = upcomingEvents[indexPath.row].eventTitle
+        cell.textLabel?.text = upcomingEvents[indexPath.row].eventText
+
+        cell.accessoryType = .disclosureIndicator
+
+
+        cell.tag = indexPath.row
+
+        return cell
+    }
+
 //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 //        return 50
 //    }
