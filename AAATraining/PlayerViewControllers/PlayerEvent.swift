@@ -26,6 +26,9 @@ class PlayerEvent: UIViewController, UITextViewDelegate, UINavigationControllerD
     let formatter = DateFormatter()
     let helper = Helper()
     var eventText: String = ""
+    var eventStart: String = ""
+    var eventEnd: String = ""
+    var eventTitle: String = ""
     var event = Event()
     var accountType = ""
     

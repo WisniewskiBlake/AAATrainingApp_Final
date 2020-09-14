@@ -14,27 +14,22 @@ import ProgressHUD
 
 class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance, UITableViewDelegate, UITableViewDataSource {
     
-//    @IBOutlet weak var newEventColorLabel: UILabel!
-//    @IBOutlet weak var eventColorLabel: UILabel!
-    @IBOutlet var calendar: FSCalendar!
 
+    @IBOutlet var calendar: FSCalendar!
+    @IBOutlet weak var upcomingLabel: UILabel!
+    @IBOutlet weak var tableView: UITableView!
     
     var allEvents: [Event] = []
     var upcomingEvents: [Event] = []
     var recentListener: ListenerRegistration!
     var allEventDates: [String] = []
     var countArray = [String]()
-    var dateToCheckForUpcoming: [String] = []
     
     var eventsToCopy: [Event] = []
     var isNewObserver: Bool = true
     var eventToCopyUserID: String = ""
     var today: String = ""
     
-    @IBOutlet weak var tableView: UITableView!
-    
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
         //NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "createEvent"), object: nil)
@@ -46,23 +41,23 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         calendar.delegate = self
         calendar.appearance.todayColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         calendar.appearance.headerTitleColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        //calendar.appearance.weekdayTextColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:22)
-        //calendar.placeholderType = .none
-        
-        //loadEvents()
-        
-//        eventColorLabel.layer.cornerRadius = eventColorLabel.frame.width / 2
-//        eventColorLabel.clipsToBounds = true
-//
-//        newEventColorLabel.layer.cornerRadius = newEventColorLabel.frame.width / 2
-//        newEventColorLabel.clipsToBounds = true
+
         let todayDate = self.calendar!.today! as Date
         self.calendar.formatter.dateFormat = "YYYY-MM-dd"
         today = calendar.formatter.string(from: todayDate)
         
         self.setLeftAlignedNavigationItemTitle(text: "Team Calendar", color: .white, margin: 12)
         
+        let width = CGFloat(2)
+        let color = UIColor.lightGray.cgColor
+        let border = CALayer()
+        border.borderWidth = width
+        border.borderColor = color
+        border.frame = CGRect(x: -3, y: 0, width: upcomingLabel.frame.width+6, height: upcomingLabel.frame.height)
+        upcomingLabel.layer.addSublayer(border)
+        upcomingLabel.layer.cornerRadius = 5
+        upcomingLabel.layer.masksToBounds = true
     }
     
     // pre-load func
@@ -70,7 +65,6 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         super.viewWillAppear(animated)
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        //loadTeamType()
         
        loadEvents()
        
@@ -85,11 +79,6 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         team.getTeam(teamID: FUser.currentUser()!.userTeamID) { (teamReturned) in
             if teamReturned.teamID != "" {
                 team = teamReturned
-//                if team.teamType == "Hockey" {
-//                    self.cooperWaxLogo.isHidden = false
-//                } else {
-//                    self.cooperWaxLogo.isHidden = true
-//                }
                     
             } else {
                 
@@ -107,8 +96,6 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
             self.eventsToCopy = []
             self.eventToCopyUserID = ""
             self.upcomingEvents = []
-            
-            
             
             var i = 0
                         
@@ -171,12 +158,12 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
             
            }
             //may not need to reload here to speed up time
-            for event in self.upcomingEvents {
-                print(event.eventID)
-                
-            }
-            
-            print(self.upcomingEvents.count)
+//            for event in self.upcomingEvents {
+//                print(event.eventID)
+//
+//            }
+//
+//            print(self.upcomingEvents.count)
             self.tableView.reloadData()
             self.calendar.reloadData()
             ProgressHUD.dismiss()
@@ -191,6 +178,39 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         eventToUpload = [kEVENTID: eventId, kEVENTTEAMID: event.eventTeamID, kEVENTOWNERID: event.eventOwnerID, kEVENTTEXT: event.eventText, kEVENTDATE: event.eventDate, kEVENTACCOUNTTYPE: FUser.currentUser()?.accountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: FUser.currentId(), kEVENTGROUPID: event.eventGroupID, kEVENTTITLE: event.eventTitle, kEVENTSTART: event.eventStart, kEVENTEND: event.eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: event.dateForUpcomingComparison] as [String:Any]
 
         localReference.setData(eventToUpload)
+    }
+    
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
+        calendar.formatter.dateFormat = "EEEE, MM-dd-YYYY"
+        let dateString = calendar.formatter.string(from: date)
+        guard let index = allEventDates.firstIndex(of: dateString) else {
+            return nil
+        }
+        
+        if allEventDates.contains(dateString) && Int(countArray[index])! >= 1 {
+            return #colorLiteral(red: 0.05476168428, green: 0.06671469682, blue: 1, alpha: 1)
+            
+        } else if allEventDates.contains(dateString) && Int(countArray[index])! == 0 {
+            return UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        }  else {
+            return nil
+        }
+         
+    }
+    
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
+        calendar.formatter.dateFormat = "EEEE, MM-dd-YYYY"
+        let dateString = calendar.formatter.string(from: date)
+        let values = Calendar.current.dateComponents([Calendar.Component.month, Calendar.Component.year], from: self.calendar.currentPage)
+        //print(dateString)
+        if allEventDates.contains(dateString) || date == calendar.today {
+            return #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        } else if date.get(.month) != values.month{
+            return #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        } else {
+            return calendar.appearance.titleDefaultColor
+        }
+        
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
@@ -219,50 +239,12 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         self.navigationController?.present(navController, animated: true, completion: nil)
     }
     
-   public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-//        if self.isNewObserver == true {
-//
-//        }
-        //print(upcomingEvents.count)
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
         return upcomingEvents.count
 
-    }//
-    
-    
-    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
-        calendar.formatter.dateFormat = "EEEE, MM-dd-YYYY"
-        let dateString = calendar.formatter.string(from: date)
-        guard let index = allEventDates.firstIndex(of: dateString) else {
-            return nil
-        }
-        
-        if allEventDates.contains(dateString) && Int(countArray[index])! >= 1 {
-            return #colorLiteral(red: 0.05476168428, green: 0.06671469682, blue: 1, alpha: 1)
-            
-        } else if allEventDates.contains(dateString) && Int(countArray[index])! == 0 {
-            return UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        }  else {
-            return nil
-        }
-        
-         
     }
     
-    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
-        calendar.formatter.dateFormat = "EEEE, MM-dd-YYYY"
-        let dateString = calendar.formatter.string(from: date)
-        let values = Calendar.current.dateComponents([Calendar.Component.month, Calendar.Component.year], from: self.calendar.currentPage)
-        //print(dateString)
-        if allEventDates.contains(dateString) || date == calendar.today {
-            return #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        } else if date.get(.month) != values.month{
-            return #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-        } else {
-            return calendar.appearance.titleDefaultColor
-        }
-        
-    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
@@ -304,9 +286,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         self.navigationController?.present(navController, animated: true, completion: nil)
     }
     
-    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
-        calendar.reloadData()
-    }
+    
     
     func getMonth(monthNumber: String) -> String {
         if monthNumber == "01" {
@@ -338,7 +318,9 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         }
     }
     
-    
+    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
+        calendar.reloadData()
+    }
     
 
 

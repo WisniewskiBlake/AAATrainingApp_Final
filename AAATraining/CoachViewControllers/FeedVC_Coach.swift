@@ -146,7 +146,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         
         teamFeedTextLabel.text = "Team Feed"
         teamFeedTextLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 26)!
-        teamNameLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 16)!
+        teamNameLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 15)!
         
         team.getTeam(teamID: FUser.currentUser()!.userTeamID) { (teamReturned) in
             if teamReturned.teamID != "" {

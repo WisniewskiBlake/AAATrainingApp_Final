@@ -20,11 +20,12 @@ class CalendarCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        let width = CGFloat(2)
-        let color = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        let width = CGFloat(1)
+        //let color = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        let color = UIColor.lightGray.cgColor
         let border = CALayer()
         border.borderWidth = width
-        border.borderColor = color?.cgColor
+        border.borderColor = color
         border.frame = CGRect(x: 0, y: 0, width: eventDateView.frame.width, height: eventDateView.frame.height)
         eventDateView.layer.addSublayer(border)
         eventDateView.layer.cornerRadius = 5

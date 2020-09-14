@@ -14,10 +14,9 @@ import ProgressHUD
 
 class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance {
     
-    //@IBOutlet weak var newEventColorLabel: UILabel!
-    //@IBOutlet weak var eventColorLabel: UILabel!
+
     @IBOutlet weak var calendar: FSCalendar!
-    @IBOutlet weak var cooperWaxLogo: UIImageView!
+
     
     
     var allEvents: [Event] = []
@@ -98,11 +97,6 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         team.getTeam(teamID: FUser.currentUser()!.userTeamID) { (teamReturned) in
             if teamReturned.teamID != "" {
                 team = teamReturned
-                if team.teamType == "Hockey" {
-                    self.cooperWaxLogo.isHidden = false
-                } else {
-                    self.cooperWaxLogo.isHidden = true
-                }
                     
             } else {
                 

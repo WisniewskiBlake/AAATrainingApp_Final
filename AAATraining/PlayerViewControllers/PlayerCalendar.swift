@@ -12,32 +12,27 @@ import Firebase
 import FirebaseFirestore
 import ProgressHUD
 
-class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateAppearance {
+class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance, UITableViewDataSource {
     
-    //@IBOutlet weak var eventColorLabel: UILabel!
-    //@IBOutlet weak var newEventColorLabel: UILabel!
-    @IBOutlet weak var cooperWaxLogo: UIImageView!
-    
-
     @IBOutlet weak var calendar: FSCalendar!
+    @IBOutlet weak var upcomingLabel: UILabel!
+    @IBOutlet weak var tableView: UITableView!
     
     var allEvents: [Event] = []
+    var upcomingEvents: [Event] = []
     var recentListener: ListenerRegistration!
     var allEventDates: [String] = []
+    var countArray = [String]()
     
     var eventsToCopy: [Event] = []
     var isNewObserver: Bool = true
     var eventToCopyUserID: String = ""
     var today: String = ""
-    var upcomingEvents: [Event] = []
-    
-        
-    var countArray = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "createEvent"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "createEvent"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
         
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
@@ -47,19 +42,22 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
         calendar.appearance.todayColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         calendar.appearance.headerTitleColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:22)
-        //loadEvents()
         
         let todayDate = self.calendar!.today! as Date
         self.calendar.formatter.dateFormat = "YYYY-MM-dd"
         today = calendar.formatter.string(from: todayDate)
         
-//        eventColorLabel.layer.cornerRadius = eventColorLabel.frame.width / 2
-//        eventColorLabel.clipsToBounds = true
-//
-//        newEventColorLabel.layer.cornerRadius = newEventColorLabel.frame.width / 2
-//        newEventColorLabel.clipsToBounds = true
+        self.setLeftAlignedNavigationItemTitle(text: "Team Calendar", color: .white, margin: 12)
         
-        self.setLeftAlignedNavigationItemTitle(text: "Calendar", color: .white, margin: 12)
+        let width = CGFloat(2)
+        let color = UIColor.lightGray.cgColor
+        let border = CALayer()
+        border.borderWidth = width
+        border.borderColor = color
+        border.frame = CGRect(x: -3, y: 0, width: upcomingLabel.frame.width+6, height: upcomingLabel.frame.height)
+        upcomingLabel.layer.addSublayer(border)
+        upcomingLabel.layer.cornerRadius = 5
+        upcomingLabel.layer.masksToBounds = true
     }
     
     // pre-load func
@@ -68,8 +66,7 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
         
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        
-        //loadTeamType()
+
        loadEvents()
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -82,11 +79,6 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
         team.getTeam(teamID: FUser.currentUser()!.userTeamID) { (teamReturned) in
             if teamReturned.teamID != "" {
                 team = teamReturned
-                if team.teamType == "Hockey" {
-                    self.cooperWaxLogo.isHidden = false
-                } else {
-                    self.cooperWaxLogo.isHidden = true
-                }
                     
             } else {
                 
@@ -120,6 +112,11 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
                     
                    let eventDictionary = eventDictionary.data() as NSDictionary
                    let event = Event(_dictionary: eventDictionary)
+                    
+                    if event.dateForUpcomingComparison > self.today && event.eventUserID == FUser.currentId() {
+                        self.upcomingEvents.append(event)
+                    }
+                    
                     if event.eventTeamID == FUser.currentUser()?.userTeamID {
                         self.allEvents.append(event)
                         i += 1
@@ -148,13 +145,16 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
                     for event in self.eventsToCopy {
                         self.createEventsForNewObserver(event: event)
                     }
+                    self.tableView.reloadData()
                     self.calendar.reloadData()
                 } else {
+                    self.tableView.reloadData()
                     self.calendar.reloadData()
                 }
                //self.calendar.reloadData()
             
            }
+            self.tableView.reloadData()
             self.calendar.reloadData()
             ProgressHUD.dismiss()
         })
@@ -204,13 +204,15 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
         }
     }
     
-    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
-        calendar.reloadData()
-    }
+    
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        
         calendar.formatter.dateFormat = "EEEE, MM-dd-YYYY"
         let dateString = calendar.formatter.string(from: date)
+        
+        calendar.formatter.dateFormat = "YYYY-MM-dd"
+        let dateForUpcomingComparison = calendar.formatter.string(from: date)
         
         let eventVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PlayerEvent") as! PlayerEvent
         let navController = UINavigationController(rootViewController: eventVC)
@@ -218,9 +220,16 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
         for event in allEvents {
             if event.eventDate == dateString {                
                 eventVC.event = event
+//                eventVC.eventStart = event.eventStart
+//                eventVC.eventEnd = event.eventEnd
+//                eventVC.eventTitle = event.eventTitle
                 eventVC.accountType = "player"
+                
             } else {
                 eventVC.eventText = ""
+                eventVC.eventStart = ""
+                eventVC.eventEnd = ""
+                eventVC.eventTitle = ""
             }
         }
         
@@ -230,6 +239,79 @@ class PlayerCalendar: UIViewController,FSCalendarDelegate, FSCalendarDelegateApp
         self.navigationController?.present(navController, animated: true, completion: nil)
     }
     
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
+        return upcomingEvents.count
+
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CalendarCell", for: indexPath) as! CalendarCell
+       
+        cell.eventTimeLabel?.text = upcomingEvents[indexPath.row].eventStart + " - " + upcomingEvents[indexPath.row].eventEnd
+        cell.eventTitleLabel?.text = upcomingEvents[indexPath.row].eventTitle
+        let date = upcomingEvents[indexPath.row].dateForUpcomingComparison
+        let month = date[5 ..< 7]
+        let day = date[8 ..< 10]
+        cell.eventDayLabel.text = day
+        cell.eventMonthLabel.text = getMonth(monthNumber: month)
+
+        cell.accessoryType = .disclosureIndicator
+
+
+        cell.tag = indexPath.row
+
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let event = upcomingEvents[indexPath.row]
+        
+        let eventVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PlayerEvent") as! PlayerEvent
+        let navController = UINavigationController(rootViewController: eventVC)
+
+        eventVC.event = event
+        
+        eventVC.hidesBottomBarWhenPushed = true
+        eventVC.dateString = event.eventDate
+        
+        self.navigationController?.present(navController, animated: true, completion: nil)
+    }
+    
+    func getMonth(monthNumber: String) -> String {
+        if monthNumber == "01" {
+            return "Jan."
+        } else if monthNumber == "02" {
+            return "Feb."
+        } else if monthNumber == "03" {
+            return "Mar."
+        } else if monthNumber == "04" {
+            return "Apr."
+        } else if monthNumber == "05" {
+            return "May"
+        } else if monthNumber == "06" {
+            return "June"
+        } else if monthNumber == "07" {
+            return "July"
+        } else if monthNumber == "08" {
+            return "Aug."
+        } else if monthNumber == "09" {
+            return "Sept."
+        } else if monthNumber == "10" {
+            return "Oct."
+        } else if monthNumber == "11" {
+            return "Nov."
+        } else if monthNumber == "12" {
+            return "Dec."
+        } else {
+            return ""
+        }
+    }
+    
+    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
+        calendar.reloadData()
+    }
 
 }

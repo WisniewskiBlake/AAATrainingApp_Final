@@ -15,7 +15,6 @@ import FirebaseFirestore
 class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var textView: UITextView!
-    
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var placeHolderLabel: UILabel!
@@ -24,9 +23,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     @IBOutlet weak var eventStartText: UITextField!
     @IBOutlet weak var eventEndText: UITextField!
     
-    
-    
-    
+      
     var memberIds: [String] = []
     var allMembers: [FUser] = []
     
