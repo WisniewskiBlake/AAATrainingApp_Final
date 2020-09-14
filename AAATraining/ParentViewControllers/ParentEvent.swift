@@ -12,9 +12,8 @@ import Firebase
 import FirebaseCore
 import FirebaseFirestore
 
-class ParentEvent: UIViewController, UITextViewDelegate, UINavigationControllerDelegate {
-    
-    @IBOutlet weak var rightButton: UIBarButtonItem!
+class ParentEvent: UIViewController, UITextViewDelegate, UINavigationControllerDelegate {    
+
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var placeHolderLabel: UILabel!
     @IBOutlet weak var textView: UITextView!

@@ -179,7 +179,6 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         }
         
         if allEventDates.contains(dateString) && Int(countArray[index])! >= 1 {
-              
             return #colorLiteral(red: 0.05476168428, green: 0.06671469682, blue: 1, alpha: 1)
             
         } else if allEventDates.contains(dateString) && Int(countArray[index])! == 0 {
@@ -204,8 +203,6 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         }
     }
     
-    
-    
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         
         calendar.formatter.dateFormat = "EEEE, MM-dd-YYYY"
@@ -227,9 +224,6 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                 
             } else {
                 eventVC.eventText = ""
-                eventVC.eventStart = ""
-                eventVC.eventEnd = ""
-                eventVC.eventTitle = ""
             }
         }
         
