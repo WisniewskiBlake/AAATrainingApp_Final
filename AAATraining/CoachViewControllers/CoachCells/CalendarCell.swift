@@ -19,7 +19,16 @@ class CalendarCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        let width = CGFloat(2)
+        let color = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        let border = CALayer()
+        border.borderWidth = width
+        border.borderColor = color?.cgColor
+        border.frame = CGRect(x: 0, y: 0, width: eventDateView.frame.width, height: eventDateView.frame.height)
+        eventDateView.layer.addSublayer(border)
+        eventDateView.layer.cornerRadius = 5
+        eventDateView.layer.masksToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -61,7 +61,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         self.calendar.formatter.dateFormat = "YYYY-MM-dd"
         today = calendar.formatter.string(from: todayDate)
         
-        self.setLeftAlignedNavigationItemTitle(text: "Calendar", color: .white, margin: 12)
+        self.setLeftAlignedNavigationItemTitle(text: "Team Calendar", color: .white, margin: 12)
         
     }
     
@@ -73,7 +73,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         //loadTeamType()
         
        loadEvents()
-       self.tableView.reloadData()
+       
     }
     override func viewWillDisappear(_ animated: Bool) {
         recentListener.remove()
@@ -99,7 +99,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
     @objc func loadEvents() {
         ProgressHUD.show()
-        recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).order(by: kEVENTUSERID).addSnapshotListener({ (snapshot, error) in
+        recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).order(by: kEVENTUSERID).order(by: kEVENTDATEFORUPCOMINGCOMPARISON).addSnapshotListener({ (snapshot, error) in
                            
             self.allEvents = []
             self.allEventDates = []
@@ -160,11 +160,11 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                         self.createEventsForNewObserver(event: event)
                         
                     }
-                    
+                    self.tableView.reloadData()
                     self.calendar.reloadData()
                 } else {
                     
-                    
+                    self.tableView.reloadData()
                     self.calendar.reloadData()
                 }
                                
@@ -177,6 +177,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
             }
             
             print(self.upcomingEvents.count)
+            self.tableView.reloadData()
             self.calendar.reloadData()
             ProgressHUD.dismiss()
         })
@@ -226,27 +227,8 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         //print(upcomingEvents.count)
         return upcomingEvents.count
 
-    }
-//
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CalendarCell", for: indexPath) as! CalendarCell
-        cell.textLabel?.text = upcomingEvents[indexPath.row].eventText
-        cell.eventTimeLabel?.text = upcomingEvents[indexPath.row].eventStart + " - " + upcomingEvents[indexPath.row].eventEnd
-        cell.eventTitleLabel?.text = upcomingEvents[indexPath.row].eventTitle
-        cell.textLabel?.text = upcomingEvents[indexPath.row].eventText
-
-        cell.accessoryType = .disclosureIndicator
-
-
-        cell.tag = indexPath.row
-
-        return cell
-    }
-
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 50
-//    }
+    }//
+    
     
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
         calendar.formatter.dateFormat = "EEEE, MM-dd-YYYY"
@@ -282,8 +264,78 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         
     }
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CalendarCell", for: indexPath) as! CalendarCell
+       
+        cell.eventTimeLabel?.text = upcomingEvents[indexPath.row].eventStart + " - " + upcomingEvents[indexPath.row].eventEnd
+        cell.eventTitleLabel?.text = upcomingEvents[indexPath.row].eventTitle
+        let date = upcomingEvents[indexPath.row].dateForUpcomingComparison
+        let month = date[5 ..< 7]
+        let day = date[8 ..< 10]
+        cell.eventDayLabel.text = day
+        cell.eventMonthLabel.text = getMonth(monthNumber: month)
+
+        cell.accessoryType = .disclosureIndicator
+
+
+        cell.tag = indexPath.row
+
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let event = upcomingEvents[indexPath.row]
+        
+        let eventVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as! Event_Coach
+        let navController = UINavigationController(rootViewController: eventVC)
+        
+        eventVC.updateNeeded = true
+        eventVC.event = event
+        eventVC.dateForUpcomingComparison = event.dateForUpcomingComparison
+        
+
+        
+        eventVC.hidesBottomBarWhenPushed = true
+        eventVC.dateString = event.eventDate
+        eventVC.dateForUpcomingComparison = event.dateForUpcomingComparison
+        
+        self.navigationController?.present(navController, animated: true, completion: nil)
+    }
+    
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
         calendar.reloadData()
+    }
+    
+    func getMonth(monthNumber: String) -> String {
+        if monthNumber == "01" {
+            return "Jan."
+        } else if monthNumber == "02" {
+            return "Feb."
+        } else if monthNumber == "03" {
+            return "Mar."
+        } else if monthNumber == "04" {
+            return "Apr."
+        } else if monthNumber == "05" {
+            return "May"
+        } else if monthNumber == "06" {
+            return "June"
+        } else if monthNumber == "07" {
+            return "July"
+        } else if monthNumber == "08" {
+            return "Aug."
+        } else if monthNumber == "09" {
+            return "Sept."
+        } else if monthNumber == "10" {
+            return "Oct."
+        } else if monthNumber == "11" {
+            return "Nov."
+        } else if monthNumber == "12" {
+            return "Dec."
+        } else {
+            return ""
+        }
     }
     
     
@@ -315,7 +367,7 @@ extension UIViewController
         titleLabel.text = text
         titleLabel.textAlignment = .left
         //titleLabel.font = UIFont(name: "PaladinsLaser", size: 19)
-        titleLabel.font = UIFont(name: "GigaSans-Regular", size: 29)
+        titleLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 26)
         //titleLabel.backgroundColor = .black
         
 //        titleLabel.font = UIFont(name: "Paladins", size: 29)
@@ -342,5 +394,31 @@ extension UIViewController
                                              constant: (leftBarItemWidth ?? 0) + left),
             titleLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -100)
         ])
+    }
+}
+extension String {
+
+    var length: Int {
+        return count
+    }
+
+    subscript (i: Int) -> String {
+        return self[i ..< i + 1]
+    }
+
+    func substring(fromIndex: Int) -> String {
+        return self[min(fromIndex, length) ..< length]
+    }
+
+    func substring(toIndex: Int) -> String {
+        return self[0 ..< max(0, toIndex)]
+    }
+
+    subscript (r: Range<Int>) -> String {
+        let range = Range(uncheckedBounds: (lower: max(0, min(length, r.lowerBound)),
+                                            upper: min(length, max(0, r.upperBound))))
+        let start = index(startIndex, offsetBy: range.lowerBound)
+        let end = index(start, offsetBy: range.upperBound - range.lowerBound)
+        return String(self[start ..< end])
     }
 }
