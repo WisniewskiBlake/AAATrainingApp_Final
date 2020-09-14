@@ -13,6 +13,15 @@ import FirebaseFirestore
 import ProgressHUD
 
 class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance {
+//    , UITableViewDataSource, UITableViewDelegate
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        
+//    }
+//    
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        
+//    }
+    
     
 
     @IBOutlet weak var calendar: FSCalendar!
@@ -106,7 +115,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     
     @objc func loadEvents() {
         ProgressHUD.show()
-        recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).order(by: kEVENTUSERID).addSnapshotListener({ (snapshot, error) in
+        recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).order(by: kEVENTUSERID).order(by: kEVENTDATEFORUPCOMINGCOMPARISON).addSnapshotListener({ (snapshot, error) in
                            
             self.allEvents = []
             self.allEventDates = []

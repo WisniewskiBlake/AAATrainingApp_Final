@@ -12,7 +12,7 @@ import Firebase
 import FirebaseFirestore
 import ProgressHUD
 
-class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance, UITableViewDataSource {
+class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var calendar: FSCalendar!
     @IBOutlet weak var upcomingLabel: UILabel!
@@ -88,7 +88,7 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
     @objc func loadEvents() {
         ProgressHUD.show()
-        recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).order(by: kEVENTUSERID).addSnapshotListener({ (snapshot, error) in
+        recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).order(by: kEVENTUSERID).order(by: kEVENTDATEFORUPCOMINGCOMPARISON).addSnapshotListener({ (snapshot, error) in
                            
             self.allEvents = []
             self.allEventDates = []
@@ -271,7 +271,7 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         
         let eventVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PlayerEvent") as! PlayerEvent
         let navController = UINavigationController(rootViewController: eventVC)
-
+        
         eventVC.event = event
         
         eventVC.hidesBottomBarWhenPushed = true
