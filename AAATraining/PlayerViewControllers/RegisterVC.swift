@@ -10,7 +10,7 @@ import UIKit
 import ProgressHUD
 import GoogleMobileAds
 
-class RegisterVC: UIViewController, UITextFieldDelegate {
+class RegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDelegate {
     
     @IBOutlet weak var contentView_width: NSLayoutConstraint!
     @IBOutlet weak var emailView_width: NSLayoutConstraint!
@@ -69,8 +69,10 @@ class RegisterVC: UIViewController, UITextFieldDelegate {
         self.positionTextField.delegate = self
         self.numberTextField.delegate = self
         
-        bannerView.adUnitID = ""
+        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
         bannerView.rootViewController = self
+        bannerView.delegate = self
+        bannerView.load(GADRequest())
                                
         // implementation of Swipe Gesture
         let swipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handle(_:)))
@@ -291,6 +293,17 @@ class RegisterVC: UIViewController, UITextFieldDelegate {
             scrollView.setContentOffset(new_x, animated: true)
         }
         
+    }
+    
+    /// Tells the delegate an ad request loaded an ad.
+    func adViewDidReceiveAd(_ bannerView: GADBannerView) {
+      print("adViewDidReceiveAd")
+    }
+
+    /// Tells the delegate an ad request failed.
+    func adView(_ bannerView: GADBannerView,
+        didFailToReceiveAdWithError error: GADRequestError) {
+      print("adView:didFailToReceiveAdWithError: \(error.localizedDescription)")
     }
     
            

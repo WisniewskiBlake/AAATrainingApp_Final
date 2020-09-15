@@ -83,6 +83,11 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
 
         emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -150, width: view.bounds.size.width, height: view.bounds.size.height))
         
+//        for family in UIFont.familyNames.sorted() {
+//            let names = UIFont.fontNames(forFamilyName: family)
+//            print("Family: \(family) Font names: \(names)")
+//        }
+        
         
     }
     
@@ -154,7 +159,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         
         teamFeedTextLabel.text = "Team Feed"
         teamFeedTextLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 28)!
-        teamNameLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 17)!
+        teamNameLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 18)!
         
         team.getTeam(teamID: FUser.currentUser()!.userTeamID) { (teamReturned) in
             if teamReturned.teamID != "" {

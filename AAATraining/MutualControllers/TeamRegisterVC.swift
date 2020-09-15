@@ -44,7 +44,7 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var teamCodeView: UIView!
     private let banner: GADBannerView = {
         let banner = GADBannerView()
-        banner.adUnitID = "ca-app-pub-8479238648739219/5317514555"
+        banner.adUnitID = "ca-app-pub-3940256099942544/2934735716"
         banner.load(GADRequest())
         banner.backgroundColor = .secondarySystemBackground
         return banner
