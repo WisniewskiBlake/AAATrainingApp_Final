@@ -988,6 +988,14 @@
                                                             <action selector="textFieldDidChange:" destination="pbD-KU-4y7" eventType="editingChanged" id="1oi-Wq-vXG"/>
                                                         </connections>
                                                     </textField>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fBV-MK-fRo" customClass="GADBannerView">
+                                                        <rect key="frame" x="8" y="550" width="359" height="37"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="359" id="0to-ii-h3h"/>
+                                                            <constraint firstAttribute="height" constant="37" id="HnB-eB-M1Y"/>
+                                                        </constraints>
+                                                    </view>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -1003,9 +1011,11 @@
                                                     <constraint firstItem="XMJ-Yg-zgo" firstAttribute="leading" secondItem="7lC-d9-swC" secondAttribute="leading" constant="43" id="VAr-Sc-aPb"/>
                                                     <constraint firstAttribute="trailing" secondItem="crd-pV-eEc" secondAttribute="trailing" constant="16" id="Xso-Kq-aEI"/>
                                                     <constraint firstItem="tlG-s3-ZgT" firstAttribute="top" secondItem="7lC-d9-swC" secondAttribute="top" constant="99" id="ZO2-tm-tWn"/>
+                                                    <constraint firstItem="fBV-MK-fRo" firstAttribute="leading" secondItem="7lC-d9-swC" secondAttribute="leading" constant="8" id="cIn-7D-ugJ"/>
                                                     <constraint firstItem="FnN-ft-7ct" firstAttribute="top" secondItem="tlG-s3-ZgT" secondAttribute="bottom" constant="19" id="eOv-AV-vgB"/>
                                                     <constraint firstItem="crd-pV-eEc" firstAttribute="top" secondItem="XMJ-Yg-zgo" secondAttribute="bottom" constant="19" id="kiz-Nv-HEK"/>
                                                     <constraint firstAttribute="trailing" secondItem="rXK-0u-SN5" secondAttribute="trailing" constant="42" id="qWx-n5-UFz"/>
+                                                    <constraint firstAttribute="trailing" secondItem="fBV-MK-fRo" secondAttribute="trailing" constant="8" id="sdx-aq-IRc"/>
                                                     <constraint firstAttribute="trailing" secondItem="Cmo-pG-c9A" secondAttribute="trailing" constant="16" id="taf-5S-CTr"/>
                                                     <constraint firstAttribute="trailing" secondItem="tlG-s3-ZgT" secondAttribute="trailing" constant="16" id="wmY-Mg-tlp"/>
                                                     <constraint firstAttribute="trailing" secondItem="9Dp-Gj-Zcq" secondAttribute="trailing" constant="42" id="y5E-vj-Rqv"/>
@@ -1067,6 +1077,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.91337895390000001" green="0.92143708469999996" blue="0.93379235270000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="fnJ-l6-YEM" firstAttribute="top" secondItem="fBV-MK-fRo" secondAttribute="bottom" constant="3" id="3qq-kh-Xnn"/>
                             <constraint firstItem="WMk-xw-MZo" firstAttribute="trailing" secondItem="6P6-lh-0ty" secondAttribute="trailing" id="Cvj-sQ-J3i"/>
                             <constraint firstItem="fnJ-l6-YEM" firstAttribute="trailing" secondItem="6P6-lh-0ty" secondAttribute="trailing" id="ER9-6G-4ZX"/>
                             <constraint firstItem="WMk-xw-MZo" firstAttribute="top" secondItem="9MR-LN-soe" secondAttribute="top" id="HXS-8K-MlS"/>
@@ -1079,6 +1090,7 @@
                     </view>
                     <size key="freeformSize" width="1500" height="667"/>
                     <connections>
+                        <outlet property="bannerView" destination="fBV-MK-fRo" id="2k2-to-ln2"/>
                         <outlet property="contentView_width" destination="cGs-Qw-p8D" id="4yC-Uv-DM4"/>
                         <outlet property="emailContinueButton" destination="mUE-W0-Y98" id="yaR-xM-96o"/>
                         <outlet property="emailTextField" destination="wSq-7N-OXS" id="2f6-G9-VXJ"/>
@@ -1102,7 +1114,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sdo-Dc-Wp2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2572" y="99"/>
+            <point key="canvasLocation" x="2571.1999999999998" y="98.50074962518741"/>
         </scene>
         <!--Color Picker-->
         <scene sceneID="dQn-EM-aaI">

@@ -8,6 +8,7 @@
 
 import UIKit
 import ProgressHUD
+import GoogleMobileAds
 
 class RegisterVC: UIViewController, UITextFieldDelegate {
     
@@ -40,6 +41,9 @@ class RegisterVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var footerView: UIView!
     
+    @IBOutlet weak var bannerView: GADBannerView!
+    
+    
     // code obj
     var datePicker: UIDatePicker!
     var cover = UIImage(named: "aaaCoverLogo.png")
@@ -52,11 +56,34 @@ class RegisterVC: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // adjust width of the views to the screen of the device
+        configureUI()
+        configure_footerView()
+        configureButtons()
+        
+        self.emailTextField.delegate = self
+        self.firstNameTextField.delegate = self
+        self.lastNameTextField.delegate = self
+        self.passwordTextField.delegate = self
+        self.heightTextField.delegate = self
+        self.weightTextField.delegate = self
+        self.positionTextField.delegate = self
+        self.numberTextField.delegate = self
+        
+        bannerView.adUnitID = ""
+        bannerView.rootViewController = self
+                               
+        // implementation of Swipe Gesture
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handle(_:)))
+        swipe.direction = .right
+        self.view.addGestureRecognizer(swipe)
+        
+    }
+    
+    func configureUI() {
         contentView_width.constant = self.view.frame.width * 4
         emailView_width.constant = self.view.frame.width
         nameView_width.constant = self.view.frame.width
-        passwordView_width.constant = self.view.frame.width        
+        passwordView_width.constant = self.view.frame.width
         genderView_width.constant = self.view.frame.width
         
         // make corners of the objects rounded
@@ -87,35 +114,9 @@ class RegisterVC: UIViewController, UITextFieldDelegate {
         padding(for: weightTextField)
         padding(for: positionTextField)
         padding(for: numberTextField)
-        //padding(for: phoneTextField)
-        
-        self.emailTextField.delegate = self
-        self.firstNameTextField.delegate = self
-        self.lastNameTextField.delegate = self
-        self.passwordTextField.delegate = self
-        self.heightTextField.delegate = self
-        self.weightTextField.delegate = self
-        self.positionTextField.delegate = self
-        self.numberTextField.delegate = self
-        //self.phoneTextField.delegate = self
-        
-        // run function of configuration
-        configure_footerView()
-                       
-        // implementation of Swipe Gesture
-        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handle(_:)))
-        swipe.direction = .right
-        self.view.addGestureRecognizer(swipe)
-        
-        configureButtons()
-        
     }
     
     func configureButtons() {
-//        emailContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
-//        fullnameContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
-//        passwordContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
-//        statsContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
         
         emailContinueButton.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
         fullnameContinueButton.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
