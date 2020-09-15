@@ -26,7 +26,7 @@ class ParentRecentChat: UIViewController, UITableViewDelegate, UITableViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        self.tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         //loadRecentChats()
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -69,7 +69,7 @@ class ParentRecentChat: UIViewController, UITableViewDelegate, UITableViewDataSo
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
-        self.tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
         
         if emptyLabelOne.text == "Created chats will appear here!" {
             emptyLabelOne.text = ""
@@ -77,7 +77,7 @@ class ParentRecentChat: UIViewController, UITableViewDelegate, UITableViewDataSo
         
         let attrs = [
             NSAttributedString.Key.foregroundColor: UIColor.white,
-            NSAttributedString.Key.font: UIFont(name: "PROGRESSPERSONALUSE", size: 34)!
+            NSAttributedString.Key.font: UIFont(name: "PROGRESSPERSONALUSE", size: 28)!
         ]
         
         navigationController?.navigationBar.largeTitleTextAttributes = attrs

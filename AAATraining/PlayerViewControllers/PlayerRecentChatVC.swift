@@ -41,8 +41,7 @@ class PlayerRecentChatVC: UIViewController, UITableViewDelegate, UITableViewData
         
         loadRecentChats()
         configureUI()
-    //    self.tableView.reloadData()
-        //tableView.tableFooterView = UIView()
+
     }
     
     func configureUI() {
@@ -59,7 +58,7 @@ class PlayerRecentChatVC: UIViewController, UITableViewDelegate, UITableViewData
          
          let attrs = [
              NSAttributedString.Key.foregroundColor: UIColor.white,
-             NSAttributedString.Key.font: UIFont(name: "PROGRESSPERSONALUSE", size: 26)!
+             NSAttributedString.Key.font: UIFont(name: "PROGRESSPERSONALUSE", size: 28)!
          ]
          
          navigationController?.navigationBar.largeTitleTextAttributes = attrs
