@@ -59,7 +59,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         let border = CALayer()
         border.borderWidth = width
         border.borderColor = color
-        border.frame = CGRect(x: -3, y: 0, width: upcomingLabel.frame.width+6, height: upcomingLabel.frame.height)
+        border.frame = CGRect(x: -3, y: 0, width: upcomingLabel.frame.width+20, height: upcomingLabel.frame.height)
         upcomingLabel.layer.addSublayer(border)
         upcomingLabel.layer.cornerRadius = 5
         upcomingLabel.layer.masksToBounds = true
@@ -67,7 +67,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         let border1 = CALayer()
         border1.borderWidth = width
         border1.borderColor = color
-        border1.frame = CGRect(x: -3, y: 0, width: logoutView.frame.width+6, height: upcomingLabel.frame.height)
+        border1.frame = CGRect(x: -3, y: 0, width: logoutView.frame.width+20, height: upcomingLabel.frame.height)
         logoutView.layer.addSublayer(border1)
         logoutView.layer.cornerRadius = 5
         logoutView.layer.masksToBounds = true

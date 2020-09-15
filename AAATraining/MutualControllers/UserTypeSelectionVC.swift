@@ -144,42 +144,42 @@ class UserTypeSelectionVC: UIViewController {
     
     func configure_labelView() {
         // declaring constants to store information which later on will be assigned to certain 'object'
-        let width = CGFloat(2)
-        let color = UIColor.lightGray.cgColor
-        
-        // creating layer to be a border of the view added test test
-        let border = CALayer()
-        let border1 = CALayer()
-        let border2 = CALayer()
-        border.borderWidth = width
-        border.borderColor = color
-        border1.borderWidth = width
-        border1.borderColor = color
-        border2.borderWidth = width
-        border2.borderColor = color
-        border.frame = CGRect(x: -3, y: 0, width: parentLabel.frame.width+6, height: parentLabel.frame.height)
-        border1.frame = CGRect(x: -3, y: 0, width: playerLabel.frame.width+6, height: playerLabel.frame.height)
-        border2.frame = CGRect(x: -3, y: 0, width: coachLabel.frame.width+6, height: coachLabel.frame.height)
-        
-        // creating layer to be a line in the center of the view
-//        let line = CALayer()
-//        line.borderWidth = width
-//        line.borderColor = color
-//        line.frame = CGRect(x: 0, y: textFieldsView.frame.height / 2 - width, width: textFieldsView.frame.width, height: width)
-        
-        // assigning created layers to the view
-        parentLabel.layer.addSublayer(border)
-        playerLabel.layer.addSublayer(border1)
-        coachLabel.layer.addSublayer(border2)
-        //textFieldsView.layer.addSublayer(line)
-        // rounded corners
-        parentLabel.layer.cornerRadius = 5
-        playerLabel.layer.cornerRadius = 5
-        coachLabel.layer.cornerRadius = 5
-        
-        parentLabel.layer.masksToBounds = true
-        playerLabel.layer.masksToBounds = true
-        coachLabel.layer.masksToBounds = true
+//        let width = CGFloat(2)
+//        let color = UIColor.lightGray.cgColor
+//
+//        // creating layer to be a border of the view added test test
+//        let border = CALayer()
+//        let border1 = CALayer()
+//        let border2 = CALayer()
+//        border.borderWidth = width
+//        border.borderColor = color
+//        border1.borderWidth = width
+//        border1.borderColor = color
+//        border2.borderWidth = width
+//        border2.borderColor = color
+//        border.frame = CGRect(x: -3, y: 0, width: parentLabel.frame.width+6, height: parentLabel.frame.height)
+//        border1.frame = CGRect(x: -3, y: 0, width: playerLabel.frame.width+6, height: playerLabel.frame.height)
+//        border2.frame = CGRect(x: -3, y: 0, width: coachLabel.frame.width+6, height: coachLabel.frame.height)
+//
+//        // creating layer to be a line in the center of the view
+////        let line = CALayer()
+////        line.borderWidth = width
+////        line.borderColor = color
+////        line.frame = CGRect(x: 0, y: textFieldsView.frame.height / 2 - width, width: textFieldsView.frame.width, height: width)
+//
+//        // assigning created layers to the view
+//        parentLabel.layer.addSublayer(border)
+//        playerLabel.layer.addSublayer(border1)
+//        coachLabel.layer.addSublayer(border2)
+//        //textFieldsView.layer.addSublayer(line)
+//        // rounded corners
+//        parentLabel.layer.cornerRadius = 5
+//        playerLabel.layer.cornerRadius = 5
+//        coachLabel.layer.cornerRadius = 5
+//
+//        parentLabel.layer.masksToBounds = true
+//        playerLabel.layer.masksToBounds = true
+//        coachLabel.layer.masksToBounds = true
 
     }
     

@@ -18,6 +18,9 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     @IBOutlet var calendar: FSCalendar!
     @IBOutlet weak var upcomingLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var splitterLabel: UILabel!
+    @IBOutlet weak var splitterLabelTwo: UILabel!
+    
     
     var allEvents: [Event] = []
     var upcomingEvents: [Event] = []
@@ -49,15 +52,8 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         
         self.setLeftAlignedNavigationItemTitle(text: "Team Calendar", color: .white, margin: 12)
         
-        let width = CGFloat(2)
-        let color = UIColor.lightGray.cgColor
-        let border = CALayer()
-        border.borderWidth = width
-        border.borderColor = color
-        border.frame = CGRect(x: -3, y: 0, width: upcomingLabel.frame.width+6, height: upcomingLabel.frame.height)
-        upcomingLabel.layer.addSublayer(border)
-        upcomingLabel.layer.cornerRadius = 5
-        upcomingLabel.layer.masksToBounds = true
+        splitterLabel.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+        splitterLabelTwo.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
     }
     
     // pre-load func
@@ -349,7 +345,7 @@ extension UIViewController
         titleLabel.text = text
         titleLabel.textAlignment = .left
         //titleLabel.font = UIFont(name: "PaladinsLaser", size: 19)
-        titleLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 26)
+        titleLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 27)
         //titleLabel.backgroundColor = .black
         
 //        titleLabel.font = UIFont(name: "Paladins", size: 29)

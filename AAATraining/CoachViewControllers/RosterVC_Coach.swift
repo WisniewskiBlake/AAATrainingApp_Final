@@ -60,7 +60,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
 //        } else {
 //            navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 //        }
-        
+        self.tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         tableView.tableFooterView = UIView()
         // hide navigation bar on Home Pagex
         

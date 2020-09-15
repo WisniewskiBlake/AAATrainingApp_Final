@@ -29,11 +29,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        //loadRecentChats()
-        let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        self.tableView.tableFooterView = view
+        
         
         emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -125, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
     }
@@ -42,6 +38,11 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        self.tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        //loadRecentChats()
+        let view = UIView()
+        view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        self.tableView.tableFooterView = view
         loadRecentChats()
         configureUI()
 
@@ -79,7 +80,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         
         let attrs = [
             NSAttributedString.Key.foregroundColor: UIColor.white,
-            NSAttributedString.Key.font: UIFont(name: "PROGRESSPERSONALUSE", size: 26)!
+            NSAttributedString.Key.font: UIFont(name: "PROGRESSPERSONALUSE", size: 28)!
         ]
         
         navigationController?.navigationBar.largeTitleTextAttributes = attrs

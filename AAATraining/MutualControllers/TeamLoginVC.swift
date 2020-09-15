@@ -35,6 +35,10 @@ class TeamLoginVC: UIViewController, UITextFieldDelegate {
         
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     @IBAction func continueButtonClicked(_ sender: Any) {
         if teamCodeText.text != "" {
             team.getTeam(teamID: teamCodeText.text!) { (teamReturned) in
