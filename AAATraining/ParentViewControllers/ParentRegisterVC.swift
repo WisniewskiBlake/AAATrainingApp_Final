@@ -8,8 +8,9 @@
 
 import UIKit
 import ProgressHUD
+import GoogleMobileAds
 
-class ParentRegisterVC: UIViewController, UITextFieldDelegate {
+class ParentRegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDelegate {
     
     @IBOutlet weak var coachPassword_width: NSLayoutConstraint!
     @IBOutlet weak var nameView_width: NSLayoutConstraint!
@@ -22,15 +23,16 @@ class ParentRegisterVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
-    //@IBOutlet weak var phoneTextField: UITextField!
+    
     @IBOutlet weak var passwordTextField: UITextField!
     
     @IBOutlet weak var emailContinueButton: UIButton!
     @IBOutlet weak var nameContinueButton: UIButton!
-    //@IBOutlet weak var phoneContinueButton: UIButton!
+    
     @IBOutlet weak var finishButton: UIButton!
     
     @IBOutlet weak var footerView: UIView!
+    @IBOutlet weak var bannerView: GADBannerView!
     
     var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
     
@@ -47,6 +49,25 @@ class ParentRegisterVC: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.emailTextField.delegate = self
+        self.firstNameTextField.delegate = self
+        self.lastNameTextField.delegate = self
+        self.passwordTextField.delegate = self
+        
+        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.rootViewController = self
+        bannerView.delegate = self
+        bannerView.load(GADRequest())
+        
+        configureUI()
+        
+        configure_footerView()
+        
+        configureButtons()
+        
+    }
+    
+    func configureUI() {
         contentView_width.constant = self.view.frame.width * 3
         coachPassword_width.constant = self.view.frame.width
         nameView_width.constant = self.view.frame.width
@@ -57,42 +78,24 @@ class ParentRegisterVC: UIViewController, UITextFieldDelegate {
         cornerRadius(for: lastNameTextField)
         cornerRadius(for: emailTextField)
         cornerRadius(for: passwordTextField)
-        //cornerRadius(for: phoneTextField)
         
         cornerRadius(for: emailContinueButton)
         cornerRadius(for: nameContinueButton)
-        //cornerRadius(for: phoneContinueButton)
         cornerRadius(for: finishButton)
         
         padding(for: emailTextField)
         padding(for: firstNameTextField)
         padding(for: lastNameTextField)
         padding(for: passwordTextField)
-        //padding(for: phoneTextField)
-        
-        self.emailTextField.delegate = self
-        self.firstNameTextField.delegate = self
-        self.lastNameTextField.delegate = self
-        self.passwordTextField.delegate = self
-        //self.phoneTextField.delegate = self
-        
-        
-        configure_footerView()
-        
-        configureButtons()
         
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
         navigationItem.leftBarButtonItem?.tintColor = UIColor.white
     }
     
     func configureButtons() {
-//        emailContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
-//        nameContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
-//        phoneContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
-//        finishButton.backgroundColor = UIColor(hexString: team.teamColorOne)
+
         emailContinueButton.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
         nameContinueButton.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
-        //phoneContinueButton.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
         finishButton.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
     }
     
@@ -230,6 +233,17 @@ class ParentRegisterVC: UIViewController, UITextFieldDelegate {
                 finishButton.isHidden = false
             }
         }
+    }
+    
+    /// Tells the delegate an ad request loaded an ad.
+    func adViewDidReceiveAd(_ bannerView: GADBannerView) {
+      print("adViewDidReceiveAd")
+    }
+
+    /// Tells the delegate an ad request failed.
+    func adView(_ bannerView: GADBannerView,
+        didFailToReceiveAdWithError error: GADRequestError) {
+      print("adView:didFailToReceiveAdWithError: \(error.localizedDescription)")
     }
     
 }

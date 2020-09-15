@@ -596,12 +596,22 @@
                                                             <action selector="passwordContinue_clicked:" destination="Lz1-PB-y5L" eventType="touchUpInside" id="n7s-Sr-6Od"/>
                                                         </connections>
                                                     </button>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aj4-Gq-N9H" customClass="GADBannerView">
+                                                        <rect key="frame" x="8" y="467" width="359" height="37"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="359" id="fkW-MK-6HC"/>
+                                                            <constraint firstAttribute="height" constant="37" id="vci-JH-93i"/>
+                                                        </constraints>
+                                                    </view>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="375" id="4YB-ri-h5i"/>
                                                     <constraint firstItem="AO2-Ow-nLm" firstAttribute="leading" secondItem="vjN-Pl-KU2" secondAttribute="leading" constant="16" id="F47-SJ-eJU"/>
                                                     <constraint firstItem="qeX-2k-w1l" firstAttribute="leading" secondItem="vjN-Pl-KU2" secondAttribute="leading" constant="16" id="Frq-sg-19n"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Aj4-Gq-N9H" secondAttribute="trailing" constant="8" id="GWt-PA-JtV"/>
+                                                    <constraint firstItem="Aj4-Gq-N9H" firstAttribute="leading" secondItem="vjN-Pl-KU2" secondAttribute="leading" constant="8" id="HGb-1O-poA"/>
                                                     <constraint firstAttribute="trailing" secondItem="lmE-hT-vlv" secondAttribute="trailing" constant="16" id="KEk-UX-w4g"/>
                                                     <constraint firstAttribute="trailing" secondItem="AO2-Ow-nLm" secondAttribute="trailing" constant="16" id="LrI-E0-wAQ"/>
                                                     <constraint firstItem="Ekz-o1-FL3" firstAttribute="leading" secondItem="vjN-Pl-KU2" secondAttribute="leading" constant="16" id="ORH-uj-gJP"/>
@@ -668,12 +678,14 @@
                             <constraint firstItem="OTE-w6-tTK" firstAttribute="trailing" secondItem="NpS-U0-y3i" secondAttribute="trailing" id="XmC-jR-xNG"/>
                             <constraint firstItem="s4Y-Z1-f0n" firstAttribute="trailing" secondItem="NpS-U0-y3i" secondAttribute="trailing" id="ZG1-7Y-iQL"/>
                             <constraint firstItem="OTE-w6-tTK" firstAttribute="leading" secondItem="NpS-U0-y3i" secondAttribute="leading" id="ZOK-LZ-gHS"/>
+                            <constraint firstItem="OTE-w6-tTK" firstAttribute="top" secondItem="Aj4-Gq-N9H" secondAttribute="bottom" constant="6" id="fFH-wh-mlL"/>
                             <constraint firstItem="s4Y-Z1-f0n" firstAttribute="top" secondItem="BZa-fa-r4R" secondAttribute="top" id="rbn-Sy-8ce"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="NpS-U0-y3i"/>
                     </view>
                     <size key="freeformSize" width="1125" height="587"/>
                     <connections>
+                        <outlet property="bannerView" destination="Aj4-Gq-N9H" id="Lah-RC-QpO"/>
                         <outlet property="contentView_width" destination="Wex-xU-W7w" id="StI-of-LHD"/>
                         <outlet property="emailContinueButton" destination="b4p-nI-6ra" id="3Sg-DJ-LDy"/>
                         <outlet property="emailTextField" destination="UHI-oF-BmO" id="lfK-R8-NIm"/>
@@ -6476,6 +6488,14 @@
                                                             <action selector="finishButtonClicked:" destination="t5H-gz-0An" eventType="touchUpInside" id="67l-tB-iK0"/>
                                                         </connections>
                                                     </button>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D7l-IE-prz" customClass="GADBannerView">
+                                                        <rect key="frame" x="8" y="467" width="359" height="37"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="359" id="Jsk-Lt-4hc"/>
+                                                            <constraint firstAttribute="height" constant="37" id="fM5-It-SeD"/>
+                                                        </constraints>
+                                                    </view>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -6486,10 +6506,12 @@
                                                     <constraint firstItem="Bdi-0l-sIQ" firstAttribute="top" secondItem="MFq-co-rCI" secondAttribute="bottom" constant="20" id="Dfl-ij-rQY"/>
                                                     <constraint firstItem="DSt-aT-zdY" firstAttribute="leading" secondItem="OGJ-cB-smT" secondAttribute="leading" constant="16" id="Hc4-sx-kID"/>
                                                     <constraint firstItem="MFq-co-rCI" firstAttribute="top" secondItem="Qvp-gO-gTO" secondAttribute="bottom" constant="20" id="IQB-u4-ldq"/>
+                                                    <constraint firstAttribute="trailing" secondItem="D7l-IE-prz" secondAttribute="trailing" constant="8" id="LdK-7D-mgg"/>
                                                     <constraint firstItem="Bdi-0l-sIQ" firstAttribute="leading" secondItem="OGJ-cB-smT" secondAttribute="leading" constant="16" id="Ol0-eO-PCf"/>
                                                     <constraint firstAttribute="trailing" secondItem="DSt-aT-zdY" secondAttribute="trailing" constant="16" id="TBU-Ve-fz2"/>
                                                     <constraint firstItem="DSt-aT-zdY" firstAttribute="top" secondItem="OGJ-cB-smT" secondAttribute="top" constant="124" id="dTO-pg-op9"/>
                                                     <constraint firstAttribute="trailing" secondItem="Bdi-0l-sIQ" secondAttribute="trailing" constant="16" id="eYh-ru-LvR"/>
+                                                    <constraint firstItem="D7l-IE-prz" firstAttribute="leading" secondItem="OGJ-cB-smT" secondAttribute="leading" constant="8" id="nAo-cm-xOb"/>
                                                     <constraint firstAttribute="width" constant="375" id="nn2-qM-WCr"/>
                                                     <constraint firstItem="Qvp-gO-gTO" firstAttribute="top" secondItem="DSt-aT-zdY" secondAttribute="bottom" constant="18" id="zE1-lE-Mpz"/>
                                                 </constraints>
@@ -6547,12 +6569,14 @@
                             <constraint firstItem="7pk-SK-PUa" firstAttribute="leading" secondItem="hTx-Lw-2h1" secondAttribute="leading" id="GT9-fR-KKV"/>
                             <constraint firstItem="d5H-NX-WDW" firstAttribute="leading" secondItem="hTx-Lw-2h1" secondAttribute="leading" id="LgV-WZ-FVu"/>
                             <constraint firstItem="d5H-NX-WDW" firstAttribute="trailing" secondItem="hTx-Lw-2h1" secondAttribute="trailing" id="N3R-sX-Aw2"/>
+                            <constraint firstItem="d5H-NX-WDW" firstAttribute="top" secondItem="D7l-IE-prz" secondAttribute="bottom" constant="6" id="U1j-xZ-iUx"/>
                             <constraint firstItem="7pk-SK-PUa" firstAttribute="bottom" secondItem="hTx-Lw-2h1" secondAttribute="bottom" id="juO-GN-FNM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hTx-Lw-2h1"/>
                     </view>
                     <size key="freeformSize" width="1125" height="587"/>
                     <connections>
+                        <outlet property="bannerView" destination="D7l-IE-prz" id="Wto-hd-P8P"/>
                         <outlet property="coachPassword_width" destination="kfJ-vC-UeM" id="11T-Af-Zmy"/>
                         <outlet property="contentView_width" destination="36v-Bw-drO" id="fhd-fq-1Y7"/>
                         <outlet property="emailContinueButton" destination="4FR-jF-zqn" id="GHI-U4-QEV"/>
@@ -7541,6 +7565,14 @@
                                                             <action selector="finishContinueClicked:" destination="zm7-l7-ZFi" eventType="touchUpInside" id="Kl8-eo-q0i"/>
                                                         </connections>
                                                     </button>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p23-Sz-R8D" customClass="GADBannerView">
+                                                        <rect key="frame" x="8" y="468" width="359" height="37"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="37" id="0zg-Fk-aqK"/>
+                                                            <constraint firstAttribute="width" constant="359" id="IHu-oK-rBA"/>
+                                                        </constraints>
+                                                    </view>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -7552,10 +7584,12 @@
                                                     <constraint firstAttribute="trailing" secondItem="x4X-iu-lgp" secondAttribute="trailing" constant="16" id="L66-UR-t3c"/>
                                                     <constraint firstItem="BQw-RF-ggd" firstAttribute="leading" secondItem="i1R-ma-yzH" secondAttribute="leading" constant="16" id="OhL-rL-1FN"/>
                                                     <constraint firstItem="x4X-iu-lgp" firstAttribute="top" secondItem="Zxh-sK-UZJ" secondAttribute="bottom" constant="18" id="VRl-L8-FHE"/>
+                                                    <constraint firstAttribute="trailing" secondItem="p23-Sz-R8D" secondAttribute="trailing" constant="8" id="b40-1c-wXa"/>
                                                     <constraint firstAttribute="width" constant="375" id="c0E-gJ-ccQ"/>
                                                     <constraint firstItem="xR7-ON-x05" firstAttribute="leading" secondItem="i1R-ma-yzH" secondAttribute="leading" constant="16" id="kHs-Zz-tHE"/>
                                                     <constraint firstAttribute="trailing" secondItem="W2r-LV-9t9" secondAttribute="trailing" constant="16" id="kLE-7e-SGd"/>
                                                     <constraint firstAttribute="trailing" secondItem="BQw-RF-ggd" secondAttribute="trailing" constant="16" id="lL7-ov-gwV"/>
+                                                    <constraint firstItem="p23-Sz-R8D" firstAttribute="leading" secondItem="i1R-ma-yzH" secondAttribute="leading" constant="8" id="n1I-hp-BaS"/>
                                                     <constraint firstAttribute="trailing" secondItem="Zxh-sK-UZJ" secondAttribute="trailing" constant="16" id="rVP-rx-XmQ"/>
                                                     <constraint firstItem="Zxh-sK-UZJ" firstAttribute="leading" secondItem="i1R-ma-yzH" secondAttribute="leading" constant="16" id="tas-eB-Il9"/>
                                                     <constraint firstItem="W2r-LV-9t9" firstAttribute="leading" secondItem="i1R-ma-yzH" secondAttribute="leading" constant="16" id="v5b-Bn-Kyj"/>
@@ -7617,6 +7651,7 @@
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="PNX-1n-Rjr" firstAttribute="top" secondItem="p23-Sz-R8D" secondAttribute="bottom" constant="5" id="Dg7-Qf-R4g"/>
                             <constraint firstItem="PNX-1n-Rjr" firstAttribute="top" secondItem="bVp-qO-Oah" secondAttribute="bottom" constant="17" id="R0l-xA-5YV"/>
                             <constraint firstItem="PNX-1n-Rjr" firstAttribute="trailing" secondItem="oxP-tG-RBC" secondAttribute="trailing" id="RXe-US-duX"/>
                             <constraint firstItem="PNX-1n-Rjr" firstAttribute="leading" secondItem="oxP-tG-RBC" secondAttribute="leading" id="UrG-Q2-vjy"/>
@@ -7631,6 +7666,7 @@
                     <navigationItem key="navigationItem" id="LG1-qM-5tP"/>
                     <size key="freeformSize" width="1500" height="587"/>
                     <connections>
+                        <outlet property="bannerView" destination="p23-Sz-R8D" id="jyq-eV-lDh"/>
                         <outlet property="coachPassword_width" destination="c0E-gJ-ccQ" id="AuV-1j-c3h"/>
                         <outlet property="codeLabel" destination="Zxh-sK-UZJ" id="g1O-8V-8P3"/>
                         <outlet property="contentView_width" destination="p7V-G9-6I2" id="syf-Cp-xAh"/>

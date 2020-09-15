@@ -13,15 +13,13 @@ class TeamTypeSelectionCellClass: UITableViewCell {
     
 }
 
-class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
+class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate {
     
-    
+    @IBOutlet weak var bannerView: GADBannerView!
     
     @IBOutlet weak var teamNameText: UITextField!
     @IBOutlet weak var teamNameContinueButton: UIButton!
-    
-//    @IBOutlet weak var cityText: UITextField!
-//    @IBOutlet weak var stateText: UITextField!
+
     @IBOutlet weak var locationContinueButton: UIButton!
     @IBOutlet weak var selectImageButton: UIButton!
     @IBOutlet weak var logoImageView: UIImageView!
@@ -42,22 +40,13 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var contentView_width: NSLayoutConstraint!
 
     @IBOutlet weak var teamCodeView: UIView!
-    private let banner: GADBannerView = {
-        let banner = GADBannerView()
-        banner.adUnitID = "ca-app-pub-3940256099942544/2934735716"
-        banner.load(GADRequest())
-        banner.backgroundColor = .secondarySystemBackground
-        return banner
-    }()
     
     var dataSource = ["Archery", "Basketball", "Baseball", "Bowling", "Curling", "Cricket", "Cycling", "Diving", "Football", "Golf", "Gymnastics", "Hockey", "Kayaking", "Lacrosse", "MMA", "Martial Arts", "Rowing", "Rugby", "Running", "Skateboarding", "Skiing", "Snowboarding", "Soccer", "Softball", "Surfing", "Swimming", "Table Tennis", "Tennis", "Track", "Triathlon", "Volleyball", "Wakeboarding", "Weight Loss", "Wrestling", "Yoga", "Other"]
     var cellText = "Select Type..."
     var teamType = ""
     var oneSelected = false
     var cellTagArray: [[Int]] = []
-    
-    
-    
+        
     var isPictureSelected = false
     var isVideoSelected = true
     
@@ -78,31 +67,10 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     let helper = Helper()
     
-    //var sceneDelegate = UIApplication.shared.delegate as! SceneDelegate
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        contentView_width.constant = self.view.frame.width * 4
-        coachPassword_width.constant = self.view.frame.width
-        nameView_width.constant = self.view.frame.width
-        emailView_width.constant = self.view.frame.width
-        passwordView_width.constant = self.view.frame.width
-        
-        cornerRadius(for: teamNameText)
-//        cornerRadius(for: cityText)
-//        cornerRadius(for: stateText)
-        
-        cornerRadius(for: teamNameContinueButton)
-        cornerRadius(for: locationContinueButton)
-        cornerRadius(for: logoContinueButton)
-        cornerRadius(for: finishButton)
-        cornerRadius(for: copyToClipButton)
-        
-        padding(for: teamNameText)
-//        padding(for: cityText)
-//        padding(for: stateText)
-        
+
+        configureUI()
         configure_footerView()
         
         randomInt = Int.random(in: 1..<9)
@@ -119,15 +87,28 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         codeLabel.text = teamLoginCode
         
-        banner.rootViewController = self
-        teamCodeView.addSubview(banner)
-        
-        //tableView.register(TeamTypeSelectionCellClass.self, forCellReuseIdentifier: "TypeCell")
+        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.rootViewController = self
+        bannerView.delegate = self
+        bannerView.load(GADRequest())
+  
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        banner.frame = CGRect(x: 0, y: view.frame.size.height-170, width: view.frame.size.width, height: 40).integral
+    func configureUI() {
+        contentView_width.constant = self.view.frame.width * 4
+        coachPassword_width.constant = self.view.frame.width
+        nameView_width.constant = self.view.frame.width
+        emailView_width.constant = self.view.frame.width
+        passwordView_width.constant = self.view.frame.width
+        
+        cornerRadius(for: teamNameText)
+        cornerRadius(for: teamNameContinueButton)
+        cornerRadius(for: locationContinueButton)
+        cornerRadius(for: logoContinueButton)
+        cornerRadius(for: finishButton)
+        cornerRadius(for: copyToClipButton)
+        
+        padding(for: teamNameText)
     }
    
     
@@ -423,7 +404,16 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
 
-    
+    /// Tells the delegate an ad request loaded an ad.
+    func adViewDidReceiveAd(_ bannerView: GADBannerView) {
+      print("adViewDidReceiveAd")
+    }
+
+    /// Tells the delegate an ad request failed.
+    func adView(_ bannerView: GADBannerView,
+        didFailToReceiveAdWithError error: GADRequestError) {
+      print("adView:didFailToReceiveAdWithError: \(error.localizedDescription)")
+    }
     
     
 }

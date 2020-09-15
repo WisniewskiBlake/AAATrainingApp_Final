@@ -8,8 +8,9 @@
 
 import UIKit
 import ProgressHUD
+import GoogleMobileAds
 
-class CoachRegisterVC: UIViewController, UITextFieldDelegate {
+class CoachRegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDelegate {
     
     //@IBOutlet weak var coachPassword_width: NSLayoutConstraint!
     @IBOutlet weak var nameView_width: NSLayoutConstraint!
@@ -33,7 +34,8 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordContinueButton: UIButton!
     
     @IBOutlet weak var footerView: UIView!
-   
+    @IBOutlet weak var bannerView: GADBannerView!
+    
     var cover = UIImage(named: "aaaCoverLogo.png")
     
     var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
@@ -41,52 +43,50 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.firstNameTextField.delegate = self
+        self.lastNameTextField.delegate = self
+        self.emailTextField.delegate = self
+        self.passwordTextField.delegate = self
+
+        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.rootViewController = self
+        bannerView.delegate = self
+        bannerView.load(GADRequest())
+        
+        configureUI()
+        
+        configure_footerView()
+        
+        configureButtons()
+
+    }
+    
+    func configureUI() {
+        
         contentView_width.constant = self.view.frame.width * 3
-        //coachPassword_width.constant = self.view.frame.width
         nameView_width.constant = self.view.frame.width
         emailView_width.constant = self.view.frame.width
         passwordView_width.constant = self.view.frame.width
-        
-        //cornerRadius(for: coachPasswordTextField)
+
         cornerRadius(for: firstNameTextField)
         cornerRadius(for: lastNameTextField)
         cornerRadius(for: emailTextField)
         cornerRadius(for: passwordTextField)
-        //cornerRadius(for: phoneTextField)
         
         cornerRadius(for: emailContinueButton)
         cornerRadius(for: fullnameContinueButton)
         cornerRadius(for: passwordContinueButton)
-        //cornerRadius(for: coachPasswordContinueButton)
         
         padding(for: emailTextField)
         padding(for: firstNameTextField)
         padding(for: lastNameTextField)
         padding(for: passwordTextField)
-        //padding(for: coachPasswordTextField)
-        //padding(for: phoneTextField)
-        
-        //self.coachPasswordTextField.delegate = self
-        self.firstNameTextField.delegate = self
-        self.lastNameTextField.delegate = self
-        self.emailTextField.delegate = self
-        self.passwordTextField.delegate = self
-        //self.phoneTextField.delegate = self
-        
-        configure_footerView()
-        
-        configureButtons()
         
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
         navigationItem.leftBarButtonItem?.tintColor = UIColor.white
-        
     }
     
     func configureButtons() {
-//        emailContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
-//        fullnameContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
-//        passwordContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
-        //coachPasswordContinueButton.backgroundColor = UIColor(hexString: team.teamColorOne)
         
         emailContinueButton.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
         fullnameContinueButton.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
@@ -209,15 +209,8 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate {
     @IBAction func textFieldDidChange(_ textField: UITextField) {
         // declaring constant (shortcut) to the Helper Class
         let helper = Helper()
-        
-        // logic for Email TextField
-//        if textField == coachPasswordTextField {
-//
-//            // check email validation
-//            if coachPasswordTextField.text!.count >= 6 {
-//                coachPasswordContinueButton.isHidden = false
-//            }
-//
+
+
 //        // logic for First Name or Last Name TextFields
 //        }
         if textField == firstNameTextField || textField == lastNameTextField {
@@ -245,7 +238,16 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate {
         } 
     }
     
+    /// Tells the delegate an ad request loaded an ad.
+    func adViewDidReceiveAd(_ bannerView: GADBannerView) {
+      print("adViewDidReceiveAd")
+    }
 
+    /// Tells the delegate an ad request failed.
+    func adView(_ bannerView: GADBannerView,
+        didFailToReceiveAdWithError error: GADRequestError) {
+      print("adView:didFailToReceiveAdWithError: \(error.localizedDescription)")
+    }
     
 
 }
