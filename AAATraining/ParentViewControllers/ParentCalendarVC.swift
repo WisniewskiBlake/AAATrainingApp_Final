@@ -18,6 +18,8 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     @IBOutlet weak var upcomingLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var logoutView: UIView!
+    @IBOutlet weak var splitterLabel: UILabel!
+    @IBOutlet weak var splitterLabelTwo: UILabel!
     
     var allEvents: [Event] = []
     var upcomingEvents: [Event] = []
@@ -73,6 +75,8 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:23)
         self.setLeftAlignedNavigationItemTitle(text: "Team Calendar", color: .white, margin: 12)
         upcomingLabel.textColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        splitterLabel.backgroundColor = UIColor.lightGray
+        splitterLabelTwo.backgroundColor = UIColor.lightGray
     }
     
     func loadTeamType() {
