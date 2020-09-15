@@ -127,7 +127,7 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        banner.frame = CGRect(x: 0, y: view.frame.size.height-75, width: view.frame.size.width, height: 40).integral
+        banner.frame = CGRect(x: 0, y: view.frame.size.height-170, width: view.frame.size.width, height: 40).integral
     }
    
     
