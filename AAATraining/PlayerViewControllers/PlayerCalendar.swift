@@ -17,6 +17,8 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     @IBOutlet weak var calendar: FSCalendar!
     @IBOutlet weak var upcomingLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var splitterLabel: UILabel!
+    @IBOutlet weak var splitterLabelTwo: UILabel!
     
     var allEvents: [Event] = []
     var upcomingEvents: [Event] = []
@@ -32,45 +34,38 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "createEvent"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
-        
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
 
         calendar.delegate = self
-        calendar.appearance.todayColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-        calendar.appearance.headerTitleColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:22)
         
         let todayDate = self.calendar!.today! as Date
         self.calendar.formatter.dateFormat = "YYYY-MM-dd"
         today = calendar.formatter.string(from: todayDate)
-        
-        self.setLeftAlignedNavigationItemTitle(text: "Team Calendar", color: .white, margin: 12)
-        
-        let width = CGFloat(2)
-        let color = UIColor.lightGray.cgColor
-        let border = CALayer()
-        border.borderWidth = width
-        border.borderColor = color
-        border.frame = CGRect(x: -3, y: 0, width: upcomingLabel.frame.width+6, height: upcomingLabel.frame.height)
-        upcomingLabel.layer.addSublayer(border)
-        upcomingLabel.layer.cornerRadius = 5
-        upcomingLabel.layer.masksToBounds = true
+ 
     }
     
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-
-       loadEvents()
+        configureUI()
+        loadEvents()
     }
     override func viewWillDisappear(_ animated: Bool) {
         recentListener.remove()
+    }
+    
+    func configureUI() {
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
+        calendar.appearance.todayColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        calendar.appearance.headerTitleColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:23)
+        upcomingLabel.textColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        self.setLeftAlignedNavigationItemTitle(text: "Team Calendar", color: .white, margin: 12)
+        splitterLabel.backgroundColor = UIColor.lightGray
+        splitterLabelTwo.backgroundColor = UIColor.lightGray
     }
     
     func loadTeamType() {
