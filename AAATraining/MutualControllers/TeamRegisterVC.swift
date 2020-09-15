@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 class TeamTypeSelectionCellClass: UITableViewCell {
     
 }
 
 class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
+    
+    
     
     @IBOutlet weak var teamNameText: UITextField!
     @IBOutlet weak var teamNameContinueButton: UIButton!
@@ -38,6 +41,14 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var coachPassword_width: NSLayoutConstraint!
     @IBOutlet weak var contentView_width: NSLayoutConstraint!
 
+    @IBOutlet weak var teamCodeView: UIView!
+    private let banner: GADBannerView = {
+        let banner = GADBannerView()
+        banner.adUnitID = "ca-app-pub-8479238648739219/5317514555"
+        banner.load(GADRequest())
+        banner.backgroundColor = .secondarySystemBackground
+        return banner
+    }()
     
     var dataSource = ["Archery", "Basketball", "Baseball", "Bowling", "Curling", "Cricket", "Cycling", "Diving", "Football", "Golf", "Gymnastics", "Hockey", "Kayaking", "Lacrosse", "MMA", "Martial Arts", "Rowing", "Rugby", "Running", "Skateboarding", "Skiing", "Snowboarding", "Soccer", "Softball", "Surfing", "Swimming", "Table Tennis", "Tennis", "Track", "Triathlon", "Volleyball", "Wakeboarding", "Weight Loss", "Wrestling", "Yoga", "Other"]
     var cellText = "Select Type..."
@@ -108,12 +119,16 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         codeLabel.text = teamLoginCode
         
-        
+        banner.rootViewController = self
+        teamCodeView.addSubview(banner)
         
         //tableView.register(TeamTypeSelectionCellClass.self, forCellReuseIdentifier: "TypeCell")
     }
     
-
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        banner.frame = CGRect(x: 0, y: view.frame.size.height-75, width: view.frame.size.width, height: 40).integral
+    }
    
     
     @IBAction func teamNameContinueClicked(_ sender: Any) {

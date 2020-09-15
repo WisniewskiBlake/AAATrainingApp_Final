@@ -34,7 +34,6 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     @IBOutlet weak var moreImageView: UIImageView!
     @IBOutlet weak var postImageView: UIImageView!
     
-    
     var avas = [UIImage]()
     var pictures = [UIImage]()
     var postDatesArray: [String] = []
@@ -111,10 +110,12 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         super.viewWillAppear(animated)
         loadPosts()
         getMembers()
+        
         configureUI()
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         tableView.tableFooterView = view
+        //configure_teamImageView()
         
         //loadPosts()
 
@@ -124,6 +125,18 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         recentListener.remove()
     }
     
+    func configure_teamImageView() {
+        let border = CALayer()
+        border.borderColor = UIColor.white.cgColor
+        border.borderWidth = 2
+        border.frame = CGRect(x: 0, y: 0, width: teamImageView.frame.width, height: teamImageView.frame.height)
+        teamImageView.layer.addSublayer(border)
+        
+        // rounded corners
+        teamImageView.layer.cornerRadius = teamImageView.frame.width / 2
+        //teamImageView.layer.masksToBounds = true
+        teamImageView.clipsToBounds = true
+    }
     
     
     func configureUI() {
@@ -146,7 +159,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         
         teamFeedTextLabel.text = "Team Feed"
         teamFeedTextLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 28)!
-        teamNameLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 15)!
+        teamNameLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 17)!
         
         team.getTeam(teamID: FUser.currentUser()!.userTeamID) { (teamReturned) in
             if teamReturned.teamID != "" {

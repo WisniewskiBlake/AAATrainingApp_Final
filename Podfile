@@ -29,6 +29,8 @@ pod 'FSCalendar'
 
 pod "Colorful", "~> 3.0"
 
+pod 'Google-Mobile-Ads-SDK'
+
 
   # Pods for AAATraining
 

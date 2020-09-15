@@ -546,13 +546,6 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             return cellPic
     }
     
-    
-    
-    
-    
-    
-    
-    
     // MARK: - Scroll Did Scroll
     // executed always whenever tableView is scrolling
 //    override func scrollViewDidScroll(_ scrollView: UIScrollView) {

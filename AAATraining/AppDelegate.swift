@@ -15,6 +15,7 @@ import OneSignal
 import FirebaseAuth
 import Sinch
 import FirebaseFirestore
+import GoogleMobileAds
 
 
 @UIApplicationMain
@@ -40,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         let db = Firestore.firestore()
         db.settings = settings
 
-        
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
         //UINavigationBar.appearance().barTintColor = #colorLiteral(red: 0.1006183103, green: 0.2956552207, blue: 0.71825701, alpha: 1)
         //UINavigationBar.appearance().tintColor = UIColor.white
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
