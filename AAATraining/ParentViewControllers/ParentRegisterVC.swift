@@ -54,7 +54,7 @@ class ParentRegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDele
         self.lastNameTextField.delegate = self
         self.passwordTextField.delegate = self
         
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.adUnitID = "ca-app-pub-8479238648739219/3793498137"
         bannerView.rootViewController = self
         bannerView.delegate = self
         bannerView.load(GADRequest())

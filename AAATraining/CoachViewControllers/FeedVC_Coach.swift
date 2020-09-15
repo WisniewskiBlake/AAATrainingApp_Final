@@ -117,9 +117,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         tableView.tableFooterView = view
-        //configure_teamImageView()
-        
-        //loadPosts()
+
 
     }
     
@@ -573,31 +571,31 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         
     }
     
-func showActionSheet() {
-    
-    // declaring action sheet
-    let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-    
-    // declaring library button
-    let library = UIAlertAction(title: "Photo Library", style: .default) { (action) in
+    func showActionSheet() {
         
-        // checking availability of photo library
-        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
-            self.showPicker(with: .photoLibrary)
+        // declaring action sheet
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // declaring library button
+        let library = UIAlertAction(title: "Photo Library", style: .default) { (action) in
+            
+            // checking availability of photo library
+            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+                self.showPicker(with: .photoLibrary)
+            }
+            
         }
+        // declaring cancel button
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
+        // adding buttons to the sheet
+        sheet.addAction(library)
+        sheet.addAction(cancel)
+        
+        // present action sheet to the user finally
+        self.present(sheet, animated: true, completion: nil)
         
     }
-    // declaring cancel button
-    let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-
-    // adding buttons to the sheet
-    sheet.addAction(library)
-    sheet.addAction(cancel)
-    
-    // present action sheet to the user finally
-    self.present(sheet, animated: true, completion: nil)
-    
-}
     
     func showPicker(with source: UIImagePickerController.SourceType) {
         

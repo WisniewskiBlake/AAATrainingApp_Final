@@ -69,7 +69,7 @@ class RegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDelegate {
         self.positionTextField.delegate = self
         self.numberTextField.delegate = self
         
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.adUnitID = "ca-app-pub-8479238648739219/2436200347"
         bannerView.rootViewController = self
         bannerView.delegate = self
         bannerView.load(GADRequest())
@@ -98,15 +98,12 @@ class RegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDelegate {
         cornerRadius(for: weightTextField)
         cornerRadius(for: positionTextField)
         cornerRadius(for: numberTextField)
-        //cornerRadius(for: phoneTextField)
         
         cornerRadius(for: emailContinueButton)
         cornerRadius(for: fullnameContinueButton)
         cornerRadius(for: passwordContinueButton)
-        
-        cornerRadius(for: statsContinueButton)
-        
-        // apply padding to the textFields
+        cornerRadius(for: statsContinueButton)        
+
         padding(for: emailTextField)
         padding(for: firstNameTextField)
         padding(for: lastNameTextField)

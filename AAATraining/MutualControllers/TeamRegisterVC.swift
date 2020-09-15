@@ -67,6 +67,8 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     let helper = Helper()
     
+    let logoImageTapGestureRecognizer = UITapGestureRecognizer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -87,10 +89,14 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         codeLabel.text = teamLoginCode
         
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.adUnitID = "ca-app-pub-8479238648739219/5317514555"
         bannerView.rootViewController = self
         bannerView.delegate = self
         bannerView.load(GADRequest())
+        
+        logoImageTapGestureRecognizer.addTarget(self, action: #selector(self.logoImageViewClicked))
+        logoImageView.isUserInteractionEnabled = true
+        logoImageView.addGestureRecognizer(logoImageTapGestureRecognizer)
   
     }
     
@@ -109,6 +115,13 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         cornerRadius(for: copyToClipButton)
         
         padding(for: teamNameText)
+        
+        logoImageView.layer.cornerRadius = logoImageView.frame.width / 2
+        logoImageView.clipsToBounds = true
+    }
+    
+    @objc func logoImageViewClicked() {
+        showActionSheet()
     }
    
     
@@ -177,70 +190,9 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
     }
     
-   @IBAction func selectImageButtonClicked(_ sender: Any) {
-       print("tapped")
-       let camera = Camera(delegate_: self)
-       
-       let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
-       let takePhotoOrVideo = UIAlertAction(title: "Camera", style: .default) { (action) in
-           camera.PresentMultyCamera(target: self, canEdit: false)
-       }
-       
-       let sharePhoto = UIAlertAction(title: "Photo Library", style: .default) { (action) in
-           
-           camera.PresentPhotoLibrary(target: self, canEdit: false)
-       }
-
-       let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
-       }
-       
-       takePhotoOrVideo.setValue(UIImage(named: "camera"), forKey: "image")
-       sharePhoto.setValue(UIImage(named: "picture"), forKey: "image")
-       
-       //optionMenu.addAction(takePhotoOrVideo)
-       optionMenu.addAction(sharePhoto)
-       optionMenu.addAction(cancelAction)
-       
-       self.present(optionMenu, animated: true, completion: nil)
-   }
+   
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-                
-        picturePath = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
-        
-        
-        picturePath.getColors(quality: UIImageColorsQuality(rawValue: CGFloat(100))!) { colors in
-            self.uiColorOne = colors?.background
-            self.uiColorTwo = colors?.primary
-            self.uiColorThree = colors?.detail
-            
-            
-            
-          //detailLabel.textColor = colors.detail
-            self.teamColorOne = self.uiColorOne?.htmlRGBaColor
-            self.teamColorTwo = self.uiColorTwo?.htmlRGBaColor
-            self.teamColorThree = self.uiColorThree?.htmlRGBaColor
-            
-
-        }
-        
-        let pictureData = picturePath.jpegData(compressionQuality: 0.4)!
-        pictureToUpload = pictureData.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-        logoContinueButton.isHidden = false
-        displayMedia(picture: picturePath)
-        
-        picker.dismiss(animated: true, completion: nil)
-    }
     
-    func displayMedia(picture: UIImage?) {
-        if let pic = picture {
-            logoImageView.image = pic
-            isVideoSelected = false
-            isPictureSelected = true
-            return
-        }
-    }
     
     // configuring the appearance of the footerView
     func configure_footerView() {
@@ -278,14 +230,7 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
             
         // logic for First Name or Last Name TextFields
         }
-//        else if textField == cityText || textField == stateText {
-//
-//            // check fullname validation
-//            if helper.isValid(name: cityText.text!) && helper.isValid(name: stateText.text!) {
-//                locationContinueButton.isHidden = false
-//            }
-//
-//        }
+
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -396,11 +341,144 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
         
  
+    }
+    
+    func showActionSheet() {
         
+        // declaring action sheet
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // declaring library button
+        let library = UIAlertAction(title: "Photo Library", style: .default) { (action) in
+            
+            // checking availability of photo library
+            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+                self.showPicker(with: .photoLibrary)
+            }
+            
+        }
+        // declaring cancel button
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
 
+        // adding buttons to the sheet
+        sheet.addAction(library)
+        sheet.addAction(cancel)
+        
+        // present action sheet to the user finally
+        self.present(sheet, animated: true, completion: nil)
+        
+    }
+    
+    func showPicker(with source: UIImagePickerController.SourceType) {
+        
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true
+        picker.sourceType = source
+        present(picker, animated: true, completion: nil)
+        
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+                    
+            
+            let image = info[UIImagePickerController.InfoKey(rawValue: convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage))] as? UIImage
+            //picturePath = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+        
+        image?.getColors(quality: UIImageColorsQuality(rawValue: CGFloat(100))!) { colors in
+                     self.uiColorOne = colors?.background
+                     self.uiColorTwo = colors?.primary
+                     self.uiColorThree = colors?.detail
         
         
+        
+                   //detailLabel.textColor = colors.detail
+                     self.teamColorOne = self.uiColorOne?.htmlRGBaColor
+                     self.teamColorTwo = self.uiColorTwo?.htmlRGBaColor
+                     self.teamColorThree = self.uiColorThree?.htmlRGBaColor
+        
+        
+                 }
+               
+                // assign selected image to CoverImageView
+                self.logoImageView.image = image
+                
+                let pictureData = image?.jpegData(compressionQuality: 0.4)!
+        pictureToUpload = pictureData!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+                logoContinueButton.isHidden = false
+            
+            // completion handler, to communicate to the project that images has been selected (enable delete button)
+            dismiss(animated: true) {
+                
+            }
 
+    
+        }
+    
+
+//     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+//
+//         picturePath = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+//
+//
+//         picturePath.getColors(quality: UIImageColorsQuality(rawValue: CGFloat(100))!) { colors in
+//             self.uiColorOne = colors?.background
+//             self.uiColorTwo = colors?.primary
+//             self.uiColorThree = colors?.detail
+//
+//
+//
+//           //detailLabel.textColor = colors.detail
+//             self.teamColorOne = self.uiColorOne?.htmlRGBaColor
+//             self.teamColorTwo = self.uiColorTwo?.htmlRGBaColor
+//             self.teamColorThree = self.uiColorThree?.htmlRGBaColor
+//
+//
+//         }
+//
+//         let pictureData = picturePath.jpegData(compressionQuality: 0.4)!
+//         pictureToUpload = pictureData.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+//         logoContinueButton.isHidden = false
+//         displayMedia(picture: picturePath)
+//
+//         picker.dismiss(animated: true, completion: nil)
+//     }
+     
+     func displayMedia(picture: UIImage?) {
+         if let pic = picture {
+             logoImageView.image = pic
+             isVideoSelected = false
+             isPictureSelected = true
+             return
+         }
+     }
+    
+    @IBAction func selectImageButtonClicked(_ sender: Any) {
+        print("tapped")
+        let camera = Camera(delegate_: self)
+        
+        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+        let takePhotoOrVideo = UIAlertAction(title: "Camera", style: .default) { (action) in
+            camera.PresentMultyCamera(target: self, canEdit: false)
+        }
+        
+        let sharePhoto = UIAlertAction(title: "Photo Library", style: .default) { (action) in
+            
+            camera.PresentPhotoLibrary(target: self, canEdit: false)
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+        }
+        
+        takePhotoOrVideo.setValue(UIImage(named: "camera"), forKey: "image")
+        sharePhoto.setValue(UIImage(named: "picture"), forKey: "image")
+        
+        //optionMenu.addAction(takePhotoOrVideo)
+        optionMenu.addAction(sharePhoto)
+        optionMenu.addAction(cancelAction)
+        
+        self.present(optionMenu, animated: true, completion: nil)
     }
     
 
@@ -418,3 +496,12 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     
 }
 
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+    return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+    return input.rawValue
+}
