@@ -39,26 +39,29 @@ class UserTypeSelectionVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        coachView_height.constant = containerView.frame.height/3
-        playerView_height.constant = containerView.frame.height/3
-        parentView_height.constant = containerView.frame.height/3
-        print(coachView_height.constant)
-        print(playerView_height.constant)
-        print(parentView_height.constant)
-        self.view.layoutIfNeeded()
+//        coachView_height.constant = containerView.frame.height/3
+//        playerView_height.constant = containerView.frame.height/3
+//        parentView_height.constant = containerView.frame.height/3
+//        print(coachView_height.constant)
+//        print(playerView_height.constant)
+//        print(parentView_height.constant)
+//        self.view.layoutIfNeeded()
     }
     
     override func viewWillAppear(_ animated: Bool) {
            super.viewWillAppear(animated)
-        self.navigationController?.view.addSubview(self.titleView)
-        self.navigationController?.navigationBar.layer.zPosition = 0;
-           coachView_height.constant = containerView.frame.height/3
-           playerView_height.constant = containerView.frame.height/3
-           parentView_height.constant = containerView.frame.height/3
-           print(coachView_height.constant)
-           print(playerView_height.constant)
-           print(parentView_height.constant)
-            self.view.layoutIfNeeded()
+        //self.navigationController?.view.addSubview(self.titleView)
+        //self.navigationController?.navigationBar.layer.zPosition = 0;
+//           coachView_height.constant = containerView.frame.height/3
+//           playerView_height.constant = containerView.frame.height/3
+//           parentView_height.constant = containerView.frame.height/3
+//           print(coachView_height.constant)
+//           print(playerView_height.constant)
+//           print(parentView_height.constant)
+//            self.view.layoutIfNeeded()
+//        print(coachView_height.constant)
+//        print(playerView_height.constant)
+//        print(parentView_height.constant)
            self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
 
            
