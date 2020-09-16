@@ -20,9 +20,10 @@ class LoginVC: UIViewController, UITextViewDelegate {
     @IBOutlet weak var logoBackground_top: NSLayoutConstraint!
     @IBOutlet weak var logoBackground_height: NSLayoutConstraint!
     
-    @IBOutlet weak var silhouetteLogo: UIImageView!
-    @IBOutlet weak var silhoutte_top: NSLayoutConstraint!
-    @IBOutlet weak var silhoutte_height: NSLayoutConstraint!
+    @IBOutlet weak var leftLabel: UILabel!
+    @IBOutlet weak var rightLabel: UILabel!
+    
+
         
     @IBOutlet weak var loginBtn: UIButton!
     @IBOutlet weak var forgotPassBtn: UIButton!
@@ -138,10 +139,6 @@ class LoginVC: UIViewController, UITextViewDelegate {
             
             if teamImage != nil {
                 logo.image = teamImage
-                //logoBackground.backgroundColor = UIColor(hexString: team.teamColorOne)
-//                loginBtn.backgroundColor = UIColor(hexString: team.teamColorOne)
-//                registerCoachBtn.setTitleColor(UIColor.darkGray, for: .normal)
-//                forgotPassBtn.setTitleColor(UIColor.darkGray, for: .normal)
                 loginBtn.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
                 registerCoachBtn.setTitleColor(#colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), for: .normal)
                 forgotPassBtn.setTitleColor(#colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), for: .normal)
@@ -240,7 +237,11 @@ class LoginVC: UIViewController, UITextViewDelegate {
         
         logoBackground_height.constant = self.view.frame.width/5
         logo_height.constant = self.view.frame.width/5
-        silhoutte_top.constant = -15
+        leftLabel.isHidden = true
+        rightLabel.isHidden = true
+        logoBackground.isHidden = false
+        logo.isHidden = true
+//        silhoutte_top.constant = -15
         
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             //registerButton_bottom.constant = keyboardSize.height + 20
@@ -250,7 +251,7 @@ class LoginVC: UIViewController, UITextViewDelegate {
         
         // animation function. Whatever in the closures below will be animated
         UIView.animate(withDuration: 0.5) {
-            self.silhouetteLogo.alpha = 0
+//            self.silhouetteLogo.alpha = 0
             self.view.layoutIfNeeded()
             
         }
@@ -262,13 +263,15 @@ class LoginVC: UIViewController, UITextViewDelegate {
       
         logoBackground_height.constant = logoBackground_height_cache
         logo_height.constant = logo_height_cache
-        silhoutte_top.constant = 177
-        //registerButton_bottom.constant = registerButton_bottom_cache
+//        silhoutte_top.constant = 177
         registerCoachButton_bottom.constant = registerCoachButton_bottom_cache
-        
+        logoBackground.isHidden = true
+        logo.isHidden = false
+        leftLabel.isHidden = false
+        rightLabel.isHidden = false
         // animation function. Whatever in the closures below will be animated
         UIView.animate(withDuration: 0.5) {
-            self.silhouetteLogo.alpha = 1
+//            self.silhouetteLogo.alpha = 1
             self.view.layoutIfNeeded()
             
         }
@@ -339,28 +342,13 @@ class LoginVC: UIViewController, UITextViewDelegate {
        rightLineView.layer.addSublayer(rightLine)
     }
     
-//    func configure_registerButton(btn: UIButton) {
-//        // creating constant named 'border' of type layer which acts as a border frame
-//        let border = CALayer()
-//        border.borderColor = UIColor(hexString: team.teamColorOne)?.cgColor
-//        border.borderWidth = 2
-//        border.frame = CGRect(x: 0, y: 0, width: btn.frame.width, height: btn.frame.height)
-//
-//        // assign border to the obj (button)
-//        btn.layer.addSublayer(border)
-//
-//
-//        // rounded corner
-//        btn.layer.cornerRadius = 5
-//        btn.layer.masksToBounds = true
-//
-//    }
+
     
     func configure_registerCoachButton(btn: UIButton) {
         // creating constant named 'border' of type layer which acts as a border frame
         let border = CALayer()
 //        border.borderColor = UIColor(hexString: team.teamColorOne)?.cgColor
-        border.borderColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+        border.borderColor = #colorLiteral(red: 0.1626327634, green: 0.1581403017, blue: 0.1580258608, alpha: 1)
         border.borderWidth = 2
         border.frame = CGRect(x: 0, y: 0, width: btn.frame.width, height: btn.frame.height)
         
