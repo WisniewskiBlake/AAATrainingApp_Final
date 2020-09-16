@@ -20,7 +20,16 @@ class UserTypeSelectionVC: UIViewController {
     @IBOutlet weak var parentView: UIView!
     @IBOutlet weak var containerView: UIView!
     
-
+    @IBOutlet weak var coachView_top: NSLayoutConstraint!
+    @IBOutlet weak var coachView_height: NSLayoutConstraint!
+    
+    @IBOutlet weak var playerView_top: NSLayoutConstraint!
+    @IBOutlet weak var playerView_height: NSLayoutConstraint!
+    
+    @IBOutlet weak var parentView_top: NSLayoutConstraint!
+    @IBOutlet weak var parentView_height: NSLayoutConstraint!
+    
+    
     var viewToGoTo = ""
     
     var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
@@ -28,7 +37,7 @@ class UserTypeSelectionVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        coachView.he
+        coachView.heightAnchor = containerView.frame.height/3
     }
     
     override func viewWillAppear(_ animated: Bool) {

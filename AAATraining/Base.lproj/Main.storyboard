@@ -333,10 +333,10 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UNC-C4-vim">
                                 <rect key="frame" x="0.0" y="66" width="375" height="601"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qo1-UH-tev">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qo1-UH-tev">
                                         <rect key="frame" x="0.0" y="199" width="375" height="199"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S1g-nB-8lt">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="S1g-nB-8lt">
                                                 <rect key="frame" x="36" y="44" width="110" height="110"/>
                                                 <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
@@ -346,11 +346,18 @@
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="S1g-nB-8lt" secondAttribute="bottom" constant="45" id="27Z-Lz-A3C"/>
+                                            <constraint firstAttribute="height" constant="199" id="FIc-GU-HfD"/>
+                                            <constraint firstAttribute="width" constant="375" id="PbB-jf-8zf"/>
+                                            <constraint firstItem="S1g-nB-8lt" firstAttribute="leading" secondItem="Qo1-UH-tev" secondAttribute="leading" constant="36" id="je9-Yj-btr"/>
+                                            <constraint firstItem="S1g-nB-8lt" firstAttribute="top" secondItem="Qo1-UH-tev" secondAttribute="top" constant="44" id="xxW-MB-2tl"/>
+                                        </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pH1-sj-MWx">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pH1-sj-MWx">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="199"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="coach.png" translatesAutoresizingMaskIntoConstraints="NO" id="fv9-At-0s7">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coach.png" translatesAutoresizingMaskIntoConstraints="NO" id="fv9-At-0s7">
                                                 <rect key="frame" x="36" y="44" width="110" height="110"/>
                                                 <color key="backgroundColor" red="0.95686274510000002" green="0.32156862749999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
@@ -360,11 +367,17 @@
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="375" id="29V-0v-Ufo"/>
+                                            <constraint firstAttribute="bottom" secondItem="fv9-At-0s7" secondAttribute="bottom" constant="45" id="OOv-28-EyY"/>
+                                            <constraint firstAttribute="height" constant="199" id="b33-yO-0Ud"/>
+                                            <constraint firstItem="fv9-At-0s7" firstAttribute="leading" secondItem="pH1-sj-MWx" secondAttribute="leading" constant="36" id="mlr-es-zJt"/>
+                                        </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z4r-Zr-UD9">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z4r-Zr-UD9">
                                         <rect key="frame" x="0.0" y="398" width="375" height="199"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ogm-xU-Krp">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ogm-xU-Krp">
                                                 <rect key="frame" x="36" y="44" width="110" height="110"/>
                                                 <color key="backgroundColor" systemColor="systemPurpleColor" red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
@@ -374,6 +387,13 @@
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="ogm-xU-Krp" firstAttribute="leading" secondItem="Z4r-Zr-UD9" secondAttribute="leading" constant="36" id="FDa-fe-4QN"/>
+                                            <constraint firstAttribute="height" constant="199" id="R5B-AL-6Uo"/>
+                                            <constraint firstItem="ogm-xU-Krp" firstAttribute="top" secondItem="Z4r-Zr-UD9" secondAttribute="top" constant="44" id="RFa-g1-z78"/>
+                                            <constraint firstAttribute="width" constant="375" id="WJC-kh-mqA"/>
+                                            <constraint firstAttribute="bottom" secondItem="ogm-xU-Krp" secondAttribute="bottom" constant="45" id="ffQ-Zc-7YQ"/>
+                                        </constraints>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -386,7 +406,6 @@
                                     <constraint firstItem="Qo1-UH-tev" firstAttribute="leading" secondItem="UNC-C4-vim" secondAttribute="leading" id="YU4-Np-I19"/>
                                     <constraint firstAttribute="trailing" secondItem="Qo1-UH-tev" secondAttribute="trailing" id="rsn-f3-KE7"/>
                                     <constraint firstItem="Z4r-Zr-UD9" firstAttribute="top" secondItem="Qo1-UH-tev" secondAttribute="bottom" id="sFJ-Mr-WDk"/>
-                                    <constraint firstAttribute="height" constant="601" id="vpC-sp-23c"/>
                                     <constraint firstAttribute="bottom" secondItem="Z4r-Zr-UD9" secondAttribute="bottom" constant="4" id="xwm-5G-3rZ"/>
                                     <constraint firstItem="Z4r-Zr-UD9" firstAttribute="leading" secondItem="UNC-C4-vim" secondAttribute="leading" id="yfm-dM-agP"/>
                                 </constraints>
@@ -416,9 +435,15 @@
                     <connections>
                         <outlet property="accountTypeLabel" destination="KiZ-O6-Raw" id="98y-Hz-VZQ"/>
                         <outlet property="coachView" destination="pH1-sj-MWx" id="e79-a8-30a"/>
+                        <outlet property="coachView_height" destination="b33-yO-0Ud" id="Svw-uP-Uc8"/>
+                        <outlet property="coachView_top" destination="AVp-1n-cij" id="Ugw-az-F0K"/>
                         <outlet property="containerView" destination="UNC-C4-vim" id="MDK-jn-AOh"/>
                         <outlet property="parentView" destination="Z4r-Zr-UD9" id="JHw-FE-zbT"/>
+                        <outlet property="parentView_height" destination="R5B-AL-6Uo" id="jSN-Ad-PL4"/>
+                        <outlet property="parentView_top" destination="sFJ-Mr-WDk" id="ZRW-TU-xXQ"/>
                         <outlet property="playerView" destination="Qo1-UH-tev" id="u28-mv-r9L"/>
+                        <outlet property="playerView_height" destination="FIc-GU-HfD" id="CqF-1F-lyU"/>
+                        <outlet property="playerView_top" destination="W72-FL-nE5" id="YH1-hG-LbV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ng0-e4-scJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
