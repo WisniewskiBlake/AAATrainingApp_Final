@@ -237,8 +237,8 @@ class LoginVC: UIViewController, UITextViewDelegate {
         
         logoBackground_height.constant = self.view.frame.width/5
         logo_height.constant = self.view.frame.width/5
-        leftLabel.isHidden = true
-        rightLabel.isHidden = true
+//        leftLabel.isHidden = true
+//        rightLabel.isHidden = true
         logoBackground.isHidden = false
         logo.isHidden = true
 //        silhoutte_top.constant = -15
@@ -267,8 +267,8 @@ class LoginVC: UIViewController, UITextViewDelegate {
         registerCoachButton_bottom.constant = registerCoachButton_bottom_cache
         logoBackground.isHidden = true
         logo.isHidden = false
-        leftLabel.isHidden = false
-        rightLabel.isHidden = false
+//        leftLabel.isHidden = false
+//        rightLabel.isHidden = false
         // animation function. Whatever in the closures below will be animated
         UIView.animate(withDuration: 0.5) {
 //            self.silhouetteLogo.alpha = 1
@@ -348,7 +348,7 @@ class LoginVC: UIViewController, UITextViewDelegate {
         // creating constant named 'border' of type layer which acts as a border frame
         let border = CALayer()
 //        border.borderColor = UIColor(hexString: team.teamColorOne)?.cgColor
-        border.borderColor = #colorLiteral(red: 0.1626327634, green: 0.1581403017, blue: 0.1580258608, alpha: 1)
+        border.borderColor = #colorLiteral(red: 0.1882352941, green: 0.1882352941, blue: 0.1882352941, alpha: 1)
         border.borderWidth = 2
         border.frame = CGRect(x: 0, y: 0, width: btn.frame.width, height: btn.frame.height)
         
@@ -363,7 +363,9 @@ class LoginVC: UIViewController, UITextViewDelegate {
     }
 
     
-    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 
     
 
