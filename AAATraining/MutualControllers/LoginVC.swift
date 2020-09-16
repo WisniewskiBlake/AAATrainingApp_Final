@@ -118,11 +118,12 @@ class LoginVC: UIViewController, UITextViewDelegate {
     @IBAction func registerButtonClicked(_ sender: Any) {
 
         
-        let navigationSelection = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "userSelectionNav") as! UINavigationController
-         let selectionVC = navigationSelection.viewControllers.first as! UserTypeSelectionVC
+        let selectionVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserTypeSelectionVC") as! UserTypeSelectionVC
         selectionVC.team = self.team
+        selectionVC.modalPresentationStyle = .fullScreen
 
-        self.present(navigationSelection, animated: true, completion: nil)
+        self.present(selectionVC, animated: true, completion: nil)
+        //self.navigationController?.pushViewController(selectionVC, animated: true)
     }
 
     
