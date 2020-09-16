@@ -19,6 +19,8 @@ class UserTypeSelectionVC: UIViewController {
     @IBOutlet weak var playerView: UIView!
     @IBOutlet weak var parentView: UIView!
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var titleView: UIView!
+    
     
     @IBOutlet weak var coachView_top: NSLayoutConstraint!
     @IBOutlet weak var coachView_height: NSLayoutConstraint!
@@ -37,14 +39,27 @@ class UserTypeSelectionVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        coachView.heightAnchor = containerView.frame.height/3
+        coachView_height.constant = containerView.frame.height/3
+        playerView_height.constant = containerView.frame.height/3
+        parentView_height.constant = containerView.frame.height/3
+        print(coachView_height.constant)
+        print(playerView_height.constant)
+        print(parentView_height.constant)
+        self.view.layoutIfNeeded()
     }
     
     override func viewWillAppear(_ animated: Bool) {
            super.viewWillAppear(animated)
-           
-
-        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+        self.navigationController?.view.addSubview(self.titleView)
+        self.navigationController?.navigationBar.layer.zPosition = 0;
+           coachView_height.constant = containerView.frame.height/3
+           playerView_height.constant = containerView.frame.height/3
+           parentView_height.constant = containerView.frame.height/3
+           print(coachView_height.constant)
+           print(playerView_height.constant)
+           print(parentView_height.constant)
+            self.view.layoutIfNeeded()
+           self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
 
            
        }
