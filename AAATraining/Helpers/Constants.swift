@@ -161,7 +161,7 @@ public let kTEAMMEMBERIDS = "teamMemberIDs"
 public let kTEAMCOLORONE = "teamColorOne"
 public let kTEAMCOLORTWO = "teamColorTwo"
 public let kTEAMCOLORTHREE = "teamColorThree"
-
+public let kTEAMMEMBERCOUNT = "teamMemberCount"
 
 //recent
 public let kCHATROOMID = "chatRoomID"

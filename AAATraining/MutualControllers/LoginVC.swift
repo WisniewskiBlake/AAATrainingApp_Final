@@ -183,24 +183,11 @@ class LoginVC: UIViewController, UITextViewDelegate {
     func goToApp() {
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
-        print(FUser.currentId())
-        print(FUser.currentUser()?.accountType)
-        print(FUser.currentUser()?.height)
-        
-        if FUser.currentUser()?.accountType == "coach" {
-            ProgressHUD.show("Login...")
-            self.goToCoach()
-            
+        let selectionVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as! TeamSelectionVC
 
-        } else if FUser.currentUser()?.accountType == "player" {
-            ProgressHUD.show("Login...")
-            self.goToPlayer()
-            
-        } else if FUser.currentUser()?.accountType == "parent" {
-            ProgressHUD.show("Login...")
-            self.goToParent()
-            
-        }
+        selectionVC.modalPresentationStyle = .fullScreen
+
+        self.present(selectionVC, animated: true, completion: nil)
     }
         
     func goToCoach() {

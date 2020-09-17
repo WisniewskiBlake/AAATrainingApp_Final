@@ -153,12 +153,12 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBAction func finishContinueClicked(_ sender: Any) {
         
-        let team = Team(teamID: teamLoginCode, teamName: teamNameText.text!, teamLogo: self.pictureToUpload!, teamMemberIDs: [FUser.currentId()], teamCity: "", teamState: "", teamColorOne: teamColorOne!, teamColorTwo: teamColorTwo!, teamColorThree: teamColorThree!, teamType: self.teamType)
+        let team = Team(teamID: teamLoginCode, teamName: teamNameText.text!, teamLogo: self.pictureToUpload!, teamMemberIDs: [FUser.currentId()], teamCity: "", teamState: "", teamColorOne: teamColorOne!, teamColorTwo: teamColorTwo!, teamColorThree: teamColorThree!, teamType: self.teamType, teamMemberCount: "1")
         
         team.saveTeam()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createTeam"), object: nil)
         
-        self.goToApp()       
+        self.goToApp()
 
     }
     
@@ -179,8 +179,6 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     func goToApp() {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
         {
-//            vc.team = teamToLoad
-//            vc.teamID = teamToLoad.teamID
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         }

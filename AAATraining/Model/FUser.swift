@@ -48,7 +48,7 @@ public class FUser {
     
     //MARK: Initializers
     
-    init(_objectId: String, _pushId: String?, _createdAt: Date, _updatedAt: Date, _email: String, _firstname: String, _lastname: String, _avatar: String = "", _loginMethod: String, _phoneNumber: String, _height: String, _weight: String, _position: String, _number: String, _accountType: String, _birthday: String, _cover: String, _userTeamID: String, _userTeamColorOne: String, _userTeamColorTwo: String, _userTeamColorThree: String, _userTeamIDs: [String]) {
+    init(_objectId: String, _pushId: String?, _createdAt: Date, _updatedAt: Date, _email: String, _firstname: String, _lastname: String, _avatar: String = "", _loginMethod: String, _phoneNumber: String, _height: String, _weight: String, _position: String, _number: String, _accountType: String, _birthday: String, _cover: String, _userCurrentTeamID: String, _userTeamColorOne: String, _userTeamColorTwo: String, _userTeamColorThree: String, _userTeamIDs: [String]) {
         
         objectId = _objectId
         pushId = _pushId
@@ -67,7 +67,7 @@ public class FUser {
         accountType = _accountType
         birthday = _birthday
         cover = _cover
-        userCurrentTeamID = _userTeamID
+        userCurrentTeamID = _userCurrentTeamID
         userTeamColorOne = _userTeamColorOne
         userTeamColorTwo = _userTeamColorTwo
         userTeamColorThree = _userTeamColorThree
@@ -315,7 +315,7 @@ public class FUser {
     
     //MARK: Register functions
     
-    class func registerUserWith(email: String, password: String, firstName: String, lastName: String, avatar: String, height: String, weight: String, position: String, number: String, accountType: String, birthday: String, cover: String, phoneNumber: String, userTeamID: String, userTeamColorOne: String, userTeamColorTwo: String, userTeamColorThree: String, userTeamIDs: [String], completion: @escaping (_ error: Error?) -> Void ) {
+    class func registerUserWith(email: String, password: String, firstName: String, lastName: String, avatar: String, height: String, weight: String, position: String, number: String, accountType: String, birthday: String, cover: String, phoneNumber: String, userCurrentTeamID: String, userTeamColorOne: String, userTeamColorTwo: String, userTeamColorThree: String, userTeamIDs: [String], completion: @escaping (_ error: Error?) -> Void ) {
         
         Auth.auth().createUser(withEmail: email, password: password, completion: { (firuser, error) in
             
@@ -325,7 +325,7 @@ public class FUser {
                 return
             }
             
-            let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: firuser!.user.email!, _firstname: firstName, _lastname: lastName, _avatar: avatar, _loginMethod: kEMAIL, _phoneNumber: phoneNumber, _height: height, _weight: weight, _position: position, _number: number,  _accountType: accountType, _birthday: birthday, _cover: cover, _userTeamID: userTeamID, _userTeamColorOne: userTeamColorOne, _userTeamColorTwo: userTeamColorTwo, _userTeamColorThree: userTeamColorThree, _userTeamIDs: userTeamIDs)
+            let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: firuser!.user.email!, _firstname: firstName, _lastname: lastName, _avatar: avatar, _loginMethod: kEMAIL, _phoneNumber: phoneNumber, _height: height, _weight: weight, _position: position, _number: number,  _accountType: accountType, _birthday: birthday, _cover: cover, _userCurrentTeamID: userCurrentTeamID, _userTeamColorOne: userTeamColorOne, _userTeamColorTwo: userTeamColorTwo, _userTeamColorThree: userTeamColorThree, _userTeamIDs: userTeamIDs)
             
             
             saveUserLocally(fUser: fUser)
@@ -365,7 +365,7 @@ public class FUser {
                 } else {
 
                     //    we have no user, register
-                    let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: "", _firstname: "", _lastname: "", _avatar: "", _loginMethod: kPHONE, _phoneNumber: firuser!.user.phoneNumber!, _height: "", _weight: "", _position: "", _number: "", _accountType: "", _birthday: "", _cover: "", _userTeamID: "", _userTeamColorOne: "", _userTeamColorTwo: "", _userTeamColorThree: "", _userTeamIDs: [""])
+                    let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: "", _firstname: "", _lastname: "", _avatar: "", _loginMethod: kPHONE, _phoneNumber: firuser!.user.phoneNumber!, _height: "", _weight: "", _position: "", _number: "", _accountType: "", _birthday: "", _cover: "", _userCurrentTeamID: "", _userTeamColorOne: "", _userTeamColorTwo: "", _userTeamColorThree: "", _userTeamIDs: [""])
 
                     saveUserLocally(fUser: fUser)
                     saveUserToFirestore(fUser: fUser)

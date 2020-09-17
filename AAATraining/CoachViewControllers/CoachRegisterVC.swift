@@ -164,7 +164,7 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDeleg
         let avatar = getAvatar()
         let defaultTeamColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1).htmlRGBaColor
         
-        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "coach", birthday: "", cover: team.teamLogo, phoneNumber: "", userTeamID: team.teamID, userTeamColorOne: defaultTeamColor, userTeamColorTwo: team.teamColorTwo, userTeamColorThree: team.teamColorThree) { (error)  in
+        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "coach", birthday: "", cover: "", phoneNumber: "", userCurrentTeamID: "", userTeamColorOne: defaultTeamColor, userTeamColorTwo: team.teamColorTwo, userTeamColorThree: team.teamColorThree, userTeamIDs: [""]) { (error)  in
             
                 if error != nil {
                     ProgressHUD.dismiss()
@@ -191,10 +191,13 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDeleg
     
     
     func goToApp() {
-        let helper = Helper()
+        
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
-        // go to TabBar
-        helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
+        {
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
     
