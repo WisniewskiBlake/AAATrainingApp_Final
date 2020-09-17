@@ -79,18 +79,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         splitterLabelTwo.backgroundColor = UIColor.lightGray
     }
     
-    func loadTeamType() {
-        var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
-        
-        team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
-            if teamReturned.teamID != "" {
-                team = teamReturned
-                    
-            } else {
-                
-            }
-        }
-    }
+
     
     @objc func loadEvents() {
         ProgressHUD.show()
@@ -322,7 +311,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
             FUser.logOutCurrentUser { (success) in
                 
                 if success {
-                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamLoginVC") as? TeamLoginVC
+                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
                     {
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: true, completion: nil)

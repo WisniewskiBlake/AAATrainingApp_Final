@@ -160,7 +160,7 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         team.saveTeam()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createTeam"), object: nil)
-        updateCurrentUserInFirestore(withValues: [kUSERTEAMIDS : FieldValue.arrayUnion([teamLoginCode])]) { (success) in
+        updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMIDS : FieldValue.arrayUnion([teamLoginCode])]) { (success) in
             self.goToApp()
         }
         

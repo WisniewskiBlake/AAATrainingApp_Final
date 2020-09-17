@@ -48,11 +48,7 @@ class LoginVC: UIViewController, UITextViewDelegate {
     let helper = Helper()
     
     var teamID: String = ""
-    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
-    
-    //
-//    var loginRef: DatabaseReference!
-    
+
     //executed when scene is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -133,18 +129,10 @@ class LoginVC: UIViewController, UITextViewDelegate {
         padding(for: passwordTextField)
         cornerRadius(for: emailTextField)
         cornerRadius(for: passwordTextField)
-        
-        //this will load the team and set the current user defaults to team color and logo
-        self.helper.imageFromData(pictureData: team.teamLogo) { (teamImage) in
-            
-            
-            if teamImage != nil {
-                logo.image = teamImage
-                loginBtn.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
-                registerCoachBtn.setTitleColor(#colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), for: .normal)
-                forgotPassBtn.setTitleColor(#colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), for: .normal)
-            }
-        }
+
+        loginBtn.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+        registerCoachBtn.setTitleColor(#colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), for: .normal)
+        forgotPassBtn.setTitleColor(#colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), for: .normal)
 
     }
             

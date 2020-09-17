@@ -239,6 +239,15 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDeleg
         } 
     }
     
+    @IBAction func alreadyHaveAccClicked(_ sender: Any) {
+        let loginVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+
+        loginVC.modalPresentationStyle = .fullScreen
+
+        self.present(loginVC, animated: true, completion: nil)
+    }
+    
+    
     /// Tells the delegate an ad request loaded an ad.
     func adViewDidReceiveAd(_ bannerView: GADBannerView) {
       print("adViewDidReceiveAd")

@@ -309,12 +309,12 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="97"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Your Account Type" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KiZ-O6-Raw">
-                                        <rect key="frame" x="16" y="61" width="343" height="28"/>
+                                        <rect key="frame" x="16" y="56" width="343" height="33"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="28" id="K5x-zA-5Ok"/>
+                                            <constraint firstAttribute="height" constant="33" id="K5x-zA-5Ok"/>
                                             <constraint firstAttribute="width" constant="343" id="kwB-iK-XWu"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="23"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="24"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -519,12 +519,12 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="225"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Join Or Create A Team" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="19b-QO-mm9">
-                                        <rect key="frame" x="0.0" y="74" width="375" height="21"/>
+                                        <rect key="frame" x="0.0" y="63" width="375" height="28"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="375" id="ak3-Rl-UQ0"/>
-                                            <constraint firstAttribute="height" constant="21" id="xqw-DJ-iND"/>
+                                            <constraint firstAttribute="height" constant="28" id="xqw-DJ-iND"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="23"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="24"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -533,12 +533,13 @@
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="joinTeam.png" translatesAutoresizingMaskIntoConstraints="NO" id="zJg-sj-Dvh">
                                                 <rect key="frame" x="54" y="8" width="80" height="80"/>
+                                                <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="80" id="Wop-PV-L18"/>
                                                     <constraint firstAttribute="width" constant="80" id="bPn-zN-9Jk"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+ Join A Team" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kGl-zE-Spw">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Join A Team" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kGl-zE-Spw">
                                                 <rect key="frame" x="39.5" y="93" width="109" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="109" id="JxA-LS-PM0"/>
@@ -570,7 +571,7 @@
                                                     <constraint firstAttribute="width" constant="80" id="Nhu-fE-83m"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+ Create A Team" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7yR-Kv-JCy">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create A Team" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7yR-Kv-JCy">
                                                 <rect key="frame" x="30" y="93" width="128" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="21" id="6JW-PV-H6G"/>
@@ -595,16 +596,16 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.18823529410000001" green="0.18823529410000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="i0x-UI-6eI" firstAttribute="top" secondItem="19b-QO-mm9" secondAttribute="bottom" constant="8" id="3Os-Hi-oiB"/>
+                                    <constraint firstItem="i0x-UI-6eI" firstAttribute="top" secondItem="19b-QO-mm9" secondAttribute="bottom" constant="12" id="3Os-Hi-oiB"/>
                                     <constraint firstAttribute="width" constant="375" id="8ZH-oL-5ds"/>
                                     <constraint firstItem="19b-QO-mm9" firstAttribute="leading" secondItem="li7-pG-6ad" secondAttribute="leading" id="BZ4-zw-ats"/>
                                     <constraint firstItem="i0x-UI-6eI" firstAttribute="bottom" secondItem="li7-pG-6ad" secondAttribute="bottom" id="LLQ-Df-kqK"/>
                                     <constraint firstAttribute="height" constant="225" id="cAz-OE-FYN"/>
-                                    <constraint firstItem="Dj7-Jy-gn0" firstAttribute="top" secondItem="19b-QO-mm9" secondAttribute="bottom" constant="8" id="hwX-uf-zn5"/>
+                                    <constraint firstItem="Dj7-Jy-gn0" firstAttribute="top" secondItem="19b-QO-mm9" secondAttribute="bottom" constant="12" id="hwX-uf-zn5"/>
                                     <constraint firstItem="Dj7-Jy-gn0" firstAttribute="bottom" secondItem="li7-pG-6ad" secondAttribute="bottom" id="jBC-d6-0AI"/>
                                     <constraint firstItem="19b-QO-mm9" firstAttribute="trailing" secondItem="li7-pG-6ad" secondAttribute="trailing" id="jCB-dg-96h"/>
                                     <constraint firstItem="i0x-UI-6eI" firstAttribute="leading" secondItem="Dj7-Jy-gn0" secondAttribute="trailing" id="mh7-PD-1h8"/>
-                                    <constraint firstItem="19b-QO-mm9" firstAttribute="top" secondItem="li7-pG-6ad" secondAttribute="top" constant="74" id="wfj-T5-ZN7"/>
+                                    <constraint firstItem="19b-QO-mm9" firstAttribute="top" secondItem="li7-pG-6ad" secondAttribute="top" constant="63" id="wfj-T5-ZN7"/>
                                     <constraint firstItem="Dj7-Jy-gn0" firstAttribute="leading" secondItem="li7-pG-6ad" secondAttribute="leading" id="y1K-9d-W9t"/>
                                     <constraint firstItem="i0x-UI-6eI" firstAttribute="trailing" secondItem="li7-pG-6ad" secondAttribute="trailing" id="z4i-CA-yBq"/>
                                     <constraint firstItem="i0x-UI-6eI" firstAttribute="leading" secondItem="Dj7-Jy-gn0" secondAttribute="trailing" id="zdj-dg-klL"/>
@@ -627,16 +628,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7nq-Jv-Cit">
-                                                    <rect key="frame" x="51" y="11" width="70" height="70"/>
+                                                    <rect key="frame" x="41" y="11" width="70" height="70"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="70" id="1KT-Fo-gNi"/>
                                                         <constraint firstAttribute="height" constant="70" id="Zqu-tz-uVp"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gae-ep-AWx">
-                                                    <rect key="frame" x="142" y="27" width="47" height="22"/>
+                                                    <rect key="frame" x="131" y="22" width="218" height="22"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="47" id="AgX-iM-B94"/>
+                                                        <constraint firstAttribute="width" constant="218" id="AgX-iM-B94"/>
                                                         <constraint firstAttribute="height" constant="22" id="VIv-Jx-Zwu"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
@@ -644,7 +645,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lZ9-wE-PU6">
-                                                    <rect key="frame" x="142" y="53" width="198" height="21"/>
+                                                    <rect key="frame" x="132" y="48" width="198" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="198" id="Zdj-XZ-i5H"/>
                                                         <constraint firstAttribute="height" constant="21" id="dhv-eb-8Nd"/>
@@ -655,12 +656,16 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="7nq-Jv-Cit" firstAttribute="leading" secondItem="Eej-kR-SOU" secondAttribute="leadingMargin" constant="36" id="4Gt-cZ-TZQ"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="lZ9-wE-PU6" secondAttribute="trailing" constant="30" id="0ep-4J-Jvw"/>
+                                                <constraint firstItem="7nq-Jv-Cit" firstAttribute="leading" secondItem="Eej-kR-SOU" secondAttribute="leadingMargin" constant="26" id="4Gt-cZ-TZQ"/>
                                                 <constraint firstItem="lZ9-wE-PU6" firstAttribute="top" secondItem="Gae-ep-AWx" secondAttribute="bottom" constant="4" id="9gb-3l-FSm"/>
-                                                <constraint firstItem="Gae-ep-AWx" firstAttribute="leading" secondItem="7nq-Jv-Cit" secondAttribute="trailing" constant="21" id="Qi6-xb-0g9"/>
-                                                <constraint firstItem="Gae-ep-AWx" firstAttribute="top" secondItem="7nq-Jv-Cit" secondAttribute="topMargin" constant="8" id="Zig-Zs-UMO"/>
+                                                <constraint firstItem="Gae-ep-AWx" firstAttribute="leading" secondItem="7nq-Jv-Cit" secondAttribute="trailing" constant="20" id="Qi6-xb-0g9"/>
+                                                <constraint firstItem="Gae-ep-AWx" firstAttribute="top" secondItem="7nq-Jv-Cit" secondAttribute="topMargin" constant="3" id="Zig-Zs-UMO"/>
                                                 <constraint firstItem="7nq-Jv-Cit" firstAttribute="centerY" secondItem="Eej-kR-SOU" secondAttribute="centerY" id="hzr-be-kxT"/>
+                                                <constraint firstItem="7nq-Jv-Cit" firstAttribute="top" secondItem="Eej-kR-SOU" secondAttribute="topMargin" id="irW-Do-LsL"/>
+                                                <constraint firstItem="7nq-Jv-Cit" firstAttribute="bottom" secondItem="Eej-kR-SOU" secondAttribute="bottomMargin" id="r8P-K4-lbg"/>
                                                 <constraint firstItem="lZ9-wE-PU6" firstAttribute="leading" secondItem="7nq-Jv-Cit" secondAttribute="trailing" constant="21" id="rLW-Vp-9XR"/>
+                                                <constraint firstItem="Gae-ep-AWx" firstAttribute="trailing" secondItem="Eej-kR-SOU" secondAttribute="trailingMargin" constant="-11" id="w76-f9-dn5"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -959,6 +964,9 @@
                                         <state key="normal" title="Already have an account?">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="alreadyHaveAccClicked:" destination="Lz1-PB-y5L" eventType="touchUpInside" id="9N5-Tf-E53"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -6836,6 +6844,9 @@
                                         <state key="normal" title="Already have an account?">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="alreadyHaveAccClicked:" destination="t5H-gz-0An" eventType="touchUpInside" id="65C-RH-a7W"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -40,11 +40,8 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
 
 
     var isLoading = false
-    
-    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
-    
     var emptyLabelOne = UILabel()
- 
+    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "")
     let helper = Helper()
     let currentDateFormater = Helper().dateFormatter()
     
@@ -199,10 +196,9 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         
         
         
-        let query = reference(.Team).whereField(kUSERCURRENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
+        let query = reference(.Team).whereField(kTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
         query.getDocuments { (snapshot, error) in
-            
-            self.allUsers = []
+ 
             
             if error != nil {
                 print(error!.localizedDescription)
@@ -223,13 +219,11 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
                 for userDictionary in snapshot.documents {
                     
                     let userDictionary = userDictionary.data() as NSDictionary
-                    let fUser = FUser(_dictionary: userDictionary)
-                    
-                    
-                    self.allUsers.append(fUser)
+                    let team = Team(_dictionary: userDictionary)
+                    self.membersTextLabel.text = team.teamMemberCount + " Team Members"
                     
                 }
-                self.membersTextLabel.text = String(self.allUsers.count) + " Team Members"
+                
 
             }
             ProgressHUD.dismiss()

@@ -176,7 +176,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
             FUser.logOutCurrentUser { (success) in
                 
                 if success {
-                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamLoginVC") as? TeamLoginVC
+                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
                     {
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: true, completion: nil)
@@ -222,7 +222,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         let position = userBeingViewed.position
         let number = userBeingViewed.number
         
-         var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
+        var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "")
          
          team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
              if teamReturned.teamID != "" {
@@ -273,7 +273,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
    @objc func loadUser() {
         let helper = Helper()
         var query: Query!
-        var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
+    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "")
         
         team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
             if teamReturned.teamID != "" {

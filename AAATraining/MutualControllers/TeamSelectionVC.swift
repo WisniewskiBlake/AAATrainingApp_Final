@@ -55,6 +55,8 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadTeamsForUser()
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 100
         emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -150, width: view.bounds.size.width, height: view.bounds.size.height))
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -72,7 +74,7 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     
     @objc func createTeamViewClicked() {
-        let teamRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamRegister") as! TeamRegisterVC
+        let teamRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamRegisterVC") as! TeamRegisterVC
         
         teamRegisterVC.modalPresentationStyle = .fullScreen
         self.present(teamRegisterVC, animated: true, completion: nil)
@@ -156,7 +158,7 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         cell.teamImageView.image = self.teamLogos[indexPath.row]
         cell.teamNameLabel.text = teams[indexPath.row].teamName
-        cell.memberCountLabel.text = teams[indexPath.row].teamMemberCount
+        cell.memberCountLabel.text = teams[indexPath.row].teamMemberCount + " Team Members"
         
         return cell
         

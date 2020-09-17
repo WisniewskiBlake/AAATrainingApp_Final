@@ -67,19 +67,7 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         splitterLabel.backgroundColor = UIColor.lightGray
         splitterLabelTwo.backgroundColor = UIColor.lightGray
     }
-    
-    func loadTeamType() {
-        var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
-        
-        team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
-            if teamReturned.teamID != "" {
-                team = teamReturned
-                    
-            } else {
-                
-            }
-        }
-    }
+
     
     @objc func loadEvents() {
         ProgressHUD.show()

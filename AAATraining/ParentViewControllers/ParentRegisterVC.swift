@@ -191,8 +191,11 @@ class ParentRegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDele
     func goToApp() {
         let helper = Helper()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
-        // go to TabBar
-        helper.instantiateViewController(identifier: "ParentTabBar", animated: true, by: self, completion: nil)
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
+        {
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -232,6 +235,15 @@ class ParentRegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDele
             }
         }
     }
+    
+    @IBAction func alreadyHaveAccClicked(_ sender: Any) {
+        let loginVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+
+        loginVC.modalPresentationStyle = .fullScreen
+
+        self.present(loginVC, animated: true, completion: nil)
+    }
+    
     
     /// Tells the delegate an ad request loaded an ad.
     func adViewDidReceiveAd(_ bannerView: GADBannerView) {

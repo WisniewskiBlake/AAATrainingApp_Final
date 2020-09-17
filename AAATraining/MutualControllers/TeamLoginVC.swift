@@ -44,7 +44,8 @@ class TeamLoginVC: UIViewController, UITextFieldDelegate {
             team.getTeam(teamID: teamCodeText.text!) { (teamReturned) in
                 if teamReturned.teamID != "" {
                     self.team = teamReturned
-                    Team.updateTeam(teamID: self.team.teamID, withValues: [kTEAMMEMBERIDS: FieldValue.arrayUnion([FUser.currentId()])])
+                    let teamMemberCount = Int(teamReturned.teamMemberCount)! + 1
+                    Team.updateTeam(teamID: self.team.teamID, withValues: [kTEAMMEMBERIDS: FieldValue.arrayUnion([FUser.currentId()]), kTEAMMEMBERCOUNT: String(teamMemberCount)])
                     updateCurrentUserInFirestore(withValues: [kUSERTEAMIDS : self.team.teamID]) { (success) in
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "joinedTeam"), object: nil)
                         

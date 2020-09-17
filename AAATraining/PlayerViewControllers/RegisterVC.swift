@@ -218,15 +218,22 @@ class RegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDelegate {
     }
     
     func goToApp() {
-        let helper = Helper()
+        
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: USER_DID_LOGIN_NOTIFICATION), object: nil, userInfo: [kUSERID : FUser.currentId()])
-        // go to TabBar
-        helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
+        {
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
     
     @IBAction func cancelButton_clicked(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        let loginVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+
+        loginVC.modalPresentationStyle = .fullScreen
+
+        self.present(loginVC, animated: true, completion: nil)
     }
     
     @IBAction func textFieldDidChange(_ textField: UITextField) {
