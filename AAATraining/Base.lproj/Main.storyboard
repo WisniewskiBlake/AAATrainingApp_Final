@@ -657,6 +657,10 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="zlP-4e-fTv" id="c89-LL-cnT"/>
+                                    <outlet property="delegate" destination="zlP-4e-fTv" id="GtZ-LD-XOJ"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -676,6 +680,7 @@
                         <outlet property="createTeamView" destination="i0x-UI-6eI" id="R5H-lO-lZI"/>
                         <outlet property="joinImageView" destination="zJg-sj-Dvh" id="qrj-wk-ubY"/>
                         <outlet property="joinTeamView" destination="Dj7-Jy-gn0" id="5Ha-Py-Q92"/>
+                        <outlet property="tableView" destination="t78-Pv-Zel" id="PUv-7Y-NpG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R3g-jn-Xm3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

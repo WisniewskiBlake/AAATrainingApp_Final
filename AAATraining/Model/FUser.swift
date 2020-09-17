@@ -35,13 +35,12 @@ public class FUser {
     var birthday: String
     var cover: String
     
-    var userTeamID: String
+    var userCurrentTeamID: String
     var userTeamColorOne: String
     var userTeamColorTwo: String
     var userTeamColorThree: String
     
-    
-    
+    var userTeamIDs: [String]
     
     var contacts: [String]
     var blockedUsers: [String]
@@ -49,77 +48,64 @@ public class FUser {
     
     //MARK: Initializers
     
-    init(_objectId: String, _pushId: String?, _createdAt: Date, _updatedAt: Date, _email: String, _firstname: String, _lastname: String, _avatar: String = "", _loginMethod: String, _phoneNumber: String, _height: String, _weight: String, _position: String, _number: String, _accountType: String, _birthday: String, _cover: String, _userTeamID: String, _userTeamColorOne: String, _userTeamColorTwo: String, _userTeamColorThree: String) {
+    init(_objectId: String, _pushId: String?, _createdAt: Date, _updatedAt: Date, _email: String, _firstname: String, _lastname: String, _avatar: String = "", _loginMethod: String, _phoneNumber: String, _height: String, _weight: String, _position: String, _number: String, _accountType: String, _birthday: String, _cover: String, _userTeamID: String, _userTeamColorOne: String, _userTeamColorTwo: String, _userTeamColorThree: String, _userTeamIDs: [String]) {
         
         objectId = _objectId
         pushId = _pushId
-        
         createdAt = _createdAt
         updatedAt = _updatedAt
-        
         email = _email
         firstname = _firstname
         lastname = _lastname
         fullname = _firstname + " " + _lastname
         ava = _avatar
         isOnline = true
-        
         height = _height
         weight = _weight
         position = _position
         number = _number
-        
         accountType = _accountType
         birthday = _birthday
         cover = _cover
-        
-        userTeamID = _userTeamID
+        userCurrentTeamID = _userTeamID
         userTeamColorOne = _userTeamColorOne
         userTeamColorTwo = _userTeamColorTwo
         userTeamColorThree = _userTeamColorThree
-        
-        
         loginMethod = _loginMethod
         phoneNumber = _phoneNumber
-        
         blockedUsers = []
         contacts = []
+        userTeamIDs = _userTeamIDs
         
     }
     
     init() {
         objectId = ""
         pushId = ""
-        
         createdAt = Date()
         updatedAt = Date()
-        
         email = ""
         firstname = ""
         lastname = ""
         fullname = ""
         ava = ""
         isOnline = true
-        
         height = ""
         weight = ""
         position = ""
         number = ""
-        
         accountType = ""
         birthday = ""
         cover = ""
-        
-        userTeamID = ""
+        userCurrentTeamID = ""
         userTeamColorOne = ""
         userTeamColorTwo = ""
         userTeamColorThree = ""
-        
         loginMethod = ""
         phoneNumber = ""
-        
         blockedUsers = []
         contacts = []
+        userTeamIDs = []
     }
     
     
@@ -230,10 +216,10 @@ public class FUser {
         } else {
             cover = ""
         }
-        if let tmID = _dictionary[kUSERTEAMID] {
-            userTeamID = tmID as! String
+        if let tmID = _dictionary[kUSERCURRENTTEAMID] {
+            userCurrentTeamID = tmID as! String
         } else {
-            userTeamID = ""
+            userCurrentTeamID = ""
         }
         if let tCO = _dictionary[kUSERTEAMCOLORONE] {
             userTeamColorOne = tCO as! String
@@ -249,6 +235,11 @@ public class FUser {
             userTeamColorThree = tCTH as! String
         } else {
             userTeamColorThree = ""
+        }
+        if let tIDs = _dictionary[kUSERTEAMIDS] {
+            userTeamIDs = tIDs as! [String]
+        } else {
+            userTeamIDs = []
         }
      }
     
@@ -324,7 +315,7 @@ public class FUser {
     
     //MARK: Register functions
     
-    class func registerUserWith(email: String, password: String, firstName: String, lastName: String, avatar: String, height: String, weight: String, position: String, number: String, accountType: String, birthday: String, cover: String, phoneNumber: String, userTeamID: String, userTeamColorOne: String, userTeamColorTwo: String, userTeamColorThree: String, completion: @escaping (_ error: Error?) -> Void ) {
+    class func registerUserWith(email: String, password: String, firstName: String, lastName: String, avatar: String, height: String, weight: String, position: String, number: String, accountType: String, birthday: String, cover: String, phoneNumber: String, userTeamID: String, userTeamColorOne: String, userTeamColorTwo: String, userTeamColorThree: String, userTeamIDs: [String], completion: @escaping (_ error: Error?) -> Void ) {
         
         Auth.auth().createUser(withEmail: email, password: password, completion: { (firuser, error) in
             
@@ -334,7 +325,7 @@ public class FUser {
                 return
             }
             
-            let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: firuser!.user.email!, _firstname: firstName, _lastname: lastName, _avatar: avatar, _loginMethod: kEMAIL, _phoneNumber: phoneNumber, _height: height, _weight: weight, _position: position, _number: number,  _accountType: accountType, _birthday: birthday, _cover: cover, _userTeamID: userTeamID, _userTeamColorOne: userTeamColorOne, _userTeamColorTwo: userTeamColorTwo, _userTeamColorThree: userTeamColorThree)
+            let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: firuser!.user.email!, _firstname: firstName, _lastname: lastName, _avatar: avatar, _loginMethod: kEMAIL, _phoneNumber: phoneNumber, _height: height, _weight: weight, _position: position, _number: number,  _accountType: accountType, _birthday: birthday, _cover: cover, _userTeamID: userTeamID, _userTeamColorOne: userTeamColorOne, _userTeamColorTwo: userTeamColorTwo, _userTeamColorThree: userTeamColorThree, _userTeamIDs: userTeamIDs)
             
             
             saveUserLocally(fUser: fUser)
@@ -374,7 +365,7 @@ public class FUser {
                 } else {
 
                     //    we have no user, register
-                    let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: "", _firstname: "", _lastname: "", _avatar: "", _loginMethod: kPHONE, _phoneNumber: firuser!.user.phoneNumber!, _height: "", _weight: "", _position: "", _number: "", _accountType: "", _birthday: "", _cover: "", _userTeamID: "", _userTeamColorOne: "", _userTeamColorTwo: "", _userTeamColorThree: "")
+                    let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: "", _firstname: "", _lastname: "", _avatar: "", _loginMethod: kPHONE, _phoneNumber: firuser!.user.phoneNumber!, _height: "", _weight: "", _position: "", _number: "", _accountType: "", _birthday: "", _cover: "", _userTeamID: "", _userTeamColorOne: "", _userTeamColorTwo: "", _userTeamColorThree: "", _userTeamIDs: [""])
 
                     saveUserLocally(fUser: fUser)
                     saveUserToFirestore(fUser: fUser)
@@ -499,7 +490,7 @@ func userDictionaryFrom(user: FUser) -> NSDictionary {
     let createdAt = helper.dateFormatter().string(from: user.createdAt)
     let updatedAt = helper.dateFormatter().string(from: user.updatedAt)
     
-    return NSDictionary(objects: [user.objectId,  createdAt, updatedAt, user.email, user.loginMethod, user.pushId!, user.firstname, user.lastname, user.ava, user.contacts, user.blockedUsers, user.isOnline, user.phoneNumber, user.height, user.weight, user.position, user.number, user.birthday, user.cover, user.accountType, user.userTeamID, user.userTeamColorOne, user.userTeamColorTwo, user.userTeamColorThree], forKeys: [kOBJECTID as NSCopying, kCREATEDAT as NSCopying, kUPDATEDAT as NSCopying, kEMAIL as NSCopying, kLOGINMETHOD as NSCopying, kPUSHID as NSCopying, kFIRSTNAME as NSCopying, kLASTNAME as NSCopying, kAVATAR as NSCopying, kCONTACT as NSCopying, kBLOCKEDUSERID as NSCopying, kISONLINE as NSCopying, kPHONE as NSCopying, kHEIGHT as NSCopying, kWEIGHT as NSCopying, kPOSITION as NSCopying, kNUMBER as NSCopying, kBIRTHDAY as NSCopying, kCOVER as NSCopying, kACCOUNTTYPE as NSCopying, kUSERTEAMID as NSCopying, kUSERTEAMCOLORONE as NSCopying, kUSERTEAMCOLORTWO as NSCopying, kUSERTEAMCOLORTHREE as NSCopying])
+    return NSDictionary(objects: [user.objectId,  createdAt, updatedAt, user.email, user.loginMethod, user.pushId!, user.firstname, user.lastname, user.ava, user.contacts, user.blockedUsers, user.isOnline, user.phoneNumber, user.height, user.weight, user.position, user.number, user.birthday, user.cover, user.accountType, user.userCurrentTeamID, user.userTeamColorOne, user.userTeamColorTwo, user.userTeamColorThree, user.userTeamIDs], forKeys: [kOBJECTID as NSCopying, kCREATEDAT as NSCopying, kUPDATEDAT as NSCopying, kEMAIL as NSCopying, kLOGINMETHOD as NSCopying, kPUSHID as NSCopying, kFIRSTNAME as NSCopying, kLASTNAME as NSCopying, kAVATAR as NSCopying, kCONTACT as NSCopying, kBLOCKEDUSERID as NSCopying, kISONLINE as NSCopying, kPHONE as NSCopying, kHEIGHT as NSCopying, kWEIGHT as NSCopying, kPOSITION as NSCopying, kNUMBER as NSCopying, kBIRTHDAY as NSCopying, kCOVER as NSCopying, kACCOUNTTYPE as NSCopying, kUSERCURRENTTEAMID as NSCopying, kUSERTEAMCOLORONE as NSCopying, kUSERTEAMCOLORTWO as NSCopying, kUSERTEAMCOLORTHREE as NSCopying, kUSERTEAMIDS as NSCopying])
     
     
     

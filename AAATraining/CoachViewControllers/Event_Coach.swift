@@ -112,7 +112,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         
         //NEED TO ADD EVENTGROUPID HERE NOT DATE, EVENTGROUPID WILL BE THE ID ALL USERS SHARE FOR AN EVENT (SYNONYMOUS WITH CHATROOMID), AND EVENTID WILL BE
         //A UNIQUE IDENTIFIER FOR THE EVENT
-        reference(.Event).whereField(kEVENTDATE, isEqualTo: dateString).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).getDocuments { (snapshot, error) in
+        reference(.Event).whereField(kEVENTDATE, isEqualTo: dateString).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).getDocuments { (snapshot, error) in
                
                guard let snapshot = snapshot else { return }
                
@@ -134,7 +134,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
                
                
                for userId in tempMembers {
-                self.createEvent(eventOwnerID: eventOwnerID, eventTeamID: FUser.currentUser()!.userTeamID, eventText: eventText, eventDate: self.dateString, eventAccountType: eventAccountType, eventUserID: userId, eventGroupID: eventGroupID, eventTitle: eventTitle, eventStart: eventStart!, eventEnd: eventEnd!)
+                self.createEvent(eventOwnerID: eventOwnerID, eventTeamID: FUser.currentUser()!.userCurrentTeamID, eventText: eventText, eventDate: self.dateString, eventAccountType: eventAccountType, eventUserID: userId, eventGroupID: eventGroupID, eventTitle: eventTitle, eventStart: eventStart!, eventEnd: eventEnd!)
 
                }
                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
@@ -142,7 +142,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     }
     
     func getAllMembers() {
-        reference(.User).whereField(kUSERTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).getDocuments { (snapshot, error) in
+        reference(.User).whereField(kUSERCURRENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).getDocuments { (snapshot, error) in
         
             guard let snapshot = snapshot else { return }
         

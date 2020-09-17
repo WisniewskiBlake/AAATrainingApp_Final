@@ -152,17 +152,13 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     @IBAction func finishContinueClicked(_ sender: Any) {
-//        let avatar = getAvatar()
-//        let coverIMG = cover?.jpegData(compressionQuality: 0.7)
-//        let coverData = coverIMG!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         
-        let team = Team(teamID: teamLoginCode, teamName: teamNameText.text!, teamLogo: self.pictureToUpload!, teamMemberIDs: [""], teamCity: "", teamState: "", teamColorOne: teamColorOne!, teamColorTwo: teamColorTwo!, teamColorThree: teamColorThree!, teamType: self.teamType)
+        let team = Team(teamID: teamLoginCode, teamName: teamNameText.text!, teamLogo: self.pictureToUpload!, teamMemberIDs: [FUser.currentId()], teamCity: "", teamState: "", teamColorOne: teamColorOne!, teamColorTwo: teamColorTwo!, teamColorThree: teamColorThree!, teamType: self.teamType)
         
         team.saveTeam()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createTeam"), object: nil)
-        //sceneDelegate.tintColor = UIColor(hexString: team.teamColorOne)
-        self.goToApp(teamToLoad: team)
-        //self.goToLogin()
+        
+        self.goToApp()       
 
     }
     
@@ -180,11 +176,11 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     
-    func goToApp(teamToLoad: Team) {
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+    func goToApp() {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
         {
-            vc.team = teamToLoad
-            vc.teamID = teamToLoad.teamID
+//            vc.team = teamToLoad
+//            vc.teamID = teamToLoad.teamID
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         }
@@ -414,35 +410,7 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
 
     
         }
-    
 
-//     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-//
-//         picturePath = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
-//
-//
-//         picturePath.getColors(quality: UIImageColorsQuality(rawValue: CGFloat(100))!) { colors in
-//             self.uiColorOne = colors?.background
-//             self.uiColorTwo = colors?.primary
-//             self.uiColorThree = colors?.detail
-//
-//
-//
-//           //detailLabel.textColor = colors.detail
-//             self.teamColorOne = self.uiColorOne?.htmlRGBaColor
-//             self.teamColorTwo = self.uiColorTwo?.htmlRGBaColor
-//             self.teamColorThree = self.uiColorThree?.htmlRGBaColor
-//
-//
-//         }
-//
-//         let pictureData = picturePath.jpegData(compressionQuality: 0.4)!
-//         pictureToUpload = pictureData.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-//         logoContinueButton.isHidden = false
-//         displayMedia(picture: picturePath)
-//
-//         picker.dismiss(animated: true, completion: nil)
-//     }
      
      func displayMedia(picture: UIImage?) {
          if let pic = picture {

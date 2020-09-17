@@ -82,7 +82,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     func loadTeamType() {
         var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
         
-        team.getTeam(teamID: FUser.currentUser()!.userTeamID) { (teamReturned) in
+        team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
             if teamReturned.teamID != "" {
                 team = teamReturned
                     
@@ -94,7 +94,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     
     @objc func loadEvents() {
         ProgressHUD.show()
-        recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).order(by: kEVENTUSERID).order(by: kEVENTDATEFORUPCOMINGCOMPARISON).addSnapshotListener({ (snapshot, error) in
+        recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kEVENTUSERID).order(by: kEVENTDATEFORUPCOMINGCOMPARISON).addSnapshotListener({ (snapshot, error) in
                            
             self.allEvents = []
             self.allEventDates = []
@@ -123,7 +123,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
                         self.upcomingEvents.append(event)
                     }
                     
-                    if event.eventTeamID == FUser.currentUser()?.userTeamID {
+                    if event.eventTeamID == FUser.currentUser()?.userCurrentTeamID {
                         self.allEvents.append(event)
                         i += 1
                        if event.eventUserID == FUser.currentId() {
@@ -300,7 +300,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     }
     
     @objc func logoutViewClicked() {
-        let sheet = UIAlertController(title: "Team Login Code: " + FUser.currentUser()!.userTeamID, message: nil, preferredStyle: .actionSheet)
+        let sheet = UIAlertController(title: "Team Login Code: " + FUser.currentUser()!.userCurrentTeamID, message: nil, preferredStyle: .actionSheet)
         
         
         

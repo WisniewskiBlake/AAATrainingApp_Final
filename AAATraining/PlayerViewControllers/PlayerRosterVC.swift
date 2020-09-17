@@ -137,13 +137,13 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
            
            switch filter {
             case "player":
-                query = reference(.User).whereField("accountType", isEqualTo: "player").whereField(kUSERTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).order(by: kFIRSTNAME, descending: false)
+                query = reference(.User).whereField("accountType", isEqualTo: "player").whereField(kUSERCURRENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
            case ("coach"):
-               query = reference(.User).whereField("accountType", isEqualTo: "coach").whereField(kUSERTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).order(by: kFIRSTNAME, descending: false)
+               query = reference(.User).whereField("accountType", isEqualTo: "coach").whereField(kUSERCURRENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
             case ("parent"):
-                query = reference(.User).whereField("accountType", isEqualTo: "parent").whereField(kUSERTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).order(by: kFIRSTNAME, descending: false)
+                query = reference(.User).whereField("accountType", isEqualTo: "parent").whereField(kUSERCURRENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
            default:
-               query = reference(.User).whereField(kUSERTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).order(by: kFIRSTNAME, descending: false)
+               query = reference(.User).whereField(kUSERCURRENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
         }
            
            query.getDocuments { (snapshot, error) in

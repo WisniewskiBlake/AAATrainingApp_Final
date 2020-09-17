@@ -71,7 +71,7 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     func loadTeamType() {
         var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
         
-        team.getTeam(teamID: FUser.currentUser()!.userTeamID) { (teamReturned) in
+        team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
             if teamReturned.teamID != "" {
                 team = teamReturned
                     
@@ -83,7 +83,7 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
     @objc func loadEvents() {
         ProgressHUD.show()
-        recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).order(by: kEVENTUSERID).order(by: kEVENTDATEFORUPCOMINGCOMPARISON).addSnapshotListener({ (snapshot, error) in
+        recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kEVENTUSERID).order(by: kEVENTDATEFORUPCOMINGCOMPARISON).addSnapshotListener({ (snapshot, error) in
                            
             self.allEvents = []
             self.allEventDates = []
@@ -112,7 +112,7 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                         self.upcomingEvents.append(event)
                     }
                     
-                    if event.eventTeamID == FUser.currentUser()?.userTeamID {
+                    if event.eventTeamID == FUser.currentUser()?.userCurrentTeamID {
                         self.allEvents.append(event)
                         i += 1
                        if event.eventUserID == FUser.currentId() {

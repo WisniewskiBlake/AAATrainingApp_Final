@@ -99,7 +99,7 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
     @objc func loadNutritionPosts() {
         ProgressHUD.show()
         
-        recentListener = reference(.Nutrition).order(by: kNUTRITIONPOSTDATE, descending: true).whereField(kNUTRITIONTEAMID, isEqualTo: FUser.currentUser()?.userTeamID as Any).limit(to: 100).addSnapshotListener({ (snapshot, error) in
+        recentListener = reference(.Nutrition).order(by: kNUTRITIONPOSTDATE, descending: true).whereField(kNUTRITIONTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID as Any).limit(to: 100).addSnapshotListener({ (snapshot, error) in
                    
             self.allPosts = []
             self.postDatesArray = []

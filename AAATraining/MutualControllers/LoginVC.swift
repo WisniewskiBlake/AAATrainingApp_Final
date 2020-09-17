@@ -119,11 +119,11 @@ class LoginVC: UIViewController, UITextViewDelegate {
 
         
         let selectionVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserTypeSelectionVC") as! UserTypeSelectionVC
-        selectionVC.team = self.team
+
         selectionVC.modalPresentationStyle = .fullScreen
 
         self.present(selectionVC, animated: true, completion: nil)
-        //self.navigationController?.pushViewController(selectionVC, animated: true)
+
     }
 
     
@@ -153,28 +153,30 @@ class LoginVC: UIViewController, UITextViewDelegate {
             
             let helper = Helper()
             
-            reference(.User).whereField(kUSERTEAMID, isEqualTo: self.team.teamID).getDocuments { (snapshot, error) in
+            FUser.loginUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!) { (error) in
                 
-                guard let snapshot = snapshot else { return }
-                
-                if !snapshot.isEmpty {
-                    FUser.loginUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!) { (error) in
-                        
-                        if error != nil {
-                            ProgressHUD.showError(error!.localizedDescription)
-                            return
-                        }
-                        
-                        print(FUser.currentId())
-                        self.goToApp()
-                    }
-                    
-                } else {
-                    helper.showAlert(title: "Invalid Credentials", message: "Email does not belong to this team.", in: self)
+                if error != nil {
+                    ProgressHUD.showError(error!.localizedDescription)
                     return
                 }
-
+                
+                print(FUser.currentId())
+                self.goToApp()
             }
+            
+//            reference(.User).whereField(kUSERCURRENTTEAMID, isEqualTo: self.team.teamID).getDocuments { (snapshot, error) in
+//                
+//                guard let snapshot = snapshot else { return }
+//                
+//                if !snapshot.isEmpty {
+//                    
+//                    
+//                } else {
+//                    helper.showAlert(title: "Invalid Credentials", message: "Email does not belong to this team.", in: self)
+//                    return
+//                }
+//
+//            }
             
     }
     

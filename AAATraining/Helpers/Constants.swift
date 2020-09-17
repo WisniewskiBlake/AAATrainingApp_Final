@@ -41,7 +41,8 @@ public let kCALL_PATH = "Call"
 
 //FUser
 public let kOBJECTID = "objectId"
-public let kUSERTEAMID = "userTeamID"
+public let kUSERCURRENTTEAMID = "userCurrentTeamID"
+public let kUSERTEAMIDS = "userTeamIDs"
 public let kUSERTEAMCOLORONE = "userTeamColorOne"
 public let kUSERTEAMCOLORTWO = "userTeamColorTwo"
 public let kUSERTEAMCOLORTHREE = "userTeamColorThree"

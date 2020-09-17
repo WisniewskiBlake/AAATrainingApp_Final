@@ -154,7 +154,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     }
     
     @objc func logoutViewClicked() {
-        let sheet = UIAlertController(title: "Team Login Code: " + FUser.currentUser()!.userTeamID, message: nil, preferredStyle: .actionSheet)
+        let sheet = UIAlertController(title: "Team Login Code: " + FUser.currentUser()!.userCurrentTeamID, message: nil, preferredStyle: .actionSheet)
         
         
         
@@ -224,7 +224,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         
          var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
          
-         team.getTeam(teamID: FUser.currentUser()!.userTeamID) { (teamReturned) in
+         team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
              if teamReturned.teamID != "" {
                  team = teamReturned
                  if team.teamLogo != "" {
@@ -275,7 +275,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         var query: Query!
         var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
         
-        team.getTeam(teamID: FUser.currentUser()!.userTeamID) { (teamReturned) in
+        team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
             if teamReturned.teamID != "" {
                 team = teamReturned
                 if team.teamLogo != "" {

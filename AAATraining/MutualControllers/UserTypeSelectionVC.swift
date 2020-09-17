@@ -27,8 +27,6 @@ class UserTypeSelectionVC: UIViewController {
        
     var viewToGoTo = ""
     
-    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
-    
     let coachTapGestureRecognizer = UITapGestureRecognizer()
     let playerTapGestureRecognizer = UITapGestureRecognizer()
     let parentTapGestureRecognizer = UITapGestureRecognizer()
@@ -73,7 +71,7 @@ class UserTypeSelectionVC: UIViewController {
     
     @objc func coachViewClicked() {
         let coachRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoachRegister") as! CoachRegisterVC
-        coachRegisterVC.team = self.team
+
         coachRegisterVC.modalPresentationStyle = .fullScreen
         self.present(coachRegisterVC, animated: true, completion: nil)
     }
@@ -81,7 +79,7 @@ class UserTypeSelectionVC: UIViewController {
     @objc func playerViewClicked() {
         
        let playerRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PlayerRegister") as! RegisterVC
-       playerRegisterVC.team = self.team
+
        playerRegisterVC.modalPresentationStyle = .fullScreen
        self.present(playerRegisterVC, animated: true, completion: nil)
 
@@ -89,7 +87,7 @@ class UserTypeSelectionVC: UIViewController {
     
     @objc func parentViewClicked() {
         let parentRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ParentRegister") as! ParentRegisterVC
-        parentRegisterVC.team = self.team
+
         parentRegisterVC.modalPresentationStyle = .fullScreen
         self.present(parentRegisterVC, animated: true, completion: nil)
     }

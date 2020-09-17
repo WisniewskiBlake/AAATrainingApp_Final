@@ -206,10 +206,10 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     @objc func logoutViewClicked() {
         let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let copyCode = UIAlertAction(title: "Copy Team Code: " + FUser.currentUser()!.userTeamID, style: .default, handler: { (action) in
+        let copyCode = UIAlertAction(title: "Copy Team Code: " + FUser.currentUser()!.userCurrentTeamID, style: .default, handler: { (action) in
                         
             let pasteboard = UIPasteboard.general
-            pasteboard.string = FUser.currentUser()!.userTeamID
+            pasteboard.string = FUser.currentUser()!.userCurrentTeamID
             self.helper.showAlert(title: "Copied!", message: "Team code copied to clipboard.", in: self)
                 
             
@@ -272,7 +272,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         let user = FUser.currentUser()
         var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
         
-        team.getTeam(teamID: FUser.currentUser()!.userTeamID) { (teamReturned) in
+        team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
             if teamReturned.teamID != "" {
                 team = teamReturned
                 if team.teamLogo != "" {
@@ -698,7 +698,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changeProPic"), object: nil)
                 self.loadUser()
             }
-            Team.updateTeam(teamID: FUser.currentUser()!.userTeamID, withValues: [kTEAMLOGO : cover!])
+            Team.updateTeam(teamID: FUser.currentUser()!.userCurrentTeamID, withValues: [kTEAMLOGO : cover!])
 //            self.loadUser()
             
             

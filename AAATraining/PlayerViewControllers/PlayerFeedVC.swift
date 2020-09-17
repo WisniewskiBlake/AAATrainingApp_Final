@@ -135,7 +135,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         teamFeedTextLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 28)!
         teamNameLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 18)!
         
-        team.getTeam(teamID: FUser.currentUser()!.userTeamID) { (teamReturned) in
+        team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
             if teamReturned.teamID != "" {
                 self.team = teamReturned
                 if self.team.teamLogo != "" {
@@ -171,7 +171,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     func getMembers() {
         ProgressHUD.show()
         
-        var query = reference(.User).whereField(kUSERTEAMID, isEqualTo: FUser.currentUser()?.userTeamID).order(by: kFIRSTNAME, descending: false)
+        var query = reference(.User).whereField(kUSERCURRENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
         query.getDocuments { (snapshot, error) in
             
             self.allUsers = []
@@ -212,10 +212,10 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     @objc func moreImageViewClicked() {
         let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let copyCode = UIAlertAction(title: "Copy Team Code: " + FUser.currentUser()!.userTeamID, style: .default, handler: { (action) in
+        let copyCode = UIAlertAction(title: "Copy Team Code: " + FUser.currentUser()!.userCurrentTeamID, style: .default, handler: { (action) in
                         
             let pasteboard = UIPasteboard.general
-            pasteboard.string = FUser.currentUser()!.userTeamID
+            pasteboard.string = FUser.currentUser()!.userCurrentTeamID
             self.helper.showAlert(title: "Copied!", message: "Team code copied to clipboard.", in: self)
                 
             
@@ -306,7 +306,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     @objc func loadPosts() {
         ProgressHUD.show()
         
-            self.recentListener = reference(.Post).whereField(kPOSTTEAMID, isEqualTo: FUser.currentUser()?.userTeamID as Any).order(by: kPOSTDATE, descending: true).limit(to: 100).addSnapshotListener({ (snapshot, error) in
+            self.recentListener = reference(.Post).whereField(kPOSTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID as Any).order(by: kPOSTDATE, descending: true).limit(to: 100).addSnapshotListener({ (snapshot, error) in
                    
                 self.allPosts = []
                 self.avas = []

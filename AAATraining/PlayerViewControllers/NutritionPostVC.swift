@@ -69,7 +69,7 @@ class NutritionPostVC: UIViewController, UITextViewDelegate, UIImagePickerContro
                         let pictureData = thumbImage?.jpegData(compressionQuality: 0.3)!
                         let thumbToUpload = pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
                         let fullName = FUser.currentUser()!.firstname + " " + FUser.currentUser()!.lastname
-                        let nutritionPost = Nutrition(nutritionPostID: self.nutritionPostID, nutritionTeamID: FUser.currentUser()!.userTeamID, nutritionOwnerID: FUser.currentId(), nutritionText: self.postTextView.text, nutritionPicture: thumbToUpload!, nutritionDate: "", nutritionPostUserAva: FUser.currentUser()!.ava, nutritionPostUserName: fullName, nutritionVideo: videoLink!, nutritionPostType: "video", nutritionPostUrlLink: self.urlLinkTextField.text!)
+                        let nutritionPost = Nutrition(nutritionPostID: self.nutritionPostID, nutritionTeamID: FUser.currentUser()!.userCurrentTeamID, nutritionOwnerID: FUser.currentId(), nutritionText: self.postTextView.text, nutritionPicture: thumbToUpload!, nutritionDate: "", nutritionPostUserAva: FUser.currentUser()!.ava, nutritionPostUserName: fullName, nutritionVideo: videoLink!, nutritionPostType: "video", nutritionPostUrlLink: self.urlLinkTextField.text!)
                         
                         nutritionPost.savePost()
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createNutritionPost"), object: nil)
@@ -81,7 +81,7 @@ class NutritionPostVC: UIViewController, UITextViewDelegate, UIImagePickerContro
             } else if isPictureSelected {
 
                     let fullName = FUser.currentUser()!.firstname + " " + FUser.currentUser()!.lastname
-                    let nutritionPost = Nutrition(nutritionPostID: self.nutritionPostID, nutritionTeamID: FUser.currentUser()!.userTeamID, nutritionOwnerID: FUser.currentId(), nutritionText: self.postTextView.text, nutritionPicture: self.pictureToUpload!, nutritionDate: "", nutritionPostUserAva: FUser.currentUser()!.ava, nutritionPostUserName: fullName, nutritionVideo: "", nutritionPostType: "picture", nutritionPostUrlLink: self.urlLinkTextField.text!)
+                    let nutritionPost = Nutrition(nutritionPostID: self.nutritionPostID, nutritionTeamID: FUser.currentUser()!.userCurrentTeamID, nutritionOwnerID: FUser.currentId(), nutritionText: self.postTextView.text, nutritionPicture: self.pictureToUpload!, nutritionDate: "", nutritionPostUserAva: FUser.currentUser()!.ava, nutritionPostUserName: fullName, nutritionVideo: "", nutritionPostType: "picture", nutritionPostUrlLink: self.urlLinkTextField.text!)
                     
                     nutritionPost.savePost()
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createNutritionPost"), object: nil)
@@ -91,7 +91,7 @@ class NutritionPostVC: UIViewController, UITextViewDelegate, UIImagePickerContro
             } else {
                 
                 let fullName = FUser.currentUser()!.firstname + " " + FUser.currentUser()!.lastname
-                let nutritionPost = Nutrition(nutritionPostID: self.nutritionPostID, nutritionTeamID: FUser.currentUser()!.userTeamID, nutritionOwnerID: FUser.currentId(), nutritionText: self.postTextView.text, nutritionPicture: "", nutritionDate: "", nutritionPostUserAva: FUser.currentUser()!.ava, nutritionPostUserName: fullName, nutritionVideo: "", nutritionPostType: "text", nutritionPostUrlLink: self.urlLinkTextField.text!)
+                let nutritionPost = Nutrition(nutritionPostID: self.nutritionPostID, nutritionTeamID: FUser.currentUser()!.userCurrentTeamID, nutritionOwnerID: FUser.currentId(), nutritionText: self.postTextView.text, nutritionPicture: "", nutritionDate: "", nutritionPostUserAva: FUser.currentUser()!.ava, nutritionPostUserName: fullName, nutritionVideo: "", nutritionPostType: "text", nutritionPostUrlLink: self.urlLinkTextField.text!)
                 
                 nutritionPost.savePost()
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createNutritionPost"), object: nil)

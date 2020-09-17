@@ -46,7 +46,7 @@ class AllBaselinesVC: UIViewController {
         ProgressHUD.show()
         
         var query: Query!
-        query = reference(.Baseline).whereField(kBASELINETEAMID, isEqualTo: FUser.currentUser()?.userTeamID).order(by: kBASELINEUSERNAME, descending: false)
+        query = reference(.Baseline).whereField(kBASELINETEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kBASELINEUSERNAME, descending: false)
         query.getDocuments { (snapshot, error) in
             
             self.allBaselines = []
