@@ -34,8 +34,6 @@ class ParentRegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDele
     @IBOutlet weak var footerView: UIView!
     @IBOutlet weak var bannerView: GADBannerView!
     
-    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
-    
     var email: String!
     var password: String!
     let height = "123456789"
@@ -165,8 +163,8 @@ class ParentRegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDele
         _ = coverIMG!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         
         let defaultTeamColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1).htmlRGBaColor
-        
-        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "parent", birthday: "", cover: team.teamLogo, phoneNumber: "", userTeamID: team.teamID, userTeamColorOne: defaultTeamColor, userTeamColorTwo: team.teamColorTwo, userTeamColorThree: team.teamColorThree) { (error)  in
+                
+        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "parent", birthday: "", cover: "", phoneNumber: "", userCurrentTeamID: "", userTeamColorOne: defaultTeamColor, userTeamColorTwo: "", userTeamColorThree: "", userTeamIDs: [""]) { (error)  in
             
                             if error != nil {
                                 ProgressHUD.dismiss()

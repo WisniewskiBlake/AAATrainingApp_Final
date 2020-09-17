@@ -12,6 +12,7 @@ class TeamCell: UITableViewCell {
 
     @IBOutlet weak var teamImageView: UIImageView!
     @IBOutlet weak var teamNameLabel: UILabel!
+    @IBOutlet weak var memberCountLabel: UILabel!
     
     
     override func awakeFromNib() {

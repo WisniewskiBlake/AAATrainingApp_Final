@@ -8,6 +8,9 @@
 
 import UIKit
 import GoogleMobileAds
+import Firebase
+import FirebaseFirestore
+import ProgressHUD
 
 class TeamTypeSelectionCellClass: UITableViewCell {
     
@@ -157,8 +160,10 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         team.saveTeam()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createTeam"), object: nil)
+        updateCurrentUserInFirestore(withValues: [kUSERTEAMIDS : FieldValue.arrayUnion([teamLoginCode])]) { (success) in
+            self.goToApp()
+        }
         
-        self.goToApp()
 
     }
     

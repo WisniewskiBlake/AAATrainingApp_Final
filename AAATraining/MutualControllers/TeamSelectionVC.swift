@@ -152,6 +152,7 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         cell.teamImageView.image = self.teamLogos[indexPath.row]
         cell.teamNameLabel.text = teams[indexPath.row].teamName
+        cell.memberCountLabel.text = teams[indexPath.row].teamMemberCount
         
         return cell
         

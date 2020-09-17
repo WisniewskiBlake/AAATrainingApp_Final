@@ -563,7 +563,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i0x-UI-6eI">
                                         <rect key="frame" x="187.5" y="103" width="187.5" height="122"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fCw-lM-Sgu">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add.png" translatesAutoresizingMaskIntoConstraints="NO" id="fCw-lM-Sgu">
                                                 <rect key="frame" x="54" y="8" width="80" height="80"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="80" id="EsP-hf-I0z"/>
@@ -634,24 +634,37 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gae-ep-AWx">
-                                                    <rect key="frame" x="142" y="35" width="47" height="22"/>
+                                                    <rect key="frame" x="142" y="27" width="47" height="22"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="47" id="bBU-Tq-p6z"/>
-                                                        <constraint firstAttribute="height" constant="22" id="wgv-X1-b1v"/>
+                                                        <constraint firstAttribute="width" constant="47" id="AgX-iM-B94"/>
+                                                        <constraint firstAttribute="height" constant="22" id="VIv-Jx-Zwu"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lZ9-wE-PU6">
+                                                    <rect key="frame" x="142" y="53" width="198" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="198" id="Zdj-XZ-i5H"/>
+                                                        <constraint firstAttribute="height" constant="21" id="dhv-eb-8Nd"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="7nq-Jv-Cit" firstAttribute="leading" secondItem="Eej-kR-SOU" secondAttribute="leadingMargin" constant="36" id="4Gt-cZ-TZQ"/>
+                                                <constraint firstItem="lZ9-wE-PU6" firstAttribute="top" secondItem="Gae-ep-AWx" secondAttribute="bottom" constant="4" id="9gb-3l-FSm"/>
+                                                <constraint firstItem="Gae-ep-AWx" firstAttribute="leading" secondItem="7nq-Jv-Cit" secondAttribute="trailing" constant="21" id="Qi6-xb-0g9"/>
+                                                <constraint firstItem="Gae-ep-AWx" firstAttribute="top" secondItem="7nq-Jv-Cit" secondAttribute="topMargin" constant="8" id="Zig-Zs-UMO"/>
                                                 <constraint firstItem="7nq-Jv-Cit" firstAttribute="centerY" secondItem="Eej-kR-SOU" secondAttribute="centerY" id="hzr-be-kxT"/>
-                                                <constraint firstItem="Gae-ep-AWx" firstAttribute="centerY" secondItem="Eej-kR-SOU" secondAttribute="centerY" id="re5-W8-yRr"/>
-                                                <constraint firstItem="Gae-ep-AWx" firstAttribute="leading" secondItem="7nq-Jv-Cit" secondAttribute="trailing" constant="21" id="zT8-KF-AuR"/>
+                                                <constraint firstItem="lZ9-wE-PU6" firstAttribute="leading" secondItem="7nq-Jv-Cit" secondAttribute="trailing" constant="21" id="rLW-Vp-9XR"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="memberCountLabel" destination="lZ9-wE-PU6" id="Tha-pN-BuP"/>
                                             <outlet property="teamImageView" destination="7nq-Jv-Cit" id="o45-Uk-6K8"/>
                                             <outlet property="teamNameLabel" destination="Gae-ep-AWx" id="K9z-Eg-Qzb"/>
                                         </connections>
@@ -7972,6 +7985,7 @@
     </scenes>
     <resources>
         <image name="HomeCover.jpg" width="1242" height="621"/>
+        <image name="add.png" width="512" height="512"/>
         <image name="avatarPlaceholder" width="101" height="101"/>
         <image name="back" width="25" height="25"/>
         <image name="baselineIcon" width="25" height="25"/>

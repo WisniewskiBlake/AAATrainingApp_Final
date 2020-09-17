@@ -110,6 +110,10 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         
     }
     
+    func getTeamMembers() {
+        
+    }
+    
     func loadUsers(filter: String) {
            isLoading = true
            ProgressHUD.show()
@@ -118,13 +122,13 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
            
            switch filter {
             case "player":
-                query = reference(.User).whereField("accountType", isEqualTo: "player").whereField(kUSERCURRENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
+                query = reference(.User).whereField("accountType", isEqualTo: "player").whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
            case ("coach"):
-               query = reference(.User).whereField("accountType", isEqualTo: "coach").whereField(kUSERCURRENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
+               query = reference(.User).whereField("accountType", isEqualTo: "coach").whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
             case ("parent"):
-                query = reference(.User).whereField("accountType", isEqualTo: "parent").whereField(kUSERCURRENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
+                query = reference(.User).whereField("accountType", isEqualTo: "parent").whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
            default:
-               query = reference(.User).whereField(kUSERCURRENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
+               query = reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
         }
            
            query.getDocuments { (snapshot, error) in
@@ -389,13 +393,17 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     
     func deleteAUser(user : FUser) {
         print(user.objectId)
-        reference(.User).document(user.objectId).delete() { err in
-        if let err = err {
-            print("Error removing document: \(err)")
-        } else {
-            print("Document successfully removed!")
-        }
-    }
+        
+        updateUser(userID: user.objectId, withValues: [kUSERTEAMIDS: FieldValue.arrayRemove([FUser.currentUser()!.userCurrentTeamID])])
+        Team.updateTeam(teamID: FUser.currentUser()!.userCurrentTeamID, withValues: [kTEAMMEMBERIDS: FieldValue.arrayRemove([user.objectId])])
+            
+//            { err in
+//        if let err = err {
+//            print("Error removing document: \(err)")
+//        } else {
+//            print("Document successfully removed!")
+//        }
+//    }
         self.tableView.reloadData()
 
     

@@ -532,6 +532,10 @@ func getUsersFromFirestore(withIds: [String], completion: @escaping (_ usersArra
     }
 }
 
+func updateUser(userID: String, withValues: [String:Any]) {
+    reference(.Team).document(userID).updateData(withValues)
+    
+}
 
 func updateCurrentUserInFirestore(withValues : [String : Any], completion: @escaping (_ error: Error?) -> Void) {
     
