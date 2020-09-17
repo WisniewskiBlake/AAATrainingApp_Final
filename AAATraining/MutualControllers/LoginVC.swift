@@ -174,12 +174,9 @@ class LoginVC: UIViewController, UITextViewDelegate {
                     return
                 }
 
-                
             }
             
-            
-            
-        }
+    }
     
     func goToApp() {
         

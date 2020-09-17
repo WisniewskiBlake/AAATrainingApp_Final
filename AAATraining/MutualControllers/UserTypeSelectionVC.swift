@@ -21,23 +21,34 @@ class UserTypeSelectionVC: UIViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var titleView: UIView!
     
-    
-    @IBOutlet weak var coachView_top: NSLayoutConstraint!
-    @IBOutlet weak var coachView_height: NSLayoutConstraint!
-    
-    @IBOutlet weak var playerView_top: NSLayoutConstraint!
-    @IBOutlet weak var playerView_height: NSLayoutConstraint!
-    
-    @IBOutlet weak var parentView_top: NSLayoutConstraint!
-    @IBOutlet weak var parentView_height: NSLayoutConstraint!
-    
-    
+    @IBOutlet weak var coachImageView: UIImageView!
+    @IBOutlet weak var playerImageView: UIImageView!
+    @IBOutlet weak var parentImageView: UIImageView!
+       
     var viewToGoTo = ""
     
     var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
+    
+    let coachTapGestureRecognizer = UITapGestureRecognizer()
+    let playerTapGestureRecognizer = UITapGestureRecognizer()
+    let parentTapGestureRecognizer = UITapGestureRecognizer()
+    
+    let helper = Helper()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        coachTapGestureRecognizer.addTarget(self, action: #selector(self.coachViewClicked))
+        coachView.isUserInteractionEnabled = true
+        coachView.addGestureRecognizer(coachTapGestureRecognizer)
+        
+        playerTapGestureRecognizer.addTarget(self, action: #selector(self.playerViewClicked))
+        playerView.isUserInteractionEnabled = true
+        playerView.addGestureRecognizer(playerTapGestureRecognizer)
+        
+        parentTapGestureRecognizer.addTarget(self, action: #selector(self.parentViewClicked))
+        parentView.isUserInteractionEnabled = true
+        parentView.addGestureRecognizer(parentTapGestureRecognizer)
         
 //        coachView_height.constant = containerView.frame.height/3
 //        playerView_height.constant = containerView.frame.height/3
@@ -50,42 +61,37 @@ class UserTypeSelectionVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
            super.viewWillAppear(animated)
-        //self.navigationController?.view.addSubview(self.titleView)
-        //self.navigationController?.navigationBar.layer.zPosition = 0;
-//           coachView_height.constant = containerView.frame.height/3
-//           playerView_height.constant = containerView.frame.height/3
-//           parentView_height.constant = containerView.frame.height/3
-//           print(coachView_height.constant)
-//           print(playerView_height.constant)
-//           print(parentView_height.constant)
-//            self.view.layoutIfNeeded()
-//        print(coachView_height.constant)
-//        print(playerView_height.constant)
-//        print(parentView_height.constant)
+        coachImageView.layer.cornerRadius = coachImageView.frame.width / 2
+        coachImageView.clipsToBounds = true
+        playerImageView.layer.cornerRadius = playerImageView.frame.width / 2
+               playerImageView.clipsToBounds = true
+        parentImageView.layer.cornerRadius = parentImageView.frame.width / 2
+               parentImageView.clipsToBounds = true
            self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
 
-           
-       }
+    }
     
-    @IBAction func nextButtonPressed(_ sender: Any) {
-        self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        self.navigationController?.navigationBar.isTranslucent = false
-        if viewToGoTo == "PlayerRegister" {
-            let pRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PlayerRegister") as! RegisterVC
-            pRegisterVC.team = self.team
-            
-            self.navigationController?.pushViewController(pRegisterVC, animated: true)
-        } else if viewToGoTo == "ParentRegister" {
-            let newGroupVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ParentRegister") as! ParentRegisterVC
-            newGroupVC.team = self.team
-            
-            self.navigationController?.pushViewController(newGroupVC, animated: true)
-        } else if viewToGoTo == "CoachRegister" {
-            let cRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoachRegister") as! CoachRegisterVC
-            cRegisterVC.team = self.team
-            
-            self.navigationController?.pushViewController(cRegisterVC, animated: true)
-        }
+    @objc func coachViewClicked() {
+        let coachRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoachRegister") as! CoachRegisterVC
+        coachRegisterVC.team = self.team
+        coachRegisterVC.modalPresentationStyle = .fullScreen
+        self.present(coachRegisterVC, animated: true, completion: nil)
+    }
+    
+    @objc func playerViewClicked() {
+        
+       let playerRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PlayerRegister") as! RegisterVC
+       playerRegisterVC.team = self.team
+       playerRegisterVC.modalPresentationStyle = .fullScreen
+       self.present(playerRegisterVC, animated: true, completion: nil)
+
+    }
+    
+    @objc func parentViewClicked() {
+        let parentRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ParentRegister") as! ParentRegisterVC
+        parentRegisterVC.team = self.team
+        parentRegisterVC.modalPresentationStyle = .fullScreen
+        self.present(parentRegisterVC, animated: true, completion: nil)
     }
     
     // make corners rounded for any views (objects)
