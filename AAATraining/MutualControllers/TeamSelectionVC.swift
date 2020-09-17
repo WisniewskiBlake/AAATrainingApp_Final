@@ -33,6 +33,10 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(loadTeamsForUser), name: NSNotification.Name(rawValue: "joinedTeam"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(loadTeamsForUser), name: NSNotification.Name(rawValue: "createdTeam"), object: nil)
+        
         joinImageView.layer.cornerRadius = joinImageView.frame.width / 2
         joinImageView.clipsToBounds = true
         createImageView.layer.cornerRadius = createImageView.frame.width / 2
@@ -74,7 +78,7 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         self.present(teamRegisterVC, animated: true, completion: nil)
     }
     
-    func loadTeamsForUser() {
+    @objc func loadTeamsForUser() {
         ProgressHUD.show()
         let query = reference(.Team).whereField(kTEAMMEMBERIDS, arrayContains: FUser.currentId()).order(by: kTEAMNAME, descending: false)
         query.getDocuments { (snapshot, error) in

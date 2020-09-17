@@ -17,7 +17,7 @@ class TeamLoginVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var registerTeamLabel: UILabel!
     @IBOutlet weak var continueButton: UIButton!
     let helper = Helper()   
-    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "")
+    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "")
     
     let registerTeamTapGestureRecognizer = UITapGestureRecognizer()
 
@@ -44,9 +44,13 @@ class TeamLoginVC: UIViewController, UITextFieldDelegate {
             team.getTeam(teamID: teamCodeText.text!) { (teamReturned) in
                 if teamReturned.teamID != "" {
                     self.team = teamReturned
-                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+                    Team.updateTeam(teamID: self.team.teamID, withValues: [kTEAMMEMBERIDS: FieldValue.arrayUnion([FUser.currentId()])])
+                    updateCurrentUserInFirestore(withValues: [kUSERTEAMIDS : self.team.teamID]) { (success) in
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "joinedTeam"), object: nil)
+                        
+                    }
+                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
                     {
-                        vc.team = self.team
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: true, completion: nil)
                     }
