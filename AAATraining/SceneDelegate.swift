@@ -114,19 +114,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
         let user = FUser.currentUser()!
         let accountType = user.accountType
         
-        if accountType == "coach" {
-            print(FUser.currentId())
-            let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoachTabBar") as! UITabBarController
-          self.window?.rootViewController = TabBar
-        } else if accountType == "parent" {
-            print(FUser.currentId())
-            let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ParentTabBar") as! UITabBarController
-          self.window?.rootViewController = TabBar
-        } else {
-            // accessing TabBar controller via Main.storyboard
-            let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabBar") as! UITabBarController
-          self.window?.rootViewController = TabBar
-        }
+        let selectionVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as! TeamSelectionVC
+
+        selectionVC.modalPresentationStyle = .fullScreen
+
+        self.window?.rootViewController = selectionVC
+        
+//        if accountType == "coach" {
+//            print(FUser.currentId())
+//            let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoachTabBar") as! UITabBarController
+//          self.window?.rootViewController = TabBar
+//        } else if accountType == "parent" {
+//            print(FUser.currentId())
+//            let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ParentTabBar") as! UITabBarController
+//          self.window?.rootViewController = TabBar
+//        } else {
+//            // accessing TabBar controller via Main.storyboard
+//            let TabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabBar") as! UITabBarController
+//          self.window?.rootViewController = TabBar
+//        }
         
 
 
