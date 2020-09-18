@@ -43,8 +43,8 @@ public class FUser {
     var userTeamIDs: [String]
     var userTeamAccountTypes: [String]
     var userTeamNames: [String]
-    var userTeamMembers: [String]
-    var userTeamMemberCount: String
+    var userTeamMembers: [[String]]
+    var userTeamMemberCount: [String]
     
     var contacts: [String]
     var blockedUsers: [String]
@@ -52,7 +52,7 @@ public class FUser {
     
     //MARK: Initializers
     
-    init(_objectId: String, _pushId: String?, _createdAt: Date, _updatedAt: Date, _email: String, _firstname: String, _lastname: String, _avatar: String = "", _loginMethod: String, _phoneNumber: String, _height: String, _weight: String, _position: String, _number: String, _accountType: String, _birthday: String, _cover: String, _userCurrentTeamID: String, _userTeamColorOne: String, _userTeamColorTwo: String, _userTeamColorThree: String, _userTeamIDs: [String], _userTeamAccountTypes: [String], _userTeamNames: [String], _userTeamMembers: [String], _userTeamMemberCount: String) {
+    init(_objectId: String, _pushId: String?, _createdAt: Date, _updatedAt: Date, _email: String, _firstname: String, _lastname: String, _avatar: String = "", _loginMethod: String, _phoneNumber: String, _height: String, _weight: String, _position: String, _number: String, _accountType: String, _birthday: String, _cover: String, _userCurrentTeamID: String, _userTeamColorOne: String, _userTeamColorTwo: String, _userTeamColorThree: String, _userTeamIDs: [String], _userTeamAccountTypes: [String], _userTeamNames: [String], _userTeamMembers: [[String]], _userTeamMemberCount: [String]) {
         
         objectId = _objectId
         pushId = _pushId
@@ -115,8 +115,8 @@ public class FUser {
         userTeamIDs = []
         userTeamAccountTypes = []
         userTeamNames = []
-        userTeamMembers = []
-        userTeamMemberCount = ""
+        userTeamMembers = [[]]
+        userTeamMemberCount = []
     }
     
     
@@ -263,14 +263,14 @@ public class FUser {
             userTeamNames = []
         }
         if let tMs = _dictionary[kUSERTEAMMEMBERS] {
-            userTeamMembers = tMs as! [String]
+            userTeamMembers = tMs as! [[String]]
         } else {
-            userTeamMembers = []
+            userTeamMembers = [[]]
         }
         if let tMC = _dictionary[kUSERTEAMMEMBERCOUNT] {
-            userTeamMemberCount = tMC as! String
+            userTeamMemberCount = tMC as! [String]
         } else {
-            userTeamMemberCount = ""
+            userTeamMemberCount = []
         }
         
         
@@ -348,7 +348,7 @@ public class FUser {
     
     //MARK: Register functions
     
-    class func registerUserWith(email: String, password: String, firstName: String, lastName: String, avatar: String, height: String, weight: String, position: String, number: String, accountType: String, birthday: String, cover: String, phoneNumber: String, userCurrentTeamID: String, userTeamColorOne: String, userTeamColorTwo: String, userTeamColorThree: String, userTeamIDs: [String], userTeamAccountTypes: [String], userTeamNames: [String], userTeamMembers: [String], userTeamMemberCount: String, completion: @escaping (_ error: Error?) -> Void ) {
+    class func registerUserWith(email: String, password: String, firstName: String, lastName: String, avatar: String, height: String, weight: String, position: String, number: String, accountType: String, birthday: String, cover: String, phoneNumber: String, userCurrentTeamID: String, userTeamColorOne: String, userTeamColorTwo: String, userTeamColorThree: String, userTeamIDs: [String], userTeamAccountTypes: [String], userTeamNames: [String], userTeamMembers: [[String]], userTeamMemberCount: [String], completion: @escaping (_ error: Error?) -> Void ) {
         
         Auth.auth().createUser(withEmail: email, password: password, completion: { (firuser, error) in
             
@@ -398,7 +398,7 @@ public class FUser {
                 } else {
 
                     //    we have no user, register
-                    let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: "", _firstname: "", _lastname: "", _avatar: "", _loginMethod: kPHONE, _phoneNumber: firuser!.user.phoneNumber!, _height: "", _weight: "", _position: "", _number: "", _accountType: "", _birthday: "", _cover: "", _userCurrentTeamID: "", _userTeamColorOne: "", _userTeamColorTwo: "", _userTeamColorThree: "", _userTeamIDs: [""], _userTeamAccountTypes: [""], _userTeamNames: [""], _userTeamMembers: [""], _userTeamMemberCount: "")
+                    let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: "", _firstname: "", _lastname: "", _avatar: "", _loginMethod: kPHONE, _phoneNumber: firuser!.user.phoneNumber!, _height: "", _weight: "", _position: "", _number: "", _accountType: "", _birthday: "", _cover: "", _userCurrentTeamID: "", _userTeamColorOne: "", _userTeamColorTwo: "", _userTeamColorThree: "", _userTeamIDs: [""], _userTeamAccountTypes: [""], _userTeamNames: [""], _userTeamMembers: [[""]], _userTeamMemberCount: [])
 
                     saveUserLocally(fUser: fUser)
                     saveUserToFirestore(fUser: fUser)

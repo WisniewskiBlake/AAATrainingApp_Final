@@ -163,7 +163,7 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDeleg
         let avatar = getAvatar()
         let defaultTeamColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1).htmlRGBaColor
         
-        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "", birthday: "", cover: "", phoneNumber: "", userCurrentTeamID: "", userTeamColorOne: defaultTeamColor, userTeamColorTwo: "", userTeamColorThree: "", userTeamIDs: [""], userTeamAccountTypes: [""], userTeamNames: [""], userTeamMembers: [""], userTeamMemberCount: "") { (error)  in
+        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "", birthday: "", cover: "", phoneNumber: "", userCurrentTeamID: "", userTeamColorOne: defaultTeamColor, userTeamColorTwo: "", userTeamColorThree: "", userTeamIDs: [], userTeamAccountTypes: [], userTeamNames: [], userTeamMembers: [[]], userTeamMemberCount: []) { (error)  in
             
                 if error != nil {
                     ProgressHUD.dismiss()

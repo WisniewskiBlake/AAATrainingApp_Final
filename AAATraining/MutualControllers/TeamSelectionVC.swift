@@ -97,51 +97,54 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 
     
     @objc func loadTeamsForUser() {
-        ProgressHUD.show()
-        let query = reference(.Team).whereField(kTEAMMEMBERIDS, arrayContains: FUser.currentId())
-        query.getDocuments { (snapshot, error) in
-            
-            self.teams = []
-            self.teamLogos = []
-            
-            if error != nil {
-                print(error!.localizedDescription)
-                ProgressHUD.dismiss()
-             self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
-                 
-                return
-            }
-            
-            guard let snapshot = snapshot else {
-                self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
-                ProgressHUD.dismiss(); return
-            }
-            
-            if !snapshot.isEmpty {
-                
-                for teamDictionary in snapshot.documents {
-                    
-                    let teamDictionary = teamDictionary.data() as NSDictionary
-                    let team = Team(_dictionary: teamDictionary)
-                    self.teams.append(team)
-                    self.helper.imageFromData(pictureData: team.teamLogo) { (avatarImage) in
-
-                        if avatarImage != nil {
-                            self.teamLogos.append(avatarImage!.circleMasked!)
-                        }
-                    }
-                    
-                }
-                self.tableView.reloadData()
-            }
-            self.tableView.reloadData()
-            ProgressHUD.dismiss()
-        }
+//        ProgressHUD.show()
+//        let query = reference(.Team).whereField(kTEAMMEMBERIDS, arrayContains: FUser.currentId())
+//        query.getDocuments { (snapshot, error) in
+//
+//            self.teams = []
+//            self.teamLogos = []
+//
+//            if error != nil {
+//                print(error!.localizedDescription)
+//                ProgressHUD.dismiss()
+//             self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
+//
+//                return
+//            }
+//
+//            guard let snapshot = snapshot else {
+//                self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
+//                ProgressHUD.dismiss(); return
+//            }
+//
+//            if !snapshot.isEmpty {
+//
+//                for teamDictionary in snapshot.documents {
+//
+//                    let teamDictionary = teamDictionary.data() as NSDictionary
+//                    let team = Team(_dictionary: teamDictionary)
+//                    self.teams.append(team)
+//                    self.helper.imageFromData(pictureData: team.teamLogo) { (avatarImage) in
+//
+//                        if avatarImage != nil {
+//                            self.teamLogos.append(avatarImage!.circleMasked!)
+//                        }
+//                    }
+//
+//                }
+//                self.tableView.reloadData()
+//            }
+//            self.tableView.reloadData()
+//            ProgressHUD.dismiss()
+//        }
         ProgressHUD.show()
         let query2 = reference(.User).whereField(kOBJECTID, isEqualTo: FUser.currentId())
         
             query2.getDocuments { (snapshot, error) in
                 self.currentUser = FUser()
+                self.teams = []
+                self.teamLogos = []
+                let team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [""])
                 
                 if error != nil {
                     print(error!.localizedDescription)
@@ -159,9 +162,20 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                         let userDoc = userDoc.data() as NSDictionary
                         let userCurr = FUser(_dictionary: userDoc)
                         self.currentUser = userCurr
+                    }
+                    for teamID in self.currentUser.userTeamIDs {
+                        if teamID != "" {
+                            team.getTeam(teamID: teamID) { (teamReturned) in
+                                self.teams.append(team)
+                                self.helper.imageFromData(pictureData: teamReturned.teamLogo) { (avatarImage) in
 
-
-                                        
+                                    if avatarImage != nil {
+                                        self.teamLogos.append(avatarImage!.circleMasked!)
+                                    }
+                                }
+                            }
+                        }
+                        
                     }
                     
                 self.tableView.reloadData()
@@ -209,7 +223,7 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         cell.teamNameLabel.text = teams[indexPath.row].teamName
         cell.memberCountLabel.text = teams[indexPath.row].teamMemberCount + " Team Members"
 
-        cell.accountTypeLabel.text = currentUser.userTeamAccountTypes[indexPath.row + 1]
+        cell.accountTypeLabel.text = currentUser.userTeamAccountTypes[indexPath.row]
 //        cell.accountTypeLabel.text = teams[indexPath.row].teamMemberAccountTypes[indexPath.row]
         
         return cell
