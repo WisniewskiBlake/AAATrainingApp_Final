@@ -70,26 +70,55 @@ class UserTypeSelectionVC: UIViewController {
     }
     
     @objc func coachViewClicked() {
-        let coachRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoachRegister") as! CoachRegisterVC
-
-        coachRegisterVC.modalPresentationStyle = .fullScreen
-        self.present(coachRegisterVC, animated: true, completion: nil)
+        if viewToGoTo == "join" {
+            let teamLoginVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamLoginVC") as! TeamLoginVC
+            teamLoginVC.userAccountType = "Coach"
+            teamLoginVC.modalPresentationStyle = .fullScreen
+            self.present(teamLoginVC, animated: true, completion: nil)
+        } else if viewToGoTo == "create" {
+            let teamRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamRegisterVC") as! TeamRegisterVC
+            teamRegisterVC.userAccountType = "Coach"
+            teamRegisterVC.modalPresentationStyle = .fullScreen
+            self.present(teamRegisterVC, animated: true, completion: nil)
+        }
+//        let coachRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoachRegister") as! CoachRegisterVC
+//
+//        coachRegisterVC.modalPresentationStyle = .fullScreen
+//        self.present(coachRegisterVC, animated: true, completion: nil)
     }
     
     @objc func playerViewClicked() {
-        
-       let playerRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PlayerRegister") as! RegisterVC
-
-       playerRegisterVC.modalPresentationStyle = .fullScreen
-       self.present(playerRegisterVC, animated: true, completion: nil)
+        if viewToGoTo == "join" {
+            let teamLoginVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamLoginVC") as! TeamLoginVC
+            teamLoginVC.userAccountType = "Player"
+            teamLoginVC.modalPresentationStyle = .fullScreen
+            self.present(teamLoginVC, animated: true, completion: nil)
+        } else if viewToGoTo == "create" {
+            let teamRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamRegisterVC") as! TeamRegisterVC
+            teamRegisterVC.userAccountType = "Player"
+            teamRegisterVC.modalPresentationStyle = .fullScreen
+            self.present(teamRegisterVC, animated: true, completion: nil)
+        }
 
     }
     
     @objc func parentViewClicked() {
-        let parentRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ParentRegister") as! ParentRegisterVC
-
-        parentRegisterVC.modalPresentationStyle = .fullScreen
-        self.present(parentRegisterVC, animated: true, completion: nil)
+        
+        if viewToGoTo == "join" {
+            let teamLoginVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamLoginVC") as! TeamLoginVC
+            teamLoginVC.userAccountType = "Parent"
+            teamLoginVC.modalPresentationStyle = .fullScreen
+            self.present(teamLoginVC, animated: true, completion: nil)
+        } else if viewToGoTo == "create" {
+            let teamRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamRegisterVC") as! TeamRegisterVC
+            teamRegisterVC.userAccountType = "Parent"
+            teamRegisterVC.modalPresentationStyle = .fullScreen
+            self.present(teamRegisterVC, animated: true, completion: nil)
+        }
+//        let parentRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ParentRegister") as! ParentRegisterVC
+//
+//        parentRegisterVC.modalPresentationStyle = .fullScreen
+//        self.present(parentRegisterVC, animated: true, completion: nil)
     }
     
     // make corners rounded for any views (objects)

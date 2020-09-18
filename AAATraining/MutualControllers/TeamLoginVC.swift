@@ -16,8 +16,10 @@ class TeamLoginVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var teamCodeText: UITextField!
     @IBOutlet weak var registerTeamLabel: UILabel!
     @IBOutlet weak var continueButton: UIButton!
+    
+    var userAccountType = ""
     let helper = Helper()   
-    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "")
+    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [""])
     
     let registerTeamTapGestureRecognizer = UITapGestureRecognizer()
 
@@ -45,10 +47,9 @@ class TeamLoginVC: UIViewController, UITextFieldDelegate {
                 if teamReturned.teamID != "" {
                     self.team = teamReturned
                     let teamMemberCount = Int(teamReturned.teamMemberCount)! + 1
-                    Team.updateTeam(teamID: self.team.teamID, withValues: [kTEAMMEMBERIDS: FieldValue.arrayUnion([FUser.currentId()]), kTEAMMEMBERCOUNT: String(teamMemberCount)])
-                    updateCurrentUserInFirestore(withValues: [kUSERTEAMIDS : self.team.teamID]) { (success) in
+                    Team.updateTeam(teamID: self.team.teamID, withValues: [kTEAMMEMBERIDS: FieldValue.arrayUnion([FUser.currentId()]), kTEAMMEMBERCOUNT: String(teamMemberCount), kTEAMMEMBERACCOUNTTYPES: FieldValue.arrayUnion([self.userAccountType])])
+                    updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMIDS : FieldValue.arrayUnion([self.team.teamID]), kUSERTEAMACCOUNTTYPES : FieldValue.arrayUnion([self.userAccountType])]) { (success) in
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "joinedTeam"), object: nil)
-                        
                     }
                     if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
                     {
@@ -83,9 +84,9 @@ class TeamLoginVC: UIViewController, UITextFieldDelegate {
     }
     
     @objc func registerTeamClicked() {
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamRegisterVC") as? TeamRegisterVC
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
         {
-            vc.modalPresentationStyle = .automatic
+            vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         }
     }

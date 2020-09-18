@@ -52,7 +52,8 @@ class ParentRegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDele
         self.lastNameTextField.delegate = self
         self.passwordTextField.delegate = self
         
-        bannerView.adUnitID = "ca-app-pub-8479238648739219/3793498137"
+        bannerView.adUnitID = ""
+        //ca-app-pub-8479238648739219/3793498137
         bannerView.rootViewController = self
         bannerView.delegate = self
         bannerView.load(GADRequest())
@@ -164,7 +165,7 @@ class ParentRegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDele
         
         let defaultTeamColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1).htmlRGBaColor
                 
-        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "parent", birthday: "", cover: "", phoneNumber: "", userCurrentTeamID: "", userTeamColorOne: defaultTeamColor, userTeamColorTwo: "", userTeamColorThree: "", userTeamIDs: [""]) { (error)  in
+        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "parent", birthday: "", cover: "", phoneNumber: "", userCurrentTeamID: "", userTeamColorOne: defaultTeamColor, userTeamColorTwo: "", userTeamColorThree: "", userTeamIDs: [""], userTeamAccountTypes: [""]) { (error)  in
             
                             if error != nil {
                                 ProgressHUD.dismiss()

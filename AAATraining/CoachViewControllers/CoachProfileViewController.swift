@@ -234,6 +234,17 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             
         })
         
+        let backToTeamSelect = UIAlertAction(title: "Back To Team Select", style: .default, handler: { (action) in
+                        
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
+            {
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true, completion: nil)
+            }
+                
+            
+        })
+        
         // creating buttons for action sheet
         let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
                         
@@ -255,6 +266,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         sheet.addAction(copyCode)
         sheet.addAction(colorPicker)
         sheet.addAction(changeLogo)
+        sheet.addAction(backToTeamSelect)
         sheet.addAction(logout)
         sheet.addAction(cancel)
         
@@ -270,7 +282,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         
         let helper = Helper()
         let user = FUser.currentUser()
-        var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "")
+        var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [""])
         
         team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
             if teamReturned.teamID != "" {

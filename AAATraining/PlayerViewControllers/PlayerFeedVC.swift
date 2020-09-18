@@ -41,7 +41,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
 
     var emptyLabelOne = UILabel()
     
-    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "")
+    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [""])
     
        let helper = Helper()
        let currentDateFormater = Helper().dateFormatter()
@@ -233,7 +233,16 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
             
         })
         
-//
+      let backToTeamSelect = UIAlertAction(title: "Back To Team Select", style: .default, handler: { (action) in
+                
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
+        {
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+        }
+            
+        
+      })
         
         // creating buttons for action sheet
         let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
@@ -255,7 +264,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         // add buttons to action sheet
         sheet.addAction(copyCode)
         sheet.addAction(colorPicker)
-
+        sheet.addAction(backToTeamSelect)
         sheet.addAction(logout)
         sheet.addAction(cancel)
         

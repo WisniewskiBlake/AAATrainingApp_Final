@@ -31,12 +31,13 @@ public class Team {
     var teamColorThree: String
     var teamType: String
     var teamMemberCount: String
+    var teamMemberAccountTypes: [String]
 
     let teamDictionary: NSMutableDictionary
     
-    init(teamID: String, teamName: String, teamLogo: String, teamMemberIDs: [String], teamCity: String, teamState: String, teamColorOne: String, teamColorTwo: String, teamColorThree: String, teamType: String, teamMemberCount: String) {
+    init(teamID: String, teamName: String, teamLogo: String, teamMemberIDs: [String], teamCity: String, teamState: String, teamColorOne: String, teamColorTwo: String, teamColorThree: String, teamType: String, teamMemberCount: String, teamMemberAccountTypes: [String]) {
         
-        teamDictionary = NSMutableDictionary(objects: [teamID, teamName, teamLogo, teamMemberIDs, teamCity, teamState, teamColorOne, teamColorTwo, teamColorThree, teamType, teamMemberCount], forKeys: [kTEAMID as NSCopying, kTEAMNAME as NSCopying, kTEAMLOGO as NSCopying, kTEAMMEMBERIDS as NSCopying, kTEAMCITY as NSCopying, kTEAMSTATE as NSCopying, kTEAMCOLORONE as NSCopying, kTEAMCOLORTWO as NSCopying, kTEAMCOLORTHREE as NSCopying, kTEAMTYPE as NSCopying, kTEAMMEMBERCOUNT as NSCopying])
+        teamDictionary = NSMutableDictionary(objects: [teamID, teamName, teamLogo, teamMemberIDs, teamCity, teamState, teamColorOne, teamColorTwo, teamColorThree, teamType, teamMemberCount, teamMemberAccountTypes], forKeys: [kTEAMID as NSCopying, kTEAMNAME as NSCopying, kTEAMLOGO as NSCopying, kTEAMMEMBERIDS as NSCopying, kTEAMCITY as NSCopying, kTEAMSTATE as NSCopying, kTEAMCOLORONE as NSCopying, kTEAMCOLORTWO as NSCopying, kTEAMCOLORTHREE as NSCopying, kTEAMTYPE as NSCopying, kTEAMMEMBERCOUNT as NSCopying, kTEAMMEMBERACCOUNTTYPES as NSCopying])
         
         self.teamID = teamID
         self.teamName = teamName
@@ -49,6 +50,7 @@ public class Team {
         self.teamColorThree = teamColorThree
         self.teamType = teamType
         self.teamMemberCount = teamMemberCount
+        self.teamMemberAccountTypes = teamMemberAccountTypes
         
     }
     
@@ -108,8 +110,13 @@ public class Team {
         } else {
             teamMemberCount = ""
         }
+        if let tAC = _dictionary[kTEAMMEMBERACCOUNTTYPES] {
+            teamMemberAccountTypes = tAC as! [String]
+        } else {
+            teamMemberAccountTypes = [""]
+        }
         
-        teamDictionary = NSMutableDictionary(objects: [teamID, teamName, teamLogo, teamMemberIDs, teamCity, teamState, teamColorOne, teamColorTwo, teamColorThree, teamType, teamMemberCount], forKeys: [kTEAMID as NSCopying, kTEAMNAME as NSCopying, kTEAMLOGO as NSCopying, kTEAMMEMBERIDS as NSCopying, kTEAMCITY as NSCopying, kTEAMSTATE as NSCopying, kTEAMCOLORONE as NSCopying, kTEAMCOLORTWO as NSCopying, kTEAMCOLORTHREE as NSCopying, kTEAMTYPE as NSCopying, kTEAMMEMBERCOUNT as NSCopying])
+        teamDictionary = NSMutableDictionary(objects: [teamID, teamName, teamLogo, teamMemberIDs, teamCity, teamState, teamColorOne, teamColorTwo, teamColorThree, teamType, teamMemberCount, teamMemberAccountTypes], forKeys: [kTEAMID as NSCopying, kTEAMNAME as NSCopying, kTEAMLOGO as NSCopying, kTEAMMEMBERIDS as NSCopying, kTEAMCITY as NSCopying, kTEAMSTATE as NSCopying, kTEAMCOLORONE as NSCopying, kTEAMCOLORTWO as NSCopying, kTEAMCOLORTHREE as NSCopying, kTEAMTYPE as NSCopying, kTEAMMEMBERCOUNT as NSCopying, kTEAMMEMBERACCOUNTTYPES as NSCopying])
        
     }
     
@@ -129,7 +136,7 @@ public class Team {
                 
                 
             } else {
-                let team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "")
+                let team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [""])
                 
                 completion(team)
             }

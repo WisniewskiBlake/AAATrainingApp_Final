@@ -28,14 +28,15 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     var emptyLabelOne = UILabel()
     
     var teams: [Team] = []
+    var currentUser = FUser()
     var teamLogos = [UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadTeamsForUser), name: NSNotification.Name(rawValue: "joinedTeam"), object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(loadTeamsForUser), name: NSNotification.Name(rawValue: "createdTeam"), object: nil)
+
         
         joinImageView.layer.cornerRadius = joinImageView.frame.width / 2
         joinImageView.clipsToBounds = true
@@ -50,10 +51,13 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         createTeamView.isUserInteractionEnabled = true
         createTeamView.addGestureRecognizer(createTapGestureRecognizer)
         
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         loadTeamsForUser()
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
@@ -62,27 +66,39 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         tableView.tableFooterView = view
         
+        
 
     }
     
     @objc func joinTeamViewClicked() {
-        let teamLoginVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamLoginVC") as! TeamLoginVC
         
-        teamLoginVC.modalPresentationStyle = .fullScreen
-        self.present(teamLoginVC, animated: true, completion: nil)
+        let userTypeSelectionVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserTypeSelectionVC") as! UserTypeSelectionVC
+        userTypeSelectionVC.viewToGoTo = "join"
+        userTypeSelectionVC.modalPresentationStyle = .fullScreen
+        self.present(userTypeSelectionVC, animated: true, completion: nil)
+//        let teamLoginVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserTypeSelectionVC") as! UserTypeSelectionVC
+//
+//        teamLoginVC.modalPresentationStyle = .fullScreen
+//        self.present(teamLoginVC, animated: true, completion: nil)
         
     }
     
     @objc func createTeamViewClicked() {
-        let teamRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamRegisterVC") as! TeamRegisterVC
         
-        teamRegisterVC.modalPresentationStyle = .fullScreen
-        self.present(teamRegisterVC, animated: true, completion: nil)
+        let userTypeSelectionVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserTypeSelectionVC") as! UserTypeSelectionVC
+        userTypeSelectionVC.viewToGoTo = "create"
+        userTypeSelectionVC.modalPresentationStyle = .fullScreen
+        self.present(userTypeSelectionVC, animated: true, completion: nil)
+//        let teamRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamRegisterVC") as! TeamRegisterVC
+//
+//        teamRegisterVC.modalPresentationStyle = .fullScreen
+//        self.present(teamRegisterVC, animated: true, completion: nil)
     }
+
     
     @objc func loadTeamsForUser() {
         ProgressHUD.show()
-        let query = reference(.Team).whereField(kTEAMMEMBERIDS, arrayContains: FUser.currentId()).order(by: kTEAMNAME, descending: false)
+        let query = reference(.Team).whereField(kTEAMMEMBERIDS, arrayContains: FUser.currentId())
         query.getDocuments { (snapshot, error) in
             
             self.teams = []
@@ -121,6 +137,39 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             self.tableView.reloadData()
             ProgressHUD.dismiss()
         }
+        ProgressHUD.show()
+        let query2 = reference(.User).whereField(kOBJECTID, isEqualTo: FUser.currentId())
+        
+            query2.getDocuments { (snapshot, error) in
+                self.currentUser = FUser()
+                
+                if error != nil {
+                    print(error!.localizedDescription)
+                    
+                    return
+                }
+                
+                guard let snapshot = snapshot else {
+                    return
+                }
+                
+                if !snapshot.isEmpty {
+                    
+                    for userDoc in snapshot.documents {
+                        let userDoc = userDoc.data() as NSDictionary
+                        let userCurr = FUser(_dictionary: userDoc)
+                        self.currentUser = userCurr
+
+
+                                        
+                    }
+                    
+                self.tableView.reloadData()
+                }
+            self.tableView.reloadData()
+            ProgressHUD.dismiss()
+            }
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -155,10 +204,13 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "TeamCell", for: indexPath) as! TeamCell
-        
+        print(indexPath.row)
         cell.teamImageView.image = self.teamLogos[indexPath.row]
         cell.teamNameLabel.text = teams[indexPath.row].teamName
         cell.memberCountLabel.text = teams[indexPath.row].teamMemberCount + " Team Members"
+
+        cell.accountTypeLabel.text = currentUser.userTeamAccountTypes[indexPath.row + 1]
+//        cell.accountTypeLabel.text = teams[indexPath.row].teamMemberAccountTypes[indexPath.row]
         
         return cell
         
@@ -166,13 +218,13 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        if FUser.currentUser()?.accountType == "coach" {
+        if currentUser.userTeamAccountTypes[indexPath.row + 1] == "Coach" {
             updateCurrentUserInFirestore(withValues: [kUSERCURRENTTEAMID : teams[indexPath.row].teamID]) { (success) in
                 
                 self.helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
             }
             
-        } else if FUser.currentUser()?.accountType == "player" {
+        } else if currentUser.userTeamAccountTypes[indexPath.row + 1] == "Player" {
             updateCurrentUserInFirestore(withValues: [kUSERCURRENTTEAMID : teams[indexPath.row].teamID]) { (success) in
                 
                 self.helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
@@ -185,5 +237,41 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             }
         }
     }
+    
+    @IBAction func more_clicked(_ sender: Any) {
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        
+        // creating buttons for action sheet
+        let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
+                        
+            FUser.logOutCurrentUser { (success) in
+                
+                if success {
+                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+                    {
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true, completion: nil)
+                    }
+                }
+            }
+        })
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        // add buttons to action sheet
+        sheet.addAction(logout)
+        sheet.addAction(cancel)
+        
+        // show action sheet
+        present(sheet, animated: true, completion: nil)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    
+    
 
 }

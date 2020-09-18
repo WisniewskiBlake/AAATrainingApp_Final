@@ -68,6 +68,8 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     var uiColorTwo: UIColor?
     var uiColorThree: UIColor?
     
+    var userAccountType = ""
+    
     let helper = Helper()
     
     let logoImageTapGestureRecognizer = UITapGestureRecognizer()
@@ -92,7 +94,8 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         codeLabel.text = teamLoginCode
         
-        bannerView.adUnitID = "ca-app-pub-8479238648739219/5317514555"
+        bannerView.adUnitID = "c8b13a0958c55302a0092a8fdabd1f7e"
+        //ca-app-pub-8479238648739219/5317514555
         bannerView.rootViewController = self
         bannerView.delegate = self
         bannerView.load(GADRequest())
@@ -156,13 +159,16 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBAction func finishContinueClicked(_ sender: Any) {
         
-        let team = Team(teamID: teamLoginCode, teamName: teamNameText.text!, teamLogo: self.pictureToUpload!, teamMemberIDs: [FUser.currentId()], teamCity: "", teamState: "", teamColorOne: teamColorOne!, teamColorTwo: teamColorTwo!, teamColorThree: teamColorThree!, teamType: self.teamType, teamMemberCount: "1")
+        let team = Team(teamID: teamLoginCode, teamName: teamNameText.text!, teamLogo: self.pictureToUpload!, teamMemberIDs: [FUser.currentId()], teamCity: "", teamState: "", teamColorOne: teamColorOne!, teamColorTwo: teamColorTwo!, teamColorThree: teamColorThree!, teamType: self.teamType, teamMemberCount: "1", teamMemberAccountTypes: [userAccountType.capitalizingFirstLetter()])
         
         team.saveTeam()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createTeam"), object: nil)
-        updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMIDS : FieldValue.arrayUnion([teamLoginCode])]) { (success) in
+        updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMIDS : FieldValue.arrayUnion([teamLoginCode]), kUSERTEAMACCOUNTTYPES : FieldValue.arrayUnion([userAccountType.capitalizingFirstLetter()])]) { (success) in
             self.goToApp()
+
         }
+        
+
         
 
     }
@@ -239,7 +245,7 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     @IBAction func haveTeamClicked(_ sender: Any) {
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamLoginVC") as? TeamLoginVC
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
         {
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
@@ -475,4 +481,14 @@ fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [U
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
     return input.rawValue
+}
+
+extension String {
+    func capitalizingFirstLetter() -> String {
+        return prefix(1).capitalized + dropFirst()
+    }
+
+    mutating func capitalizeFirstLetter() {
+        self = self.capitalizingFirstLetter()
+    }
 }
