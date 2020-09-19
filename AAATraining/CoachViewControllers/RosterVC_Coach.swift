@@ -21,25 +21,22 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     var coaches: [FUser] = []
     var players: [FUser] = []
     var parents: [FUser] = []
-    var filteredUsers: [FUser] = []
     var usersToShow: [FUser] = []
+    var userType = ""
+    var userTeamAccTypeIndexArr : [Int] = []
+    var filteredUsers: [FUser] = []
     var allUsersGroupped = NSDictionary() as! [String : [FUser]]
     var sectionTitleList : [String] = []
     var userListener: ListenerRegistration!
     
-    var userType = ""
     
     var isLoading = false
     let helper = Helper()
     var skip = 0
     var limit = 10
     
-    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [])
-    
     let searchController = UISearchController(searchResultsController: nil)
-    
-    var userTeamAccTypeIndexArr : [Int] = []
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -18,6 +18,12 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
     @IBOutlet weak var filterSegmentControl: UISegmentedControl!
     
     var allUsers: [FUser] = []
+    var coaches: [FUser] = []
+    var players: [FUser] = []
+    var parents: [FUser] = []
+    var usersToShow: [FUser] = []
+    var userType = ""
+    var userTeamAccTypeIndexArr : [Int] = []
     var filteredUsers: [FUser] = []
     var allUsersGroupped = NSDictionary() as! [String : [FUser]]
     var sectionTitleList : [String] = []
@@ -33,11 +39,11 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
         case 0:
             loadUsers(filter: "")
         case 1:
-            loadUsers(filter: "player")
+            loadUsers(filter: "Player")
         case 2:
-            loadUsers(filter: "coach")
+            loadUsers(filter: "Coach")
         case 3:
-            loadUsers(filter: "parent")
+            loadUsers(filter: "Parent")
         default:
             return
         }
@@ -108,8 +114,8 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
           
           var sectionTitle: String = ""
           
-          for i in 0..<self.allUsers.count {
-              let currentUser = self.allUsers[i]
+          for i in 0..<self.usersToShow.count {
+              let currentUser = self.usersToShow[i]
               
               let firstChar = currentUser.firstname.first!
               
@@ -130,40 +136,25 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
     
     // MARK: - loadUsers
     func loadUsers(filter: String) {
-           isLoading = true
            ProgressHUD.show()
-           
-           var query: Query!
-           
-           switch filter {
-            case "player":
-                query = reference(.User).whereField("accountType", isEqualTo: "player").whereField(kUSERCURRENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
-           case ("coach"):
-               query = reference(.User).whereField("accountType", isEqualTo: "coach").whereField(kUSERCURRENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
-            case ("parent"):
-                query = reference(.User).whereField("accountType", isEqualTo: "parent").whereField(kUSERCURRENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
-           default:
-               query = reference(.User).whereField(kUSERCURRENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
-        }
-           
+           var query = reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()!.userCurrentTeamID)
            query.getDocuments { (snapshot, error) in
                
                self.allUsers = []
+               self.coaches = []
+               self.players = []
+               self.parents = []
                self.sectionTitleList = []
                self.allUsersGroupped = [:]
                
                if error != nil {
                    print(error!.localizedDescription)
                    ProgressHUD.dismiss()
-                self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
-                    self.isLoading = false
                    self.tableView.reloadData()
                    return
                }
                
                guard let snapshot = snapshot else {
-                self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
-                self.isLoading = false
                    ProgressHUD.dismiss(); return
                }
                
@@ -173,23 +164,45 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
                        
                        let userDictionary = userDictionary.data() as NSDictionary
                        let fUser = FUser(_dictionary: userDictionary)
+                       
+                       
                        self.allUsers.append(fUser)
-//                       if fUser.objectId != FUser.currentId() {
-//                           self.allUsers.append(fUser)
-//                       }
+                       let index = fUser.userTeamIDs.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)!
+                       self.userTeamAccTypeIndexArr.append(index)
+                       if fUser.userTeamAccountTypes[index] == "Coach" {
+                           self.coaches.append(fUser)
+                       } else if fUser.userTeamAccountTypes[index] == "Player" {
+                           self.players.append(fUser)
+                       } else {
+                           self.parents.append(fUser)
+                       }
+                       
                    }
                    
+                   switch filter {
+                      case "Player":
+                           self.usersToShow = self.players
+
+                     case ("Coach"):
+                           self.usersToShow = self.coaches
+
+                      case ("Parent"):
+                          self.usersToShow = self.parents
+
+                     default:
+                           self.usersToShow = self.allUsers
+
+                   }
                    self.splitDataIntoSection()
                    self.tableView.reloadData()
                }
-               self.isLoading = false
+               
                self.tableView.reloadData()
                ProgressHUD.dismiss()
-           }
-    
+               
        }
     
-    
+    }
     
     
     // MARK: - Table view data source
@@ -242,7 +255,7 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
        
        
        
-       //cell.generateCellWith(fUser: user, indexPath: indexPath)
+       cell.generateCellWith(fUser: user, indexPath: indexPath, accTypeIndexArr: userTeamAccTypeIndexArr)
        cell.delegate = self
        
        return cell
