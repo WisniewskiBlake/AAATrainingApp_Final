@@ -236,10 +236,12 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         print(indexPath.row)
         
         var index = 0
+        var i = 0
         for IDs in teams[indexPath.row].teamMemberIDs {
-            if FUser.currentId() != IDs {
-                index += 1
+            if FUser.currentId() == IDs {
+                index = i
             }
+            i += 1
         }
         
         
@@ -257,10 +259,12 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         var index = 0
+        var i = 0
         for IDs in teams[indexPath.row].teamMemberIDs {
-            if FUser.currentId() != IDs {
-                index += 1
+            if FUser.currentId() == IDs {
+                index = i
             }
+            i += 1
         }
 
         if teams[indexPath.row].teamMemberAccountTypes[index] == "Coach" {
