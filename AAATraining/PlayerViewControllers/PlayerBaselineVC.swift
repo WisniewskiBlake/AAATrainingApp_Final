@@ -37,7 +37,7 @@ class PlayerBaselineVC: UITableViewController {
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         //self.setLeftAlignedNavigationItemTitle(text: "Baselines", color: .white, margin: 12)
         
-        if FUser.currentUser()?.accountType == "player" {
+        if FUser.currentUser()?.accountType == "Player" {
             composeButton.isEnabled = false
             loadBaselines()
             
@@ -54,7 +54,7 @@ class PlayerBaselineVC: UITableViewController {
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if FUser.currentUser()?.accountType == "player" {
+        if FUser.currentUser()?.accountType == "Player" {
             composeButton.isEnabled = false
             loadBaselines()
             
@@ -223,7 +223,7 @@ class PlayerBaselineVC: UITableViewController {
         var baseline: Baseline
         baseline = allBaselines[indexPath.row]
         
-        if FUser.currentUser()?.accountType != "player" {
+        if FUser.currentUser()?.accountType != "Player" {
             let editBaselineVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditBaselineVC") as! EditBaselineVC
             
             editBaselineVC.baselineToEdit = baseline

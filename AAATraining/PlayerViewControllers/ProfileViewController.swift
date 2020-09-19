@@ -109,7 +109,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if FUser.currentUser()?.accountType == "player" {
+        if FUser.currentUser()?.accountType == "Player" {
             logoutView.isHidden = false
             loadUser()
         } else {
@@ -124,6 +124,141 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         super.viewDidLayoutSubviews()
         
         //configure_nutritionButton(btn: nutritionButton)
+    }
+    
+    
+    
+    @objc func loadUserForGuest() {
+        let helper = Helper()
+     
+        let firstName = userBeingViewed.firstname
+        let lastName = userBeingViewed.lastname
+        let avaPath = userBeingViewed.ava
+        let coverPath = userBeingViewed.cover
+        let height = userBeingViewed.height
+        let weight = userBeingViewed.weight
+        let position = userBeingViewed.position
+        let number = userBeingViewed.number
+        
+        var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [""])
+         
+         team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
+             if teamReturned.teamID != "" {
+                 team = teamReturned
+                 if team.teamLogo != "" {
+                     helper.imageFromData(pictureData: team.teamLogo) { (coverImage) in
+
+                         if coverImage != nil {
+                             self.coverImageView.image = coverImage!
+                             self.isCover = true
+                         }
+                     }
+                 } else {
+                     self.coverImageView.image = UIImage(named: "HomeCover.jpg")
+                     self.isCover = false
+                 }
+             } else {
+                 self.coverImageView.image = UIImage(named: "HomeCover.jpg")
+                 self.isCover = false
+             }
+         }
+     
+        // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
+        if avaPath != "" {
+            helper.imageFromData(pictureData: avaPath) { (avatarImage) in
+                
+                if avatarImage != nil {
+                    avaImageView.image = avatarImage!
+                    isAva = true
+                }
+            }
+        } else{
+            avaImageView.image = UIImage(named: "user.png")
+            isAva = false
+        }
+        
+        // assigning vars which we accessed from global var, to fullnameLabel
+        fullnameLabel.text = "\((firstName).capitalized) \((lastName).capitalized)"
+        heightTextLabel.text = "\((height).capitalized)" + "in."
+        weightTextLabel.text = "\((weight).capitalized)" + "lb."
+        positionTextLabel.text = "\((position).capitalized)"
+        numberTextLabel.text = "\((number).capitalized)"
+        
+    }
+    
+    // MARK: - Load User
+    // loads all user related information to be shown in the header
+   @objc func loadUser() {
+        let helper = Helper()
+        var query: Query!
+    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [""])
+        
+        team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
+            if teamReturned.teamID != "" {
+                team = teamReturned
+                if team.teamLogo != "" {
+                    helper.imageFromData(pictureData: team.teamLogo) { (coverImage) in
+
+                        if coverImage != nil {
+                            self.coverImageView.image = coverImage!
+                            self.isCover = true
+                        }
+                    }
+                } else {
+                    self.coverImageView.image = UIImage(named: "HomeCover.jpg")
+                    self.isCover = false
+                }
+            } else {
+                self.coverImageView.image = UIImage(named: "HomeCover.jpg")
+                self.isCover = false
+            }
+        }
+    
+        query = reference(.User).whereField(kOBJECTID, isEqualTo: FUser.currentId())
+    
+        query.getDocuments { (snapshot, error) in
+            self.user = FUser()
+            self.userBeingViewed = FUser()
+            
+            if error != nil {
+                print(error!.localizedDescription)
+                
+                return
+            }
+            
+            guard let snapshot = snapshot else {
+                return
+            }
+            
+            if !snapshot.isEmpty {
+                
+                for userDoc in snapshot.documents {
+                    let userDoc = userDoc.data() as NSDictionary
+                    let userCurr = FUser(_dictionary: userDoc)
+                    self.user = userCurr
+                    self.userBeingViewed = userCurr
+
+                    helper.imageFromData(pictureData: userCurr.ava) { (avatarImage) in
+        
+                       if avatarImage != nil {
+                            self.avaImageView.image = avatarImage!
+                            self.isAva = true
+                       }
+                   }
+                    self.fullnameLabel.text = "\(String(describing: (userCurr.firstname).capitalized)) \((userCurr.lastname).capitalized)"
+                    self.heightTextLabel.text = "\((userCurr.height).capitalized)" + "in."
+                    self.weightTextLabel.text = "\((userCurr.weight).capitalized)" + "lbs."
+                    self.positionTextLabel.text = "\((userCurr.position).capitalized)"
+                    self.numberTextLabel.text = "\((userCurr.number).capitalized)"
+                                    
+                }
+                
+            
+            }
+        
+    }
+
+       
     }
     
     @objc func baselineViewClicked() {
@@ -220,137 +355,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         let blankView = UIView.init(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
         textField.leftView = blankView
         textField.leftViewMode = .always
-    }
-    
-    @objc func loadUserForGuest() {
-        let helper = Helper()
-     
-        let firstName = userBeingViewed.firstname
-        let lastName = userBeingViewed.lastname
-        let avaPath = userBeingViewed.ava
-        let coverPath = userBeingViewed.cover
-        let height = userBeingViewed.height
-        let weight = userBeingViewed.weight
-        let position = userBeingViewed.position
-        let number = userBeingViewed.number
-        
-        var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [""])
-         
-         team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
-             if teamReturned.teamID != "" {
-                 team = teamReturned
-                 if team.teamLogo != "" {
-                     helper.imageFromData(pictureData: team.teamLogo) { (coverImage) in
-
-                         if coverImage != nil {
-                             self.coverImageView.image = coverImage!
-                             self.isCover = true
-                         }
-                     }
-                 } else {
-                     self.coverImageView.image = UIImage(named: "HomeCover.jpg")
-                     self.isCover = false
-                 }
-             } else {
-                 self.coverImageView.image = UIImage(named: "HomeCover.jpg")
-                 self.isCover = false
-             }
-         }
-     
-        // check in the front end is there any picture in the ImageView laoded from the server (is there a real html path / link to the image)
-        if avaPath != "" {
-            helper.imageFromData(pictureData: avaPath) { (avatarImage) in
-                
-                if avatarImage != nil {
-                    avaImageView.image = avatarImage!
-                    isAva = true
-                }
-            }
-        } else{
-            avaImageView.image = UIImage(named: "user.png")
-            isAva = false
-        }
-        
-        // assigning vars which we accessed from global var, to fullnameLabel
-        fullnameLabel.text = "\((firstName).capitalized) \((lastName).capitalized)"
-        heightTextLabel.text = "\((height).capitalized)" + "in."
-        weightTextLabel.text = "\((weight).capitalized)" + "lb."
-        positionTextLabel.text = "\((position).capitalized)"
-        numberTextLabel.text = "\((number).capitalized)"
-        
-    }
-    
-    // MARK: - Load User
-    // loads all user related information to be shown in the header
-   @objc func loadUser() {
-        let helper = Helper()
-        var query: Query!
-    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [""])
-        
-        team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
-            if teamReturned.teamID != "" {
-                team = teamReturned
-                if team.teamLogo != "" {
-                    helper.imageFromData(pictureData: team.teamLogo) { (coverImage) in
-
-                        if coverImage != nil {
-                            self.coverImageView.image = coverImage!
-                            self.isCover = true
-                        }
-                    }
-                } else {
-                    self.coverImageView.image = UIImage(named: "HomeCover.jpg")
-                    self.isCover = false
-                }
-            } else {
-                self.coverImageView.image = UIImage(named: "HomeCover.jpg")
-                self.isCover = false
-            }
-        }
-    
-        query = reference(.User).whereField(kOBJECTID, isEqualTo: FUser.currentId())
-    
-        query.getDocuments { (snapshot, error) in
-            self.user = FUser()
-            
-            if error != nil {
-                print(error!.localizedDescription)
-                
-                return
-            }
-            
-            guard let snapshot = snapshot else {
-                return
-            }
-            
-            if !snapshot.isEmpty {
-                
-                for userDoc in snapshot.documents {
-                    let userDoc = userDoc.data() as NSDictionary
-                    let userCurr = FUser(_dictionary: userDoc)
-                    self.user = userCurr
-
-                    helper.imageFromData(pictureData: userCurr.ava) { (avatarImage) in
-        
-                       if avatarImage != nil {
-                            self.avaImageView.image = avatarImage!
-                            self.isAva = true
-                       }
-                   }
-                    self.fullnameLabel.text = "\(String(describing: (userCurr.firstname).capitalized)) \((userCurr.lastname).capitalized)"
-                    self.heightTextLabel.text = "\((userCurr.height).capitalized)" + "in."
-                    self.weightTextLabel.text = "\((userCurr.weight).capitalized)" + "lbs."
-                    self.positionTextLabel.text = "\((userCurr.position).capitalized)"
-                    self.numberTextLabel.text = "\((userCurr.number).capitalized)"
-                                    
-                }
-                
-            
-            }
-        
-    }
-
-       
     }
 
     
