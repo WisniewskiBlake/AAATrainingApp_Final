@@ -41,21 +41,30 @@ class TeamLoginVC: UIViewController, UITextFieldDelegate {
         return .lightContent
     }
     
+    //need to check if the user is already part of a team
     @IBAction func continueButtonClicked(_ sender: Any) {
         if teamCodeText.text != "" {
             team.getTeam(teamID: teamCodeText.text!) { (teamReturned) in
                 if teamReturned.teamID != "" {
                     self.team = teamReturned
-                    let teamMemberCount = Int(teamReturned.teamMemberCount)! + 1
-                    Team.updateTeam(teamID: self.team.teamID, withValues: [kTEAMMEMBERIDS: FieldValue.arrayUnion([FUser.currentId()]), kTEAMMEMBERCOUNT: String(teamMemberCount), kTEAMMEMBERACCOUNTTYPES: FieldValue.arrayUnion([self.userAccountType])])
-                    updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMIDS : FieldValue.arrayUnion([self.team.teamID]), kUSERTEAMACCOUNTTYPES : FieldValue.arrayUnion([self.userAccountType])]) { (success) in
-                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "joinedTeam"), object: nil)
+                    if !self.team.teamMemberIDs.contains(FUser.currentId()) {
+                        let teamMemberCount = Int(teamReturned.teamMemberCount)! + 1
+                        var accTypesArray = self.team.teamMemberAccountTypes
+                        accTypesArray.append(self.userAccountType.capitalizingFirstLetter())
+                        Team.updateTeam(teamID: self.team.teamID, withValues: [kTEAMMEMBERIDS: FieldValue.arrayUnion([FUser.currentId()]), kTEAMMEMBERCOUNT: String(teamMemberCount), kTEAMMEMBERACCOUNTTYPES : accTypesArray])
+                        
+                        updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMIDS : FieldValue.arrayUnion([self.team.teamID]), kUSERTEAMACCOUNTTYPES : FieldValue.arrayUnion([self.userAccountType.capitalizingFirstLetter()]), kUSERTEAMNAMES : FieldValue.arrayUnion([self.team.teamName]), kUSERTEAMMEMBERS : FieldValue.arrayUnion([FUser.currentId()]), kUSERTEAMMEMBERCOUNT : FieldValue.arrayUnion([String(teamMemberCount)])]) { (success) in
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "joinedTeam"), object: nil)
+                        }
+                        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
+                        {
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true, completion: nil)
+                        }
+                    } else {
+                        self.helper.showAlert(title: "Invadlid ID", message: "You're already on this team!", in: self)
                     }
-                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
-                    {
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true, completion: nil)
-                    }
+                    
                 } else {
                     self.helper.showAlert(title: "Invadlid ID", message: "Team ID does not exist!", in: self)
                 }

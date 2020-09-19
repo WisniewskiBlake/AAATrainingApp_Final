@@ -113,7 +113,7 @@ public class Team {
         if let tAC = _dictionary[kTEAMMEMBERACCOUNTTYPES] {
             teamMemberAccountTypes = tAC as! [String]
         } else {
-            teamMemberAccountTypes = [""]
+            teamMemberAccountTypes = []
         }
         
         teamDictionary = NSMutableDictionary(objects: [teamID, teamName, teamLogo, teamMemberIDs, teamCity, teamState, teamColorOne, teamColorTwo, teamColorThree, teamType, teamMemberCount, teamMemberAccountTypes], forKeys: [kTEAMID as NSCopying, kTEAMNAME as NSCopying, kTEAMLOGO as NSCopying, kTEAMMEMBERIDS as NSCopying, kTEAMCITY as NSCopying, kTEAMSTATE as NSCopying, kTEAMCOLORONE as NSCopying, kTEAMCOLORTWO as NSCopying, kTEAMCOLORTHREE as NSCopying, kTEAMTYPE as NSCopying, kTEAMMEMBERCOUNT as NSCopying, kTEAMMEMBERACCOUNTTYPES as NSCopying])
@@ -136,7 +136,7 @@ public class Team {
                 
                 
             } else {
-                let team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [""])
+                let team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [])
                 
                 completion(team)
             }

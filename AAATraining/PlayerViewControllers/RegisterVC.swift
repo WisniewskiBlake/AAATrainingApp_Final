@@ -186,19 +186,19 @@ class RegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDelegate {
     
     @IBAction func statsContinueButton_clicked(_ sender: Any) {
         
-        let avatar = getAvatar()
-        let defaultTeamColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1).htmlRGBaColor
-                  
-        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: self.heightTextField.text!, weight: self.weightTextField.text!, position: self.positionTextField.text!, number: self.numberTextField.text!, accountType: "player", birthday: "", cover: "", phoneNumber: "", userCurrentTeamID: "", userTeamColorOne: defaultTeamColor, userTeamColorTwo: "", userTeamColorThree: "", userTeamIDs: [""], userTeamAccountTypes: [""]) { (error)  in
-            
-                            if error != nil {
-                                ProgressHUD.dismiss()
-                                ProgressHUD.showError(error!.localizedDescription)
-                                return
-                            }
-            
-                            self.goToApp()
-            }
+//        let avatar = getAvatar()
+//        let defaultTeamColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1).htmlRGBaColor
+//
+//        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: self.heightTextField.text!, weight: self.weightTextField.text!, position: self.positionTextField.text!, number: self.numberTextField.text!, accountType: "player", birthday: "", cover: "", phoneNumber: "", userCurrentTeamID: "", userTeamColorOne: defaultTeamColor, userTeamColorTwo: "", userTeamColorThree: "", userTeamIDs: [""], userTeamAccountTypes: [""]) { (error)  in
+//
+//                            if error != nil {
+//                                ProgressHUD.dismiss()
+//                                ProgressHUD.showError(error!.localizedDescription)
+//                                return
+//                            }
+//
+//                            self.goToApp()
+//            }
         
     }
     

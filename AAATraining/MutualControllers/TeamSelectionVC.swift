@@ -34,6 +34,9 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        NotificationCenter.default.addObserver(self, selector: #selector(loadTeams), name: NSNotification.Name(rawValue: "joinedTeam"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(loadTeams), name: NSNotification.Name(rawValue: "createdTeam"), object: nil)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(loadTeamsForUser), name: NSNotification.Name(rawValue: "joinedTeam"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadTeamsForUser), name: NSNotification.Name(rawValue: "createdTeam"), object: nil)
 
@@ -51,13 +54,17 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         createTeamView.isUserInteractionEnabled = true
         createTeamView.addGestureRecognizer(createTapGestureRecognizer)
         
+//        loadTeams()
+//        loadUser()
+
+        
+        
         
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         loadTeamsForUser()
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
@@ -65,7 +72,6 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         tableView.tableFooterView = view
-        
         
 
     }
@@ -95,96 +101,105 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 //        self.present(teamRegisterVC, animated: true, completion: nil)
     }
 
-    
     @objc func loadTeamsForUser() {
+            ProgressHUD.show()
+            let query = reference(.Team).whereField(kTEAMMEMBERIDS, arrayContains: FUser.currentId())
+            query.getDocuments { (snapshot, error) in
+    
+                self.teams = []
+                self.teamLogos = []
+    
+                if error != nil {
+                    print(error!.localizedDescription)
+                    ProgressHUD.dismiss()
+                 self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
+    
+                    return
+                }
+    
+                guard let snapshot = snapshot else {
+                    self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
+                    ProgressHUD.dismiss(); return
+                }
+    
+                if !snapshot.isEmpty {
+    
+                    for teamDictionary in snapshot.documents {
+    
+                        let teamDictionary = teamDictionary.data() as NSDictionary
+                        let team = Team(_dictionary: teamDictionary)
+                        self.teams.append(team)
+                        self.helper.imageFromData(pictureData: team.teamLogo) { (avatarImage) in
+    
+                            if avatarImage != nil {
+                                self.teamLogos.append(avatarImage!.circleMasked!)
+                            }
+                        }
+    
+                    }
+                    self.tableView.reloadData()
+                }
+                self.tableView.reloadData()
+                ProgressHUD.dismiss()
+            }
+    }
+    
+//    @objc func loadUser() {
+//
 //        ProgressHUD.show()
-//        let query = reference(.Team).whereField(kTEAMMEMBERIDS, arrayContains: FUser.currentId())
-//        query.getDocuments { (snapshot, error) in
+//        let query2 = reference(.User).whereField(kOBJECTID, isEqualTo: FUser.currentId())
 //
-//            self.teams = []
-//            self.teamLogos = []
+//            query2.getDocuments { (snapshot, error) in
+//                self.currentUser = FUser()
 //
-//            if error != nil {
-//                print(error!.localizedDescription)
-//                ProgressHUD.dismiss()
-//             self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
 //
-//                return
+//
+//                if error != nil {
+//                    print(error!.localizedDescription)
+//
+//                    return
+//                }
+//
+//                guard let snapshot = snapshot else {
+//                    return
+//                }
+//
+//                if !snapshot.isEmpty {
+//
+//                    for userDoc in snapshot.documents {
+//                        let userDoc = userDoc.data() as NSDictionary
+//                        let userCurr = FUser(_dictionary: userDoc)
+//                        self.currentUser = userCurr
+//                    }
+//
+//
+//                self.tableView.reloadData()
+//                }
+//            self.tableView.reloadData()
+//            ProgressHUD.dismiss()
 //            }
+//    }
 //
-//            guard let snapshot = snapshot else {
-//                self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
-//                ProgressHUD.dismiss(); return
-//            }
-//
-//            if !snapshot.isEmpty {
-//
-//                for teamDictionary in snapshot.documents {
-//
-//                    let teamDictionary = teamDictionary.data() as NSDictionary
-//                    let team = Team(_dictionary: teamDictionary)
-//                    self.teams.append(team)
-//                    self.helper.imageFromData(pictureData: team.teamLogo) { (avatarImage) in
+//    func loadTeams() {
+//        var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [""])
+//        self.teams = []
+//        self.teamLogos = []
+//        for teamID in self.currentUser.userTeamIDs {
+//            if teamID != "" {
+//                team.getTeam(teamID: teamID) { (teamReturned) in
+//                    team = teamReturned
+//                    self.teams.append(teamReturned)
+//                    self.helper.imageFromData(pictureData: teamReturned.teamLogo) { (avatarImage) in
 //
 //                        if avatarImage != nil {
 //                            self.teamLogos.append(avatarImage!.circleMasked!)
 //                        }
 //                    }
-//
 //                }
-//                self.tableView.reloadData()
 //            }
-//            self.tableView.reloadData()
-//            ProgressHUD.dismiss()
+//
 //        }
-        ProgressHUD.show()
-        let query2 = reference(.User).whereField(kOBJECTID, isEqualTo: FUser.currentId())
-        
-            query2.getDocuments { (snapshot, error) in
-                self.currentUser = FUser()
-                self.teams = []
-                self.teamLogos = []
-                let team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [""])
-                
-                if error != nil {
-                    print(error!.localizedDescription)
-                    
-                    return
-                }
-                
-                guard let snapshot = snapshot else {
-                    return
-                }
-                
-                if !snapshot.isEmpty {
-                    
-                    for userDoc in snapshot.documents {
-                        let userDoc = userDoc.data() as NSDictionary
-                        let userCurr = FUser(_dictionary: userDoc)
-                        self.currentUser = userCurr
-                    }
-                    for teamID in self.currentUser.userTeamIDs {
-                        if teamID != "" {
-                            team.getTeam(teamID: teamID) { (teamReturned) in
-                                self.teams.append(team)
-                                self.helper.imageFromData(pictureData: teamReturned.teamLogo) { (avatarImage) in
-
-                                    if avatarImage != nil {
-                                        self.teamLogos.append(avatarImage!.circleMasked!)
-                                    }
-                                }
-                            }
-                        }
-                        
-                    }
-                    
-                self.tableView.reloadData()
-                }
-            self.tableView.reloadData()
-            ProgressHUD.dismiss()
-            }
-        
-    }
+//    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -219,26 +234,42 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "TeamCell", for: indexPath) as! TeamCell
         print(indexPath.row)
+        
+        var index = 0
+        for IDs in teams[indexPath.row].teamMemberIDs {
+            if FUser.currentId() != IDs {
+                index += 1
+            }
+        }
+        
+        
         cell.teamImageView.image = self.teamLogos[indexPath.row]
         cell.teamNameLabel.text = teams[indexPath.row].teamName
         cell.memberCountLabel.text = teams[indexPath.row].teamMemberCount + " Team Members"
 
-        cell.accountTypeLabel.text = currentUser.userTeamAccountTypes[indexPath.row]
-//        cell.accountTypeLabel.text = teams[indexPath.row].teamMemberAccountTypes[indexPath.row]
+       // cell.accountTypeLabel.text = currentUser.userTeamAccountTypes[indexPath.row]
+        cell.accountTypeLabel.text = teams[indexPath.row].teamMemberAccountTypes[index]
         
         return cell
         
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        var index = 0
+        for IDs in teams[indexPath.row].teamMemberIDs {
+            if FUser.currentId() != IDs {
+                index += 1
+            }
+        }
 
-        if currentUser.userTeamAccountTypes[indexPath.row + 1] == "Coach" {
+        if teams[indexPath.row].teamMemberAccountTypes[index] == "Coach" {
             updateCurrentUserInFirestore(withValues: [kUSERCURRENTTEAMID : teams[indexPath.row].teamID]) { (success) in
                 
                 self.helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
             }
             
-        } else if currentUser.userTeamAccountTypes[indexPath.row + 1] == "Player" {
+        } else if teams[indexPath.row].teamMemberAccountTypes[index] == "Player" {
             updateCurrentUserInFirestore(withValues: [kUSERCURRENTTEAMID : teams[indexPath.row].teamID]) { (success) in
                 
                 self.helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)

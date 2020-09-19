@@ -33,6 +33,9 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDeleg
     @IBOutlet weak var emailContinueButton: UIButton!
     @IBOutlet weak var passwordContinueButton: UIButton!
     
+    @IBOutlet weak var nameImageView: UIImageView!
+    
+    
     @IBOutlet weak var footerView: UIView!
     @IBOutlet weak var bannerView: GADBannerView!
     
@@ -80,6 +83,9 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDeleg
         padding(for: firstNameTextField)
         padding(for: lastNameTextField)
         padding(for: passwordTextField)
+        
+        nameImageView.layer.cornerRadius = nameImageView.frame.width / 2
+        nameImageView.clipsToBounds = true
         
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
         navigationItem.leftBarButtonItem?.tintColor = UIColor.white
@@ -161,9 +167,9 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDeleg
     @IBAction func passwordContinue_clicked(_ sender: Any) {
         
         let avatar = getAvatar()
-        let defaultTeamColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1).htmlRGBaColor
+        let defaultTeamColor = #colorLiteral(red: 0.1882352941, green: 0.1882352941, blue: 0.1882352941, alpha: 1).htmlRGBaColor
         
-        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "", birthday: "", cover: "", phoneNumber: "", userCurrentTeamID: "", userTeamColorOne: defaultTeamColor, userTeamColorTwo: "", userTeamColorThree: "", userTeamIDs: [], userTeamAccountTypes: [], userTeamNames: [], userTeamMembers: [[]], userTeamMemberCount: []) { (error)  in
+        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "", birthday: "", cover: "", phoneNumber: "", userCurrentTeamID: "", userTeamColorOne: defaultTeamColor, userTeamColorTwo: "", userTeamColorThree: "", userTeamIDs: [], userTeamAccountTypes: [], userTeamNames: [], userTeamMembers: [], userTeamMemberCount: []) { (error)  in
             
                 if error != nil {
                     ProgressHUD.dismiss()

@@ -159,22 +159,22 @@ class ParentRegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDele
 //    }
     
     @IBAction func finishButtonClicked(_ sender: Any) {
-        let avatar = getAvatar()
-        let coverIMG = cover?.jpegData(compressionQuality: 0.7)
-        _ = coverIMG!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-        
-        let defaultTeamColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1).htmlRGBaColor
-                
-        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "parent", birthday: "", cover: "", phoneNumber: "", userCurrentTeamID: "", userTeamColorOne: defaultTeamColor, userTeamColorTwo: "", userTeamColorThree: "", userTeamIDs: [""], userTeamAccountTypes: [""]) { (error)  in
-            
-                            if error != nil {
-                                ProgressHUD.dismiss()
-                                ProgressHUD.showError(error!.localizedDescription)
-                                return
-                            }
-            
-                            self.goToApp()
-            }
+//        let avatar = getAvatar()
+//        let coverIMG = cover?.jpegData(compressionQuality: 0.7)
+//        _ = coverIMG!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+//
+//        let defaultTeamColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1).htmlRGBaColor
+//
+//        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "parent", birthday: "", cover: "", phoneNumber: "", userCurrentTeamID: "", userTeamColorOne: defaultTeamColor, userTeamColorTwo: "", userTeamColorThree: "", userTeamIDs: [""], userTeamAccountTypes: [""]) { (error)  in
+//
+//                            if error != nil {
+//                                ProgressHUD.dismiss()
+//                                ProgressHUD.showError(error!.localizedDescription)
+//                                return
+//                            }
+//
+//                            self.goToApp()
+//            }
     }
     
     func getAvatar() -> String {

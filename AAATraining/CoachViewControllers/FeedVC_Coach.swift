@@ -236,122 +236,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         self.refreshControl?.endRefreshing()
     }
     
-    @objc func postImageViewClicked() {
-        let postNav = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "postNav") as! UINavigationController
-        
-            self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-
-            self.present(postNav, animated: true, completion: nil)
-    }
     
-    @objc func teamImageViewClicked() {
-        showActionSheet()
-    }
-    
-    @objc func moreImageViewClicked() {
-        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        let copyCode = UIAlertAction(title: "Copy Team Code: " + FUser.currentUser()!.userCurrentTeamID, style: .default, handler: { (action) in
-                        
-            let pasteboard = UIPasteboard.general
-            pasteboard.string = FUser.currentUser()!.userCurrentTeamID
-            self.helper.showAlert(title: "Copied!", message: "Team code copied to clipboard.", in: self)
-                
-            
-        })
-        
-        let colorPicker = UIAlertAction(title: "Choose Color Theme", style: .default, handler: { (action) in
-                        
-            
-            let navigationColorPicker = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ColorPickerNav") as! UINavigationController
-             //let colorPickerVC = navigationColorPicker.viewControllers.first as! ColorPickerVC
-            
-            
-            self.present(navigationColorPicker, animated: true, completion: nil)
-                
-            
-        })
-        
-        let changeLogo = UIAlertAction(title: "Change Team Logo", style: .default, handler: { (action) in
-                        
-            self.teamImageViewClicked()
-                
-            
-        })
-        
-        let backToTeamSelect = UIAlertAction(title: "Back To Team Select", style: .default, handler: { (action) in
-                        
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
-            {
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true, completion: nil)
-            }
-                
-            
-        })
-        
-        // creating buttons for action sheet
-        let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
-                        
-            FUser.logOutCurrentUser { (success) in
-                
-                if success {
-                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamLoginVC") as? TeamLoginVC
-                    {
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true, completion: nil)
-                    }
-                }
-            }
-        })
-        
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        // add buttons to action sheet
-        sheet.addAction(copyCode)
-        sheet.addAction(colorPicker)
-        sheet.addAction(changeLogo)
-        sheet.addAction(backToTeamSelect)
-        sheet.addAction(logout)
-        sheet.addAction(cancel)
-        
-        // show action sheet
-        present(sheet, animated: true, completion: nil)
-    }
-    
-    func didTapMediaImage(indexPath: IndexPath) {
-        let post = allPosts[indexPath.row]
-        let postType = post.postType
-        
-        if postType == "video" {
-            let mediaItem = post.video
-            
-            let player = AVPlayer(url: Foundation.URL(string: mediaItem)!)
-            let moviewPlayer = AVPlayerViewController()
-            
-            let session = AVAudioSession.sharedInstance()
-            
-            try! session.setCategory(.playAndRecord, mode: .default, options: .defaultToSpeaker)
-
-            moviewPlayer.player = player
-            
-            self.present(moviewPlayer, animated: true) {
-                moviewPlayer.player!.play()
-            }
-        }
-        if postType == "picture" {
-            self.helper.imageFromData(pictureData: post.picture) { (pictureImage) in
-
-                if pictureImage != nil {
-                    let photos = IDMPhoto.photos(withImages: [pictureImage as Any])
-                    let browser = IDMPhotoBrowser(photos: photos)
-                    
-                    self.present(browser!, animated: true, completion: nil)
-                }
-            }
-            
-        }
-    }
 
     
     
@@ -543,14 +428,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
                 
             } else {
                 let cellNoPic = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as!
-                CoachNoPicCell
-                
-//                let bottomBorder = CALayer()
-//
-//                bottomBorder.frame = CGRect(x: 0.0, y: 43.0, width: cellNoPic.contentView.frame.size.width, height: 1.0)
-//                bottomBorder.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-//                cellNoPic.contentView.layer.addSublayer(bottomBorder)
-                
+                CoachNoPicCell         
                 cellNoPic.postTextLabel.numberOfLines = 0
                 cellNoPic.postTextLabel.text = post.text
                 
@@ -573,6 +451,123 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         
         return cellPic
         
+    }
+    
+    @objc func postImageViewClicked() {
+        let postNav = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "postNav") as! UINavigationController
+        
+            self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+
+            self.present(postNav, animated: true, completion: nil)
+    }
+    
+    @objc func teamImageViewClicked() {
+        showActionSheet()
+    }
+    
+    @objc func moreImageViewClicked() {
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let copyCode = UIAlertAction(title: "Copy Team Code: " + FUser.currentUser()!.userCurrentTeamID, style: .default, handler: { (action) in
+                        
+            let pasteboard = UIPasteboard.general
+            pasteboard.string = FUser.currentUser()!.userCurrentTeamID
+            self.helper.showAlert(title: "Copied!", message: "Team code copied to clipboard.", in: self)
+                
+            
+        })
+        
+        let colorPicker = UIAlertAction(title: "Choose Color Theme", style: .default, handler: { (action) in
+                        
+            
+            let navigationColorPicker = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ColorPickerNav") as! UINavigationController
+             //let colorPickerVC = navigationColorPicker.viewControllers.first as! ColorPickerVC
+            
+            
+            self.present(navigationColorPicker, animated: true, completion: nil)
+                
+            
+        })
+        
+        let changeLogo = UIAlertAction(title: "Change Team Logo", style: .default, handler: { (action) in
+                        
+            self.teamImageViewClicked()
+                
+            
+        })
+        
+        let backToTeamSelect = UIAlertAction(title: "Back To Team Select", style: .default, handler: { (action) in
+                        
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
+            {
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true, completion: nil)
+            }
+                
+            
+        })
+        
+        // creating buttons for action sheet
+        let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
+                        
+            FUser.logOutCurrentUser { (success) in
+                
+                if success {
+                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamLoginVC") as? TeamLoginVC
+                    {
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true, completion: nil)
+                    }
+                }
+            }
+        })
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        // add buttons to action sheet
+        sheet.addAction(copyCode)
+        sheet.addAction(colorPicker)
+        sheet.addAction(changeLogo)
+        sheet.addAction(backToTeamSelect)
+        sheet.addAction(logout)
+        sheet.addAction(cancel)
+        
+        // show action sheet
+        present(sheet, animated: true, completion: nil)
+    }
+    
+    func didTapMediaImage(indexPath: IndexPath) {
+        let post = allPosts[indexPath.row]
+        let postType = post.postType
+        
+        if postType == "video" {
+            let mediaItem = post.video
+            
+            let player = AVPlayer(url: Foundation.URL(string: mediaItem)!)
+            let moviewPlayer = AVPlayerViewController()
+            
+            let session = AVAudioSession.sharedInstance()
+            
+            try! session.setCategory(.playAndRecord, mode: .default, options: .defaultToSpeaker)
+
+            moviewPlayer.player = player
+            
+            self.present(moviewPlayer, animated: true) {
+                moviewPlayer.player!.play()
+            }
+        }
+        if postType == "picture" {
+            self.helper.imageFromData(pictureData: post.picture) { (pictureImage) in
+
+                if pictureImage != nil {
+                    let photos = IDMPhoto.photos(withImages: [pictureImage as Any])
+                    let browser = IDMPhotoBrowser(photos: photos)
+                    
+                    self.present(browser!, animated: true, completion: nil)
+                }
+            }
+            
+        }
     }
     
     func showActionSheet() {
