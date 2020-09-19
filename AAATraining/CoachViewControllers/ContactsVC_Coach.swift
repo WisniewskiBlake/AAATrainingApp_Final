@@ -212,7 +212,7 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
         
         
         cell.delegate = self
-        cell.generateCellWith(fUser: user, indexPath: indexPath)
+        //cell.generateCellWith(fUser: user, indexPath: indexPath)
         
         print(cell.fullNameLabel.text!)
         if cellTagArray.contains([indexPath.section, indexPath.row]) && cellFullNameCheckArray.contains(cell.fullNameLabel.text!) {

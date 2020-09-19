@@ -48,12 +48,18 @@ class TeamLoginVC: UIViewController, UITextFieldDelegate {
                 if teamReturned.teamID != "" {
                     self.team = teamReturned
                     if !self.team.teamMemberIDs.contains(FUser.currentId()) {
+                        
                         let teamMemberCount = Int(teamReturned.teamMemberCount)! + 1
                         var accTypesArray = self.team.teamMemberAccountTypes
                         accTypesArray.append(self.userAccountType.capitalizingFirstLetter())
+                        
                         Team.updateTeam(teamID: self.team.teamID, withValues: [kTEAMMEMBERIDS: FieldValue.arrayUnion([FUser.currentId()]), kTEAMMEMBERCOUNT: String(teamMemberCount), kTEAMMEMBERACCOUNTTYPES : accTypesArray])
                         
-                        updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMIDS : FieldValue.arrayUnion([self.team.teamID]), kUSERTEAMACCOUNTTYPES : FieldValue.arrayUnion([self.userAccountType.capitalizingFirstLetter()]), kUSERTEAMNAMES : FieldValue.arrayUnion([self.team.teamName]), kUSERTEAMMEMBERS : FieldValue.arrayUnion([FUser.currentId()]), kUSERTEAMMEMBERCOUNT : FieldValue.arrayUnion([String(teamMemberCount)])]) { (success) in
+                        fetchCurrentUserFromFirestore(userId: FUser.currentId())
+                        var userTeamAccTypeArray = FUser.currentUser()?.userTeamAccountTypes
+                        userTeamAccTypeArray!.append(self.userAccountType.capitalizingFirstLetter())
+                        
+                        updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMIDS : FieldValue.arrayUnion([self.team.teamID]), kUSERTEAMACCOUNTTYPES : userTeamAccTypeArray, kUSERTEAMNAMES : FieldValue.arrayUnion([self.team.teamName]), kUSERTEAMMEMBERS : FieldValue.arrayUnion([FUser.currentId()]), kUSERTEAMMEMBERCOUNT : FieldValue.arrayUnion([String(teamMemberCount)])]) { (success) in
                             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "joinedTeam"), object: nil)
                         }
                         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC

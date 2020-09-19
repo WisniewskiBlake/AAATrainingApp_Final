@@ -18,22 +18,34 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     @IBOutlet weak var filterSegmentedControl: UISegmentedControl!
     
     var allUsers: [FUser] = []
+    var coaches: [FUser] = []
+    var players: [FUser] = []
+    var parents: [FUser] = []
     var filteredUsers: [FUser] = []
+    var usersToShow: [FUser] = []
     var allUsersGroupped = NSDictionary() as! [String : [FUser]]
     var sectionTitleList : [String] = []
     var userListener: ListenerRegistration!
+    
+    var userType = ""
     
     var isLoading = false
     let helper = Helper()
     var skip = 0
     var limit = 10
     
-    
+    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [])
     
     let searchController = UISearchController(searchResultsController: nil)
     
+    var userTeamAccTypeIndexArr : [Int] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        getAllTeamMembers()
+//        getFilteredUsers()
+//        loadUsers(filter: "")
 
         navigationItem.largeTitleDisplayMode = .never
         tableView.tableFooterView = UIView()
@@ -48,13 +60,20 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         searchController.obscuresBackgroundDuringPresentation = false
         definesPresentationContext = true
         
-        loadUsers(filter: "")
+        //getTeam()
+        getTeam(filter: "")
+        
+        
         
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        //getTeam()
+//        getAllTeamMembers()
+//        getFilteredUsers()
+//        loadUsers(filter: "")
         
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
@@ -64,7 +83,8 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         tableView.tableFooterView = view
-
+        
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -97,84 +117,151 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         
         switch sender.selectedSegmentIndex {
         case 0:
-            loadUsers(filter: "")
+            getTeam(filter: "")
         case 1:
-            loadUsers(filter: "player")
+            getTeam(filter: "Player")
         case 2:
-            loadUsers(filter: "coach")
+            getTeam(filter: "Coach")
         case 3:
-            loadUsers(filter: "parent")
+            getTeam(filter: "Parent")
         default:
             return
         }
         
     }
     
-    func getTeamMembers() {
+    func getTeam(filter: String) {
+        ProgressHUD.show()
+        var query = reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()!.userCurrentTeamID)
+        query.getDocuments { (snapshot, error) in
+            
+            self.allUsers = []
+            self.coaches = []
+            self.players = []
+            self.parents = []
+            self.sectionTitleList = []
+            self.allUsersGroupped = [:]
+            
+            if error != nil {
+                print(error!.localizedDescription)
+                ProgressHUD.dismiss()
+                self.tableView.reloadData()
+                return
+            }
+            
+            guard let snapshot = snapshot else {
+                ProgressHUD.dismiss(); return
+            }
+            
+            if !snapshot.isEmpty {
+                
+                for userDictionary in snapshot.documents {
+                    
+                    let userDictionary = userDictionary.data() as NSDictionary
+                    let fUser = FUser(_dictionary: userDictionary)
+                    
+                    
+                    self.allUsers.append(fUser)
+                    let index = fUser.userTeamIDs.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)!
+                    self.userTeamAccTypeIndexArr.append(index)
+                    if fUser.userTeamAccountTypes[index] == "Coach" {
+                        self.coaches.append(fUser)
+                    } else if fUser.userTeamAccountTypes[index] == "Player" {
+                        self.players.append(fUser)
+                    } else {
+                        self.parents.append(fUser)
+                    }
+                    
+                }
+                
+                switch filter {
+                   case "Player":
+                        self.usersToShow = self.players
+
+                  case ("Coach"):
+                        self.usersToShow = self.coaches
+
+                   case ("Parent"):
+                       self.usersToShow = self.parents
+
+                  default:
+                        self.usersToShow = self.allUsers
+
+                }
+                self.splitDataIntoSection()
+                self.tableView.reloadData()
+            }
+            
+            self.tableView.reloadData()
+            ProgressHUD.dismiss()
+            
+        }
         
+//        team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
+//            if teamReturned.teamID != "" {
+//                //self.team = teamReturned
+//                self.getAllTeamMembers(teamReturned: teamReturned)
+//
+//            } else {
+//                self.helper.showAlert(title: "Invadlid ID", message: "Team ID does not exist!", in: self)
+//            }
+//        }
     }
     
-    func loadUsers(filter: String) {
-           isLoading = true
-           ProgressHUD.show()
-           
-           var query: Query!
-           
-           switch filter {
-            case "player":
-                query = reference(.User).whereField("accountType", isEqualTo: "player").whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
-           case ("coach"):
-               query = reference(.User).whereField("accountType", isEqualTo: "coach").whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
-            case ("parent"):
-                query = reference(.User).whereField("accountType", isEqualTo: "parent").whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
-           default:
-               query = reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
-        }
-           
-           query.getDocuments { (snapshot, error) in
-               
-               self.allUsers = []
-               self.sectionTitleList = []
-               self.allUsersGroupped = [:]
-               
-               if error != nil {
-                   print(error!.localizedDescription)
-                   ProgressHUD.dismiss()
-                self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
-                    self.isLoading = false
-                   self.tableView.reloadData()
-                   return
-               }
-               
-               guard let snapshot = snapshot else {
-                self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
-                self.isLoading = false
-                   ProgressHUD.dismiss(); return
-               }
-               
-               if !snapshot.isEmpty {
-                   
-                   for userDictionary in snapshot.documents {
-                       
-                       let userDictionary = userDictionary.data() as NSDictionary
-                       let fUser = FUser(_dictionary: userDictionary)
-                    
-                       self.allUsers.append(fUser)
-//                       if fUser.objectId != FUser.currentId() {
-//                           self.allUsers.append(fUser)
-//                       }
-                   }
-                   
-                   self.splitDataIntoSection()
-                   self.tableView.reloadData()
-               }
-               self.isLoading = false
-               self.tableView.reloadData()
-               ProgressHUD.dismiss()
-               
-           }
+//    func getAllTeamMembers(teamReturned: Team) {
+//        for ID in teamReturned.teamMemberIDs {
+//            fetchUserFromFirestore(userId: ID, completion: { (user) in
+//                self.allUsers.append(user!)
+//
+//            })
+//
+//        }
+//        self.getFilteredUsers()
+//        print(allUsers.count)
+//    }
+//
+//    func getFilteredUsers() {
+//        for user in allUsers {
+//            let index = user.userTeamIDs.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)!
+//            userTeamAccTypeIndexArr.append(index)
+//            if user.userTeamAccountTypes[index] == "Coach" {
+//                coaches.append(user)
+//            } else if user.userTeamAccountTypes[index] == "Player" {
+//                players.append(user)
+//            } else {
+//                parents.append(user)
+//            }
+//
+//        }
+//        self.loadUsers(filter: "")
+//        print(coaches.count)
+//        print(players.count)
+//        print(parents.count)
+//
+//    }
     
-       }
+    
+    
+    
+    //query User for documents where userTeamIDs contains the same current team ID of the FUser.currentUser. Store that user then determine what type of account he has by matching the position of userteamaccounttypes to position of userteamID
+//    func loadUsers(filter: String) {
+//           isLoading = true
+//        self.getTeam()
+//           ProgressHUD.show()
+//
+//
+//           usersToShow = []
+//            self.sectionTitleList = []
+//            self.allUsersGroupped = [:]
+//
+//
+//
+//        self.splitDataIntoSection()
+//        self.tableView.reloadData()
+//        ProgressHUD.dismiss()
+//
+//
+//       }
     
     //MARK: Helper functions
       
@@ -182,8 +269,8 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
           
           var sectionTitle: String = ""
           
-          for i in 0..<self.allUsers.count {
-              let currentUser = self.allUsers[i]
+          for i in 0..<self.usersToShow.count {
+              let currentUser = self.usersToShow[i]
               
               let firstChar = currentUser.firstname.first!
               
@@ -274,7 +361,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         
         
         
-        cell.generateCellWith(fUser: user, indexPath: indexPath)
+        cell.generateCellWith(fUser: user, indexPath: indexPath, accTypeIndexArr: userTeamAccTypeIndexArr)
         cell.delegate = self
         
         return cell

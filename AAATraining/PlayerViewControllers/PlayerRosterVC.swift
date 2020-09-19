@@ -242,7 +242,7 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
        
        
        
-       cell.generateCellWith(fUser: user, indexPath: indexPath)
+       //cell.generateCellWith(fUser: user, indexPath: indexPath)
        cell.delegate = self
        
        return cell

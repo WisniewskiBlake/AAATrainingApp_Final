@@ -486,7 +486,7 @@ func fetchCurrentUserFromFirestore(userId: String) {
             print(snapshot)
             
             UserDefaults.standard.setValue(snapshot.data()! as NSDictionary, forKeyPath: kCURRENTUSER)
-            UserDefaults.standard.setValue(snapshot.data()! as NSDictionary, forKeyPath: kACCOUNTTYPE)
+            //UserDefaults.standard.setValue(snapshot.data()! as NSDictionary, forKeyPath: kACCOUNTTYPE)
             UserDefaults.standard.synchronize()
             
         }
@@ -497,6 +497,23 @@ func fetchCurrentUserFromFirestore(userId: String) {
 
 
 func fetchCurrentUserFromFirestore(userId: String, completion: @escaping (_ user: FUser?)->Void) {
+    
+    reference(.User).document(userId).getDocument { (snapshot, error) in
+        
+        guard let snapshot = snapshot else {  return }
+        
+        if snapshot.exists {
+            
+            let user = FUser(_dictionary: snapshot.data()! as NSDictionary)
+            completion(user)
+        } else {
+            completion(nil)
+        }
+        
+    }
+}
+
+func fetchUserFromFirestore(userId: String, completion: @escaping (_ user: FUser?)->Void) {
     
     reference(.User).document(userId).getDocument { (snapshot, error) in
         

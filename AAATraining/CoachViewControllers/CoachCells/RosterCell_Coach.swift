@@ -39,20 +39,20 @@ class RosterCell_Coach: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func generateCellWith(fUser: FUser, indexPath: IndexPath) {
+    func generateCellWith(fUser: FUser, indexPath: IndexPath, accTypeIndexArr: [Int]) {
         let helper = Helper()
         self.indexPath = indexPath
         self.userFullName = fUser.fullname
         
         self.fullNameLabel.text = fUser.firstname + " " + fUser.lastname
         
-        if fUser.accountType == "player" && FUser.currentUser()?.accountType == "coach" {
+        if fUser.userTeamAccountTypes[accTypeIndexArr[indexPath.row]] == "Player" && FUser.currentUser()?.accountType == "Coach" {
             self.infoLabel.text = fUser.position.capitalized + ", #" + fUser.number
             self.accessoryType = .disclosureIndicator
-        } else if fUser.accountType == "player" && FUser.currentUser()?.accountType == "player" {
+        } else if fUser.userTeamAccountTypes[accTypeIndexArr[indexPath.row]] == "Player" && FUser.currentUser()?.accountType == "Player" {
             self.infoLabel.text = fUser.position.capitalized + ", #" + fUser.number
             self.accessoryType = .none
-        } else if fUser.accountType == "coach" {
+        } else if fUser.userTeamAccountTypes[accTypeIndexArr[indexPath.row]] == "Coach" {
             self.infoLabel.text = "Coach"
             self.accessoryType = .none
         } else {

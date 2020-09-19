@@ -264,19 +264,19 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         }
 
         if teams[indexPath.row].teamMemberAccountTypes[index] == "Coach" {
-            updateCurrentUserInFirestore(withValues: [kUSERCURRENTTEAMID : teams[indexPath.row].teamID]) { (success) in
+            updateCurrentUserInFirestore(withValues: [kUSERCURRENTTEAMID : teams[indexPath.row].teamID, kACCOUNTTYPE : "Coach"]) { (success) in
                 
                 self.helper.instantiateViewController(identifier: "CoachTabBar", animated: true, by: self, completion: nil)
             }
             
         } else if teams[indexPath.row].teamMemberAccountTypes[index] == "Player" {
-            updateCurrentUserInFirestore(withValues: [kUSERCURRENTTEAMID : teams[indexPath.row].teamID]) { (success) in
+            updateCurrentUserInFirestore(withValues: [kUSERCURRENTTEAMID : teams[indexPath.row].teamID, kACCOUNTTYPE : "Player"]) { (success) in
                 
                 self.helper.instantiateViewController(identifier: "TabBar", animated: true, by: self, completion: nil)
             }
             
         } else {
-            updateCurrentUserInFirestore(withValues: [kUSERCURRENTTEAMID : teams[indexPath.row].teamID]) { (success) in
+            updateCurrentUserInFirestore(withValues: [kUSERCURRENTTEAMID : teams[indexPath.row].teamID, kACCOUNTTYPE : "Parent"]) { (success) in
                 
                 self.helper.instantiateViewController(identifier: "ParentTabBar", animated: true, by: self, completion: nil)
             }

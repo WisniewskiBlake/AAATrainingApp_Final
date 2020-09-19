@@ -163,7 +163,13 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         team.saveTeam()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createTeam"), object: nil)
-        updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMIDS : FieldValue.arrayUnion([teamLoginCode]), kUSERTEAMACCOUNTTYPES : FieldValue.arrayUnion([userAccountType.capitalizingFirstLetter()]), kUSERTEAMNAMES : FieldValue.arrayUnion([teamNameText.text!]), kUSERTEAMMEMBERS : FieldValue.arrayUnion([FUser.currentId()]), kUSERTEAMMEMBERCOUNT : FieldValue.arrayUnion(["1"])]) { (success) in
+        
+        //potentially could use save user locally here, could also fix userTeamMemberCount bc thats just straight wrong
+        fetchCurrentUserFromFirestore(userId: FUser.currentId())
+        var userTeamAccTypeArray = FUser.currentUser()?.userTeamAccountTypes
+        userTeamAccTypeArray!.append(self.userAccountType.capitalizingFirstLetter())
+        
+        updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMIDS : FieldValue.arrayUnion([teamLoginCode]), kUSERTEAMACCOUNTTYPES : userTeamAccTypeArray, kUSERTEAMNAMES : FieldValue.arrayUnion([teamNameText.text!]), kUSERTEAMMEMBERS : FieldValue.arrayUnion([FUser.currentId()]), kUSERTEAMMEMBERCOUNT : FieldValue.arrayUnion(["1"])]) { (success) in
             self.goToApp()
 
         }
