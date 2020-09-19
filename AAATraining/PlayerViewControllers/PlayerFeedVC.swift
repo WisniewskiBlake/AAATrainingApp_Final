@@ -170,42 +170,39 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     
     func getMembers() {
         ProgressHUD.show()
+               
+               let query = reference(.Team).whereField(kTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID)
+               query.getDocuments { (snapshot, error) in
         
-        var query = reference(.User).whereField(kUSERCURRENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
-        query.getDocuments { (snapshot, error) in
-            
-            self.allUsers = []
-            
-            if error != nil {
-                print(error!.localizedDescription)
-                ProgressHUD.dismiss()
-             self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
-                 
-                return
-            }
-            
-            guard let snapshot = snapshot else {
-             self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
-             self.isLoading = false
-                ProgressHUD.dismiss(); return
-            }
-            
-            if !snapshot.isEmpty {
-                
-                for userDictionary in snapshot.documents {
-                    
-                    let userDictionary = userDictionary.data() as NSDictionary
-                    let fUser = FUser(_dictionary: userDictionary)
-                    
-                    
-                    self.allUsers.append(fUser)
-                    
-                }
-                self.membersTextLabel.text = String(self.allUsers.count) + " Team Members"
+                   
+                   if error != nil {
+                       print(error!.localizedDescription)
+                       ProgressHUD.dismiss()
+                    self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
+                        
+                       return
+                   }
+                   
+                   guard let snapshot = snapshot else {
+                    self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
+                    self.isLoading = false
+                       ProgressHUD.dismiss(); return
+                   }
+                   
+                   if !snapshot.isEmpty {
+                       
+                       for userDictionary in snapshot.documents {
+                           
+                           let userDictionary = userDictionary.data() as NSDictionary
+                           let team = Team(_dictionary: userDictionary)
+                           self.membersTextLabel.text = team.teamMemberCount + " Team Members"
+                           
+                       }
+                       
 
-            }
-            ProgressHUD.dismiss()
-        }
+                   }
+                   ProgressHUD.dismiss()
+               }
         
     }
     

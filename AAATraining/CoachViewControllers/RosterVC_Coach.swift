@@ -138,6 +138,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
             self.parents = []
             self.sectionTitleList = []
             self.allUsersGroupped = [:]
+            self.usersToShow = []
             
             if error != nil {
                 print(error!.localizedDescription)
@@ -381,7 +382,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
             user = users![indexPath.row]
         }
 
-        if(user.accountType == "player") {
+        if(user.userTeamAccountTypes[userTeamAccTypeIndexArr[indexPath.row]] == "Player") {
             let playerProfileVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
             playerProfileVC.userBeingViewed = user
             self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)

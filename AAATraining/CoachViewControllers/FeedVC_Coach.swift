@@ -192,9 +192,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     }
     
     func getMembers() {
-        ProgressHUD.show()
-        
-        
+        ProgressHUD.show()      
         
         let query = reference(.Team).whereField(kTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID)
         query.getDocuments { (snapshot, error) in

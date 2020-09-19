@@ -47,10 +47,14 @@ class RosterCell_Coach: UITableViewCell {
         self.fullNameLabel.text = fUser.firstname + " " + fUser.lastname
         
         if fUser.userTeamAccountTypes[accTypeIndexArr[indexPath.row]] == "Player" && FUser.currentUser()?.accountType == "Coach" {
-            self.infoLabel.text = fUser.position.capitalized + ", #" + fUser.number
+            if fUser.position != "" {
+                self.infoLabel.text = fUser.position.capitalized + ", #" + fUser.number
+            }
             self.accessoryType = .disclosureIndicator
         } else if fUser.userTeamAccountTypes[accTypeIndexArr[indexPath.row]] == "Player" && FUser.currentUser()?.accountType == "Player" {
-            self.infoLabel.text = fUser.position.capitalized + ", #" + fUser.number
+            if fUser.position != "" {
+                self.infoLabel.text = fUser.position.capitalized + ", #" + fUser.number
+            }
             self.accessoryType = .none
         } else if fUser.userTeamAccountTypes[accTypeIndexArr[indexPath.row]] == "Coach" {
             self.infoLabel.text = "Coach"

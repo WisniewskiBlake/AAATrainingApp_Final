@@ -27,6 +27,12 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     var skip = 0
     var limit = 25
     var users: [FUser] = []
+    var coaches: [FUser] = []
+    var players: [FUser] = []
+    var parents: [FUser] = []
+    var usersToShow: [FUser] = []
+    var userType = ""
+    var userTeamAccTypeIndexArr : [Int] = []
     var matchedUsers: [FUser] = []
     var filteredMatchedUsers: [FUser] = []
     var allUsersGrouped = NSDictionary() as! [String : [FUser]]
@@ -80,11 +86,11 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
         case 0:
             loadUsers(filter: "")
         case 1:
-            loadUsers(filter: "player")
+            loadUsers(filter: "Player")
         case 2:
-            loadUsers(filter: "coach")
+            loadUsers(filter: "Coach")
         case 3:
-            loadUsers(filter: "parent")
+            loadUsers(filter: "Parent")
         default:
             return
         }
@@ -102,27 +108,17 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     
     
     func loadUsers(filter: String) {
-           
            ProgressHUD.show()
-           
-           var query: Query!
-           
-           switch filter {
-            case "player":
-                query = reference(.User).whereField("accountType", isEqualTo: "player").whereField(kUSERCURRENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
-           case ("coach"):
-               query = reference(.User).whereField("accountType", isEqualTo: "coach").whereField(kUSERCURRENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
-            case ("parent"):
-                query = reference(.User).whereField("accountType", isEqualTo: "parent").whereField(kUSERCURRENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
-           default:
-               query = reference(.User).whereField(kUSERCURRENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
-           }
-           
+           var query = reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()!.userCurrentTeamID)
            query.getDocuments { (snapshot, error) in
                
                self.allUsers = []
+               self.coaches = []
+               self.players = []
+               self.parents = []
                self.sectionTitleList = []
                self.allUsersGrouped = [:]
+               self.usersToShow = []
                
                if error != nil {
                    print(error!.localizedDescription)
@@ -142,17 +138,41 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
                        let userDictionary = userDictionary.data() as NSDictionary
                        let fUser = FUser(_dictionary: userDictionary)
                        
+                       
                        if fUser.objectId != FUser.currentId() {
                            self.allUsers.append(fUser)
                        }
+                       let index = fUser.userTeamIDs.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)!
+                       self.userTeamAccTypeIndexArr.append(index)
+                       if fUser.userTeamAccountTypes[index] == "Coach" {
+                           self.coaches.append(fUser)
+                       } else if fUser.userTeamAccountTypes[index] == "Player" {
+                           self.players.append(fUser)
+                       } else {
+                           self.parents.append(fUser)
+                       }
+                       
                    }
                    
-                   
+                   switch filter {
+                      case "Player":
+                           self.usersToShow = self.players
+
+                     case ("Coach"):
+                           self.usersToShow = self.coaches
+
+                      case ("Parent"):
+                          self.usersToShow = self.parents
+
+                     default:
+                           self.usersToShow = self.allUsers
+
+                   }
                    self.splitDataIntoSection()
                    self.tableView.reloadData()
                }
                
-               //self.tableView.reloadData()
+               self.tableView.reloadData()
                ProgressHUD.dismiss()
                
            }
@@ -332,7 +352,7 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     
     func filterContentForSearchText(searchText: String, scope: String = "All") {
     
-        filteredMatchedUsers = allUsers.filter({ (user) -> Bool in
+        filteredMatchedUsers = usersToShow.filter({ (user) -> Bool in
             
             return user.firstname.lowercased().contains(searchText.lowercased())
         })
@@ -353,9 +373,9 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
           
           var sectionTitle: String = ""
           
-          for i in 0..<self.allUsers.count {
+          for i in 0..<self.usersToShow.count {
               
-              let currentUser = self.allUsers[i]
+              let currentUser = self.usersToShow[i]
               
               let firstChar = currentUser.firstname.first!
               
