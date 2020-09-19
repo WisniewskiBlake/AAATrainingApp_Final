@@ -3496,9 +3496,20 @@
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No events on this day!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uuz-H2-cyB">
+                                <rect key="frame" x="16" y="241" width="343" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="E10-1c-0qe"/>
+                                    <constraint firstAttribute="width" constant="343" id="SmS-C0-U2B"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="n4l-P8-1rY" firstAttribute="trailing" secondItem="Uuz-H2-cyB" secondAttribute="trailing" constant="16" id="0JQ-dc-cWL"/>
                             <constraint firstItem="v5U-ED-JIC" firstAttribute="leading" secondItem="n4l-P8-1rY" secondAttribute="leading" constant="16" id="8Ju-oS-tyz"/>
                             <constraint firstItem="LZ4-NH-cCE" firstAttribute="bottom" secondItem="yXe-g9-0my" secondAttribute="bottom" id="8Pg-lc-9iV"/>
                             <constraint firstItem="yXe-g9-0my" firstAttribute="top" secondItem="eLN-xf-yQ4" secondAttribute="bottom" constant="37" id="Akg-58-6pL"/>
@@ -3509,11 +3520,13 @@
                             <constraint firstItem="LZ4-NH-cCE" firstAttribute="bottom" secondItem="bSS-Sq-US3" secondAttribute="bottom" id="Snp-0Z-hXD"/>
                             <constraint firstItem="n4l-P8-1rY" firstAttribute="trailing" secondItem="LLV-Ds-eGn" secondAttribute="trailing" constant="25" id="TuB-Ge-sVn"/>
                             <constraint firstItem="n4l-P8-1rY" firstAttribute="trailing" secondItem="xIp-LO-krf" secondAttribute="trailing" constant="16" id="Ve0-28-4to"/>
+                            <constraint firstItem="Uuz-H2-cyB" firstAttribute="leading" secondItem="n4l-P8-1rY" secondAttribute="leading" constant="16" id="X3F-QA-4dB"/>
                             <constraint firstItem="bSS-Sq-US3" firstAttribute="leading" secondItem="LZ4-NH-cCE" secondAttribute="trailing" id="ZdG-oK-IVE"/>
                             <constraint firstItem="n4l-P8-1rY" firstAttribute="trailing" secondItem="v5U-ED-JIC" secondAttribute="trailing" constant="16" id="dPZ-Dw-B5a"/>
                             <constraint firstItem="xIp-LO-krf" firstAttribute="top" secondItem="LZ4-NH-cCE" secondAttribute="bottom" constant="35" id="gYd-Ya-exX"/>
                             <constraint firstItem="v5U-ED-JIC" firstAttribute="top" secondItem="n4l-P8-1rY" secondAttribute="top" constant="36" id="hiC-Qe-xms"/>
                             <constraint firstItem="n4l-P8-1rY" firstAttribute="trailing" secondItem="eLN-xf-yQ4" secondAttribute="trailing" constant="16" id="kvi-am-Obh"/>
+                            <constraint firstItem="xIp-LO-krf" firstAttribute="top" secondItem="Uuz-H2-cyB" secondAttribute="bottom" constant="1" id="pcn-wL-fj0"/>
                             <constraint firstItem="xIp-LO-krf" firstAttribute="top" secondItem="EGh-Ll-9zf" secondAttribute="bottom" constant="-24" id="ptI-ZN-Ydg"/>
                             <constraint firstItem="LZ4-NH-cCE" firstAttribute="bottom" secondItem="LLV-Ds-eGn" secondAttribute="bottom" id="qQn-wl-aoh"/>
                             <constraint firstItem="LZ4-NH-cCE" firstAttribute="leading" secondItem="n4l-P8-1rY" secondAttribute="leading" constant="22" id="r5s-dd-uWb"/>
@@ -3535,10 +3548,13 @@
                     <connections>
                         <outlet property="backButton" destination="Gsa-86-MVf" id="K43-Ya-5Gc"/>
                         <outlet property="dateLabel" destination="v5U-ED-JIC" id="8jC-1y-IMl"/>
+                        <outlet property="end" destination="yXe-g9-0my" id="cub-m5-jPR"/>
+                        <outlet property="eventEmptyLabel" destination="Uuz-H2-cyB" id="dIh-IH-Ehx"/>
                         <outlet property="eventEndText" destination="LLV-Ds-eGn" id="f7c-ae-rjy"/>
                         <outlet property="eventStartText" destination="bSS-Sq-US3" id="Oog-FQ-QOV"/>
                         <outlet property="eventTitleText" destination="eLN-xf-yQ4" id="SWx-jH-tmR"/>
                         <outlet property="placeHolderLabel" destination="EGh-Ll-9zf" id="KTt-KN-jhN"/>
+                        <outlet property="start" destination="LZ4-NH-cCE" id="oDA-lp-aaP"/>
                         <outlet property="textView" destination="xIp-LO-krf" id="3Ub-kQ-58M"/>
                     </connections>
                 </viewController>
@@ -7174,17 +7190,30 @@
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No events on this day!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kHM-yp-IkZ">
+                                <rect key="frame" x="16" y="240" width="343" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="N9H-CL-oe2"/>
+                                    <constraint firstAttribute="width" constant="343" id="l8n-9E-piV"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="ibj-SO-YlK" firstAttribute="top" secondItem="HJF-zx-TTo" secondAttribute="bottom" constant="36" id="7ba-Q5-VqM"/>
                             <constraint firstItem="HJF-zx-TTo" firstAttribute="bottom" secondItem="a5G-KJ-Pre" secondAttribute="bottom" id="8Nc-m8-lpO"/>
+                            <constraint firstItem="m6h-7B-d3A" firstAttribute="trailing" secondItem="kHM-yp-IkZ" secondAttribute="trailing" constant="16" id="A83-No-8UG"/>
+                            <constraint firstItem="ibj-SO-YlK" firstAttribute="top" secondItem="kHM-yp-IkZ" secondAttribute="bottom" constant="2" id="AEA-ui-DYk"/>
                             <constraint firstItem="bOo-mi-Z0Z" firstAttribute="leading" secondItem="m6h-7B-d3A" secondAttribute="leading" constant="16" id="DQh-rf-vUR"/>
                             <constraint firstItem="lK5-ph-1dF" firstAttribute="top" secondItem="bOo-mi-Z0Z" secondAttribute="bottom" constant="28" id="Fto-Vu-gOI"/>
                             <constraint firstItem="a5G-KJ-Pre" firstAttribute="top" secondItem="lK5-ph-1dF" secondAttribute="bottom" constant="37" id="Is5-ZD-GD6"/>
                             <constraint firstItem="m6h-7B-d3A" firstAttribute="trailing" secondItem="ibj-SO-YlK" secondAttribute="trailing" constant="16" id="JVW-QR-2zi"/>
                             <constraint firstItem="HJF-zx-TTo" firstAttribute="bottom" secondItem="ncd-VC-csc" secondAttribute="bottom" id="KsO-dc-fYB"/>
                             <constraint firstItem="HJF-zx-TTo" firstAttribute="bottom" secondItem="uBs-1E-4fO" secondAttribute="bottom" id="RaU-7C-Tfe"/>
+                            <constraint firstItem="kHM-yp-IkZ" firstAttribute="leading" secondItem="m6h-7B-d3A" secondAttribute="leading" constant="16" id="RdV-mk-zjG"/>
                             <constraint firstItem="m6h-7B-d3A" firstAttribute="trailing" secondItem="lK5-ph-1dF" secondAttribute="trailing" constant="16" id="TJb-kk-pU5"/>
                             <constraint firstItem="uBs-1E-4fO" firstAttribute="top" secondItem="lK5-ph-1dF" secondAttribute="bottom" constant="37" id="XgO-dv-jUd"/>
                             <constraint firstItem="ncd-VC-csc" firstAttribute="top" secondItem="lK5-ph-1dF" secondAttribute="bottom" constant="37" id="Yf5-xo-eCM"/>
@@ -7199,6 +7228,7 @@
                             <constraint firstItem="uBs-1E-4fO" firstAttribute="leading" secondItem="HJF-zx-TTo" secondAttribute="trailing" id="uBA-7W-V32"/>
                             <constraint firstItem="ibj-SO-YlK" firstAttribute="top" secondItem="Ty6-OW-Ebl" secondAttribute="bottom" constant="-28" id="vhr-OP-NZD"/>
                             <constraint firstItem="lK5-ph-1dF" firstAttribute="leading" secondItem="m6h-7B-d3A" secondAttribute="leading" constant="16" id="xxJ-56-km5"/>
+                            <constraint firstItem="kHM-yp-IkZ" firstAttribute="centerX" secondItem="m6h-7B-d3A" secondAttribute="centerX" id="zsb-qn-5BZ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="m6h-7B-d3A"/>
                     </view>
@@ -7212,10 +7242,13 @@
                     </navigationItem>
                     <connections>
                         <outlet property="dateLabel" destination="bOo-mi-Z0Z" id="OEB-72-ycN"/>
+                        <outlet property="end" destination="a5G-KJ-Pre" id="PZy-dZ-CoW"/>
                         <outlet property="eventEndText" destination="ncd-VC-csc" id="Tti-Fr-ABc"/>
                         <outlet property="eventStartText" destination="uBs-1E-4fO" id="v2l-Hd-B99"/>
                         <outlet property="eventTitleText" destination="lK5-ph-1dF" id="cNL-eC-hpD"/>
+                        <outlet property="noEventsLabel" destination="kHM-yp-IkZ" id="2DC-fT-l3a"/>
                         <outlet property="placeHolderLabel" destination="Ty6-OW-Ebl" id="EQT-5T-Pq8"/>
+                        <outlet property="start" destination="HJF-zx-TTo" id="ZJY-fg-FFI"/>
                         <outlet property="textView" destination="ibj-SO-YlK" id="58f-hC-hLL"/>
                     </connections>
                 </viewController>

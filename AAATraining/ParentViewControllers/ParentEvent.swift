@@ -20,6 +20,11 @@ class ParentEvent: UIViewController, UITextViewDelegate, UINavigationControllerD
     @IBOutlet weak var eventTitleText: UITextField!
     @IBOutlet weak var eventStartText: UITextField!
     @IBOutlet weak var eventEndText: UITextField!
+    @IBOutlet weak var start: UILabel!
+    @IBOutlet weak var end: UILabel!
+    @IBOutlet weak var noEventsLabel: UILabel!
+    
+    
     
     var dateString: String = ""
     let formatter = DateFormatter()
@@ -36,13 +41,30 @@ class ParentEvent: UIViewController, UITextViewDelegate, UINavigationControllerD
         
         dateLabel.text = dateString
         textView.text = event.eventText
-        eventTitleText.text = event.eventTitle
-        eventStartText.text = event.eventStart
-        eventEndText.text = event.eventEnd
-        if event.eventText != "" {
+        
+        if event.eventTitle == "" && event.eventStart == "" && event.eventEnd == "" {
+            eventTitleText.isHidden = true
+            eventStartText.isHidden = true
+            eventEndText.isHidden = true
+            start.isHidden = true
+            end.isHidden = true
             placeHolderLabel.isHidden = true
+            noEventsLabel.isHidden = false
         } else {
-            placeHolderLabel.isHidden = false
+            eventTitleText.isHidden = false
+            eventStartText.isHidden = false
+            eventEndText.isHidden = false
+            eventTitleText.text = event.eventTitle
+            eventStartText.text = event.eventStart
+            eventEndText.text = event.eventEnd
+            start.isHidden = false
+            end.isHidden = false
+            noEventsLabel.isHidden = true
+            if event.eventText != "" {
+                placeHolderLabel.isHidden = true
+            } else {
+                placeHolderLabel.isHidden = false
+            }
         }
 
         

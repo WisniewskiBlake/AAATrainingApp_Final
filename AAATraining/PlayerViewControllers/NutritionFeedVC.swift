@@ -55,7 +55,7 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
-        if accountType == "player" {
+        if accountType == "Player" {
             composeButton.isEnabled = false
         }
        
@@ -229,7 +229,7 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
                 //}
                     cellPic.optionsButton.tag = indexPath.row
                     
-                    if accountType == "player" {
+                    if accountType == "Player" {
                         cellPic.optionsButton.isHidden = true
                     }
                     
@@ -257,7 +257,7 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
                     //}
                     cellPic.optionsButton.tag = indexPath.row
                     
-                    if accountType == "player" {
+                    if accountType == "Player" {
                         cellPic.optionsButton.isHidden = true
                     }
                     
@@ -281,7 +281,7 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
                 //}
                     cellNoPic.optionsButton.tag = indexPath.row
                     
-                    if accountType == "player" {
+                    if accountType == "Player" {
                         cellNoPic.optionsButton.isHidden = true
                     }
                     
