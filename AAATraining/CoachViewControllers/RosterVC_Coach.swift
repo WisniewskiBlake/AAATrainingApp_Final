@@ -22,7 +22,8 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     var players: [FUser] = []
     var parents: [FUser] = []
     var usersToShow: [FUser] = []
-    var userType = ""
+    var allUserIDs: [String] = []
+    var allUserAccTypes: [String] = []
     var userTeamAccTypeIndexArr : [Int] = []
     var filteredUsers: [FUser] = []
     var allUsersGroupped = NSDictionary() as! [String : [FUser]]
@@ -129,137 +130,73 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     
     func getTeam(filter: String) {
         ProgressHUD.show()
-        var query = reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()!.userCurrentTeamID)
-        query.getDocuments { (snapshot, error) in
-            
-            self.allUsers = []
-            self.coaches = []
-            self.players = []
-            self.parents = []
-            self.sectionTitleList = []
-            self.allUsersGroupped = [:]
-            self.usersToShow = []
-            
-            if error != nil {
-                print(error!.localizedDescription)
-                ProgressHUD.dismiss()
-                self.tableView.reloadData()
-                return
-            }
-            
-            guard let snapshot = snapshot else {
-                ProgressHUD.dismiss(); return
-            }
-            
-            if !snapshot.isEmpty {
+       var query = reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()!.userCurrentTeamID)
+            query.getDocuments { (snapshot, error) in
                 
-                for userDictionary in snapshot.documents {
+                self.allUsers = []
+                self.coaches = []
+                self.players = []
+                self.parents = []
+                self.sectionTitleList = []
+                self.allUsersGroupped = [:]
+                self.usersToShow = []
+                
+                if error != nil {
+                    print(error!.localizedDescription)
+                    ProgressHUD.dismiss()
+                    self.tableView.reloadData()
+                    return
+                }
+                
+                guard let snapshot = snapshot else {
+                    ProgressHUD.dismiss(); return
+                }
+                
+                if !snapshot.isEmpty {
                     
-                    let userDictionary = userDictionary.data() as NSDictionary
-                    let fUser = FUser(_dictionary: userDictionary)
-                    
-                    
-                    self.allUsers.append(fUser)
-                    let index = fUser.userTeamIDs.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)!
-                    self.userTeamAccTypeIndexArr.append(index)
-                    if fUser.userTeamAccountTypes[index] == "Coach" {
-                        self.coaches.append(fUser)
-                    } else if fUser.userTeamAccountTypes[index] == "Player" {
-                        self.players.append(fUser)
-                    } else {
-                        self.parents.append(fUser)
+                    for userDictionary in snapshot.documents {
+                        
+                        let userDictionary = userDictionary.data() as NSDictionary
+                        let fUser = FUser(_dictionary: userDictionary)
+                        
+                        
+                        self.allUsers.append(fUser)
+                        let index = fUser.userTeamIDs.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)!
+                        self.userTeamAccTypeIndexArr.append(index)
+                        if fUser.userTeamAccountTypes[index] == "Coach" {
+                            self.coaches.append(fUser)
+                        } else if fUser.userTeamAccountTypes[index] == "Player" {
+                            self.players.append(fUser)
+                        } else {
+                            self.parents.append(fUser)
+                        }
+                        
                     }
                     
+                    switch filter {
+                       case "Player":
+                            self.usersToShow = self.players
+
+                      case ("Coach"):
+                            self.usersToShow = self.coaches
+
+                       case ("Parent"):
+                           self.usersToShow = self.parents
+
+                      default:
+                            self.usersToShow = self.allUsers
+
+                    }
+                    self.splitDataIntoSection()
+                    self.tableView.reloadData()
                 }
                 
-                switch filter {
-                   case "Player":
-                        self.usersToShow = self.players
-
-                  case ("Coach"):
-                        self.usersToShow = self.coaches
-
-                   case ("Parent"):
-                       self.usersToShow = self.parents
-
-                  default:
-                        self.usersToShow = self.allUsers
-
-                }
-                self.splitDataIntoSection()
                 self.tableView.reloadData()
-            }
-            
-            self.tableView.reloadData()
-            ProgressHUD.dismiss()
-            
+                ProgressHUD.dismiss()
+                
         }
-        
-//        team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
-//            if teamReturned.teamID != "" {
-//                //self.team = teamReturned
-//                self.getAllTeamMembers(teamReturned: teamReturned)
-//
-//            } else {
-//                self.helper.showAlert(title: "Invadlid ID", message: "Team ID does not exist!", in: self)
-//            }
-//        }
     }
-    
-//    func getAllTeamMembers(teamReturned: Team) {
-//        for ID in teamReturned.teamMemberIDs {
-//            fetchUserFromFirestore(userId: ID, completion: { (user) in
-//                self.allUsers.append(user!)
-//
-//            })
-//
-//        }
-//        self.getFilteredUsers()
-//        print(allUsers.count)
-//    }
-//
-//    func getFilteredUsers() {
-//        for user in allUsers {
-//            let index = user.userTeamIDs.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)!
-//            userTeamAccTypeIndexArr.append(index)
-//            if user.userTeamAccountTypes[index] == "Coach" {
-//                coaches.append(user)
-//            } else if user.userTeamAccountTypes[index] == "Player" {
-//                players.append(user)
-//            } else {
-//                parents.append(user)
-//            }
-//
-//        }
-//        self.loadUsers(filter: "")
-//        print(coaches.count)
-//        print(players.count)
-//        print(parents.count)
-//
-//    }
-    
-    
-    
-    
-    //query User for documents where userTeamIDs contains the same current team ID of the FUser.currentUser. Store that user then determine what type of account he has by matching the position of userteamaccounttypes to position of userteamID
-//    func loadUsers(filter: String) {
-//           isLoading = true
-//        self.getTeam()
-//           ProgressHUD.show()
-//
-//
-//           usersToShow = []
-//            self.sectionTitleList = []
-//            self.allUsersGroupped = [:]
-//
-//
-//
-//        self.splitDataIntoSection()
-//        self.tableView.reloadData()
-//        ProgressHUD.dismiss()
-//
-//
-//       }
+
     
     //MARK: Helper functions
       
@@ -291,22 +228,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     func didTapAvatarImage(indexPath: IndexPath) {
         
     }
-    
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // load more posts when the scroll is about to reach the bottom AND currently is not loading (posts)
-        //print("Called")
-                let a = tableView.contentOffset.y - tableView.contentSize.height + 60
-                let b = -tableView.frame.height
-                
-                if a > b && isLoading == false {
-                    //loadMore(offset: skip, limit: limit)
-                    //print("Scrolled")
-                }
-    }
-    
-    
-    
-    
+
 
     // MARK: - Table view data source
 
@@ -357,9 +279,9 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
             user = users![indexPath.row]
         }
         
+        let index = allUsers.firstIndex(where: { $0.objectId == user.objectId })!
         
-        
-        cell.generateCellWith(fUser: user, indexPath: indexPath, accTypeIndexArr: userTeamAccTypeIndexArr)
+        cell.generateCellWith(fUser: user, indexPath: indexPath, accTypeIndexArr: userTeamAccTypeIndexArr, index: index)
         cell.delegate = self
         
         return cell

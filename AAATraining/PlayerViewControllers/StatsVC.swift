@@ -158,7 +158,7 @@ class StatsVC: UIViewController {
     
     // updating bio by sending request to the server
     @objc func updateStats(stat: String, value: String) {
-        if FUser.currentUser()?.accountType == "player" {
+        if FUser.currentUser()?.accountType == "Player" {
             updateCurrentUserInFirestore(withValues: [stat : value]) { (success) in
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateStats"), object: nil)
             }

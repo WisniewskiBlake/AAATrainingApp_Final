@@ -44,6 +44,8 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         self.calendar.formatter.dateFormat = "YYYY-MM-dd"
         today = calendar.formatter.string(from: todayDate)
         
+        loadEvents()
+        
     }
     
     // pre-load func
@@ -51,7 +53,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         super.viewWillAppear(animated)
 
         configureUI()
-        loadEvents()
+        //loadEvents()
        
     }
     override func viewWillDisappear(_ animated: Bool) {

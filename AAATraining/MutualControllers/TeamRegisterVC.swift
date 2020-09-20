@@ -157,22 +157,40 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         scrollView.setContentOffset(position, animated: true)
     }
     
+    func getUserTeamAccTypes() {
+        
+    }
+    
     @IBAction func finishContinueClicked(_ sender: Any) {
         
         let team = Team(teamID: teamLoginCode, teamName: teamNameText.text!, teamLogo: self.pictureToUpload!, teamMemberIDs: [FUser.currentId()], teamCity: "", teamState: "", teamColorOne: teamColorOne!, teamColorTwo: teamColorTwo!, teamColorThree: teamColorThree!, teamType: self.teamType, teamMemberCount: "1", teamMemberAccountTypes: [userAccountType.capitalizingFirstLetter()])
         
         team.saveTeam()
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createTeam"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createdTeam"), object: nil)
         
         //potentially could use save user locally here, could also fix userTeamMemberCount bc thats just straight wrong
-        fetchCurrentUserFromFirestore(userId: FUser.currentId())
-        var userTeamAccTypeArray = FUser.currentUser()?.userTeamAccountTypes
-        userTeamAccTypeArray!.append(self.userAccountType.capitalizingFirstLetter())
-        
-        updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMIDS : FieldValue.arrayUnion([teamLoginCode]), kUSERTEAMACCOUNTTYPES : userTeamAccTypeArray, kUSERTEAMNAMES : FieldValue.arrayUnion([teamNameText.text!]), kUSERTEAMMEMBERS : FieldValue.arrayUnion([FUser.currentId()]), kUSERTEAMMEMBERCOUNT : FieldValue.arrayUnion(["1"])]) { (success) in
-            self.goToApp()
+        var userTeamAccTypeArray: [String]? = []
+        fetchCurrentUserFromFirestore(userId: FUser.currentId(), completion: { (user) in
 
-        }
+           if user != nil && user!.firstname != "" {
+            //we have user, login
+            userTeamAccTypeArray = user?.userTeamAccountTypes
+            userTeamAccTypeArray!.append("Coach")
+            updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMIDS : FieldValue.arrayUnion([self.teamLoginCode]), kUSERTEAMACCOUNTTYPES : userTeamAccTypeArray, kUSERTEAMNAMES : FieldValue.arrayUnion([self.teamNameText.text!]), kUSERTEAMMEMBERS : FieldValue.arrayUnion([FUser.currentId()]), kUSERTEAMMEMBERCOUNT : FieldValue.arrayUnion(["1"])]) { (success) in
+                self.goToApp()
+
+            }
+            
+           } else {
+            let helper = Helper()
+                helper.showAlert(title: "Data Error", message: "Couldn't register, try again later.", in: self)
+           }
+
+        })
+        
+        
+        
+        
         
 
         

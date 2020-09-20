@@ -54,19 +54,34 @@ class TeamLoginVC: UIViewController, UITextFieldDelegate {
                         accTypesArray.append(self.userAccountType.capitalizingFirstLetter())
                         
                         Team.updateTeam(teamID: self.team.teamID, withValues: [kTEAMMEMBERIDS: FieldValue.arrayUnion([FUser.currentId()]), kTEAMMEMBERCOUNT: String(teamMemberCount), kTEAMMEMBERACCOUNTTYPES : accTypesArray])
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "joinedTeam"), object: nil)
                         
-                        fetchCurrentUserFromFirestore(userId: FUser.currentId())
-                        var userTeamAccTypeArray = FUser.currentUser()?.userTeamAccountTypes
-                        userTeamAccTypeArray!.append(self.userAccountType.capitalizingFirstLetter())
+                        var userTeamAccTypeArray: [String]? = []
+                        fetchCurrentUserFromFirestore(userId: FUser.currentId(), completion: { (user) in
+
+                           if user != nil && user!.firstname != "" {
+                            //we have user, login
+                            userTeamAccTypeArray = user?.userTeamAccountTypes
+                            userTeamAccTypeArray!.append(self.userAccountType.capitalizingFirstLetter())
+                            
+                            updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMIDS : FieldValue.arrayUnion([self.team.teamID]), kUSERTEAMACCOUNTTYPES : userTeamAccTypeArray, kUSERTEAMNAMES : FieldValue.arrayUnion([self.team.teamName]), kUSERTEAMMEMBERS : FieldValue.arrayUnion([FUser.currentId()]), kUSERTEAMMEMBERCOUNT : FieldValue.arrayUnion([String(teamMemberCount)])]) { (success) in
+                                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
+                                {
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true, completion: nil)
+                                }
+                            }
+                            
+                           } else {
+
+                           }
+
+                        })
                         
-                        updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMIDS : FieldValue.arrayUnion([self.team.teamID]), kUSERTEAMACCOUNTTYPES : userTeamAccTypeArray, kUSERTEAMNAMES : FieldValue.arrayUnion([self.team.teamName]), kUSERTEAMMEMBERS : FieldValue.arrayUnion([FUser.currentId()]), kUSERTEAMMEMBERCOUNT : FieldValue.arrayUnion([String(teamMemberCount)])]) { (success) in
-                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "joinedTeam"), object: nil)
-                        }
-                        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
-                        {
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true, completion: nil)
-                        }
+                        
+                        
+                        
+                        
                     } else {
                         self.helper.showAlert(title: "Invadlid ID", message: "You're already on this team!", in: self)
                     }

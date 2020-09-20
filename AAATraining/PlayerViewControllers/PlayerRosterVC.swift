@@ -138,6 +138,7 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
     func loadUsers(filter: String) {
            ProgressHUD.show()
            var query = reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()!.userCurrentTeamID)
+        print(FUser.currentUser()!.userCurrentTeamID)
            query.getDocuments { (snapshot, error) in
                
                self.allUsers = []
@@ -169,6 +170,7 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
                        
                        self.allUsers.append(fUser)
                        let index = fUser.userTeamIDs.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)!
+                    print(index)
                        self.userTeamAccTypeIndexArr.append(index)
                        if fUser.userTeamAccountTypes[index] == "Coach" {
                            self.coaches.append(fUser)
@@ -255,8 +257,9 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
        }
        
        
+       let index = allUsers.firstIndex(where: { $0.objectId == user.objectId })!
        
-       cell.generateCellWith(fUser: user, indexPath: indexPath, accTypeIndexArr: userTeamAccTypeIndexArr)
+       cell.generateCellWith(fUser: user, indexPath: indexPath, accTypeIndexArr: userTeamAccTypeIndexArr, index: index)
        cell.delegate = self
        
        return cell

@@ -91,14 +91,16 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     @objc func createTeamViewClicked() {
         
-        let userTypeSelectionVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserTypeSelectionVC") as! UserTypeSelectionVC
-        userTypeSelectionVC.viewToGoTo = "create"
-        userTypeSelectionVC.modalPresentationStyle = .fullScreen
-        self.present(userTypeSelectionVC, animated: true, completion: nil)
-//        let teamRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamRegisterVC") as! TeamRegisterVC
-//
-//        teamRegisterVC.modalPresentationStyle = .fullScreen
-//        self.present(teamRegisterVC, animated: true, completion: nil)
+        let teamRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamRegisterVC") as! TeamRegisterVC
+        teamRegisterVC.userAccountType = "Coach"
+        teamRegisterVC.modalPresentationStyle = .fullScreen
+        self.present(teamRegisterVC, animated: true, completion: nil)
+        
+//        let userTypeSelectionVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserTypeSelectionVC") as! UserTypeSelectionVC
+//        userTypeSelectionVC.viewToGoTo = "create"
+//        userTypeSelectionVC.modalPresentationStyle = .fullScreen
+//        self.present(userTypeSelectionVC, animated: true, completion: nil)
+
     }
 
     @objc func loadTeamsForUser() {
