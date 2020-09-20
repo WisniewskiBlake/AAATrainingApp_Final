@@ -140,7 +140,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         let position = userBeingViewed.position
         let number = userBeingViewed.number
         
-        var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [""])
+        var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [])
          
          team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
              if teamReturned.teamID != "" {
@@ -191,7 +191,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
    @objc func loadUser() {
         let helper = Helper()
         var query: Query!
-    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [""])
+    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [])
         
         team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
             if teamReturned.teamID != "" {

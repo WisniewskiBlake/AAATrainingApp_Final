@@ -12,7 +12,7 @@ import Firebase
 import FirebaseCore
 import FirebaseFirestore
 
-class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerDelegate {
+class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var dateLabel: UILabel!
@@ -49,6 +49,8 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
         
         //self.setLeftAlignedNavigationItemTitle(text: "Event", color: .white, margin: 12)
         dateLabel.text = dateString
@@ -142,7 +144,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     }
     
     func getAllMembers() {
-        reference(.User).whereField(kUSERCURRENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).getDocuments { (snapshot, error) in
+        reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()!.userCurrentTeamID).getDocuments { (snapshot, error) in
         
             guard let snapshot = snapshot else { return }
         
@@ -209,9 +211,17 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         dismiss(animated: true, completion: nil)
         
     }
+
     
-    
-    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        textView.resignFirstResponder()
+        eventTitleText.resignFirstResponder()
+        eventStartText.resignFirstResponder()
+        eventEndText.resignFirstResponder()
+        
+           return true;
+       }
     
     func textViewDidChange(_ textView: UITextView) {
         if textView.text.isEmpty {
@@ -222,10 +232,10 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         }
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        return false
-    }
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        self.view.endEditing(true)
+//        return false
+//    }
     
     // exec whenever the screen has been tapped
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
