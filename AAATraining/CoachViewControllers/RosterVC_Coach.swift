@@ -130,7 +130,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     
     func getTeam(filter: String) {
         ProgressHUD.show()
-       var query = reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()!.userCurrentTeamID)
+       var query = reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()!.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
             query.getDocuments { (snapshot, error) in
                 
                 self.allUsers = []
@@ -303,8 +303,9 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
 
             user = users![indexPath.row]
         }
-
-        if(user.userTeamAccountTypes[userTeamAccTypeIndexArr[indexPath.row]] == "Player") {
+        
+        let index = allUsers.firstIndex(where: { $0.objectId == user.objectId })!
+        if(user.userTeamAccountTypes[userTeamAccTypeIndexArr[index]] == "Player") {
             let playerProfileVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
             playerProfileVC.userBeingViewed = user
             self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)

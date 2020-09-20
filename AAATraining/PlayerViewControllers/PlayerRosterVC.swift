@@ -137,7 +137,7 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
     // MARK: - loadUsers
     func loadUsers(filter: String) {
            ProgressHUD.show()
-           var query = reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()!.userCurrentTeamID)
+           var query = reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()!.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
         print(FUser.currentUser()!.userCurrentTeamID)
            query.getDocuments { (snapshot, error) in
                

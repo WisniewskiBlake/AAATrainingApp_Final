@@ -46,21 +46,21 @@ class RosterCell_Coach: UITableViewCell {
         
         self.fullNameLabel.text = fUser.firstname + " " + fUser.lastname
         
-        if fUser.userTeamAccountTypes[accTypeIndexArr[indexPath.row]] == "Player" && FUser.currentUser()?.accountType == "Coach" {
+        if fUser.userTeamAccountTypes[accTypeIndexArr[index]] == "Player" && FUser.currentUser()?.accountType == "Coach" {
             if fUser.position != "" {
                 self.infoLabel.text = fUser.position.capitalized + ", #" + fUser.number
             } else {
                 self.infoLabel.text = ""
             }
             self.accessoryType = .disclosureIndicator
-        } else if fUser.userTeamAccountTypes[accTypeIndexArr[indexPath.row]] == "Player" && FUser.currentUser()?.accountType == "Player" {
+        } else if fUser.userTeamAccountTypes[accTypeIndexArr[index]] == "Player" && FUser.currentUser()?.accountType == "Player" {
             if fUser.position != "" {
                 self.infoLabel.text = fUser.position.capitalized + ", #" + fUser.number
             } else {
                 self.infoLabel.text = ""
             }
             self.accessoryType = .none
-        } else if fUser.userTeamAccountTypes[accTypeIndexArr[indexPath.row]] == "Coach" {
+        } else if fUser.userTeamAccountTypes[accTypeIndexArr[index]] == "Coach" {
             self.infoLabel.text = "Coach"
             self.accessoryType = .none
         } else {
