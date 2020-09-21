@@ -40,10 +40,6 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        getAllTeamMembers()
-//        getFilteredUsers()
-//        loadUsers(filter: "")
 
         navigationItem.largeTitleDisplayMode = .never
         tableView.tableFooterView = UIView()
@@ -57,21 +53,15 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         definesPresentationContext = true
-        
-        //getTeam()
+
         getTeam(filter: "")
-        
-        
         
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //getTeam()
-//        getAllTeamMembers()
-//        getFilteredUsers()
-//        loadUsers(filter: "")
+
         
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
@@ -280,9 +270,9 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         }
         
         let index = allUsers.firstIndex(where: { $0.objectId == user.objectId })!
-        
-        cell.generateCellWith(fUser: user, indexPath: indexPath, accTypeIndexArr: userTeamAccTypeIndexArr, index: index)
         cell.delegate = self
+        cell.generateCellWith(fUser: user, indexPath: indexPath, accTypeIndexArr: userTeamAccTypeIndexArr, index: index)
+        
         
         return cell
     }

@@ -109,7 +109,7 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     
     func loadUsers(filter: String) {
            ProgressHUD.show()
-           var query = reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()!.userCurrentTeamID)
+           var query = reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()!.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
            query.getDocuments { (snapshot, error) in
                
                self.allUsers = []
@@ -138,19 +138,19 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
                        let userDictionary = userDictionary.data() as NSDictionary
                        let fUser = FUser(_dictionary: userDictionary)
                        
-                       
                        if fUser.objectId != FUser.currentId() {
                            self.allUsers.append(fUser)
+                           let index = fUser.userTeamIDs.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)!
+                           self.userTeamAccTypeIndexArr.append(index)
+                           if fUser.userTeamAccountTypes[index] == "Coach" {
+                               self.coaches.append(fUser)
+                           } else if fUser.userTeamAccountTypes[index] == "Player" {
+                               self.players.append(fUser)
+                           } else {
+                               self.parents.append(fUser)
+                           }
                        }
-                       let index = fUser.userTeamIDs.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)!
-                       self.userTeamAccTypeIndexArr.append(index)
-                       if fUser.userTeamAccountTypes[index] == "Coach" {
-                           self.coaches.append(fUser)
-                       } else if fUser.userTeamAccountTypes[index] == "Player" {
-                           self.players.append(fUser)
-                       } else {
-                           self.parents.append(fUser)
-                       }
+                       
                        
                    }
                    
@@ -231,8 +231,9 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
         }
         
         
+        let index = allUsers.firstIndex(where: { $0.objectId == user.objectId })!
         cell.delegate = self
-        //cell.generateCellWith(fUser: user, indexPath: indexPath)
+        cell.generateCellWith(fUser: user, indexPath: indexPath, accTypeIndexArr: userTeamAccTypeIndexArr, index: index)
         
         print(cell.fullNameLabel.text!)
         if cellTagArray.contains([indexPath.section, indexPath.row]) && cellFullNameCheckArray.contains(cell.fullNameLabel.text!) {

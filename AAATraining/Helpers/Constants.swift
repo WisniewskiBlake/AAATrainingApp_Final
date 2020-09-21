@@ -68,6 +68,8 @@ public let kCOVER = "cover"
 public let kCOACH = "coach"
 public let kPLAYER = "player"
 
+public let kRECENTTEAMID = "recentTeamID"
+
 
 public let kPHONE = "phone"
 

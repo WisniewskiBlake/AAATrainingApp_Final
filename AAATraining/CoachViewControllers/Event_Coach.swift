@@ -130,11 +130,11 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         eventEndText.layer.addSublayer(bottomLine1)
         cornerRadius(for: deleteButton)
         
-        var bottomLine2 = CALayer()
-        bottomLine2.frame = CGRect(x: 0.0, y: eventTitleText.frame.height - 1, width: eventTitleText.frame.width, height: 1.0)
-        bottomLine2.backgroundColor = #colorLiteral(red: 0.6574437103, green: 0.6574437103, blue: 0.6574437103, alpha: 1)
-        eventTitleText.borderStyle = UITextField.BorderStyle.none
-        eventTitleText.layer.addSublayer(bottomLine2)
+//        var bottomLine2 = CALayer()
+//        bottomLine2.frame = CGRect(x: 0.0, y: eventTitleText.frame.height - 1, width: eventTitleText.frame.width, height: 1.0)
+//        bottomLine2.backgroundColor = #colorLiteral(red: 0.6574437103, green: 0.6574437103, blue: 0.6574437103, alpha: 1)
+//        eventTitleText.borderStyle = UITextField.BorderStyle.none
+//        eventTitleText.layer.addSublayer(bottomLine2)
         cornerRadius(for: deleteButton)
     }
     
