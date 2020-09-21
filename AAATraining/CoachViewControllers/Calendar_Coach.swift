@@ -46,6 +46,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         self.calendar.formatter.dateFormat = "YYYY-MM-dd"
         today = calendar.formatter.string(from: todayDate)
         
+        
         loadEvents()
         
         
@@ -55,6 +56,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        //loadTeam()
         configureUI()
         //loadEvents()
        
@@ -76,12 +78,11 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         splitterLabelTwo.backgroundColor = UIColor.lightGray
     }
     
-    func loadTeamType() {
-        var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [""])
+    func loadTeam() {
         
         team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
             if teamReturned.teamID != "" {
-                team = teamReturned
+                self.team = teamReturned
                     
             } else {
                 
@@ -181,11 +182,12 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
     func checkForNewObserver() {
         let helper = Helper()
+        print(FUser.currentUser()!.userCurrentTeamID)
         team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
             if teamReturned.teamID != "" {
                 self.team = teamReturned
                 
-                if self.allEvents.count == Int(teamReturned.teamMemberCount) {
+                if self.eventsToCopy.count == Int(teamReturned.teamMemberCount) {
                     var j = 0
                     for event in self.allEvents {
                         if event.eventUserID != FUser.currentId() {

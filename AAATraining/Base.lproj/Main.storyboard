@@ -11,13 +11,16 @@
         <array key="GillSans-Bold.otf">
             <string>GigaSans-Bold</string>
         </array>
+        <array key="Locomotype  GigaSansMedium.otf">
+            <string>GigaSans-Medium</string>
+        </array>
         <array key="Locomotype  GigaSansRegular.otf">
             <string>GigaSans-Regular</string>
         </array>
         <array key="Locomotype  GigaSansSemiBold.otf">
             <string>GigaSans-SemiBold</string>
         </array>
-        <array key="SirichanaBoldTTF.ttf">
+        <array key="SirichanaBoldOTF.otf">
             <string>SirichanaW31-Bold</string>
         </array>
     </customFonts>
@@ -5089,10 +5092,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9Ye-CG-6dJ">
-                                <rect key="frame" x="16" y="273" width="343" height="112"/>
+                                <rect key="frame" x="16" y="273" width="343" height="76"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="112" id="Hem-b9-79T"/>
+                                    <constraint firstAttribute="height" constant="76" id="Hem-b9-79T"/>
                                 </constraints>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
@@ -5110,20 +5113,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OtC-ju-zgH">
-                                <rect key="frame" x="16" y="393" width="343" height="30"/>
-                                <color key="backgroundColor" red="0.9044845104" green="0.098046459259999996" blue="0.1389197409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="VL9-rH-Maq"/>
-                                    <constraint firstAttribute="width" constant="343" id="plS-5b-iai"/>
-                                </constraints>
-                                <state key="normal" title="Delete">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="deleteButtonPressed:" destination="cGp-No-v10" eventType="touchUpInside" id="Bmz-NS-cSc"/>
-                                </connections>
-                            </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="leU-if-B3G">
                                 <rect key="frame" x="16" y="141" width="343" height="34"/>
                                 <constraints>
@@ -5177,6 +5166,20 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OtC-ju-zgH">
+                                <rect key="frame" x="16" y="357" width="343" height="30"/>
+                                <color key="backgroundColor" red="0.9044845104" green="0.098046459259999996" blue="0.1389197409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="VL9-rH-Maq"/>
+                                    <constraint firstAttribute="width" constant="343" id="plS-5b-iai"/>
+                                </constraints>
+                                <state key="normal" title="Delete">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="deleteButtonPressed:" destination="cGp-No-v10" eventType="touchUpInside" id="Bmz-NS-cSc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -5557,7 +5560,7 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="31.5" id="l8x-cg-lwf"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="27"/>
+                                    <fontDescription key="fontDescription" name="GigaSans-SemiBold" family="Giga Sans" pointSize="28"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -6059,23 +6062,23 @@
                                     <constraint firstAttribute="height" constant="245" id="mTm-hD-juh"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XpT-I0-hoj">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Blake Wisniewski" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XpT-I0-hoj">
                                 <rect key="frame" x="8" y="372" width="359" height="33"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="359" id="1yJ-7r-6lH"/>
                                     <constraint firstAttribute="height" constant="33" id="i4s-vt-nO7"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="28"/>
+                                <fontDescription key="fontDescription" name="GigaSans-SemiBold" family="Giga Sans" pointSize="28"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weight:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zu7-rA-uuw">
-                                <rect key="frame" x="42" y="486" width="69" height="26"/>
+                                <rect key="frame" x="33" y="486" width="78" height="26"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="69" id="YHL-7F-iFk"/>
+                                    <constraint firstAttribute="width" constant="78" id="YHL-7F-iFk"/>
                                     <constraint firstAttribute="height" constant="26" id="veJ-Xr-3oS"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="19"/>
+                                <fontDescription key="fontDescription" name="GigaSans-Medium" family="Giga Sans" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -6085,7 +6088,7 @@
                                     <constraint firstAttribute="width" constant="78" id="rBR-Ny-ggV"/>
                                     <constraint firstAttribute="height" constant="26" id="uQU-4J-lmh"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="19"/>
+                                <fontDescription key="fontDescription" name="GigaSans-Medium" family="Giga Sans" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -6135,17 +6138,17 @@
                                     <constraint firstAttribute="height" constant="26" id="bGm-LW-G2H"/>
                                     <constraint firstAttribute="width" constant="78" id="zvs-kg-GFE"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="19"/>
+                                <fontDescription key="fontDescription" name="GigaSans-Medium" family="Giga Sans" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Height:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MgP-xq-Dhg">
-                                <rect key="frame" x="42" y="428" width="69" height="26"/>
+                                <rect key="frame" x="33" y="428" width="78" height="26"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="69" id="UXZ-H4-gVp"/>
+                                    <constraint firstAttribute="width" constant="78" id="UXZ-H4-gVp"/>
                                     <constraint firstAttribute="height" constant="26" id="gx9-z9-1Xm"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="19"/>
+                                <fontDescription key="fontDescription" name="GigaSans-Medium" family="Giga Sans" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -6319,12 +6322,14 @@
                             <constraint firstItem="MgP-xq-Dhg" firstAttribute="bottom" secondItem="xJf-gN-P7M" secondAttribute="bottom" id="8zI-RE-cP0"/>
                             <constraint firstItem="Pu5-bv-70Y" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="37h-Lg-HOO" secondAttribute="bottom" id="BFy-yq-qeS"/>
                             <constraint firstItem="Zu7-rA-uuw" firstAttribute="bottom" secondItem="Ktp-ij-b3D" secondAttribute="bottom" id="Bfa-Ug-nOz"/>
+                            <constraint firstItem="Ktp-ij-b3D" firstAttribute="bottom" secondItem="9gP-gh-RpN" secondAttribute="bottom" id="BrL-k9-o89"/>
                             <constraint firstItem="MgP-xq-Dhg" firstAttribute="top" secondItem="XpT-I0-hoj" secondAttribute="bottom" constant="23" id="C8F-v6-oIZ"/>
                             <constraint firstItem="xJf-gN-P7M" firstAttribute="top" secondItem="XpT-I0-hoj" secondAttribute="bottom" constant="23" id="CcI-IV-CBc"/>
                             <constraint firstItem="Zu7-rA-uuw" firstAttribute="top" secondItem="MgP-xq-Dhg" secondAttribute="bottom" constant="32" id="E0P-kc-uyI"/>
                             <constraint firstItem="9gP-gh-RpN" firstAttribute="bottom" secondItem="nk2-qd-ROr" secondAttribute="bottom" id="FQk-NH-jGJ"/>
-                            <constraint firstItem="MgP-xq-Dhg" firstAttribute="leading" secondItem="Pu5-bv-70Y" secondAttribute="leading" constant="42" id="FnN-sS-ULW"/>
+                            <constraint firstItem="MgP-xq-Dhg" firstAttribute="leading" secondItem="Pu5-bv-70Y" secondAttribute="leading" constant="33" id="FnN-sS-ULW"/>
                             <constraint firstItem="SDt-c0-Ejc" firstAttribute="top" secondItem="9gP-gh-RpN" secondAttribute="bottom" constant="40" id="Fnh-nY-AXj"/>
+                            <constraint firstItem="xJf-gN-P7M" firstAttribute="bottom" secondItem="nLv-r1-Qh5" secondAttribute="bottom" id="H53-jC-zzn"/>
                             <constraint firstItem="nk2-qd-ROr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="9gP-gh-RpN" secondAttribute="trailing" constant="6" id="J1i-IT-znr"/>
                             <constraint firstItem="37h-Lg-HOO" firstAttribute="top" secondItem="Ktp-ij-b3D" secondAttribute="bottom" constant="40" id="J1y-RX-x2L"/>
                             <constraint firstItem="obc-IT-NSu" firstAttribute="top" secondItem="Pu5-bv-70Y" secondAttribute="top" constant="413" id="LGv-v7-ANv"/>
@@ -6348,7 +6353,7 @@
                             <constraint firstItem="obc-IT-NSu" firstAttribute="leading" secondItem="xJf-gN-P7M" secondAttribute="trailing" id="lGB-ZL-joF"/>
                             <constraint firstItem="XpT-I0-hoj" firstAttribute="leading" secondItem="Pu5-bv-70Y" secondAttribute="leading" constant="8" id="mgc-fH-aSU"/>
                             <constraint firstItem="Ktp-ij-b3D" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Zu7-rA-uuw" secondAttribute="trailing" constant="8" id="mhk-xH-5Z1"/>
-                            <constraint firstItem="Zu7-rA-uuw" firstAttribute="leading" secondItem="Pu5-bv-70Y" secondAttribute="leading" constant="42" id="n5y-4v-fmR"/>
+                            <constraint firstItem="Zu7-rA-uuw" firstAttribute="leading" secondItem="Pu5-bv-70Y" secondAttribute="leading" constant="33" id="n5y-4v-fmR"/>
                             <constraint firstItem="Pu5-bv-70Y" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="7l5-xQ-C44" secondAttribute="bottom" id="nsq-9Y-G6I"/>
                             <constraint firstItem="9gP-gh-RpN" firstAttribute="top" secondItem="nLv-r1-Qh5" secondAttribute="bottom" constant="32" id="ska-e3-Ttd"/>
                             <constraint firstItem="nLv-r1-Qh5" firstAttribute="leading" secondItem="obc-IT-NSu" secondAttribute="trailing" constant="6" id="uRD-Xz-Iok"/>
