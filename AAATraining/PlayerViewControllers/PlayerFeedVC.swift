@@ -247,7 +247,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
             FUser.logOutCurrentUser { (success) in
                 
                 if success {
-                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamLoginVC") as? TeamLoginVC
+                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
                     {
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: true, completion: nil)

@@ -33,7 +33,11 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     var eventToCopyUserID: String = ""
     var today: String = ""
     
+    var eventUserIDs: [String] = []
+    
     var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [])
+    
+    var x = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,6 +104,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
             self.eventsToCopy = []
             self.eventToCopyUserID = ""
             self.upcomingEvents = []
+            self.eventUserIDs = []
             
             var i = 0
                         
@@ -132,7 +137,6 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                             self.isNewObserver = false
                        } else {
                         
-                        
                             //else if the first event grabbed does not belong to an existing user, then append it to eventsToCopy
                             if i == 1 {
                                 self.eventsToCopy.append(event)
@@ -142,38 +146,18 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                                     self.eventsToCopy.append(event)
                                 }
                             }
+                            if !self.eventUserIDs.contains(event.eventUserID) {
+                                self.eventUserIDs.append(event.eventUserID)
+                            }
                             
                        }
                     }
                 
                }
-                //i need to check if -> none of the events in allEvents contain Fuser.currentId, then create a new event
-                
-//                if self.isNewObserver == true {
-//                    //self.isNewObserver = false
-//                    for event in self.eventsToCopy {
-//                        self.createEventsForNewObserver(event: event)
-//
-//                    }
-//                    self.tableView.reloadData()
-//                    self.calendar.reloadData()
-//                } else {
-//
-//                    self.tableView.reloadData()
-//                    self.calendar.reloadData()
-//                }
-                               
-            
+
            }
-            //may not need to reload here to speed up time
-//            for event in self.upcomingEvents {
-//                print(event.eventID)
-//
-//            }
-//
-//            print(self.upcomingEvents.count)
-//            self.tableView.reloadData()
-//            self.calendar.reloadData()
+            self.x += 1
+            print(self.x)
             self.checkForNewObserver()
             ProgressHUD.dismiss()
         })
@@ -183,39 +167,36 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     func checkForNewObserver() {
         let helper = Helper()
         print(FUser.currentUser()!.userCurrentTeamID)
-        team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
-            if teamReturned.teamID != "" {
-                self.team = teamReturned
-                
-                if self.eventsToCopy.count == Int(teamReturned.teamMemberCount) {
-                    var j = 0
-                    for event in self.allEvents {
-                        if event.eventUserID != FUser.currentId() {
-                            j += 1
-                        }
-                    }
-                    if j >= self.allEvents.count {
-                        for event in self.eventsToCopy {
-                            self.createEventsForNewObserver(event: event)
-                            
-                        }
-                        self.tableView.reloadData()
-                        self.calendar.reloadData()
-                    } else {
-                        
-                        self.tableView.reloadData()
-                        self.calendar.reloadData()
-                    }
-                } else {
-                    self.tableView.reloadData()
-                    self.calendar.reloadData()
+        
+        if self.eventsToCopy.count * self.eventUserIDs.count == self.allEvents.count {
+            if !self.eventUserIDs.contains(FUser.currentId()) {
+                for event in self.eventsToCopy {
+                    self.createEventsForNewObserver(event: event)
+                    
                 }
-                
-                
+                self.tableView.reloadData()
+                self.calendar.reloadData()
             } else {
-                helper.showAlert(title: "Invadlid ID", message: "Can't get events right now.", in: self)
+                
+                self.tableView.reloadData()
+                self.calendar.reloadData()
             }
         }
+        
+
+        self.tableView.reloadData()
+        self.calendar.reloadData()
+//        team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
+//            if teamReturned.teamID != "" {
+//                self.team = teamReturned
+//
+////                if self.eventsToCopy.count == Int(teamReturned.teamMemberCount) {
+//
+//
+//            } else {
+//                helper.showAlert(title: "Invalid ID", message: "Can't get events right now.", in: self)
+//            }
+//        }
         
     }
     

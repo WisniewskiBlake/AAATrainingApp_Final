@@ -144,21 +144,45 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     }
     
     func getAllMembers() {
-        reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()!.userCurrentTeamID).getDocuments { (snapshot, error) in
+        
+        reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kEVENTUSERID).order(by: kEVENTDATEFORUPCOMINGCOMPARISON).getDocuments { (snapshot, error) in
+            
+            self.memberIds = []
         
             guard let snapshot = snapshot else { return }
         
             if !snapshot.isEmpty {
                 
-                for user in snapshot.documents {
+                for eventDictionary in snapshot.documents {
                     
-                    let currUser = user.data() as NSDictionary
+                    let eventDictionary = eventDictionary.data() as NSDictionary
+                    let event = Event(_dictionary: eventDictionary)
                     
-                    self.memberIds.append(currUser[kOBJECTID] as! String)
+                    if !self.memberIds.contains(event.eventUserID) {
+                        self.memberIds.append(event.eventUserID)
+                    }
                    
                 }
             }
         }
+        
+        
+        
+//        reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()!.userCurrentTeamID).getDocuments { (snapshot, error) in
+//
+//            guard let snapshot = snapshot else { return }
+//
+//            if !snapshot.isEmpty {
+//
+//                for user in snapshot.documents {
+//
+//                    let currUser = user.data() as NSDictionary
+//
+//                    self.memberIds.append(currUser[kOBJECTID] as! String)
+//
+//                }
+//            }
+//        }
     }
     
     func getAllEvents() {
