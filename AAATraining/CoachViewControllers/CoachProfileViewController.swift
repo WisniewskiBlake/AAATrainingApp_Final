@@ -358,7 +358,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         DispatchQueue.main.async {
             var query: Query!
             
-            query = reference(.Post).whereField(kPOSTOWNERID, isEqualTo: FUser.currentId()).order(by: kPOSTDATE, descending: true)
+            query = reference(.Post).whereField(kPOSTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID as Any).whereField(kPOSTOWNERID, isEqualTo: FUser.currentId()).order(by: kPOSTDATE, descending: true)
             
             query.getDocuments { (snapshot, error) in
                 self.allPosts = []

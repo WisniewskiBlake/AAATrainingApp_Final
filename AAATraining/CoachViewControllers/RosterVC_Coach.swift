@@ -407,4 +407,6 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     
 
 }
+    
+
 }
