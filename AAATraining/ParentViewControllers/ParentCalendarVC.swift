@@ -32,19 +32,20 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     var eventToCopyUserID: String = ""
     var today: String = ""
     
+    var eventUserIDs: [String] = []
+    
+    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [])
+    
     let logoutTapGestureRecognizer = UITapGestureRecognizer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setBadges(controller: self.tabBarController!, accountType: "coach")
-        
 
         NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
-
         
         calendar.delegate = self
-        
         
         let todayDate = self.calendar!.today! as Date
         self.calendar.formatter.dateFormat = "YYYY-MM-dd"
@@ -54,6 +55,8 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         logoutView.isUserInteractionEnabled = true
         logoutView.addGestureRecognizer(logoutTapGestureRecognizer)
         
+        loadEvents()
+        
     }
     
     // pre-load func
@@ -61,7 +64,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         super.viewWillAppear(animated)
         
         configureUI()
-        loadEvents()
+
     }
     override func viewWillDisappear(_ animated: Bool) {
         recentListener.remove()
@@ -75,8 +78,8 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:23)
         self.setLeftAlignedNavigationItemTitle(text: "Team Calendar", color: .white, margin: 12)
         upcomingLabel.textColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        splitterLabel.backgroundColor = UIColor.lightGray
-        splitterLabelTwo.backgroundColor = UIColor.lightGray
+        splitterLabel.backgroundColor = #colorLiteral(red: 0.6815950428, green: 0.6815950428, blue: 0.6815950428, alpha: 1)
+        splitterLabelTwo.backgroundColor = #colorLiteral(red: 0.6815950428, green: 0.6815950428, blue: 0.6815950428, alpha: 1)
     }
     
 
@@ -91,6 +94,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
             self.eventsToCopy = []
             self.eventToCopyUserID = ""
             self.upcomingEvents = []
+            self.eventUserIDs = []
             
             var i = 0
                         
@@ -120,7 +124,6 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
                             self.countArray.append(String(event.eventCounter))
                             self.isNewObserver = false
                        } else {
-                            
                             if i == 1 {
                                 self.eventsToCopy.append(event)
                                 self.eventToCopyUserID = event.eventUserID
@@ -129,28 +132,39 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
                                     self.eventsToCopy.append(event)
                                 }
                             }
-                            
+                            if !self.eventUserIDs.contains(event.eventUserID) {
+                                self.eventUserIDs.append(event.eventUserID)
+                            }
                        }
                     }
-                
                }
-                if self.isNewObserver == true {
-                    //self.isNewObserver = false
-                    for event in self.eventsToCopy {
-                        self.createEventsForNewObserver(event: event)
-                    }
-                    self.tableView.reloadData()
-                    self.calendar.reloadData()
-                } else {
-                    self.tableView.reloadData()
-                    self.calendar.reloadData()
-                }
-            
            }
-            self.tableView.reloadData()
-            self.calendar.reloadData()
+            self.checkForNewObserver()
             ProgressHUD.dismiss()
         })
+    }
+    
+    func checkForNewObserver() {
+        let helper = Helper()
+        print(FUser.currentUser()!.userCurrentTeamID)
+        
+        if self.eventsToCopy.count * self.eventUserIDs.count == self.allEvents.count {
+            if !self.eventUserIDs.contains(FUser.currentId()) {
+                for event in self.eventsToCopy {
+                    self.createEventsForNewObserver(event: event)
+                    
+                }
+                self.tableView.reloadData()
+                self.calendar.reloadData()
+            } else {
+                
+                self.tableView.reloadData()
+                self.calendar.reloadData()
+            }
+        }
+        self.tableView.reloadData()
+        self.calendar.reloadData()
+
     }
     
     func createEventsForNewObserver(event: Event) {
@@ -216,9 +230,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
         return upcomingEvents.count
-
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -233,7 +245,6 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
          cell.eventMonthLabel.text = getMonth(monthNumber: month)
 
          cell.accessoryType = .disclosureIndicator
-
 
          cell.tag = indexPath.row
 

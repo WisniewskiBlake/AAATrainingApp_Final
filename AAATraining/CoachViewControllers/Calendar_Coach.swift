@@ -50,9 +50,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         self.calendar.formatter.dateFormat = "YYYY-MM-dd"
         today = calendar.formatter.string(from: todayDate)
         
-        
         loadEvents()
-        
         
     }
     
@@ -60,9 +58,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        //loadTeam()
         configureUI()
-        //loadEvents()
        
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -136,7 +132,6 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                             self.countArray.append(String(event.eventCounter))
                             self.isNewObserver = false
                        } else {
-                        
                             //else if the first event grabbed does not belong to an existing user, then append it to eventsToCopy
                             if i == 1 {
                                 self.eventsToCopy.append(event)
@@ -149,19 +144,15 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                             if !self.eventUserIDs.contains(event.eventUserID) {
                                 self.eventUserIDs.append(event.eventUserID)
                             }
-                            
                        }
                     }
-                
                }
-
            }
             self.x += 1
             print(self.x)
             self.checkForNewObserver()
             ProgressHUD.dismiss()
         })
-        
     }
     
     func checkForNewObserver() {
@@ -182,22 +173,9 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                 self.calendar.reloadData()
             }
         }
-        
-
         self.tableView.reloadData()
         self.calendar.reloadData()
-//        team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
-//            if teamReturned.teamID != "" {
-//                self.team = teamReturned
-//
-////                if self.eventsToCopy.count == Int(teamReturned.teamMemberCount) {
-//
-//
-//            } else {
-//                helper.showAlert(title: "Invalid ID", message: "Can't get events right now.", in: self)
-//            }
-//        }
-        
+
     }
     
     func createEventsForNewObserver(event: Event) {
@@ -306,8 +284,6 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         eventVC.updateNeeded = true
         eventVC.event = event
         eventVC.dateForUpcomingComparison = event.dateForUpcomingComparison
-        
-
         
         eventVC.hidesBottomBarWhenPushed = true
         eventVC.dateString = event.eventDate
