@@ -60,6 +60,8 @@ class ParentEvent: UIViewController, UITextViewDelegate, UINavigationControllerD
             start.isHidden = false
             end.isHidden = false
             noEventsLabel.isHidden = true
+            
+            
             if event.eventText != "" {
                 placeHolderLabel.isHidden = true
             } else {

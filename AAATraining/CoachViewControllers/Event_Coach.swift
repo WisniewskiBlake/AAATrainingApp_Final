@@ -39,20 +39,20 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     var allEventsWithGroupID: [NSDictionary] = []
     
     var dateForUpcomingComparison: String = ""
+    var datePicker = UIDatePicker()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print(dateForUpcomingComparison)
         getAllMembers()
         getAllEvents()
-        cornerRadius(for: deleteButton)
-        
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        configureUI()
+        createStartDatePicker()
+        createEndDatePicker()
         
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
         
-        //self.setLeftAlignedNavigationItemTitle(text: "Event", color: .white, margin: 12)
+
         dateLabel.text = dateString
         textView.text = event.eventText
         eventTitleText.text = event.eventTitle
@@ -71,6 +71,71 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             deleteButton.isHidden = true
         }
         
+        
+        
+    }
+    
+    func createStartDatePicker() {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneStartPressed))
+        toolbar.setItems([doneBtn], animated: true)
+        eventStartText.inputAccessoryView = toolbar
+        eventStartText.inputView = datePicker
+        datePicker.datePickerMode = .time
+        
+    }
+    func createEndDatePicker() {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneEndPressed))
+        toolbar.setItems([doneBtn], animated: true)
+        eventEndText.inputAccessoryView = toolbar
+        eventEndText.inputView = datePicker
+        datePicker.datePickerMode = .time
+        
+    }
+    
+    @objc func doneStartPressed() {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        eventStartText.text = formatter.string(from: datePicker.date)
+        self.view.endEditing(true)
+    }
+    
+    @objc func doneEndPressed() {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        eventEndText.text = formatter.string(from: datePicker.date)
+        self.view.endEditing(true)
+    }
+    
+    func configureUI() {
+        
+       self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+       navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
+        var bottomLine = CALayer()
+        bottomLine.frame = CGRect(x: 0.0, y: eventStartText.frame.height, width: eventStartText.frame.width, height: 1.0)
+        bottomLine.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        eventStartText.borderStyle = UITextField.BorderStyle.none
+        eventStartText.layer.addSublayer(bottomLine)
+        
+        var bottomLine1 = CALayer()
+        bottomLine1.frame = CGRect(x: 0.0, y: eventEndText.frame.height, width: eventEndText.frame.width, height: 1.0)
+        bottomLine1.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        eventEndText.borderStyle = UITextField.BorderStyle.none
+        eventEndText.layer.addSublayer(bottomLine1)
+        cornerRadius(for: deleteButton)
+        
+        var bottomLine2 = CALayer()
+        bottomLine2.frame = CGRect(x: 0.0, y: eventTitleText.frame.height - 1, width: eventTitleText.frame.width, height: 1.0)
+        bottomLine2.backgroundColor = #colorLiteral(red: 0.6574437103, green: 0.6574437103, blue: 0.6574437103, alpha: 1)
+        eventTitleText.borderStyle = UITextField.BorderStyle.none
+        eventTitleText.layer.addSublayer(bottomLine2)
+        cornerRadius(for: deleteButton)
     }
     
     override func viewWillAppear(_ animated: Bool) {
