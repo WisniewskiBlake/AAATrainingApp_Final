@@ -34,6 +34,12 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDeleg
     @IBOutlet weak var passwordContinueButton: UIButton!
     
     @IBOutlet weak var nameImageView: UIImageView!
+    @IBOutlet weak var emailImageView: UIImageView!
+    @IBOutlet weak var passwordImageView: UIImageView!
+    
+    @IBOutlet weak var imageHolderName: UIImageView!
+    @IBOutlet weak var imageHolderEmail: UIImageView!
+    @IBOutlet weak var imageHolderPassword: UIImageView!
     
     
     @IBOutlet weak var footerView: UIView!
@@ -84,8 +90,12 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDeleg
         padding(for: lastNameTextField)
         padding(for: passwordTextField)
         
-        nameImageView.layer.cornerRadius = nameImageView.frame.width / 2
-        nameImageView.clipsToBounds = true
+        imageHolderName.layer.cornerRadius = imageHolderName.frame.width / 2
+        imageHolderName.clipsToBounds = true
+        imageHolderEmail.layer.cornerRadius = imageHolderEmail.frame.width / 2
+        imageHolderEmail.clipsToBounds = true
+        imageHolderPassword.layer.cornerRadius = imageHolderPassword.frame.width / 2
+        imageHolderPassword.clipsToBounds = true
         
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
         navigationItem.leftBarButtonItem?.tintColor = UIColor.white

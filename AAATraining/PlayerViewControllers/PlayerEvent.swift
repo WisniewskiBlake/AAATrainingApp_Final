@@ -69,6 +69,18 @@ class PlayerEvent: UIViewController, UITextViewDelegate, UINavigationControllerD
             }
         }
         
+        var bottomLine = CALayer()
+        bottomLine.frame = CGRect(x: 0.0, y: eventStartText.frame.height, width: eventStartText.frame.width, height: 1.0)
+        bottomLine.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        eventStartText.borderStyle = UITextField.BorderStyle.none
+        eventStartText.layer.addSublayer(bottomLine)
+        
+        var bottomLine1 = CALayer()
+        bottomLine1.frame = CGRect(x: 0.0, y: eventEndText.frame.height, width: eventEndText.frame.width, height: 1.0)
+        bottomLine1.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        eventEndText.borderStyle = UITextField.BorderStyle.none
+        eventEndText.layer.addSublayer(bottomLine1)
+        
         
     }
     

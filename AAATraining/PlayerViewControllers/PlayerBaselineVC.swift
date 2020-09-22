@@ -76,7 +76,7 @@ class PlayerBaselineVC: UITableViewController {
         
         ProgressHUD.show()
         
-        recentListener = reference(.Baseline).whereField(kBASELINEOWNERID, isEqualTo: userBeingViewed.objectId).order(by: kBASELINEDATE, descending: true).addSnapshotListener({ (snapshot, error) in
+        recentListener = reference(.Baseline).whereField(kBASELINEOWNERID, isEqualTo: userBeingViewed.objectId).whereField(kBASELINETEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kBASELINEDATE, descending: true).addSnapshotListener({ (snapshot, error) in
                    
                 self.allBaselines = []
             

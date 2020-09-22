@@ -128,7 +128,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         bottomLine1.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         eventEndText.borderStyle = UITextField.BorderStyle.none
         eventEndText.layer.addSublayer(bottomLine1)
-        cornerRadius(for: deleteButton)
+        
         
 //        var bottomLine2 = CALayer()
 //        bottomLine2.frame = CGRect(x: 0.0, y: eventTitleText.frame.height - 1, width: eventTitleText.frame.width, height: 1.0)
@@ -167,6 +167,9 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     //get all events with the same teamID as current user, sort by event id and create new events for current user. The number of new events to be created will be determined by how many indexes in until the next eventUserID starts
     
     func createEventForMembers() {
+        if self.memberIds.isEmpty {
+            self.memberIds.append(FUser.currentId())
+        }
         var tempMembers = memberIds
         let eventText = textView.text!
         let eventOwnerID = FUser.currentId()
@@ -210,24 +213,51 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     func getAllMembers() {
         
+//        var query = reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()!.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
+//            query.getDocuments { (snapshot, error) in
+//
+//
+//                guard let snapshot = snapshot else {
+//                    ProgressHUD.dismiss(); return
+//                }
+//
+//                if !snapshot.isEmpty {
+//
+//                    for userDictionary in snapshot.documents {
+//
+//                        let userDictionary = userDictionary.data() as NSDictionary
+//                        let fUser = FUser(_dictionary: userDictionary)
+//                        self.memberIds.append(fUser.objectId)
+//
+//                    }
+//
+//
+//                }
+//
+//
+//        }
+        
         reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kEVENTUSERID).order(by: kEVENTDATEFORUPCOMINGCOMPARISON).getDocuments { (snapshot, error) in
-            
+
             self.memberIds = []
-        
+
             guard let snapshot = snapshot else { return }
-        
+
             if !snapshot.isEmpty {
-                
+
                 for eventDictionary in snapshot.documents {
-                    
+
                     let eventDictionary = eventDictionary.data() as NSDictionary
                     let event = Event(_dictionary: eventDictionary)
-                    
+
                     if !self.memberIds.contains(event.eventUserID) {
                         self.memberIds.append(event.eventUserID)
                     }
-                   
+
                 }
+                
+                
+                
             }
         }
         

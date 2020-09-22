@@ -56,14 +56,14 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         logoutView.isUserInteractionEnabled = true
         logoutView.addGestureRecognizer(logoutTapGestureRecognizer)
         
-        loadEvents()
+        
         
     }
     
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        loadEvents()
         configureUI()
 
     }
