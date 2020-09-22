@@ -11,7 +11,7 @@ import FirebaseFirestore
 
 func recentBadgeCount(withBlock: @escaping(_ badgeNumber: Int) -> Void) {
     
-    recentBadgeHandler = reference(.Recent).whereField(kUSERID, isEqualTo: FUser.currentId()).addSnapshotListener({ (snapshot, error) in
+    recentBadgeHandler = reference(.Recent).whereField(kUSERID, isEqualTo: FUser.currentId()).whereField(kRECENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).addSnapshotListener({ (snapshot, error) in
         
         var badge = 0
         var counter = 0
@@ -42,7 +42,7 @@ func recentBadgeCount(withBlock: @escaping(_ badgeNumber: Int) -> Void) {
 func calendarBadgeCount(withBlock: @escaping(_ badgeNumber: Int) -> Void) {
     
     
-    calendarBadgeHandler = reference(.Event).whereField(kEVENTUSERID, isEqualTo: FUser.currentId()).addSnapshotListener({ (snapshot, error) in
+    calendarBadgeHandler = reference(.Event).whereField(kEVENTUSERID, isEqualTo: FUser.currentId()).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).addSnapshotListener({ (snapshot, error) in
         
         var badge = 0
         var counter = 0
@@ -108,9 +108,9 @@ func setCalendarBadges(controller: UITabBarController, accountType: String) {
         calendarBadgeCount { (badge) in
             
             if badge != 0 {
-                controller.tabBar.items![1].badgeValue = "\(badge)"
+                controller.tabBar.items![0].badgeValue = "\(badge)"
             } else {
-                controller.tabBar.items![1].badgeValue = nil
+                controller.tabBar.items![0].badgeValue = nil
             }
         }
     }

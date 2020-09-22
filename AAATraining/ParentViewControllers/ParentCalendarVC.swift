@@ -42,6 +42,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         super.viewDidLoad()
         
         setBadges(controller: self.tabBarController!, accountType: "coach")
+        setCalendarBadges(controller: self.tabBarController!, accountType: "parent")
 
         NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
         
@@ -78,6 +79,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:23)
         self.setLeftAlignedNavigationItemTitle(text: "Team Calendar", color: .white, margin: 12)
         upcomingLabel.textColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        logoutView.tintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         splitterLabel.backgroundColor = #colorLiteral(red: 0.6815950428, green: 0.6815950428, blue: 0.6815950428, alpha: 1)
         splitterLabelTwo.backgroundColor = #colorLiteral(red: 0.6815950428, green: 0.6815950428, blue: 0.6815950428, alpha: 1)
     }

@@ -209,7 +209,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
               }
               self.allUsersGroupped[firstCarString]?.append(currentUser)
           }
-    
+
       }
     
     
@@ -395,13 +395,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         updateUser(userID: user.objectId, withValues: [kUSERTEAMIDS: FieldValue.arrayRemove([FUser.currentUser()!.userCurrentTeamID])])
         Team.updateTeam(teamID: FUser.currentUser()!.userCurrentTeamID, withValues: [kTEAMMEMBERIDS: FieldValue.arrayRemove([user.objectId])])
             
-//            { err in
-//        if let err = err {
-//            print("Error removing document: \(err)")
-//        } else {
-//            print("Document successfully removed!")
-//        }
-//    }
+
         self.tableView.reloadData()
 
     

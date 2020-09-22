@@ -147,7 +147,7 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
                self.parents = []
                self.sectionTitleList = []
                self.allUsersGroupped = [:]
-            self.usersToShow = []
+               self.usersToShow = []
                
                if error != nil {
                    print(error!.localizedDescription)
