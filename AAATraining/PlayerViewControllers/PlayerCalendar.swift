@@ -35,12 +35,14 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
     var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [])
     
+    var eventCopied = Event()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
 
-        calendar.delegate = self
+        
         
         let todayDate = self.calendar!.today! as Date
         self.calendar.formatter.dateFormat = "YYYY-MM-dd"
@@ -53,6 +55,7 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        calendar.delegate = self
         loadEvents()
         configureUI()
         
@@ -76,6 +79,7 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
 
     
     @objc func loadEvents() {
+        print("loadEvents")
         ProgressHUD.show()
         recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kEVENTUSERID).order(by: kEVENTDATEFORUPCOMINGCOMPARISON).addSnapshotListener({ (snapshot, error) in
                            
@@ -86,9 +90,10 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
             self.eventToCopyUserID = ""
             self.upcomingEvents = []
             self.eventUserIDs = []
+            self.isNewObserver = true
             
             var i = 0
-            
+            var k = 0
             if error != nil {
                 print(error!.localizedDescription)
                 ProgressHUD.dismiss()
@@ -107,15 +112,21 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                         self.upcomingEvents.append(event)
                     }
                     
+                    //if the user and event grabbed have same teamID, append it to all events
                     if event.eventTeamID == FUser.currentUser()?.userCurrentTeamID {
                         self.allEvents.append(event)
+                        print("allEvents.append(event)")
+                        print(event.eventUserID + " 1")
                         i += 1
-                       if event.eventUserID == FUser.currentId() {
+                        //if the event that has the same teamID belongs to an existing user, append the date and count
+                        if event.eventUserID == FUser.currentId() {
+                            print(event.eventUserID + " 2")
+                            //print("event.eventUserID == FUser.currentId()")
                             self.allEventDates.append(event.eventDate)
                             self.countArray.append(String(event.eventCounter))
                             self.isNewObserver = false
                        } else {
-                            
+                            //else if the first event grabbed does not belong to an existing user, then append it to eventsToCopy
                             if i == 1 {
                                 self.eventsToCopy.append(event)
                                 self.eventToCopyUserID = event.eventUserID
@@ -130,30 +141,48 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                        }
                     }
                }
+                self.checkForNewObserver()
+                k += 1
+                print("k " + String(k))
            }
-            self.checkForNewObserver()
+            
+            print("x " + String(self.allEvents.count))
+            
+                
+           self.tableView.reloadData()
+           self.calendar.reloadData()
+            
             ProgressHUD.dismiss()
         })
     }
     
     func checkForNewObserver() {
         let helper = Helper()
-        print(FUser.currentUser()!.userCurrentTeamID)
+        print("check For New Observer")
         
-        if self.eventsToCopy.count * self.eventUserIDs.count == self.allEvents.count {
-            if !self.eventUserIDs.contains(FUser.currentId()) {
+        if self.isNewObserver {
+            if self.eventsToCopy.count * self.eventUserIDs.count == self.allEvents.count && !(self.eventUserIDs.contains(FUser.currentId())) {
+                
                 for event in self.eventsToCopy {
-                    self.createEventsForNewObserver(event: event)
+                    print("create Events For New Observer")
+                    if !(event.eventOwnerID == FUser.currentId()) && event.eventDate != eventCopied.eventDate {
+                        eventCopied = event
+                        self.createEventsForNewObserver(event: event)
+                    }
+                    
                     
                 }
                 self.tableView.reloadData()
                 self.calendar.reloadData()
+                
             } else {
                 
                 self.tableView.reloadData()
                 self.calendar.reloadData()
             }
         }
+        
+        
         self.tableView.reloadData()
         self.calendar.reloadData()
 
@@ -301,6 +330,9 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         } else {
             return ""
         }
+    }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {

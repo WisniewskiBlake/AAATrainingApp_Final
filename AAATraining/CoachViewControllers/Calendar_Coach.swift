@@ -39,6 +39,8 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
     var x = 0
     
+    var eventCopied = Event()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -61,13 +63,13 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         super.viewWillAppear(animated)
         calendar.delegate = self
         loadEvents()
-        print("viewWillAppear")
+        
         configureUI()
        
     }
     override func viewWillDisappear(_ animated: Bool) {
         recentListener.remove()
-        print("viewWillDisppear")
+        
     }
     
     func configureUI() {
@@ -175,26 +177,25 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         let helper = Helper()
         print("check For New Observer")
         
-        
-        
         if self.isNewObserver {
             if self.eventsToCopy.count * self.eventUserIDs.count == self.allEvents.count && !(self.eventUserIDs.contains(FUser.currentId())) {
-                if !self.eventUserIDs.contains(FUser.currentId()) {
-                    for event in self.eventsToCopy {
-                        print("create Events For New Observer")
-                        if !(event.eventOwnerID == FUser.currentId()) {
-                            self.createEventsForNewObserver(event: event)
-                        }
-                        
-                        
+                
+                for event in self.eventsToCopy {
+                    print("create Events For New Observer")
+                    if !(event.eventOwnerID == FUser.currentId()) && event.eventDate != eventCopied.eventDate {
+                        eventCopied = event
+                        self.createEventsForNewObserver(event: event)
                     }
-                    self.tableView.reloadData()
-                    self.calendar.reloadData()
-                } else {
                     
-                    self.tableView.reloadData()
-                    self.calendar.reloadData()
+                    
                 }
+                self.tableView.reloadData()
+                self.calendar.reloadData()
+                
+            } else {
+                
+                self.tableView.reloadData()
+                self.calendar.reloadData()
             }
         }
         
@@ -222,7 +223,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         }
         
         if allEventDates.contains(dateString) && Int(countArray[index])! >= 1 {
-            return #colorLiteral(red: 0.05476168428, green: 0.06671469682, blue: 1, alpha: 1)
+            return UIColor.red
             
         } else if allEventDates.contains(dateString) && Int(countArray[index])! == 0 {
             return UIColor(hexString: FUser.currentUser()!.userTeamColorOne)

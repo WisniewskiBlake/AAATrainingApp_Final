@@ -148,6 +148,8 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
 
             }
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
+            sleep(UInt32(0.6))
+            ProgressHUD.dismiss()
         }
     }
     
@@ -237,7 +239,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
                     i += 1
                 }
                 if i == self.allEventsWithGroupID.count {
-                    sleep(UInt32(1.5))
+                    sleep(UInt32(1.7))
                            ProgressHUD.dismiss()
                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
                     self.dismiss(animated: true, completion: nil)
@@ -286,13 +288,16 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             if self.doneButton.currentTitle == "Update" {
                 event.updateEvent(eventGroupID: event.eventGroupID, eventOwnerID: event.eventOwnerID, eventText: textView.text!, eventTitle: eventTitleText.text!, eventStart: eventStartText.text!, eventEnd: eventEndText.text!)
             } else {
+                ProgressHUD.show("Creating...", interaction: false)
                 createEventForMembers()
+                sleep(UInt32(0.6))
             }
             
             //createEvent()
         } else {
             helper.showAlert(title: "Data Error", message: "Please fill in info.", in: self)
         }
+        sleep(UInt32(0.6))
         dismiss(animated: true, completion: nil)
         
     }
