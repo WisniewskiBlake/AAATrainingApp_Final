@@ -43,26 +43,31 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         super.viewDidLoad()
 
         NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "createEvent"), object: nil)
 
-        calendar.delegate = self
+        
 
         let todayDate = self.calendar!.today! as Date
         self.calendar.formatter.dateFormat = "YYYY-MM-dd"
         today = calendar.formatter.string(from: todayDate)
         
         
+        //loadEvents()
         
     }
     
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        calendar.delegate = self
         loadEvents()
+        print("viewWillAppear")
         configureUI()
        
     }
     override func viewWillDisappear(_ animated: Bool) {
         recentListener.remove()
+        print("viewWillDisppear")
     }
     
     func configureUI() {
@@ -89,6 +94,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     }
     
     @objc func loadEvents() {
+        print("loadEvents")
         ProgressHUD.show()
         recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kEVENTUSERID).order(by: kEVENTDATEFORUPCOMINGCOMPARISON).addSnapshotListener({ (snapshot, error) in
                            
@@ -99,9 +105,10 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
             self.eventToCopyUserID = ""
             self.upcomingEvents = []
             self.eventUserIDs = []
+            self.isNewObserver = true
             
             var i = 0
-                        
+            var k = 0
             if error != nil {
                 print(error!.localizedDescription)
                 ProgressHUD.dismiss()
@@ -123,9 +130,13 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                     //if the user and event grabbed have same teamID, append it to all events
                     if event.eventTeamID == FUser.currentUser()?.userCurrentTeamID {
                         self.allEvents.append(event)
+                        print("allEvents.append(event)")
+                        print(event.eventUserID + " 1")
                         i += 1
                         //if the event that has the same teamID belongs to an existing user, append the date and count
-                       if event.eventUserID == FUser.currentId() {
+                        if event.eventUserID == FUser.currentId() {
+                            print(event.eventUserID + " 2")
+                            //print("event.eventUserID == FUser.currentId()")
                             self.allEventDates.append(event.eventDate)
                             self.countArray.append(String(event.eventCounter))
                             self.isNewObserver = false
@@ -145,32 +156,49 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                        }
                     }
                }
+                self.checkForNewObserver()
+                k += 1
+                print("k " + String(k))
            }
             self.x += 1
-            print(self.x)
-            self.checkForNewObserver()
+            print("x " + String(self.allEvents.count))
+            
+                
+           self.tableView.reloadData()
+           self.calendar.reloadData()
+            
             ProgressHUD.dismiss()
         })
     }
     
     func checkForNewObserver() {
         let helper = Helper()
-        print(FUser.currentUser()!.userCurrentTeamID)
+        print("check For New Observer")
         
-        if self.eventsToCopy.count * self.eventUserIDs.count == self.allEvents.count {
-            if !self.eventUserIDs.contains(FUser.currentId()) {
-                for event in self.eventsToCopy {
-                    self.createEventsForNewObserver(event: event)
+        
+        
+        if self.isNewObserver {
+            if self.eventsToCopy.count * self.eventUserIDs.count == self.allEvents.count && !(self.eventUserIDs.contains(FUser.currentId())) {
+                if !self.eventUserIDs.contains(FUser.currentId()) {
+                    for event in self.eventsToCopy {
+                        print("create Events For New Observer")
+                        if !(event.eventOwnerID == FUser.currentId()) {
+                            self.createEventsForNewObserver(event: event)
+                        }
+                        
+                        
+                    }
+                    self.tableView.reloadData()
+                    self.calendar.reloadData()
+                } else {
                     
+                    self.tableView.reloadData()
+                    self.calendar.reloadData()
                 }
-                self.tableView.reloadData()
-                self.calendar.reloadData()
-            } else {
-                
-                self.tableView.reloadData()
-                self.calendar.reloadData()
             }
         }
+        
+        
         self.tableView.reloadData()
         self.calendar.reloadData()
 
@@ -226,23 +254,31 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         calendar.formatter.dateFormat = "YYYY-MM-dd"
         let dateForUpcomingComparison = calendar.formatter.string(from: date)
         
-        let eventVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as! Event_Coach
-        let navController = UINavigationController(rootViewController: eventVC)
-        
-        for event in allEvents {
-            if event.eventDate == dateString {
-                eventVC.updateNeeded = true
-                eventVC.event = event
-                eventVC.dateForUpcomingComparison = dateForUpcomingComparison
-                //event.clearCalendarCounter(eventGroupID: event.eventGroupID, eventUserID: event.eventUserID)
+        if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
+        {
+            for event in allEvents {
+                if event.eventDate == dateString {
+                    eventVC.updateNeeded = true
+                    eventVC.event = event
+                    eventVC.dateForUpcomingComparison = dateForUpcomingComparison
+                    //event.clearCalendarCounter(eventGroupID: event.eventGroupID, eventUserID: event.eventUserID)
+                }
             }
+            eventVC.hidesBottomBarWhenPushed = true
+            eventVC.dateString = dateString
+            eventVC.dateForUpcomingComparison = dateForUpcomingComparison
+            eventVC.modalPresentationStyle = .fullScreen
+            self.present(eventVC, animated: true, completion: nil)
         }
         
-        eventVC.hidesBottomBarWhenPushed = true
-        eventVC.dateString = dateString
-        eventVC.dateForUpcomingComparison = dateForUpcomingComparison
+//        let eventVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as! Event_Coach
+//        let navController = UINavigationController(rootViewController: eventVC)
         
-        self.navigationController?.present(navController, animated: true, completion: nil)
+        
+        
+        
+        
+        //self.navigationController?.present(navController, animated: true, completion: nil)
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

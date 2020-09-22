@@ -38,7 +38,7 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
 
         calendar.delegate = self
         
