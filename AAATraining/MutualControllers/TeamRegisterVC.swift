@@ -44,6 +44,12 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
 
     @IBOutlet weak var teamCodeView: UIView!
     
+    @IBOutlet weak var teamNameImage: UIImageView!
+    @IBOutlet weak var teamSportImage: UIImageView!
+    @IBOutlet weak var teamLogoImage: UIImageView!
+    @IBOutlet weak var teamCodeImage: UIImageView!
+    
+    
     var dataSource = ["Archery", "Basketball", "Baseball", "Bowling", "Curling", "Cricket", "Cycling", "Diving", "Football", "Golf", "Gymnastics", "Hockey", "Kayaking", "Lacrosse", "MMA", "Martial Arts", "Rowing", "Rugby", "Running", "Skateboarding", "Skiing", "Snowboarding", "Soccer", "Softball", "Surfing", "Swimming", "Table Tennis", "Tennis", "Track", "Triathlon", "Volleyball", "Wakeboarding", "Weight Loss", "Wrestling", "Yoga", "Other"]
     var cellText = "Select Type..."
     var teamType = ""
@@ -103,6 +109,15 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         logoImageTapGestureRecognizer.addTarget(self, action: #selector(self.logoImageViewClicked))
         logoImageView.isUserInteractionEnabled = true
         logoImageView.addGestureRecognizer(logoImageTapGestureRecognizer)
+        
+        teamNameImage.layer.cornerRadius = teamNameImage.frame.width / 2
+        teamNameImage.clipsToBounds = true
+        teamSportImage.layer.cornerRadius = teamSportImage.frame.width / 2
+        teamSportImage.clipsToBounds = true
+        teamLogoImage.layer.cornerRadius = teamLogoImage.frame.width / 2
+        teamLogoImage.clipsToBounds = true
+        teamCodeImage.layer.cornerRadius = teamCodeImage.frame.width / 2
+        teamCodeImage.clipsToBounds = true
   
     }
     
@@ -124,6 +139,10 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         logoImageView.layer.cornerRadius = logoImageView.frame.width / 2
         logoImageView.clipsToBounds = true
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     @objc func logoImageViewClicked() {
