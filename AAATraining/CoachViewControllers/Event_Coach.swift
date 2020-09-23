@@ -77,7 +77,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         }
         if updateNeeded == true {
             deleteButton.isHidden = false
-            doneButton.setTitle("Update", for: .normal)
+            self.doneButton.setTitle("Update", for: .normal)
             
         } else {
             deleteButton.isHidden = true
@@ -290,14 +290,14 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             } else {
                 ProgressHUD.show("Creating...", interaction: false)
                 createEventForMembers()
-                sleep(UInt32(0.6))
+                sleep(UInt32(0.5))
             }
             
             //createEvent()
         } else {
             helper.showAlert(title: "Data Error", message: "Please fill in info.", in: self)
         }
-        sleep(UInt32(0.6))
+        sleep(UInt32(1.5))
         dismiss(animated: true, completion: nil)
         
     }

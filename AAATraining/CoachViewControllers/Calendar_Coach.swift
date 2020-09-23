@@ -63,7 +63,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         super.viewWillAppear(animated)
         calendar.delegate = self
         loadEvents()
-        
+        print("View Will Appear")
         configureUI()
        
     }
@@ -255,6 +255,24 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         calendar.formatter.dateFormat = "YYYY-MM-dd"
         let dateForUpcomingComparison = calendar.formatter.string(from: date)
         
+//        let eventVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as! Event_Coach
+//        let navController = UINavigationController(rootViewController: eventVC)
+//        
+//        for event in allEvents {
+//            if event.eventDate == dateString {
+//                eventVC.updateNeeded = true
+//                eventVC.event = event
+//                eventVC.dateForUpcomingComparison = dateForUpcomingComparison
+//                //event.clearCalendarCounter(eventGroupID: event.eventGroupID, eventUserID: event.eventUserID)
+//            }
+//        }
+//        
+//        eventVC.hidesBottomBarWhenPushed = true
+//        eventVC.dateString = dateString
+//        eventVC.dateForUpcomingComparison = dateForUpcomingComparison
+//        
+//        self.navigationController?.present(navController, animated: true, completion: nil)
+        
         if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
         {
             for event in allEvents {
@@ -272,8 +290,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
             self.present(eventVC, animated: true, completion: nil)
         }
         
-//        let eventVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as! Event_Coach
-//        let navController = UINavigationController(rootViewController: eventVC)
+
         
         
         
