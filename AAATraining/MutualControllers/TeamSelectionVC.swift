@@ -57,10 +57,6 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 //        loadTeams()
 //        loadUser()
 
-        
-        
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {

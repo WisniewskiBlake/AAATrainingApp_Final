@@ -55,6 +55,7 @@
 		B7376D31251B69CB00B2391B /* teamSportFinal.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = B7376D30251B69C900B2391B /* teamSportFinal.jpeg */; };
 		B7376D33251B69F100B2391B /* teamCodeFinal.png in Resources */ = {isa = PBXBuildFile; fileRef = B7376D32251B69EF00B2391B /* teamCodeFinal.png */; };
 		B7376D35251B6A0700B2391B /* teamLogoFinal.png in Resources */ = {isa = PBXBuildFile; fileRef = B7376D34251B6A0400B2391B /* teamLogoFinal.png */; };
+		B7376D37251C853700B2391B /* TeamEventCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7376D36251C853700B2391B /* TeamEventCache.swift */; };
 		B7551077249C2CD400598A30 /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7551076249C2CD400598A30 /* RegisterVC.swift */; };
 		B755107B249CAB7400598A30 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B755107A249CAB7400598A30 /* Helper.swift */; };
 		B755107E24A2000200598A30 /* Log.png in Resources */ = {isa = PBXBuildFile; fileRef = B755107C24A1FFFE00598A30 /* Log.png */; };
@@ -291,6 +292,7 @@
 		B7376D30251B69C900B2391B /* teamSportFinal.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = teamSportFinal.jpeg; sourceTree = "<group>"; };
 		B7376D32251B69EF00B2391B /* teamCodeFinal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = teamCodeFinal.png; sourceTree = "<group>"; };
 		B7376D34251B6A0400B2391B /* teamLogoFinal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = teamLogoFinal.png; sourceTree = "<group>"; };
+		B7376D36251C853700B2391B /* TeamEventCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamEventCache.swift; sourceTree = "<group>"; };
 		B7551076249C2CD400598A30 /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		B755107A249CAB7400598A30 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		B755107C24A1FFFE00598A30 /* Log.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Log.png; path = ../../../Downloads/FaceBook/FaceBook/Log.png; sourceTree = "<group>"; };
@@ -542,6 +544,7 @@
 				B771576724EDC865005834CA /* Nutrition.swift */,
 				B7DEBF5A24F3B32C00D179C4 /* Team.swift */,
 				B7EA82E52508685700824BC7 /* FooterView.swift */,
+				B7376D36251C853700B2391B /* TeamEventCache.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1313,6 +1316,7 @@
 				B75AD64424CAEBF200DCC857 /* Badges.swift in Sources */,
 				B796233F24E3823500AD3C8F /* Baseline.swift in Sources */,
 				B7DEBF5724F34CBC00D179C4 /* TeamLoginVC.swift in Sources */,
+				B7376D37251C853700B2391B /* TeamEventCache.swift in Sources */,
 				B70EDF2524D7243100CC21F5 /* PlayerCalendar.swift in Sources */,
 				B75D0AE724BECD7000CF7943 /* PlayerRosterCell.swift in Sources */,
 				B70EDF2124D666EB00CC21F5 /* PlayerRecentChatVC.swift in Sources */,
@@ -1543,7 +1547,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hockey.AAATraining;
 				PRODUCT_NAME = LockerRoom;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1569,7 +1573,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hockey.AAATraining;
 				PRODUCT_NAME = LockerRoom;
 				PROVISIONING_PROFILE_SPECIFIER = "";

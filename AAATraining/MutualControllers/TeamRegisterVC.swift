@@ -102,6 +102,7 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         bannerView.adUnitID = "c8b13a0958c55302a0092a8fdabd1f7e"
         //ca-app-pub-8479238648739219/5317514555
+        //c8b13a0958c55302a0092a8fdabd1f7e
         bannerView.rootViewController = self
         bannerView.delegate = self
         bannerView.load(GADRequest())
@@ -189,13 +190,16 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         //potentially could use save user locally here, could also fix userTeamMemberCount bc thats just straight wrong
         var userTeamAccTypeArray: [String]? = []
+        var userIsNewObserverArray: [String]? = []
         fetchCurrentUserFromFirestore(userId: FUser.currentId(), completion: { (user) in
 
            if user != nil && user!.firstname != "" {
             //we have user, login
             userTeamAccTypeArray = user?.userTeamAccountTypes
+            userIsNewObserverArray = user?.userIsNewObserverArray
             userTeamAccTypeArray!.append("Coach")
-            updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMIDS : FieldValue.arrayUnion([self.teamLoginCode]), kUSERTEAMACCOUNTTYPES : userTeamAccTypeArray, kUSERTEAMNAMES : FieldValue.arrayUnion([self.teamNameText.text!]), kUSERTEAMMEMBERS : FieldValue.arrayUnion([FUser.currentId()]), kUSERTEAMMEMBERCOUNT : FieldValue.arrayUnion(["1"])]) { (success) in
+            userIsNewObserverArray!.append("No")
+            updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMIDS : FieldValue.arrayUnion([self.teamLoginCode]), kUSERTEAMACCOUNTTYPES : userTeamAccTypeArray, kUSERTEAMNAMES : FieldValue.arrayUnion([self.teamNameText.text!]), kUSERTEAMMEMBERS : FieldValue.arrayUnion([FUser.currentId()]), kUSERTEAMMEMBERCOUNT : FieldValue.arrayUnion(["1"]), kUSERISNEWOBSERVERARRAY : userIsNewObserverArray]) { (success) in
                 self.goToApp()
 
             }

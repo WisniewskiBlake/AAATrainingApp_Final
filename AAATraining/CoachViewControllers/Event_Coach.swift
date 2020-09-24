@@ -23,6 +23,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     @IBOutlet weak var eventStartText: UITextField!
     @IBOutlet weak var eventEndText: UITextField!
     
+    
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var doneButton: UIButton!
     

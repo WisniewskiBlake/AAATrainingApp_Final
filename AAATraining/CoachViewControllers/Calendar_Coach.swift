@@ -187,7 +187,6 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                         self.createEventsForNewObserver(event: event)
                     }
                     
-                    
                 }
                 self.tableView.reloadData()
                 self.calendar.reloadData()
@@ -198,8 +197,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                 self.calendar.reloadData()
             }
         }
-        
-        
+                
         self.tableView.reloadData()
         self.calendar.reloadData()
 
@@ -289,11 +287,6 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
             eventVC.modalPresentationStyle = .fullScreen
             self.present(eventVC, animated: true, completion: nil)
         }
-        
-
-        
-        
-        
         
         
         //self.navigationController?.present(navController, animated: true, completion: nil)

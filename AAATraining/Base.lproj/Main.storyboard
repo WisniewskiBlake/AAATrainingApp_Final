@@ -85,7 +85,7 @@
                                     <action selector="continueButtonClicked:" destination="khG-9V-29r" eventType="touchUpInside" id="Hfo-Xq-zEB"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have a team?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sIT-Dd-6aX">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Back To Team Select" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sIT-Dd-6aX">
                                 <rect key="frame" x="94.5" y="311" width="230" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="23" id="2Qd-si-2Hi"/>
@@ -387,12 +387,12 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playerFinal.png" translatesAutoresizingMaskIntoConstraints="NO" id="tFh-Md-dJf">
-                                                <rect key="frame" x="57" y="89.5" width="78" height="78"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playerFinal.png" translatesAutoresizingMaskIntoConstraints="NO" id="tFh-Md-dJf">
+                                                <rect key="frame" x="58.5" y="91" width="75" height="75"/>
                                                 <color key="backgroundColor" red="0.092254404499999998" green="0.52911645600000001" blue="0.91474662829999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="78" id="AzD-Ou-3w6"/>
-                                                    <constraint firstAttribute="height" constant="78" id="XN9-6S-ljW"/>
+                                                    <constraint firstAttribute="width" constant="75" id="AzD-Ou-3w6"/>
+                                                    <constraint firstAttribute="height" constant="75" id="XN9-6S-ljW"/>
                                                 </constraints>
                                             </imageView>
                                         </subviews>
@@ -696,7 +696,7 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plusFinal1.png" translatesAutoresizingMaskIntoConstraints="NO" id="fCw-lM-Sgu">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plusFinal2.png" translatesAutoresizingMaskIntoConstraints="NO" id="fCw-lM-Sgu">
                                                 <rect key="frame" x="51.5" y="8" width="85" height="85"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="85" id="G9l-eD-ppa"/>
@@ -943,7 +943,7 @@
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4lx-Vl-fHg">
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="passwordFinal.jpeg" translatesAutoresizingMaskIntoConstraints="NO" id="4lx-Vl-fHg">
                                                                 <rect key="frame" x="145" y="58" width="85" height="85"/>
                                                                 <color key="backgroundColor" red="0.91337895390000001" green="0.92143708469999996" blue="0.93379235270000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
@@ -1182,7 +1182,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Nv-5t-i80" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2271.1999999999998" y="-554.57271364317842"/>
+            <point key="canvasLocation" x="2270.289855072464" y="-554.79910714285711"/>
         </scene>
         <!--RegisterVC-->
         <scene sceneID="HSw-cd-ub0">
@@ -5430,8 +5430,8 @@
                         <outlet property="dateLabel" destination="Qfo-S3-aDs" id="zJ8-OU-4dP"/>
                         <outlet property="deleteButton" destination="OtC-ju-zgH" id="5Kg-e5-O8j"/>
                         <outlet property="doneButton" destination="yYS-GZ-4OG" id="ZdH-Qi-DL2"/>
-                        <outlet property="eventEndText" destination="zW0-b3-Pzf" id="KRs-YT-KP2"/>
-                        <outlet property="eventStartText" destination="8b5-xN-hyJ" id="LpN-XW-olb"/>
+                        <outlet property="eventEndText" destination="8b5-xN-hyJ" id="78r-K3-tkQ"/>
+                        <outlet property="eventStartText" destination="zW0-b3-Pzf" id="gRU-zN-3MJ"/>
                         <outlet property="eventTitleText" destination="leU-if-B3G" id="62u-Za-1AG"/>
                         <outlet property="navView" destination="FTE-cL-UMg" id="pc0-dc-IsL"/>
                         <outlet property="placeHolderLabel" destination="4aD-fX-s2g" id="0Ha-SB-n0r"/>
@@ -5816,7 +5816,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nutritionIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Cga-qF-XGY">
-                                            <rect key="frame" x="0.0" y="4" width="50" height="25"/>
+                                            <rect key="frame" x="0.0" y="-6" width="50" height="35"/>
                                             <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="50" id="HkU-QS-ek6"/>
@@ -6413,7 +6413,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nutritionIcon" translatesAutoresizingMaskIntoConstraints="NO" id="CdB-n4-8Ng">
-                                        <rect key="frame" x="0.0" y="3" width="50" height="26"/>
+                                        <rect key="frame" x="0.0" y="-7" width="50" height="36"/>
                                         <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36" id="p1V-gH-Hvv"/>
@@ -7924,7 +7924,7 @@
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ozd-Nd-JCw">
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="teamNameFinal.jpeg" translatesAutoresizingMaskIntoConstraints="NO" id="Ozd-Nd-JCw">
                                                                 <rect key="frame" x="146" y="58" width="83" height="83"/>
                                                                 <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
@@ -8003,7 +8003,7 @@
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9Mu-ip-bkl">
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="teamSportFinal.jpeg" translatesAutoresizingMaskIntoConstraints="NO" id="9Mu-ip-bkl">
                                                                 <rect key="frame" x="146" y="58" width="83" height="83"/>
                                                                 <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
@@ -8119,9 +8119,9 @@
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qVC-S2-kJt">
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="teamLogoFinal.png" translatesAutoresizingMaskIntoConstraints="NO" id="qVC-S2-kJt">
                                                                 <rect key="frame" x="146" y="58" width="83" height="83"/>
-                                                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="83" id="0FH-jG-8jh"/>
                                                                     <constraint firstAttribute="height" constant="83" id="Qpr-et-2Rr"/>
@@ -8230,7 +8230,7 @@
                                                     <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aFc-CU-N96">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="197"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This Is Your Team Code" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="58N-Vl-E0O">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This Is Your New Team Code" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="58N-Vl-E0O">
                                                                 <rect key="frame" x="16" y="156" width="343" height="33"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="33" id="jcs-Tx-00h"/>
@@ -8240,9 +8240,9 @@
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RZA-m5-CPl">
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="teamCodeFinal.png" translatesAutoresizingMaskIntoConstraints="NO" id="RZA-m5-CPl">
                                                                 <rect key="frame" x="146" y="58" width="83" height="83"/>
-                                                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="83" id="8f4-kR-lQm"/>
                                                                     <constraint firstAttribute="height" constant="83" id="qFV-bL-jM2"/>
@@ -8377,10 +8377,13 @@
                         <outlet property="nameView_width" destination="u5y-lD-f5L" id="NFj-Nd-jD4"/>
                         <outlet property="passwordView_width" destination="o1B-qt-klV" id="ada-z2-IZF"/>
                         <outlet property="scrollView" destination="OsK-CK-eIs" id="ATO-DW-NSZ"/>
+                        <outlet property="teamCodeImage" destination="RZA-m5-CPl" id="SfA-Sm-YYX"/>
                         <outlet property="teamCodeView" destination="i1R-ma-yzH" id="6FN-MD-dsF"/>
+                        <outlet property="teamLogoImage" destination="qVC-S2-kJt" id="jNj-SQ-imK"/>
                         <outlet property="teamNameContinueButton" destination="mpk-H7-xjt" id="OBP-pU-Kga"/>
                         <outlet property="teamNameImage" destination="Ozd-Nd-JCw" id="zlZ-vJ-MTz"/>
                         <outlet property="teamNameText" destination="mu0-22-iYv" id="gcG-KI-new"/>
+                        <outlet property="teamSportImage" destination="9Mu-ip-bkl" id="U0M-fO-Wl0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c86-zg-ukn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -8438,14 +8441,19 @@
         <image name="nameFinal1.jpeg" width="371" height="347.5736083984375"/>
         <image name="nutritionIcon" width="25" height="25"/>
         <image name="parentFinal.png" width="583" height="848.774169921875"/>
+        <image name="passwordFinal.jpeg" width="758.3756103515625" height="703.91876220703125"/>
         <image name="passwrd.png" width="384" height="384"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
         <image name="playerFinal.png" width="1202" height="1202"/>
-        <image name="plusFinal1.png" width="1415.5126953125" height="1415.5126953125"/>
+        <image name="plusFinal2.png" width="1415.5126953125" height="1415.5126953125"/>
         <image name="profile" width="25" height="25"/>
         <image name="profile_selected" width="25" height="25"/>
         <image name="searchIcon" width="25" height="25"/>
         <image name="searchIconSelected" width="25" height="25"/>
+        <image name="teamCodeFinal.png" width="445.2244873046875" height="446.3265380859375"/>
+        <image name="teamLogoFinal.png" width="451.9384765625" height="451.56924438476562"/>
+        <image name="teamNameFinal.jpeg" width="307" height="316.87310791015625"/>
+        <image name="teamSportFinal.jpeg" width="247.43147277832031" height="331.49237060546875"/>
         <image name="user.png" width="300" height="300"/>
         <image name="video.badge.plus" catalog="system" width="128" height="82"/>
         <image name="whistleFinal.png" width="1044" height="924.2069091796875"/>
