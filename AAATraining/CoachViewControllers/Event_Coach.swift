@@ -48,6 +48,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     var dateForUpcomingComparison: String = ""
     var datePicker = UIDatePicker()
+    let eventDatePicker = UIDatePicker()
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -343,8 +344,8 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneEventDatePressed))
         toolbar.setItems([doneBtn], animated: true)
         dateText.inputAccessoryView = toolbar
-        dateText.inputView = datePicker
-        datePicker.datePickerMode = .date
+        dateText.inputView = eventDatePicker
+        eventDatePicker.datePickerMode = .date
     }
     
     @objc func doneEventDatePressed() {

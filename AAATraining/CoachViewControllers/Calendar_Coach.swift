@@ -156,6 +156,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
 
             localReference.setData(eventToUpload)
         }
+        self.loadEvents()
         
     }
     
@@ -173,8 +174,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
             self.eventUserIDs = []
             self.isNewObserver = true
             
-            var i = 0
-            var k = 0
+
             if error != nil {
                 print(error!.localizedDescription)
                 ProgressHUD.dismiss()
@@ -198,7 +198,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                     self.allEvents.append(event)
                     print("allEvents.append(event)")
                     print(event.eventUserID + " 1")
-                    i += 1
+  
                     //if the event that has the same teamID belongs to an existing user, append the date and count
                     if event.eventUserID == FUser.currentId() {
                         print(event.eventUserID + " 2")
@@ -219,37 +219,6 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
            ProgressHUD.dismiss()
         })
     }
-    
-    func checkForNewObserver() {
-        let helper = Helper()
-        print("check For New Observer")
-        
-        if self.isNewObserver {
-            if self.eventsToCopy.count * self.eventUserIDs.count == self.allEvents.count && !(self.eventUserIDs.contains(FUser.currentId())) {
-                
-                for event in self.eventsToCopy {
-                    print("create Events For New Observer")
-                    if !(event.eventOwnerID == FUser.currentId()) && event.eventDate != eventCopied.eventDate {
-                        eventCopied = event
-                        self.createEventsForNewObserver(event: event)
-                    }
-                    
-                }
-                self.tableView.reloadData()
-                self.calendar.reloadData()
-                
-            } else {
-                
-                self.tableView.reloadData()
-                self.calendar.reloadData()
-            }
-        }
-                
-        self.tableView.reloadData()
-        self.calendar.reloadData()
-
-    }
-    
     
     
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
