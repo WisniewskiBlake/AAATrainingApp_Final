@@ -16,6 +16,8 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
 
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var dateText: UITextField!
+    
 
     @IBOutlet weak var placeHolderLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
@@ -66,7 +68,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
         
 
-        dateLabel.text = dateString
+        //dateLabel.text = dateString
         textView.text = event.eventText
         eventTitleText.text = event.eventTitle
         eventStartText.text = event.eventStart
@@ -106,6 +108,18 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         
     }
     
+    func createTeamEvent(eventOwnerID: String, eventTeamID: String, eventText: String, eventDate: String, eventAccountType: String, eventUserID: String, eventGroupID: String, eventTitle: String, eventStart: String, eventEnd: String) {
+        let localReference = reference(.TeamEventCache).document()
+        let eventId = localReference.documentID
+        var event: [String : Any]!
+        var eventCounter = 0
+        
+        event = [kEVENTID: eventId, kEVENTTEAMID: eventTeamID, kEVENTOWNERID: FUser.currentId(), kEVENTTEXT: eventText, kEVENTDATE: self.dateString, kEVENTACCOUNTTYPE: eventAccountType, kEVENTCOUNTER: "0", kEVENTUSERID: "", kEVENTGROUPID: eventGroupID, kEVENTTITLE: eventTitle, kEVENTSTART: eventStart, kEVENTEND: eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: dateForUpcomingComparison] as [String:Any]
+        
+        localReference.setData(event)
+        
+    }
+    
     //get all events with the same teamID as current user, sort by event id and create new events for current user. The number of new events to be created will be determined by how many indexes in until the next eventUserID starts
     
     func createEventForMembers() {
@@ -115,7 +129,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         var tempMembers = memberIds
         let eventText = textView.text!
         let eventOwnerID = FUser.currentId()
-        let eventAccountType = "coach"
+        let eventAccountType = "Coach"
         let eventGroupID = UUID().uuidString
         let eventTitle = eventTitleText.text!
         let eventStart = eventStartText.text
@@ -124,82 +138,81 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         
         //NEED TO ADD EVENTGROUPID HERE NOT DATE, EVENTGROUPID WILL BE THE ID ALL USERS SHARE FOR AN EVENT (SYNONYMOUS WITH CHATROOMID), AND EVENTID WILL BE
         //A UNIQUE IDENTIFIER FOR THE EVENT
-        reference(.Event).whereField(kEVENTDATE, isEqualTo: dateString).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).getDocuments { (snapshot, error) in
-            
-            guard let snapshot = snapshot else { return }
-            
-            if !snapshot.isEmpty {
-                
-                for event in snapshot.documents {
-                    
-                    let currEvent = event.data() as NSDictionary
-                    
-                    if let currentUserId = currEvent[kEVENTUSERID] {
-                        
-                        if tempMembers.contains(currentUserId as! String) {
-                            tempMembers.remove(at: tempMembers.firstIndex(of: currentUserId as! String)!)
-                        }
-                    }
-                }
-                
-            }
+//        reference(.Event).whereField(kEVENTDATE, isEqualTo: dateString).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).getDocuments { (snapshot, error) in
+//
+//            guard let snapshot = snapshot else { return }
+//
+//            if !snapshot.isEmpty {
+//
+//                for event in snapshot.documents {
+//
+//                    let currEvent = event.data() as NSDictionary
+//
+//                    if let currentUserId = currEvent[kEVENTUSERID] {
+//
+//                        if tempMembers.contains(currentUserId as! String) {
+//                            tempMembers.remove(at: tempMembers.firstIndex(of: currentUserId as! String)!)
+//                        }
+//                    }
+//                }
+//
+//            }
             
             
             for userId in tempMembers {
              self.createEvent(eventOwnerID: eventOwnerID, eventTeamID: FUser.currentUser()!.userCurrentTeamID, eventText: eventText, eventDate: self.dateString, eventAccountType: eventAccountType, eventUserID: userId, eventGroupID: eventGroupID, eventTitle: eventTitle, eventStart: eventStart!, eventEnd: eventEnd!)
 
             }
+            self.createTeamEvent(eventOwnerID: eventOwnerID, eventTeamID: FUser.currentUser()!.userCurrentTeamID, eventText: eventText, eventDate: self.dateString, eventAccountType: eventAccountType, eventUserID: "", eventGroupID: eventGroupID, eventTitle: eventTitle, eventStart: eventStart!, eventEnd: eventEnd!)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
             sleep(UInt32(0.6))
             ProgressHUD.dismiss()
-        }
+        //}
     }
     
     func getAllMembers() {
 
         
-        reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kEVENTUSERID).order(by: kEVENTDATEFORUPCOMINGCOMPARISON).getDocuments { (snapshot, error) in
-
-            self.memberIds = []
-
-            guard let snapshot = snapshot else { return }
-
-            if !snapshot.isEmpty {
-
-                for eventDictionary in snapshot.documents {
-
-                    let eventDictionary = eventDictionary.data() as NSDictionary
-                    let event = Event(_dictionary: eventDictionary)
-
-                    if !self.memberIds.contains(event.eventUserID) {
-                        self.memberIds.append(event.eventUserID)
-                    }
-
-                }
-
-
-
-            }
-        }
-        
-        
-        
-//        reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()!.userCurrentTeamID).getDocuments { (snapshot, error) in
-//              self.memberIds = []
+//        reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kEVENTUSERID).order(by: kEVENTDATEFORUPCOMINGCOMPARISON).getDocuments { (snapshot, error) in
+//
+//            self.memberIds = []
+//
 //            guard let snapshot = snapshot else { return }
 //
 //            if !snapshot.isEmpty {
 //
-//                for userDictionary in snapshot.documents {
+//                for eventDictionary in snapshot.documents {
 //
-//                    let userDictionary = userDictionary.data() as NSDictionary
-//                    let fUser = FUser(_dictionary: userDictionary)
+//                    let eventDictionary = eventDictionary.data() as NSDictionary
+//                    let event = Event(_dictionary: eventDictionary)
 //
-//                    self.memberIds.append(fUser.objectId)
+//                    if !self.memberIds.contains(event.eventUserID) {
+//                        self.memberIds.append(event.eventUserID)
+//                    }
 //
 //                }
+//
+//
+//
 //            }
 //        }
+                
+        reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()!.userCurrentTeamID).getDocuments { (snapshot, error) in
+              self.memberIds = []
+            guard let snapshot = snapshot else { return }
+
+            if !snapshot.isEmpty {
+
+                for userDictionary in snapshot.documents {
+
+                    let userDictionary = userDictionary.data() as NSDictionary
+                    let fUser = FUser(_dictionary: userDictionary)
+
+                    self.memberIds.append(fUser.objectId)
+
+                }
+            }
+        }
     }
     
     func getAllEvents() {
@@ -286,7 +299,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     }
     
     @IBAction func doneButtonPressed(_ sender: Any) {
-        if eventTitleText.text != "" && eventStartText.text != "" && eventEndText.text != "" {
+        if eventTitleText.text != "" && eventStartText.text != "" && eventEndText.text != "" && dateText.text != "" {
             if self.doneButton.currentTitle == "Update" {
                 event.updateEvent(eventGroupID: event.eventGroupID, eventOwnerID: event.eventOwnerID, eventText: textView.text!, eventTitle: eventTitleText.text!, eventStart: eventStartText.text!, eventEnd: eventEndText.text!)
             } else {
@@ -303,7 +316,89 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         dismiss(animated: true, completion: nil)
         
     }
+
     
+    func createStartDatePicker() {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneStartPressed))
+        toolbar.setItems([doneBtn], animated: true)
+        eventStartText.inputAccessoryView = toolbar
+        eventStartText.inputView = datePicker
+        datePicker.datePickerMode = .time
+    }
+    func createEndDatePicker() {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneEndPressed))
+        toolbar.setItems([doneBtn], animated: true)
+        eventEndText.inputAccessoryView = toolbar
+        eventEndText.inputView = datePicker
+        datePicker.datePickerMode = .time
+    }
+    
+    func createEventDatePicker() {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneEventDatePressed))
+        toolbar.setItems([doneBtn], animated: true)
+        dateText.inputAccessoryView = toolbar
+        dateText.inputView = datePicker
+        datePicker.datePickerMode = .date
+    }
+    
+    @objc func doneEventDatePressed() {
+        let formatter = DateFormatter()
+        //formatter.dateStyle = .full
+        formatter.dateFormat = "EEEE, MM-dd-YYYY"
+        self.dateString = formatter.string(from: datePicker.date)
+        dateText.text = formatter.string(from: datePicker.date)
+        formatter.dateFormat = "YYYY-MM-dd"
+        self.dateForUpcomingComparison = formatter.string(from: datePicker.date)
+        self.view.endEditing(true)
+    }
+    
+    @objc func doneStartPressed() {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        eventStartText.text = formatter.string(from: datePicker.date)
+        self.view.endEditing(true)
+    }
+    
+    @objc func doneEndPressed() {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        eventEndText.text = formatter.string(from: datePicker.date)
+        self.view.endEditing(true)
+    }
+    
+    func configureUI() {
+        
+       self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+       navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
+        var bottomLine = CALayer()
+        bottomLine.frame = CGRect(x: 0.0, y: eventStartText.frame.height, width: eventStartText.frame.width, height: 1.0)
+        bottomLine.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        eventStartText.borderStyle = UITextField.BorderStyle.none
+        eventStartText.layer.addSublayer(bottomLine)
+        
+        var bottomLine1 = CALayer()
+        bottomLine1.frame = CGRect(x: 0.0, y: eventEndText.frame.height, width: eventEndText.frame.width, height: 1.0)
+        bottomLine1.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        eventEndText.borderStyle = UITextField.BorderStyle.none
+        eventEndText.layer.addSublayer(bottomLine1)
+
+        cornerRadius(for: deleteButton)
+    }
+    
+
+        
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     @IBAction func backButtonPressed(_ sender: Any) {
         event.clearCalendarCounter(eventGroupID: event.eventGroupID, eventUserID : event.eventUserID)
@@ -353,85 +448,6 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     func cornerRadius(for view: UIView) {
         view.layer.cornerRadius = 5
         view.layer.masksToBounds = true
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
-    func createStartDatePicker() {
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneStartPressed))
-        toolbar.setItems([doneBtn], animated: true)
-        eventStartText.inputAccessoryView = toolbar
-        eventStartText.inputView = datePicker
-        datePicker.datePickerMode = .time
-    }
-    func createEndDatePicker() {
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneEndPressed))
-        toolbar.setItems([doneBtn], animated: true)
-        eventEndText.inputAccessoryView = toolbar
-        eventEndText.inputView = datePicker
-        datePicker.datePickerMode = .time
-    }
-    
-    func createEventDatePicker() {
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneEventDatePressed))
-        toolbar.setItems([doneBtn], animated: true)
-        eventEndText.inputAccessoryView = toolbar
-        eventEndText.inputView = datePicker
-        datePicker.datePickerMode = .time
-    }
-    
-    @objc func doneEventDatePressed() {
-        let formatter = DateFormatter()
-        //formatter.dateStyle = .full
-        formatter.dateFormat = "EEEE, MM-dd-YYYY"
-        dateLabel.text = formatter.string(from: datePicker.date)
-        formatter.dateFormat = "YYYY-MM-dd"
-        self.dateForUpcomingComparison = formatter.string(from: datePicker.date)
-        self.view.endEditing(true)
-    }
-    
-    @objc func doneStartPressed() {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .none
-        formatter.timeStyle = .short
-        eventStartText.text = formatter.string(from: datePicker.date)
-        self.view.endEditing(true)
-    }
-    
-    @objc func doneEndPressed() {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .none
-        formatter.timeStyle = .short
-        eventEndText.text = formatter.string(from: datePicker.date)
-        self.view.endEditing(true)
-    }
-    
-    func configureUI() {
-        
-       self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-       navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        
-        var bottomLine = CALayer()
-        bottomLine.frame = CGRect(x: 0.0, y: eventStartText.frame.height, width: eventStartText.frame.width, height: 1.0)
-        bottomLine.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-        eventStartText.borderStyle = UITextField.BorderStyle.none
-        eventStartText.layer.addSublayer(bottomLine)
-        
-        var bottomLine1 = CALayer()
-        bottomLine1.frame = CGRect(x: 0.0, y: eventEndText.frame.height, width: eventEndText.frame.width, height: 1.0)
-        bottomLine1.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-        eventEndText.borderStyle = UITextField.BorderStyle.none
-        eventEndText.layer.addSublayer(bottomLine1)
-
-        cornerRadius(for: deleteButton)
     }
 
 }

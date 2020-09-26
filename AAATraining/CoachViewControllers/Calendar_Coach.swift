@@ -38,6 +38,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [])
     
     var x = 0
+    var index = 0
     
     var eventCopied = Event()
     
@@ -62,7 +63,13 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         calendar.delegate = self
-        loadEvents()
+        loadUser()
+        if FUser.currentUser()?.userIsNewObserverArray[self.index] == "Yes" {
+            getEventsForNewObserver()
+        } else {
+            loadEvents()
+        }
+        
         print("View Will Appear")
         configureUI()
        
@@ -84,15 +91,11 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         splitterLabelTwo.backgroundColor = #colorLiteral(red: 0.9133789539, green: 0.9214370847, blue: 0.9337923527, alpha: 1)
     }
     
-    func loadTeam() {
-        team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
-            if teamReturned.teamID != "" {
-                self.team = teamReturned
-                    
-            } else {
-                
-            }
-        }
+    func loadUser() {
+        
+        var userTeamIDArray = FUser.currentUser()?.userTeamIDs
+        var userIsNewObserverArray = FUser.currentUser()?.userIsNewObserverArray
+        self.index = userTeamIDArray?.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)! as! Int
     }
     
     @IBAction func createEvent_clicked(_ sender: Any) {
@@ -103,6 +106,58 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         }
     }
     
+    func getEventsForNewObserver() {
+        ProgressHUD.show()
+        recentListener = reference(.TeamEventCache).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kEVENTDATEFORUPCOMINGCOMPARISON).addSnapshotListener({ (snapshot, error) in
+            self.allEvents = []
+            self.allEventDates = []
+            self.upcomingEvents = []
+            
+            if error != nil {
+                 print(error!.localizedDescription)
+                 ProgressHUD.dismiss()
+                 self.calendar.reloadData()
+                 return
+             }
+             guard let snapshot = snapshot else { ProgressHUD.dismiss(); return }
+                    
+             if !snapshot.isEmpty {
+                 for eventDictionary in snapshot.documents {
+                     
+                    let eventDictionary = eventDictionary.data() as NSDictionary
+                    let event = Event(_dictionary: eventDictionary)
+                     
+
+                    self.allEvents.append(event)
+
+                     
+                }
+ 
+
+            }
+
+            self.tableView.reloadData()
+            self.calendar.reloadData()
+             
+             ProgressHUD.dismiss()
+            
+            
+            
+        })
+        
+        
+        
+        let localReference = reference(.Event).document()
+        let eventId = localReference.documentID
+        var eventToUpload: [String : Any]!
+        let eventCounter = 0
+        for event in allEvents {
+            eventToUpload = [kEVENTID: eventId, kEVENTTEAMID: event.eventTeamID, kEVENTOWNERID: event.eventOwnerID, kEVENTTEXT: event.eventText, kEVENTDATE: event.eventDate, kEVENTACCOUNTTYPE: FUser.currentUser()?.accountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: FUser.currentId(), kEVENTGROUPID: event.eventGroupID, kEVENTTITLE: event.eventTitle, kEVENTSTART: event.eventStart, kEVENTEND: event.eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: event.dateForUpcomingComparison] as [String:Any]
+
+            localReference.setData(eventToUpload)
+        }
+        
+    }
     
     @objc func loadEvents() {
         print("loadEvents")
@@ -139,46 +194,29 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                     }
                     
                     //if the user and event grabbed have same teamID, append it to all events
-                    if event.eventTeamID == FUser.currentUser()?.userCurrentTeamID {
-                        self.allEvents.append(event)
-                        print("allEvents.append(event)")
-                        print(event.eventUserID + " 1")
-                        i += 1
-                        //if the event that has the same teamID belongs to an existing user, append the date and count
-                        if event.eventUserID == FUser.currentId() {
-                            print(event.eventUserID + " 2")
-                            //print("event.eventUserID == FUser.currentId()")
-                            self.allEventDates.append(event.eventDate)
-                            self.countArray.append(String(event.eventCounter))
-                            self.isNewObserver = false
-                       } else {
-                            //else if the first event grabbed does not belong to an existing user, then append it to eventsToCopy
-                            if i == 1 {
-                                self.eventsToCopy.append(event)
-                                self.eventToCopyUserID = event.eventUserID
-                            } else if i > 1 {
-                                if self.eventToCopyUserID == event.eventUserID {
-                                    self.eventsToCopy.append(event)
-                                }
-                            }
-                            if !self.eventUserIDs.contains(event.eventUserID) {
-                                self.eventUserIDs.append(event.eventUserID)
-                            }
-                       }
-                    }
+                    
+                    self.allEvents.append(event)
+                    print("allEvents.append(event)")
+                    print(event.eventUserID + " 1")
+                    i += 1
+                    //if the event that has the same teamID belongs to an existing user, append the date and count
+                    if event.eventUserID == FUser.currentId() {
+                        print(event.eventUserID + " 2")
+                        //print("event.eventUserID == FUser.currentId()")
+                        self.allEventDates.append(event.eventDate)
+                        self.countArray.append(String(event.eventCounter))
+                       
+                   }
+                    
                }
-                self.checkForNewObserver()
-                k += 1
-                print("k " + String(k))
+                self.tableView.reloadData()
+                self.calendar.reloadData()
            }
-            self.x += 1
-            print("x " + String(self.allEvents.count))
-            
-                
+  
            self.tableView.reloadData()
            self.calendar.reloadData()
             
-            ProgressHUD.dismiss()
+           ProgressHUD.dismiss()
         })
     }
     
@@ -212,15 +250,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
 
     }
     
-    func createEventsForNewObserver(event: Event) {
-        let localReference = reference(.Event).document()
-        let eventId = localReference.documentID
-        var eventToUpload: [String : Any]!
-        let eventCounter = 0
-        eventToUpload = [kEVENTID: eventId, kEVENTTEAMID: event.eventTeamID, kEVENTOWNERID: event.eventOwnerID, kEVENTTEXT: event.eventText, kEVENTDATE: event.eventDate, kEVENTACCOUNTTYPE: FUser.currentUser()?.accountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: FUser.currentId(), kEVENTGROUPID: event.eventGroupID, kEVENTTITLE: event.eventTitle, kEVENTSTART: event.eventStart, kEVENTEND: event.eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: event.dateForUpcomingComparison] as [String:Any]
-
-        localReference.setData(eventToUpload)
-    }
+    
     
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
         calendar.formatter.dateFormat = "EEEE, MM-dd-YYYY"

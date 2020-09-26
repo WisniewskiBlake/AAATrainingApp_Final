@@ -303,30 +303,8 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 self.coverImageView.image = UIImage(named: "HomeCover.jpg")
                 self.isCover = false
             }
-        }
-        
-//        reference(.Team).document(FUser.currentUser()!.userTeamID).getDocument { (snapshot, error) in
-//
-//            guard let snapshot = snapshot else {  return }
-//
-//            if snapshot.exists {
-//
-//                let team = Team(_dictionary: snapshot.data()! as NSDictionary)
-//
-//                helper.imageFromData(pictureData: team.teamLogo) { (coverImage) in
-//
-//                    if coverImage != nil {
-//                        self.coverImageView.image = coverImage!
-//                        self.isCover = true
-//                    }
-//                }
-//
-//
-//            } else {
-//                self.coverImageView.image = UIImage(named: "HomeCover.jpg")
-//                self.isCover = false
-//            }
-//        }
+        }        
+
    
         guard let firstName = user?.firstname, let lastName = user?.lastname, let avaPath = user?.ava, let coverPath = user?.cover else {
                

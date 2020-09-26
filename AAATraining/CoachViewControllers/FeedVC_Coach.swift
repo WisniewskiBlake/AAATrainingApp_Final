@@ -86,9 +86,9 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         
         
 
-        configureFloatingButton()
-        //self.view.addSubview(actionButton)
-        self.navigationController?.view.addSubview(actionButton)
+//        configureFloatingButton()
+//        self.view.addSubview(actionButton)
+//        self.navigationController?.view.addSubview(actionButton)
 //        for family in UIFont.familyNames.sorted() {
 //            let names = UIFont.fontNames(forFamilyName: family)
 //            print("Family: \(family) Font names: \(names)")
