@@ -9,6 +9,14 @@
 import UIKit
 
 class EventCell: UITableViewCell {
+    
+    @IBOutlet weak var eventDateLabel: UILabel!
+    @IBOutlet weak var eventTitleText: UITextField!
+    @IBOutlet weak var eventStartText: UITextField!
+    @IBOutlet weak var eventEndText: UITextField!
+    @IBOutlet weak var eventText: UITextView!
+    @IBOutlet weak var placeholderLabel: UILabel!
+    
 
     override func awakeFromNib() {
         super.awakeFromNib()

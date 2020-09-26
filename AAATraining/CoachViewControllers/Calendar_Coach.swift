@@ -96,7 +96,11 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     }
     
     @IBAction func createEvent_clicked(_ sender: Any) {
-        
+        if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
+        {            
+            eventVC.modalPresentationStyle = .fullScreen
+            self.present(eventVC, animated: true, completion: nil)
+        }
     }
     
     

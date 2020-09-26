@@ -46,7 +46,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     var dateForUpcomingComparison: String = ""
     var datePicker = UIDatePicker()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         print(dateForUpcomingComparison)
@@ -61,6 +61,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         configureUI()
         createStartDatePicker()
         createEndDatePicker()
+        createEventDatePicker()
         
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
         
@@ -366,7 +367,6 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         eventStartText.inputAccessoryView = toolbar
         eventStartText.inputView = datePicker
         datePicker.datePickerMode = .time
-        
     }
     func createEndDatePicker() {
         let toolbar = UIToolbar()
@@ -376,7 +376,26 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         eventEndText.inputAccessoryView = toolbar
         eventEndText.inputView = datePicker
         datePicker.datePickerMode = .time
-        
+    }
+    
+    func createEventDatePicker() {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneEventDatePressed))
+        toolbar.setItems([doneBtn], animated: true)
+        eventEndText.inputAccessoryView = toolbar
+        eventEndText.inputView = datePicker
+        datePicker.datePickerMode = .time
+    }
+    
+    @objc func doneEventDatePressed() {
+        let formatter = DateFormatter()
+        //formatter.dateStyle = .full
+        formatter.dateFormat = "EEEE, MM-dd-YYYY"
+        dateLabel.text = formatter.string(from: datePicker.date)
+        formatter.dateFormat = "YYYY-MM-dd"
+        self.dateForUpcomingComparison = formatter.string(from: datePicker.date)
+        self.view.endEditing(true)
     }
     
     @objc func doneStartPressed() {
