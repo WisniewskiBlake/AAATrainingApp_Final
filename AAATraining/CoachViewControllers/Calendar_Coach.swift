@@ -95,6 +95,11 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         }
     }
     
+    @IBAction func createEvent_clicked(_ sender: Any) {
+        
+    }
+    
+    
     @objc func loadEvents() {
         print("loadEvents")
         ProgressHUD.show()
