@@ -93,8 +93,8 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
     func loadUser() {
         
-        var userTeamIDArray = FUser.currentUser()?.userTeamIDs
-        var userIsNewObserverArray = FUser.currentUser()?.userIsNewObserverArray
+        let userTeamIDArray = FUser.currentUser()?.userTeamIDs
+        let userIsNewObserverArray = FUser.currentUser()?.userIsNewObserverArray
         self.index = userTeamIDArray?.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)! as! Int
     }
     
@@ -189,9 +189,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                    let eventDictionary = eventDictionary.data() as NSDictionary
                    let event = Event(_dictionary: eventDictionary)
                     
-                    if event.dateForUpcomingComparison > self.today && event.eventUserID == FUser.currentId() {
-                        self.upcomingEvents.append(event)
-                    }
+                    
                     
                     //if the user and event grabbed have same teamID, append it to all events
                     
@@ -203,6 +201,9 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                     if event.eventUserID == FUser.currentId() {
                         print(event.eventUserID + " 2")
                         //print("event.eventUserID == FUser.currentId()")
+                        if event.dateForUpcomingComparison > self.today {
+                            self.upcomingEvents.append(event)
+                        }
                         self.allEventDates.append(event.eventDate)
                         self.countArray.append(String(event.eventCounter))
                        

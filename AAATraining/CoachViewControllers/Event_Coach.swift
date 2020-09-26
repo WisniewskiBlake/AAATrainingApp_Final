@@ -208,8 +208,16 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
 
                     let userDictionary = userDictionary.data() as NSDictionary
                     let fUser = FUser(_dictionary: userDictionary)
+                    
+                    let userTeamIDArray = fUser.userTeamIDs
+                    let userIsNewObserverArray = fUser.userIsNewObserverArray
+                    let index = userTeamIDArray.firstIndex(of: fUser.userCurrentTeamID)! as! Int
+                    
+                    if fUser.userIsNewObserverArray[index] != "Yes" {
+                        self.memberIds.append(fUser.objectId)
+                    }
 
-                    self.memberIds.append(fUser.objectId)
+                    
 
                 }
             }
@@ -352,10 +360,10 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         let formatter = DateFormatter()
         //formatter.dateStyle = .full
         formatter.dateFormat = "EEEE, MM-dd-YYYY"
-        self.dateString = formatter.string(from: datePicker.date)
-        dateText.text = formatter.string(from: datePicker.date)
+        self.dateString = formatter.string(from: eventDatePicker.date)
+        dateText.text = self.dateString
         formatter.dateFormat = "YYYY-MM-dd"
-        self.dateForUpcomingComparison = formatter.string(from: datePicker.date)
+        self.dateForUpcomingComparison = formatter.string(from: eventDatePicker.date)
         self.view.endEditing(true)
     }
     
