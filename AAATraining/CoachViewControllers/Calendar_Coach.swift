@@ -180,30 +180,30 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                     let event = TeamEventCache(_dictionary: eventDictionary)
                      
 
-                    self.allCacheEvents.append(event)
+                    //self.allCacheEvents.append(event)
                     self.createEventsForNewObserver(event: event)
                    
 
-                   if event.dateForUpcomingComparison > self.today {
-                       self.upcomingCacheEvents.append(event)
-                   }
-                   self.allEventDates.append(event.eventDate)
-                   self.countArray.append(String(event.eventCounter))
+//                   if event.dateForUpcomingComparison > self.today {
+//                       self.upcomingCacheEvents.append(event)
+//                   }
+//                   self.allEventDates.append(event.eventDate)
+//                   self.countArray.append(String(event.eventCounter))
                       
                   
 
                      
                 }
-                self.tableView.reloadData()
-                self.calendar.reloadData()
+//                self.tableView.reloadData()
+//                self.calendar.reloadData()
 
             }
 
-            self.tableView.reloadData()
-            self.calendar.reloadData()
+//            self.tableView.reloadData()
+//            self.calendar.reloadData()
              //sleep(UInt32(1.2))
              ProgressHUD.dismiss()
-//             self.loadEvents()
+             self.loadEvents()
             
             
         }
