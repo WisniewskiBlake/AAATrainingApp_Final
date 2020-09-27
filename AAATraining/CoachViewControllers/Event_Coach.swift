@@ -49,6 +49,9 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     var dateForUpcomingComparison: String = ""
     var datePicker = UIDatePicker()
     let eventDatePicker = UIDatePicker()
+    
+    var index = 0
+    var isNewObserverValue: String = ""
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,7 +118,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         var event: [String : Any]!
         var eventCounter = 0
         
-        event = [kEVENTID: eventId, kEVENTTEAMID: eventTeamID, kEVENTOWNERID: FUser.currentId(), kEVENTTEXT: eventText, kEVENTDATE: self.dateString, kEVENTACCOUNTTYPE: eventAccountType, kEVENTCOUNTER: "0", kEVENTUSERID: "", kEVENTGROUPID: eventGroupID, kEVENTTITLE: eventTitle, kEVENTSTART: eventStart, kEVENTEND: eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: dateForUpcomingComparison] as [String:Any]
+        event = [kEVENTID: eventId, kEVENTTEAMID: eventTeamID, kEVENTOWNERID: FUser.currentId(), kEVENTTEXT: eventText, kEVENTDATE: self.dateString, kEVENTACCOUNTTYPE: eventAccountType, kEVENTCOUNTER: 0, kEVENTUSERID: "", kEVENTGROUPID: eventGroupID, kEVENTTITLE: eventTitle, kEVENTSTART: eventStart, kEVENTEND: eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: dateForUpcomingComparison] as [String:Any]
         
         localReference.setData(event)
         
@@ -202,6 +205,10 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
               self.memberIds = []
             guard let snapshot = snapshot else { return }
 
+            self.index = 0
+            self.isNewObserverValue = ""
+            self.memberIds = []
+            
             if !snapshot.isEmpty {
 
                 for userDictionary in snapshot.documents {
@@ -211,9 +218,11 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
                     
                     let userTeamIDArray = fUser.userTeamIDs
                     let userIsNewObserverArray = fUser.userIsNewObserverArray
-                    let index = userTeamIDArray.firstIndex(of: fUser.userCurrentTeamID)! as! Int
                     
-                    if fUser.userIsNewObserverArray[index] != "Yes" {
+                    self.index = userTeamIDArray.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)!
+                    self.isNewObserverValue = fUser.userIsNewObserverArray[self.index]
+                    
+                    if self.isNewObserverValue == "No" {
                         self.memberIds.append(fUser.objectId)
                     }
 

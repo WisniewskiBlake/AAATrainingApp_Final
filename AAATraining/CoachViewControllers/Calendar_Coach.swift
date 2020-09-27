@@ -24,6 +24,10 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
     var allEvents: [Event] = []
     var upcomingEvents: [Event] = []
+    
+    var allCacheEvents: [TeamEventCache] = []
+    var upcomingCacheEvents: [TeamEventCache] = []
+    
     var recentListener: ListenerRegistration!
     var allEventDates: [String] = []
     var countArray = [String]()
@@ -39,8 +43,11 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
     var x = 0
     var index = 0
+    let helper = Helper()
     
     var eventCopied = Event()
+    var isNewObserverValue: String = "No"
+    var updateObserverArray: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +62,8 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         today = calendar.formatter.string(from: todayDate)
         
         
-        //loadEvents()
+        loadUser()
+        
         
     }
     
@@ -63,12 +71,8 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         calendar.delegate = self
-        loadUser()
-        if FUser.currentUser()?.userIsNewObserverArray[self.index] == "Yes" {
-            getEventsForNewObserver()
-        } else {
-            loadEvents()
-        }
+        //loadUser()
+        
         
         print("View Will Appear")
         configureUI()
@@ -93,10 +97,51 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
     func loadUser() {
         
-        let userTeamIDArray = FUser.currentUser()?.userTeamIDs
-        let userIsNewObserverArray = FUser.currentUser()?.userIsNewObserverArray
-        self.index = userTeamIDArray?.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)! as! Int
-    }
+        let query = reference(.User).whereField(kOBJECTID, isEqualTo: FUser.currentId())
+                query.getDocuments { (snapshot, error) in
+                    
+                    self.updateObserverArray = []
+
+                    if error != nil {
+                        print(error!.localizedDescription)
+                        ProgressHUD.dismiss()
+                     self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
+        
+                        return
+                    }
+        
+                    guard let snapshot = snapshot else {
+                        self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
+                        ProgressHUD.dismiss(); return
+                    }
+        
+                    if !snapshot.isEmpty {
+        
+                        for userDictionary in snapshot.documents {
+        
+                            let userDictionary = userDictionary.data() as NSDictionary
+                            let user = FUser(_dictionary: userDictionary)
+                            
+                            let userTeamIDArray = user.userTeamIDs
+                            let userIsNewObserverArray = user.userIsNewObserverArray
+                            self.index = userTeamIDArray.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)!
+                            self.isNewObserverValue = user.userIsNewObserverArray[self.index]
+                            self.updateObserverArray = userIsNewObserverArray
+                            
+                        }
+                        if self.isNewObserverValue == "Yes" {
+                            self.getEventsForNewObserver()
+                            self.updateObserverArray[self.index] = "No"
+                            updateUser(userID: FUser.currentId(), withValues: [kUSERISNEWOBSERVERARRAY: self.updateObserverArray])
+                        } else {
+                            self.loadEvents()
+                        }
+                    }
+                    
+                    ProgressHUD.dismiss()
+                    
+                }
+     }
     
     @IBAction func createEvent_clicked(_ sender: Any) {
         if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
@@ -108,10 +153,17 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
     func getEventsForNewObserver() {
         ProgressHUD.show()
-        recentListener = reference(.TeamEventCache).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kEVENTDATEFORUPCOMINGCOMPARISON).addSnapshotListener({ (snapshot, error) in
-            self.allEvents = []
+        let localReference = reference(.Event).document()
+        let eventId = localReference.documentID
+        var eventToUpload: [String : Any]!
+        print(FUser.currentUser()?.userCurrentTeamID)
+        
+        let query = reference(.TeamEventCache).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kEVENTDATEFORUPCOMINGCOMPARISON)
+        query.getDocuments { (snapshot, error) in
+            self.allCacheEvents = []
             self.allEventDates = []
-            self.upcomingEvents = []
+            self.upcomingCacheEvents = []
+            self.countArray = []
             
             if error != nil {
                  print(error!.localizedDescription)
@@ -125,39 +177,49 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                  for eventDictionary in snapshot.documents {
                      
                     let eventDictionary = eventDictionary.data() as NSDictionary
-                    let event = Event(_dictionary: eventDictionary)
+                    let event = TeamEventCache(_dictionary: eventDictionary)
                      
 
-                    self.allEvents.append(event)
+                    self.allCacheEvents.append(event)
+                    self.createEventsForNewObserver(event: event)
+                   
+
+                   if event.dateForUpcomingComparison > self.today {
+                       self.upcomingCacheEvents.append(event)
+                   }
+                   self.allEventDates.append(event.eventDate)
+                   self.countArray.append(String(event.eventCounter))
+                      
+                  
 
                      
                 }
- 
+                self.tableView.reloadData()
+                self.calendar.reloadData()
 
             }
 
             self.tableView.reloadData()
             self.calendar.reloadData()
-             
+             //sleep(UInt32(1.2))
              ProgressHUD.dismiss()
+//             self.loadEvents()
             
             
-            
-        })
+        }
         
         
         
+    }
+    
+    func createEventsForNewObserver(event: TeamEventCache) {
         let localReference = reference(.Event).document()
         let eventId = localReference.documentID
         var eventToUpload: [String : Any]!
         let eventCounter = 0
-        for event in allEvents {
-            eventToUpload = [kEVENTID: eventId, kEVENTTEAMID: event.eventTeamID, kEVENTOWNERID: event.eventOwnerID, kEVENTTEXT: event.eventText, kEVENTDATE: event.eventDate, kEVENTACCOUNTTYPE: FUser.currentUser()?.accountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: FUser.currentId(), kEVENTGROUPID: event.eventGroupID, kEVENTTITLE: event.eventTitle, kEVENTSTART: event.eventStart, kEVENTEND: event.eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: event.dateForUpcomingComparison] as [String:Any]
+        eventToUpload = [kEVENTID: eventId, kEVENTTEAMID: event.eventTeamID, kEVENTOWNERID: event.eventOwnerID, kEVENTTEXT: event.eventText, kEVENTDATE: event.eventDate, kEVENTACCOUNTTYPE: FUser.currentUser()?.accountType, kEVENTCOUNTER: 0, kEVENTUSERID: FUser.currentId(), kEVENTGROUPID: event.eventGroupID, kEVENTTITLE: event.eventTitle, kEVENTSTART: event.eventStart, kEVENTEND: event.eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: event.dateForUpcomingComparison] as [String:Any]
 
-            localReference.setData(eventToUpload)
-        }
-        self.loadEvents()
-        
+        localReference.setData(eventToUpload)
     }
     
     @objc func loadEvents() {
@@ -189,10 +251,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                    let eventDictionary = eventDictionary.data() as NSDictionary
                    let event = Event(_dictionary: eventDictionary)
                     
-                    
-                    
-                    //if the user and event grabbed have same teamID, append it to all events
-                    
+
                     self.allEvents.append(event)
                     print("allEvents.append(event)")
                     print(event.eventUserID + " 1")
@@ -343,7 +402,8 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         eventVC.dateString = event.eventDate
         eventVC.dateForUpcomingComparison = event.dateForUpcomingComparison
         
-        self.navigationController?.present(navController, animated: true, completion: nil)
+        eventVC.modalPresentationStyle = .fullScreen
+        self.present(eventVC, animated: true, completion: nil)
     }
     
     
