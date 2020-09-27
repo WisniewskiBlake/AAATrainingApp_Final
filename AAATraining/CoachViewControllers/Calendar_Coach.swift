@@ -62,7 +62,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         today = calendar.formatter.string(from: todayDate)
         
         
-        loadUser()
+        //loadUser()
         
         
     }
@@ -71,7 +71,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         calendar.delegate = self
-        //loadUser()
+        loadUser()
         
         
         print("View Will Appear")
@@ -321,37 +321,24 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         calendar.formatter.dateFormat = "YYYY-MM-dd"
         let dateForUpcomingComparison = calendar.formatter.string(from: date)
         
-//        let eventVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as! Event_Coach
-//        let navController = UINavigationController(rootViewController: eventVC)
-//        
-//        for event in allEvents {
-//            if event.eventDate == dateString {
-//                eventVC.updateNeeded = true
-//                eventVC.event = event
-//                eventVC.dateForUpcomingComparison = dateForUpcomingComparison
-//                //event.clearCalendarCounter(eventGroupID: event.eventGroupID, eventUserID: event.eventUserID)
-//            }
-//        }
-//        
-//        eventVC.hidesBottomBarWhenPushed = true
-//        eventVC.dateString = dateString
-//        eventVC.dateForUpcomingComparison = dateForUpcomingComparison
-//        
-//        self.navigationController?.present(navController, animated: true, completion: nil)
+        var allEventsSameDate: [Event] = []
+        var datesForUpcomingComparison: [String] = []
+
         
-        if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
+        if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MultiEvent_Coach") as? MultiEvent_Coach
         {
             for event in allEvents {
                 if event.eventDate == dateString {
-                    eventVC.updateNeeded = true
-                    eventVC.event = event
-                    eventVC.dateForUpcomingComparison = dateForUpcomingComparison
+                    allEventsSameDate.append(event)
+                    datesForUpcomingComparison.append(dateForUpcomingComparison)
+                    
                     //event.clearCalendarCounter(eventGroupID: event.eventGroupID, eventUserID: event.eventUserID)
                 }
             }
             eventVC.hidesBottomBarWhenPushed = true
             eventVC.dateString = dateString
-            eventVC.dateForUpcomingComparison = dateForUpcomingComparison
+            eventVC.allEventsSameDate = allEventsSameDate
+            eventVC.datesForUpcomingComparison = datesForUpcomingComparison
             eventVC.modalPresentationStyle = .fullScreen
             self.present(eventVC, animated: true, completion: nil)
         }
@@ -391,19 +378,24 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         
         let event = upcomingEvents[indexPath.row]
         
-        let eventVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as! Event_Coach
-        let navController = UINavigationController(rootViewController: eventVC)
+        if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
+        {
+            eventVC.hidesBottomBarWhenPushed = true
+            eventVC.dateString = event.eventDate
+            eventVC.dateForUpcomingComparison = event.dateForUpcomingComparison
+            eventVC.updateNeeded = true
+            eventVC.event = event
+            eventVC.dateForUpcomingComparison = event.dateForUpcomingComparison
+            eventVC.modalPresentationStyle = .fullScreen
+            self.present(eventVC, animated: true, completion: nil)
+        }
         
-        eventVC.updateNeeded = true
-        eventVC.event = event
-        eventVC.dateForUpcomingComparison = event.dateForUpcomingComparison
         
-        eventVC.hidesBottomBarWhenPushed = true
-        eventVC.dateString = event.eventDate
-        eventVC.dateForUpcomingComparison = event.dateForUpcomingComparison
         
-        eventVC.modalPresentationStyle = .fullScreen
-        self.present(eventVC, animated: true, completion: nil)
+        
+        
+        
+        
     }
     
     

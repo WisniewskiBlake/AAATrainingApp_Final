@@ -72,7 +72,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
         
 
-        //dateLabel.text = dateString
+        dateText.text = dateString
         textView.text = event.eventText
         eventTitleText.text = event.eventTitle
         eventStartText.text = event.eventStart

@@ -20,6 +20,7 @@ class UserTypeSelectionVC: UIViewController {
     @IBOutlet weak var parentView: UIView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var titleView: UIView!
+    @IBOutlet weak var backButton: UIButton!
     
     @IBOutlet weak var coachImageView: UIImageView!
     @IBOutlet weak var playerImageView: UIImageView!
@@ -137,6 +138,15 @@ class UserTypeSelectionVC: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
+    @IBAction func backButtonPressed(_ sender: Any) {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
+        {
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+    
 
 }
 
