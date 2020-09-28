@@ -23,8 +23,14 @@ class MultiEvent_Coach: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadEvents()
+        //loadEvents()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        loadEvents()
         
     }
     

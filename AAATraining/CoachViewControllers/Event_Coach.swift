@@ -55,10 +55,12 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(dateForUpcomingComparison)
+        //print(dateForUpcomingComparison)
         
     }
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        GIFHUD.shared.setGif(named: "loaderFinal.gif")
         event.clearCalendarCounter(eventGroupID: event.eventGroupID, eventUserID : event.eventUserID)
         self.navView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         
@@ -170,7 +172,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             self.createTeamEvent(eventOwnerID: eventOwnerID, eventTeamID: FUser.currentUser()!.userCurrentTeamID, eventText: eventText, eventDate: self.dateString, eventAccountType: eventAccountType, eventUserID: "", eventGroupID: eventGroupID, eventTitle: eventTitle, eventStart: eventStart!, eventEnd: eventEnd!)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
             sleep(UInt32(0.6))
-            ProgressHUD.dismiss()
+        GIFHUD.shared.dismiss()
         //}
     }
     
@@ -259,8 +261,8 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
 
     
     @IBAction func deleteButtonPressed(_ sender: Any) {
-        //ProgressHUD.show()
-        ProgressHUD.show("Deleting...", interaction: false)
+        GIFHUD.shared.show(withOverlay: true)
+        //ProgressHUD.show("Deleting...", interaction: false)
         var i = 0
         
         for event in allEventsWithGroupID {
@@ -273,7 +275,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
                 }
                 if i == self.allEventsWithGroupID.count {
                     sleep(UInt32(1.7))
-                           ProgressHUD.dismiss()
+                    GIFHUD.shared.dismiss()
                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
                     self.dismiss(animated: true, completion: nil)
                 }

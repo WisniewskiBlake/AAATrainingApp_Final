@@ -66,7 +66,7 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        GIFHUD.shared.setGif(named: "loaderFinal.gif")
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -97,7 +97,7 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
     
     // MARK: - Load Posts
     @objc func loadNutritionPosts() {
-        ProgressHUD.show()
+        GIFHUD.shared.show(withOverlay: true)
         
         recentListener = reference(.Nutrition).order(by: kNUTRITIONPOSTDATE, descending: true).whereField(kNUTRITIONTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID as Any).limit(to: 100).addSnapshotListener({ (snapshot, error) in
                    
@@ -108,11 +108,11 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
             
             if error != nil {
                 print(error!.localizedDescription)
-                ProgressHUD.dismiss()
+                GIFHUD.shared.dismiss()
                 self.tableView.reloadData()
                 return
             }
-                   guard let snapshot = snapshot else { ProgressHUD.dismiss(); return }
+                   guard let snapshot = snapshot else { GIFHUD.shared.dismiss(); return }
 
                    if !snapshot.isEmpty {
 
@@ -155,7 +155,7 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
                        self.tableView.reloadData()
                     
                    }
-            ProgressHUD.dismiss()
+                GIFHUD.shared.dismiss()
                })
         
     }

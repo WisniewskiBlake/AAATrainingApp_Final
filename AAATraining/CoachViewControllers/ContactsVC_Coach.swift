@@ -71,7 +71,8 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        super.viewWillAppear(animated)
+        GIFHUD.shared.setGif(named: "loaderFinal.gif")
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         
@@ -108,7 +109,7 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     
     
     func loadUsers(filter: String) {
-           ProgressHUD.show()
+        GIFHUD.shared.show(withOverlay: true)
            var query = reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()!.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
            query.getDocuments { (snapshot, error) in
                
@@ -122,13 +123,13 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
                
                if error != nil {
                    print(error!.localizedDescription)
-                   ProgressHUD.dismiss()
+                GIFHUD.shared.dismiss()
                    self.tableView.reloadData()
                    return
                }
                
                guard let snapshot = snapshot else {
-                   ProgressHUD.dismiss(); return
+                GIFHUD.shared.dismiss(); return
                }
                
                if !snapshot.isEmpty {
@@ -173,7 +174,7 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
                }
                
                self.tableView.reloadData()
-               ProgressHUD.dismiss()
+            GIFHUD.shared.dismiss()
                
            }
     

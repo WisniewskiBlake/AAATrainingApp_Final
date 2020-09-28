@@ -20,7 +20,7 @@ class AllBaselinesVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        GIFHUD.shared.setGif(named: "loaderFinal.gif")
         NotificationCenter.default.addObserver(self, selector: #selector(loadBaselines), name: NSNotification.Name(rawValue: "createBaseline"), object: nil)
         
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
@@ -43,7 +43,7 @@ class AllBaselinesVC: UIViewController {
     }
     
     @objc func loadBaselines() {
-        ProgressHUD.show()
+        GIFHUD.shared.show(withOverlay: true)
         
         var query: Query!
         query = reference(.Baseline).whereField(kBASELINETEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kBASELINEUSERNAME, descending: false)
@@ -53,7 +53,7 @@ class AllBaselinesVC: UIViewController {
                         
             if error != nil {
                 print(error!.localizedDescription)
-                ProgressHUD.dismiss()
+                GIFHUD.shared.dismiss()
              self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
                 self.gridCollectionView.reloadData()
                 return
@@ -62,7 +62,7 @@ class AllBaselinesVC: UIViewController {
             guard let snapshot = snapshot else {
              self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
              
-                ProgressHUD.dismiss(); return
+                GIFHUD.shared.dismiss(); return
             }
             
             if !snapshot.isEmpty {
@@ -80,13 +80,13 @@ class AllBaselinesVC: UIViewController {
             }
             
             self.gridCollectionView.reloadData()
-            ProgressHUD.dismiss()
+            GIFHUD.shared.dismiss()
             
         }
     }
     
     func loadUserClicked(objectID : String) {
-        ProgressHUD.show()
+        GIFHUD.shared.show(withOverlay: true)
         var query: Query!
         
         query = reference(.User).whereField("objectId", isEqualTo: objectID)
@@ -97,14 +97,14 @@ class AllBaselinesVC: UIViewController {
             
             if error != nil {
                 print(error!.localizedDescription)
-                ProgressHUD.dismiss()
+                GIFHUD.shared.dismiss()
              self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
                 return
             }
             
             guard let snapshot = snapshot else {
              self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
-                ProgressHUD.dismiss(); return
+                GIFHUD.shared.dismiss(); return
             }
             
             if !snapshot.isEmpty {
@@ -119,7 +119,7 @@ class AllBaselinesVC: UIViewController {
                 
             }
             
-            ProgressHUD.dismiss()
+            GIFHUD.shared.dismiss()
             
         }
     }

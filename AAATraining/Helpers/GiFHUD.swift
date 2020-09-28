@@ -248,7 +248,7 @@ public class GIFHUDImage: UIImage {
 public class GIFHUD: UIView {
   public static let shared = GIFHUD()
 
-  public var hudSize: CGSize = CGSize(width: 180, height: 140)
+  public var hudSize: CGSize = CGSize(width: 220, height: 180)
   public var fadeDuration: TimeInterval = 0.3
   public var gifSpeed: CGFloat = 0.3
   public var overlayAlpha: CGFloat = 0.3
@@ -268,11 +268,11 @@ public class GIFHUD: UIView {
     alpha = 0
     center = window?.center ?? .zero
     clipsToBounds = false
-    layer.backgroundColor = UIColor(white: 0, alpha: 0.5).cgColor
+    layer.backgroundColor = UIColor(white: 0, alpha: 0).cgColor
     layer.cornerRadius = 10
     layer.masksToBounds = true
 
-    imageView = GIFHUDImageView(frame: bounds.insetBy(dx: 20, dy: 20))
+    imageView = GIFHUDImageView(frame: bounds.insetBy(dx: 0, dy: 0))
     addSubview(imageView!)
   }
 

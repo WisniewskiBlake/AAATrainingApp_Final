@@ -54,6 +54,7 @@ class PlayerBaselineVC: UITableViewController {
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        GIFHUD.shared.setGif(named: "loaderFinal.gif")
         if FUser.currentUser()?.accountType == "Player" {
             composeButton.isEnabled = false
             loadBaselines()
@@ -74,7 +75,7 @@ class PlayerBaselineVC: UITableViewController {
     
     @objc func loadBaselinesForGuest() {
         
-        ProgressHUD.show()
+        GIFHUD.shared.show(withOverlay: true)
         
         recentListener = reference(.Baseline).whereField(kBASELINEOWNERID, isEqualTo: userBeingViewed.objectId).whereField(kBASELINETEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kBASELINEDATE, descending: true).addSnapshotListener({ (snapshot, error) in
                    
@@ -82,11 +83,11 @@ class PlayerBaselineVC: UITableViewController {
             
                 if error != nil {
                     print(error!.localizedDescription)
-                    ProgressHUD.dismiss()
+                    GIFHUD.shared.dismiss()
                     self.tableView.reloadData()
                     return
                 }
-                   guard let snapshot = snapshot else { ProgressHUD.dismiss(); return }
+                   guard let snapshot = snapshot else { GIFHUD.shared.dismiss(); return }
 
                    if !snapshot.isEmpty {
 
@@ -102,11 +103,11 @@ class PlayerBaselineVC: UITableViewController {
                        self.tableView.reloadData()
                     
                    }
-            ProgressHUD.dismiss()
+            GIFHUD.shared.dismiss()
                })
         
         
-        ProgressHUD.show()
+//        ProgressHUD.show()
         
     }
     
@@ -114,7 +115,7 @@ class PlayerBaselineVC: UITableViewController {
     // loading posts from the server via@objc  PHP protocol
     @objc func loadBaselines() {
         
-        ProgressHUD.show()
+        GIFHUD.shared.show(withOverlay: true)
         
         recentListener = reference(.Baseline).whereField(kBASELINETEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).whereField(kBASELINEOWNERID, isEqualTo: FUser.currentId()).order(by: kBASELINEDATE, descending: true).addSnapshotListener({ (snapshot, error) in
                    
@@ -122,11 +123,11 @@ class PlayerBaselineVC: UITableViewController {
             
                 if error != nil {
                     print(error!.localizedDescription)
-                    ProgressHUD.dismiss()
+                    GIFHUD.shared.dismiss()
                     self.tableView.reloadData()
                     return
                 }
-                   guard let snapshot = snapshot else { ProgressHUD.dismiss(); return }
+                   guard let snapshot = snapshot else { GIFHUD.shared.dismiss(); return }
 
                    if !snapshot.isEmpty {
 
@@ -142,11 +143,11 @@ class PlayerBaselineVC: UITableViewController {
                        self.tableView.reloadData()
                     
                    }
-            ProgressHUD.dismiss()
+            GIFHUD.shared.dismiss()
                })
         
         
-        ProgressHUD.show()
+        
         
 
         

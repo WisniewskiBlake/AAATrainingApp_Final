@@ -117,6 +117,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        GIFHUD.shared.setGif(named: "loaderFinal.gif")
         loadUser()
         loadPosts()
         tableView.tableFooterView = UIView()
@@ -332,7 +333,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     // MARK: - Load Posts
     // loading posts from the server via@objc  PHP protocol
     @objc func loadPosts() {
-        ProgressHUD.show()
+        GIFHUD.shared.show(withOverlay: true)
         DispatchQueue.main.async {
             var query: Query!
             
@@ -347,13 +348,13 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 
                 if error != nil {
                     print(error!.localizedDescription)
-                    ProgressHUD.dismiss()
+                    GIFHUD.shared.dismiss()
                     self.tableView.reloadData()
                     return
                 }
                 
                 guard let snapshot = snapshot else {
-                    ProgressHUD.dismiss(); return
+                    GIFHUD.shared.dismiss(); return
                 }
                 
                 if !snapshot.isEmpty {
@@ -398,7 +399,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                     self.tableView.reloadData()
                 
                 }
-                ProgressHUD.dismiss()
+                GIFHUD.shared.dismiss()
             }
         }
         

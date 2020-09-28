@@ -74,7 +74,7 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
     
         override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(animated)
-            
+            GIFHUD.shared.setGif(named: "loaderFinal.gif")
             self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
             navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
             navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -136,7 +136,7 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
     
     // MARK: - loadUsers
     func loadUsers(filter: String) {
-           ProgressHUD.show()
+        GIFHUD.shared.show(withOverlay: true)
            var query = reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()!.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
         print(FUser.currentUser()!.userCurrentTeamID)
            query.getDocuments { (snapshot, error) in
@@ -151,13 +151,13 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
                
                if error != nil {
                    print(error!.localizedDescription)
-                   ProgressHUD.dismiss()
+                GIFHUD.shared.dismiss()
                    self.tableView.reloadData()
                    return
                }
                
                guard let snapshot = snapshot else {
-                   ProgressHUD.dismiss(); return
+                GIFHUD.shared.dismiss(); return
                }
                
                if !snapshot.isEmpty {
@@ -201,7 +201,7 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
                }
                
                self.tableView.reloadData()
-               ProgressHUD.dismiss()
+            GIFHUD.shared.dismiss()
                
        }
     

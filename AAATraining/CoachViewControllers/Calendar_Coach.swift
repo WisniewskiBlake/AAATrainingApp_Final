@@ -61,7 +61,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         let todayDate = self.calendar!.today! as Date
         self.calendar.formatter.dateFormat = "YYYY-MM-dd"
         today = calendar.formatter.string(from: todayDate)
-        GIFHUD.shared.setGif(named: "loader.gif")
+        
         
         //loadUser()
         
@@ -71,9 +71,8 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        
-        //ProgressHUD.imageSuccess = UIImage(named: "success.png")!
+
+        GIFHUD.shared.setGif(named: "loaderFinal.gif")
         calendar.delegate = self
         loadUser()
         
@@ -101,6 +100,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
     func loadUser() {
         GIFHUD.shared.show(withOverlay: true)
+        //GIFHUD.shared.dismiss()
         let query = reference(.User).whereField(kOBJECTID, isEqualTo: FUser.currentId())
                 query.getDocuments { (snapshot, error) in
                     
@@ -108,7 +108,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
 
                     if error != nil {
                         print(error!.localizedDescription)
-                        //ProgressHUD.dismiss()
+                        GIFHUD.shared.dismiss()
                      self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
         
                         return
@@ -116,7 +116,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         
                     guard let snapshot = snapshot else {
                         self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
-                        //ProgressHUD.dismiss();
+                        GIFHUD.shared.dismiss();
                         return
                     }
         
@@ -143,7 +143,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                         }
                     }
                     
-                    
+                    GIFHUD.shared.dismiss()
                     
                 }
      }
@@ -157,6 +157,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     }
     
     func getEventsForNewObserver() {
+        GIFHUD.shared.show(withOverlay: true)
         //ProgressHUD.show()
         let localReference = reference(.Event).document()
         let eventId = localReference.documentID
@@ -172,11 +173,11 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
             
             if error != nil {
                  print(error!.localizedDescription)
-                 //ProgressHUD.dismiss()
+                GIFHUD.shared.dismiss()
                  self.calendar.reloadData()
                  return
              }
-             guard let snapshot = snapshot else { ProgressHUD.dismiss(); return }
+             guard let snapshot = snapshot else { GIFHUD.shared.dismiss(); return }
                     
              if !snapshot.isEmpty {
                  for eventDictionary in snapshot.documents {
@@ -207,7 +208,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
 //            self.tableView.reloadData()
 //            self.calendar.reloadData()
              //sleep(UInt32(1.2))
-             
+//             GIFHUD.shared.dismiss()
              self.loadEvents()
             
             
@@ -228,6 +229,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     }
     
     @objc func loadEvents() {
+        //GIFHUD.shared.show(withOverlay: true)
         print("loadEvents")
         //ProgressHUD.show()
         recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kEVENTUSERID).order(by: kEVENTDATEFORUPCOMINGCOMPARISON).addSnapshotListener({ (snapshot, error) in
@@ -244,11 +246,11 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
 
             if error != nil {
                 print(error!.localizedDescription)
-                //ProgressHUD.dismiss()
+                GIFHUD.shared.dismiss()
                 self.calendar.reloadData()
                 return
             }
-            guard let snapshot = snapshot else { ProgressHUD.dismiss(); return }
+            guard let snapshot = snapshot else { GIFHUD.shared.dismiss(); return }
                    
             if !snapshot.isEmpty {
                 for eventDictionary in snapshot.documents {
@@ -277,11 +279,11 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                 self.tableView.reloadData()
                 self.calendar.reloadData()
            }
-  
-           self.tableView.reloadData()
-           self.calendar.reloadData()
             
-           GIFHUD.shared.dismiss()
+            self.tableView.reloadData()
+            self.calendar.reloadData()
+            GIFHUD.shared.dismiss()
+           
         })
     }
     

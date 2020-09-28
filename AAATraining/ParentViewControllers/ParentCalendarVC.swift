@@ -65,6 +65,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        GIFHUD.shared.setGif(named: "loaderFinal.gif")
         loadEvents()
         configureUI()
 
@@ -90,7 +91,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     
     @objc func loadEvents() {
         print("loadEvents")
-        ProgressHUD.show()
+        GIFHUD.shared.show(withOverlay: true)
         recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kEVENTUSERID).order(by: kEVENTDATEFORUPCOMINGCOMPARISON).addSnapshotListener({ (snapshot, error) in
                            
             self.allEvents = []
@@ -106,11 +107,11 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
             var k = 0
             if error != nil {
                 print(error!.localizedDescription)
-                ProgressHUD.dismiss()
+                GIFHUD.shared.dismiss()
                 self.calendar.reloadData()
                 return
             }
-            guard let snapshot = snapshot else { ProgressHUD.dismiss(); return }
+            guard let snapshot = snapshot else { GIFHUD.shared.dismiss(); return }
                    
             if !snapshot.isEmpty {
                 for eventDictionary in snapshot.documents {
@@ -162,7 +163,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
            self.tableView.reloadData()
            self.calendar.reloadData()
             
-            ProgressHUD.dismiss()
+            GIFHUD.shared.dismiss()
         })
     }
     

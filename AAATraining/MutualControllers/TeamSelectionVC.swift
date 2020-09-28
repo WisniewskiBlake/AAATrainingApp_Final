@@ -61,6 +61,7 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        GIFHUD.shared.setGif(named: "loaderFinal.gif")
         loadTeamsForUser()
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
@@ -100,7 +101,7 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
 
     @objc func loadTeamsForUser() {
-            ProgressHUD.show()
+        GIFHUD.shared.show(withOverlay: true)
             let query = reference(.Team).whereField(kTEAMMEMBERIDS, arrayContains: FUser.currentId())
             query.getDocuments { (snapshot, error) in
     
@@ -109,7 +110,7 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
                 if error != nil {
                     print(error!.localizedDescription)
-                    ProgressHUD.dismiss()
+                    GIFHUD.shared.dismiss()
                  self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
     
                     return
@@ -117,7 +118,7 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
                 guard let snapshot = snapshot else {
                     self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
-                    ProgressHUD.dismiss(); return
+                    GIFHUD.shared.dismiss(); return
                 }
     
                 if !snapshot.isEmpty {
@@ -138,7 +139,8 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                     self.tableView.reloadData()
                 }
                 self.tableView.reloadData()
-                ProgressHUD.dismiss()
+                GIFHUD.shared.dismiss()
+                //ProgressHUD.dismiss()
             }
     }
     

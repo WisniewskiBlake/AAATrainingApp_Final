@@ -100,6 +100,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        GIFHUD.shared.setGif(named: "loaderFinal.gif")
         loadPosts()
         getMembers()
         configureUI()
@@ -169,7 +170,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     }
     
     func getMembers() {
-        ProgressHUD.show()
+        GIFHUD.shared.show(withOverlay: true)
                
                let query = reference(.Team).whereField(kTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID)
                query.getDocuments { (snapshot, error) in
@@ -177,7 +178,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
                    
                    if error != nil {
                        print(error!.localizedDescription)
-                       ProgressHUD.dismiss()
+                    GIFHUD.shared.dismiss()
                     self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
                         
                        return
@@ -186,7 +187,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
                    guard let snapshot = snapshot else {
                     self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
                     self.isLoading = false
-                       ProgressHUD.dismiss(); return
+                    GIFHUD.shared.dismiss(); return
                    }
                    
                    if !snapshot.isEmpty {
@@ -201,7 +202,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
                        
 
                    }
-                   ProgressHUD.dismiss()
+                GIFHUD.shared.dismiss()
                }
         
     }
@@ -310,7 +311,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     
     // MARK: - Load Posts
     @objc func loadPosts() {
-        ProgressHUD.show()
+        GIFHUD.shared.show(withOverlay: true)
         
             self.recentListener = reference(.Post).whereField(kPOSTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID as Any).order(by: kPOSTDATE, descending: true).limit(to: 100).addSnapshotListener({ (snapshot, error) in
                    
@@ -321,11 +322,11 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
             
             if error != nil {
                 print(error!.localizedDescription)
-                ProgressHUD.dismiss()
+                GIFHUD.shared.dismiss()
                 self.tableView.reloadData()
                 return
             }
-                   guard let snapshot = snapshot else { ProgressHUD.dismiss(); return }
+                   guard let snapshot = snapshot else { GIFHUD.shared.dismiss(); return }
 
                    if !snapshot.isEmpty {
 
@@ -368,7 +369,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
                        self.tableView.reloadData()
                     
                    }
-            ProgressHUD.dismiss()
+                GIFHUD.shared.dismiss()
             })
         
     }
