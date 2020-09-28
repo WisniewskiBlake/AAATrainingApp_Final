@@ -14,7 +14,7 @@ class MultiEvent_Coach: UITableViewController {
     var datesForUpcomingComparison: [String] = []
     var dateString: String = ""
     var eventsToShow: [Event] = []
-    
+    var emptyLabelOne = UILabel()
     @IBOutlet weak var eventCounterLabel: UILabel!
     
     @IBOutlet weak var titleView: UIView!
@@ -29,9 +29,33 @@ class MultiEvent_Coach: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -150, width: view.bounds.size.width, height: view.bounds.size.height))
+        titleView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        titleView.alpha = 1.0
+        tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        tableView.separatorColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        self.navigationController?.view.addSubview(self.titleView)
+        self.navigationController?.navigationBar.layer.zPosition = 0;
+        let view = UIView()
+        view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        tableView.tableFooterView = view
         loadEvents()
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        fillContentGap:
+        if let tableFooterView = tableView.tableFooterView {
+            /// The expected height for the footer under autolayout.
+            let footerHeight = tableFooterView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+            /// The amount of empty space to fill with the footer view.
+            let gapHeight: CGFloat = tableView.bounds.height - tableView.adjustedContentInset.top - tableView.adjustedContentInset.bottom - tableView.contentSize.height
+            // Ensure there is space to be filled
+            guard gapHeight.rounded() > 0 else { break fillContentGap }
+            // Fill the gap
+            tableFooterView.frame.size.height = gapHeight + footerHeight
+        }
     }
     
     func loadEvents() {
@@ -42,12 +66,7 @@ class MultiEvent_Coach: UITableViewController {
             
         }
         eventCounterLabel.text = String(eventsToShow.count) + " Events"
-        titleView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        titleView.alpha = 1.0
-        tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        tableView.separatorColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        self.navigationController?.view.addSubview(self.titleView)
-        self.navigationController?.navigationBar.layer.zPosition = 0;
+        
     }
 
     // MARK: - Table view data source
@@ -59,7 +78,19 @@ class MultiEvent_Coach: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return eventsToShow.count
+        if eventsToShow.count == 0 {
+            
+            emptyLabelOne.text = "Created posts will appear here!"
+            emptyLabelOne.textAlignment = NSTextAlignment.center
+            self.tableView.tableFooterView!.addSubview(emptyLabelOne)
+            return 0
+        } else {
+            emptyLabelOne.text = ""
+            emptyLabelOne.removeFromSuperview()
+            
+            return eventsToShow.count
+        }
+        
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

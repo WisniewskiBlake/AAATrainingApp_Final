@@ -33,6 +33,8 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     var imageview = UIImageView()
     
+    var i = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -161,6 +163,7 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                     self.tableView.reloadData()
                     self.imageview.removeFromSuperview()
                 }
+                self.i += 1
                 self.tableView.reloadData()
                 
                 self.imageview.removeFromSuperview()
@@ -187,10 +190,12 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if teams.count == 0 {
+            if self.i == 1 {
+                emptyLabelOne.text = "No teams to show!"
+                emptyLabelOne.textAlignment = NSTextAlignment.center
+                self.tableView.tableFooterView!.addSubview(emptyLabelOne)
+            }
             
-            emptyLabelOne.text = "No teams to show!"
-            emptyLabelOne.textAlignment = NSTextAlignment.center
-            self.tableView.tableFooterView!.addSubview(emptyLabelOne)
             return 0
         } else {
             emptyLabelOne.text = ""

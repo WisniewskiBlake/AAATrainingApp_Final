@@ -266,7 +266,9 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
                     
                    
                 }
+                self.imageview.removeFromSuperview()
             }
+            self.imageview.removeFromSuperview()
         }
     }
     
