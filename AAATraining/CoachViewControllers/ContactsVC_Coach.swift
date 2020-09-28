@@ -73,11 +73,19 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
         do {
             let gif = try UIImage(gifName: "loaderFinal.gif")
             imageview = UIImageView(gifImage: gif, loopCount: -1) // Will loop 3 times
-            let screenSize: CGRect = view.bounds
-            imageview.frame = CGRect(x: screenSize.width * 0.31, y: screenSize.height * 0.47, width: screenSize.width * 0.41, height: screenSize.height * 0.33)
-            //imageview.frame = view.bounds
-
+            imageview.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(imageview)
+            let widthConstraint = NSLayoutConstraint(item: imageview, attribute: .width, relatedBy: .equal,
+                                                     toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 250)
+
+            let heightConstraint = NSLayoutConstraint(item: imageview, attribute: .height, relatedBy: .equal,
+                                                      toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 250)
+
+            let xConstraint = NSLayoutConstraint(item: imageview, attribute: .centerX, relatedBy: .equal, toItem: self.tableView, attribute: .centerX, multiplier: 1, constant: 0)
+
+            let yConstraint = NSLayoutConstraint(item: imageview, attribute: .centerY, relatedBy: .equal, toItem: self.tableView, attribute: .centerY, multiplier: 1, constant: 0)
+
+            NSLayoutConstraint.activate([widthConstraint, heightConstraint, xConstraint, yConstraint])
         } catch {
             print(error)
         }

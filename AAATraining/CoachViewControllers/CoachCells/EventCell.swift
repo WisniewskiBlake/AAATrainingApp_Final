@@ -21,6 +21,12 @@ class EventCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        eventDateLabel.isUserInteractionEnabled = false
+        eventTitleText.isUserInteractionEnabled = false
+        eventStartText.isUserInteractionEnabled = false
+        eventEndText.isUserInteractionEnabled = false
+        eventText.isUserInteractionEnabled = false
+        
         var bottomLine = CALayer()
         bottomLine.frame = CGRect(x: 0.0, y: eventStartText.frame.height, width: eventStartText.frame.width, height: 1.0)
         bottomLine.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)

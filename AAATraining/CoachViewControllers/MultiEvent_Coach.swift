@@ -33,7 +33,7 @@ class MultiEvent_Coach: UITableViewController {
         titleView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         titleView.alpha = 1.0
         tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        tableView.separatorColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        tableView.separatorColor = UIColor.clear
         self.navigationController?.view.addSubview(self.titleView)
         self.navigationController?.navigationBar.layer.zPosition = 0;
         let view = UIView()
@@ -59,6 +59,7 @@ class MultiEvent_Coach: UITableViewController {
     }
     
     func loadEvents() {
+        self.eventsToShow = []
         for event in allEventsSameDate {
             if event.eventUserID == FUser.currentId() {
                 eventsToShow.append(event)
@@ -116,10 +117,8 @@ class MultiEvent_Coach: UITableViewController {
         {
             eventVC.hidesBottomBarWhenPushed = true
             eventVC.dateString = event.eventDate
-            eventVC.dateForUpcomingComparison = event.dateForUpcomingComparison
             eventVC.updateNeeded = true
-            eventVC.event = event
-            eventVC.dateForUpcomingComparison = event.dateForUpcomingComparison
+            eventVC.event = event            
             eventVC.modalPresentationStyle = .fullScreen
             self.present(eventVC, animated: true, completion: nil)
         }
