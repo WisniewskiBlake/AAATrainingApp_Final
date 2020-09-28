@@ -135,7 +135,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         event.clearCalendarCounter(eventGroupID: event.eventGroupID, eventUserID : event.eventUserID)
     }
     
-    func createEvent(eventOwnerID: String, eventTeamID: String, eventText: String, eventDate: String, eventAccountType: String, eventUserID: String, eventGroupID: String, eventTitle: String, eventStart: String, eventEnd: String, upcomingCompar: String) {
+    func createEvent(eventOwnerID: String, eventTeamID: String, eventText: String, eventDate: String, eventAccountType: String, eventUserID: String, eventGroupID: String, eventTitle: String, eventStart: String, eventEnd: String, upcomingCompar: String, eventLocation: String, eventImage: String, eventURL: String) {
         let localReference = reference(.Event).document()
         let eventId = localReference.documentID
         var event: [String : Any]!
@@ -146,19 +146,19 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         }
         
         
-        event = [kEVENTID: eventId, kEVENTTEAMID: eventTeamID, kEVENTOWNERID: FUser.currentId(), kEVENTTEXT: eventText, kEVENTDATE: eventDate, kEVENTACCOUNTTYPE: eventAccountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: eventUserID, kEVENTGROUPID: eventGroupID, kEVENTTITLE: eventTitle, kEVENTSTART: eventStart, kEVENTEND: eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: upcomingCompar] as [String:Any]
+        event = [kEVENTID: eventId, kEVENTTEAMID: eventTeamID, kEVENTOWNERID: FUser.currentId(), kEVENTTEXT: eventText, kEVENTDATE: eventDate, kEVENTACCOUNTTYPE: eventAccountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: eventUserID, kEVENTGROUPID: eventGroupID, kEVENTTITLE: eventTitle, kEVENTSTART: eventStart, kEVENTEND: eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: upcomingCompar, kEVENTLOCATION: eventLocation, kEVENTIMAGE: eventImage, kEVENTURL: eventURL] as [String:Any]
         
         localReference.setData(event)
         
     }
     
-    func createTeamEvent(eventOwnerID: String, eventTeamID: String, eventText: String, eventDate: String, eventAccountType: String, eventUserID: String, eventGroupID: String, eventTitle: String, eventStart: String, eventEnd: String, upcomingCompar: String) {
+    func createTeamEvent(eventOwnerID: String, eventTeamID: String, eventText: String, eventDate: String, eventAccountType: String, eventUserID: String, eventGroupID: String, eventTitle: String, eventStart: String, eventEnd: String, upcomingCompar: String, eventLocation: String, eventImage: String, eventURL: String) {
         let localReference = reference(.TeamEventCache).document(eventGroupID)
         let eventId = localReference.documentID
         var event: [String : Any]!
         var eventCounter = 0
         
-        event = [kEVENTGROUPID: eventGroupID, kEVENTID: eventId, kEVENTTEAMID: eventTeamID, kEVENTOWNERID: FUser.currentId(), kEVENTTEXT: eventText, kEVENTDATE: eventDate, kEVENTACCOUNTTYPE: eventAccountType, kEVENTCOUNTER: 0, kEVENTUSERID: "", kEVENTTITLE: eventTitle, kEVENTSTART: eventStart, kEVENTEND: eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: upcomingCompar] as [String:Any]
+        event = [kEVENTGROUPID: eventGroupID, kEVENTID: eventId, kEVENTTEAMID: eventTeamID, kEVENTOWNERID: FUser.currentId(), kEVENTTEXT: eventText, kEVENTDATE: eventDate, kEVENTACCOUNTTYPE: eventAccountType, kEVENTCOUNTER: 0, kEVENTUSERID: "", kEVENTTITLE: eventTitle, kEVENTSTART: eventStart, kEVENTEND: eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: upcomingCompar, kEVENTLOCATION: eventLocation, kEVENTIMAGE: eventImage, kEVENTURL: eventURL] as [String:Any]
         
         localReference.setData(event)
         
@@ -184,10 +184,10 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             
             
             for userId in tempMembers {
-                self.createEvent(eventOwnerID: eventOwnerID, eventTeamID: FUser.currentUser()!.userCurrentTeamID, eventText: eventText, eventDate: fullDate, eventAccountType: eventAccountType, eventUserID: userId, eventGroupID: eventGroupID, eventTitle: eventTitle, eventStart: eventStart, eventEnd: eventEnd, upcomingCompar: upcomingCompar)
+                self.createEvent(eventOwnerID: eventOwnerID, eventTeamID: FUser.currentUser()!.userCurrentTeamID, eventText: eventText, eventDate: fullDate, eventAccountType: eventAccountType, eventUserID: userId, eventGroupID: eventGroupID, eventTitle: eventTitle, eventStart: eventStart, eventEnd: eventEnd, upcomingCompar: upcomingCompar, eventLocation: "", eventImage: "", eventURL: "")
 
             }
-        self.createTeamEvent(eventOwnerID: eventOwnerID, eventTeamID: FUser.currentUser()!.userCurrentTeamID, eventText: eventText, eventDate: fullDate, eventAccountType: eventAccountType, eventUserID: "", eventGroupID: eventGroupID, eventTitle: eventTitle, eventStart: eventStart, eventEnd: eventEnd, upcomingCompar: upcomingCompar)
+        self.createTeamEvent(eventOwnerID: eventOwnerID, eventTeamID: FUser.currentUser()!.userCurrentTeamID, eventText: eventText, eventDate: fullDate, eventAccountType: eventAccountType, eventUserID: "", eventGroupID: eventGroupID, eventTitle: eventTitle, eventStart: eventStart, eventEnd: eventEnd, upcomingCompar: upcomingCompar, eventLocation: "", eventImage: "", eventURL: "")
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
             //sleep(UInt32(0.6))
         
@@ -314,7 +314,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         
         if eventTitleText.text != "" {
             if self.doneButton.currentTitle == "Update" {
-                event.updateEvent(eventGroupID: event.eventGroupID, eventOwnerID: event.eventOwnerID, eventText: textView.text!, eventTitle: eventTitleText.text!, eventStart: startTime, eventEnd: endTime)
+                event.updateEvent(eventGroupID: event.eventGroupID, eventOwnerID: event.eventOwnerID, eventText: textView.text!, eventTitle: eventTitleText.text!, eventStart: startTime, eventEnd: endTime, eventLocation: event.eventLocation, eventImage: event.eventImage, eventURL: event.eventURL)
             } else {
                 //ProgressHUD.show("Creating...", interaction: false)
                 createEventForMembers(start: startTime, end: endTime, fullDate: dateString, upcomingCompar: dateForUpcomingComparison)
