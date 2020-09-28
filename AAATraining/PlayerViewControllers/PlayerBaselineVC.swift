@@ -22,7 +22,7 @@ class PlayerBaselineVC: UITableViewController {
     let helper = Helper()
     
     var userBeingViewed = FUser()
-
+    var imageview = UIImageView()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,7 +54,18 @@ class PlayerBaselineVC: UITableViewController {
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        GIFHUD.shared.setGif(named: "loaderFinal.gif")
+        do {
+            let gif = try UIImage(gifName: "loaderFinal.gif")
+            imageview = UIImageView(gifImage: gif, loopCount: -1) // Will loop 3 times
+            let screenSize: CGRect = view.bounds
+            imageview.frame = CGRect(x: screenSize.width * 0.31, y: screenSize.height * 0.47, width: screenSize.width * 0.41, height: screenSize.height * 0.33)
+            //imageview.frame = view.bounds
+
+            view.addSubview(imageview)
+        } catch {
+            print(error)
+        }
+        self.imageview.startAnimatingGif()
         if FUser.currentUser()?.accountType == "Player" {
             composeButton.isEnabled = false
             loadBaselines()
@@ -75,7 +86,7 @@ class PlayerBaselineVC: UITableViewController {
     
     @objc func loadBaselinesForGuest() {
         
-        GIFHUD.shared.show(withOverlay: true)
+        
         
         recentListener = reference(.Baseline).whereField(kBASELINEOWNERID, isEqualTo: userBeingViewed.objectId).whereField(kBASELINETEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kBASELINEDATE, descending: true).addSnapshotListener({ (snapshot, error) in
                    
@@ -83,11 +94,11 @@ class PlayerBaselineVC: UITableViewController {
             
                 if error != nil {
                     print(error!.localizedDescription)
-                    GIFHUD.shared.dismiss()
+                    self.imageview.removeFromSuperview()
                     self.tableView.reloadData()
                     return
                 }
-                   guard let snapshot = snapshot else { GIFHUD.shared.dismiss(); return }
+                   guard let snapshot = snapshot else { self.imageview.removeFromSuperview(); return }
 
                    if !snapshot.isEmpty {
 
@@ -103,7 +114,7 @@ class PlayerBaselineVC: UITableViewController {
                        self.tableView.reloadData()
                     
                    }
-            GIFHUD.shared.dismiss()
+            self.imageview.removeFromSuperview()
                })
         
         
@@ -115,7 +126,7 @@ class PlayerBaselineVC: UITableViewController {
     // loading posts from the server via@objc  PHP protocol
     @objc func loadBaselines() {
         
-        GIFHUD.shared.show(withOverlay: true)
+        
         
         recentListener = reference(.Baseline).whereField(kBASELINETEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).whereField(kBASELINEOWNERID, isEqualTo: FUser.currentId()).order(by: kBASELINEDATE, descending: true).addSnapshotListener({ (snapshot, error) in
                    
@@ -123,11 +134,11 @@ class PlayerBaselineVC: UITableViewController {
             
                 if error != nil {
                     print(error!.localizedDescription)
-                    GIFHUD.shared.dismiss()
+                    self.imageview.removeFromSuperview()
                     self.tableView.reloadData()
                     return
                 }
-                   guard let snapshot = snapshot else { GIFHUD.shared.dismiss(); return }
+                   guard let snapshot = snapshot else { self.imageview.removeFromSuperview(); return }
 
                    if !snapshot.isEmpty {
 
@@ -143,7 +154,7 @@ class PlayerBaselineVC: UITableViewController {
                        self.tableView.reloadData()
                     
                    }
-            GIFHUD.shared.dismiss()
+                   self.imageview.removeFromSuperview()
                })
         
         

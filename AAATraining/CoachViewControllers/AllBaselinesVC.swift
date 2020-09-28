@@ -17,10 +17,22 @@ class AllBaselinesVC: UIViewController {
     var user = FUser()
     let helper = Helper()
     var baselineData: [String] = ["Name", "Date", "Height", "Weight", "Wingspan", "Vertical", "20yd Dash", "Agility", "Push Ups", "Chin Ups", "Mile Time"]
+    var imageview = UIImageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        GIFHUD.shared.setGif(named: "loaderFinal.gif")
+        do {
+            let gif = try UIImage(gifName: "loaderFinal.gif")
+            imageview = UIImageView(gifImage: gif, loopCount: -1) // Will loop 3 times
+            let screenSize: CGRect = view.bounds
+            imageview.frame = CGRect(x: screenSize.width * 0.31, y: screenSize.height * 0.47, width: screenSize.width * 0.41, height: screenSize.height * 0.33)
+            //imageview.frame = view.bounds
+
+            view.addSubview(imageview)
+        } catch {
+            print(error)
+        }
+        self.imageview.startAnimatingGif()
         NotificationCenter.default.addObserver(self, selector: #selector(loadBaselines), name: NSNotification.Name(rawValue: "createBaseline"), object: nil)
         
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
@@ -43,7 +55,7 @@ class AllBaselinesVC: UIViewController {
     }
     
     @objc func loadBaselines() {
-        GIFHUD.shared.show(withOverlay: true)
+        
         
         var query: Query!
         query = reference(.Baseline).whereField(kBASELINETEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kBASELINEUSERNAME, descending: false)
@@ -53,7 +65,7 @@ class AllBaselinesVC: UIViewController {
                         
             if error != nil {
                 print(error!.localizedDescription)
-                GIFHUD.shared.dismiss()
+                self.imageview.removeFromSuperview()
              self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
                 self.gridCollectionView.reloadData()
                 return
@@ -62,7 +74,7 @@ class AllBaselinesVC: UIViewController {
             guard let snapshot = snapshot else {
              self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
              
-                GIFHUD.shared.dismiss(); return
+                self.imageview.removeFromSuperview(); return
             }
             
             if !snapshot.isEmpty {
@@ -80,13 +92,13 @@ class AllBaselinesVC: UIViewController {
             }
             
             self.gridCollectionView.reloadData()
-            GIFHUD.shared.dismiss()
+            self.imageview.removeFromSuperview()
             
         }
     }
     
     func loadUserClicked(objectID : String) {
-        GIFHUD.shared.show(withOverlay: true)
+        self.imageview.startAnimatingGif()
         var query: Query!
         
         query = reference(.User).whereField("objectId", isEqualTo: objectID)
@@ -97,14 +109,14 @@ class AllBaselinesVC: UIViewController {
             
             if error != nil {
                 print(error!.localizedDescription)
-                GIFHUD.shared.dismiss()
+                self.imageview.removeFromSuperview()
              self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
                 return
             }
             
             guard let snapshot = snapshot else {
              self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
-                GIFHUD.shared.dismiss(); return
+                self.imageview.removeFromSuperview(); return
             }
             
             if !snapshot.isEmpty {
@@ -119,12 +131,13 @@ class AllBaselinesVC: UIViewController {
                 
             }
             
-            GIFHUD.shared.dismiss()
+            self.imageview.removeFromSuperview()
             
         }
     }
     
     func displayUserProfile(user : FUser) {
+        self.imageview.removeFromSuperview()
         let playerProfileVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
         playerProfileVC.userBeingViewed = user
         self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)

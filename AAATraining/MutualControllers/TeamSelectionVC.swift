@@ -31,12 +31,11 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     var currentUser = FUser()
     var teamLogos = [UIImage]()
     
+    var imageview = UIImageView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        NotificationCenter.default.addObserver(self, selector: #selector(loadTeams), name: NSNotification.Name(rawValue: "joinedTeam"), object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(loadTeams), name: NSNotification.Name(rawValue: "createdTeam"), object: nil)
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(loadTeamsForUser), name: NSNotification.Name(rawValue: "joinedTeam"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadTeamsForUser), name: NSNotification.Name(rawValue: "createdTeam"), object: nil)
 
@@ -61,11 +60,23 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        GIFHUD.shared.setGif(named: "loaderFinal.gif")
+        do {
+            let gif = try UIImage(gifName: "loaderFinal.gif")
+            imageview = UIImageView(gifImage: gif, loopCount: -1) // Will loop 3 times
+            let screenSize: CGRect = view.bounds
+            imageview.frame = CGRect(x: screenSize.width * 0.31, y: screenSize.height * 0.47, width: screenSize.width * 0.41, height: screenSize.height * 0.33)
+            //imageview.frame = view.bounds
+
+            view.addSubview(imageview)
+        } catch {
+            print(error)
+        }
+        self.imageview.startAnimatingGif()
+        
         loadTeamsForUser()
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
-        emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -150, width: view.bounds.size.width, height: view.bounds.size.height))
+        
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         tableView.tableFooterView = view
@@ -101,7 +112,7 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
 
     @objc func loadTeamsForUser() {
-        GIFHUD.shared.show(withOverlay: true)
+        
             let query = reference(.Team).whereField(kTEAMMEMBERIDS, arrayContains: FUser.currentId())
             query.getDocuments { (snapshot, error) in
     
@@ -110,7 +121,7 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
                 if error != nil {
                     print(error!.localizedDescription)
-                    GIFHUD.shared.dismiss()
+                    self.imageview.removeFromSuperview()
                  self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
     
                     return
@@ -118,7 +129,7 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
                 guard let snapshot = snapshot else {
                     self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
-                    GIFHUD.shared.dismiss(); return
+                    self.imageview.removeFromSuperview(); return
                 }
     
                 if !snapshot.isEmpty {
@@ -137,69 +148,16 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
                     }
                     self.tableView.reloadData()
+                    self.imageview.removeFromSuperview()
                 }
                 self.tableView.reloadData()
-                GIFHUD.shared.dismiss()
-                //ProgressHUD.dismiss()
+                
+                self.imageview.removeFromSuperview()
+                
             }
     }
     
-//    @objc func loadUser() {
-//
-//        ProgressHUD.show()
-//        let query2 = reference(.User).whereField(kOBJECTID, isEqualTo: FUser.currentId())
-//
-//            query2.getDocuments { (snapshot, error) in
-//                self.currentUser = FUser()
-//
-//
-//
-//                if error != nil {
-//                    print(error!.localizedDescription)
-//
-//                    return
-//                }
-//
-//                guard let snapshot = snapshot else {
-//                    return
-//                }
-//
-//                if !snapshot.isEmpty {
-//
-//                    for userDoc in snapshot.documents {
-//                        let userDoc = userDoc.data() as NSDictionary
-//                        let userCurr = FUser(_dictionary: userDoc)
-//                        self.currentUser = userCurr
-//                    }
-//
-//
-//                self.tableView.reloadData()
-//                }
-//            self.tableView.reloadData()
-//            ProgressHUD.dismiss()
-//            }
-//    }
-//
-//    func loadTeams() {
-//        var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [""])
-//        self.teams = []
-//        self.teamLogos = []
-//        for teamID in self.currentUser.userTeamIDs {
-//            if teamID != "" {
-//                team.getTeam(teamID: teamID) { (teamReturned) in
-//                    team = teamReturned
-//                    self.teams.append(teamReturned)
-//                    self.helper.imageFromData(pictureData: teamReturned.teamLogo) { (avatarImage) in
-//
-//                        if avatarImage != nil {
-//                            self.teamLogos.append(avatarImage!.circleMasked!)
-//                        }
-//                    }
-//                }
-//            }
-//
-//        }
-//    }
+
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -218,6 +176,7 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if teams.count == 0 {
+            emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -150, width: view.bounds.size.width, height: view.bounds.size.height))
             emptyLabelOne.text = "No teams to show!"
             emptyLabelOne.textAlignment = NSTextAlignment.center
             self.tableView.tableFooterView!.addSubview(emptyLabelOne)

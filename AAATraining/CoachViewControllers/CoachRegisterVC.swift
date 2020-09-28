@@ -183,7 +183,7 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDeleg
         FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "", birthday: "", cover: "", phoneNumber: "", userCurrentTeamID: "", userTeamColorOne: defaultTeamColor, userTeamColorTwo: "", userTeamColorThree: "", userTeamIDs: [], userTeamAccountTypes: [], userTeamNames: [], userTeamMembers: [], userTeamMemberCount: [], userIsNewObserverArray: []) { (error)  in
             
                 if error != nil {
-                    GIFHUD.shared.dismiss()
+                    
                     ProgressHUD.showError(error!.localizedDescription)
                     return
                 }

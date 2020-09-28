@@ -49,6 +49,7 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     
     
     let searchController = UISearchController(searchResultsController: nil)
+    var imageview = UIImageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,10 +60,7 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
         
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        
-//        let backItem = UIBarButtonItem()
-//        backItem.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-//        navigationItem.backBarButtonItem = backItem
+
         
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -72,7 +70,18 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        GIFHUD.shared.setGif(named: "loaderFinal.gif")
+        do {
+            let gif = try UIImage(gifName: "loaderFinal.gif")
+            imageview = UIImageView(gifImage: gif, loopCount: -1) // Will loop 3 times
+            let screenSize: CGRect = view.bounds
+            imageview.frame = CGRect(x: screenSize.width * 0.31, y: screenSize.height * 0.47, width: screenSize.width * 0.41, height: screenSize.height * 0.33)
+            //imageview.frame = view.bounds
+
+            view.addSubview(imageview)
+        } catch {
+            print(error)
+        }
+        self.imageview.startAnimatingGif()
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         
@@ -109,7 +118,7 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
     
     
     func loadUsers(filter: String) {
-        GIFHUD.shared.show(withOverlay: true)
+        
            var query = reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()!.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
            query.getDocuments { (snapshot, error) in
                
@@ -123,13 +132,13 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
                
                if error != nil {
                    print(error!.localizedDescription)
-                GIFHUD.shared.dismiss()
+                self.imageview.removeFromSuperview()
                    self.tableView.reloadData()
                    return
                }
                
                guard let snapshot = snapshot else {
-                GIFHUD.shared.dismiss(); return
+                self.imageview.removeFromSuperview(); return
                }
                
                if !snapshot.isEmpty {
@@ -174,7 +183,7 @@ class ContactsVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCe
                }
                
                self.tableView.reloadData()
-            GIFHUD.shared.dismiss()
+               self.imageview.removeFromSuperview()
                
            }
     

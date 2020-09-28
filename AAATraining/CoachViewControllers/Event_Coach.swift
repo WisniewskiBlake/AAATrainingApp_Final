@@ -52,6 +52,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     var index = 0
     var isNewObserverValue: String = ""
+    var imageview = UIImageView()
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +61,18 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        GIFHUD.shared.setGif(named: "loaderFinal.gif")
+        do {
+            let gif = try UIImage(gifName: "loaderFinal.gif")
+            imageview = UIImageView(gifImage: gif, loopCount: -1) // Will loop 3 times
+            let screenSize: CGRect = view.bounds
+            imageview.frame = CGRect(x: screenSize.width * 0.31, y: screenSize.height * 0.47, width: screenSize.width * 0.41, height: screenSize.height * 0.33)
+            //imageview.frame = view.bounds
+
+            view.addSubview(imageview)
+        } catch {
+            print(error)
+        }
+        self.imageview.startAnimatingGif()
         event.clearCalendarCounter(eventGroupID: event.eventGroupID, eventUserID : event.eventUserID)
         self.navView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         
@@ -171,8 +183,8 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             }
             self.createTeamEvent(eventOwnerID: eventOwnerID, eventTeamID: FUser.currentUser()!.userCurrentTeamID, eventText: eventText, eventDate: self.dateString, eventAccountType: eventAccountType, eventUserID: "", eventGroupID: eventGroupID, eventTitle: eventTitle, eventStart: eventStart!, eventEnd: eventEnd!)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
-            sleep(UInt32(0.6))
-        GIFHUD.shared.dismiss()
+            //sleep(UInt32(0.6))
+        
         //}
     }
     
@@ -261,7 +273,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
 
     
     @IBAction func deleteButtonPressed(_ sender: Any) {
-        GIFHUD.shared.show(withOverlay: true)
+        
         //ProgressHUD.show("Deleting...", interaction: false)
         var i = 0
         
@@ -275,7 +287,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
                 }
                 if i == self.allEventsWithGroupID.count {
                     sleep(UInt32(1.7))
-                    GIFHUD.shared.dismiss()
+                    self.imageview.removeFromSuperview()
                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
                     self.dismiss(animated: true, completion: nil)
                 }

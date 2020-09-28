@@ -37,6 +37,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     var limit = 10
     
     let searchController = UISearchController(searchResultsController: nil)
+    var imageview = UIImageView()
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,13 +56,24 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         definesPresentationContext = true
 
         getTeam(filter: "")
-        GIFHUD.shared.dismiss()
+        
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        GIFHUD.shared.setGif(named: "loaderFinal.gif")
+        do {
+            let gif = try UIImage(gifName: "loaderFinal.gif")
+            imageview = UIImageView(gifImage: gif, loopCount: -1) // Will loop 3 times
+            let screenSize: CGRect = view.bounds
+            imageview.frame = CGRect(x: screenSize.width * 0.31, y: screenSize.height * 0.47, width: screenSize.width * 0.41, height: screenSize.height * 0.33)
+            //imageview.frame = view.bounds
+
+            view.addSubview(imageview)
+        } catch {
+            print(error)
+        }
+        self.imageview.startAnimatingGif()
         
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
@@ -119,7 +131,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     }
     
     func getTeam(filter: String) {
-        GIFHUD.shared.show(withOverlay: true)
+        
        var query = reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()!.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
             query.getDocuments { (snapshot, error) in
                 
@@ -133,13 +145,13 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
                 
                 if error != nil {
                     print(error!.localizedDescription)
-                    GIFHUD.shared.dismiss()
+                    self.imageview.removeFromSuperview()
                     self.tableView.reloadData()
                     return
                 }
                 
                 guard let snapshot = snapshot else {
-                    GIFHUD.shared.dismiss(); return
+                    self.imageview.removeFromSuperview(); return
                 }
                 
                 if !snapshot.isEmpty {
@@ -179,14 +191,14 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
                     }
                     self.splitDataIntoSection()
                     self.tableView.reloadData()
-                    GIFHUD.shared.dismiss()
+                    self.imageview.removeFromSuperview()
                 }
                 
                 self.tableView.reloadData()
-                GIFHUD.shared.dismiss()
+                self.imageview.removeFromSuperview()
                 
         }
-        GIFHUD.shared.dismiss()
+//        GIFHUD.shared.dismiss()
     }
 
     
@@ -211,7 +223,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
               }
               self.allUsersGroupped[firstCarString]?.append(currentUser)
           }
-          GIFHUD.shared.dismiss()
+          
       }
     
     

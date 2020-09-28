@@ -65,7 +65,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     let postTapGestureRecognizer = UITapGestureRecognizer()
     let logoutTapGestureRecognizer = UITapGestureRecognizer()
     let coverTapGestureRecognizer = UITapGestureRecognizer()
-       
+    var imageview = UIImageView()
     //var recentListener: ListenerRegistration!
     
     override func viewDidLoad() {
@@ -117,7 +117,18 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        GIFHUD.shared.setGif(named: "loaderFinal.gif")
+        do {
+            let gif = try UIImage(gifName: "loaderFinal.gif")
+            imageview = UIImageView(gifImage: gif, loopCount: -1) // Will loop 3 times
+            let screenSize: CGRect = view.bounds
+            imageview.frame = CGRect(x: screenSize.width * 0.31, y: screenSize.height * 0.47, width: screenSize.width * 0.41, height: screenSize.height * 0.33)
+            //imageview.frame = view.bounds
+
+            view.addSubview(imageview)
+        } catch {
+            print(error)
+        }
+        self.imageview.startAnimatingGif()
         loadUser()
         loadPosts()
         tableView.tableFooterView = UIView()
@@ -333,7 +344,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     // MARK: - Load Posts
     // loading posts from the server via@objc  PHP protocol
     @objc func loadPosts() {
-        GIFHUD.shared.show(withOverlay: true)
+        
         
             var query: Query!
             
@@ -348,13 +359,13 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 
                 if error != nil {
                     print(error!.localizedDescription)
-                    GIFHUD.shared.dismiss()
+                    self.imageview.removeFromSuperview()
                     self.tableView.reloadData()
                     return
                 }
                 
                 guard let snapshot = snapshot else {
-                    GIFHUD.shared.dismiss(); return
+                    self.imageview.removeFromSuperview(); return
                 }
                 
                 if !snapshot.isEmpty {
@@ -397,12 +408,12 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                                         
                     }
                     self.tableView.reloadData()
-                    GIFHUD.shared.dismiss()
+                    self.imageview.removeFromSuperview()
                 }
                 self.tableView.reloadData()
-                GIFHUD.shared.dismiss()
+                self.imageview.removeFromSuperview()
             }
-        GIFHUD.shared.dismiss()
+//        self.imageview.removeFromSuperview()
         
     }
         

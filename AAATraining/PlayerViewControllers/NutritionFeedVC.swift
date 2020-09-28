@@ -36,7 +36,7 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
    
     
     @IBOutlet weak var composeButton: UIBarButtonItem!
-    
+    var imageview = UIImageView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +66,18 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        GIFHUD.shared.setGif(named: "loaderFinal.gif")
+        do {
+            let gif = try UIImage(gifName: "loaderFinal.gif")
+            imageview = UIImageView(gifImage: gif, loopCount: -1) // Will loop 3 times
+            let screenSize: CGRect = view.bounds
+            imageview.frame = CGRect(x: screenSize.width * 0.31, y: screenSize.height * 0.47, width: screenSize.width * 0.41, height: screenSize.height * 0.33)
+            //imageview.frame = view.bounds
+
+            view.addSubview(imageview)
+        } catch {
+            print(error)
+        }
+        self.imageview.startAnimatingGif()
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -97,7 +108,7 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
     
     // MARK: - Load Posts
     @objc func loadNutritionPosts() {
-        GIFHUD.shared.show(withOverlay: true)
+        
         
         recentListener = reference(.Nutrition).order(by: kNUTRITIONPOSTDATE, descending: true).whereField(kNUTRITIONTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID as Any).limit(to: 100).addSnapshotListener({ (snapshot, error) in
                    
@@ -108,11 +119,11 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
             
             if error != nil {
                 print(error!.localizedDescription)
-                GIFHUD.shared.dismiss()
+                self.imageview.removeFromSuperview()
                 self.tableView.reloadData()
                 return
             }
-                   guard let snapshot = snapshot else { GIFHUD.shared.dismiss(); return }
+                   guard let snapshot = snapshot else { self.imageview.removeFromSuperview(); return }
 
                    if !snapshot.isEmpty {
 
@@ -155,7 +166,7 @@ class NutritionFeedVC: UITableViewController, CoachPicCellDelegate {
                        self.tableView.reloadData()
                     
                    }
-                GIFHUD.shared.dismiss()
+                   self.imageview.removeFromSuperview()
                })
         
     }

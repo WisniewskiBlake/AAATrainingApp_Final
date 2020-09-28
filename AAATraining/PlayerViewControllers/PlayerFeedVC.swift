@@ -47,7 +47,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
        let currentDateFormater = Helper().dateFormatter()
     
     let moreTapGestureRecognizer = UITapGestureRecognizer()
-
+    var imageview = UIImageView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,7 +100,18 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        GIFHUD.shared.setGif(named: "loaderFinal.gif")
+        do {
+            let gif = try UIImage(gifName: "loaderFinal.gif")
+            imageview = UIImageView(gifImage: gif, loopCount: -1) // Will loop 3 times
+            let screenSize: CGRect = view.bounds
+            imageview.frame = CGRect(x: screenSize.width * 0.31, y: screenSize.height * 0.47, width: screenSize.width * 0.41, height: screenSize.height * 0.33)
+            //imageview.frame = view.bounds
+
+            view.addSubview(imageview)
+        } catch {
+            print(error)
+        }
+        self.imageview.startAnimatingGif()
         loadPosts()
         getMembers()
         configureUI()
@@ -170,7 +181,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     }
     
     func getMembers() {
-        GIFHUD.shared.show(withOverlay: true)
+        
                
                let query = reference(.Team).whereField(kTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID)
                query.getDocuments { (snapshot, error) in
@@ -178,7 +189,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
                    
                    if error != nil {
                        print(error!.localizedDescription)
-                    GIFHUD.shared.dismiss()
+                    self.imageview.removeFromSuperview()
                     self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
                         
                        return
@@ -187,7 +198,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
                    guard let snapshot = snapshot else {
                     self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
                     self.isLoading = false
-                    GIFHUD.shared.dismiss(); return
+                    self.imageview.removeFromSuperview(); return
                    }
                    
                    if !snapshot.isEmpty {
@@ -202,7 +213,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
                        
 
                    }
-                GIFHUD.shared.dismiss()
+                self.imageview.removeFromSuperview()
                }
         
     }
@@ -311,7 +322,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     
     // MARK: - Load Posts
     @objc func loadPosts() {
-        GIFHUD.shared.show(withOverlay: true)
+        
         
             self.recentListener = reference(.Post).whereField(kPOSTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID as Any).order(by: kPOSTDATE, descending: true).limit(to: 100).addSnapshotListener({ (snapshot, error) in
                    
@@ -322,11 +333,11 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
             
             if error != nil {
                 print(error!.localizedDescription)
-                GIFHUD.shared.dismiss()
+                self.imageview.removeFromSuperview()
                 self.tableView.reloadData()
                 return
             }
-                   guard let snapshot = snapshot else { GIFHUD.shared.dismiss(); return }
+                   guard let snapshot = snapshot else { self.imageview.removeFromSuperview(); return }
 
                    if !snapshot.isEmpty {
 
@@ -369,7 +380,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
                        self.tableView.reloadData()
                     
                    }
-                GIFHUD.shared.dismiss()
+                self.imageview.removeFromSuperview()
             })
         
     }

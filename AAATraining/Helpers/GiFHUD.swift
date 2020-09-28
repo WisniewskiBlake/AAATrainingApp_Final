@@ -63,17 +63,17 @@ public class GIFHUDImageView: UIImageView {
   }
 
   // MARK: Animation
-  public func startAnimatingGif() {
-    if animatable {
-      animatableImage?.resumeAnimation()
-    }
-  }
-
-  public func stopAnimatingGif() {
-    if animatable {
-      animatableImage?.pauseAnimation()
-    }
-  }
+//  public func startAnimatingGif() {
+//    if animatable {
+//      animatableImage?.resumeAnimation()
+//    }
+//  }
+//
+//  public func stopAnimatingGif() {
+//    if animatable {
+//      animatableImage?.pauseAnimation()
+//    }
+//  }
 }
 
 // MARK: - UIImage Extension
@@ -121,7 +121,7 @@ public class GIFHUDImage: UIImage {
   private lazy var displayLink: CADisplayLink = CADisplayLink(target: self, selector: #selector(updateCurrentFrame))
   private lazy var preloadFrameQueue: DispatchQueue! = DispatchQueue(label: "GIFHUDPreloadImages", attributes: [])
   private var currentFrameIndex = 0
-  private var imageSource: CGImageSource?
+//  private var imageSource: CGImageSource?
   private var timeSinceLastFrameChange: TimeInterval = 0.0
 
   // MARK: Computed Properties
