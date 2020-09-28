@@ -23,6 +23,9 @@ public class TeamEventCache {
     var eventStart: String
     var eventEnd: String
     var dateForUpcomingComparison: String
+    var eventLocation: String
+    var eventImage: String
+    var eventURL: String
     
     
     let eventDictionary: NSMutableDictionary
@@ -41,13 +44,16 @@ public class TeamEventCache {
         eventStart = ""
         eventEnd = ""
         dateForUpcomingComparison = ""
+        eventLocation = ""
+        eventImage = ""
+        eventURL = ""
         
-        eventDictionary = NSMutableDictionary(objects: [eventGroupID, eventID, eventTeamID, eventOwnerID, eventText, eventDate, eventAccountType, eventCounter, eventUserID, eventTitle, eventStart, eventEnd, dateForUpcomingComparison], forKeys: [kEVENTGROUPID as NSCopying, kEVENTID as NSCopying, kEVENTTEAMID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying, kEVENTCOUNTER as NSCopying, kEVENTUSERID as NSCopying, kEVENTTITLE as NSCopying, kEVENTSTART as NSCopying, kEVENTEND as NSCopying, kEVENTDATEFORUPCOMINGCOMPARISON as NSCopying])
+        eventDictionary = NSMutableDictionary(objects: [eventGroupID, eventID, eventTeamID, eventOwnerID, eventText, eventDate, eventAccountType, eventCounter, eventUserID, eventTitle, eventStart, eventEnd, dateForUpcomingComparison, eventLocation, eventImage, eventURL], forKeys: [kEVENTGROUPID as NSCopying, kEVENTID as NSCopying, kEVENTTEAMID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying, kEVENTCOUNTER as NSCopying, kEVENTUSERID as NSCopying, kEVENTTITLE as NSCopying, kEVENTSTART as NSCopying, kEVENTEND as NSCopying, kEVENTDATEFORUPCOMINGCOMPARISON as NSCopying, kEVENTLOCATION as NSCopying, kEVENTIMAGE as NSCopying, kEVENTURL as NSCopying])
     }
 
-    init(eventGroupID: String, eventID: String, eventTeamID: String, eventOwnerID: String, eventText: String, eventDate: String, eventAccountType: String, eventCounter: Int, eventUserID: String, eventTitle: String, eventStart: String, eventEnd: String, dateForUpcomingComparison: String) {
+    init(eventGroupID: String, eventID: String, eventTeamID: String, eventOwnerID: String, eventText: String, eventDate: String, eventAccountType: String, eventCounter: Int, eventUserID: String, eventTitle: String, eventStart: String, eventEnd: String, dateForUpcomingComparison: String, eventLocation: String, eventImage: String, eventURL: String) {
 
-        eventDictionary = NSMutableDictionary(objects: [eventGroupID, eventID, eventTeamID, eventOwnerID, eventText, eventDate, eventAccountType, eventCounter, eventUserID, eventTitle, eventStart, eventEnd, dateForUpcomingComparison], forKeys: [kEVENTGROUPID as NSCopying, kEVENTID as NSCopying, kEVENTTEAMID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying, kEVENTCOUNTER as NSCopying, kEVENTUSERID as NSCopying, kEVENTTITLE as NSCopying, kEVENTSTART as NSCopying, kEVENTEND as NSCopying, kEVENTDATEFORUPCOMINGCOMPARISON as NSCopying])
+        eventDictionary = NSMutableDictionary(objects: [eventGroupID, eventID, eventTeamID, eventOwnerID, eventText, eventDate, eventAccountType, eventCounter, eventUserID, eventTitle, eventStart, eventEnd, dateForUpcomingComparison, eventLocation, eventImage, eventURL], forKeys: [kEVENTGROUPID as NSCopying, kEVENTID as NSCopying, kEVENTTEAMID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying, kEVENTCOUNTER as NSCopying, kEVENTUSERID as NSCopying, kEVENTTITLE as NSCopying, kEVENTSTART as NSCopying, kEVENTEND as NSCopying, kEVENTDATEFORUPCOMINGCOMPARISON as NSCopying, kEVENTLOCATION as NSCopying, kEVENTIMAGE as NSCopying, kEVENTURL as NSCopying])
         
         self.eventGroupID = eventGroupID
         self.eventID = eventID
@@ -62,6 +68,9 @@ public class TeamEventCache {
         self.eventStart = eventStart
         self.eventEnd = eventEnd
         self.dateForUpcomingComparison = dateForUpcomingComparison
+        self.eventLocation = eventLocation
+        self.eventImage = eventImage
+        self.eventURL = eventURL
     }
     
     init(_dictionary: NSDictionary) {
@@ -123,15 +132,30 @@ public class TeamEventCache {
         } else {
             dateForUpcomingComparison = ""
         }
+        if let eL = _dictionary[kEVENTLOCATION] {
+            eventLocation = eL as! String
+        } else {
+            eventLocation = ""
+        }
+        if let eI = _dictionary[kEVENTIMAGE] {
+            eventImage = eI as! String
+        } else {
+            eventImage = ""
+        }
+        if let eU = _dictionary[kEVENTURL] {
+            eventURL = eU as! String
+        } else {
+            eventURL = ""
+        }
         
        
         
-        eventDictionary = NSMutableDictionary(objects: [eventGroupID, eventID, eventTeamID, eventOwnerID, eventText, eventDate, eventAccountType, eventCounter, eventUserID, eventTitle, eventStart, eventEnd, dateForUpcomingComparison], forKeys: [kEVENTGROUPID as NSCopying, kEVENTID as NSCopying, kEVENTTEAMID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying, kEVENTCOUNTER as NSCopying, kEVENTUSERID as NSCopying, kEVENTTITLE as NSCopying, kEVENTSTART as NSCopying, kEVENTEND as NSCopying, kEVENTDATEFORUPCOMINGCOMPARISON as NSCopying])
+        eventDictionary = NSMutableDictionary(objects: [eventGroupID, eventID, eventTeamID, eventOwnerID, eventText, eventDate, eventAccountType, eventCounter, eventUserID, eventTitle, eventStart, eventEnd, dateForUpcomingComparison, eventLocation, eventImage, eventURL], forKeys: [kEVENTGROUPID as NSCopying, kEVENTID as NSCopying, kEVENTTEAMID as NSCopying, kEVENTOWNERID as NSCopying, kEVENTTEXT as NSCopying, kEVENTDATE as NSCopying, kEVENTACCOUNTTYPE as NSCopying, kEVENTCOUNTER as NSCopying, kEVENTUSERID as NSCopying, kEVENTTITLE as NSCopying, kEVENTSTART as NSCopying, kEVENTEND as NSCopying, kEVENTDATEFORUPCOMINGCOMPARISON as NSCopying, kEVENTLOCATION as NSCopying, kEVENTIMAGE as NSCopying, kEVENTURL as NSCopying])
         
     }
 
 
-    public func updateTeamEvent(eventGroupID: String, eventOwnerID: String, eventText : String, eventTitle: String, eventStart: String, eventEnd: String) {
+    public func updateTeamEvent(eventGroupID: String, eventOwnerID: String, eventText : String, eventTitle: String, eventStart: String, eventEnd: String, eventLocation: String, eventImage: String, eventURL: String) {
         reference(.Event).whereField(kEVENTGROUPID, isEqualTo: eventGroupID).getDocuments { (snapshot, error) in
             
             guard let snapshot = snapshot else { return }
@@ -142,14 +166,14 @@ public class TeamEventCache {
                     
                     let currentRecent = recent.data() as NSDictionary
                     
-                    self.updateTeamEventItem(event: currentRecent, eventText: eventText, eventTitle: eventTitle, eventStart: eventStart, eventEnd: eventEnd)
+                    self.updateTeamEventItem(event: currentRecent, eventText: eventText, eventTitle: eventTitle, eventStart: eventStart, eventEnd: eventEnd, eventLocation: eventLocation, eventImage: eventImage, eventURL: eventURL)
                 }
             }
         }
         
     }
     
-    func updateTeamEventItem(event: NSDictionary, eventText: String, eventTitle: String, eventStart: String, eventEnd: String) {
+    func updateTeamEventItem(event: NSDictionary, eventText: String, eventTitle: String, eventStart: String, eventEnd: String, eventLocation: String, eventImage: String, eventURL: String) {
 
         var counter = event[kEVENTCOUNTER] as! Int
 
