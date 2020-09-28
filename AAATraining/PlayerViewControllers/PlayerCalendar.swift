@@ -301,26 +301,26 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         calendar.formatter.dateFormat = "YYYY-MM-dd"
         let dateForUpcomingComparison = calendar.formatter.string(from: date)
         
-        let eventVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PlayerEvent") as! PlayerEvent
-        let navController = UINavigationController(rootViewController: eventVC)
+        var allEventsSameDate: [Event] = []
+        var datesForUpcomingComparison: [String] = []
         
-        for event in allEvents {
-            if event.eventDate == dateString {                
-                eventVC.event = event
-//                eventVC.eventStart = event.eventStart
-//                eventVC.eventEnd = event.eventEnd
-//                eventVC.eventTitle = event.eventTitle
-                eventVC.accountType = "player"
-                
-            } else {
-                eventVC.eventText = ""
+        if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MultiEvent_Coach") as? MultiEvent_Coach
+        {
+            for event in allEvents {
+                if event.eventDate == dateString {
+                    allEventsSameDate.append(event)
+                    datesForUpcomingComparison.append(dateForUpcomingComparison)
+                }
             }
-        }
+            eventVC.hidesBottomBarWhenPushed = true
+            eventVC.dateString = dateString
+            eventVC.allEventsSameDate = allEventsSameDate
+            eventVC.datesForUpcomingComparison = datesForUpcomingComparison
+            eventVC.accountType = "Player"
+            eventVC.modalPresentationStyle = .fullScreen
+            self.present(eventVC, animated: true, completion: nil)
+        }        
         
-        eventVC.hidesBottomBarWhenPushed = true
-        eventVC.dateString = dateString
-        
-        self.navigationController?.present(navController, animated: true, completion: nil)
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

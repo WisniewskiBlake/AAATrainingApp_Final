@@ -328,8 +328,6 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                 if event.eventDate == dateString {
                     allEventsSameDate.append(event)
                     datesForUpcomingComparison.append(dateForUpcomingComparison)
-                    
-                    //event.clearCalendarCounter(eventGroupID: event.eventGroupID, eventUserID: event.eventUserID)
                 }
             }
             eventVC.hidesBottomBarWhenPushed = true

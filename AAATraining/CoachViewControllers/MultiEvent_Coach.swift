@@ -13,10 +13,12 @@ class MultiEvent_Coach: UITableViewController {
     var allEventsSameDate: [Event] = []
     var datesForUpcomingComparison: [String] = []
     var dateString: String = ""
+    var accountType: String = ""
     var eventsToShow: [Event] = []
     var emptyLabelOne = UILabel()
-    @IBOutlet weak var eventCounterLabel: UILabel!
     
+    
+    @IBOutlet weak var eventCounterLabel: UILabel!
     @IBOutlet weak var titleView: UIView!
     
 
@@ -113,15 +115,37 @@ class MultiEvent_Coach: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let event = eventsToShow[indexPath.row]
         
-        if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
-        {
-            eventVC.hidesBottomBarWhenPushed = true
-            eventVC.dateString = event.eventDate
-            eventVC.updateNeeded = true
-            eventVC.event = event            
-            eventVC.modalPresentationStyle = .fullScreen
-            self.present(eventVC, animated: true, completion: nil)
+        if self.accountType == "Player" {
+            if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PlayerEvent") as? PlayerEvent
+            {
+                eventVC.hidesBottomBarWhenPushed = true
+                eventVC.dateString = event.eventDate                
+                eventVC.event = event
+                eventVC.modalPresentationStyle = .fullScreen
+                self.present(eventVC, animated: true, completion: nil)
+            }
+        } else if self.accountType == "Parent" {
+            if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ParentEvent") as? ParentEvent
+            {
+                eventVC.hidesBottomBarWhenPushed = true
+                eventVC.dateString = event.eventDate
+                eventVC.event = event
+                eventVC.modalPresentationStyle = .fullScreen
+                self.present(eventVC, animated: true, completion: nil)
+            }
+        } else {
+            if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
+            {
+                eventVC.hidesBottomBarWhenPushed = true
+                eventVC.dateString = event.eventDate
+                eventVC.updateNeeded = true
+                eventVC.event = event
+                eventVC.modalPresentationStyle = .fullScreen
+                self.present(eventVC, animated: true, completion: nil)
+            }
         }
+        
+        
     }
 
     @IBAction func backButtonPressed(_ sender: Any) {

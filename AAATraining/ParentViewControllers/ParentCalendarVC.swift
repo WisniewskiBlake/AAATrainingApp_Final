@@ -269,7 +269,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
             self.imageview.removeFromSuperview()
             
         })
-    }    
+    }
     
     
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
@@ -307,21 +307,29 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         calendar.formatter.dateFormat = "EEEE, MM-dd-YYYY"
         let dateString = calendar.formatter.string(from: date)
         
-        let eventVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ParentEvent") as! ParentEvent
-        let navController = UINavigationController(rootViewController: eventVC)
+        calendar.formatter.dateFormat = "YYYY-MM-dd"
+        let dateForUpcomingComparison = calendar.formatter.string(from: date)
         
-        for event in allEvents {
-            if event.eventDate == dateString {                
-                eventVC.event = event
-                
-            } else {
-                eventVC.eventText = ""
+        var allEventsSameDate: [Event] = []
+        var datesForUpcomingComparison: [String] = []
+        
+        if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MultiEvent_Coach") as? MultiEvent_Coach
+        {
+            for event in allEvents {
+                if event.eventDate == dateString {
+                    allEventsSameDate.append(event)
+                    datesForUpcomingComparison.append(dateForUpcomingComparison)
+                }
             }
-        }
+            eventVC.hidesBottomBarWhenPushed = true
+            eventVC.dateString = dateString
+            eventVC.allEventsSameDate = allEventsSameDate
+            eventVC.datesForUpcomingComparison = datesForUpcomingComparison
+            eventVC.accountType = "Parent"
+            eventVC.modalPresentationStyle = .fullScreen
+            self.present(eventVC, animated: true, completion: nil)
+        }        
         
-        eventVC.hidesBottomBarWhenPushed = true
-        eventVC.dateString = dateString
-        self.navigationController?.present(navController, animated: true, completion: nil)
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
