@@ -25,6 +25,7 @@ pod 'RNCryptor'
 pod 'ImagePicker'
 pod 'OneSignal'
 pod 'SinchRTC'
+pod 'GiFHUD-Swift'
 
 pod 'FSCalendar'
 
