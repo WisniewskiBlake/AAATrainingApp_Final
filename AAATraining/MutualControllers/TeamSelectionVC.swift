@@ -63,11 +63,22 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         do {
             let gif = try UIImage(gifName: "loaderFinal.gif")
             imageview = UIImageView(gifImage: gif, loopCount: -1) // Will loop 3 times
-            let screenSize: CGRect = view.bounds
-            imageview.frame = CGRect(x: screenSize.width * 0.31, y: screenSize.height * 0.47, width: screenSize.width * 0.41, height: screenSize.height * 0.33)
-            //imageview.frame = view.bounds
-
+            let screenSize = view.frame.size
+            //imageview.frame = CGRect(x: 0, y: 0, width: screenSize.width * 0.8, height: screenSize.height * 0.65)
+            imageview.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(imageview)
+            let widthConstraint = NSLayoutConstraint(item: imageview, attribute: .width, relatedBy: .equal,
+                                                     toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 250)
+
+            let heightConstraint = NSLayoutConstraint(item: imageview, attribute: .height, relatedBy: .equal,
+                                                      toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 250)
+
+            let xConstraint = NSLayoutConstraint(item: imageview, attribute: .centerX, relatedBy: .equal, toItem: self.tableView, attribute: .centerX, multiplier: 1, constant: 0)
+
+            let yConstraint = NSLayoutConstraint(item: imageview, attribute: .centerY, relatedBy: .equal, toItem: self.tableView, attribute: .centerY, multiplier: 1, constant: 0)
+
+            NSLayoutConstraint.activate([widthConstraint, heightConstraint, xConstraint, yConstraint])
+            //NSLayoutConstraint.activate([xConstraint, yConstraint])
         } catch {
             print(error)
         }
@@ -76,7 +87,7 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         loadTeamsForUser()
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
-        
+        emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -150, width: view.bounds.size.width, height: view.bounds.size.height))
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         tableView.tableFooterView = view
@@ -176,7 +187,7 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if teams.count == 0 {
-            emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -150, width: view.bounds.size.width, height: view.bounds.size.height))
+            
             emptyLabelOne.text = "No teams to show!"
             emptyLabelOne.textAlignment = NSTextAlignment.center
             self.tableView.tableFooterView!.addSubview(emptyLabelOne)
