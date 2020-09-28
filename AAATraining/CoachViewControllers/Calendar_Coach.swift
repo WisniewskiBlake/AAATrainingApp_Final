@@ -56,7 +56,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
         //NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "createEvent"), object: nil)
 
-        
+        GIFHUD.shared.setGif(named: "loaderFinal.gif")
 
         let todayDate = self.calendar!.today! as Date
         self.calendar.formatter.dateFormat = "YYYY-MM-dd"
@@ -72,7 +72,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        GIFHUD.shared.setGif(named: "loaderFinal.gif")
+        
         calendar.delegate = self
         loadUser()
         
@@ -141,6 +141,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                         } else {
                             self.loadEvents()
                         }
+                        GIFHUD.shared.dismiss()
                     }
                     
                     GIFHUD.shared.dismiss()
@@ -157,7 +158,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     }
     
     func getEventsForNewObserver() {
-        GIFHUD.shared.show(withOverlay: true)
+        //GIFHUD.shared.show(withOverlay: true)
         //ProgressHUD.show()
         let localReference = reference(.Event).document()
         let eventId = localReference.documentID
@@ -202,15 +203,15 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                 }
 //                self.tableView.reloadData()
 //                self.calendar.reloadData()
-
+                GIFHUD.shared.dismiss()
             }
 
 //            self.tableView.reloadData()
 //            self.calendar.reloadData()
              //sleep(UInt32(1.2))
-//             GIFHUD.shared.dismiss()
+             
              self.loadEvents()
-            
+             GIFHUD.shared.dismiss()
             
         }
         
@@ -230,6 +231,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
     @objc func loadEvents() {
         //GIFHUD.shared.show(withOverlay: true)
+        
         print("loadEvents")
         //ProgressHUD.show()
         recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kEVENTUSERID).order(by: kEVENTDATEFORUPCOMINGCOMPARISON).addSnapshotListener({ (snapshot, error) in
@@ -278,12 +280,14 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                }
                 self.tableView.reloadData()
                 self.calendar.reloadData()
+                GIFHUD.shared.dismiss()
+                
            }
             
             self.tableView.reloadData()
             self.calendar.reloadData()
             GIFHUD.shared.dismiss()
-           
+            
         })
     }
     

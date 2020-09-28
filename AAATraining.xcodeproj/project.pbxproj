@@ -140,6 +140,11 @@
 		B771576A24EF9384005834CA /* AllBaselinesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B771576924EF9383005834CA /* AllBaselinesVC.swift */; };
 		B771576C24EF95D1005834CA /* AllBaselinesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B771576B24EF95D1005834CA /* AllBaselinesCell.swift */; };
 		B771576E24F08437005834CA /* StickyGridCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B771576D24F08436005834CA /* StickyGridCollectionViewLayout.swift */; };
+		B79194462521B21B000895F5 /* UIImage+SwiftyGif.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79194402521B218000895F5 /* UIImage+SwiftyGif.swift */; };
+		B79194472521B21B000895F5 /* NSImageView+SwiftyGif.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79194412521B218000895F5 /* NSImageView+SwiftyGif.swift */; };
+		B79194482521B21B000895F5 /* UIImageView+SwiftyGif.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79194432521B219000895F5 /* UIImageView+SwiftyGif.swift */; };
+		B79194492521B21B000895F5 /* NSImage+SwiftyGif.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79194442521B21A000895F5 /* NSImage+SwiftyGif.swift */; };
+		B791944A2521B21B000895F5 /* SwiftyGifManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79194452521B21B000895F5 /* SwiftyGifManager.swift */; };
 		B796233F24E3823500AD3C8F /* Baseline.swift in Sources */ = {isa = PBXBuildFile; fileRef = B796233E24E3823500AD3C8F /* Baseline.swift */; };
 		B79CC87F24FF3CB5007FE36E /* ColorPickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79CC87E24FF3CB5007FE36E /* ColorPickerVC.swift */; };
 		B79CC88624FF4702007FE36E /* ColorMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79CC88024FF46F4007FE36E /* ColorMapView.swift */; };
@@ -388,6 +393,12 @@
 		B771576924EF9383005834CA /* AllBaselinesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllBaselinesVC.swift; sourceTree = "<group>"; };
 		B771576B24EF95D1005834CA /* AllBaselinesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllBaselinesCell.swift; sourceTree = "<group>"; };
 		B771576D24F08436005834CA /* StickyGridCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickyGridCollectionViewLayout.swift; sourceTree = "<group>"; };
+		B79194402521B218000895F5 /* UIImage+SwiftyGif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+SwiftyGif.swift"; sourceTree = "<group>"; };
+		B79194412521B218000895F5 /* NSImageView+SwiftyGif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSImageView+SwiftyGif.swift"; sourceTree = "<group>"; };
+		B79194422521B219000895F5 /* SwiftyGif.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftyGif.h; sourceTree = "<group>"; };
+		B79194432521B219000895F5 /* UIImageView+SwiftyGif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+SwiftyGif.swift"; sourceTree = "<group>"; };
+		B79194442521B21A000895F5 /* NSImage+SwiftyGif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSImage+SwiftyGif.swift"; sourceTree = "<group>"; };
+		B79194452521B21B000895F5 /* SwiftyGifManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyGifManager.swift; sourceTree = "<group>"; };
 		B796233E24E3823500AD3C8F /* Baseline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Baseline.swift; sourceTree = "<group>"; };
 		B79CC87E24FF3CB5007FE36E /* ColorPickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerVC.swift; sourceTree = "<group>"; };
 		B79CC88024FF46F4007FE36E /* ColorMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorMapView.swift; sourceTree = "<group>"; };
@@ -657,6 +668,19 @@
 			path = CoachCells;
 			sourceTree = "<group>";
 		};
+		B791943C2521B034000895F5 /* GIFLoader */ = {
+			isa = PBXGroup;
+			children = (
+				B79194442521B21A000895F5 /* NSImage+SwiftyGif.swift */,
+				B79194412521B218000895F5 /* NSImageView+SwiftyGif.swift */,
+				B79194422521B219000895F5 /* SwiftyGif.h */,
+				B79194452521B21B000895F5 /* SwiftyGifManager.swift */,
+				B79194402521B218000895F5 /* UIImage+SwiftyGif.swift */,
+				B79194432521B219000895F5 /* UIImageView+SwiftyGif.swift */,
+			);
+			path = GIFLoader;
+			sourceTree = "<group>";
+		};
 		B7C3BDFD24BC630C00086C27 /* fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -750,6 +774,7 @@
 		B7F18C6224970084009BFA17 /* AAATraining */ = {
 			isa = PBXGroup;
 			children = (
+				B791943C2521B034000895F5 /* GIFLoader */,
 				B7376D3A251C98E900B2391B /* Floaty */,
 				B7EA82E22500C33300824BC7 /* AAATraining.entitlements */,
 				B70EDF1D24D1A58800CC21F5 /* ParentViewControllers */,
@@ -1335,6 +1360,7 @@
 				B70EDF1A24D13EF500CC21F5 /* Event.swift in Sources */,
 				B75AD62124C993B500DCC857 /* ChatVC_Coach.swift in Sources */,
 				B7376D5E251CA44B00B2391B /* JJFloatingActionButtonDelegate.swift in Sources */,
+				B791944A2521B21B000895F5 /* SwiftyGifManager.swift in Sources */,
 				B75AD62D24CA927900DCC857 /* ContactsVC_Coach.swift in Sources */,
 				B701BB9224E3803400FC88DC /* BaselineCell.swift in Sources */,
 				B701BB8424DE5D1200FC88DC /* ParentRecentChat.swift in Sources */,
@@ -1374,6 +1400,7 @@
 				B7376D5D251CA44B00B2391B /* JJCircleView.swift in Sources */,
 				B70EDF1F24D1A5AA00CC21F5 /* ParentRegisterVC.swift in Sources */,
 				B70EDF1424CEAA6E00CC21F5 /* Post.swift in Sources */,
+				B79194462521B21B000895F5 /* UIImage+SwiftyGif.swift in Sources */,
 				B7C3BDF824BB08D200086C27 /* CoachNoPicCell.swift in Sources */,
 				B7DEBF5B24F3B32C00D179C4 /* Team.swift in Sources */,
 				B70EDF0224CD3BC500CC21F5 /* MapViewController.swift in Sources */,
@@ -1391,16 +1418,19 @@
 				B75AD61D24C9667000DCC857 /* RosterVC_Coach.swift in Sources */,
 				B75AD62524C996D700DCC857 /* Recent.swift in Sources */,
 				B7F8AFEC24A4B3A800B315FD /* CoachRegisterVC.swift in Sources */,
+				B79194472521B21B000895F5 /* NSImageView+SwiftyGif.swift in Sources */,
 				B7F18C9C24975B60009BFA17 /* LoginVC.swift in Sources */,
 				B7376D5A251CA44B00B2391B /* AnimationConfiguration.swift in Sources */,
 				B75D0AEB24BFC8D900CF7943 /* FeedVC_Coach.swift in Sources */,
 				B7376D65251EEA3900B2391B /* EventCell.swift in Sources */,
 				B7376D59251CA44B00B2391B /* JJFloatingActionButtonState.swift in Sources */,
 				B771576C24EF95D1005834CA /* AllBaselinesCell.swift in Sources */,
+				B79194492521B21B000895F5 /* NSImage+SwiftyGif.swift in Sources */,
 				B7EA82E62508685800824BC7 /* FooterView.swift in Sources */,
 				B7F8AFE924A45ABA00B315FD /* StatsVC.swift in Sources */,
 				B7628BAE24EDB54400BBDC97 /* NutritionPostVC.swift in Sources */,
 				B771576A24EF9384005834CA /* AllBaselinesVC.swift in Sources */,
+				B79194482521B21B000895F5 /* UIImageView+SwiftyGif.swift in Sources */,
 				B755107B249CAB7400598A30 /* Helper.swift in Sources */,
 				B7DEBF5924F363D000D179C4 /* TeamRegisterVC.swift in Sources */,
 				B70EDF0424CD40D400CC21F5 /* EditGroupVC_Coach.swift in Sources */,

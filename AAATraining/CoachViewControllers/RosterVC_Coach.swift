@@ -55,7 +55,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         definesPresentationContext = true
 
         getTeam(filter: "")
-        
+        GIFHUD.shared.dismiss()
     }
     
     
@@ -179,12 +179,14 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
                     }
                     self.splitDataIntoSection()
                     self.tableView.reloadData()
+                    GIFHUD.shared.dismiss()
                 }
                 
                 self.tableView.reloadData()
                 GIFHUD.shared.dismiss()
                 
         }
+        GIFHUD.shared.dismiss()
     }
 
     
@@ -209,7 +211,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
               }
               self.allUsersGroupped[firstCarString]?.append(currentUser)
           }
-
+          GIFHUD.shared.dismiss()
       }
     
     

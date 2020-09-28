@@ -334,7 +334,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     // loading posts from the server via@objc  PHP protocol
     @objc func loadPosts() {
         GIFHUD.shared.show(withOverlay: true)
-        DispatchQueue.main.async {
+        
             var query: Query!
             
             query = reference(.Post).whereField(kPOSTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID as Any).whereField(kPOSTOWNERID, isEqualTo: FUser.currentId()).order(by: kPOSTDATE, descending: true)
@@ -397,11 +397,12 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                                         
                     }
                     self.tableView.reloadData()
-                
+                    GIFHUD.shared.dismiss()
                 }
+                self.tableView.reloadData()
                 GIFHUD.shared.dismiss()
             }
-        }
+        GIFHUD.shared.dismiss()
         
     }
         
