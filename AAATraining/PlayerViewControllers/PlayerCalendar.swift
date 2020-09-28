@@ -22,6 +22,13 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
     var allEvents: [Event] = []
     var upcomingEvents: [Event] = []
+    
+    var allCacheEvents: [TeamEventCache] = []
+    var upcomingCacheEvents: [TeamEventCache] = []
+    var isNewObserverValue: String = "No"
+    var updateObserverArray: [String] = []
+    var index = 0
+    
     var recentListener: ListenerRegistration!
     var allEventDates: [String] = []
     var countArray = [String]()
@@ -37,6 +44,7 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
     var eventCopied = Event()
     var imageview = UIImageView()
+    let helper = Helper()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,8 +80,9 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
             print(error)
         }
         self.imageview.startAnimatingGif()
+        
         calendar.delegate = self
-        loadEvents()
+        loadUser()
         configureUI()
         
     }
@@ -91,13 +100,108 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         upcomingLabel.textColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         self.setLeftAlignedNavigationItemTitle(text: "Team Calendar", color: .white, margin: 12)
         splitterLabel.backgroundColor = #colorLiteral(red: 0.6815950428, green: 0.6815950428, blue: 0.6815950428, alpha: 1)
-        splitterLabelTwo.backgroundColor = #colorLiteral(red: 0.6815950428, green: 0.6815950428, blue: 0.6815950428, alpha: 1)
+        splitterLabelTwo.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     }
 
+    func loadUser() {
+
+        let query = reference(.User).whereField(kOBJECTID, isEqualTo: FUser.currentId())
+                query.getDocuments { (snapshot, error) in
+                    
+                    self.updateObserverArray = []
+
+                    if error != nil {
+                        print(error!.localizedDescription)
+                        self.imageview.removeFromSuperview()
+                     self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
+        
+                        return
+                    }
+        
+                    guard let snapshot = snapshot else {
+                        self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
+                        self.imageview.removeFromSuperview();
+                        return
+                    }
+        
+                    if !snapshot.isEmpty {
+        
+                        for userDictionary in snapshot.documents {
+        
+                            let userDictionary = userDictionary.data() as NSDictionary
+                            let user = FUser(_dictionary: userDictionary)
+                            
+                            let userTeamIDArray = user.userTeamIDs
+                            let userIsNewObserverArray = user.userIsNewObserverArray
+                            self.index = userTeamIDArray.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)!
+                            self.isNewObserverValue = user.userIsNewObserverArray[self.index]
+                            self.updateObserverArray = userIsNewObserverArray
+                            
+                        }
+                        if self.isNewObserverValue == "Yes" {
+                            self.getEventsForNewObserver()
+                            self.updateObserverArray[self.index] = "No"
+                            updateUser(userID: FUser.currentId(), withValues: [kUSERISNEWOBSERVERARRAY: self.updateObserverArray])
+                        } else {
+                            self.loadEvents()
+                        }
+
+                    }
+                    
+                    
+                    
+                }
+     }
+    
+    func getEventsForNewObserver() {
+
+        let localReference = reference(.Event).document()
+        let eventId = localReference.documentID
+        var eventToUpload: [String : Any]!
+        print(FUser.currentUser()?.userCurrentTeamID)
+        
+        let query = reference(.TeamEventCache).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kEVENTDATEFORUPCOMINGCOMPARISON)
+        query.getDocuments { (snapshot, error) in
+            self.allCacheEvents = []
+            self.allEventDates = []
+            self.upcomingCacheEvents = []
+            self.countArray = []
+            
+            if error != nil {
+                 print(error!.localizedDescription)
+                self.imageview.removeFromSuperview()
+                 self.calendar.reloadData()
+                 return
+             }
+             guard let snapshot = snapshot else { self.imageview.removeFromSuperview(); return }
+                    
+             if !snapshot.isEmpty {
+                 for eventDictionary in snapshot.documents {
+                     
+                    let eventDictionary = eventDictionary.data() as NSDictionary
+                    let event = TeamEventCache(_dictionary: eventDictionary)
+
+                    self.createEventsForNewObserver(event: event)
+
+                }
+
+            }
+             self.loadEvents()
+        }
+    }
+    
+    func createEventsForNewObserver(event: TeamEventCache) {
+        let localReference = reference(.Event).document()
+        let eventId = localReference.documentID
+        var eventToUpload: [String : Any]!
+        let eventCounter = 0
+        eventToUpload = [kEVENTID: eventId, kEVENTTEAMID: event.eventTeamID, kEVENTOWNERID: event.eventOwnerID, kEVENTTEXT: event.eventText, kEVENTDATE: event.eventDate, kEVENTACCOUNTTYPE: FUser.currentUser()?.accountType, kEVENTCOUNTER: 0, kEVENTUSERID: FUser.currentId(), kEVENTGROUPID: event.eventGroupID, kEVENTTITLE: event.eventTitle, kEVENTSTART: event.eventStart, kEVENTEND: event.eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: event.dateForUpcomingComparison, kEVENTLOCATION: "", kEVENTIMAGE: "", kEVENTURL: ""] as [String:Any]
+
+        localReference.setData(eventToUpload)
+    }
     
     @objc func loadEvents() {
-        print("loadEvents")
-        
+
         recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kEVENTUSERID).order(by: kEVENTDATEFORUPCOMINGCOMPARISON).addSnapshotListener({ (snapshot, error) in
                            
             self.allEvents = []
@@ -109,15 +213,14 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
             self.eventUserIDs = []
             self.isNewObserver = true
             
-            var i = 0
-            var k = 0
+
             if error != nil {
                 print(error!.localizedDescription)
-                GIFHUD.shared.dismiss()
+                self.imageview.removeFromSuperview()
                 self.calendar.reloadData()
                 return
             }
-            guard let snapshot = snapshot else { GIFHUD.shared.dismiss(); return }
+            guard let snapshot = snapshot else { self.imageview.removeFromSuperview(); return }
                    
             if !snapshot.isEmpty {
                 for eventDictionary in snapshot.documents {
@@ -125,96 +228,38 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                    let eventDictionary = eventDictionary.data() as NSDictionary
                    let event = Event(_dictionary: eventDictionary)
                     
-                    if event.dateForUpcomingComparison > self.today && event.eventUserID == FUser.currentId() {
-                        self.upcomingEvents.append(event)
-                    }
+
+                    self.allEvents.append(event)
+                    print("allEvents.append(event)")
+                    print(event.eventUserID + " 1")
+  
+                    //if the event that has the same teamID belongs to an existing user, append the date and count
+                    if event.eventUserID == FUser.currentId() {
+                        print(event.eventUserID + " 2")
+                        //print("event.eventUserID == FUser.currentId()")
+                        if event.dateForUpcomingComparison > self.today {
+                            self.upcomingEvents.append(event)
+                        }
+                        self.allEventDates.append(event.eventDate)
+                        self.countArray.append(String(event.eventCounter))
+                       
+                   }
                     
-                    //if the user and event grabbed have same teamID, append it to all events
-                    if event.eventTeamID == FUser.currentUser()?.userCurrentTeamID {
-                        self.allEvents.append(event)
-                        print("allEvents.append(event)")
-                        print(event.eventUserID + " 1")
-                        i += 1
-                        //if the event that has the same teamID belongs to an existing user, append the date and count
-                        if event.eventUserID == FUser.currentId() {
-                            print(event.eventUserID + " 2")
-                            //print("event.eventUserID == FUser.currentId()")
-                            self.allEventDates.append(event.eventDate)
-                            self.countArray.append(String(event.eventCounter))
-                            self.isNewObserver = false
-                       } else {
-                            //else if the first event grabbed does not belong to an existing user, then append it to eventsToCopy
-                            if i == 1 {
-                                self.eventsToCopy.append(event)
-                                self.eventToCopyUserID = event.eventUserID
-                            } else if i > 1 {
-                                if self.eventToCopyUserID == event.eventUserID {
-                                    self.eventsToCopy.append(event)
-                                }
-                            }
-                            if !self.eventUserIDs.contains(event.eventUserID) {
-                                self.eventUserIDs.append(event.eventUserID)
-                            }
-                       }
-                    }
                }
-                self.checkForNewObserver()
-                k += 1
-                print("k " + String(k))
+                self.tableView.reloadData()
+                self.calendar.reloadData()
+                self.imageview.removeFromSuperview()
+                
            }
             
-            print("x " + String(self.allEvents.count))
+            self.tableView.reloadData()
+            self.calendar.reloadData()
+            self.imageview.removeFromSuperview()
             
-                
-           self.tableView.reloadData()
-           self.calendar.reloadData()
-            
-            GIFHUD.shared.dismiss()
         })
     }
     
-    func checkForNewObserver() {
-        let helper = Helper()
-        print("check For New Observer")
-        
-        if self.isNewObserver {
-            if self.eventsToCopy.count * self.eventUserIDs.count == self.allEvents.count && !(self.eventUserIDs.contains(FUser.currentId())) {
-                
-                for event in self.eventsToCopy {
-                    print("create Events For New Observer")
-                    if !(event.eventOwnerID == FUser.currentId()) && event.eventDate != eventCopied.eventDate {
-                        eventCopied = event
-                        self.createEventsForNewObserver(event: event)
-                    }
-                    
-                    
-                }
-                self.tableView.reloadData()
-                self.calendar.reloadData()
-                
-            } else {
-                
-                self.tableView.reloadData()
-                self.calendar.reloadData()
-            }
-        }
-        
-        
-        self.tableView.reloadData()
-        self.calendar.reloadData()
-
-    }
     
-    //when a new observer opens the view this is called twice
-    func createEventsForNewObserver(event: Event) {
-        let localReference = reference(.Event).document()
-        let eventId = localReference.documentID
-        var eventToUpload: [String : Any]!
-        let eventCounter = 0
-        eventToUpload = [kEVENTID: eventId, kEVENTTEAMID: event.eventTeamID, kEVENTOWNERID: event.eventOwnerID, kEVENTTEXT: event.eventText, kEVENTDATE: event.eventDate, kEVENTACCOUNTTYPE: FUser.currentUser()?.accountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: FUser.currentId(), kEVENTGROUPID: event.eventGroupID, kEVENTTITLE: event.eventTitle, kEVENTSTART: event.eventStart, kEVENTEND: event.eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: event.dateForUpcomingComparison] as [String:Any]
-
-        localReference.setData(eventToUpload)
-    }
     
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
         calendar.formatter.dateFormat = "EEEE, MM-dd-YYYY"

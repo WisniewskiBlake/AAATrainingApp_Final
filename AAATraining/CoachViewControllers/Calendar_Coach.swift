@@ -27,6 +27,10 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
     var allCacheEvents: [TeamEventCache] = []
     var upcomingCacheEvents: [TeamEventCache] = []
+    var isNewObserverValue: String = "No"
+    var updateObserverArray: [String] = []
+    var index = 0
+    let helper = Helper()
     
     var recentListener: ListenerRegistration!
     var allEventDates: [String] = []
@@ -42,12 +46,8 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [])
     
     var x = 0
-    var index = 0
-    let helper = Helper()
     
     var eventCopied = Event()
-    var isNewObserverValue: String = "No"
-    var updateObserverArray: [String] = []
     var imageview = UIImageView()
     
     
@@ -93,9 +93,6 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         
         calendar.delegate = self
         loadUser()
-        
-        
-        print("View Will Appear")
         configureUI()
        
     }
@@ -201,38 +198,14 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                      
                     let eventDictionary = eventDictionary.data() as NSDictionary
                     let event = TeamEventCache(_dictionary: eventDictionary)
-                     
 
-                    //self.allCacheEvents.append(event)
                     self.createEventsForNewObserver(event: event)
-                   
 
-//                   if event.dateForUpcomingComparison > self.today {
-//                       self.upcomingCacheEvents.append(event)
-//                   }
-//                   self.allEventDates.append(event.eventDate)
-//                   self.countArray.append(String(event.eventCounter))
-                      
-                  
-
-                     
                 }
-//                self.tableView.reloadData()
-//                self.calendar.reloadData()
 
             }
-
-//            self.tableView.reloadData()
-//            self.calendar.reloadData()
-             //sleep(UInt32(1.2))
-             
              self.loadEvents()
-
-            
         }
-        
-        
-        
     }
     
     func createEventsForNewObserver(event: TeamEventCache) {
@@ -240,14 +213,12 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         let eventId = localReference.documentID
         var eventToUpload: [String : Any]!
         let eventCounter = 0
-        eventToUpload = [kEVENTID: eventId, kEVENTTEAMID: event.eventTeamID, kEVENTOWNERID: event.eventOwnerID, kEVENTTEXT: event.eventText, kEVENTDATE: event.eventDate, kEVENTACCOUNTTYPE: FUser.currentUser()?.accountType, kEVENTCOUNTER: 0, kEVENTUSERID: FUser.currentId(), kEVENTGROUPID: event.eventGroupID, kEVENTTITLE: event.eventTitle, kEVENTSTART: event.eventStart, kEVENTEND: event.eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: event.dateForUpcomingComparison] as [String:Any]
+        eventToUpload = [kEVENTID: eventId, kEVENTTEAMID: event.eventTeamID, kEVENTOWNERID: event.eventOwnerID, kEVENTTEXT: event.eventText, kEVENTDATE: event.eventDate, kEVENTACCOUNTTYPE: FUser.currentUser()?.accountType, kEVENTCOUNTER: 0, kEVENTUSERID: FUser.currentId(), kEVENTGROUPID: event.eventGroupID, kEVENTTITLE: event.eventTitle, kEVENTSTART: event.eventStart, kEVENTEND: event.eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: event.dateForUpcomingComparison, kEVENTLOCATION: "", kEVENTIMAGE: "", kEVENTURL: ""] as [String:Any]
 
         localReference.setData(eventToUpload)
     }
     
     @objc func loadEvents() {
-        
-        print("loadEvents")
 
         recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kEVENTUSERID).order(by: kEVENTDATEFORUPCOMINGCOMPARISON).addSnapshotListener({ (snapshot, error) in
                            
