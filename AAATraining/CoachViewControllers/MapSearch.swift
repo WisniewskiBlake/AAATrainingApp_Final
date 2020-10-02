@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class MapSearch: UITableViewController {
 
@@ -28,4 +29,9 @@ class MapSearch: UITableViewController {
     }
 
     
+}
+extension MapSearch : UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        <#code#>
+    }
 }
