@@ -5748,6 +5748,34 @@
             </objects>
             <point key="canvasLocation" x="6798.5507246376819" y="-2946.4285714285711"/>
         </scene>
+        <!--Map Search-->
+        <scene sceneID="kpl-CQ-kQA">
+            <objects>
+                <tableViewController storyboardIdentifier="MapSearch" id="Ya1-rb-FnJ" customClass="MapSearch" customModule="LockerRoom" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="pVS-Qu-pbC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="UEt-fO-hdn">
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UEt-fO-hdn" id="sxu-af-iaj">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Ya1-rb-FnJ" id="BYs-QC-VF6"/>
+                            <outlet property="delegate" destination="Ya1-rb-FnJ" id="MEc-ia-3Pz"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LDn-nA-w2t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7665" y="-2939"/>
+        </scene>
         <!--Add Members-->
         <scene sceneID="VP0-r2-905">
             <objects>
