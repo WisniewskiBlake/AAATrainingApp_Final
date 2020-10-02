@@ -11,14 +11,13 @@ import FSCalendar
 import Firebase
 import FirebaseFirestore
 
-
 class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance, UITableViewDelegate, UITableViewDataSource {
     
 
     @IBOutlet var calendar: FSCalendar!
-    @IBOutlet weak var upcomingLabel: UILabel!
+    //@IBOutlet weak var upcomingLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var splitterLabel: UILabel!
+    //@IBOutlet weak var splitterLabel: UILabel!
     @IBOutlet weak var splitterLabelTwo: UILabel!
     
     
@@ -108,8 +107,8 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         calendar.appearance.headerTitleColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:23)
         self.setLeftAlignedNavigationItemTitle(text: "Team Calendar", color: .white, margin: 12)
-        upcomingLabel.textColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        splitterLabel.backgroundColor = #colorLiteral(red: 0.6815950428, green: 0.6815950428, blue: 0.6815950428, alpha: 1)
+        //upcomingLabel.textColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        //splitterLabel.backgroundColor = #colorLiteral(red: 0.6815950428, green: 0.6815950428, blue: 0.6815950428, alpha: 1)
         splitterLabelTwo.backgroundColor = #colorLiteral(red: 0.9133789539, green: 0.9214370847, blue: 0.9337923527, alpha: 1)
     }
     

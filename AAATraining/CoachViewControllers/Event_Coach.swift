@@ -493,7 +493,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     
     func configure_titleLocationView() {
-        let width = CGFloat(2)
+        let width = CGFloat(1.9)
         let color = UIColor.lightGray.cgColor
         
         // creating layer to be a border of the view added test test
@@ -517,7 +517,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     }
     
     func configure_startEndView() {
-        let width = CGFloat(2)
+        let width = CGFloat(1.9)
         let color = UIColor.lightGray.cgColor
         
         // creating layer to be a border of the view added test test
@@ -541,7 +541,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     }
     
     func configure_detailsURLView() {
-        let width = CGFloat(2)
+        let width = CGFloat(1.9)
         let color = UIColor.lightGray.cgColor
         
         // creating layer to be a border of the view added test test
