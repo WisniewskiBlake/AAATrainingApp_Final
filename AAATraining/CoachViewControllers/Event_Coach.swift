@@ -22,6 +22,10 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     @IBOutlet weak var placeHolderLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var eventTitleText: UITextField!
+    @IBOutlet weak var eventLocationText: UITextField!
+    
+    @IBOutlet weak var titleLocationView: UIView!
+    
 //    @IBOutlet weak var eventStartText: UITextField!
 //    @IBOutlet weak var eventEndText: UITextField!
     
@@ -134,6 +138,12 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        configure_titleLocationView()
+
+    }
+    
     func setDatePickerDates() {
         let dateFormatter = DateFormatter()
         
@@ -218,7 +228,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             sleep(UInt32(1.5))
             dismiss(animated: true, completion: nil)
         } else {
-            helper.showAlert(title: "Data Error", message: "Event must be on the same day.", in: self)
+            helper.showAlert(title: "Data Error", message: "Event must start and end on the same day.", in: self)
         }
 
         
@@ -472,6 +482,11 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         
+        padding(for: eventTitleText)
+        padding(for: eventLocationText)
+        cornerRadius(for: eventTitleText)
+        cornerRadius(for: eventLocationText)
+        
 //        var bottomLine = CALayer()
 //        bottomLine.frame = CGRect(x: 0.0, y: eventStartText.frame.height, width: eventStartText.frame.width, height: 1.0)
 //        bottomLine.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
@@ -541,6 +556,36 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     func cornerRadius(for view: UIView) {
         view.layer.cornerRadius = 5
         view.layer.masksToBounds = true
+    }
+    
+    func padding(for textField: UITextField) {
+        let blankView = UIView.init(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
+        textField.leftView = blankView
+        textField.leftViewMode = .always
+    }
+    
+    func configure_titleLocationView() {
+        let width = CGFloat(2)
+        let color = UIColor.lightGray.cgColor
+        
+        // creating layer to be a border of the view added test test
+        let border = CALayer()
+        border.borderWidth = width
+        border.borderColor = color
+        border.frame = CGRect(x: 0, y: 0, width: titleLocationView.frame.width, height: titleLocationView.frame.height)
+        
+        // creating layer to be a line in the center of the view
+        let line = CALayer()
+        line.borderWidth = width
+        line.borderColor = color
+        line.frame = CGRect(x: 0, y: titleLocationView.frame.height / 2 - width, width: titleLocationView.frame.width, height: width)
+        
+        // assigning created layers to the view
+        titleLocationView.layer.addSublayer(border)
+        titleLocationView.layer.addSublayer(line)
+        // rounded corners
+        titleLocationView.layer.cornerRadius = 5
+        titleLocationView.layer.masksToBounds = true
     }
 
 }
