@@ -505,6 +505,9 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         cornerRadius(for: startText)
         cornerRadius(for: endText)
         
+        padding(for: eventURLText)
+        cornerRadius(for: eventURLText)
+        
 //        var bottomLine = CALayer()
 //        bottomLine.frame = CGRect(x: 0.0, y: eventStartText.frame.height, width: eventStartText.frame.width, height: 1.0)
 //        bottomLine.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
@@ -641,15 +644,10 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         border.borderColor = color
         border.frame = CGRect(x: 0, y: 0, width: detailsURLView.frame.width, height: detailsURLView.frame.height)
         
-        // creating layer to be a line in the center of the view
-        let line = CALayer()
-        line.borderWidth = width
-        line.borderColor = color
-        line.frame = CGRect(x: 0, y: eventURLText.frame.height, width: eventURLText.frame.width, height: width)
+
         
         // assigning created layers to the view
         detailsURLView.layer.addSublayer(border)
-        detailsURLView.layer.addSublayer(line)
         // rounded corners
         detailsURLView.layer.cornerRadius = 5
         detailsURLView.layer.masksToBounds = true
