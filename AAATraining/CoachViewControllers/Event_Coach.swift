@@ -25,7 +25,8 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var placeHolderLabel: UILabel!
-    @IBOutlet weak var eventURLText: UITextField!
+    @IBOutlet weak var eventURLText: UITextView!
+    @IBOutlet weak var placeHolderLabelOne: UILabel!
     
     
     @IBOutlet weak var titleLocationView: UIView!
@@ -398,6 +399,11 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         } else {
             placeHolderLabel.isHidden = false
         }
+        if event.eventURL != "" {
+            placeHolderLabelOne.isHidden = true
+        } else {
+            placeHolderLabelOne.isHidden = false
+        }
         if updateNeeded == true {
             deleteButton.isHidden = false
             self.doneButton.setTitle("Update", for: .normal)
@@ -419,7 +425,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         cornerRadius(for: startText)
         cornerRadius(for: endText)
         
-        padding(for: eventURLText)
+
         cornerRadius(for: eventURLText)
 
         cornerRadius(for: deleteButton)
@@ -459,6 +465,12 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         else {
             placeHolderLabel.isHidden = true
         }
+        if eventURLText.text.isEmpty{
+            placeHolderLabelOne.isHidden = false
+        } else {
+            placeHolderLabelOne.isHidden = true
+        }
+        
     }
     
 //    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
