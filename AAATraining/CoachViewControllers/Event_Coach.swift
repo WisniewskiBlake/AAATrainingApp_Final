@@ -21,10 +21,16 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
 
     @IBOutlet weak var placeHolderLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
+    
     @IBOutlet weak var eventTitleText: UITextField!
     @IBOutlet weak var eventLocationText: UITextField!
     
+    @IBOutlet weak var startText: UITextField!
+    @IBOutlet weak var endText: UITextField!
+    
+    
     @IBOutlet weak var titleLocationView: UIView!
+    @IBOutlet weak var startEndView: UIView!
     
 //    @IBOutlet weak var eventStartText: UITextField!
 //    @IBOutlet weak var eventEndText: UITextField!
@@ -141,6 +147,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         configure_titleLocationView()
+        configure_startEndView()
 
     }
     
@@ -487,6 +494,11 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         cornerRadius(for: eventTitleText)
         cornerRadius(for: eventLocationText)
         
+        padding(for: startText)
+        padding(for: endText)
+        cornerRadius(for: startText)
+        cornerRadius(for: endText)
+        
 //        var bottomLine = CALayer()
 //        bottomLine.frame = CGRect(x: 0.0, y: eventStartText.frame.height, width: eventStartText.frame.width, height: 1.0)
 //        bottomLine.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
@@ -564,6 +576,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         textField.leftViewMode = .always
     }
     
+    
     func configure_titleLocationView() {
         let width = CGFloat(2)
         let color = UIColor.lightGray.cgColor
@@ -586,6 +599,30 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         // rounded corners
         titleLocationView.layer.cornerRadius = 5
         titleLocationView.layer.masksToBounds = true
+    }
+    
+    func configure_startEndView() {
+        let width = CGFloat(2)
+        let color = UIColor.lightGray.cgColor
+        
+        // creating layer to be a border of the view added test test
+        let border = CALayer()
+        border.borderWidth = width
+        border.borderColor = color
+        border.frame = CGRect(x: 0, y: 0, width: startEndView.frame.width, height: startEndView.frame.height)
+        
+        // creating layer to be a line in the center of the view
+        let line = CALayer()
+        line.borderWidth = width
+        line.borderColor = color
+        line.frame = CGRect(x: 0, y: startEndView.frame.height / 2 - width, width: startEndView.frame.width, height: width)
+        
+        // assigning created layers to the view
+        startEndView.layer.addSublayer(border)
+        startEndView.layer.addSublayer(line)
+        // rounded corners
+        startEndView.layer.cornerRadius = 5
+        startEndView.layer.masksToBounds = true
     }
 
 }
