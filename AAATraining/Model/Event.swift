@@ -179,7 +179,7 @@ public class Event {
             counter += 1
         }
 
-        let values = [kEVENTTEXT : eventText, kEVENTCOUNTER : counter, kEVENTTITLE : eventTitle, kEVENTSTART : eventStart, kEVENTEND : eventEnd] as [String : Any]
+        let values = [kEVENTTEXT : eventText, kEVENTCOUNTER : counter, kEVENTTITLE : eventTitle, kEVENTSTART : eventStart, kEVENTEND : eventEnd, kEVENTLOCATION : eventLocation, kEVENTIMAGE : eventImage, kEVENTURL : eventURL] as [String : Any]
 
         reference(.Event).document(event[kEVENTID] as! String).updateData(values)
     }

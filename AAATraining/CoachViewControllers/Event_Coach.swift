@@ -185,7 +185,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             
             if eventTitleText.text != "" {
                 if self.doneButton.currentTitle == "Update" {
-                    event.updateEvent(eventGroupID: event.eventGroupID, eventOwnerID: event.eventOwnerID, eventText: textView.text!, eventTitle: eventTitleText.text!, eventStart: startTime, eventEnd: endTime, eventLocation: event.eventLocation, eventImage: event.eventImage, eventURL: event.eventURL)
+                    event.updateEvent(eventGroupID: event.eventGroupID, eventOwnerID: event.eventOwnerID, eventText: textView.text!, eventTitle: eventTitleText.text!, eventStart: startTime, eventEnd: endTime, eventLocation: eventLocationText.text!, eventImage: "", eventURL: eventURLText.text!)
                 } else {
                     //ProgressHUD.show("Creating...", interaction: false)
                     createEventForMembers(start: startTime, end: endTime, fullDate: dateString, upcomingCompar: dateForUpcomingComparison)
@@ -242,9 +242,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     //get all events with the same teamID as current user, sort by event id and create new events for current user. The number of new events to be created will be determined by how many indexes in until the next eventUserID starts
     
     func createEventForMembers(start: String, end: String, fullDate: String, upcomingCompar: String) {
-        if self.memberIds.isEmpty {
-            self.memberIds.append(FUser.currentId())
-        }
+
         var tempMembers = memberIds
         let eventText = textView.text!
         let eventOwnerID = FUser.currentId()
