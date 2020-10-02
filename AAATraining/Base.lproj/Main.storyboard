@@ -5248,7 +5248,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XJo-I0-oU8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="11956" y="-1680.8095952023989"/>
+            <point key="canvasLocation" x="10622" y="-2939"/>
         </scene>
         <!--Roster-->
         <scene sceneID="yw7-UA-o4j">
@@ -5757,12 +5757,28 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="UEt-fO-hdn">
-                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="locCell" textLabel="boI-hP-3Jp" detailTextLabel="qfR-Lp-Goc" style="IBUITableViewCellStyleSubtitle" id="UEt-fO-hdn">
+                                <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UEt-fO-hdn" id="sxu-af-iaj">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="55.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="boI-hP-3Jp">
+                                            <rect key="frame" x="20" y="10" width="33" height="20.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qfR-Lp-Goc">
+                                            <rect key="frame" x="20" y="31.5" width="44" height="14.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -5774,7 +5790,37 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LDn-nA-w2t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7665" y="-2939"/>
+            <point key="canvasLocation" x="7496" y="-2946"/>
+        </scene>
+        <!--Map Controller-->
+        <scene sceneID="UhF-qS-tQz">
+            <objects>
+                <viewController storyboardIdentifier="MapController" id="YrX-di-Ss4" customClass="MapController" customModule="LockerRoom" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Q4D-OE-iUa">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="emh-ad-Thh">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                            </mapView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="NPI-5G-Ohh"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="emh-ad-Thh" firstAttribute="leading" secondItem="NPI-5G-Ohh" secondAttribute="leading" id="GcY-Q9-8Hh"/>
+                            <constraint firstItem="emh-ad-Thh" firstAttribute="top" secondItem="NPI-5G-Ohh" secondAttribute="top" id="HJp-Oy-BX9"/>
+                            <constraint firstItem="emh-ad-Thh" firstAttribute="trailing" secondItem="NPI-5G-Ohh" secondAttribute="trailing" id="cAo-xg-Crk"/>
+                            <constraint firstItem="emh-ad-Thh" firstAttribute="bottom" secondItem="NPI-5G-Ohh" secondAttribute="bottom" id="d27-cG-UFx"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="8B3-uz-CD2"/>
+                    <connections>
+                        <outlet property="mapView" destination="emh-ad-Thh" id="3pe-jH-Otn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Kt-DH-YZS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8889.855072463768" y="-2946.4285714285711"/>
         </scene>
         <!--Add Members-->
         <scene sceneID="VP0-r2-905">
@@ -8745,6 +8791,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Or3-97-Uxm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4349.6000000000004" y="3682.3088455772117"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="5k7-yB-spX">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JD2-g8-C6x" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Kx0-HR-77f">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="YrX-di-Ss4" kind="relationship" relationship="rootViewController" id="bH6-oE-lI6"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zTN-yI-Jze" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8212" y="-2946"/>
         </scene>
     </scenes>
     <resources>
