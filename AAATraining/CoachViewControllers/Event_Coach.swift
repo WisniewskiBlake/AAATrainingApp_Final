@@ -144,29 +144,39 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             let dashDelimiter = "-"
             let dateWithSlash = dateToken[1].components(separatedBy: dashDelimiter)
             
-            let timeStartToken = event.eventStart.components(separatedBy: delimiter)
-            let timeStartWithZeros = timeStartToken[0] + ":00 " + timeStartToken[1]
-            let fullStartString = dateWithSlash[0] + "/" + dateWithSlash[1] + "/" + dateWithSlash[2] + ", " + timeStartWithZeros
+            let colonDelimiter = ":"
+            let startHourToken = event.eventStart.components(separatedBy: colonDelimiter)
+            let startMinuteToken = startHourToken[1].components(separatedBy: delimiter)
+            
+            let endHourToken = event.eventEnd.components(separatedBy: colonDelimiter)
+            let endMinuteToken = endHourToken[1].components(separatedBy: delimiter)
+            
             
             let timeEndToken = event.eventEnd.components(separatedBy: delimiter)
             let timeEndWithZeros = timeEndToken[0] + ":00 " + timeEndToken[1]
             let fullEndString = dateWithSlash[0] + "/" + dateWithSlash[1] + "/" + dateWithSlash[2] + ", " + timeEndWithZeros
-  
-            dateFormatter.dateFormat = "MMM/d/yyyy, h:mm a"
+
 
             var startDateComps = datePicker.calendar.dateComponents([.month, .day, .year, .hour, .minute, .second], from: datePicker.date)
-            startDateComps.year = 2021
-            startDateComps.month = 9
-            startDateComps.day = 9
-            
+            startDateComps.month = Int(dateWithSlash[0])
+            startDateComps.day = Int(dateWithSlash[1])
+            startDateComps.year = Int(dateWithSlash[2])
+            startDateComps.hour = Int(startHourToken[0])
+            startDateComps.minute = Int(startMinuteToken[0])
+            startDateComps.second = 0
 
-            let startDate = dateFormatter.date(from: String(fullStartString))
-            //datePicker.setDate(startDate!, animated: true)
             datePicker.date = Calendar.current.date(from: startDateComps)!
-            //datePicker.date = startDate!
             
-//            let endDate = dateFormatter.date(from: String(fullEndString))
-//            endDatePicker.setDate(endDate!, animated: true)
+            var endDateComps = endDatePicker.calendar.dateComponents([.month, .day, .year, .hour, .minute, .second], from: endDatePicker.date)
+            endDateComps.month = Int(dateWithSlash[0])
+            endDateComps.day = Int(dateWithSlash[1])
+            endDateComps.year = Int(dateWithSlash[2])
+            endDateComps.hour = Int(endHourToken[0])
+            endDateComps.minute = Int(endMinuteToken[0])
+            endDateComps.second = 0
+
+            endDatePicker.date = Calendar.current.date(from: endDateComps)!
+
         }
         
         
