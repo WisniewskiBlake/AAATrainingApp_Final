@@ -212,11 +212,6 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         })
         
         
-        
-        
-        
-
-        
 
     }
     

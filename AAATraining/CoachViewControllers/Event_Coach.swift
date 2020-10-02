@@ -13,14 +13,8 @@ import FirebaseCore
 import FirebaseFirestore
 import MapKit
 
-class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
+class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
 
-    
-    @IBOutlet weak var dateLabel: UILabel!
-//    @IBOutlet weak var dateText: UITextField!
-    
-
-    
     @IBOutlet weak var deleteButton: UIButton!
     
     @IBOutlet weak var eventTitleText: UITextField!
@@ -37,14 +31,10 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     @IBOutlet weak var titleLocationView: UIView!
     @IBOutlet weak var startEndView: UIView!
     @IBOutlet weak var detailsURLView: UIView!
-    
-//    @IBOutlet weak var eventStartText: UITextField!
-//    @IBOutlet weak var eventEndText: UITextField!
-    
-    
+
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var doneButton: UIButton!
-    
+
     @IBOutlet weak var navView: UIView!
     var dateFormatter = DateFormatter()
       
@@ -73,33 +63,13 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     let startTapGestureRecognizer = UITapGestureRecognizer()
     let endTapGestureRecognizer = UITapGestureRecognizer()
 
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    let locationManager = CLLocationManager()
-        
     override func viewDidLoad() {
         super.viewDidLoad()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-            locationManager.requestLocation()
 
-        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        if #available(iOS 14, *) {
-//            datePicker.preferredDatePickerStyle = .compact
-//            datePicker.sizeToFit()
-//            createStartiOS14Picker()
-//            createEndiOS14Picker()
-//
-//        } else {
-//            createStartDatePicker()
-//            createEndDatePicker()
-//            createEventDatePicker()
-//        }
-        
-        
+
         do {
             let gif = try UIImage(gifName: "loaderFinal.gif")
             imageview = UIImageView(gifImage: gif, loopCount: -1) // Will loop 3 times
@@ -129,37 +99,21 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         setDatePickerDates()
         
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
-        
 
-//        dateText.text = dateString
-        textView.text = event.eventText
-        eventTitleText.text = event.eventTitle
-        eventLocationText.text = event.eventLocation
-        eventURLText.text = event.eventURL
-//        eventStartText.text = event.eventStart
-//        eventEndText.text = event.eventEnd
-        
-        if event.eventText != "" {
-            placeHolderLabel.isHidden = true
-        } else {
-            placeHolderLabel.isHidden = false
-        }
-        if updateNeeded == true {
-            deleteButton.isHidden = false
-            self.doneButton.setTitle("Update", for: .normal)
-            
-        } else {
-            deleteButton.isHidden = true
-        }
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
         configure_titleLocationView()
         configure_startEndView()
         configure_detailsURLView()
 
     }
+    
+    @IBAction func mapBtn_pressed(_ sender: Any) {
+    }
+    
     
     func setDatePickerDates() {
         let dateFormatter = DateFormatter()
@@ -437,6 +391,23 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
 
     func configureUI() {
         
+        textView.text = event.eventText
+        eventTitleText.text = event.eventTitle
+        eventLocationText.text = event.eventLocation
+        eventURLText.text = event.eventURL
+        if event.eventText != "" {
+            placeHolderLabel.isHidden = true
+        } else {
+            placeHolderLabel.isHidden = false
+        }
+        if updateNeeded == true {
+            deleteButton.isHidden = false
+            self.doneButton.setTitle("Update", for: .normal)
+            
+        } else {
+            deleteButton.isHidden = true
+        }
+        
        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         
@@ -454,6 +425,8 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         cornerRadius(for: eventURLText)
 
         cornerRadius(for: deleteButton)
+        
+        
     }
     
 
@@ -587,20 +560,4 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     }
 
 }
-extension Event_Coach {
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse {
-            locationManager.requestLocation()
-        }
-    }
 
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.first {
-            print("location:: (location)")
-        }
-    }
-
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        print("error:: (error)")
-    }
-}
