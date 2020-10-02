@@ -176,44 +176,53 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             endDateComps.second = 0
 
             endDatePicker.date = Calendar.current.date(from: endDateComps)!
-
+            
         }
         
         
     }
     
+    
+    
     @IBAction func doneButtonPressed(_ sender: Any) {
         let startDateComps = datePicker.calendar.dateComponents([.month, .day, .year, .hour, .minute, .second], from: datePicker.date)
         let endDateComps = endDatePicker.calendar.dateComponents([.month, .day, .year, .hour, .minute, .second], from: endDatePicker.date)
-        dateFormatter.dateFormat = "h:mm a"
+        if endDateComps.month == startDateComps.month && endDateComps.day == startDateComps.day && endDateComps.year == startDateComps.year {
+            dateFormatter.dateFormat = "h:mm a"
 
-        let startDate = Calendar.current.date(from: startDateComps)!
-        let endDate = Calendar.current.date(from: endDateComps)!
-        let startTime = dateFormatter.string(from: startDate)
-        let endTime = dateFormatter.string(from: endDate)
-        print(startTime)
-        
-        dateFormatter.dateFormat = "YYYY-MM-dd"
-        let dateForUpcomingComparison = dateFormatter.string(from: startDate)
-        
-        dateFormatter.dateFormat = "EEEE, MM-dd-YYYY"
-        let dateString = dateFormatter.string(from: startDate)
-        
-        if eventTitleText.text != "" {
-            if self.doneButton.currentTitle == "Update" {
-                event.updateEvent(eventGroupID: event.eventGroupID, eventOwnerID: event.eventOwnerID, eventText: textView.text!, eventTitle: eventTitleText.text!, eventStart: startTime, eventEnd: endTime, eventLocation: event.eventLocation, eventImage: event.eventImage, eventURL: event.eventURL)
+            let startDate = Calendar.current.date(from: startDateComps)!
+            let endDate = Calendar.current.date(from: endDateComps)!
+            let startTime = dateFormatter.string(from: startDate)
+            let endTime = dateFormatter.string(from: endDate)
+            print(startTime)
+            
+            dateFormatter.dateFormat = "YYYY-MM-dd"
+            let dateForUpcomingComparison = dateFormatter.string(from: startDate)
+            
+            dateFormatter.dateFormat = "EEEE, MM-dd-YYYY"
+            let dateString = dateFormatter.string(from: startDate)
+            
+            if eventTitleText.text != "" {
+                if self.doneButton.currentTitle == "Update" {
+                    event.updateEvent(eventGroupID: event.eventGroupID, eventOwnerID: event.eventOwnerID, eventText: textView.text!, eventTitle: eventTitleText.text!, eventStart: startTime, eventEnd: endTime, eventLocation: event.eventLocation, eventImage: event.eventImage, eventURL: event.eventURL)
+                } else {
+                    //ProgressHUD.show("Creating...", interaction: false)
+                    createEventForMembers(start: startTime, end: endTime, fullDate: dateString, upcomingCompar: dateForUpcomingComparison)
+                    sleep(UInt32(0.5))
+                }
+                
+                
             } else {
-                //ProgressHUD.show("Creating...", interaction: false)
-                createEventForMembers(start: startTime, end: endTime, fullDate: dateString, upcomingCompar: dateForUpcomingComparison)
-                sleep(UInt32(0.5))
+                helper.showAlert(title: "Data Error", message: "Please fill in title.", in: self)
             }
-            
-            
+            sleep(UInt32(1.5))
+            dismiss(animated: true, completion: nil)
         } else {
-            helper.showAlert(title: "Data Error", message: "Please fill in title.", in: self)
+            helper.showAlert(title: "Data Error", message: "Event must be on the same day.", in: self)
         }
-        sleep(UInt32(1.5))
-        dismiss(animated: true, completion: nil)
+
+        
+        
         
     }
     
