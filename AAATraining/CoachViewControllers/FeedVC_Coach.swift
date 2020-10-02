@@ -426,8 +426,10 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
 
         if allPosts.count == 0 {
             
-            emptyLabelOne.text = "Created posts will appear here!"
+            emptyLabelOne.text = "No posts to show!"
             emptyLabelOne.textAlignment = NSTextAlignment.center
+            emptyLabelOne.font = UIFont(name: "Helvetica Neue", size: 15)
+            emptyLabelOne.textColor = UIColor.lightGray
             self.tableView.tableFooterView!.addSubview(emptyLabelOne)
             return 0
         } else {

@@ -427,17 +427,19 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-         if allPosts.count == 0 {                   
-                   emptyLabelOne.text = "Created posts will appear here!"
-                   emptyLabelOne.textAlignment = NSTextAlignment.center
-                   self.tableView.tableFooterView!.addSubview(emptyLabelOne)
-                   return 0
-               } else {
-                    emptyLabelOne.text = ""
-                   emptyLabelOne.removeFromSuperview()
-                   
-                   return allPosts.count
-               }
+      if allPosts.count == 0 {
+        emptyLabelOne.text = "Created posts will appear here!"
+        emptyLabelOne.font = UIFont(name: "Helvetica Neue", size: 15)
+        emptyLabelOne.textColor = UIColor.lightGray
+        emptyLabelOne.textAlignment = NSTextAlignment.center
+        self.tableView.tableFooterView!.addSubview(emptyLabelOne)
+        return 0
+       } else {
+         emptyLabelOne.text = ""
+         emptyLabelOne.removeFromSuperview()
+           
+         return allPosts.count
+       }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

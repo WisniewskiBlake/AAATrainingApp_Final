@@ -14,12 +14,12 @@ import FirebaseFirestore
 
 class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
 
-    @IBOutlet weak var textView: UITextView!
+    
     @IBOutlet weak var dateLabel: UILabel!
 //    @IBOutlet weak var dateText: UITextField!
     
 
-    @IBOutlet weak var placeHolderLabel: UILabel!
+    
     @IBOutlet weak var deleteButton: UIButton!
     
     @IBOutlet weak var eventTitleText: UITextField!
@@ -28,9 +28,14 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     @IBOutlet weak var startText: UITextField!
     @IBOutlet weak var endText: UITextField!
     
+    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var placeHolderLabel: UILabel!
+    @IBOutlet weak var eventURLText: UITextField!
+    
     
     @IBOutlet weak var titleLocationView: UIView!
     @IBOutlet weak var startEndView: UIView!
+    @IBOutlet weak var detailsURLView: UIView!
     
 //    @IBOutlet weak var eventStartText: UITextField!
 //    @IBOutlet weak var eventEndText: UITextField!
@@ -148,6 +153,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         super.viewDidLayoutSubviews()
         configure_titleLocationView()
         configure_startEndView()
+        configure_detailsURLView()
 
     }
     
@@ -623,6 +629,30 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         // rounded corners
         startEndView.layer.cornerRadius = 5
         startEndView.layer.masksToBounds = true
+    }
+    
+    func configure_detailsURLView() {
+        let width = CGFloat(2)
+        let color = UIColor.lightGray.cgColor
+        
+        // creating layer to be a border of the view added test test
+        let border = CALayer()
+        border.borderWidth = width
+        border.borderColor = color
+        border.frame = CGRect(x: 0, y: 0, width: detailsURLView.frame.width, height: detailsURLView.frame.height)
+        
+        // creating layer to be a line in the center of the view
+        let line = CALayer()
+        line.borderWidth = width
+        line.borderColor = color
+        line.frame = CGRect(x: 0, y: eventURLText.frame.height, width: eventURLText.frame.width, height: width)
+        
+        // assigning created layers to the view
+        detailsURLView.layer.addSublayer(border)
+        detailsURLView.layer.addSublayer(line)
+        // rounded corners
+        detailsURLView.layer.cornerRadius = 5
+        detailsURLView.layer.masksToBounds = true
     }
 
 }

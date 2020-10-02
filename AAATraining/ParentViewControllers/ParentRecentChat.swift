@@ -133,7 +133,8 @@ class ParentRecentChat: UIViewController, UITableViewDelegate, UITableViewDataSo
             if recentChats.count == 0 {
                 
                 emptyLabelOne.text = "Created chats will appear here!"
-                
+                emptyLabelOne.font = UIFont(name: "Helvetica Neue", size: 15)
+                emptyLabelOne.textColor = UIColor.lightGray
                 emptyLabelOne.textAlignment = NSTextAlignment.center
                 self.tableView.tableFooterView!.addSubview(emptyLabelOne)
                 return 0
