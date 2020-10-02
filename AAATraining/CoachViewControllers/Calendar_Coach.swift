@@ -373,14 +373,14 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         
         let event = upcomingEvents[indexPath.row]
         
-        if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
+        if let eventCoach : Event_Coach = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
         {
-            eventVC.hidesBottomBarWhenPushed = true
-            eventVC.dateString = event.eventDate
-            eventVC.updateNeeded = true
-            eventVC.event = event            
-            eventVC.modalPresentationStyle = .fullScreen
-            self.present(eventVC, animated: true, completion: nil)
+            eventCoach.hidesBottomBarWhenPushed = true
+            eventCoach.dateString = event.eventDate
+            eventCoach.updateNeeded = true
+            eventCoach.event = event
+            eventCoach.modalPresentationStyle = .fullScreen
+            self.present(eventCoach, animated: true, completion: nil)
         }
         
         

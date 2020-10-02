@@ -47,9 +47,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     var accountType = ""
     
     var allEventsWithGroupID: [Event] = []
-    
-    //var dateForUpcomingComparison: String = ""
-    //var datePicker = UIDatePicker()
+
     let eventDatePicker = UIDatePicker()
     
     var index = 0
@@ -58,9 +56,15 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     let startTapGestureRecognizer = UITapGestureRecognizer()
     let endTapGestureRecognizer = UITapGestureRecognizer()
+
+    
+    
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        var eventStrt = event.eventStart
+        print(eventStrt)
+        print(updateNeeded)
 
         
     }
@@ -77,6 +81,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
 //            createEndDatePicker()
 //            createEventDatePicker()
 //        }
+        
         
         do {
             let gif = try UIImage(gifName: "loaderFinal.gif")
@@ -104,7 +109,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         getAllMembers()
         getAllEvents()
         configureUI()
-        
+        setDatePickerDates()
         
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
         
@@ -127,6 +132,79 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         } else {
             deleteButton.isHidden = true
         }
+    }
+    
+    func setDatePickerDates() {
+        let dateFormatter = DateFormatter()
+        
+        if event.eventStart != "" && event.eventEnd != "" {
+            let delimiter = " "
+            let dateToken = event.eventDate.components(separatedBy: delimiter)
+            
+            let dashDelimiter = "-"
+            let dateWithSlash = dateToken[1].components(separatedBy: dashDelimiter)
+            
+            let timeStartToken = event.eventStart.components(separatedBy: delimiter)
+            let timeStartWithZeros = timeStartToken[0] + ":00 " + timeStartToken[1]
+            let fullStartString = dateWithSlash[0] + "/" + dateWithSlash[1] + "/" + dateWithSlash[2] + ", " + timeStartWithZeros
+            
+            let timeEndToken = event.eventEnd.components(separatedBy: delimiter)
+            let timeEndWithZeros = timeEndToken[0] + ":00 " + timeEndToken[1]
+            let fullEndString = dateWithSlash[0] + "/" + dateWithSlash[1] + "/" + dateWithSlash[2] + ", " + timeEndWithZeros
+  
+            dateFormatter.dateFormat = "MMM/d/yyyy, h:mm a"
+
+            var startDateComps = datePicker.calendar.dateComponents([.month, .day, .year, .hour, .minute, .second], from: datePicker.date)
+            startDateComps.year = 2021
+            startDateComps.month = 9
+            startDateComps.day = 9
+            
+
+            let startDate = dateFormatter.date(from: String(fullStartString))
+            //datePicker.setDate(startDate!, animated: true)
+            datePicker.date = Calendar.current.date(from: startDateComps)!
+            //datePicker.date = startDate!
+            
+//            let endDate = dateFormatter.date(from: String(fullEndString))
+//            endDatePicker.setDate(endDate!, animated: true)
+        }
+        
+        
+    }
+    
+    @IBAction func doneButtonPressed(_ sender: Any) {
+        let startDateComps = datePicker.calendar.dateComponents([.month, .day, .year, .hour, .minute, .second], from: datePicker.date)
+        let endDateComps = endDatePicker.calendar.dateComponents([.month, .day, .year, .hour, .minute, .second], from: endDatePicker.date)
+        dateFormatter.dateFormat = "h:mm a"
+
+        let startDate = Calendar.current.date(from: startDateComps)!
+        let endDate = Calendar.current.date(from: endDateComps)!
+        let startTime = dateFormatter.string(from: startDate)
+        let endTime = dateFormatter.string(from: endDate)
+        print(startTime)
+        
+        dateFormatter.dateFormat = "YYYY-MM-dd"
+        let dateForUpcomingComparison = dateFormatter.string(from: startDate)
+        
+        dateFormatter.dateFormat = "EEEE, MM-dd-YYYY"
+        let dateString = dateFormatter.string(from: startDate)
+        
+        if eventTitleText.text != "" {
+            if self.doneButton.currentTitle == "Update" {
+                event.updateEvent(eventGroupID: event.eventGroupID, eventOwnerID: event.eventOwnerID, eventText: textView.text!, eventTitle: eventTitleText.text!, eventStart: startTime, eventEnd: endTime, eventLocation: event.eventLocation, eventImage: event.eventImage, eventURL: event.eventURL)
+            } else {
+                //ProgressHUD.show("Creating...", interaction: false)
+                createEventForMembers(start: startTime, end: endTime, fullDate: dateString, upcomingCompar: dateForUpcomingComparison)
+                sleep(UInt32(0.5))
+            }
+            
+            
+        } else {
+            helper.showAlert(title: "Data Error", message: "Please fill in title.", in: self)
+        }
+        sleep(UInt32(1.5))
+        dismiss(animated: true, completion: nil)
+        
     }
     
     
@@ -179,14 +257,11 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         let eventStart = start
         let eventEnd = end
         
-        
-
             
-            
-            for userId in tempMembers {
-                self.createEvent(eventOwnerID: eventOwnerID, eventTeamID: FUser.currentUser()!.userCurrentTeamID, eventText: eventText, eventDate: fullDate, eventAccountType: eventAccountType, eventUserID: userId, eventGroupID: eventGroupID, eventTitle: eventTitle, eventStart: eventStart, eventEnd: eventEnd, upcomingCompar: upcomingCompar, eventLocation: "", eventImage: "", eventURL: "")
+        for userId in tempMembers {
+            self.createEvent(eventOwnerID: eventOwnerID, eventTeamID: FUser.currentUser()!.userCurrentTeamID, eventText: eventText, eventDate: fullDate, eventAccountType: eventAccountType, eventUserID: userId, eventGroupID: eventGroupID, eventTitle: eventTitle, eventStart: eventStart, eventEnd: eventEnd, upcomingCompar: upcomingCompar, eventLocation: "", eventImage: "", eventURL: "")
 
-            }
+        }
         self.createTeamEvent(eventOwnerID: eventOwnerID, eventTeamID: FUser.currentUser()!.userCurrentTeamID, eventText: eventText, eventDate: fullDate, eventAccountType: eventAccountType, eventUserID: "", eventGroupID: eventGroupID, eventTitle: eventTitle, eventStart: eventStart, eventEnd: eventEnd, upcomingCompar: upcomingCompar, eventLocation: "", eventImage: "", eventURL: "")
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
             //sleep(UInt32(0.6))
@@ -296,39 +371,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
 //        }
  }
     
-    @IBAction func doneButtonPressed(_ sender: Any) {
-        let startDateComps = datePicker.calendar.dateComponents([.month, .day, .year, .hour, .minute, .second], from: datePicker.date)
-        let endDateComps = endDatePicker.calendar.dateComponents([.month, .day, .year, .hour, .minute, .second], from: endDatePicker.date)
-        dateFormatter.dateFormat = "H:mm a"
-        let startDate = Calendar.current.date(from: startDateComps)!
-        let endDate = Calendar.current.date(from: endDateComps)!
-        let startTime = dateFormatter.string(from: startDate)
-        let endTime = dateFormatter.string(from: endDate)
-        print(startTime)
-        
-        dateFormatter.dateFormat = "YYYY-MM-dd"
-        let dateForUpcomingComparison = dateFormatter.string(from: startDate)
-        
-        dateFormatter.dateFormat = "EEEE, MM-dd-YYYY"
-        let dateString = dateFormatter.string(from: startDate)
-        
-        if eventTitleText.text != "" {
-            if self.doneButton.currentTitle == "Update" {
-                event.updateEvent(eventGroupID: event.eventGroupID, eventOwnerID: event.eventOwnerID, eventText: textView.text!, eventTitle: eventTitleText.text!, eventStart: startTime, eventEnd: endTime, eventLocation: event.eventLocation, eventImage: event.eventImage, eventURL: event.eventURL)
-            } else {
-                //ProgressHUD.show("Creating...", interaction: false)
-                createEventForMembers(start: startTime, end: endTime, fullDate: dateString, upcomingCompar: dateForUpcomingComparison)
-                sleep(UInt32(0.5))
-            }
-            
-            
-        } else {
-            helper.showAlert(title: "Data Error", message: "Please fill in title.", in: self)
-        }
-        sleep(UInt32(1.5))
-        dismiss(animated: true, completion: nil)
-        
-    }
+    
     
     func createStartiOS14Picker() {
         

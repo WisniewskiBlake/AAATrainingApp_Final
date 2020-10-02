@@ -100,7 +100,7 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         codeLabel.text = teamLoginCode
         
-        bannerView.adUnitID = "c8b13a0958c55302a0092a8fdabd1f7e"
+        bannerView.adUnitID = "ca-app-pub-8479238648739219/5317514555"
         //ca-app-pub-8479238648739219/5317514555
         //c8b13a0958c55302a0092a8fdabd1f7e
         bannerView.rootViewController = self

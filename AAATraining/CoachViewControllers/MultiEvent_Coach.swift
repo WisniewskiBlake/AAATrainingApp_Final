@@ -20,6 +20,7 @@ class MultiEvent_Coach: UITableViewController {
     
     @IBOutlet weak var eventCounterLabel: UILabel!
     @IBOutlet weak var titleView: UIView!
+    @IBOutlet weak var createButton: UIButton!
     
 
     override func viewDidLoad() {
@@ -31,6 +32,20 @@ class MultiEvent_Coach: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        configureUI()
+        loadEvents()
+        
+    }
+    
+    func configureUI() {
+        if self.accountType == "Coach" {
+            createButton.isHidden = false
+        } else if self.accountType == "Parent" {
+            createButton.isHidden = true
+        } else if self.accountType == "Player"{
+            createButton.isHidden = true
+        }
+        
         emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -150, width: view.bounds.size.width, height: view.bounds.size.height))
         titleView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         titleView.alpha = 1.0
@@ -41,8 +56,6 @@ class MultiEvent_Coach: UITableViewController {
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         tableView.tableFooterView = view
-        loadEvents()
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -59,6 +72,15 @@ class MultiEvent_Coach: UITableViewController {
             tableFooterView.frame.size.height = gapHeight + footerHeight
         }
     }
+    
+    @IBAction func createButton_clicked(_ sender: Any) {
+        if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
+        {
+            eventVC.modalPresentationStyle = .fullScreen
+            self.present(eventVC, animated: true, completion: nil)
+        }
+    }
+    
     
     func loadEvents() {
         self.eventsToShow = []
@@ -119,7 +141,7 @@ class MultiEvent_Coach: UITableViewController {
             if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PlayerEvent") as? PlayerEvent
             {
                 eventVC.hidesBottomBarWhenPushed = true
-                eventVC.dateString = event.eventDate                
+                eventVC.dateString = event.eventDate
                 eventVC.event = event
                 eventVC.modalPresentationStyle = .fullScreen
                 self.present(eventVC, animated: true, completion: nil)
@@ -147,6 +169,8 @@ class MultiEvent_Coach: UITableViewController {
         
         
     }
+    
+    
 
     @IBAction func backButtonPressed(_ sender: Any) {
         for event in eventsToShow {

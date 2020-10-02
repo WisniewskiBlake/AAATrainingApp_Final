@@ -55,7 +55,7 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDeleg
         self.emailTextField.delegate = self
         self.passwordTextField.delegate = self
 
-        bannerView.adUnitID = "c8b13a0958c55302a0092a8fdabd1f7e"
+        bannerView.adUnitID = "ca-app-pub-8479238648739219/7732936662"
         //ca-app-pub-8479238648739219/7732936662
         //c8b13a0958c55302a0092a8fdabd1f7e
         bannerView.rootViewController = self
