@@ -424,12 +424,9 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         padding(for: endText)
         cornerRadius(for: startText)
         cornerRadius(for: endText)
-        
 
         cornerRadius(for: eventURLText)
-
         cornerRadius(for: deleteButton)
-        
         
     }
     
@@ -503,7 +500,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     
     func configure_titleLocationView() {
-        let width = CGFloat(1.9)
+        let width = CGFloat(1)
         let color = UIColor.lightGray.cgColor
         
         // creating layer to be a border of the view added test test
@@ -516,18 +513,18 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         let line = CALayer()
         line.borderWidth = width
         line.borderColor = color
-        line.frame = CGRect(x: 0, y: titleLocationView.frame.height / 2 - width, width: titleLocationView.frame.width, height: width)
+        line.frame = CGRect(x: 15, y: titleLocationView.frame.height / 2 - width, width: titleLocationView.frame.width-15, height: width)
         
         // assigning created layers to the view
         titleLocationView.layer.addSublayer(border)
         titleLocationView.layer.addSublayer(line)
         // rounded corners
-        titleLocationView.layer.cornerRadius = 5
-        titleLocationView.layer.masksToBounds = true
+//        titleLocationView.layer.cornerRadius = 5
+//        titleLocationView.layer.masksToBounds = true
     }
     
     func configure_startEndView() {
-        let width = CGFloat(1.9)
+        let width = CGFloat(1)
         let color = UIColor.lightGray.cgColor
         
         // creating layer to be a border of the view added test test
@@ -540,18 +537,18 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         let line = CALayer()
         line.borderWidth = width
         line.borderColor = color
-        line.frame = CGRect(x: 0, y: startEndView.frame.height / 2 - width, width: startEndView.frame.width, height: width)
+        line.frame = CGRect(x: 15, y: startEndView.frame.height / 2 - width, width: startEndView.frame.width-15, height: width)
         
         // assigning created layers to the view
         startEndView.layer.addSublayer(border)
         startEndView.layer.addSublayer(line)
         // rounded corners
-        startEndView.layer.cornerRadius = 5
-        startEndView.layer.masksToBounds = true
+//        startEndView.layer.cornerRadius = 5
+//        startEndView.layer.masksToBounds = true
     }
     
     func configure_detailsURLView() {
-        let width = CGFloat(1.9)
+        let width = CGFloat(1)
         let color = UIColor.lightGray.cgColor
         
         // creating layer to be a border of the view added test test
@@ -565,8 +562,8 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         // assigning created layers to the view
         detailsURLView.layer.addSublayer(border)
         // rounded corners
-        detailsURLView.layer.cornerRadius = 5
-        detailsURLView.layer.masksToBounds = true
+//        detailsURLView.layer.cornerRadius = 5
+//        detailsURLView.layer.masksToBounds = true
     }
 
 }

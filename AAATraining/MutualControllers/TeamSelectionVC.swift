@@ -193,6 +193,8 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             if self.i == 1 {
                 emptyLabelOne.text = "No teams to show!"
                 emptyLabelOne.textAlignment = NSTextAlignment.center
+                emptyLabelOne.font = UIFont(name: "Helvetica Neue", size: 15)
+                emptyLabelOne.textAlignment = NSTextAlignment.center
                 self.tableView.tableFooterView!.addSubview(emptyLabelOne)
             }
             
