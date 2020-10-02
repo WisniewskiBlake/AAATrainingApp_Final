@@ -11,8 +11,9 @@ import ProgressHUD
 import Firebase
 import FirebaseCore
 import FirebaseFirestore
+import MapKit
 
-class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
+class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
 
     
     @IBOutlet weak var dateLabel: UILabel!
@@ -72,14 +73,15 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     let startTapGestureRecognizer = UITapGestureRecognizer()
     let endTapGestureRecognizer = UITapGestureRecognizer()
 
-    
-    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let locationManager = CLLocationManager()
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        var eventStrt = event.eventStart
-        print(eventStrt)
-        print(updateNeeded)
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+            locationManager.requestLocation()
 
         
     }
@@ -132,6 +134,8 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
 //        dateText.text = dateString
         textView.text = event.eventText
         eventTitleText.text = event.eventTitle
+        eventLocationText.text = event.eventLocation
+        eventURLText.text = event.eventURL
 //        eventStartText.text = event.eventStart
 //        eventEndText.text = event.eventEnd
         
@@ -245,10 +249,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         }
 
         
-        
-        
     }
-    
     
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -296,15 +297,17 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         let eventAccountType = "Coach"
         let eventGroupID = UUID().uuidString
         let eventTitle = eventTitleText.text!
+        let eventLocation = eventLocationText.text!
+        let eventURL = eventURLText.text!
         let eventStart = start
         let eventEnd = end
         
             
         for userId in tempMembers {
-            self.createEvent(eventOwnerID: eventOwnerID, eventTeamID: FUser.currentUser()!.userCurrentTeamID, eventText: eventText, eventDate: fullDate, eventAccountType: eventAccountType, eventUserID: userId, eventGroupID: eventGroupID, eventTitle: eventTitle, eventStart: eventStart, eventEnd: eventEnd, upcomingCompar: upcomingCompar, eventLocation: "", eventImage: "", eventURL: "")
+            self.createEvent(eventOwnerID: eventOwnerID, eventTeamID: FUser.currentUser()!.userCurrentTeamID, eventText: eventText, eventDate: fullDate, eventAccountType: eventAccountType, eventUserID: userId, eventGroupID: eventGroupID, eventTitle: eventTitle, eventStart: eventStart, eventEnd: eventEnd, upcomingCompar: upcomingCompar, eventLocation: eventLocation, eventImage: "", eventURL: eventURL)
 
         }
-        self.createTeamEvent(eventOwnerID: eventOwnerID, eventTeamID: FUser.currentUser()!.userCurrentTeamID, eventText: eventText, eventDate: fullDate, eventAccountType: eventAccountType, eventUserID: "", eventGroupID: eventGroupID, eventTitle: eventTitle, eventStart: eventStart, eventEnd: eventEnd, upcomingCompar: upcomingCompar, eventLocation: "", eventImage: "", eventURL: "")
+        self.createTeamEvent(eventOwnerID: eventOwnerID, eventTeamID: FUser.currentUser()!.userCurrentTeamID, eventText: eventText, eventDate: fullDate, eventAccountType: eventAccountType, eventUserID: "", eventGroupID: eventGroupID, eventTitle: eventTitle, eventStart: eventStart, eventEnd: eventEnd, upcomingCompar: upcomingCompar, eventLocation: eventLocation, eventImage: "", eventURL: eventURL)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
             //sleep(UInt32(0.6))
         
@@ -432,64 +435,6 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         
     }
 
-    
-//    func createStartDatePicker() {
-//        let toolbar = UIToolbar()
-//        toolbar.sizeToFit()
-//        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneStartPressed))
-//        toolbar.setItems([doneBtn], animated: true)
-//        eventStartText.inputAccessoryView = toolbar
-//        eventStartText.inputView = datePicker
-//        datePicker.datePickerMode = .time
-//    }
-//    func createEndDatePicker() {
-//        let toolbar = UIToolbar()
-//        toolbar.sizeToFit()
-//        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneEndPressed))
-//        toolbar.setItems([doneBtn], animated: true)
-//        eventEndText.inputAccessoryView = toolbar
-//        eventEndText.inputView = datePicker
-//        datePicker.datePickerMode = .time
-//    }
-    
-//    func createEventDatePicker() {
-//        let toolbar = UIToolbar()
-//        toolbar.sizeToFit()
-//        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneEventDatePressed))
-//        toolbar.setItems([doneBtn], animated: true)
-//        dateText.inputAccessoryView = eventDatePicker
-//        eventDatePicker.datePickerMode = .date
-//        dateText.inputView = eventDatePicker
-//
-//    }
-//
-//    @objc func doneEventDatePressed() {
-//        let formatter = DateFormatter()
-//        //formatter.dateStyle = .full
-//        formatter.dateFormat = "EEEE, MM-dd-YYYY"
-//        self.dateString = formatter.string(from: eventDatePicker.date)
-//        dateText.text = self.dateString
-//        formatter.dateFormat = "YYYY-MM-dd"
-//        self.dateForUpcomingComparison = formatter.string(from: eventDatePicker.date)
-//        self.view.endEditing(true)
-//    }
-    
-//    @objc func doneStartPressed() {
-//        let formatter = DateFormatter()
-//        formatter.dateStyle = .none
-//        formatter.timeStyle = .short
-//        eventStartText.text = formatter.string(from: datePicker.date)
-//        self.view.endEditing(true)
-//    }
-//
-//    @objc func doneEndPressed() {
-//        let formatter = DateFormatter()
-//        formatter.dateStyle = .none
-//        formatter.timeStyle = .short
-//        eventEndText.text = formatter.string(from: datePicker.date)
-//        self.view.endEditing(true)
-//    }
-    
     func configureUI() {
         
        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
@@ -507,18 +452,6 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         
         padding(for: eventURLText)
         cornerRadius(for: eventURLText)
-        
-//        var bottomLine = CALayer()
-//        bottomLine.frame = CGRect(x: 0.0, y: eventStartText.frame.height, width: eventStartText.frame.width, height: 1.0)
-//        bottomLine.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-//        eventStartText.borderStyle = UITextField.BorderStyle.none
-//        eventStartText.layer.addSublayer(bottomLine)
-        
-//        var bottomLine1 = CALayer()
-//        bottomLine1.frame = CGRect(x: 0.0, y: eventEndText.frame.height, width: eventEndText.frame.width, height: 1.0)
-//        bottomLine1.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-//        eventEndText.borderStyle = UITextField.BorderStyle.none
-//        eventEndText.layer.addSublayer(bottomLine1)
 
         cornerRadius(for: deleteButton)
     }
@@ -653,4 +586,21 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         detailsURLView.layer.masksToBounds = true
     }
 
+}
+extension Event_Coach {
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse {
+            locationManager.requestLocation()
+        }
+    }
+
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            print("location:: (location)")
+        }
+    }
+
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        print("error:: (error)")
+    }
 }

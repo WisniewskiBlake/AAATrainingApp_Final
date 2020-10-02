@@ -1136,7 +1136,7 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
         if appDelegate.locationManager != nil {
             return true
         } else {
-            ProgressHUD.showError("Please give access tp loacation in Settings.")
+            ProgressHUD.showError("Please give access to loacation in Settings.")
             return false
         }
     }
