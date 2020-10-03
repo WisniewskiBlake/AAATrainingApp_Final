@@ -45,8 +45,24 @@ class MapController: UIViewController {
         
     }
     
+    @IBAction func cancelPressed(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func donePressed(_ sender: Any) {
+        if resultSearchController!.searchBar.text != "" {
+            let searchResult:[String: String?] = ["searchResult": resultSearchController!.searchBar.text]
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "locationSet"), object: nil, userInfo: searchResult as [AnyHashable : Any])
+            self.dismiss(animated: true, completion: nil)
+        } else {
+            helper.showAlert(title: "Data Error", message: "Please fill in location text.", in: self)
+        }
+    }
+    
+    
+    
     func configureUI() {
-        let _annotation = myAnnotation(title: "Title", locationName: "locationName", discipline: "discipline", coordinate: CLLocationCoordinate2DMake(1.2835921, 103.8448966))
+        let _annotation = myAnnotation(title: "", locationName: "locationName", discipline: "discipline", coordinate: CLLocationCoordinate2DMake(1.2835921, 103.8448966))
         mapView.addAnnotation(_annotation)
     }
     

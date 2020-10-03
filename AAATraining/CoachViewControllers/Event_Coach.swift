@@ -66,6 +66,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(self.setLocation(_:)), name: NSNotification.Name(rawValue: "locationSet"), object: nil)
 
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -101,6 +102,12 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
 
+    }
+    
+    @objc func setLocation(_ notification: NSNotification) {
+        if let searchResult = notification.userInfo?["searchResult"] as? String {
+            eventLocationText.text = searchResult
+        }
     }
     
     override func viewDidLayoutSubviews() {
