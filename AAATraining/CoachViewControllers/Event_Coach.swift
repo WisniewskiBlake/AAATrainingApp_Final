@@ -113,6 +113,12 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     }
     
     @IBAction func mapBtn_pressed(_ sender: Any) {
+//        let mapNav = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MapNav") as! UINavigationController
+//        let mapView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MapController") as! MapController
+//        
+//        
+////        self.navigationController?.pushViewController(mapNav, animated: true)
+//        self.present(mapNav, animated: true)
     }
     
     

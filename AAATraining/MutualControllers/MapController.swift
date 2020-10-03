@@ -40,7 +40,8 @@ class MapController: UIViewController {
     }
     
     func configureUI() {
-        let _annotation = myAnnotation(title: "Title", locationName: "locationName", discipline: "discipline", coordinate: CLLocationCoordinate2DMake(1.2835921, 103.8448966)
+        let _annotation = myAnnotation(title: "Title", locationName: "locationName", discipline: "discipline", coordinate: CLLocationCoordinate2DMake(1.2835921, 103.8448966))
+        mapView.addAnnotation(_annotation)
     }
     
     //Helper Functions
@@ -52,4 +53,21 @@ class MapController: UIViewController {
     
 
 
+}
+extension MapController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let _annotation = annotation as? myAnnotation else {return nil}
+        let _identifier = "marker"
+        var view: MKMarkerAnnotationView
+        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: _identifier) as? MKMarkerAnnotationView {
+            dequeuedView.annotation = annotation
+            view = dequeuedView
+        } else {
+            view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: _identifier)
+            view.canShowCallout = true
+            view.calloutOffset = CGPoint(x: -5, y: 5)
+            view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        }
+        return view
+    }
 }

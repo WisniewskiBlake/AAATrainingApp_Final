@@ -5520,6 +5520,7 @@
                                         <state key="normal" title="Map"/>
                                         <connections>
                                             <action selector="mapBtn_pressed:" destination="cGp-No-v10" eventType="touchUpInside" id="MGM-rg-jjL"/>
+                                            <segue destination="JD2-g8-C6x" kind="presentation" id="5s6-tv-U92"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -5790,18 +5791,18 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LDn-nA-w2t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7496" y="-2946"/>
+            <point key="canvasLocation" x="7501" y="-3050"/>
         </scene>
         <!--Map Controller-->
         <scene sceneID="UhF-qS-tQz">
             <objects>
                 <viewController storyboardIdentifier="MapController" id="YrX-di-Ss4" customClass="MapController" customModule="LockerRoom" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Q4D-OE-iUa">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="emh-ad-Thh">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="56" width="414" height="752"/>
                             </mapView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="NPI-5G-Ohh"/>
@@ -8795,10 +8796,10 @@
         <!--Navigation Controller-->
         <scene sceneID="5k7-yB-spX">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JD2-g8-C6x" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MapNav" automaticallyAdjustsScrollViewInsets="NO" id="JD2-g8-C6x" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Kx0-HR-77f">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
