@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import MapKit
+import CoreLocation
 
 class MultiEvent_Coach: UITableViewController {
     
@@ -22,6 +24,9 @@ class MultiEvent_Coach: UITableViewController {
     @IBOutlet weak var titleView: UIView!
     @IBOutlet weak var createButton: UIButton!
     
+    let geoCoder = CLGeocoder()
+    var locationArray: [MKPlacemark] = []
+    var doesHaveLocationArray: [Int] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +39,7 @@ class MultiEvent_Coach: UITableViewController {
         super.viewWillAppear(animated)
         configureUI()
         loadEvents()
-        
+        getLocations()
     }
     
     func configureUI() {
@@ -45,12 +50,12 @@ class MultiEvent_Coach: UITableViewController {
         } else if self.accountType == "Player"{
             createButton.isHidden = true
         }
-        
+        eventCounterLabel.text = self.dateString
         emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -150, width: view.bounds.size.width, height: view.bounds.size.height))
         titleView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         titleView.alpha = 1.0
         tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        tableView.separatorColor = UIColor.clear
+        //tableView.separatorColor = UIColor.clear
         self.navigationController?.view.addSubview(self.titleView)
         self.navigationController?.navigationBar.layer.zPosition = 0;
         let view = UIView()
@@ -84,13 +89,35 @@ class MultiEvent_Coach: UITableViewController {
     
     func loadEvents() {
         self.eventsToShow = []
+        
+        self.doesHaveLocationArray = []
         for event in allEventsSameDate {
             if event.eventUserID == FUser.currentId() {
                 eventsToShow.append(event)
             }
-            
         }
-        eventCounterLabel.text = String(eventsToShow.count) + " Events"
+    }
+    
+    func getLocations() {
+        self.locationArray = []
+        for event in eventsToShow {
+            geoCoder.geocodeAddressString(event.eventLocation) { (placemarks, error) in
+                if error != nil {
+                    print(error)
+                }
+                guard
+                    let placemarks = placemarks,
+                    let location = placemarks.first
+                else {
+                    self.doesHaveLocationArray.append(0)
+                    return
+                }
+                self.doesHaveLocationArray.append(1)
+                let mkPlacemark = MKPlacemark(placemark: location)
+                self.locationArray.append(mkPlacemark)
+                self.tableView.reloadData()
+            }
+        }
         
     }
 
@@ -120,16 +147,41 @@ class MultiEvent_Coach: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath) as! EventCell
-        cell.eventDateLabel.text = eventsToShow[indexPath.row].eventDate
+        
         cell.eventTitleText.text = eventsToShow[indexPath.row].eventTitle
-        cell.eventStartText.text = eventsToShow[indexPath.row].eventStart
-        cell.eventEndText.text = eventsToShow[indexPath.row].eventEnd
+        cell.eventLocationView.text = eventsToShow[indexPath.row].eventLocation
+        cell.eventTimeLabel.text = "From " + eventsToShow[indexPath.row].eventStart + " to " + eventsToShow[indexPath.row].eventEnd
         cell.eventText.text = eventsToShow[indexPath.row].eventText
         if cell.eventText.text != "" {
             cell.placeholderLabel.isHidden = true
         } else {
             cell.placeholderLabel.isHidden = false
         }
+        if cell.eventLocationView.text != "" {
+            cell.locationPlaceholder.isHidden = true
+        } else {
+            cell.locationPlaceholder.isHidden = false
+        }
+        
+        if !locationArray.isEmpty {
+            cell.eventMapView.removeAnnotations(cell.eventMapView.annotations)
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = locationArray[indexPath.row].coordinate
+            
+            if let city = locationArray[indexPath.row].locality,
+               let state = locationArray[indexPath.row].administrativeArea {
+                annotation.subtitle = "(city) (state)"
+            }
+            
+            cell.eventMapView.addAnnotation(annotation)
+            let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+            let region = MKCoordinateRegion(center: locationArray[indexPath.row].coordinate, span: span)
+            cell.eventMapView.setRegion(region, animated: true)
+        }
+        
+        
+//        let lat = locationArray[indexPath.row].coordinate.latitude
+//        let lon = locationArray[indexPath.row].coordinate.longitude
         
         return cell
     }
