@@ -31,7 +31,8 @@ class MultiEvent_Coach: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //loadEvents()
+        NotificationCenter.default.addObserver(self, selector: #selector(self.loadEvents), name: NSNotification.Name(rawValue: "createEvent"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.loadEvents), name: NSNotification.Name(rawValue: "updateEvent"), object: nil)
         
     }
     
@@ -88,7 +89,7 @@ class MultiEvent_Coach: UITableViewController {
     }
     
     
-    func loadEvents() {
+    @objc func loadEvents() {
         self.eventsToShow = []
         
         self.doesHaveLocationArray = []
@@ -121,6 +122,8 @@ class MultiEvent_Coach: UITableViewController {
         }
         self.tableView.reloadData()
     }
+    
+    
 
     // MARK: - Table view data source
 

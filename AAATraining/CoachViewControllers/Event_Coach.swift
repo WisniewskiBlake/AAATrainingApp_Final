@@ -200,6 +200,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             if eventTitleText.text != "" {
                 if self.doneButton.currentTitle == "Update" {
                     event.updateEvent(eventGroupID: event.eventGroupID, eventOwnerID: event.eventOwnerID, eventText: textView.text!, eventTitle: eventTitleText.text!, eventStart: startTime, eventEnd: endTime, eventLocation: eventLocationText.text!, eventImage: "", eventURL: eventURLText.text!)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateEvent"), object: nil)
                 } else {
                     //ProgressHUD.show("Creating...", interaction: false)
                     createEventForMembers(start: startTime, end: endTime, fullDate: dateString, upcomingCompar: dateForUpcomingComparison)

@@ -7,6 +7,12 @@
 //
 
 import UIKit
+import MapKit
+import CoreLocation
+
+protocol CalendarCellDelegate {
+    func didTapLocation(indexPath: IndexPath)
+}
 
 class CalendarCell: UITableViewCell {
     
@@ -15,12 +21,21 @@ class CalendarCell: UITableViewCell {
     @IBOutlet weak var eventMonthLabel: UILabel!
     @IBOutlet weak var eventTitleLabel: UILabel!
     @IBOutlet weak var eventTimeLabel: UILabel!
+    @IBOutlet weak var eventLocationText: UILabel!
     
-
+    var delegate: CalendarCellDelegate?
+    var indexPath: IndexPath!
+    
+    let locTapGestureRecognizer = UITapGestureRecognizer()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
         eventMonthLabel.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
+        locTapGestureRecognizer.addTarget(self, action: #selector(self.goToMap))
+        eventLocationText.isUserInteractionEnabled = true
+        eventLocationText.addGestureRecognizer(locTapGestureRecognizer)
         
         let width = CGFloat(2)
         let color = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)!.cgColor
@@ -38,6 +53,10 @@ class CalendarCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    @objc func goToMap() {
+        delegate!.didTapLocation(indexPath: indexPath)        
     }
 
 }

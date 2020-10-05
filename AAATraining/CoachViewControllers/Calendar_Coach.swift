@@ -10,8 +10,10 @@ import UIKit
 import FSCalendar
 import Firebase
 import FirebaseFirestore
+import MapKit
+import CoreLocation
 
-class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance, UITableViewDelegate, UITableViewDataSource {
+class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance, UITableViewDelegate, UITableViewDataSource, CalendarCellDelegate {
     
 
     @IBOutlet var calendar: FSCalendar!
@@ -20,7 +22,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     //@IBOutlet weak var splitterLabel: UILabel!
     @IBOutlet weak var splitterLabelTwo: UILabel!
     
-    
+    let geoCoder = CLGeocoder()
     var allEvents: [Event] = []
     var upcomingEvents: [Event] = []
     
@@ -351,15 +353,30 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "CalendarCell", for: indexPath) as! CalendarCell
-       
-        cell.eventTimeLabel?.text = upcomingEvents[indexPath.row].eventStart + " - " + upcomingEvents[indexPath.row].eventEnd
+        cell.delegate = self
+        cell.indexPath = indexPath
+        if upcomingEvents[indexPath.row].eventLocation != "" {
+            let locationLimited = upcomingEvents[indexPath.row].eventLocation.components(separatedBy: ",")
+            if locationLimited.count == 3 {
+                cell.eventLocationText.text = String(locationLimited[0]) + " " + String(locationLimited[1]) + " " + String(locationLimited[2])
+            } else if locationLimited.count == 2 {
+                cell.eventLocationText.text = String(locationLimited[0]) + " " + String(locationLimited[1])
+            } else if locationLimited.count == 1 {
+                cell.eventLocationText.text = String(locationLimited[0])
+            } else {
+                cell.eventLocationText.text = String(locationLimited[0])
+            }
+            
+        }
+        
+        cell.eventTimeLabel?.text = upcomingEvents[indexPath.row].eventStart + " - " + upcomingEvents[indexPath.row].eventEnd + ","
         cell.eventTitleLabel?.text = upcomingEvents[indexPath.row].eventTitle
         let date = upcomingEvents[indexPath.row].dateForUpcomingComparison
         let month = date[5 ..< 7]
         let day = date[8 ..< 10]
         cell.eventDayLabel.text = day
         cell.eventMonthLabel.text = getMonth(monthNumber: month)
-
+        
         cell.accessoryType = .disclosureIndicator
 
 
@@ -415,6 +432,42 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         } else {
             return ""
         }
+    }
+    
+    func didTapLocation(indexPath: IndexPath) {
+        let helper = Helper()
+        geoCoder.geocodeAddressString(upcomingEvents[indexPath.row].eventLocation) { (placemarks, error) in
+            if error != nil {
+                print(error)
+            }
+            guard
+                let placemarks = placemarks,
+                let location = placemarks.first
+            else {
+                helper.showAlert(title: "Couldn't open in maps.", message: "Not enough info.", in: self)
+                return
+            }
+            
+            let mkPlacemark = MKPlacemark(placemark: location)
+            let regionDestination: CLLocationDistance = 10000
+            
+            let coordinates = mkPlacemark.coordinate
+            
+            let regionSpan = MKCoordinateRegion(center: coordinates, latitudinalMeters: regionDestination, longitudinalMeters: regionDestination)
+
+            let options = [
+                MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+                MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan:  regionSpan.span)
+            ]
+            
+            let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+            let mapItem = MKMapItem(placemark: placemark)
+            //mapItem.name = "User's Location"
+            mapItem.openInMaps(launchOptions: options)
+        }
+        
+        
+        
     }
     
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
