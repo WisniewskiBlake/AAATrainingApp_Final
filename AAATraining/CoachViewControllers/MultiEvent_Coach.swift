@@ -39,7 +39,8 @@ class MultiEvent_Coach: UITableViewController {
         super.viewWillAppear(animated)
         configureUI()
         loadEvents()
-        getLocations()
+//        getLocations()
+//        self.tableView.reloadData()
     }
     
     func configureUI() {
@@ -110,15 +111,15 @@ class MultiEvent_Coach: UITableViewController {
                     let location = placemarks.first
                 else {
                     self.doesHaveLocationArray.append(0)
+                    self.locationArray.append(MKPlacemark())
                     return
                 }
                 self.doesHaveLocationArray.append(1)
                 let mkPlacemark = MKPlacemark(placemark: location)
                 self.locationArray.append(mkPlacemark)
-                self.tableView.reloadData()
             }
         }
-        
+        self.tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -131,7 +132,6 @@ class MultiEvent_Coach: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         if eventsToShow.count == 0 {
-            
             emptyLabelOne.text = "Created posts will appear here!"
             emptyLabelOne.textAlignment = NSTextAlignment.center
             self.tableView.tableFooterView!.addSubview(emptyLabelOne)
@@ -139,7 +139,6 @@ class MultiEvent_Coach: UITableViewController {
         } else {
             emptyLabelOne.text = ""
             emptyLabelOne.removeFromSuperview()
-            
             return eventsToShow.count
         }
         
@@ -163,21 +162,53 @@ class MultiEvent_Coach: UITableViewController {
             cell.locationPlaceholder.isHidden = false
         }
         
-        if !locationArray.isEmpty {
-            cell.eventMapView.removeAnnotations(cell.eventMapView.annotations)
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = locationArray[indexPath.row].coordinate
-            
-            if let city = locationArray[indexPath.row].locality,
-               let state = locationArray[indexPath.row].administrativeArea {
-                annotation.subtitle = "(city) (state)"
+        if eventsToShow[indexPath.row].eventLocation != "" {
+            geoCoder.geocodeAddressString(eventsToShow[indexPath.row].eventLocation) { (placemarks, error) in
+                if error != nil {
+                    print(error)
+                }
+                guard
+                    let placemarks = placemarks,
+                    let location = placemarks.first
+                else {
+//                    self.doesHaveLocationArray.append(0)
+//                    self.locationArray.append(MKPlacemark())
+                    return
+                }
+                self.doesHaveLocationArray.append(1)
+                let mkPlacemark = MKPlacemark(placemark: location)
+                cell.eventMapView.removeAnnotations(cell.eventMapView.annotations)
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = mkPlacemark.coordinate
+                
+                if let city = mkPlacemark.locality,
+                   let state = mkPlacemark.administrativeArea {
+                    annotation.subtitle = "(city) (state)"
+                }
+                
+                cell.eventMapView.addAnnotation(annotation)
+                let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+                let region = MKCoordinateRegion(center: mkPlacemark.coordinate, span: span)
+                cell.eventMapView.setRegion(region, animated: true)
             }
-            
-            cell.eventMapView.addAnnotation(annotation)
-            let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-            let region = MKCoordinateRegion(center: locationArray[indexPath.row].coordinate, span: span)
-            cell.eventMapView.setRegion(region, animated: true)
         }
+
+        
+//        if !locationArray.isEmpty {
+//            cell.eventMapView.removeAnnotations(cell.eventMapView.annotations)
+//            let annotation = MKPointAnnotation()
+//            annotation.coordinate = locationArray[indexPath.row].coordinate
+//
+//            if let city = locationArray[indexPath.row].locality,
+//               let state = locationArray[indexPath.row].administrativeArea {
+//                annotation.subtitle = "(city) (state)"
+//            }
+//
+//            cell.eventMapView.addAnnotation(annotation)
+//            let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+//            let region = MKCoordinateRegion(center: locationArray[indexPath.row].coordinate, span: span)
+//            cell.eventMapView.setRegion(region, animated: true)
+//        }
         
         
 //        let lat = locationArray[indexPath.row].coordinate.latitude
