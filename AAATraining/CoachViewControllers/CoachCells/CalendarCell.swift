@@ -20,9 +20,11 @@ class CalendarCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        let width = CGFloat(1)
-        //let color = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        let color = UIColor.lightGray.cgColor
+        eventMonthLabel.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
+        let width = CGFloat(2)
+        let color = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)!.cgColor
+        //let color = UIColor.lightGray.cgColor
         let border = CALayer()
         border.borderWidth = width
         border.borderColor = color

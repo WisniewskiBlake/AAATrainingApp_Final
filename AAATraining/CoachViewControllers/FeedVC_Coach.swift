@@ -227,7 +227,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         setCalendarBadges(controller: self.tabBarController!, accountType: "coach")
         
         tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        tableView.separatorColor = UIColor.clear
+        //tableView.separatorColor = UIColor.clear
         
         titleView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         titleView.alpha = 1.0
