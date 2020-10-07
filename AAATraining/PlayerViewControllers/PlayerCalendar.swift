@@ -15,9 +15,7 @@ import ProgressHUD
 class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var calendar: FSCalendar!
-    @IBOutlet weak var upcomingLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var splitterLabel: UILabel!
     @IBOutlet weak var splitterLabelTwo: UILabel!
     
     var allEvents: [Event] = []

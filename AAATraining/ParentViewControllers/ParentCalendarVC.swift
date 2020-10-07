@@ -17,7 +17,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     @IBOutlet weak var calendar: FSCalendar!
     @IBOutlet weak var upcomingLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var logoutView: UIView!
+
     @IBOutlet weak var splitterLabel: UILabel!
     @IBOutlet weak var splitterLabelTwo: UILabel!
     
@@ -63,9 +63,9 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         self.calendar.formatter.dateFormat = "YYYY-MM-dd"
         today = calendar.formatter.string(from: todayDate)
         
-        logoutTapGestureRecognizer.addTarget(self, action: #selector(self.logoutViewClicked))
-        logoutView.isUserInteractionEnabled = true
-        logoutView.addGestureRecognizer(logoutTapGestureRecognizer)
+//        logoutTapGestureRecognizer.addTarget(self, action: #selector(self.logoutViewClicked))
+//        logoutView.isUserInteractionEnabled = true
+ //       logoutView.addGestureRecognizer(logoutTapGestureRecognizer)
         
     }
     
@@ -110,7 +110,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:23)
         self.setLeftAlignedNavigationItemTitle(text: "Team Calendar", color: .white, margin: 12)
         upcomingLabel.textColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        logoutView.tintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+ //       logoutView.tintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         splitterLabel.backgroundColor = #colorLiteral(red: 0.6815950428, green: 0.6815950428, blue: 0.6815950428, alpha: 1)
         splitterLabelTwo.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     }
@@ -404,8 +404,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
         calendar.reloadData()
     }
-    
-    @objc func logoutViewClicked() {
+    @IBAction func logoutViewClicked(_ sender: Any) {
         let sheet = UIAlertController(title: "Team Login Code: " + FUser.currentUser()!.userCurrentTeamID, message: nil, preferredStyle: .actionSheet)
         
         
@@ -448,6 +447,8 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         // show action sheet
         present(sheet, animated: true, completion: nil)
     }
+    
+    
     
 
 
