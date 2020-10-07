@@ -193,7 +193,7 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         let eventId = localReference.documentID
         var eventToUpload: [String : Any]!
         let eventCounter = 0
-        eventToUpload = [kEVENTID: eventId, kEVENTTEAMID: event.eventTeamID, kEVENTOWNERID: event.eventOwnerID, kEVENTTEXT: event.eventText, kEVENTDATE: event.eventDate, kEVENTACCOUNTTYPE: FUser.currentUser()?.accountType, kEVENTCOUNTER: 0, kEVENTUSERID: FUser.currentId(), kEVENTGROUPID: event.eventGroupID, kEVENTTITLE: event.eventTitle, kEVENTSTART: event.eventStart, kEVENTEND: event.eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: event.dateForUpcomingComparison, kEVENTLOCATION: "", kEVENTIMAGE: "", kEVENTURL: ""] as [String:Any]
+        eventToUpload = [kEVENTID: eventId, kEVENTTEAMID: event.eventTeamID, kEVENTOWNERID: event.eventOwnerID, kEVENTTEXT: event.eventText, kEVENTDATE: event.eventDate, kEVENTACCOUNTTYPE: FUser.currentUser()?.accountType, kEVENTCOUNTER: 0, kEVENTUSERID: FUser.currentId(), kEVENTGROUPID: event.eventGroupID, kEVENTTITLE: event.eventTitle, kEVENTSTART: event.eventStart, kEVENTEND: event.eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: event.dateForUpcomingComparison, kEVENTLOCATION: event.eventLocation, kEVENTIMAGE: "", kEVENTURL: event.eventURL] as [String:Any]
 
         localReference.setData(eventToUpload)
     }

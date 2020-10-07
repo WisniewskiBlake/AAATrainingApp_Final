@@ -458,6 +458,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             endDatePicker.isUserInteractionEnabled = false
             textView.isUserInteractionEnabled = false
             eventURLText.isUserInteractionEnabled = false
+            deleteButton.isHidden = true
         } else {
             if updateNeeded == true {
                 deleteButton.isHidden = false

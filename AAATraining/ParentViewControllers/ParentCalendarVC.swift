@@ -203,7 +203,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         let eventId = localReference.documentID
         var eventToUpload: [String : Any]!
         let eventCounter = 0
-        eventToUpload = [kEVENTID: eventId, kEVENTTEAMID: event.eventTeamID, kEVENTOWNERID: event.eventOwnerID, kEVENTTEXT: event.eventText, kEVENTDATE: event.eventDate, kEVENTACCOUNTTYPE: FUser.currentUser()?.accountType, kEVENTCOUNTER: 0, kEVENTUSERID: FUser.currentId(), kEVENTGROUPID: event.eventGroupID, kEVENTTITLE: event.eventTitle, kEVENTSTART: event.eventStart, kEVENTEND: event.eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: event.dateForUpcomingComparison, kEVENTLOCATION: "", kEVENTIMAGE: "", kEVENTURL: ""] as [String:Any]
+        eventToUpload = [kEVENTID: eventId, kEVENTTEAMID: event.eventTeamID, kEVENTOWNERID: event.eventOwnerID, kEVENTTEXT: event.eventText, kEVENTDATE: event.eventDate, kEVENTACCOUNTTYPE: FUser.currentUser()?.accountType, kEVENTCOUNTER: 0, kEVENTUSERID: FUser.currentId(), kEVENTGROUPID: event.eventGroupID, kEVENTTITLE: event.eventTitle, kEVENTSTART: event.eventStart, kEVENTEND: event.eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: event.dateForUpcomingComparison, kEVENTLOCATION: event.eventLocation, kEVENTIMAGE: "", kEVENTURL: event.eventURL] as [String:Any]
 
         localReference.setData(eventToUpload)
     }
@@ -467,6 +467,17 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
             
         })
         
+        let backToTeamSelect = UIAlertAction(title: "Back To Team Select", style: .default, handler: { (action) in
+                        
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
+            {
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true, completion: nil)
+            }
+                
+            
+        })
+        
         // creating buttons for action sheet
         let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
                         
@@ -487,6 +498,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         // add buttons to action sheet
         
         sheet.addAction(colorPicker)
+        sheet.addAction(backToTeamSelect)
         sheet.addAction(logout)
         sheet.addAction(cancel)
         
