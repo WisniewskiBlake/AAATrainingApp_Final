@@ -17,9 +17,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
 
     @IBOutlet var calendar: FSCalendar!
-    //@IBOutlet weak var upcomingLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
-    //@IBOutlet weak var splitterLabel: UILabel!
     @IBOutlet weak var splitterLabelTwo: UILabel!
     
     let geoCoder = CLGeocoder()
