@@ -11,16 +11,16 @@ import FSCalendar
 import Firebase
 import FirebaseFirestore
 import ProgressHUD
+import MapKit
+import CoreLocation
 
-class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance, UITableViewDataSource, UITableViewDelegate {
+class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance, UITableViewDataSource, UITableViewDelegate, CalendarCellDelegate {
 
     @IBOutlet weak var calendar: FSCalendar!
-    @IBOutlet weak var upcomingLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
-
-    @IBOutlet weak var splitterLabel: UILabel!
     @IBOutlet weak var splitterLabelTwo: UILabel!
     
+    let geoCoder = CLGeocoder()
     var allEvents: [Event] = []
     var upcomingEvents: [Event] = []
     
@@ -109,9 +109,6 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         calendar.appearance.headerTitleColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:23)
         self.setLeftAlignedNavigationItemTitle(text: "Team Calendar", color: .white, margin: 12)
-        upcomingLabel.textColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
- //       logoutView.tintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        splitterLabel.backgroundColor = #colorLiteral(red: 0.6815950428, green: 0.6815950428, blue: 0.6815950428, alpha: 1)
         splitterLabelTwo.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     }
     
@@ -166,7 +163,6 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
      }
     
     func getEventsForNewObserver() {
-
         let localReference = reference(.Event).document()
         let eventId = localReference.documentID
         var eventToUpload: [String : Any]!
@@ -213,7 +209,6 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     }
     
     @objc func loadEvents() {
-
         recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kEVENTUSERID).order(by: kEVENTDATEFORUPCOMINGCOMPARISON).addSnapshotListener({ (snapshot, error) in
                            
             self.allEvents = []
@@ -242,12 +237,12 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
                     
 
                     self.allEvents.append(event)
-                    print("allEvents.append(event)")
-                    print(event.eventUserID + " 1")
+//                    print("allEvents.append(event)")
+//                    print(event.eventUserID + " 1")
   
                     //if the event that has the same teamID belongs to an existing user, append the date and count
                     if event.eventUserID == FUser.currentId() {
-                        print(event.eventUserID + " 2")
+                        //print(event.eventUserID + " 2")
                         //print("event.eventUserID == FUser.currentId()")
                         if event.dateForUpcomingComparison > self.today {
                             self.upcomingEvents.append(event)
@@ -280,7 +275,8 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         }
         
         if allEventDates.contains(dateString) && Int(countArray[index])! >= 1 {
-            return #colorLiteral(red: 0.05476168428, green: 0.06671469682, blue: 1, alpha: 1)
+            return UIColor.red
+            
         } else if allEventDates.contains(dateString) && Int(countArray[index])! == 0 {
             return UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         }  else {
@@ -292,7 +288,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         calendar.formatter.dateFormat = "EEEE, MM-dd-YYYY"
         let dateString = calendar.formatter.string(from: date)
         let values = Calendar.current.dateComponents([Calendar.Component.month, Calendar.Component.year], from: self.calendar.currentPage)
-        
+        //print(dateString)
         if allEventDates.contains(dateString) || date == calendar.today {
             return #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         } else if date.get(.month) != values.month{
@@ -337,36 +333,52 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+       
         let cell = tableView.dequeueReusableCell(withIdentifier: "CalendarCell", for: indexPath) as! CalendarCell
+        cell.delegate = self
+        cell.indexPath = indexPath
+        if upcomingEvents[indexPath.row].eventLocation != "" {
+            let locationLimited = upcomingEvents[indexPath.row].eventLocation.components(separatedBy: ",")
+            if locationLimited.count == 3 {
+                cell.eventLocationText.text = String(locationLimited[0]) + " " + String(locationLimited[1]) + " " + String(locationLimited[2])
+            } else if locationLimited.count == 2 {
+                cell.eventLocationText.text = String(locationLimited[0]) + " " + String(locationLimited[1])
+            } else if locationLimited.count == 1 {
+                cell.eventLocationText.text = String(locationLimited[0])
+            } else {
+                cell.eventLocationText.text = String(locationLimited[0])
+            }
+            
+        }
         
-         cell.eventTimeLabel?.text = upcomingEvents[indexPath.row].eventStart + " - " + upcomingEvents[indexPath.row].eventEnd
-         cell.eventTitleLabel?.text = upcomingEvents[indexPath.row].eventTitle
-         let date = upcomingEvents[indexPath.row].dateForUpcomingComparison
-         let month = date[5 ..< 7]
-         let day = date[8 ..< 10]
-         cell.eventDayLabel.text = day
-         cell.eventMonthLabel.text = getMonth(monthNumber: month)
+        cell.eventTimeLabel?.text = upcomingEvents[indexPath.row].eventStart + " - " + upcomingEvents[indexPath.row].eventEnd + ","
+        cell.eventTitleLabel?.text = upcomingEvents[indexPath.row].eventTitle
+        let date = upcomingEvents[indexPath.row].dateForUpcomingComparison
+        let month = date[5 ..< 7]
+        let day = date[8 ..< 10]
+        cell.eventDayLabel.text = day
+        cell.eventMonthLabel.text = getMonth(monthNumber: month)
+        
+        cell.accessoryType = .disclosureIndicator
 
-         cell.accessoryType = .disclosureIndicator
 
-         cell.tag = indexPath.row
+        cell.tag = indexPath.row
 
-         return cell
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         let event = upcomingEvents[indexPath.row]
         
-        let eventVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ParentEvent") as! ParentEvent
-        let navController = UINavigationController(rootViewController: eventVC)
-        
-        eventVC.event = event
-        
-        eventVC.hidesBottomBarWhenPushed = true
-        eventVC.dateString = event.eventDate
-        
-        self.navigationController?.present(navController, animated: true, completion: nil)
+        if let eventCoach : Event_Coach = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
+        {
+            eventCoach.hidesBottomBarWhenPushed = true
+            eventCoach.dateString = event.eventDate
+            eventCoach.event = event
+            eventCoach.accountType = "Parent"
+            eventCoach.modalPresentationStyle = .fullScreen
+            self.present(eventCoach, animated: true, completion: nil)
+        }
     }
     func getMonth(monthNumber: String) -> String {
         if monthNumber == "01" {
@@ -397,6 +409,40 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
             return ""
         }
     }
+    
+    func didTapLocation(indexPath: IndexPath) {
+        let helper = Helper()
+        geoCoder.geocodeAddressString(upcomingEvents[indexPath.row].eventLocation) { (placemarks, error) in
+            if error != nil {
+                print(error)
+            }
+            guard
+                let placemarks = placemarks,
+                let location = placemarks.first
+            else {
+                helper.showAlert(title: "Couldn't open in maps.", message: "Not enough info.", in: self)
+                return
+            }
+            
+            let mkPlacemark = MKPlacemark(placemark: location)
+            let regionDestination: CLLocationDistance = 10000
+            
+            let coordinates = mkPlacemark.coordinate
+            
+            let regionSpan = MKCoordinateRegion(center: coordinates, latitudinalMeters: regionDestination, longitudinalMeters: regionDestination)
+
+            let options = [
+                MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+                MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan:  regionSpan.span)
+            ]
+            
+            let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+            let mapItem = MKMapItem(placemark: placemark)
+            //mapItem.name = "User's Location"
+            mapItem.openInMaps(launchOptions: options)
+        }
+    }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }

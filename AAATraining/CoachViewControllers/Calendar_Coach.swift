@@ -106,8 +106,6 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         calendar.appearance.headerTitleColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:23)
         self.setLeftAlignedNavigationItemTitle(text: "Team Calendar", color: .white, margin: 12)
-        //upcomingLabel.textColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        //splitterLabel.backgroundColor = #colorLiteral(red: 0.6815950428, green: 0.6815950428, blue: 0.6815950428, alpha: 1)
         splitterLabelTwo.backgroundColor = #colorLiteral(red: 0.9133789539, green: 0.9214370847, blue: 0.9337923527, alpha: 1)
     }
     
@@ -170,7 +168,6 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     }
     
     func getEventsForNewObserver() {
-
         let localReference = reference(.Event).document()
         let eventId = localReference.documentID
         var eventToUpload: [String : Any]!
@@ -217,7 +214,6 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     }
     
     @objc func loadEvents() {
-
         recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).order(by: kEVENTUSERID).order(by: kEVENTDATEFORUPCOMINGCOMPARISON).addSnapshotListener({ (snapshot, error) in
                            
             self.allEvents = []
@@ -246,12 +242,12 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                     
 
                     self.allEvents.append(event)
-                    print("allEvents.append(event)")
-                    print(event.eventUserID + " 1")
+//                    print("allEvents.append(event)")
+//                    print(event.eventUserID + " 1")
   
                     //if the event that has the same teamID belongs to an existing user, append the date and count
                     if event.eventUserID == FUser.currentId() {
-                        print(event.eventUserID + " 2")
+//                        print(event.eventUserID + " 2")
                         //print("event.eventUserID == FUser.currentId()")
                         if event.dateForUpcomingComparison > self.today {
                             self.upcomingEvents.append(event)
@@ -383,7 +379,6 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         let event = upcomingEvents[indexPath.row]
         
         if let eventCoach : Event_Coach = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
@@ -395,7 +390,6 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
             eventCoach.modalPresentationStyle = .fullScreen
             self.present(eventCoach, animated: true, completion: nil)
         }
-        
         
     }
     
@@ -461,10 +455,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
             let mapItem = MKMapItem(placemark: placemark)
             //mapItem.name = "User's Location"
             mapItem.openInMaps(launchOptions: options)
-        }
-        
-        
-        
+        }        
     }
     
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
