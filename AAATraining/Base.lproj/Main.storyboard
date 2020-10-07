@@ -25,7 +25,7 @@
         <array key="Locomotype  GigaSansSemiBold.otf">
             <string>GigaSans-SemiBold</string>
         </array>
-        <array key="SirichanaBoldTTF.ttf">
+        <array key="SirichanaBoldOTF.otf">
             <string>SirichanaW31-Bold</string>
         </array>
     </customFonts>
@@ -4077,7 +4077,7 @@
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calendarPlus" translatesAutoresizingMaskIntoConstraints="NO" id="FXr-dh-HlA">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calendarPlus2" translatesAutoresizingMaskIntoConstraints="NO" id="FXr-dh-HlA">
                                     <rect key="frame" x="364" y="162" width="30" height="30"/>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
@@ -4541,7 +4541,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Calendar" id="9ox-Ly-2Fj">
-                        <barButtonItem key="rightBarButtonItem" image="calendarPlus" style="done" id="JSr-Dp-5Re">
+                        <barButtonItem key="rightBarButtonItem" image="calendarPlus2" style="done" id="JSr-Dp-5Re">
                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="createEvent_clicked:" destination="tCe-Kh-oC2" id="4yf-DF-e1s"/>
@@ -4583,12 +4583,12 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QIe-T9-or8">
-                                    <rect key="frame" x="360" y="21" width="46" height="30"/>
+                                    <rect key="frame" x="361" y="21" width="46" height="30"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="30" id="9Y1-K9-QyE"/>
                                         <constraint firstAttribute="width" constant="46" id="ZJa-Sl-70n"/>
                                     </constraints>
-                                    <state key="normal" image="calendarPlus"/>
+                                    <state key="normal" image="calendarPlus1"/>
                                     <connections>
                                         <action selector="createButton_clicked:" destination="7Xh-pg-lTo" eventType="touchUpInside" id="Jk8-Dd-DFa"/>
                                     </connections>
@@ -4614,7 +4614,7 @@
                                 <constraint firstItem="qUi-ah-JMY" firstAttribute="bottom" secondItem="Ahy-Aw-U5f" secondAttribute="bottom" constant="9" id="69h-jL-YXf"/>
                                 <constraint firstItem="Ex3-vN-ryF" firstAttribute="centerX" secondItem="qUi-ah-JMY" secondAttribute="centerX" id="Hm2-qV-8Rl"/>
                                 <constraint firstItem="Ahy-Aw-U5f" firstAttribute="leading" secondItem="qUi-ah-JMY" secondAttribute="leading" constant="8" id="KXh-2g-Bww"/>
-                                <constraint firstItem="qUi-ah-JMY" firstAttribute="trailing" secondItem="QIe-T9-or8" secondAttribute="trailing" constant="8" id="QGB-9d-lF7"/>
+                                <constraint firstItem="qUi-ah-JMY" firstAttribute="trailing" secondItem="QIe-T9-or8" secondAttribute="trailing" constant="7" id="QGB-9d-lF7"/>
                                 <constraint firstItem="qUi-ah-JMY" firstAttribute="bottom" secondItem="Ex3-vN-ryF" secondAttribute="bottom" constant="9" id="W4r-OB-vqN"/>
                                 <constraint firstItem="qUi-ah-JMY" firstAttribute="bottom" secondItem="QIe-T9-or8" secondAttribute="bottom" constant="7" id="o17-S8-gR8"/>
                             </constraints>
@@ -4679,10 +4679,10 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VzB-aH-zgJ">
-                                            <rect key="frame" x="20" y="57" width="374" height="21"/>
+                                            <rect key="frame" x="20" y="57" width="374" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="374" id="BLV-Sl-Med"/>
-                                                <constraint firstAttribute="height" constant="21" id="tRb-db-jzE"/>
+                                                <constraint firstAttribute="height" constant="30" id="tRb-db-jzE"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                             <color key="textColor" systemColor="linkColor"/>
@@ -4697,7 +4697,7 @@
                                         <constraint firstItem="Ywj-Aa-a7h" firstAttribute="top" secondItem="rTm-gV-twm" secondAttribute="topMargin" constant="4" id="Bna-Kt-LKK"/>
                                         <constraint firstItem="VzB-aH-zgJ" firstAttribute="leading" secondItem="rTm-gV-twm" secondAttribute="leadingMargin" id="J3R-1q-ZJE"/>
                                         <constraint firstItem="or0-x7-F0H" firstAttribute="top" secondItem="kwY-pq-rmB" secondAttribute="bottom" constant="9" id="OYG-8G-UFq"/>
-                                        <constraint firstItem="kwY-pq-rmB" firstAttribute="top" secondItem="VzB-aH-zgJ" secondAttribute="bottom" constant="15" id="VBw-tM-OkU"/>
+                                        <constraint firstItem="kwY-pq-rmB" firstAttribute="top" secondItem="VzB-aH-zgJ" secondAttribute="bottom" constant="6" id="VBw-tM-OkU"/>
                                         <constraint firstItem="or0-x7-F0H" firstAttribute="top" secondItem="tBj-JC-53a" secondAttribute="bottom" constant="-28.5" id="cbK-lf-rqO"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="F50-bd-jJh" secondAttribute="bottom" constant="30" id="dwh-fI-ew8"/>
                                         <constraint firstItem="F50-bd-jJh" firstAttribute="leading" secondItem="rTm-gV-twm" secondAttribute="leadingMargin" id="iJM-mf-oIx"/>
@@ -4733,7 +4733,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8tQ-5l-ebc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5309" y="-2946"/>
+            <point key="canvasLocation" x="5307.2463768115949" y="-2946.4285714285711"/>
         </scene>
         <!--Group Chats-->
         <scene sceneID="6hW-az-6Ff">
@@ -5709,6 +5709,7 @@
                         <outlet property="eventLocationText" destination="63F-1f-OUr" id="QrJ-cD-yEF"/>
                         <outlet property="eventTitleText" destination="RJe-Vh-Sz7" id="keh-7e-orB"/>
                         <outlet property="eventURLText" destination="SJP-bc-kZI" id="rnE-UO-5RA"/>
+                        <outlet property="mapBtn" destination="0ey-gj-5ya" id="gvM-Q2-ybQ"/>
                         <outlet property="navView" destination="FTE-cL-UMg" id="pc0-dc-IsL"/>
                         <outlet property="placeHolderLabel" destination="4aD-fX-s2g" id="zj5-5X-4JS"/>
                         <outlet property="placeHolderLabelOne" destination="31J-C8-wy8" id="l4C-Ld-wvp"/>
@@ -5720,7 +5721,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D85-lG-G79" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6798.5507246376819" y="-2946.4285714285711"/>
+            <point key="canvasLocation" x="6248" y="-2946"/>
         </scene>
         <!--Map Search-->
         <scene sceneID="kpl-CQ-kQA">
@@ -7686,7 +7687,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ibj-SO-YlK">
-                                <rect key="frame" x="16" y="324" width="382" height="134"/>
+                                <rect key="frame" x="16" y="324" width="343" height="134"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="134" id="CEF-SB-iSg"/>
@@ -7705,7 +7706,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bOo-mi-Z0Z">
-                                <rect key="frame" x="16" y="112" width="382" height="33"/>
+                                <rect key="frame" x="16" y="112" width="343" height="33"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="343" id="NMH-Tk-MYd"/>
                                     <constraint firstAttribute="height" constant="33" id="TCT-9q-Jch"/>
@@ -7715,7 +7716,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lK5-ph-1dF">
-                                <rect key="frame" x="16" y="178" width="382" height="34"/>
+                                <rect key="frame" x="16" y="178" width="343" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="fKO-tV-0vz"/>
                                     <constraint firstAttribute="width" constant="343" id="hTh-Zj-cGp"/>
@@ -7734,7 +7735,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="End:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a5G-KJ-Pre">
-                                <rect key="frame" x="237" y="254" width="51" height="26"/>
+                                <rect key="frame" x="198" y="254" width="51" height="26"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="51" id="JLk-kK-sY7"/>
                                     <constraint firstAttribute="height" constant="26" id="moa-tm-lHf"/>
@@ -7753,7 +7754,7 @@
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
                             <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ncd-VC-csc">
-                                <rect key="frame" x="291" y="254" width="94" height="26"/>
+                                <rect key="frame" x="252" y="254" width="94" height="26"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="94" id="Clb-yV-9dr"/>
                                     <constraint firstAttribute="height" constant="26" id="uZp-kz-CsL"/>
@@ -7762,7 +7763,7 @@
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No events on this day!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kHM-yp-IkZ">
-                                <rect key="frame" x="16" y="217" width="382" height="31"/>
+                                <rect key="frame" x="16" y="217" width="343" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="31" id="N9H-CL-oe2"/>
                                     <constraint firstAttribute="width" constant="343" id="l8n-9E-piV"/>
@@ -7772,7 +7773,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eqx-au-SK5">
-                                <rect key="frame" x="36" y="211" width="342" height="1"/>
+                                <rect key="frame" x="36" y="211" width="303" height="1"/>
                                 <color key="backgroundColor" red="0.65744371030000004" green="0.65744371030000004" blue="0.65744371030000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="e6Y-W9-iaf"/>
@@ -8819,7 +8820,8 @@
         <image name="avatarPlaceholder" width="101" height="101"/>
         <image name="back" width="25" height="25"/>
         <image name="baselineIcon" width="25" height="25"/>
-        <image name="calendarPlus" width="25" height="25"/>
+        <image name="calendarPlus1" width="25" height="25"/>
+        <image name="calendarPlus2" width="25" height="25"/>
         <image name="cameraIcon" width="80" height="80"/>
         <image name="cancel" width="25" height="25"/>
         <image name="chat3" width="25" height="25"/>

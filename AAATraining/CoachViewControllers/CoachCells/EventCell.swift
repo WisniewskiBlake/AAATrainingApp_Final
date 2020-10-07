@@ -26,18 +26,21 @@ class EventCell: UITableViewCell {
     @IBOutlet weak var eventText: UITextView!
     @IBOutlet weak var placeholderLabel: UILabel!
     @IBOutlet weak var eventMapView: MKMapView!
-    
+    var selectedPin: MKPlacemark? = nil
     var delegate: EventCellDelegate?
     var indexPath: IndexPath!
     
+    let locTapGestureRecognizer = UITapGestureRecognizer()
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
 
         eventTitleText.isUserInteractionEnabled = false
         eventText.isUserInteractionEnabled = false
         
+        locTapGestureRecognizer.addTarget(self, action: #selector(self.goToMap))
+        eventLocationView.isUserInteractionEnabled = true
+        eventLocationView.addGestureRecognizer(locTapGestureRecognizer)
 
     }
 
@@ -49,6 +52,23 @@ class EventCell: UITableViewCell {
     
     @objc func goToMap() {
         delegate!.didTapLocation(indexPath: indexPath)
+    }
+    
+    func dropPinZoomIN(placemark: MKPlacemark) {
+        selectedPin = placemark
+        eventMapView.removeAnnotations(eventMapView.annotations)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = placemark.coordinate
+        
+        if let city = placemark.locality,
+           let state = placemark.administrativeArea {
+            annotation.subtitle = "(city) (state)"
+        }
+        
+        eventMapView.addAnnotation(annotation)
+        let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        let region = MKCoordinateRegion(center: placemark.coordinate, span: span)
+        eventMapView.setRegion(region, animated: true)
     }
 
 }

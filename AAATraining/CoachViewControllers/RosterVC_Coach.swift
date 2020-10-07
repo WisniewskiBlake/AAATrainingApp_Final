@@ -413,8 +413,18 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     
     func deleteAUser(user : FUser) {
         print(user.objectId)
+        var userIsNewObserverArray = user.userIsNewObserverArray
+        var userTeamAccountTypes = user.userTeamAccountTypes
+        var userTeamIDs = user.userTeamIDs
+        var teamID = FUser.currentUser()?.userCurrentTeamID
         
-        updateUser(userID: user.objectId, withValues: [kUSERTEAMIDS: FieldValue.arrayRemove([FUser.currentUser()!.userCurrentTeamID])])
+        let index = userTeamIDs.firstIndex(of: teamID!)
+        
+        userIsNewObserverArray.remove(at: index!)
+        userTeamAccountTypes.remove(at: index!)
+        userTeamIDs.remove(at: index!)
+        
+        updateUser(userID: user.objectId, withValues: [kUSERTEAMIDS: userTeamIDs, kUSERISNEWOBSERVERARRAY: userIsNewObserverArray, kUSERTEAMACCOUNTTYPES: userTeamAccountTypes])
         Team.updateTeam(teamID: FUser.currentUser()!.userCurrentTeamID, withValues: [kTEAMMEMBERIDS: FieldValue.arrayRemove([user.objectId])])
             
 

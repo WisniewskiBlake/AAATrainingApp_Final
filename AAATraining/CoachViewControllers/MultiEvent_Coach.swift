@@ -9,8 +9,10 @@
 import UIKit
 import MapKit
 import CoreLocation
+import Firebase
+import FirebaseFirestore
 
-class MultiEvent_Coach: UITableViewController {
+class MultiEvent_Coach: UITableViewController, EventCellDelegate {
     
     var allEventsSameDate: [Event] = []
     var datesForUpcomingComparison: [String] = []
@@ -27,21 +29,30 @@ class MultiEvent_Coach: UITableViewController {
     let geoCoder = CLGeocoder()
     var locationArray: [MKPlacemark] = []
     var doesHaveLocationArray: [Int] = []
+    
+    var selectedPin: MKPlacemark? = nil
+    
+    var recentListener: ListenerRegistration!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.loadEvents), name: NSNotification.Name(rawValue: "createEvent"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.loadEvents), name: NSNotification.Name(rawValue: "updateEvent"), object: nil)
-        
+        loadEvents()
+        //getLocations()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureUI()
-        loadEvents()
-//        getLocations()
+        
+        
 //        self.tableView.reloadData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        recentListener.remove()
     }
     
     func configureUI() {
@@ -63,6 +74,14 @@ class MultiEvent_Coach: UITableViewController {
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         tableView.tableFooterView = view
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+    }
+    @objc func handleRefresh() {
+        loadEvents()
+        //getLocations()
+        self.refreshControl?.endRefreshing()
     }
     
     override func viewDidLayoutSubviews() {
@@ -83,25 +102,63 @@ class MultiEvent_Coach: UITableViewController {
     @IBAction func createButton_clicked(_ sender: Any) {
         if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
         {
+            eventVC.dateString = self.dateString
+            eventVC.sendFromMultiEvent = true
             eventVC.modalPresentationStyle = .fullScreen
             self.present(eventVC, animated: true, completion: nil)
+            self.navigationController?.pushViewController(eventVC, animated: true)
         }
+        
+        
     }
     
     
+//    @objc func loadEvents() {
+//        self.eventsToShow = []
+//        self.doesHaveLocationArray = []
+//        for event in allEventsSameDate {
+//            if event.eventUserID == FUser.currentId() {
+//                eventsToShow.append(event)
+//            }
+//        }
+//    }
+    
     @objc func loadEvents() {
-        self.eventsToShow = []
-        
-        self.doesHaveLocationArray = []
-        for event in allEventsSameDate {
-            if event.eventUserID == FUser.currentId() {
-                eventsToShow.append(event)
+        recentListener = reference(.Event).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).whereField(kEVENTUSERID, isEqualTo: FUser.currentId()).whereField(kEVENTDATE, isEqualTo: self.dateString).order(by: kEVENTSTART).addSnapshotListener({ (snapshot, error) in
+                           
+            self.eventsToShow = []
+            self.doesHaveLocationArray = []
+
+            if error != nil {
+                print(error!.localizedDescription)
+
+                return
             }
-        }
+            guard let snapshot = snapshot else { return }
+                   
+            if !snapshot.isEmpty {
+                for eventDictionary in snapshot.documents {
+                    
+                   let eventDictionary = eventDictionary.data() as NSDictionary
+                   let event = Event(_dictionary: eventDictionary)
+                    
+
+                    self.eventsToShow.append(event)
+                    //self.getLocations(event: event)
+                    
+               }
+                //self.getLocations()
+                self.tableView.reloadData()
+                
+           }
+            //self.getLocations()
+            self.tableView.reloadData()
+            
+        })
     }
     
     func getLocations() {
-        self.locationArray = []
+        //var mkPlacemark = MKPlacemark()
         for event in eventsToShow {
             geoCoder.geocodeAddressString(event.eventLocation) { (placemarks, error) in
                 if error != nil {
@@ -111,16 +168,17 @@ class MultiEvent_Coach: UITableViewController {
                     let placemarks = placemarks,
                     let location = placemarks.first
                 else {
-                    self.doesHaveLocationArray.append(0)
                     self.locationArray.append(MKPlacemark())
                     return
+                    
                 }
-                self.doesHaveLocationArray.append(1)
                 let mkPlacemark = MKPlacemark(placemark: location)
                 self.locationArray.append(mkPlacemark)
+                self.tableView.reloadData()
             }
         }
-        self.tableView.reloadData()
+        
+        
     }
     
     
@@ -135,9 +193,11 @@ class MultiEvent_Coach: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         if eventsToShow.count == 0 {
-            emptyLabelOne.text = "Created posts will appear here!"
+            emptyLabelOne.text = "No events to show."
             emptyLabelOne.textAlignment = NSTextAlignment.center
-            self.tableView.tableFooterView!.addSubview(emptyLabelOne)
+            emptyLabelOne.font = UIFont(name: "Helvetica Neue", size: 15)
+            emptyLabelOne.textColor = UIColor.lightGray
+            //self.tableView.tableFooterView!.addSubview(emptyLabelOne)
             return 0
         } else {
             emptyLabelOne.text = ""
@@ -150,6 +210,11 @@ class MultiEvent_Coach: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath) as! EventCell
         
+        let event = eventsToShow[indexPath.row]
+        
+        cell.delegate = self
+        cell.indexPath = indexPath
+        
         cell.eventTitleText.text = eventsToShow[indexPath.row].eventTitle
         cell.eventLocationView.text = eventsToShow[indexPath.row].eventLocation
         cell.eventTimeLabel.text = "From " + eventsToShow[indexPath.row].eventStart + " to " + eventsToShow[indexPath.row].eventEnd
@@ -159,13 +224,9 @@ class MultiEvent_Coach: UITableViewController {
         } else {
             cell.placeholderLabel.isHidden = false
         }
-        if cell.eventLocationView.text != "" {
-            cell.locationPlaceholder.isHidden = true
-        } else {
-            cell.locationPlaceholder.isHidden = false
-        }
         
         if eventsToShow[indexPath.row].eventLocation != "" {
+            
             geoCoder.geocodeAddressString(eventsToShow[indexPath.row].eventLocation) { (placemarks, error) in
                 if error != nil {
                     print(error)
@@ -174,76 +235,47 @@ class MultiEvent_Coach: UITableViewController {
                     let placemarks = placemarks,
                     let location = placemarks.first
                 else {
-//                    self.doesHaveLocationArray.append(0)
-//                    self.locationArray.append(MKPlacemark())
                     return
                 }
-                self.doesHaveLocationArray.append(1)
                 let mkPlacemark = MKPlacemark(placemark: location)
-                cell.eventMapView.removeAnnotations(cell.eventMapView.annotations)
-                let annotation = MKPointAnnotation()
-                annotation.coordinate = mkPlacemark.coordinate
-                
-                if let city = mkPlacemark.locality,
-                   let state = mkPlacemark.administrativeArea {
-                    annotation.subtitle = "(city) (state)"
-                }
-                
-                cell.eventMapView.addAnnotation(annotation)
-                let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-                let region = MKCoordinateRegion(center: mkPlacemark.coordinate, span: span)
-                cell.eventMapView.setRegion(region, animated: true)
+                cell.dropPinZoomIN(placemark: mkPlacemark)
+
             }
+            
         }
+        
+        
 
         
-//        if !locationArray.isEmpty {
-//            cell.eventMapView.removeAnnotations(cell.eventMapView.annotations)
-//            let annotation = MKPointAnnotation()
-//            annotation.coordinate = locationArray[indexPath.row].coordinate
-//
-//            if let city = locationArray[indexPath.row].locality,
-//               let state = locationArray[indexPath.row].administrativeArea {
-//                annotation.subtitle = "(city) (state)"
-//            }
-//
-//            cell.eventMapView.addAnnotation(annotation)
-//            let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-//            let region = MKCoordinateRegion(center: locationArray[indexPath.row].coordinate, span: span)
-//            cell.eventMapView.setRegion(region, animated: true)
-//        }
-        
-        
-//        let lat = locationArray[indexPath.row].coordinate.latitude
-//        let lon = locationArray[indexPath.row].coordinate.longitude
-        
+
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let event = eventsToShow[indexPath.row]
         
-        if self.accountType == "Player" {
-            if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PlayerEvent") as? PlayerEvent
-            {
-                eventVC.hidesBottomBarWhenPushed = true
-                eventVC.dateString = event.eventDate
-                eventVC.event = event
-                eventVC.modalPresentationStyle = .fullScreen
-                self.present(eventVC, animated: true, completion: nil)
-            }
-        } else if self.accountType == "Parent" {
-            if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ParentEvent") as? ParentEvent
-            {
-                eventVC.hidesBottomBarWhenPushed = true
-                eventVC.dateString = event.eventDate
-                eventVC.event = event
-                eventVC.modalPresentationStyle = .fullScreen
-                self.present(eventVC, animated: true, completion: nil)
-            }
-        } else {
+//        if self.accountType == "Player" {
+//            if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PlayerEvent") as? PlayerEvent
+//            {
+//                eventVC.hidesBottomBarWhenPushed = true
+//                eventVC.dateString = event.eventDate
+//                eventVC.event = event
+//                eventVC.modalPresentationStyle = .fullScreen
+//                self.present(eventVC, animated: true, completion: nil)
+//            }
+//        } else if self.accountType == "Parent" {
+//            if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ParentEvent") as? ParentEvent
+//            {
+//                eventVC.hidesBottomBarWhenPushed = true
+//                eventVC.dateString = event.eventDate
+//                eventVC.event = event
+//                eventVC.modalPresentationStyle = .fullScreen
+//                self.present(eventVC, animated: true, completion: nil)
+//            }
+//        } else {
             if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
             {
+                eventVC.accountType = self.accountType
                 eventVC.hidesBottomBarWhenPushed = true
                 eventVC.dateString = event.eventDate
                 eventVC.updateNeeded = true
@@ -251,7 +283,43 @@ class MultiEvent_Coach: UITableViewController {
                 eventVC.modalPresentationStyle = .fullScreen
                 self.present(eventVC, animated: true, completion: nil)
             }
+        //}
+        
+        
+    }
+    
+    func didTapLocation(indexPath: IndexPath) {
+        let helper = Helper()
+        geoCoder.geocodeAddressString(eventsToShow[indexPath.row].eventLocation) { (placemarks, error) in
+            if error != nil {
+                print(error)
+            }
+            guard
+                let placemarks = placemarks,
+                let location = placemarks.first
+            else {
+                helper.showAlert(title: "Couldn't open in maps.", message: "Not enough info.", in: self)
+                return
+            }
+            
+            let mkPlacemark = MKPlacemark(placemark: location)
+            let regionDestination: CLLocationDistance = 10000
+            
+            let coordinates = mkPlacemark.coordinate
+            
+            let regionSpan = MKCoordinateRegion(center: coordinates, latitudinalMeters: regionDestination, longitudinalMeters: regionDestination)
+
+            let options = [
+                MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+                MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan:  regionSpan.span)
+            ]
+            
+            let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+            let mapItem = MKMapItem(placemark: placemark)
+            mapItem.name = self.eventsToShow[indexPath.row].eventLocation
+            mapItem.openInMaps(launchOptions: options)
         }
+        
         
         
     }

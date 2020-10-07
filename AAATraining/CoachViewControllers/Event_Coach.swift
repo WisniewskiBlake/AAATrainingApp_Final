@@ -38,7 +38,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
 
     @IBOutlet weak var navView: UIView!
     var dateFormatter = DateFormatter()
-      
+    var sendFromMultiEvent: Bool = false
     var memberIds: [String] = []
     var allMembers: [FUser] = []
     
@@ -47,6 +47,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     let helper = Helper()
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var endDatePicker: UIDatePicker!
+    @IBOutlet weak var mapBtn: UIButton!
     
     var updateNeeded: Bool = false
     
@@ -132,33 +133,20 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     func setDatePickerDates() {
         let dateFormatter = DateFormatter()
         
-        if event.eventStart != "" && event.eventEnd != "" {
+        if sendFromMultiEvent == true {
             let delimiter = " "
-            let dateToken = event.eventDate.components(separatedBy: delimiter)
+            let dateToken = dateString.components(separatedBy: delimiter)
             
             let dashDelimiter = "-"
             let dateWithSlash = dateToken[1].components(separatedBy: dashDelimiter)
             
-            let colonDelimiter = ":"
-            let startHourToken = event.eventStart.components(separatedBy: colonDelimiter)
-            let startMinuteToken = startHourToken[1].components(separatedBy: delimiter)
-            
-            let endHourToken = event.eventEnd.components(separatedBy: colonDelimiter)
-            let endMinuteToken = endHourToken[1].components(separatedBy: delimiter)
-            
-            
-            let timeEndToken = event.eventEnd.components(separatedBy: delimiter)
-            let timeEndWithZeros = timeEndToken[0] + ":00 " + timeEndToken[1]
-            let fullEndString = dateWithSlash[0] + "/" + dateWithSlash[1] + "/" + dateWithSlash[2] + ", " + timeEndWithZeros
-
-
             var startDateComps = datePicker.calendar.dateComponents([.month, .day, .year, .hour, .minute, .second], from: datePicker.date)
             startDateComps.month = Int(dateWithSlash[0])
             startDateComps.day = Int(dateWithSlash[1])
             startDateComps.year = Int(dateWithSlash[2])
-            startDateComps.hour = Int(startHourToken[0])
-            startDateComps.minute = Int(startMinuteToken[0])
-            startDateComps.second = 0
+//            startDateComps.hour = Int(startHourToken[0])
+//            startDateComps.minute = Int(startMinuteToken[0])
+//            startDateComps.second = 0
 
             datePicker.date = Calendar.current.date(from: startDateComps)!
             
@@ -166,13 +154,56 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             endDateComps.month = Int(dateWithSlash[0])
             endDateComps.day = Int(dateWithSlash[1])
             endDateComps.year = Int(dateWithSlash[2])
-            endDateComps.hour = Int(endHourToken[0])
-            endDateComps.minute = Int(endMinuteToken[0])
-            endDateComps.second = 0
+//            endDateComps.hour = Int(endHourToken[0])
+//            endDateComps.minute = Int(endMinuteToken[0])
+//            endDateComps.second = 0
 
             endDatePicker.date = Calendar.current.date(from: endDateComps)!
-            
+        } else {
+            if event.eventStart != "" && event.eventEnd != "" {
+                let delimiter = " "
+                let dateToken = event.eventDate.components(separatedBy: delimiter)
+                
+                let dashDelimiter = "-"
+                let dateWithSlash = dateToken[1].components(separatedBy: dashDelimiter)
+                
+                let colonDelimiter = ":"
+                let startHourToken = event.eventStart.components(separatedBy: colonDelimiter)
+                let startMinuteToken = startHourToken[1].components(separatedBy: delimiter)
+                
+                let endHourToken = event.eventEnd.components(separatedBy: colonDelimiter)
+                let endMinuteToken = endHourToken[1].components(separatedBy: delimiter)
+                
+                
+                let timeEndToken = event.eventEnd.components(separatedBy: delimiter)
+                let timeEndWithZeros = timeEndToken[0] + ":00 " + timeEndToken[1]
+                let fullEndString = dateWithSlash[0] + "/" + dateWithSlash[1] + "/" + dateWithSlash[2] + ", " + timeEndWithZeros
+
+
+                var startDateComps = datePicker.calendar.dateComponents([.month, .day, .year, .hour, .minute, .second], from: datePicker.date)
+                startDateComps.month = Int(dateWithSlash[0])
+                startDateComps.day = Int(dateWithSlash[1])
+                startDateComps.year = Int(dateWithSlash[2])
+                startDateComps.hour = Int(startHourToken[0])
+                startDateComps.minute = Int(startMinuteToken[0])
+                startDateComps.second = 0
+
+                datePicker.date = Calendar.current.date(from: startDateComps)!
+                
+                var endDateComps = endDatePicker.calendar.dateComponents([.month, .day, .year, .hour, .minute, .second], from: endDatePicker.date)
+                endDateComps.month = Int(dateWithSlash[0])
+                endDateComps.day = Int(dateWithSlash[1])
+                endDateComps.year = Int(dateWithSlash[2])
+                endDateComps.hour = Int(endHourToken[0])
+                endDateComps.minute = Int(endMinuteToken[0])
+                endDateComps.second = 0
+
+                endDatePicker.date = Calendar.current.date(from: endDateComps)!
+                
+            }
         }
+        
+        
         
         
     }
@@ -418,13 +449,25 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         } else {
             placeHolderLabelOne.isHidden = false
         }
-        if updateNeeded == true {
-            deleteButton.isHidden = false
-            self.doneButton.setTitle("Update", for: .normal)
-            
+        if self.accountType != "Coach" {
+            doneButton.isHidden = true
+            mapBtn.isHidden = true
+            eventTitleText.isUserInteractionEnabled = false
+            eventLocationText.isUserInteractionEnabled = false
+            datePicker.isUserInteractionEnabled = false
+            endDatePicker.isUserInteractionEnabled = false
+            textView.isUserInteractionEnabled = false
+            eventURLText.isUserInteractionEnabled = false
         } else {
-            deleteButton.isHidden = true
+            if updateNeeded == true {
+                deleteButton.isHidden = false
+                self.doneButton.setTitle("Update", for: .normal)
+                
+            } else {
+                deleteButton.isHidden = true
+            }
         }
+        
         
        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)

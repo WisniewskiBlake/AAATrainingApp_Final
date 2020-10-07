@@ -99,7 +99,6 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     }
     override func viewWillDisappear(_ animated: Bool) {
         recentListener.remove()
-        
     }
     
     func configureUI() {
