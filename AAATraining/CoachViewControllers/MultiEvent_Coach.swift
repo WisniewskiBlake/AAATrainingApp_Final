@@ -254,25 +254,7 @@ class MultiEvent_Coach: UITableViewController, EventCellDelegate {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let event = eventsToShow[indexPath.row]
         
-//        if self.accountType == "Player" {
-//            if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PlayerEvent") as? PlayerEvent
-//            {
-//                eventVC.hidesBottomBarWhenPushed = true
-//                eventVC.dateString = event.eventDate
-//                eventVC.event = event
-//                eventVC.modalPresentationStyle = .fullScreen
-//                self.present(eventVC, animated: true, completion: nil)
-//            }
-//        } else if self.accountType == "Parent" {
-//            if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ParentEvent") as? ParentEvent
-//            {
-//                eventVC.hidesBottomBarWhenPushed = true
-//                eventVC.dateString = event.eventDate
-//                eventVC.event = event
-//                eventVC.modalPresentationStyle = .fullScreen
-//                self.present(eventVC, animated: true, completion: nil)
-//            }
-//        } else {
+
             if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
             {
                 eventVC.accountType = self.accountType
@@ -283,9 +265,7 @@ class MultiEvent_Coach: UITableViewController, EventCellDelegate {
                 eventVC.modalPresentationStyle = .fullScreen
                 self.present(eventVC, animated: true, completion: nil)
             }
-        //}
-        
-        
+
     }
     
     func didTapLocation(indexPath: IndexPath) {

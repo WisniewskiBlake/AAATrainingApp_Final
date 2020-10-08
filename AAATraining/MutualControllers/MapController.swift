@@ -16,7 +16,6 @@ class MapController: UIViewController {
     var resultSearchController: UISearchController? = nil
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 

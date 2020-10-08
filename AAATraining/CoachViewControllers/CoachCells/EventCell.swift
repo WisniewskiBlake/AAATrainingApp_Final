@@ -34,14 +34,15 @@ class EventCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-
+        eventMapView.layer.cornerRadius = 10.0;
         eventTitleText.isUserInteractionEnabled = false
         eventText.isUserInteractionEnabled = false
         
         locTapGestureRecognizer.addTarget(self, action: #selector(self.goToMap))
         eventLocationView.isUserInteractionEnabled = true
+        eventMapView.isUserInteractionEnabled = true
         eventLocationView.addGestureRecognizer(locTapGestureRecognizer)
-
+        eventMapView.addGestureRecognizer(locTapGestureRecognizer)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
