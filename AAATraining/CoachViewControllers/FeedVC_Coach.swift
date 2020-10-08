@@ -18,6 +18,7 @@ import IDMPhotoBrowser
 import AVFoundation
 import AVKit
 import JSQMessagesViewController
+import Floaty
 
 class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
         
@@ -53,8 +54,12 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     
     var imageview = UIImageView()
     
+    let floaty = Floaty()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+
         
         getMembers()
 
@@ -84,8 +89,11 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
 
         emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -150, width: view.bounds.size.width, height: view.bounds.size.height))
         
-        
-
+        floaty.addItem(title: "Hello, World!")
+        floaty.paddingY = (self.tableView.safeAreaInsets.bottom ?? 0) + 85
+        //floaty.paddingY = (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0) + 85
+//        floaty.sticky = true
+        self.tableView.addSubview(floaty)
 //        configureFloatingButton()
 //        self.view.addSubview(actionButton)
 //        self.navigationController?.view.addSubview(actionButton)
@@ -275,10 +283,8 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     
     func getMembers() {
         
-        
         let query = reference(.Team).whereField(kTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID)
         query.getDocuments { (snapshot, error) in
- 
             
             if error != nil {
                 print(error!.localizedDescription)
@@ -324,8 +330,6 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     // MARK: - Load Posts
     @objc func loadPosts() {
         
-        
-        //DispatchQueue.main.async {
         recentListener = reference(.Post).whereField(kPOSTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID as Any).order(by: kPOSTDATE, descending: true).limit(to: 100).addSnapshotListener({ (snapshot, error) in
                    
             self.allPosts = []
@@ -380,17 +384,10 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
                         self.postDatesArray.append(self.currentDateFormater.string(from: postDate!))
                        }
                        self.tableView.reloadData()
-                    
                    }
-                
-               
                 self.tableView.reloadData()
-
-                
             
                })
-        //}
-        
     }
     
     // MARK: - Load New
@@ -423,9 +420,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
 //        return allPosts.count
-
         if allPosts.count == 0 {
-            
             emptyLabelOne.text = "No posts to show!"
             emptyLabelOne.textAlignment = NSTextAlignment.center
             emptyLabelOne.font = UIFont(name: "Helvetica Neue", size: 15)
@@ -712,9 +707,6 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changeTeamLogo"), object: nil)
                 
                 
-                
-            
-            
             // completion handler, to communicate to the project that images has been selected (enable delete button)
             dismiss(animated: true) {
                 

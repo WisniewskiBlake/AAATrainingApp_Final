@@ -102,6 +102,7 @@ class MultiEvent_Coach: UITableViewController, EventCellDelegate {
     @IBAction func createButton_clicked(_ sender: Any) {
         if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
         {
+            eventVC.accountType = self.accountType
             eventVC.dateString = self.dateString
             eventVC.sendFromMultiEvent = true
             eventVC.modalPresentationStyle = .fullScreen
@@ -216,7 +217,12 @@ class MultiEvent_Coach: UITableViewController, EventCellDelegate {
         cell.indexPath = indexPath
         
         cell.eventTitleText.text = eventsToShow[indexPath.row].eventTitle
-        cell.eventLocationView.text = eventsToShow[indexPath.row].eventLocation
+        if event.eventLocation == "" {
+            cell.eventLocationView.text = "No Location"
+            cell.eventLocationView.tintColor = UIColor.lightGray
+        } else {
+            cell.eventLocationView.text = eventsToShow[indexPath.row].eventLocation
+        }
         cell.eventTimeLabel.text = "From " + eventsToShow[indexPath.row].eventStart + " to " + eventsToShow[indexPath.row].eventEnd
         cell.eventText.text = eventsToShow[indexPath.row].eventText
         if cell.eventText.text != "" {
@@ -225,7 +231,7 @@ class MultiEvent_Coach: UITableViewController, EventCellDelegate {
             cell.placeholderLabel.isHidden = false
         }
         
-        if eventsToShow[indexPath.row].eventLocation != "" {
+        if event.eventLocation != "" {
             
             geoCoder.geocodeAddressString(eventsToShow[indexPath.row].eventLocation) { (placemarks, error) in
                 if error != nil {
@@ -244,10 +250,6 @@ class MultiEvent_Coach: UITableViewController, EventCellDelegate {
             
         }
         
-        
-
-        
-
         return cell
     }
     

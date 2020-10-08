@@ -49,7 +49,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     var eventCopied = Event()
     var imageview = UIImageView()
     
-    
+    var emptyLabelOne = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +60,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         self.calendar.formatter.dateFormat = "YYYY-MM-dd"
         today = calendar.formatter.string(from: todayDate)
         
-        //loadUser()
+        
         
     }
     
@@ -93,6 +93,9 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         calendar.delegate = self
         loadUser()
         configureUI()
+        let view = UIView()
+        view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        tableView.tableFooterView = view
        
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -161,7 +164,8 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
     @IBAction func createEvent_clicked(_ sender: Any) {
         if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
-        {            
+        {
+            eventVC.accountType == "Coach"
             eventVC.modalPresentationStyle = .fullScreen
             self.present(eventVC, animated: true, completion: nil)
         }
@@ -324,6 +328,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                     datesForUpcomingComparison.append(dateForUpcomingComparison)
                 }
             }
+            eventVC.accountType = "Coach"
             eventVC.hidesBottomBarWhenPushed = true
             eventVC.dateString = dateString
             eventVC.allEventsSameDate = allEventsSameDate
@@ -336,9 +341,38 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         //self.navigationController?.present(navController, animated: true, completion: nil)
     }
     
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//        fillContentGap:
+//        if let tableFooterView = tableView.tableFooterView {
+//            /// The expected height for the footer under autolayout.
+//            let footerHeight = tableFooterView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+//            /// The amount of empty space to fill with the footer view.
+//            let gapHeight: CGFloat = tableView.bounds.height - tableView.adjustedContentInset.top - tableView.adjustedContentInset.bottom - tableView.contentSize.height
+//            // Ensure there is space to be filled
+//            guard gapHeight.rounded() > 0 else { break fillContentGap }
+//            // Fill the gap
+//            tableFooterView.frame.size.height = gapHeight + footerHeight
+//        }
+//    }
+    
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-        return upcomingEvents.count
+        
+        if upcomingEvents.count == 0 {
+//            emptyLabelOne = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+//            emptyLabelOne.text = "No upcoming events!"
+//            emptyLabelOne.textAlignment = NSTextAlignment.center
+//            emptyLabelOne.font = UIFont(name: "Helvetica Neue", size: 15)
+//            emptyLabelOne.textColor = UIColor.lightGray
+//            tableView.tableFooterView!.addSubview(emptyLabelOne)
+            
+            return 0
+        } else {
+//            emptyLabelOne.text = ""
+//            emptyLabelOne.removeFromSuperview()
+            
+            return upcomingEvents.count
+        }
 
     }
     

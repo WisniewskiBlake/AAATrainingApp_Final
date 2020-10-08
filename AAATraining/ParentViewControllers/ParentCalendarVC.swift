@@ -96,7 +96,9 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         calendar.delegate = self
         loadUser()
         configureUI()
-
+        let view = UIView()
+        view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        tableView.tableFooterView = view
     }
     override func viewWillDisappear(_ animated: Bool) {
         recentListener.remove()

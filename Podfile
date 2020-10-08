@@ -33,6 +33,8 @@ pod "Colorful", "~> 3.0"
 
 pod 'Google-Mobile-Ads-SDK'
 
+use_frameworks!
+pod 'Floaty', '~> 4.2.0'
 
   # Pods for AAATraining
 
