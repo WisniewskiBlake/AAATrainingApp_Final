@@ -4002,7 +4002,7 @@
         <scene sceneID="v6S-4N-Eu9">
             <objects>
                 <tabBarController restorationIdentifier="coach" storyboardIdentifier="CoachTabBar" id="ksd-Kg-Isq" sceneMemberID="viewController">
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="CRr-ef-iRf">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="CRr-ef-iRf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -4023,10 +4023,10 @@
         <scene sceneID="XYf-ab-AaS">
             <objects>
                 <tableViewController id="doT-ZS-dhL" customClass="FeedVC_Coach" customModule="LockerRoom" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="-1" id="Ytv-fw-bcR">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="28" id="Ytv-fw-bcR">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="uMc-OQ-kTb"/>
+                        <viewLayoutGuide key="safeArea" id="6eY-MM-094"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="7gx-fB-amW">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="202"/>
@@ -4357,14 +4357,14 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CFj-yB-s0x" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4608.8000000000002" y="-3649.0254872563719"/>
+            <point key="canvasLocation" x="4608.695652173913" y="-3649.5535714285711"/>
         </scene>
         <!--Calendar-->
         <scene sceneID="EHF-fk-EYM">
             <objects>
                 <viewController storyboardIdentifier="Calendar_Coach" id="tCe-Kh-oC2" customClass="Calendar_Coach" customModule="LockerRoom" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="IAF-hz-fjJ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HAZ-ud-SBX" customClass="FSCalendar">
@@ -4722,11 +4722,11 @@
             <objects>
                 <viewController storyboardIdentifier="recentVC" id="m41-eK-O4l" customClass="RecentChatVC_Coach" customModule="LockerRoom" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6GD-SN-13O">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="-1" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vQb-66-3wr">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                                 <viewLayoutGuide key="safeArea" id="wiP-aF-Ewg"/>
                                 <color key="backgroundColor" red="0.91337895390000001" green="0.92143708469999996" blue="0.93379235270000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
@@ -5210,7 +5210,7 @@
             <objects>
                 <tableViewController id="nfW-nG-ypf" customClass="RosterVC_Coach" customModule="LockerRoom" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="2Wa-Q3-J2M">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="lio-1D-8el">
@@ -6108,7 +6108,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="CoachProfileViewController" id="alf-MY-Jyr" customClass="CoachProfileViewController" customModule="LockerRoom" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" contentViewInsetsToSafeArea="NO" id="si9-nf-H5q">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="BDc-aA-6VQ"/>
                         <color key="backgroundColor" red="0.91337895390000001" green="0.92143708469999996" blue="0.93379235270000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

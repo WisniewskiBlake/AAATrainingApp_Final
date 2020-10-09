@@ -89,12 +89,23 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
 
         emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -150, width: view.bounds.size.width, height: view.bounds.size.height))
         
-        
     }
 
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        var floaty = Floaty()
+        if UIDevice.current.hasNotch
+        {
+            floaty = Floaty(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.83, width: 60, height: 60))
+        }
+        else
+        {
+            floaty = Floaty(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.86, width: 60, height: 60))
+        }
+        floaty.addItem(title: "Hello, World!")
+        //floaty.translatesAutoresizingMaskIntoConstraints = false
+        self.tableView.addSubview(floaty)
         fillContentGap:
         if let tableFooterView = tableView.tableFooterView {
             /// The expected height for the footer under autolayout.
@@ -140,27 +151,30 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         tableView.tableFooterView = view
         
-        print(self.tabBarController?.tabBar.bounds.size.height)
-        print(self.tabBarController?.tabBar.frame.origin.y)
-        print(self.tableView.bounds.size.height)
-        var floaty = Floaty()
-        if UIDevice.current.hasNotch
-        {
-            floaty = Floaty(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.80, width: 60, height: 60))
-        }
-        else
-        {
-            floaty = Floaty(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.85, width: 60, height: 60))
-        }
         
-        
-//        (self.tableView.bounds.size.height * 0.85) - (self.tabBarController?.tabBar.bounds.size.height)!
-        //let floaty = Floaty()
-        floaty.addItem(title: "Hello, World!")
-        //floaty.translatesAutoresizingMaskIntoConstraints = false
-        self.tableView.addSubview(floaty)
-        print(floaty.frame.origin.y)
-        print(UIApplication.shared.delegate?.window??.safeAreaInsets.bottom)
+//        print(self.tableView.bounds.size.height)
+//        print(self.tabBarController?.tabBar.frame.origin.y)
+//        print(self.tableView.frame.origin.y)
+//        var floaty = Floaty()
+//
+//
+//        if UIDevice.current.hasNotch
+//        {
+//            floaty = Floaty(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! - 74, width: 60, height: 60))
+//        }
+//        else
+//        {
+//            floaty = Floaty(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.85, width: 60, height: 60))
+//        }
+//
+//
+//
+//        floaty.addItem(title: "Hello, World!")
+//        //floaty.translatesAutoresizingMaskIntoConstraints = false
+//        self.tableView.addSubview(floaty)
+//        print(floaty.frame.origin.y)
+//        print(UIApplication.shared.delegate?.window??.safeAreaInsets.bottom)
+       
         
 //        let widthConstraint = NSLayoutConstraint(item: floaty, attribute: .width, relatedBy: .equal,
 //                                                 toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 60)
@@ -172,17 +186,6 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
 //
 //        let yConstraint = NSLayoutConstraint(item: floaty, attribute: .bottom, relatedBy: .equal, toItem: self.tabBarController?.tabBar, attribute: .top, multiplier: 1, constant: 15)
         
-//        let widthConstraint = NSLayoutConstraint(item: floaty, attribute: .width, relatedBy: .equal,
-//                                                 toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 250)
-//
-//        let heightConstraint = NSLayoutConstraint(item: floaty, attribute: .height, relatedBy: .equal,
-//                                                  toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 250)
-//
-//        let xConstraint = NSLayoutConstraint(item: floaty, attribute: .centerX, relatedBy: .equal, toItem: self.tableView, attribute: .centerX, multiplier: 1, constant: 0)
-//
-//        let yConstraint = NSLayoutConstraint(item: floaty, attribute: .centerY, relatedBy: .equal, toItem: self.tableView, attribute: .centerY, multiplier: 1, constant: 0)
- //       NSLayoutConstraint.activate([widthConstraint, heightConstraint, xConstraint, yConstraint])
-        
 
         
         //floaty.paddingY = (self.tableView.safeAreaInsets.bottom ?? 0) + 85
@@ -190,10 +193,10 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         //floaty.paddingY = (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0) + 85
 //        floaty.sticky = true
         
-        //self.navigationController?.view.addSubview(actionButton)
-
-
+        
     }
+    
+
     
     override func viewWillDisappear(_ animated: Bool) {
         recentListener.remove()
@@ -252,8 +255,8 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
                 self.teamImageView.image = UIImage(named: "HomeCover.jpg")
             }
         }
-        self.navigationController?.view.addSubview(self.titleView)
-        self.navigationController?.navigationBar.layer.zPosition = 0;
+//        self.navigationController?.view.addSubview(self.titleView)
+//        self.navigationController?.navigationBar.layer.zPosition = 0;
         
         currentDateFormater.dateFormat = "MM/dd/YYYY"
         
@@ -702,11 +705,6 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         }
     
 
-
-
-    
-    
-
 }
 
 // Helper function inserted by Swift 4.2 migrator.
@@ -743,7 +741,17 @@ extension UIDevice {
     }
 }
 
-
+extension UITabBar {
+    override open func sizeThatFits(_ size: CGSize) -> CGSize {
+        super.sizeThatFits(size)
+        guard let window = UIApplication.shared.keyWindow else {
+            return super.sizeThatFits(size)
+        }
+        var sizeThatFits = super.sizeThatFits(size)
+        sizeThatFits.height = window.safeAreaInsets.bottom + 40
+        return sizeThatFits
+    }
+}
 
 
 
