@@ -417,6 +417,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         
         if let eventCoach : Event_Coach = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
         {
+            eventCoach.accountType = "Coach"
             eventCoach.hidesBottomBarWhenPushed = true
             eventCoach.dateString = event.eventDate
             eventCoach.updateNeeded = true

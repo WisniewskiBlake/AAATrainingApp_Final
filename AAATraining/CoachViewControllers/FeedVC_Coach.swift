@@ -54,7 +54,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     
     var imageview = UIImageView()
     
-    let floaty = Floaty()
+    
     
     
     override func viewDidLoad() {
@@ -89,75 +89,9 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
 
         emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -150, width: view.bounds.size.width, height: view.bounds.size.height))
         
-        floaty.addItem(title: "Hello, World!")
-        floaty.paddingY = (self.tableView.safeAreaInsets.bottom ?? 0) + 85
-        //floaty.paddingY = (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0) + 85
-//        floaty.sticky = true
-        self.tableView.addSubview(floaty)
-//        configureFloatingButton()
-//        self.view.addSubview(actionButton)
-//        self.navigationController?.view.addSubview(actionButton)
-//        for family in UIFont.familyNames.sorted() {
-//            let names = UIFont.fontNames(forFamilyName: family)
-//            print("Family: \(family) Font names: \(names)")
-//        }
-        
         
     }
-    
-    func configureFloatingButton() {
-        
 
-        actionButton.translatesAutoresizingMaskIntoConstraints = false
-        actionButton.trailingAnchor.constraint(equalTo: self.tableView.trailingAnchor, constant: 16).isActive = true
-        actionButton.bottomAnchor.constraint(equalTo: self.tableView.bottomAnchor, constant: 16).isActive = true
-        
-        
-        actionButton.handleSingleActionDirectly = false
-        actionButton.buttonDiameter = 65
-        actionButton.overlayView.backgroundColor = UIColor(white: 0, alpha: 0.3)
-        actionButton.buttonImage = UIImage(named: "Dots")
-        actionButton.buttonColor = .red
-        actionButton.buttonImageColor = .white
-        actionButton.buttonImageSize = CGSize(width: 30, height: 30)
-
-        actionButton.buttonAnimationConfiguration = .transition(toImage: UIImage(named: "X")!)
-        actionButton.itemAnimationConfiguration = .slideIn(withInterItemSpacing: 14)
-
-        actionButton.layer.shadowColor = UIColor.black.cgColor
-        actionButton.layer.shadowOffset = CGSize(width: 0, height: 1)
-        actionButton.layer.shadowOpacity = Float(0.4)
-        actionButton.layer.shadowRadius = CGFloat(2)
-
-        actionButton.itemSizeRatio = CGFloat(0.75)
-        actionButton.configureDefaultItem { item in
-            item.titlePosition = .trailing
-
-            item.titleLabel.font = .boldSystemFont(ofSize: UIFont.systemFontSize)
-            item.titleLabel.textColor = .white
-            item.buttonColor = .white
-            item.buttonImageColor = .red
-
-            item.layer.shadowColor = UIColor.black.cgColor
-            item.layer.shadowOffset = CGSize(width: 0, height: 1)
-            item.layer.shadowOpacity = Float(0.4)
-            item.layer.shadowRadius = CGFloat(2)
-        }
-
-        actionButton.addItem(title: "Balloon", image: UIImage(named: "Baloon")) { item in
-            // Do something
-        }
-
-        let item = actionButton.addItem()
-        item.titleLabel.text = "Owl"
-        item.imageView.image = UIImage(named: "Owl")
-        item.buttonColor = .black
-        item.buttonImageColor = .white
-        //item.buttonImageColor = CGSize(width: 30, height: 30)
-        item.action = { item in
-            // Do something
-        }
-    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -205,6 +139,58 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         tableView.tableFooterView = view
+        
+        print(self.tabBarController?.tabBar.bounds.size.height)
+        print(self.tabBarController?.tabBar.frame.origin.y)
+        print(self.tableView.bounds.size.height)
+        var floaty = Floaty()
+        if UIDevice.current.hasNotch
+        {
+            floaty = Floaty(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.80, width: 60, height: 60))
+        }
+        else
+        {
+            floaty = Floaty(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.85, width: 60, height: 60))
+        }
+        
+        
+//        (self.tableView.bounds.size.height * 0.85) - (self.tabBarController?.tabBar.bounds.size.height)!
+        //let floaty = Floaty()
+        floaty.addItem(title: "Hello, World!")
+        //floaty.translatesAutoresizingMaskIntoConstraints = false
+        self.tableView.addSubview(floaty)
+        print(floaty.frame.origin.y)
+        print(UIApplication.shared.delegate?.window??.safeAreaInsets.bottom)
+        
+//        let widthConstraint = NSLayoutConstraint(item: floaty, attribute: .width, relatedBy: .equal,
+//                                                 toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 60)
+//
+//        let heightConstraint = NSLayoutConstraint(item: floaty, attribute: .height, relatedBy: .equal,
+//                                                  toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 60)
+//
+//        let xConstraint = NSLayoutConstraint(item: floaty, attribute: .trailing, relatedBy: .equal, toItem: self.tableView, attribute: .trailing, multiplier: 1, constant: 0)
+//
+//        let yConstraint = NSLayoutConstraint(item: floaty, attribute: .bottom, relatedBy: .equal, toItem: self.tabBarController?.tabBar, attribute: .top, multiplier: 1, constant: 15)
+        
+//        let widthConstraint = NSLayoutConstraint(item: floaty, attribute: .width, relatedBy: .equal,
+//                                                 toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 250)
+//
+//        let heightConstraint = NSLayoutConstraint(item: floaty, attribute: .height, relatedBy: .equal,
+//                                                  toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 250)
+//
+//        let xConstraint = NSLayoutConstraint(item: floaty, attribute: .centerX, relatedBy: .equal, toItem: self.tableView, attribute: .centerX, multiplier: 1, constant: 0)
+//
+//        let yConstraint = NSLayoutConstraint(item: floaty, attribute: .centerY, relatedBy: .equal, toItem: self.tableView, attribute: .centerY, multiplier: 1, constant: 0)
+ //       NSLayoutConstraint.activate([widthConstraint, heightConstraint, xConstraint, yConstraint])
+        
+
+        
+        //floaty.paddingY = (self.tableView.safeAreaInsets.bottom ?? 0) + 85
+        //floaty.paddingY = self.tabBarController?.tabBar.topAnchor
+        //floaty.paddingY = (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0) + 85
+//        floaty.sticky = true
+        
+        //self.navigationController?.view.addSubview(actionButton)
 
 
     }
@@ -742,7 +728,20 @@ extension String {
     }
 }
 
-
+extension UIDevice {
+    var hasNotch: Bool
+    {
+        if #available(iOS 11.0, *)
+        {
+            let bottom = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
+            return bottom > 0
+        } else
+        {
+            // Fallback on earlier versions
+            return false
+        }
+    }
+}
 
 
 
