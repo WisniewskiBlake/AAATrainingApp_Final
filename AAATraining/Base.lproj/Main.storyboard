@@ -4001,7 +4001,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="v6S-4N-Eu9">
             <objects>
-                <tabBarController restorationIdentifier="coach" storyboardIdentifier="CoachTabBar" id="ksd-Kg-Isq" sceneMemberID="viewController">
+                <tabBarController restorationIdentifier="coach" storyboardIdentifier="CoachTabBar" modalPresentationStyle="fullScreen" id="ksd-Kg-Isq" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="CRr-ef-iRf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -4022,7 +4022,7 @@
         <!--FeedVC Coach-->
         <scene sceneID="XYf-ab-AaS">
             <objects>
-                <tableViewController id="doT-ZS-dhL" customClass="FeedVC_Coach" customModule="LockerRoom" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController modalPresentationStyle="fullScreen" id="doT-ZS-dhL" customClass="FeedVC_Coach" customModule="LockerRoom" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="28" id="Ytv-fw-bcR">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

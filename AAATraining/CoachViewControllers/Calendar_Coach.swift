@@ -163,12 +163,25 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
      }
     
     @IBAction func createEvent_clicked(_ sender: Any) {
-        if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
+        
+        if let eventCoach : Event_Coach = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
         {
-            eventVC.accountType == "Coach"
-            eventVC.modalPresentationStyle = .fullScreen
-            self.present(eventVC, animated: true, completion: nil)
+            eventCoach.accountType = "Coach"
+            eventCoach.hidesBottomBarWhenPushed = true
+
+            eventCoach.updateNeeded = false
+
+            eventCoach.modalPresentationStyle = .fullScreen
+            self.present(eventCoach, animated: true, completion: nil)
         }
+        
+//        if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
+//        {
+//            eventVC.accountType == "Coach"
+//            eventVC.u
+//            eventVC.modalPresentationStyle = .fullScreen
+//            self.present(eventVC, animated: true, completion: nil)
+//        }
     }
     
     func getEventsForNewObserver() {
@@ -394,6 +407,8 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                 cell.eventLocationText.text = String(locationLimited[0])
             }
             
+        } else {
+            cell.eventLocationText.isHidden = true
         }
         
         cell.eventTimeLabel?.text = upcomingEvents[indexPath.row].eventStart + " - " + upcomingEvents[indexPath.row].eventEnd + ","

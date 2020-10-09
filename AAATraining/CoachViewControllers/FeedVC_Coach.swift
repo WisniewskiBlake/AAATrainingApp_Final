@@ -54,7 +54,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     
     var imageview = UIImageView()
     
-    
+    var floaty = Floaty()
     
     
     override func viewDidLoad() {
@@ -94,18 +94,25 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        var floaty = Floaty()
+        
         if UIDevice.current.hasNotch
         {
             floaty = Floaty(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.83, width: 60, height: 60))
+            //floaty.translatesAutoresizingMaskIntoConstraints = false
         }
         else
         {
             floaty = Floaty(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.86, width: 60, height: 60))
         }
-        floaty.addItem(title: "Hello, World!")
-        //floaty.translatesAutoresizingMaskIntoConstraints = false
+        floaty.addItem("Create a post", icon: UIImage(named: "create")!, handler: { item in
+            let alert = UIAlertController(title: "Hey", message: "I'm hungry...", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Me too", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            self.floaty.close()
+        })
+        
         self.tableView.addSubview(floaty)
+        floaty.close()
         fillContentGap:
         if let tableFooterView = tableView.tableFooterView {
             /// The expected height for the footer under autolayout.
@@ -123,6 +130,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        floaty.close()
         do {
             let gif = try UIImage(gifName: "loaderFinal.gif")
             imageview = UIImageView(gifImage: gif, loopCount: -1) // Will loop 3 times
@@ -150,56 +158,15 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         tableView.tableFooterView = view
-        
-        
-//        print(self.tableView.bounds.size.height)
-//        print(self.tabBarController?.tabBar.frame.origin.y)
-//        print(self.tableView.frame.origin.y)
-//        var floaty = Floaty()
-//
-//
-//        if UIDevice.current.hasNotch
-//        {
-//            floaty = Floaty(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! - 74, width: 60, height: 60))
-//        }
-//        else
-//        {
-//            floaty = Floaty(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.85, width: 60, height: 60))
-//        }
-//
-//
-//
-//        floaty.addItem(title: "Hello, World!")
-//        //floaty.translatesAutoresizingMaskIntoConstraints = false
-//        self.tableView.addSubview(floaty)
-//        print(floaty.frame.origin.y)
-//        print(UIApplication.shared.delegate?.window??.safeAreaInsets.bottom)
-       
-        
-//        let widthConstraint = NSLayoutConstraint(item: floaty, attribute: .width, relatedBy: .equal,
-//                                                 toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 60)
-//
-//        let heightConstraint = NSLayoutConstraint(item: floaty, attribute: .height, relatedBy: .equal,
-//                                                  toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 60)
-//
-//        let xConstraint = NSLayoutConstraint(item: floaty, attribute: .trailing, relatedBy: .equal, toItem: self.tableView, attribute: .trailing, multiplier: 1, constant: 0)
-//
-//        let yConstraint = NSLayoutConstraint(item: floaty, attribute: .bottom, relatedBy: .equal, toItem: self.tabBarController?.tabBar, attribute: .top, multiplier: 1, constant: 15)
-        
 
-        
-        //floaty.paddingY = (self.tableView.safeAreaInsets.bottom ?? 0) + 85
-        //floaty.paddingY = self.tabBarController?.tabBar.topAnchor
-        //floaty.paddingY = (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0) + 85
-//        floaty.sticky = true
-        
-        
     }
     
 
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         recentListener.remove()
+        
     }
     
     func configure_teamImageView() {
