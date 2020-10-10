@@ -136,8 +136,9 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
                 eventCoach.hidesBottomBarWhenPushed = true
 
                 eventCoach.updateNeeded = false
-
-                eventCoach.modalPresentationStyle = .automatic
+                //self.navigationController?.setNavigationBarHidden(true, animated: true)
+                eventCoach.modalPresentationStyle = .overCurrentContext
+                
                 self.present(eventCoach, animated: true, completion: nil)
             }
            
@@ -155,6 +156,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         actionButton.layer.shadowOpacity = Float(0.4)
         actionButton.layer.shadowRadius = CGFloat(4)
         actionButton.items.last?.titlePosition = .top
+        actionButton.items.first?.titlePosition = .top
         actionButton.buttonColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)!
         
         
