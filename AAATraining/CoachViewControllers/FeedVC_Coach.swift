@@ -95,9 +95,19 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         actionButton = JJFloatingActionButton(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.83, width: 60, height: 60))
-        actionButton.addItem(title: "item 1", image: UIImage(named: "create")?.withRenderingMode(.alwaysTemplate)) { item in
-          // do something
+        actionButton.addItem(title: "item 1", image: UIImage(named: "calendarPlus2")?.withRenderingMode(.alwaysTemplate)) { item in
+            let alert = UIAlertController(title: "Hey", message: "I'm hungry...", preferredStyle: .alert)
+                       alert.addAction(UIAlertAction(title: "Me too", style: .default, handler: nil))
+                       self.present(alert, animated: true, completion: nil)
+                       self.actionButton.close()
         }
+        actionButton.addItem(title: "item 1", image: UIImage(named: "calendarPlus2")?.withRenderingMode(.alwaysTemplate)) { item in
+            let alert = UIAlertController(title: "Hey", message: "I'm hungry...", preferredStyle: .alert)
+                       alert.addAction(UIAlertAction(title: "Me too", style: .default, handler: nil))
+                       self.present(alert, animated: true, completion: nil)
+                       self.actionButton.close()
+        }
+        actionButton.buttonColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)!
         self.tableView.addSubview(actionButton)
 //        if UIDevice.current.hasNotch
 //        {
