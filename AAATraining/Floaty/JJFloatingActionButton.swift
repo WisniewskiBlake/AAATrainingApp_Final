@@ -553,13 +553,15 @@ internal extension JJFloatingActionButton {
 
 fileprivate extension JJFloatingActionButton {
     @objc func buttonWasTapped() {
+
         switch buttonState {
+        
         case .open, .opening:
             close()
-
+//            buttonState = .closed
         case .closed:
             handleSingleActionOrOpen()
-
+//            buttonState = .open
         default:
             break
         }

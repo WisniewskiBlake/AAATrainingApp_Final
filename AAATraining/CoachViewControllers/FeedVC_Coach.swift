@@ -59,17 +59,11 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
         getMembers()
-
         NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "createPost"), object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "changeProPic"), object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(loadAvaAfterUpload), name: NSNotification.Name(rawValue: "uploadImage"), object: nil)
         // add observers for notifications
-        
         NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: NSNotification.Name(rawValue: "deletePost"), object: nil)
         
         moreTapGestureRecognizer.addTarget(self, action: #selector(self.moreImageViewClicked))
@@ -89,45 +83,18 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
 
         emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -150, width: view.bounds.size.width, height: view.bounds.size.height))
         
+        self.tableView.addSubview(actionButton)
+        configureFAB()
     }
 
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        actionButton = JJFloatingActionButton(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.83, width: 60, height: 60))
-        actionButton.addItem(title: "item 1", image: UIImage(named: "calendarPlus2")?.withRenderingMode(.alwaysTemplate)) { item in
-            let alert = UIAlertController(title: "Hey", message: "I'm hungry...", preferredStyle: .alert)
-                       alert.addAction(UIAlertAction(title: "Me too", style: .default, handler: nil))
-                       self.present(alert, animated: true, completion: nil)
-                       self.actionButton.close()
-        }
-        actionButton.addItem(title: "item 1", image: UIImage(named: "calendarPlus2")?.withRenderingMode(.alwaysTemplate)) { item in
-            let alert = UIAlertController(title: "Hey", message: "I'm hungry...", preferredStyle: .alert)
-                       alert.addAction(UIAlertAction(title: "Me too", style: .default, handler: nil))
-                       self.present(alert, animated: true, completion: nil)
-                       self.actionButton.close()
-        }
-        actionButton.buttonColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)!
-        self.tableView.addSubview(actionButton)
-//        if UIDevice.current.hasNotch
-//        {
-//            floaty = Floaty(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.83, width: 60, height: 60))
-//            //floaty.translatesAutoresizingMaskIntoConstraints = false
-//        }
-//        else
-//        {
-//            floaty = Floaty(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.86, width: 60, height: 60))
-//        }
-//        floaty.addItem("Create a post", icon: UIImage(named: "create")!, handler: { item in
-//            let alert = UIAlertController(title: "Hey", message: "I'm hungry...", preferredStyle: .alert)
-//            alert.addAction(UIAlertAction(title: "Me too", style: .default, handler: nil))
-//            self.present(alert, animated: true, completion: nil)
-//            self.floaty.close()
-//        })
-//        floaty.close()
-//        floaty.plusColor = UIColor.white
-//        floaty.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)!
-//        self.tableView.addSubview(floaty)
+        
+        
+        
+        
+
         
         fillContentGap:
         if let tableFooterView = tableView.tableFooterView {
@@ -140,6 +107,47 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
             // Fill the gap
             tableFooterView.frame.size.height = gapHeight + footerHeight
         }
+    }
+    
+    func configureFAB() {
+        //actionButton = JJFloatingActionButton(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.83, width: 60, height: 60))
+        
+        actionButton.addItem(title: "item 1", image: UIImage(named: "calendarPlus2")?.withRenderingMode(.alwaysTemplate)) { item in
+           let alert = UIAlertController(title: "Hey", message: "I'm hungry...", preferredStyle: .alert)
+           alert.addAction(UIAlertAction(title: "Me too", style: .default, handler: nil))
+           self.present(alert, animated: true, completion: nil)
+           self.actionButton.close()
+        }
+        actionButton.addItem(title: "item 1", image: UIImage(named: "calendarPlus2")?.withRenderingMode(.alwaysTemplate)) { item in
+           let alert = UIAlertController(title: "Hey", message: "I'm hungry...", preferredStyle: .alert)
+           alert.addAction(UIAlertAction(title: "Me too", style: .default, handler: nil))
+           self.present(alert, animated: true, completion: nil)
+           self.actionButton.close()
+        }
+//        actionButton.overlayView.backgroundColor = UIColor(hue: 0.31, saturation: 0.37, brightness: 0.10, alpha: 0.30)
+        actionButton.overlayView.backgroundColor = UIColor.black
+        actionButton.handleSingleActionDirectly = false
+        actionButton.itemAnimationConfiguration = .circularSlideIn(withRadius: 120)
+        actionButton.buttonAnimationConfiguration = .rotation(toAngle: .pi * 3 / 4)
+        actionButton.buttonAnimationConfiguration.opening.duration = 0.8
+        actionButton.buttonAnimationConfiguration.closing.duration = 0.6
+        //actionButton.translatesAutoresizingMaskIntoConstraints = false
+        actionButton.buttonColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)!
+        actionButton.translatesAutoresizingMaskIntoConstraints = false
+        if #available(iOS 11.0, *) {
+            actionButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
+            actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
+        } else {
+            actionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+            actionButton.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -16).isActive = true
+        }
+
+    }
+    
+    @objc func floatingActionButtonDidOpen(_ button: JJFloatingActionButton) {
+        print(actionButton.overlayView.frame.origin.y)
+        //actionButton.buttonState = .open
+        
     }
     
     
@@ -738,3 +746,12 @@ extension UITabBar {
 
 
 
+//        if UIDevice.current.hasNotch
+//        {
+//            floaty = Floaty(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.83, width: 60, height: 60))
+//            //floaty.translatesAutoresizingMaskIntoConstraints = false
+//        }
+//        else
+//        {
+//            floaty = Floaty(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.86, width: 60, height: 60))
+//        }

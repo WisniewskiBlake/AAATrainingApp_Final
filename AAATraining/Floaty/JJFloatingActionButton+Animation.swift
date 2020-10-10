@@ -149,6 +149,7 @@ fileprivate extension JJFloatingActionButton {
 fileprivate extension JJFloatingActionButton {
     func addOverlayView(to superview: UIView) {
         overlayView.isEnabled = true
+        //superview.addSubview(overlayView)
         superview.insertSubview(overlayView, belowSubview: self)
         overlayView.translatesAutoresizingMaskIntoConstraints = false
         overlayView.topAnchor.constraint(equalTo: superview.topAnchor).isActive = true
