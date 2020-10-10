@@ -50,12 +50,12 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     let postTapGestureRecognizer = UITapGestureRecognizer()
     let teamImageTapGestureRecognizer = UITapGestureRecognizer()
     
-    let actionButton = JJFloatingActionButton()
+
     
     var imageview = UIImageView()
     
-    var floaty = Floaty()
-    
+    //var floaty = Floaty()
+    var actionButton = JJFloatingActionButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,25 +94,31 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        if UIDevice.current.hasNotch
-        {
-            floaty = Floaty(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.83, width: 60, height: 60))
-            //floaty.translatesAutoresizingMaskIntoConstraints = false
+        actionButton = JJFloatingActionButton(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.83, width: 60, height: 60))
+        actionButton.addItem(title: "item 1", image: UIImage(named: "create")?.withRenderingMode(.alwaysTemplate)) { item in
+          // do something
         }
-        else
-        {
-            floaty = Floaty(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.86, width: 60, height: 60))
-        }
-        floaty.addItem("Create a post", icon: UIImage(named: "create")!, handler: { item in
-            let alert = UIAlertController(title: "Hey", message: "I'm hungry...", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Me too", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            self.floaty.close()
-        })
+        self.tableView.addSubview(actionButton)
+//        if UIDevice.current.hasNotch
+//        {
+//            floaty = Floaty(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.83, width: 60, height: 60))
+//            //floaty.translatesAutoresizingMaskIntoConstraints = false
+//        }
+//        else
+//        {
+//            floaty = Floaty(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.86, width: 60, height: 60))
+//        }
+//        floaty.addItem("Create a post", icon: UIImage(named: "create")!, handler: { item in
+//            let alert = UIAlertController(title: "Hey", message: "I'm hungry...", preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: "Me too", style: .default, handler: nil))
+//            self.present(alert, animated: true, completion: nil)
+//            self.floaty.close()
+//        })
+//        floaty.close()
+//        floaty.plusColor = UIColor.white
+//        floaty.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)!
+//        self.tableView.addSubview(floaty)
         
-        self.tableView.addSubview(floaty)
-        floaty.close()
         fillContentGap:
         if let tableFooterView = tableView.tableFooterView {
             /// The expected height for the footer under autolayout.
@@ -130,7 +136,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        floaty.close()
+        
         do {
             let gif = try UIImage(gifName: "loaderFinal.gif")
             imageview = UIImageView(gifImage: gif, loopCount: -1) // Will loop 3 times
