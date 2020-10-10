@@ -33,7 +33,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     @IBOutlet weak var membersTextLabel: UILabel!
     
     @IBOutlet weak var moreImageView: UIImageView!
-    @IBOutlet weak var postImageView: UIImageView!
+
     
     var avas = [UIImage]()
     var pictures = [UIImage]()
@@ -69,10 +69,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         moreTapGestureRecognizer.addTarget(self, action: #selector(self.moreImageViewClicked))
         moreImageView.isUserInteractionEnabled = true
         moreImageView.addGestureRecognizer(moreTapGestureRecognizer)
-        
-        postTapGestureRecognizer.addTarget(self, action: #selector(self.postImageViewClicked))
-        postImageView.isUserInteractionEnabled = true
-        postImageView.addGestureRecognizer(postTapGestureRecognizer)
+
         
         teamImageTapGestureRecognizer.addTarget(self, action: #selector(self.teamImageViewClicked))
         teamImageView.isUserInteractionEnabled = true
@@ -132,10 +129,18 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
            self.actionButton.close()
         }
         actionButton.addItem(title: "Create Event", image: UIImage(named: "date")?.withRenderingMode(.alwaysTemplate)) { item in
-           let alert = UIAlertController(title: "Hey", message: "I'm hungry...", preferredStyle: .alert)
-           alert.addAction(UIAlertAction(title: "Me too", style: .default, handler: nil))
-           self.present(alert, animated: true, completion: nil)
-           self.actionButton.close()
+            self.actionButton.close()
+            if let eventCoach : Event_Coach = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
+            {
+                eventCoach.accountType = "Coach"
+                eventCoach.hidesBottomBarWhenPushed = true
+
+                eventCoach.updateNeeded = false
+
+                eventCoach.modalPresentationStyle = .automatic
+                self.present(eventCoach, animated: true, completion: nil)
+            }
+           
         }
 
 //        actionButton.overlayView.backgroundColor = UIColor(hue: 0.31, saturation: 0.37, brightness: 0.10, alpha: 0.30)
@@ -149,7 +154,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         actionButton.layer.shadowOffset = CGSize(width: 0, height: 3)
         actionButton.layer.shadowOpacity = Float(0.4)
         actionButton.layer.shadowRadius = CGFloat(4)
-        actionButton.items.index(2, offsetBy: 30)
+        actionButton.items.last?.titlePosition = .top
         actionButton.buttonColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)!
         
         
@@ -522,14 +527,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         return cellPic
         
     }
-    
-    @objc func postImageViewClicked() {
-        let postNav = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "postNav") as! UINavigationController
-        
-            self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 
-            self.present(postNav, animated: true, completion: nil)
-    }
     
     @objc func teamImageViewClicked() {
         showActionSheet()
