@@ -120,13 +120,17 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
                 self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 
                 self.present(postNav, animated: true, completion: nil)
+            self.actionButton.close()
            
         }
         actionButton.addItem(title: "Create Chat", image: UIImage(named: "chat3")?.withRenderingMode(.alwaysTemplate)) { item in
         
-           let alert = UIAlertController(title: "Hey", message: "I'm hungry...", preferredStyle: .alert)
-           alert.addAction(UIAlertAction(title: "Me too", style: .default, handler: nil))
-           self.present(alert, animated: true, completion: nil)
+            let contactsVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "contactsView") as! ContactsVC_Coach
+            let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "addMembersNav") as! UINavigationController
+            contactsVC.isGroup = true
+         
+            
+            self.present(navigation, animated: true, completion: nil)
            self.actionButton.close()
         }
         actionButton.addItem(title: "Create Date", image: UIImage(named: "date")?.withRenderingMode(.alwaysTemplate)) { item in
@@ -141,6 +145,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
                 eventCoach.modalPresentationStyle = .overCurrentContext
                 
                 self.present(eventCoach, animated: true, completion: nil)
+                self.actionButton.close()
             }
            
         }

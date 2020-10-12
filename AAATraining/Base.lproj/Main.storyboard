@@ -25,6 +25,9 @@
         <array key="Locomotype  GigaSansSemiBold.otf">
             <string>GigaSans-SemiBold</string>
         </array>
+        <array key="spantaran.ttf">
+            <string>Spantaran</string>
+        </array>
     </customFonts>
     <scenes>
         <!--Team LoginVC-->
@@ -127,7 +130,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="logoBackgroundLR4.png" translatesAutoresizingMaskIntoConstraints="NO" id="660-ty-t8W">
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="logoBackgroundLR5.png" translatesAutoresizingMaskIntoConstraints="NO" id="660-ty-t8W">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="268"/>
                                 <viewLayoutGuide key="safeArea" id="PK9-zT-1pC"/>
                                 <constraints>
@@ -250,28 +253,27 @@
                                 <color key="textColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lockrRoomLR (2).png" translatesAutoresizingMaskIntoConstraints="NO" id="UWm-vj-ivR">
+                                <rect key="frame" x="103" y="70.5" width="209" height="132"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="132" id="gL9-d4-OD2"/>
+                                    <constraint firstAttribute="width" constant="209" id="xfQ-Dw-wAB"/>
+                                </constraints>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LockrRoom" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fmz-NF-jUq">
-                                <rect key="frame" x="47.5" y="220" width="319" height="31"/>
+                                <rect key="frame" x="47.5" y="213" width="319" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="31" id="XvW-d6-4Sx"/>
                                     <constraint firstAttribute="width" constant="319" id="zNo-qp-DFo"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="GigaSans-Bold" family="Giga Sans" pointSize="30"/>
+                                <fontDescription key="fontDescription" name="Spantaran" family="Spantaran" pointSize="32"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lockrRoomLR (2).png" translatesAutoresizingMaskIntoConstraints="NO" id="UWm-vj-ivR">
-                                <rect key="frame" x="92.5" y="49.5" width="230" height="170"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="170" id="gL9-d4-OD2"/>
-                                    <constraint firstAttribute="width" constant="230" id="xfQ-Dw-wAB"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.91337895390000001" green="0.92143708469999996" blue="0.93379235270000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="UWm-vj-ivR" firstAttribute="centerY" secondItem="66z-7w-9ST" secondAttribute="centerY" constant="-2" id="5Cu-Da-JwT"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2ld-D8-TnF" secondAttribute="trailing" constant="16" id="6Z5-cD-hhB"/>
                             <constraint firstItem="EHQ-ct-98R" firstAttribute="centerY" secondItem="HZe-8z-doS" secondAttribute="centerY" constant="1.25" id="9id-Lb-fbk"/>
                             <constraint firstItem="660-ty-t8W" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="CV2-zs-cbV"/>
@@ -290,7 +292,7 @@
                             <constraint firstItem="2ld-D8-TnF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="dXh-DZ-rrw"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="2ld-D8-TnF" secondAttribute="bottom" constant="20" id="deu-9Q-vWe"/>
                             <constraint firstItem="pM6-9n-Kwe" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="14" id="hWj-CB-03V"/>
-                            <constraint firstItem="fmz-NF-jUq" firstAttribute="top" secondItem="pM6-9n-Kwe" secondAttribute="bottom" constant="-2" id="j8O-lS-sh7"/>
+                            <constraint firstItem="fmz-NF-jUq" firstAttribute="top" secondItem="pM6-9n-Kwe" secondAttribute="bottom" constant="-9" id="j8O-lS-sh7"/>
                             <constraint firstItem="660-ty-t8W" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="jLL-QL-5X0"/>
                             <constraint firstItem="hJq-QS-kOH" firstAttribute="top" secondItem="Zby-oh-UfM" secondAttribute="bottom" constant="15" id="kv7-W1-xGX"/>
                             <constraint firstItem="EHQ-ct-98R" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="67" id="m39-mf-H5Q"/>
@@ -305,13 +307,18 @@
                             <constraint firstAttribute="trailing" secondItem="T2s-K6-L4m" secondAttribute="trailing" constant="14" id="wHZ-ia-7uV"/>
                             <constraint firstItem="66z-7w-9ST" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="x5r-kw-bMd"/>
                             <constraint firstItem="Zby-oh-UfM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="xTv-a5-Z8T"/>
+                            <constraint firstItem="UWm-vj-ivR" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="26.5" id="yuE-sS-EBv"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="emailTextField" destination="5ki-fC-ste" id="8Oe-c3-Ydi"/>
                         <outlet property="forgotPassBtn" destination="hJq-QS-kOH" id="aB7-ww-TR1"/>
+                        <outlet property="icon" destination="UWm-vj-ivR" id="JdJ-nS-yLF"/>
+                        <outlet property="icon_height" destination="gL9-d4-OD2" id="ucq-a2-eEt"/>
+                        <outlet property="icon_top" destination="yuE-sS-EBv" id="lKM-fP-q4r"/>
                         <outlet property="leftLabel" destination="T2s-K6-L4m" id="5tH-3D-t7B"/>
                         <outlet property="leftLineView" destination="EHQ-ct-98R" id="JnB-ld-9jp"/>
+                        <outlet property="lockrLabel" destination="fmz-NF-jUq" id="6RB-Re-ekM"/>
                         <outlet property="loginBtn" destination="Zby-oh-UfM" id="Nat-R6-LBJ"/>
                         <outlet property="logo" destination="66z-7w-9ST" id="hia-2S-mx6"/>
                         <outlet property="logoBackground" destination="660-ty-t8W" id="Jub-Aa-9ce"/>
@@ -8799,8 +8806,8 @@
         <image name="groupIcon" width="99.5" height="99"/>
         <image name="info" width="25" height="25"/>
         <image name="joinTeamFinal.png" width="934.16326904296875" height="936.73468017578125"/>
-        <image name="lockrRoomLR (2).png" width="768" height="768"/>
-        <image name="logoBackgroundLR4.png" width="281.25" height="58.5"/>
+        <image name="lockrRoomLR (2).png" width="696" height="579.75"/>
+        <image name="logoBackgroundLR5.png" width="281.25" height="58.5"/>
         <image name="more" width="25" height="25"/>
         <image name="moreVert" width="25" height="25"/>
         <image name="name.png" width="512" height="512"/>

@@ -23,7 +23,11 @@ class LoginVC: UIViewController, UITextViewDelegate {
     @IBOutlet weak var leftLabel: UILabel!
     @IBOutlet weak var rightLabel: UILabel!
     
-
+    @IBOutlet weak var icon: UIImageView!
+    @IBOutlet weak var icon_height: NSLayoutConstraint!
+    @IBOutlet weak var lockrLabel: UILabel!
+    @IBOutlet weak var icon_top: NSLayoutConstraint!
+    var icon_top_cache: CGFloat!
         
     @IBOutlet weak var loginBtn: UIButton!
     @IBOutlet weak var forgotPassBtn: UIButton!
@@ -39,6 +43,7 @@ class LoginVC: UIViewController, UITextViewDelegate {
     // cache obj
     var logoBackground_height_cache: CGFloat!
     var logo_height_cache: CGFloat!
+    var icon_height_cache: CGFloat!
     var registerButton_bottom_cache: CGFloat!
     var registerCoachButton_bottom_cache: CGFloat!
     
@@ -58,6 +63,8 @@ class LoginVC: UIViewController, UITextViewDelegate {
         // caching all values of constraints
         logoBackground_height_cache = logoBackground_height.constant
         logo_height_cache = logo_height.constant
+        icon_height_cache = icon_height.constant
+        icon_top_cache = icon_top.constant
         //registerButton_bottom_cache = registerButton_bottom.constant
         registerCoachButton_bottom_cache = registerCoachButton_bottom.constant
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
@@ -210,7 +217,9 @@ class LoginVC: UIViewController, UITextViewDelegate {
         
         logoBackground_height.constant = self.view.frame.width/5
         logo_height.constant = self.view.frame.width/5
-//        leftLabel.isHidden = true
+        icon_height.constant = self.view.frame.width/5
+        icon.isHidden = true
+        lockrLabel.isHidden = true
 //        rightLabel.isHidden = true
         logoBackground.isHidden = false
         logo.isHidden = true
@@ -236,10 +245,13 @@ class LoginVC: UIViewController, UITextViewDelegate {
       
         logoBackground_height.constant = logoBackground_height_cache
         logo_height.constant = logo_height_cache
+        icon_height.constant = icon_height_cache
 //        silhoutte_top.constant = 177
         registerCoachButton_bottom.constant = registerCoachButton_bottom_cache
         logoBackground.isHidden = true
         logo.isHidden = false
+        icon.isHidden = false
+        lockrLabel.isHidden = false
 //        leftLabel.isHidden = false
 //        rightLabel.isHidden = false
         // animation function. Whatever in the closures below will be animated
@@ -266,6 +278,7 @@ class LoginVC: UIViewController, UITextViewDelegate {
         // declaring constants to store information which later on will be assigned to certain 'object'
         let width = CGFloat(2)
         let color = UIColor.lightGray.cgColor
+//        let color = UIColor.black.cgColor
         
         // creating layer to be a border of the view added test test
         let border = CALayer()
