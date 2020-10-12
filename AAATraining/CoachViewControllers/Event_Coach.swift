@@ -203,9 +203,6 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             }
         }
         
-        
-        
-        
     }
     
     

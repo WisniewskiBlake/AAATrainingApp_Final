@@ -122,13 +122,14 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
                 self.present(postNav, animated: true, completion: nil)
            
         }
-        actionButton.addItem(title: "Create Chat", image: UIImage(named: "chat")?.withRenderingMode(.alwaysTemplate)) { item in
+        actionButton.addItem(title: "Create Chat", image: UIImage(named: "chat3")?.withRenderingMode(.alwaysTemplate)) { item in
+        
            let alert = UIAlertController(title: "Hey", message: "I'm hungry...", preferredStyle: .alert)
            alert.addAction(UIAlertAction(title: "Me too", style: .default, handler: nil))
            self.present(alert, animated: true, completion: nil)
            self.actionButton.close()
         }
-        actionButton.addItem(title: "Create Event", image: UIImage(named: "date")?.withRenderingMode(.alwaysTemplate)) { item in
+        actionButton.addItem(title: "Create Date", image: UIImage(named: "date")?.withRenderingMode(.alwaysTemplate)) { item in
             self.actionButton.close()
             if let eventCoach : Event_Coach = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
             {
@@ -143,20 +144,27 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
             }
            
         }
+        
 
 //        actionButton.overlayView.backgroundColor = UIColor(hue: 0.31, saturation: 0.37, brightness: 0.10, alpha: 0.30)
         actionButton.overlayView.backgroundColor = UIColor(white: 0, alpha: 0.5)
         actionButton.handleSingleActionDirectly = false
-        actionButton.itemAnimationConfiguration = .circularSlideIn(withRadius: 120)
-        actionButton.buttonAnimationConfiguration = .rotation(toAngle: .pi * 3 / 4)
+//        actionButton.itemAnimationConfiguration = .circularSlideIn(withRadius: 120)
+//        actionButton.buttonAnimationConfiguration = .rotation(toAngle: .pi * 3 / 4)
         actionButton.buttonAnimationConfiguration.opening.duration = 0.8
         actionButton.buttonAnimationConfiguration.closing.duration = 0.6
         actionButton.layer.shadowColor = UIColor.black.cgColor
         actionButton.layer.shadowOffset = CGSize(width: 0, height: 3)
         actionButton.layer.shadowOpacity = Float(0.4)
         actionButton.layer.shadowRadius = CGFloat(4)
-        actionButton.items.last?.titlePosition = .top
-        actionButton.items.first?.titlePosition = .top
+        //actionButton.items.last?.titlePosition = .top
+//        actionButton.configureDefaultItem { item in
+//            item.titlePosition = .top
+//
+//
+//
+//        }
+        //actionButton.items.first?.titlePosition = .top
         actionButton.buttonColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)!
         
         
@@ -767,3 +775,7 @@ extension UITabBar {
 //        {
 //            floaty = Floaty(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.86, width: 60, height: 60))
 //        }
+
+
+
+//

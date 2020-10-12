@@ -130,17 +130,15 @@ class LoginVC: UIViewController, UITextViewDelegate {
         cornerRadius(for: emailTextField)
         cornerRadius(for: passwordTextField)
 
-        loginBtn.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
-        registerCoachBtn.setTitleColor(#colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), for: .normal)
-        forgotPassBtn.setTitleColor(#colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), for: .normal)
+//        loginBtn.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+//        registerCoachBtn.setTitleColor(#colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), for: .normal)
+        //forgotPassBtn.setTitleColor(#colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), for: .normal)
 
     }
             
         // sending request to the server for proceeding Log In
         func loginUser() {
-            
-            let helper = Helper()
-            
+
             FUser.loginUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!) { (error) in
                 
                 if error != nil {
@@ -323,7 +321,7 @@ class LoginVC: UIViewController, UITextViewDelegate {
         // creating constant named 'border' of type layer which acts as a border frame
         let border = CALayer()
 //        border.borderColor = UIColor(hexString: team.teamColorOne)?.cgColor
-        border.borderColor = #colorLiteral(red: 0.1882352941, green: 0.1882352941, blue: 0.1882352941, alpha: 1)
+        border.borderColor = UIColor.black.cgColor
         border.borderWidth = 2
         border.frame = CGRect(x: 0, y: 0, width: btn.frame.width, height: btn.frame.height)
         

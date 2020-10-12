@@ -60,8 +60,6 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         self.calendar.formatter.dateFormat = "YYYY-MM-dd"
         today = calendar.formatter.string(from: todayDate)
         
-        
-        
     }
     
     // pre-load func
@@ -96,8 +94,8 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         tableView.tableFooterView = view
-       
     }
+    
     override func viewWillDisappear(_ animated: Bool) {
         recentListener.remove()
     }
@@ -156,8 +154,6 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                         }
 
                     }
-                    
-                    
                     
                 }
      }
