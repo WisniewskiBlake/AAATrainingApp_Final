@@ -11,7 +11,7 @@ import ProgressHUD
 import ImagePicker
 
 
-class NewGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, GroupMemberCell_CoachDelegate, ImagePickerDelegate {
+class NewGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, GroupMemberCell_CoachDelegate, ImagePickerDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     //MARK: ImagePickerControllerDelegate
     
     func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
@@ -46,7 +46,8 @@ class NewGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollecti
     var memberIds: [String] = []
     var allMembers: [FUser] = []
     var groupIcon: UIImage?
-
+    var avaString: String = ""
+    
     @IBOutlet var iconTapGesture: UITapGestureRecognizer!
     
     override func viewDidLoad() {
@@ -70,12 +71,75 @@ class NewGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollecti
     }
     
     @IBAction func editButtonPressed(_ sender: Any) {
-        showIconOptions()
+        showActionSheet()
     }
     
     @IBAction func groupIconTapped(_ sender: Any) {
-        showIconOptions()
+        showActionSheet()
     }
+    
+    func showActionSheet() {
+        
+        // declaring action sheet
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // declaring library button
+        let library = UIAlertAction(title: "Photo Library", style: .default) { (action) in
+            
+            // checking availability of photo library
+            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+                self.showPicker(with: .photoLibrary)
+            }
+            
+        }
+        // declaring cancel button
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
+        // adding buttons to the sheet
+        sheet.addAction(library)
+        sheet.addAction(cancel)
+        
+        // present action sheet to the user finally
+        self.present(sheet, animated: true, completion: nil)
+        
+    }
+    
+    func showPicker(with source: UIImagePickerController.SourceType) {
+        
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true
+        picker.sourceType = source
+        present(picker, animated: true, completion: nil)
+        
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+                    
+            
+            let image = info[UIImagePickerController.InfoKey(rawValue: convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage))] as? UIImage
+            //picturePath = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+            
+            // based on the trigger we are assigning selected pictures to the appropriated imageView
+            
+                avaString = ""
+                // assign selected image to CoverImageView
+                self.groupIconImageView.image = image
+                
+                let pictureData = image?.jpegData(compressionQuality: 0.4)!
+                avaString = (pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0)))!
+
+
+                
+                
+                
+            // completion handler, to communicate to the project that images has been selected (enable delete button)
+            dismiss(animated: true) {
+                
+            }
+
+    
+        }
     
     //MARK: CollectionViewDataSource
     
@@ -166,7 +230,7 @@ class NewGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollecti
             
             let groupId = UUID().uuidString
             
-            let group = Group_Coach(groupId: groupId, subject: groupSubjectTextField.text!, ownerId: FUser.currentId(), members: memberIds, avatar: avatar)
+            let group = Group_Coach(groupId: groupId, subject: groupSubjectTextField.text!, ownerId: FUser.currentId(), members: memberIds, avatar: avaString)
             
             group.saveGroup()
             
@@ -204,4 +268,12 @@ class NewGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollecti
 
     
 
+}
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+    return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+    return input.rawValue
 }

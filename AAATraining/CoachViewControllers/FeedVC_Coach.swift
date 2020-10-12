@@ -79,24 +79,14 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
 
         emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -150, width: view.bounds.size.width, height: view.bounds.size.height))
-        self.tableView.tableHeaderView?.topAnchor
+
         
-        configureFAB()
-        self.tableView.addSubview(actionButton)
-        actionButton.translatesAutoresizingMaskIntoConstraints = false
-        if #available(iOS 11.0, *) {
-            actionButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
-            actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
-        } else {
-            actionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-            actionButton.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -16).isActive = true
-        }
+       
     }
 
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         fillContentGap:
         if let tableFooterView = tableView.tableFooterView {
             /// The expected height for the footer under autolayout.
@@ -108,10 +98,12 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
             // Fill the gap
             tableFooterView.frame.size.height = gapHeight + footerHeight
         }
+        
     }
     
     func configureFAB() {
         //actionButton = JJFloatingActionButton(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.83, width: 60, height: 60))
+        actionButton = JJFloatingActionButton()
         
         actionButton.addItem(title: "Create Post", image: UIImage(named: "create")?.withRenderingMode(.alwaysTemplate)) { item in
             self.actionButton.close()
@@ -187,16 +179,30 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        configureFAB()
+        actionButton.display(inViewController: self)
+        //self.tableView.addSubview(actionButton)
+        actionButton.translatesAutoresizingMaskIntoConstraints = false
+        if #available(iOS 11.0, *) {
+            actionButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
+            actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
+        } else {
+            actionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+            actionButton.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -16).isActive = true
+        }
+        
+        
+        
         do {
             let gif = try UIImage(gifName: "loaderFinal.gif")
             imageview = UIImageView(gifImage: gif, loopCount: -1) // Will loop 3 times
             imageview.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(imageview)
             let widthConstraint = NSLayoutConstraint(item: imageview, attribute: .width, relatedBy: .equal,
-                                                     toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 250)
+                                                     toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 150)
 
             let heightConstraint = NSLayoutConstraint(item: imageview, attribute: .height, relatedBy: .equal,
-                                                      toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 250)
+                                                      toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 150)
 
             let xConstraint = NSLayoutConstraint(item: imageview, attribute: .centerX, relatedBy: .equal, toItem: self.tableView, attribute: .centerX, multiplier: 1, constant: 0)
 

@@ -26,7 +26,7 @@ class LoginVC: UIViewController, UITextViewDelegate {
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var icon_height: NSLayoutConstraint!
     @IBOutlet weak var lockrLabel: UILabel!
-    @IBOutlet weak var icon_top: NSLayoutConstraint!
+
     var icon_top_cache: CGFloat!
         
     @IBOutlet weak var loginBtn: UIButton!
@@ -64,7 +64,7 @@ class LoginVC: UIViewController, UITextViewDelegate {
         logoBackground_height_cache = logoBackground_height.constant
         logo_height_cache = logo_height.constant
         icon_height_cache = icon_height.constant
-        icon_top_cache = icon_top.constant
+
         //registerButton_bottom_cache = registerButton_bottom.constant
         registerCoachButton_bottom_cache = registerCoachButton_bottom.constant
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
@@ -217,7 +217,7 @@ class LoginVC: UIViewController, UITextViewDelegate {
         
         logoBackground_height.constant = self.view.frame.width/5
         logo_height.constant = self.view.frame.width/5
-        icon_height.constant = self.view.frame.width/5
+        //icon_height.constant = self.view.frame.width/5
         icon.isHidden = true
         lockrLabel.isHidden = true
 //        rightLabel.isHidden = true
