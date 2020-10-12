@@ -124,7 +124,7 @@ class NewGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollecti
             
                 avaString = ""
                 // assign selected image to CoverImageView
-                self.groupIconImageView.image = image
+        self.groupIconImageView.image = image?.circleMasked
                 
                 let pictureData = image?.jpegData(compressionQuality: 0.4)!
                 avaString = (pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0)))!
@@ -219,14 +219,13 @@ class NewGroupVC_Coach: UIViewController, UICollectionViewDataSource, UICollecti
             
             memberIds.append(FUser.currentId())
             
-            let avatarData = UIImage(named: "groupIcon")!.jpegData(compressionQuality: 0.7)!
-            var avatar = avatarData.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
             
-            if groupIcon != nil {
-                
-                let avatarData = groupIcon!.jpegData(compressionQuality: 0.4)!
-                avatar = avatarData.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-            }
+            
+//            if avaString == "" {
+//
+//                let avatarData = UIImage(named: "groupIcon")!.jpegData(compressionQuality: 0.7)!
+//                avaString = avatarData.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+//            }
             
             let groupId = UUID().uuidString
             

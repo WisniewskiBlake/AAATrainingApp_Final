@@ -15,12 +15,13 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         
     var recentChats: [NSDictionary] = []
     var filteredChats: [NSDictionary] = []
-    
+    var avas = [UIImage]()
     var recentListener: ListenerRegistration!
     
     let searchController = UISearchController(searchResultsController: nil)
     
     var emptyLabelOne = UILabel()
+    let helper = Helper()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -121,6 +122,12 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
                     if recent[kLASTMESSAGE] as! String != "" && recent[kCHATROOMID] != nil && recent[kRECENTID] != nil {
                         
                         self.recentChats.append(recent)
+                        self.helper.imageFromData(pictureData: recent[kAVATAR] as! String) { (avatarImage) in
+
+                            if avatarImage != nil {
+                                self.avas.append(avatarImage!.circleMasked!)
+                            }
+                        }
                     }
                     
                     reference(.Recent).whereField(kCHATROOMID, isEqualTo: recent[kCHATROOMID] as! String).getDocuments(completion: { (snapshot, error) in
@@ -179,7 +186,8 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
            }
            
            cell.generateCell(recentChat: recent, indexPath: indexPath)
-           
+        
+//           cell.avatarImageView.image = avas[indexPath.row]
            return cell
        }
     

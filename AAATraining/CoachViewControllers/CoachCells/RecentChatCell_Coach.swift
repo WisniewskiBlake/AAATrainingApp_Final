@@ -57,14 +57,16 @@ class RecentChatCell_Coach: UITableViewCell {
         self.lastMessageLabel.text = decryptedText
         self.messageCounterLabel.text = recentChat[kCOUNTER] as? String
         
-        if let avatarString = recentChat[kAVATAR] {
-            helper.imageFromData(pictureData: avatarString as! String) { (avatarImage) in
-                
+        if recentChat[kAVATAR] as! String != "" {
+            helper.imageFromData(pictureData: recentChat[kAVATAR] as! String) { (avatarImage) in
+
                 if avatarImage != nil {
                     self.avatarImageView.image = avatarImage!.circleMasked
                 }
             }
-        }       
+        } else {
+            self.avatarImageView.image = UIImage(named: "groupIcon")
+        }
         
         if recentChat[kCOUNTER] as! Int != 0 {
             
