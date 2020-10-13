@@ -20,13 +20,12 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     @IBOutlet weak var eventTitleText: UITextField!
     @IBOutlet weak var eventLocationText: UITextField!
     
-    @IBOutlet weak var startText: UITextField!
-    @IBOutlet weak var endText: UITextField!
-    
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var placeHolderLabel: UILabel!
     @IBOutlet weak var eventURLText: UITextView!
     @IBOutlet weak var placeHolderLabelOne: UILabel!
+    @IBOutlet weak var startText: UITextField!
+    @IBOutlet weak var endText: UITextField!
     
     
     @IBOutlet weak var titleLocationView: UIView!
@@ -102,9 +101,16 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         
         
         if #available(iOS 14.0, *) {
+            datePicker.isHidden = false
+            endDatePicker.isHidden = false
+            startText.isHidden = true
+            endText.isHidden = true
             setDatePickerDates()
         } else {
-            // handle older versions
+            datePicker.isHidden = true
+            endDatePicker.isHidden = true
+            startText.isHidden = false
+            endText.isHidden = false
         }
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
 
@@ -507,10 +513,17 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool
     {
-        textView.resignFirstResponder()
-        eventTitleText.resignFirstResponder()
-//        eventStartText.resignFirstResponder()
-//        eventEndText.resignFirstResponder()
+        
+        if #available(iOS 14.0, *) {
+            textView.resignFirstResponder()
+            eventTitleText.resignFirstResponder()
+        } else {
+            startText.resignFirstResponder()
+            endText.resignFirstResponder()
+            textView.resignFirstResponder()
+            eventTitleText.resignFirstResponder()
+        }
+
         
            return true;
        }

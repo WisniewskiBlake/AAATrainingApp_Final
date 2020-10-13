@@ -5538,21 +5538,44 @@
                                             <constraint firstAttribute="height" constant="27" id="Y42-zV-hFy"/>
                                         </constraints>
                                     </datePicker>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5fP-Mo-Uov">
+                                        <rect key="frame" x="142" y="6" width="264" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="34" id="2ri-cR-N8d"/>
+                                            <constraint firstAttribute="width" constant="264" id="7Kd-YZ-nJN"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bhB-lc-LeO">
+                                        <rect key="frame" x="142" y="51" width="264" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="264" id="2jh-Xa-OH1"/>
+                                            <constraint firstAttribute="height" constant="34" id="TB9-Eg-EQw"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="7hk-AM-OGA" firstAttribute="top" secondItem="9pQ-AN-zPC" secondAttribute="top" constant="10" id="3MX-5U-euF"/>
                                     <constraint firstAttribute="bottom" secondItem="M9z-57-1xb" secondAttribute="bottom" constant="8" id="5zO-WX-MZt"/>
+                                    <constraint firstAttribute="bottom" secondItem="bhB-lc-LeO" secondAttribute="bottom" constant="5" id="DLw-KC-w1Q"/>
                                     <constraint firstItem="pjG-wW-kwQ" firstAttribute="leading" secondItem="9pQ-AN-zPC" secondAttribute="leading" constant="8" id="FEO-e7-k5L"/>
                                     <constraint firstItem="ObQ-s1-HUy" firstAttribute="top" secondItem="9pQ-AN-zPC" secondAttribute="top" constant="11" id="S1R-4I-Rbr"/>
                                     <constraint firstAttribute="trailing" secondItem="M9z-57-1xb" secondAttribute="trailing" constant="1" id="VFb-bZ-4gH"/>
                                     <constraint firstAttribute="bottom" secondItem="pjG-wW-kwQ" secondAttribute="bottom" constant="9" id="hYi-Pb-TIo"/>
+                                    <constraint firstAttribute="trailing" secondItem="5fP-Mo-Uov" secondAttribute="trailing" constant="8" id="hgD-JX-UbT"/>
                                     <constraint firstItem="ObQ-s1-HUy" firstAttribute="leading" secondItem="9pQ-AN-zPC" secondAttribute="leading" constant="8" id="hra-Cb-7iv"/>
+                                    <constraint firstAttribute="trailing" secondItem="bhB-lc-LeO" secondAttribute="trailing" constant="8" id="jkr-SP-R1T"/>
                                     <constraint firstItem="M9z-57-1xb" firstAttribute="leading" secondItem="pjG-wW-kwQ" secondAttribute="trailing" constant="52" id="kLW-kr-RN0"/>
                                     <constraint firstItem="7hk-AM-OGA" firstAttribute="leading" secondItem="ObQ-s1-HUy" secondAttribute="trailing" constant="52" id="kq6-p4-pvi"/>
                                     <constraint firstAttribute="trailing" secondItem="7hk-AM-OGA" secondAttribute="trailing" constant="1" id="qgS-4j-a7u"/>
                                     <constraint firstItem="M9z-57-1xb" firstAttribute="top" secondItem="7hk-AM-OGA" secondAttribute="bottom" constant="18" id="soA-j7-ZtT"/>
                                     <constraint firstItem="pjG-wW-kwQ" firstAttribute="top" secondItem="ObQ-s1-HUy" secondAttribute="bottom" constant="18" id="uUf-NZ-xcc"/>
+                                    <constraint firstItem="5fP-Mo-Uov" firstAttribute="top" secondItem="9pQ-AN-zPC" secondAttribute="top" constant="6" id="vON-ex-2iD"/>
+                                    <constraint firstItem="bhB-lc-LeO" firstAttribute="top" secondItem="5fP-Mo-Uov" secondAttribute="bottom" constant="11" id="zaJ-aH-vKT"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9NY-pO-3iO">
@@ -5695,7 +5718,7 @@
                         <outlet property="detailsURLView" destination="9NY-pO-3iO" id="yWy-ky-U2y"/>
                         <outlet property="doneButton" destination="yYS-GZ-4OG" id="ZdH-Qi-DL2"/>
                         <outlet property="endDatePicker" destination="M9z-57-1xb" id="leY-6h-c6s"/>
-                        <outlet property="endText" destination="pjG-wW-kwQ" id="H0x-3T-Iad"/>
+                        <outlet property="endText" destination="bhB-lc-LeO" id="fek-Qh-mEz"/>
                         <outlet property="eventLocationText" destination="63F-1f-OUr" id="QrJ-cD-yEF"/>
                         <outlet property="eventTitleText" destination="RJe-Vh-Sz7" id="keh-7e-orB"/>
                         <outlet property="eventURLText" destination="SJP-bc-kZI" id="rnE-UO-5RA"/>
@@ -5704,7 +5727,7 @@
                         <outlet property="placeHolderLabel" destination="4aD-fX-s2g" id="zj5-5X-4JS"/>
                         <outlet property="placeHolderLabelOne" destination="31J-C8-wy8" id="l4C-Ld-wvp"/>
                         <outlet property="startEndView" destination="9pQ-AN-zPC" id="Hq7-cB-fn4"/>
-                        <outlet property="startText" destination="ObQ-s1-HUy" id="bUv-m3-d1G"/>
+                        <outlet property="startText" destination="5fP-Mo-Uov" id="qrv-Vk-Y62"/>
                         <outlet property="textView" destination="9Ye-CG-6dJ" id="kKl-Nr-afC"/>
                         <outlet property="titleLocationView" destination="W37-PV-Xwa" id="Og8-wc-sdL"/>
                     </connections>
