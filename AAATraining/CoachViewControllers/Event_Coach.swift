@@ -99,19 +99,29 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         getAllEvents()
         configureUI()
         
+        datePicker.isHidden = false
+        endDatePicker.isHidden = false
+        startText.isHidden = true
+        endText.isHidden = true
+        setDatePickerDates()
         
-        if #available(iOS 14.0, *) {
-            datePicker.isHidden = false
-            endDatePicker.isHidden = false
-            startText.isHidden = true
-            endText.isHidden = true
-            setDatePickerDates()
-        } else {
-            datePicker.isHidden = true
-            endDatePicker.isHidden = true
-            startText.isHidden = false
-            endText.isHidden = false
-        }
+        
+//        if #available(iOS 14.0, *) {
+//            datePicker.isHidden = false
+//            endDatePicker.isHidden = false
+//            startText.isHidden = true
+//            endText.isHidden = true
+//            setDatePickerDates()
+//        } else {
+//            startText.text = event.eventDate + " " + event.eventStart
+//            endText.text = event.eventDate + " " + event.eventEnd
+//            datePicker.isHidden = true
+//            endDatePicker.isHidden = true
+//            startText.isHidden = false
+//            endText.isHidden = false
+//            createStart13DatePicker()
+//            createEnd13DatePicker()
+//        }
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
 
     }
@@ -219,42 +229,97 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     
     @IBAction func doneButtonPressed(_ sender: Any) {
-        let startDateComps = datePicker.calendar.dateComponents([.month, .day, .year, .hour, .minute, .second], from: datePicker.date)
-        let endDateComps = endDatePicker.calendar.dateComponents([.month, .day, .year, .hour, .minute, .second], from: endDatePicker.date)
-        if endDateComps.month == startDateComps.month && endDateComps.day == startDateComps.day && endDateComps.year == startDateComps.year {
-            dateFormatter.dateFormat = "h:mm a"
+            
+            var startDate = Date()
+            var endDate = Date()
+            var startTime: String = ""
+            var endTime: String = ""
+            
+            var startMonth: String = ""
+            var startDay: String = ""
+            var startYear: String = ""
+            var endMonth: String = ""
+            var endDay: String = ""
+            var endYear: String = ""
+            
+            if #available(iOS 14.0, *) {
+                let startDateComps = datePicker.calendar.dateComponents([.month, .day, .year, .hour, .minute, .second], from: datePicker.date)
+                let endDateComps = endDatePicker.calendar.dateComponents([.month, .day, .year, .hour, .minute, .second], from: endDatePicker.date)
+                if endDateComps.month == startDateComps.month && endDateComps.day == startDateComps.day && endDateComps.year == startDateComps.year {
+                    dateFormatter.dateFormat = "h:mm a"
 
-            let startDate = Calendar.current.date(from: startDateComps)!
-            let endDate = Calendar.current.date(from: endDateComps)!
-            let startTime = dateFormatter.string(from: startDate)
-            let endTime = dateFormatter.string(from: endDate)
-            print(startTime)
-            
-            dateFormatter.dateFormat = "YYYY-MM-dd"
-            let dateForUpcomingComparison = dateFormatter.string(from: startDate)
-            
-            dateFormatter.dateFormat = "EEEE, MM-dd-YYYY"
-            let dateString = dateFormatter.string(from: startDate)
-            
-            if eventTitleText.text != "" {
-                if self.doneButton.currentTitle == "Update" {
-                    event.updateEvent(eventGroupID: event.eventGroupID, eventOwnerID: event.eventOwnerID, eventText: textView.text!, eventTitle: eventTitleText.text!, eventStart: startTime, eventEnd: endTime, eventLocation: eventLocationText.text!, eventImage: "", eventURL: eventURLText.text!)
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateEvent"), object: nil)
+                startDate = Calendar.current.date(from: startDateComps)!
+                endDate = Calendar.current.date(from: endDateComps)!
+                startTime = dateFormatter.string(from: startDate)
+                endTime = dateFormatter.string(from: endDate)
+                    
+                dateFormatter.dateFormat = "YYYY-MM-dd"
+                let dateForUpcomingComparison = dateFormatter.string(from: startDate)
+                
+                dateFormatter.dateFormat = "EEEE, MM-dd-YYYY"
+                let newDateString = dateFormatter.string(from: startDate)
+                    
+                if eventTitleText.text != "" {
+                    if self.doneButton.currentTitle == "Update" {
+                        if(newDateString == self.dateString) {
+                            event.updateEvent(eventGroupID: event.eventGroupID, eventOwnerID: event.eventOwnerID, eventText: textView.text!, eventTitle: eventTitleText.text!, eventStart: startTime, eventEnd: endTime, eventLocation: eventLocationText.text!, eventImage: "", eventURL: eventURLText.text!)
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateEvent"), object: nil)
+                        } else {
+                            helper.showAlert(title: "Data Error", message: "Date to update and dates you have selected are conflicting.", in: self)
+                        }
+                        
+                    } else {
+                        ProgressHUD.show("Creating...", interaction: false)
+                        createEventForMembers(start: startTime, end: endTime, fullDate: newDateString , upcomingCompar: dateForUpcomingComparison)
+                        sleep(UInt32(0.5))
+                    }
+                    
+                    
                 } else {
-                    //ProgressHUD.show("Creating...", interaction: false)
-                    createEventForMembers(start: startTime, end: endTime, fullDate: dateString, upcomingCompar: dateForUpcomingComparison)
-                    sleep(UInt32(0.5))
+                    helper.showAlert(title: "Data Error", message: "Please fill in title.", in: self)
                 }
                 
-                
             } else {
-                helper.showAlert(title: "Data Error", message: "Please fill in title.", in: self)
+                if eventTitleText.text != "" && startText.text != "" && endText.text != "" {
+                    let delimiter = " "
+                    let startArray = startText.text!.components(separatedBy: delimiter)
+                    let endArray = endText.text!.components(separatedBy: delimiter)
+                    startTime = startArray[2]
+                    endTime = endArray[2]
+                    
+                    let dashDelimiter = "-"
+                    let startWithSlash = startArray[1].components(separatedBy: dashDelimiter)
+                    let endWithSlash = endArray[1].components(separatedBy: dashDelimiter)
+                    
+                    startMonth = startWithSlash[0]
+                    startDay = startWithSlash[1]
+                    startYear = startWithSlash[2]
+                    
+                    endMonth = endWithSlash[0]
+                    endDay = endWithSlash[1]
+                    endYear = endWithSlash[2]
+                    
+                    if (startMonth == endMonth) && (startDay == endDay) && (startYear == endYear) {
+                        
+                    } else {
+                        helper.showAlert(title: "Data Error", message: "Please fill in title, start time, and end time.", in: self)
+                    }
+                } else {
+                    helper.showAlert(title: "Data Error", message: "Please fill in title, start time, and end time.", in: self)
+                }
+                    
             }
+            
+            
+                
+            
+            
+            
             sleep(UInt32(1.5))
             dismiss(animated: true, completion: nil)
-        } else {
-            helper.showAlert(title: "Data Error", message: "Event must start and end on the same day.", in: self)
-        }
+            } else {
+                helper.showAlert(title: "Data Error", message: "Event must start and end on the same day.", in: self)
+            }
 
         
     }
@@ -466,9 +531,12 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             endDatePicker.isUserInteractionEnabled = false
             textView.isUserInteractionEnabled = false
             eventURLText.isUserInteractionEnabled = false
+            startText.isUserInteractionEnabled = false
+            endText.isUserInteractionEnabled = false
             deleteButton.isHidden = true
         } else {
             if updateNeeded == true {
+                
                 deleteButton.isHidden = false
                 self.doneButton.setTitle("Update", for: .normal)
                 
@@ -527,6 +595,42 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         
            return true;
        }
+    
+    func createStart13DatePicker() {
+            let toolbar = UIToolbar()
+            toolbar.sizeToFit()
+            let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneStartPressed))
+            toolbar.setItems([doneBtn], animated: true)
+            startText.inputAccessoryView = toolbar
+            startText.inputView = datePicker
+            datePicker.datePickerMode = .time
+            
+    }
+    func createEnd13DatePicker() {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneEndPressed))
+        toolbar.setItems([doneBtn], animated: true)
+        endText.inputAccessoryView = toolbar
+        endText.inputView = datePicker
+        datePicker.datePickerMode = .time
+        
+    }
+    @objc func doneStartPressed() {
+            let formatter = DateFormatter()
+            formatter.dateStyle = .none
+            formatter.timeStyle = .short
+            startText.text = formatter.string(from: datePicker.date)
+            self.view.endEditing(true)
+        }
+        
+        @objc func doneEndPressed() {
+            let formatter = DateFormatter()
+            formatter.dateStyle = .none
+            formatter.timeStyle = .short
+            endText.text = formatter.string(from: datePicker.date)
+            self.view.endEditing(true)
+        }
     
     func textViewDidChange(_ textView: UITextView) {
         if textView.text.isEmpty {

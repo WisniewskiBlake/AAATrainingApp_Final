@@ -125,7 +125,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
             self.present(navigation, animated: true, completion: nil)
            self.actionButton.close()
         }
-        actionButton.addItem(title: "Create Date", image: UIImage(named: "date")?.withRenderingMode(.alwaysTemplate)) { item in
+        actionButton.addItem(title: "Create Event", image: UIImage(named: "date")?.withRenderingMode(.alwaysTemplate)) { item in
             self.actionButton.close()
             if let eventCoach : Event_Coach = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
             {
