@@ -261,6 +261,7 @@ class MultiEvent_Coach: UITableViewController, EventCellDelegate {
             {
                 eventVC.accountType = self.accountType
                 eventVC.hidesBottomBarWhenPushed = true
+                //eventVC.sendFromMultiEvent = true
                 eventVC.dateString = event.eventDate
                 eventVC.updateNeeded = true
                 eventVC.event = event

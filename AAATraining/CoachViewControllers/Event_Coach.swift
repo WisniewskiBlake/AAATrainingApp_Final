@@ -109,10 +109,10 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             endText.isHidden = true
             setDatePickerDates()
         } else {
-//            startText.text = event.eventDate + " " + event.eventStart
-//            endText.text = event.eventDate + " " + event.eventEnd
-//            datePicker.isHidden = true
-//            endDatePicker.isHidden = true
+            datePicker.isHidden = true
+            endDatePicker.isHidden = true
+            startText.isHidden = true
+            endText.isHidden = true
 //            startText.isHidden = false
 //            endText.isHidden = false
 //            createStart13DatePicker()
@@ -161,7 +161,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     
     func setDatePickerDates() {
         let dateFormatter = DateFormatter()
-        
+        //send from multi event never true??
         if sendFromMultiEvent == true {
             let delimiter = " "
             let dateToken = dateString.components(separatedBy: delimiter)
@@ -196,11 +196,18 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
                 let dashDelimiter = "-"
                 let dateWithSlash = dateToken[1].components(separatedBy: dashDelimiter)
                 
+                dateFormatter.dateFormat = "h:mm a"
+                let start = dateFormatter.date(from: event.eventStart)
+                let end = dateFormatter.date(from: event.eventEnd)
+                dateFormatter.dateFormat = "HH:mm"
+                let start24 = dateFormatter.string(from: start!)
+                let end24 = dateFormatter.string(from: end!)
+                
                 let colonDelimiter = ":"
-                let startHourToken = event.eventStart.components(separatedBy: colonDelimiter)
+                let startHourToken = start24.components(separatedBy: colonDelimiter)
                 let startMinuteToken = startHourToken[1].components(separatedBy: delimiter)
                 
-                let endHourToken = event.eventEnd.components(separatedBy: colonDelimiter)
+                let endHourToken = end24.components(separatedBy: colonDelimiter)
                 let endMinuteToken = endHourToken[1].components(separatedBy: delimiter)
                 
                 
@@ -515,13 +522,26 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         
         
     }
+    
+
 
     func configureUI() {
+        
+        let delimiter = " "
+        let dateToken = dateString.components(separatedBy: delimiter)
+        let dashDelimiter = "-"
+        let dateWithSlash = dateToken[1].components(separatedBy: dashDelimiter)
+        
+        let month = getMonth(monthNumber: dateWithSlash[0])
+        let day = dateWithSlash[1]
+        let year = dateWithSlash[2]
         
         textView.text = event.eventText
         eventTitleText.text = event.eventTitle
         eventLocationText.text = event.eventLocation
         eventURLText.text = event.eventURL
+//        startText.text = month + " " + day + " " + year + " " + "at " + event.eventStart
+//        endText.text = month + " " + day + " " + year + " " + "at " + event.eventEnd
         if event.eventText != "" {
             placeHolderLabel.isHidden = true
         } else {
@@ -751,6 +771,36 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         // rounded corners
 //        detailsURLView.layer.cornerRadius = 5
 //        detailsURLView.layer.masksToBounds = true
+    }
+    
+    func getMonth(monthNumber: String) -> String {
+        if monthNumber == "01" {
+            return "Jan."
+        } else if monthNumber == "02" {
+            return "Feb."
+        } else if monthNumber == "03" {
+            return "Mar."
+        } else if monthNumber == "04" {
+            return "Apr."
+        } else if monthNumber == "05" {
+            return "May"
+        } else if monthNumber == "06" {
+            return "June"
+        } else if monthNumber == "07" {
+            return "July"
+        } else if monthNumber == "08" {
+            return "Aug."
+        } else if monthNumber == "09" {
+            return "Sept."
+        } else if monthNumber == "10" {
+            return "Oct."
+        } else if monthNumber == "11" {
+            return "Nov."
+        } else if monthNumber == "12" {
+            return "Dec."
+        } else {
+            return ""
+        }
     }
 
 }
