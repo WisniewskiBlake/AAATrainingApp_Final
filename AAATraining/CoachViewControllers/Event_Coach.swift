@@ -99,20 +99,16 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         getAllEvents()
         configureUI()
         
-        datePicker.isHidden = false
-        endDatePicker.isHidden = false
-        startText.isHidden = true
-        endText.isHidden = true
-        setDatePickerDates()
         
         
-//        if #available(iOS 14.0, *) {
-//            datePicker.isHidden = false
-//            endDatePicker.isHidden = false
-//            startText.isHidden = true
-//            endText.isHidden = true
-//            setDatePickerDates()
-//        } else {
+        
+        if #available(iOS 14.0, *) {
+            datePicker.isHidden = false
+            endDatePicker.isHidden = false
+            startText.isHidden = true
+            endText.isHidden = true
+            setDatePickerDates()
+        } else {
 //            startText.text = event.eventDate + " " + event.eventStart
 //            endText.text = event.eventDate + " " + event.eventEnd
 //            datePicker.isHidden = true
@@ -121,7 +117,19 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
 //            endText.isHidden = false
 //            createStart13DatePicker()
 //            createEnd13DatePicker()
-//        }
+            doneButton.isHidden = true
+            mapBtn.isHidden = true
+            eventTitleText.isUserInteractionEnabled = false
+            eventLocationText.isUserInteractionEnabled = false
+            datePicker.isUserInteractionEnabled = false
+            endDatePicker.isUserInteractionEnabled = false
+            textView.isUserInteractionEnabled = false
+            eventURLText.isUserInteractionEnabled = false
+            startText.isUserInteractionEnabled = false
+            endText.isUserInteractionEnabled = false
+            deleteButton.isHidden = true
+            helper.showAlert(title: "Version Error", message: "Please update your device to iOS 14+ to create and view events.", in: self)
+        }
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
 
     }
@@ -242,11 +250,11 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             var endDay: String = ""
             var endYear: String = ""
             
-            if #available(iOS 14.0, *) {
-                let startDateComps = datePicker.calendar.dateComponents([.month, .day, .year, .hour, .minute, .second], from: datePicker.date)
-                let endDateComps = endDatePicker.calendar.dateComponents([.month, .day, .year, .hour, .minute, .second], from: endDatePicker.date)
-                if endDateComps.month == startDateComps.month && endDateComps.day == startDateComps.day && endDateComps.year == startDateComps.year {
-                    dateFormatter.dateFormat = "h:mm a"
+            
+            let startDateComps = datePicker.calendar.dateComponents([.month, .day, .year, .hour, .minute, .second], from: datePicker.date)
+            let endDateComps = endDatePicker.calendar.dateComponents([.month, .day, .year, .hour, .minute, .second], from: endDatePicker.date)
+            if endDateComps.month == startDateComps.month && endDateComps.day == startDateComps.day && endDateComps.year == startDateComps.year {
+                dateFormatter.dateFormat = "h:mm a"
 
                 startDate = Calendar.current.date(from: startDateComps)!
                 endDate = Calendar.current.date(from: endDateComps)!
@@ -269,7 +277,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
                         }
                         
                     } else {
-                        ProgressHUD.show("Creating...", interaction: false)
+                        
                         createEventForMembers(start: startTime, end: endTime, fullDate: newDateString , upcomingCompar: dateForUpcomingComparison)
                         sleep(UInt32(0.5))
                     }
@@ -278,48 +286,50 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
                 } else {
                     helper.showAlert(title: "Data Error", message: "Please fill in title.", in: self)
                 }
-                
-            } else {
-                if eventTitleText.text != "" && startText.text != "" && endText.text != "" {
-                    let delimiter = " "
-                    let startArray = startText.text!.components(separatedBy: delimiter)
-                    let endArray = endText.text!.components(separatedBy: delimiter)
-                    startTime = startArray[2]
-                    endTime = endArray[2]
-                    
-                    let dashDelimiter = "-"
-                    let startWithSlash = startArray[1].components(separatedBy: dashDelimiter)
-                    let endWithSlash = endArray[1].components(separatedBy: dashDelimiter)
-                    
-                    startMonth = startWithSlash[0]
-                    startDay = startWithSlash[1]
-                    startYear = startWithSlash[2]
-                    
-                    endMonth = endWithSlash[0]
-                    endDay = endWithSlash[1]
-                    endYear = endWithSlash[2]
-                    
-                    if (startMonth == endMonth) && (startDay == endDay) && (startYear == endYear) {
-                        
-                    } else {
-                        helper.showAlert(title: "Data Error", message: "Please fill in title, start time, and end time.", in: self)
-                    }
-                } else {
-                    helper.showAlert(title: "Data Error", message: "Please fill in title, start time, and end time.", in: self)
-                }
-                    
-            }
-            
-            
-                
-            
-            
-            
-            sleep(UInt32(1.5))
-            dismiss(animated: true, completion: nil)
+                sleep(UInt32(1.5))
+                dismiss(animated: true, completion: nil)
             } else {
                 helper.showAlert(title: "Data Error", message: "Event must start and end on the same day.", in: self)
             }
+                
+                
+    //            if #available(iOS 14.0, *) {} else {
+    //                if eventTitleText.text != "" && startText.text != "" && endText.text != "" {
+    //                    let delimiter = " "
+    //                    let startArray = startText.text!.components(separatedBy: delimiter)
+    //                    let endArray = endText.text!.components(separatedBy: delimiter)
+    //                    startTime = startArray[2]
+    //                    endTime = endArray[2]
+    //
+    //                    let dashDelimiter = "-"
+    //                    let startWithSlash = startArray[1].components(separatedBy: dashDelimiter)
+    //                    let endWithSlash = endArray[1].components(separatedBy: dashDelimiter)
+    //
+    //                    startMonth = startWithSlash[0]
+    //                    startDay = startWithSlash[1]
+    //                    startYear = startWithSlash[2]
+    //
+    //                    endMonth = endWithSlash[0]
+    //                    endDay = endWithSlash[1]
+    //                    endYear = endWithSlash[2]
+    //
+    //                    if (startMonth == endMonth) && (startDay == endDay) && (startYear == endYear) {
+    //
+    //                    } else {
+    //                        helper.showAlert(title: "Data Error", message: "Please fill in title, start time, and end time.", in: self)
+    //                    }
+    //                } else {
+    //                    helper.showAlert(title: "Data Error", message: "Please fill in title, start time, and end time.", in: self)
+    //                }
+    //
+    //            }
+            
+            
+                
+            
+            
+            
+        
 
         
     }

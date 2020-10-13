@@ -407,7 +407,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
             cell.eventLocationText.isHidden = true
         }
         
-        cell.eventTimeLabel?.text = upcomingEvents[indexPath.row].eventStart + " - " + upcomingEvents[indexPath.row].eventEnd + ","
+        cell.eventTimeLabel?.text = upcomingEvents[indexPath.row].eventStart + " - " + upcomingEvents[indexPath.row].eventEnd
         cell.eventTitleLabel?.text = upcomingEvents[indexPath.row].eventTitle
         let date = upcomingEvents[indexPath.row].dateForUpcomingComparison
         let month = date[5 ..< 7]
