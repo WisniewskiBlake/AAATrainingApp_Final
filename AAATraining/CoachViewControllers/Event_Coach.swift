@@ -128,7 +128,8 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             startText.isUserInteractionEnabled = false
             endText.isUserInteractionEnabled = false
             deleteButton.isHidden = true
-            helper.showAlert(title: "Version Error", message: "Please update your device to iOS 14+ to create and view events.", in: self)
+            helper.showAlert(title: "Version Error", message: "Please update your device to iOS 14 to create and view events.", in: self)
+            
         }
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
 
@@ -275,18 +276,18 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
                 let newDateString = dateFormatter.string(from: startDate)
                     
                 if eventTitleText.text != "" {
-                    if self.doneButton.currentTitle == "Update" {
-                        if(newDateString == self.dateString) {
+                    if self.doneButton.currentTitle == "Update" &&  (newDateString == self.dateString){
+                        
                             event.updateEvent(eventGroupID: event.eventGroupID, eventOwnerID: event.eventOwnerID, eventText: textView.text!, eventTitle: eventTitleText.text!, eventStart: startTime, eventEnd: endTime, eventLocation: eventLocationText.text!, eventImage: "", eventURL: eventURLText.text!)
                             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateEvent"), object: nil)
-                        } else {
-                            helper.showAlert(title: "Data Error", message: "Date to update and dates you have selected are conflicting.", in: self)
-                        }
                         
-                    } else {
+                        
+                    } else if self.doneButton.currentTitle == "Done" {
                         
                         createEventForMembers(start: startTime, end: endTime, fullDate: newDateString , upcomingCompar: dateForUpcomingComparison)
                         sleep(UInt32(0.5))
+                    } else {
+                        helper.showAlert(title: "Data Error", message: "The date you chose update and new start and end time are not on the same day.", in: self)
                     }
                     
                     
@@ -526,15 +527,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
 
 
     func configureUI() {
-        
-        let delimiter = " "
-        let dateToken = dateString.components(separatedBy: delimiter)
-        let dashDelimiter = "-"
-        let dateWithSlash = dateToken[1].components(separatedBy: dashDelimiter)
-        
-        let month = getMonth(monthNumber: dateWithSlash[0])
-        let day = dateWithSlash[1]
-        let year = dateWithSlash[2]
+
         
         textView.text = event.eventText
         eventTitleText.text = event.eventTitle
