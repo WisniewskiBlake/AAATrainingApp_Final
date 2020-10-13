@@ -99,8 +99,13 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         getAllMembers()
         getAllEvents()
         configureUI()
-        setDatePickerDates()
         
+        
+        if #available(iOS 14.0, *) {
+            setDatePickerDates()
+        } else {
+            // handle older versions
+        }
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
 
     }
