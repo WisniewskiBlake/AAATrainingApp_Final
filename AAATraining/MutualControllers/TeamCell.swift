@@ -23,25 +23,22 @@ class TeamCell: UITableViewCell {
         teamImageView.layer.cornerRadius = teamImageView.frame.width / 2
         teamImageView.clipsToBounds = true
         
-        borderView.backgroundColor = .white
-        borderView.layer.shadowRadius = 3.0
-        borderView.layer.shadowColor = UIColor.black.cgColor
-        borderView.layer.shadowOffset = CGSize()
-        borderView.layer.shadowOpacity = 0.4
-        borderView.layer.cornerRadius = 15.0
-        borderView.layer.shadowPath = UIBezierPath(roundedRect: borderView.bounds, cornerRadius: 15.0).cgPath
-        
+//        borderView.backgroundColor = .white
+//        borderView.layer.shadowRadius = CGFloat(4.0)
+//        borderView.layer.shadowColor = UIColor.black.cgColor
+//        borderView.layer.shadowOffset = CGSize(width: 0, height: 0)
+//        borderView.layer.shadowOpacity = 0.4
+//        borderView.layer.cornerRadius = CGFloat(15.0)
+//        borderView.layer.shadowPath = UIBezierPath(roundedRect: borderView.bounds, cornerRadius: CGFloat(15.0)).cgPath
+        //borderView.layer.masksToBounds = false
 //        // add shadow on cell
 //        backgroundColor = .clear // very important
-//        layer.masksToBounds = false
-//        layer.shadowOpacity = 0.23
-//        layer.shadowRadius = 4
-//        layer.shadowOffset = CGSize(width: 0, height: 0)
-//        layer.shadowColor = UIColor.black.cgColor
+
 //
 //        // add corner radius on `contentView`
-//        contentView.backgroundColor = .white
-//        contentView.layer.cornerRadius = 10
+        //contentView.backgroundColor = .clear
+       // contentView.layer.cornerRadius = 15
+        //contentView.layer.masksToBounds = true
         
     }
 
