@@ -13,7 +13,7 @@ internal class ColorMapView: UIView {
 
     private var model = HRColorMapModel()
 
-    private let borderWidth: CGFloat = 6
+   // private let borderWidth: CGFloat = 6
     private let backgounrdLayer = CAShapeLayer()
     private let colorMap = CALayer()
     private let maskLayer = CAShapeLayer()
@@ -79,7 +79,7 @@ internal class ColorMapView: UIView {
     private func setup() {
         updateStrokeColor()
         backgounrdLayer.backgroundColor = UIColor.black.cgColor
-        backgounrdLayer.lineWidth = borderWidth
+        backgounrdLayer.lineWidth = 6
         layer.addSublayer(backgounrdLayer)
         colorMap.mask = maskLayer
         layer.addSublayer(colorMap)
@@ -104,7 +104,7 @@ internal class ColorMapView: UIView {
     }
 
     private func mapFrame() -> CGRect {
-        let mapSize: CGFloat = min(bounds.width, bounds.height) - borderWidth * 2
+        let mapSize: CGFloat = min(bounds.width, bounds.height) - 6 * 2
         return  CGRect(x: (bounds.width - mapSize)/2, y: (bounds.height - mapSize)/2, width: mapSize, height: mapSize)
     }
 
@@ -115,7 +115,7 @@ internal class ColorMapView: UIView {
         colorMap.contents = ColorMapView.createColorMapImage(size: mf.size, model: model)
         let onePixel = 1 / UIScreen.main.scale
         maskLayer.path = UIBezierPath(ovalIn: colorMap.bounds.insetBy(dx: -onePixel, dy: -onePixel)).cgPath
-        backgounrdLayer.path = UIBezierPath(ovalIn: mf.insetBy(dx: -borderWidth/2, dy: -borderWidth/2)).cgPath
+        backgounrdLayer.path = UIBezierPath(ovalIn: mf.insetBy(dx: -6/2, dy: -6/2)).cgPath
     }
     
     func set(brightness: CGFloat) {

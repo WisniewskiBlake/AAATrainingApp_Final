@@ -14,12 +14,12 @@ import ProgressHUD
 class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var createTeamButton: UIButton!
+    @IBOutlet weak var joinTeamButton: UIButton!
+    @IBOutlet weak var buttonsView: UIView!
     
-    @IBOutlet weak var joinTeamView: UIView!
-    @IBOutlet weak var createTeamView: UIView!
     
-    @IBOutlet weak var joinImageView: UIImageView!
-    @IBOutlet weak var createImageView: UIImageView!
+
     
     let joinTapGestureRecognizer = UITapGestureRecognizer()
     let createTapGestureRecognizer = UITapGestureRecognizer()
@@ -42,22 +42,47 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         NotificationCenter.default.addObserver(self, selector: #selector(loadTeamsForUser), name: NSNotification.Name(rawValue: "createdTeam"), object: nil)
 
         
-        joinImageView.layer.cornerRadius = joinImageView.frame.width / 2
-        joinImageView.clipsToBounds = true
-        createImageView.layer.cornerRadius = createImageView.frame.width / 2
-        createImageView.clipsToBounds = true
+        joinTeamButton.backgroundColor = #colorLiteral(red: 1, green: 0.3411764706, blue: 0, alpha: 1)
+        joinTeamButton.layer.shadowRadius = 3.0
+        joinTeamButton.layer.shadowColor = UIColor.black.cgColor
+        joinTeamButton.layer.shadowOffset = CGSize(width: 2, height: 1)
+        joinTeamButton.layer.shadowOpacity = 0.4
+        joinTeamButton.layer.cornerRadius = createTeamButton.frame.height / 2
+        joinTeamButton.layer.shadowPath = UIBezierPath(roundedRect: joinTeamButton.bounds, cornerRadius: joinTeamButton.frame.height / 2).cgPath
         
-        joinTapGestureRecognizer.addTarget(self, action: #selector(self.joinTeamViewClicked))
-        joinTeamView.isUserInteractionEnabled = true
-        joinTeamView.addGestureRecognizer(joinTapGestureRecognizer)
-        
-        createTapGestureRecognizer.addTarget(self, action: #selector(self.createTeamViewClicked))
-        createTeamView.isUserInteractionEnabled = true
-        createTeamView.addGestureRecognizer(createTapGestureRecognizer)
-        
-//        loadTeams()
-//        loadUser()
+        createTeamButton.backgroundColor = .white
+        createTeamButton.layer.shadowRadius = 3.0
+        createTeamButton.layer.shadowColor = UIColor.black.cgColor
+        createTeamButton.layer.shadowOffset = CGSize(width: 2, height: 1)
+        createTeamButton.layer.shadowOpacity = 0.4
+        createTeamButton.layer.cornerRadius = createTeamButton.frame.height / 2
+        createTeamButton.layer.shadowPath = UIBezierPath(roundedRect: createTeamButton.bounds, cornerRadius: createTeamButton.frame.height / 2).cgPath
 
+        buttonsView.layer.cornerRadius = CGFloat(15.0)
+        buttonsView.layer.shadowOpacity = Float(0.2)
+        buttonsView.layer.shadowOffset = CGSize(width: 2, height: 1)
+        buttonsView.layer.shadowRadius = CGFloat(2)
+        
+        tableView.separatorColor = .clear
+        tableView.layer.cornerRadius = CGFloat(15.0)
+        tableView.layer.shadowOpacity = Float(0.2)
+        tableView.layer.shadowOffset = CGSize(width: 2, height: 1)
+        tableView.layer.shadowRadius = CGFloat(2)
+    
+    
+    }
+    @IBAction func joinButtonClicked(_ sender: Any) {
+        let userTypeSelectionVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserTypeSelectionVC") as! UserTypeSelectionVC
+        userTypeSelectionVC.viewToGoTo = "join"
+        userTypeSelectionVC.modalPresentationStyle = .fullScreen
+        self.present(userTypeSelectionVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func createButtonClicked(_ sender: Any) {
+        let teamRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamRegisterVC") as! TeamRegisterVC
+        teamRegisterVC.userAccountType = "Coach"
+        teamRegisterVC.modalPresentationStyle = .fullScreen
+        self.present(teamRegisterVC, animated: true, completion: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -97,78 +122,42 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 
     }
     
-    @objc func joinTeamViewClicked() {
-        
-        let userTypeSelectionVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserTypeSelectionVC") as! UserTypeSelectionVC
-        userTypeSelectionVC.viewToGoTo = "join"
-        userTypeSelectionVC.modalPresentationStyle = .fullScreen
-        self.present(userTypeSelectionVC, animated: true, completion: nil)
-//        let teamLoginVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserTypeSelectionVC") as! UserTypeSelectionVC
-//
-//        teamLoginVC.modalPresentationStyle = .fullScreen
-//        self.present(teamLoginVC, animated: true, completion: nil)
-        
-    }
     
-    @objc func createTeamViewClicked() {
-        
-        let teamRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamRegisterVC") as! TeamRegisterVC
-        teamRegisterVC.userAccountType = "Coach"
-        teamRegisterVC.modalPresentationStyle = .fullScreen
-        self.present(teamRegisterVC, animated: true, completion: nil)
-        
-//        let userTypeSelectionVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserTypeSelectionVC") as! UserTypeSelectionVC
-//        userTypeSelectionVC.viewToGoTo = "create"
-//        userTypeSelectionVC.modalPresentationStyle = .fullScreen
-//        self.present(userTypeSelectionVC, animated: true, completion: nil)
-
-    }
-
     @objc func loadTeamsForUser() {
-        
-            let query = reference(.Team).whereField(kTEAMMEMBERIDS, arrayContains: FUser.currentId())
-            query.getDocuments { (snapshot, error) in
-    
-                self.teams = []
-                self.teamLogos = []
-    
-                if error != nil {
-                    print(error!.localizedDescription)
-                    self.imageview.removeFromSuperview()
-                 self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
-    
-                    return
-                }
-    
-                guard let snapshot = snapshot else {
-                    self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
-                    self.imageview.removeFromSuperview(); return
-                }
-    
-                if !snapshot.isEmpty {
-    
-                    for teamDictionary in snapshot.documents {
-    
-                        let teamDictionary = teamDictionary.data() as NSDictionary
-                        let team = Team(_dictionary: teamDictionary)
-                        self.teams.append(team)
-                        self.helper.imageFromData(pictureData: team.teamLogo) { (avatarImage) in
-    
-                            if avatarImage != nil {
-                                self.teamLogos.append(avatarImage!.circleMasked!)
-                            }
-                        }
-    
-                    }
-                    self.tableView.reloadData()
-                    self.imageview.removeFromSuperview()
-                }
-                self.i += 1
-                self.tableView.reloadData()
-                
+        let query = reference(.Team).whereField(kTEAMMEMBERIDS, arrayContains: FUser.currentId())
+        query.getDocuments { (snapshot, error) in
+            self.teams = []
+            self.teamLogos = []
+            if error != nil {
+                print(error!.localizedDescription)
                 self.imageview.removeFromSuperview()
-                
+             self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
+
+                return
             }
+            guard let snapshot = snapshot else {
+                self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
+                self.imageview.removeFromSuperview(); return
+            }
+            if !snapshot.isEmpty {
+                for teamDictionary in snapshot.documents {
+                    let teamDictionary = teamDictionary.data() as NSDictionary
+                    let team = Team(_dictionary: teamDictionary)
+                    self.teams.append(team)
+                    self.helper.imageFromData(pictureData: team.teamLogo) { (avatarImage) in
+
+                        if avatarImage != nil {
+                            self.teamLogos.append(avatarImage!.circleMasked!)
+                        }
+                    }
+                }
+                self.tableView.reloadData()
+                self.imageview.removeFromSuperview()
+            }
+            self.i += 1
+            self.tableView.reloadData()
+            self.imageview.removeFromSuperview()
+        }
     }
     
 
@@ -207,10 +196,17 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         
     }
     
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "TeamCell", for: indexPath) as! TeamCell
+//
+//    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "TeamCell", for: indexPath) as! TeamCell
-        print(indexPath.row)
+        cell.contentView.layer.masksToBounds = true
+        let radius = cell.contentView.layer.cornerRadius
+        cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: radius).cgPath
         
         var index = 0
         var i = 0
