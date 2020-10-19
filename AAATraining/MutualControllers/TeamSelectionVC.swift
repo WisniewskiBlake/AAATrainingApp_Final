@@ -94,14 +94,14 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             imageview.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(imageview)
             let widthConstraint = NSLayoutConstraint(item: imageview, attribute: .width, relatedBy: .equal,
-                                                     toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 250)
+                                                     toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 200)
 
             let heightConstraint = NSLayoutConstraint(item: imageview, attribute: .height, relatedBy: .equal,
-                                                      toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 250)
+                                                      toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 200)
 
-            let xConstraint = NSLayoutConstraint(item: imageview, attribute: .centerX, relatedBy: .equal, toItem: self.tableView, attribute: .centerX, multiplier: 1, constant: 0)
+            let xConstraint = NSLayoutConstraint(item: imageview, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: 1, constant: 0)
 
-            let yConstraint = NSLayoutConstraint(item: imageview, attribute: .centerY, relatedBy: .equal, toItem: self.tableView, attribute: .centerY, multiplier: 1, constant: 0)
+            let yConstraint = NSLayoutConstraint(item: imageview, attribute: .centerY, relatedBy: .equal, toItem: self.view, attribute: .centerY, multiplier: 1, constant: 0)
 
             NSLayoutConstraint.activate([widthConstraint, heightConstraint, xConstraint, yConstraint])
             //NSLayoutConstraint.activate([xConstraint, yConstraint])
