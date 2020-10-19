@@ -83,7 +83,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         
         let attrs = [
             NSAttributedString.Key.foregroundColor: UIColor.white,
-            NSAttributedString.Key.font: UIFont(name: "PROGRESSPERSONALUSE", size: 28)!
+            NSAttributedString.Key.font: UIFont(name: "Helvetica Neue Bold", size: 26)!
         ]
         
         navigationController?.navigationBar.largeTitleTextAttributes = attrs

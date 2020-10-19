@@ -538,7 +538,7 @@ extension UIViewController
         titleLabel.text = text
         titleLabel.textAlignment = .left
         //titleLabel.font = UIFont(name: "PaladinsLaser", size: 19)
-        titleLabel.font = UIFont(name: "Spantaran", size: 25)
+        titleLabel.font = UIFont(name: "Helvetica Neue Bold", size: 27)
         //titleLabel.backgroundColor = .black
         
 //        titleLabel.font = UIFont(name: "Paladins", size: 29)

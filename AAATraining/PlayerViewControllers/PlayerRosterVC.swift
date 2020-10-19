@@ -12,69 +12,63 @@ import ProgressHUD
 import FirebaseFirestore
 
 class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell_CoachDelegate {
-    
-    
     @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var filterSegmentControl: UISegmentedControl!
-    
-    var allUsers: [FUser] = []
-    var coaches: [FUser] = []
-    var players: [FUser] = []
-    var parents: [FUser] = []
-    var usersToShow: [FUser] = []
-    var userType = ""
-    var userTeamAccTypeIndexArr : [Int] = []
-    var filteredUsers: [FUser] = []
-    var allUsersGroupped = NSDictionary() as! [String : [FUser]]
-    var sectionTitleList : [String] = []
-    var userListener: ListenerRegistration!
-    
-    var isLoading = false
-    let helper = Helper()
-    var skip = 0
-    var limit = 10
-    
-    var imageview = UIImageView()
-    
-    @IBAction func filterSegmentChanged(_ sender: UISegmentedControl) {
-        switch sender.selectedSegmentIndex {
-        case 0:
-            loadUsers(filter: "")
-        case 1:
-            loadUsers(filter: "Player")
-        case 2:
-            loadUsers(filter: "Coach")
-        case 3:
-            loadUsers(filter: "Parent")
-        default:
-            return
+        @IBOutlet weak var filterSegmentedControl: UISegmentedControl!
+            
+        var allUsers: [FUser] = []
+        var coaches: [FUser] = []
+        var players: [FUser] = []
+        var parents: [FUser] = []
+        var usersToShow: [FUser] = []
+        var allUserIDs: [String] = []
+        var allUserAccTypes: [String] = []
+        var userTeamAccTypeIndexArr : [Int] = []
+        var filteredUsers: [FUser] = []
+        var allUsersGroupped = NSDictionary() as! [String : [FUser]]
+        var sectionTitleList : [String] = []
+        var userListener: ListenerRegistration!
+            
+            
+        var isLoading = false
+        let helper = Helper()
+        var skip = 0
+        var limit = 10
+            
+        let searchController = UISearchController(searchResultsController: nil)
+        var imageview = UIImageView()
+                
+        var segmentIndex = 0
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            navigationItem.largeTitleDisplayMode = .never
+            tableView.tableFooterView = UIView()
+                
+            self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+            navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+            self.setLeftAlignedNavigationItemTitle(text: "Roster", color: .white, margin: 12)
+                
+            navigationItem.searchController = searchController
+                
+            searchController.searchResultsUpdater = self
+            searchController.obscuresBackgroundDuringPresentation = false
+            definesPresentationContext = true
+    //        segmentIndex = filterSegmentedControl.selectedSegmentIndex
+    //        if(segmentIndex == 0) {
+    //            getTeam(filter: "")
+    //        } else if(segmentIndex == 0) {
+    //            getTeam(filter: "Player")
+    //        }
+    //        else if(segmentIndex == 0) {
+    //            getTeam(filter: "Coach")
+    //        }
+    //        else if(segmentIndex == 0) {
+    //            getTeam(filter: "Parent")
+    //        }
+                
+                
         }
-    }
-    
-    
-    
-    let searchController = UISearchController(searchResultsController: nil)
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        navigationItem.largeTitleDisplayMode = .never
-        tableView.tableFooterView = UIView()
-        
-        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        
-        navigationItem.searchController = searchController
-        
-        self.setLeftAlignedNavigationItemTitle(text: "Roster", color: .white, margin: 12)
-        
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        definesPresentationContext = true
-        loadUsers(filter: "")
-    }
-    
+            
+            
         override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(animated)
             do {
@@ -84,150 +78,172 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
                 view.addSubview(imageview)
                 let widthConstraint = NSLayoutConstraint(item: imageview, attribute: .width, relatedBy: .equal,
                                                          toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 250)
-
                 let heightConstraint = NSLayoutConstraint(item: imageview, attribute: .height, relatedBy: .equal,
                                                           toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 250)
-
                 let xConstraint = NSLayoutConstraint(item: imageview, attribute: .centerX, relatedBy: .equal, toItem: self.tableView, attribute: .centerX, multiplier: 1, constant: 0)
-
                 let yConstraint = NSLayoutConstraint(item: imageview, attribute: .centerY, relatedBy: .equal, toItem: self.tableView, attribute: .centerY, multiplier: 1, constant: 0)
-
                 NSLayoutConstraint.activate([widthConstraint, heightConstraint, xConstraint, yConstraint])
             } catch {
                 print(error)
             }
             self.imageview.startAnimatingGif()
+                
             self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
             navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
             navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-            
+                
             configureUI()
             let view = UIView()
             view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            tableView.tableFooterView = view           
-            
+            tableView.tableFooterView = view
+            filterSegmentedControl.selectedSegmentIndex = 0
+            getTeam(filter: "")
         }
-    
-    override func viewDidLayoutSubviews() {
-           super.viewDidLayoutSubviews()
-           fillContentGap:
-           if let tableFooterView = tableView.tableFooterView {
-               /// The expected height for the footer under autolayout.
-               let footerHeight = tableFooterView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-               /// The amount of empty space to fill with the footer view.
-               let gapHeight: CGFloat = tableView.bounds.height - tableView.adjustedContentInset.top - tableView.adjustedContentInset.bottom - tableView.contentSize.height
-               // Ensure there is space to be filled
-               guard gapHeight.rounded() > 0 else { break fillContentGap }
-               // Fill the gap
-               tableFooterView.frame.size.height = gapHeight + footerHeight
-           }
-    }
-    
-    func configureUI() {
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        self.tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        
-    }
-    
-    // MARK: - Search Bar
-    fileprivate func splitDataIntoSection() {
-          
-          var sectionTitle: String = ""
-          
-          for i in 0..<self.usersToShow.count {
-              let currentUser = self.usersToShow[i]
-              
-              let firstChar = currentUser.firstname.first!
-              
-              let firstCarString = "\(firstChar)"
-              if firstCarString != sectionTitle {
-                  sectionTitle = firstCarString
-                  self.allUsersGroupped[sectionTitle] = []
-                  if !sectionTitleList.contains(sectionTitle) {
-                      self.sectionTitleList.append(sectionTitle)
-                  }
-              }
-              self.allUsersGroupped[firstCarString]?.append(currentUser)
-          }
-    
-      }
-    
-   
-    
-    // MARK: - loadUsers
-    func loadUsers(filter: String) {
-        
+            
+        override func viewWillDisappear(_ animated: Bool) {
+            super.viewWillDisappear(animated)
+                
+        }
+            
+        override func viewDidLayoutSubviews() {
+            super.viewDidLayoutSubviews()
+            fillContentGap:
+            if let tableFooterView = tableView.tableFooterView {
+                /// The expected height for the footer under autolayout.
+                let footerHeight = tableFooterView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+                /// The amount of empty space to fill with the footer view.
+                let gapHeight: CGFloat = tableView.bounds.height - tableView.adjustedContentInset.top - tableView.adjustedContentInset.bottom - tableView.contentSize.height
+                // Ensure there is space to be filled
+                guard gapHeight.rounded() > 0 else { break fillContentGap }
+                // Fill the gap
+                tableFooterView.frame.size.height = gapHeight + footerHeight
+            }
+        }
+            
+        func configureUI() {
+            self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+            navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+            navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            self.tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+                
+        }
+        override var preferredStatusBarStyle: UIStatusBarStyle {
+            return .lightContent
+        }
+            
+        @IBAction func filterSegmentValueChanged(_ sender: UISegmentedControl) {
+                
+            switch sender.selectedSegmentIndex {
+            case 0:
+                getTeam(filter: "")
+            case 1:
+                getTeam(filter: "Player")
+            case 2:
+                getTeam(filter: "Coach")
+            case 3:
+                getTeam(filter: "Parent")
+            default:
+                return
+            }
+                
+        }
+            
+        func getTeam(filter: String) {
+                
            var query = reference(.User).whereField(kUSERTEAMIDS, arrayContains: FUser.currentUser()!.userCurrentTeamID).order(by: kFIRSTNAME, descending: false)
-        print(FUser.currentUser()!.userCurrentTeamID)
-           query.getDocuments { (snapshot, error) in
-               
-               self.allUsers = []
-               self.coaches = []
-               self.players = []
-               self.parents = []
-               self.sectionTitleList = []
-               self.allUsersGroupped = [:]
-               self.usersToShow = []
-               
-               if error != nil {
-                   print(error!.localizedDescription)
-                self.imageview.removeFromSuperview()
-                   self.tableView.reloadData()
-                   return
-               }
-               
-               guard let snapshot = snapshot else {
-                self.imageview.removeFromSuperview(); return
-               }
-               
-               if !snapshot.isEmpty {
-                   
-                   for userDictionary in snapshot.documents {
-                       
-                       let userDictionary = userDictionary.data() as NSDictionary
-                       let fUser = FUser(_dictionary: userDictionary)
-                       
-                       
-                       self.allUsers.append(fUser)
-                       let index = fUser.userTeamIDs.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)!
-                    print(index)
-                       self.userTeamAccTypeIndexArr.append(index)
-                       if fUser.userTeamAccountTypes[index] == "Coach" {
-                           self.coaches.append(fUser)
-                       } else if fUser.userTeamAccountTypes[index] == "Player" {
-                           self.players.append(fUser)
-                       } else {
-                           self.parents.append(fUser)
-                       }
-                       
-                   }
-                   
-                   switch filter {
-                      case "Player":
-                           self.usersToShow = self.players
+                query.getDocuments { (snapshot, error) in
+                        
+                    self.allUsers = []
+                    self.coaches = []
+                    self.players = []
+                    self.parents = []
+                    self.sectionTitleList = []
+                    self.allUsersGroupped = [:]
+                    self.usersToShow = []
+                        
+                    if error != nil {
+                        print(error!.localizedDescription)
+                        self.imageview.removeFromSuperview()
+                        self.tableView.reloadData()
+                        return
+                    }
+                    guard let snapshot = snapshot else {
+                        self.imageview.removeFromSuperview(); return
+                    }
+                    if !snapshot.isEmpty {
+                            
+                        for userDictionary in snapshot.documents {
+                                
+                            let userDictionary = userDictionary.data() as NSDictionary
+                            let fUser = FUser(_dictionary: userDictionary)
+                                
+                            self.allUsers.append(fUser)
+                            let index = fUser.userTeamIDs.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)!
+                            self.userTeamAccTypeIndexArr.append(index)
+                            if fUser.userTeamAccountTypes[index] == "Coach" {
+                                self.coaches.append(fUser)
+                            } else if fUser.userTeamAccountTypes[index] == "Player" {
+                                self.players.append(fUser)
+                            } else {
+                                self.parents.append(fUser)
+                            }
+                                
+                        }
+                            
+                        switch filter {
+                           case "Player":
+                                self.usersToShow = self.players
+                          case ("Coach"):
+                                self.usersToShow = self.coaches
+                           case ("Parent"):
+                               self.usersToShow = self.parents
+                          default:
+                                self.usersToShow = self.allUsers
+                        }
+                            
+                        self.splitDataIntoSection()
+                        self.tableView.reloadData()
+                        self.imageview.removeFromSuperview()
+                    }
+                        
+                    self.tableView.reloadData()
+                    self.imageview.removeFromSuperview()
+                        
+            }
+    //        GIFHUD.shared.dismiss()
+        }
+            
+        //MARK: Helper functions
+              
+          fileprivate func splitDataIntoSection() {
+                  
+              var sectionTitle: String = ""
+                  
+              for i in 0..<self.usersToShow.count {
+                  let currentUser = self.usersToShow[i]
+                      
+                  let firstChar = currentUser.firstname.first!
+                      
+                  let firstCarString = "\(firstChar)"
+                  if firstCarString != sectionTitle {
+                      sectionTitle = firstCarString
+                      self.allUsersGroupped[sectionTitle] = []
+                      if !sectionTitleList.contains(sectionTitle) {
+                          self.sectionTitleList.append(sectionTitle)
+                      }
+                  }
+                  self.allUsersGroupped[firstCarString]?.append(currentUser)
+              }
+                  
+          }
+            
+            
+            
+            
+        func didTapAvatarImage(indexPath: IndexPath) {
+                
+        }
 
-                     case ("Coach"):
-                           self.usersToShow = self.coaches
-
-                      case ("Parent"):
-                          self.usersToShow = self.parents
-
-                     default:
-                           self.usersToShow = self.allUsers
-
-                   }
-                   self.splitDataIntoSection()
-                   self.tableView.reloadData()
-               }
-               
-               self.tableView.reloadData()
-            self.imageview.removeFromSuperview()
-               
-       }
-    
-    }
     
     
     // MARK: - Table view data source
@@ -365,12 +381,7 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
 //
 //            return [deleteAction]
 //        }
-        
 
-    
-    func didTapAvatarImage(indexPath: IndexPath) {
-        
-    }
     
     func deleteUserPermanent(from cell: UITableViewCell) {
         

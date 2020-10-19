@@ -39,6 +39,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     let searchController = UISearchController(searchResultsController: nil)
     var imageview = UIImageView()
         
+    var segmentIndex = 0
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -55,7 +56,19 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         searchController.obscuresBackgroundDuringPresentation = false
         definesPresentationContext = true
 
-        getTeam(filter: "")
+//        segmentIndex = filterSegmentedControl.selectedSegmentIndex
+//        if(segmentIndex == 0) {
+//            getTeam(filter: "")
+//        } else if(segmentIndex == 0) {
+//            getTeam(filter: "Player")
+//        }
+//        else if(segmentIndex == 0) {
+//            getTeam(filter: "Coach")
+//        }
+//        else if(segmentIndex == 0) {
+//            getTeam(filter: "Parent")
+//        }
+        
         
     }
     
@@ -91,7 +104,12 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         tableView.tableFooterView = view
-        
+        filterSegmentedControl.selectedSegmentIndex = 0
+        getTeam(filter: "")
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         
     }
     
@@ -157,18 +175,15 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
                     self.tableView.reloadData()
                     return
                 }
-                
                 guard let snapshot = snapshot else {
                     self.imageview.removeFromSuperview(); return
-                }
-                
+                }                
                 if !snapshot.isEmpty {
                     
                     for userDictionary in snapshot.documents {
                         
                         let userDictionary = userDictionary.data() as NSDictionary
                         let fUser = FUser(_dictionary: userDictionary)
-                        
                         
                         self.allUsers.append(fUser)
                         let index = fUser.userTeamIDs.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)!
@@ -195,8 +210,8 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
 
                       default:
                             self.usersToShow = self.allUsers
-
                     }
+                    
                     self.splitDataIntoSection()
                     self.tableView.reloadData()
                     self.imageview.removeFromSuperview()
@@ -436,3 +451,4 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     
 
 }
+

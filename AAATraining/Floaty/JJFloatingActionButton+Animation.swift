@@ -150,7 +150,7 @@ fileprivate extension JJFloatingActionButton {
     func addOverlayView(to superview: UIView) {
         overlayView.isEnabled = true
         overlayView.isHidden = false
-        overlayView.frame = CGRect(x: 0, y: 0, width: superview.bounds.width, height: superview.bounds.height)
+        overlayView.frame = CGRect(x: 0, y: 0, width: (superview.superview?.bounds.width)!, height: (superview.superview?.bounds.height)!)
         //superview.addSubview(overlayView)
         superview.insertSubview(overlayView, belowSubview: self)
 //        overlayView.translatesAutoresizingMaskIntoConstraints = false
