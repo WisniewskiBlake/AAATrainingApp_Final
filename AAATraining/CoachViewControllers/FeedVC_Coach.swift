@@ -170,6 +170,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         }
 
 //        actionButton.overlayView.backgroundColor = UIColor(hue: 0.31, saturation: 0.37, brightness: 0.10, alpha: 0.30)
+//        actionButton.overlayView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
         actionButton.overlayView.backgroundColor = UIColor(white: 0, alpha: 0.65)
         actionButton.handleSingleActionDirectly = false
 //        actionButton.itemAnimationConfiguration = .circularSlideIn(withRadius: 120)
@@ -201,6 +202,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         actionButton.display(inViewController: self)
         //self.tableView.addSubview(actionButton)
         actionButton.translatesAutoresizingMaskIntoConstraints = false
+
         if #available(iOS 11.0, *) {
             actionButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
             actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true

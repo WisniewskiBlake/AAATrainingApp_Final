@@ -147,11 +147,12 @@ fileprivate extension JJFloatingActionButton {
 // MARK: - Overlay Animation
 
 fileprivate extension JJFloatingActionButton {
-    func addOverlayView(to superview: UIView) {
+    func addOverlayView(to superview: UITableView) {
         overlayView.isEnabled = true
         overlayView.isHidden = false
-        overlayView.frame = CGRect(x: 0, y: 0, width: (superview.superview?.bounds.width)!, height: (superview.superview?.bounds.height)!)
+        overlayView.frame = CGRect(x: 0, y: superview.contentOffset.y, width: (superview.bounds.width), height: (superview.bounds.height))
         //superview.addSubview(overlayView)
+        
         superview.insertSubview(overlayView, belowSubview: self)
 //        overlayView.translatesAutoresizingMaskIntoConstraints = false
 //        overlayView.topAnchor.constraint(equalTo: superview.topAnchor, constant: 0).isActive = true
