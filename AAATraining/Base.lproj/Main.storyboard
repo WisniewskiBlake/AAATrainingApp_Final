@@ -891,7 +891,7 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                        <real key="value" value="5"/>
+                                        <real key="value" value="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
                                         <size key="value" width="0.0" height="2"/>
@@ -4162,10 +4162,10 @@
                     </tabBar>
                     <connections>
                         <segue destination="doT-ZS-dhL" kind="relationship" relationship="viewControllers" id="emn-9f-eHH"/>
-                        <segue destination="wZc-wg-aaS" kind="relationship" relationship="viewControllers" id="V8t-7e-Kcx"/>
                         <segue destination="ykj-w3-fMi" kind="relationship" relationship="viewControllers" id="dyh-uU-6Sa"/>
                         <segue destination="uKg-ky-hnP" kind="relationship" relationship="viewControllers" id="MVu-Ak-Fn7"/>
                         <segue destination="alf-MY-Jyr" kind="relationship" relationship="viewControllers" id="RRA-jM-C7I"/>
+                        <segue destination="m41-eK-O4l" kind="relationship" relationship="viewControllers" id="qll-qM-j6N"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e9W-Mo-HBS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -4561,18 +4561,18 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NIG-kj-4zg">
-                                <rect key="frame" x="0.0" y="509" width="414" height="304"/>
+                                <rect key="frame" x="8" y="512" width="398" height="291"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="414" id="2pa-w2-qbC"/>
-                                    <constraint firstAttribute="height" constant="304" id="GVT-nm-pqA"/>
+                                    <constraint firstAttribute="width" constant="398" id="2pa-w2-qbC"/>
+                                    <constraint firstAttribute="height" constant="291" id="GVT-nm-pqA"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CalendarCell" rowHeight="67" id="d9P-ZU-ec4" customClass="CalendarCell" customModule="LockerRoom" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="67"/>
+                                        <rect key="frame" x="0.0" y="28" width="398" height="67"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="d9P-ZU-ec4" id="k3z-6g-vzA">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="67"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="398" height="67"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game Day" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J2F-Vb-K1g">
@@ -4653,8 +4653,8 @@
                                                 <constraint firstAttribute="bottom" secondItem="kIO-hd-vK5" secondAttribute="bottom" constant="16" id="hPE-za-vVB"/>
                                                 <constraint firstItem="Wdb-b5-5HK" firstAttribute="top" secondItem="J2F-Vb-K1g" secondAttribute="bottom" constant="4" id="mcT-Nt-F3S"/>
                                                 <constraint firstItem="XXA-h1-7Av" firstAttribute="centerY" secondItem="k3z-6g-vzA" secondAttribute="centerY" constant="-1" id="nTO-RI-HbY"/>
-                                                <constraint firstAttribute="trailing" secondItem="J2F-Vb-K1g" secondAttribute="trailing" constant="32" id="s4l-kl-4G5"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="kIO-hd-vK5" secondAttribute="trailing" constant="9" id="zBz-cf-EUh"/>
+                                                <constraint firstAttribute="trailing" secondItem="J2F-Vb-K1g" secondAttribute="trailing" constant="16" id="s4l-kl-4G5"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="kIO-hd-vK5" secondAttribute="trailing" constant="4" id="zBz-cf-EUh"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -4667,6 +4667,23 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                        <size key="value" width="1" height="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.59999999999999998"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                        <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="dataSource" destination="tCe-Kh-oC2" id="SjD-WB-wlr"/>
                                     <outlet property="delegate" destination="tCe-Kh-oC2" id="CWJ-bb-VKL"/>
@@ -4677,15 +4694,15 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="TA4-is-T1O" secondAttribute="trailing" id="CZx-v0-IY1"/>
-                            <constraint firstItem="NIG-kj-4zg" firstAttribute="top" secondItem="TA4-is-T1O" secondAttribute="bottom" constant="5" id="DK2-Jc-jzv"/>
+                            <constraint firstItem="NIG-kj-4zg" firstAttribute="top" secondItem="TA4-is-T1O" secondAttribute="bottom" constant="8" id="DK2-Jc-jzv"/>
                             <constraint firstItem="HAZ-ud-SBX" firstAttribute="top" secondItem="xsQ-Yv-2Jm" secondAttribute="top" constant="20" id="J6Y-Gh-el2"/>
                             <constraint firstItem="HAZ-ud-SBX" firstAttribute="leading" secondItem="xsQ-Yv-2Jm" secondAttribute="leading" id="TdT-Vp-GPU"/>
-                            <constraint firstItem="NIG-kj-4zg" firstAttribute="trailing" secondItem="xsQ-Yv-2Jm" secondAttribute="trailing" id="YAK-BU-AhE"/>
+                            <constraint firstItem="NIG-kj-4zg" firstAttribute="trailing" secondItem="xsQ-Yv-2Jm" secondAttribute="trailing" constant="-8" id="YAK-BU-AhE"/>
                             <constraint firstItem="xsQ-Yv-2Jm" firstAttribute="trailing" secondItem="HAZ-ud-SBX" secondAttribute="trailing" id="g7Q-NI-oZi"/>
-                            <constraint firstItem="NIG-kj-4zg" firstAttribute="bottom" secondItem="xsQ-Yv-2Jm" secondAttribute="bottom" id="gtm-2T-BDF"/>
+                            <constraint firstItem="NIG-kj-4zg" firstAttribute="bottom" secondItem="xsQ-Yv-2Jm" secondAttribute="bottom" constant="-10" id="gtm-2T-BDF"/>
                             <constraint firstItem="TA4-is-T1O" firstAttribute="top" secondItem="HAZ-ud-SBX" secondAttribute="bottom" constant="5" id="rfl-Km-MUh"/>
                             <constraint firstItem="TA4-is-T1O" firstAttribute="leading" secondItem="IAF-hz-fjJ" secondAttribute="leading" id="unJ-SH-iZe"/>
-                            <constraint firstItem="NIG-kj-4zg" firstAttribute="leading" secondItem="xsQ-Yv-2Jm" secondAttribute="leading" id="wic-Ot-w5p"/>
+                            <constraint firstItem="NIG-kj-4zg" firstAttribute="leading" secondItem="xsQ-Yv-2Jm" secondAttribute="leading" constant="8" id="wic-Ot-w5p"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Calendar" id="9ox-Ly-2Fj">
@@ -4883,7 +4900,7 @@
             </objects>
             <point key="canvasLocation" x="5307.2463768115949" y="-2946.4285714285711"/>
         </scene>
-        <!--Group Chats-->
+        <!--Team Chats-->
         <scene sceneID="6hW-az-6Ff">
             <objects>
                 <viewController storyboardIdentifier="recentVC" id="m41-eK-O4l" customClass="RecentChatVC_Coach" customModule="LockerRoom" customModuleProvider="target" sceneMemberID="viewController">
@@ -4895,9 +4912,15 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                                 <viewLayoutGuide key="safeArea" id="wiP-aF-Ewg"/>
                                 <color key="backgroundColor" red="0.91337895390000001" green="0.92143708469999996" blue="0.93379235270000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="DKF-l8-i57">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="125"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <viewLayoutGuide key="safeArea" id="VMA-VG-aun"/>
+                                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RecentCell" rowHeight="100" id="BSQ-rg-D2T" customClass="RecentChatCell_Coach" customModule="LockerRoom" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="100"/>
+                                        <rect key="frame" x="0.0" y="153" width="414" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BSQ-rg-D2T" id="GgU-hq-W8n">
                                             <rect key="frame" x="0.0" y="0.0" width="383" height="100"/>
@@ -5000,7 +5023,8 @@
                             <constraint firstItem="vQb-66-3wr" firstAttribute="top" secondItem="6GD-SN-13O" secondAttribute="top" id="r9g-I6-TPX"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Group Chats" id="32c-1N-GlY">
+                    <tabBarItem key="tabBarItem" title="Item" id="6sr-EL-wAr"/>
+                    <navigationItem key="navigationItem" title="Team Chats" id="32c-1N-GlY">
                         <barButtonItem key="backBarButtonItem" title="Chat" id="ZLT-qF-Twx"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="IWU-3Y-fG3">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -5011,11 +5035,12 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="vQb-66-3wr" id="lTQ-2c-Oxn"/>
+                        <outlet property="titleView" destination="DKF-l8-i57" id="0Tj-qZ-hQZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJy-7Q-Kaj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4608.695652173913" y="-2249.3303571428569"/>
+            <point key="canvasLocation" x="4676.811594202899" y="-2249.3303571428569"/>
         </scene>
         <!--Preferences-->
         <scene sceneID="cTU-iz-inf">
@@ -7176,34 +7201,6 @@
             <point key="canvasLocation" x="5548" y="800.14992503748135"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="vwk-wG-tHM">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wZc-wg-aaS" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="chat3" selectedImage="chat3_selected" id="5pe-05-CYY">
-                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-3"/>
-                    </tabBarItem>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="oiG-dv-0e2">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.1454846561" green="0.2585745156" blue="0.68228024239999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
-                        <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="m41-eK-O4l" kind="relationship" relationship="rootViewController" id="aa1-lV-JfD"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RwI-6f-cRf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3910" y="-2248"/>
-        </scene>
-        <!--Navigation Controller-->
         <scene sceneID="WEC-qB-mr5">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="uKg-ky-hnP" sceneMemberID="viewController">
@@ -7253,7 +7250,7 @@
         <!--Navigation Controller-->
         <scene sceneID="XF9-u3-W8x">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ivv-cq-YWo" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="chatNavigation" automaticallyAdjustsScrollViewInsets="NO" id="ivv-cq-YWo" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Gy3-vC-u1K">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>

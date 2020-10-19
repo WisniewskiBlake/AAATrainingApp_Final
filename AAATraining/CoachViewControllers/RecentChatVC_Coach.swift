@@ -12,7 +12,8 @@ import FirebaseFirestore
 class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewDataSource, RecentChatCell_CoachDelegate, UISearchResultsUpdating {
    
     @IBOutlet weak var tableView: UITableView!
-        
+    @IBOutlet weak var headerView: UIView!
+    
     var recentChats: [NSDictionary] = []
     var filteredChats: [NSDictionary] = []
     var avas = [UIImage]()
@@ -20,11 +21,12 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     
     let searchController = UISearchController(searchResultsController: nil)
     
+    @IBOutlet weak var titleView: UIView!
     var emptyLabelOne = UILabel()
     let helper = Helper()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return .darkContent
     }
     
     override func viewDidLoad() {
@@ -36,6 +38,10 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         self.tableView.tableFooterView = view
         
         emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -125, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
+        
+//        tableView.layer.cornerRadius = CGFloat(25.0)
+//
+//        tableView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -89,7 +95,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         navigationController?.navigationBar.largeTitleTextAttributes = attrs
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = true
-        
+        titleView.addSubview(searchController.searchBar)
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         
@@ -254,7 +260,13 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         
         let chatVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "chatVC") as! ChatVC_Coach
         let navController = UINavigationController(rootViewController: chatVC)
+
+//        let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "chatNavigation") as! UINavigationController
         
+        
+     
+        
+        //self.present(navigation, animated: true, completion: nil)
         
         //let chatVC = ChatVC_Coach()
         chatVC.hidesBottomBarWhenPushed = true
@@ -265,8 +277,8 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         chatVC.isGroup = (recent[kTYPE] as! String) == kGROUP
         //chatVC.allMembers = (recent[kMEMBERS])!
         
-        //self.present(chatVC, animated: true, completion: nil)
-        self.navigationController?.present(navController, animated: true, completion: nil)
+        self.present(navController, animated: true, completion: nil)
+        //self.navigationController?.present(navController, animated: true, completion: nil)
         
         //navigationController?.pushViewController(chatVC, animated: true)
     }

@@ -106,14 +106,14 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
     let titleLabel: UILabel = {
        let title = UILabel(frame: CGRect(x: 50, y: 10, width: 140, height: 15))
         title.textAlignment = .left
-        title.font = UIFont(name: title.font.fontName, size: 14)
+        title.font = UIFont(name: "Helvetica Neue Bold", size: 14)
         
         return title
     }()
     let subTitleLabel: UILabel = {
        let subTitle = UILabel(frame: CGRect(x: 50, y: 25, width: 140, height: 15))
         subTitle.textAlignment = .left
-        subTitle.font = UIFont(name: subTitle.font.fontName, size: 10)
+        subTitle.font = UIFont(name: "Helvetica Neue Bold", size: 10)
         
         return subTitle
     }()
