@@ -205,21 +205,16 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     }
     
     @objc func nutritionViewClicked() {
-        let navigationNutrition = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "nutritionNav") as! UINavigationController
-         let nutritionVC = navigationNutrition.viewControllers.first as! NutritionFeedVC
-        nutritionVC.accountType = FUser.currentUser()?.accountType
-        
-        self.present(navigationNutrition, animated: true, completion: nil)
+        let postScreen = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PostVC") as! PostVC
+        postScreen.postFeedType = "Fitness"
+        let postNav = UINavigationController(rootViewController: postScreen)
+        self.present(postNav, animated: true, completion: nil)
     }
     
     @objc func postViewClicked() {
-        let postNav = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "postNav") as! UINavigationController
-        
-        
-        postNav.modalPresentationStyle = .fullScreen
-    
-        self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-
+        let postScreen = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PostVC") as! PostVC
+        postScreen.postFeedType = "General"
+        let postNav = UINavigationController(rootViewController: postScreen)
         self.present(postNav, animated: true, completion: nil)
     }
     
