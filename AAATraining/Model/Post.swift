@@ -1,11 +1,3 @@
-//
-//  Post.swift
-//  AAATraining
-//
-//  Created by Margaret Dwan on 7/27/20.
-//  Copyright © 2020 Margaret Dwan. All rights reserved.
-//
-
 import Foundation
 import Firebase
 
@@ -22,12 +14,13 @@ public class Post {
     var video: String
     var postType: String
     var postUrlLink: String
+    var postFeedType: String
     
     let postDictionary: NSMutableDictionary
 
-    init(postID: String, postTeamID: String, ownerID: String, text: String, picture: String, date: String, postUserAva: String, postUserName: String, video: String, postType: String, postUrlLink: String) {
+    init(postID: String, postTeamID: String, ownerID: String, text: String, picture: String, date: String, postUserAva: String, postUserName: String, video: String, postType: String, postUrlLink: String, postFeedType: String) {
         
-        postDictionary = NSMutableDictionary(objects: [postID, postTeamID, ownerID, text, picture, postUserAva, postUserName, video, postType, postUrlLink], forKeys: [kPOSTID as NSCopying, kPOSTTEAMID as NSCopying, kPOSTOWNERID as NSCopying, kPOSTTEXT as NSCopying, kPOSTPICTURE as NSCopying, kPOSTUSERAVA as NSCopying, kPOSTUSERNAME as NSCopying, kPOSTVIDEO as NSCopying, kPOSTTYPE as NSCopying, kPOSTURLLINK as NSCopying])
+        postDictionary = NSMutableDictionary(objects: [postID, postTeamID, ownerID, text, picture, postUserAva, postUserName, video, postType, postUrlLink, postFeedType], forKeys: [kPOSTID as NSCopying, kPOSTTEAMID as NSCopying, kPOSTOWNERID as NSCopying, kPOSTTEXT as NSCopying, kPOSTPICTURE as NSCopying, kPOSTUSERAVA as NSCopying, kPOSTUSERNAME as NSCopying, kPOSTVIDEO as NSCopying, kPOSTTYPE as NSCopying, kPOSTURLLINK as NSCopying, kPOSTFEEDTYPE as NSCopying])
         
         self.postID = postID
         self.postTeamID = postTeamID
@@ -40,6 +33,7 @@ public class Post {
         self.video = video
         self.postType = postType
         self.postUrlLink = postUrlLink
+        self.postFeedType = postFeedType
     }
     
     init(_dictionary: NSDictionary) {
@@ -87,8 +81,15 @@ public class Post {
         } else {
             postUrlLink = ""
         }
+        if let fT = _dictionary[kPOSTFEEDTYPE] {
+            postFeedType = fT as! String
+        } else {
+            postFeedType = ""
+        }
         
-        postDictionary = NSMutableDictionary(objects: [postID, postTeamID, ownerID, text, picture, postUserAva, postUserName, video, postType, postUrlLink], forKeys: [kPOSTID as NSCopying, kPOSTTEAMID as NSCopying, kPOSTOWNERID as NSCopying, kPOSTTEXT as NSCopying, kPOSTPICTURE as NSCopying, kPOSTUSERAVA as NSCopying, kPOSTUSERNAME as NSCopying, kPOSTVIDEO as NSCopying, kPOSTTYPE as NSCopying, kPOSTURLLINK as NSCopying])
+        
+        
+        postDictionary = NSMutableDictionary(objects: [postID, postTeamID, ownerID, text, picture, postUserAva, postUserName, video, postType, postUrlLink, postFeedType], forKeys: [kPOSTID as NSCopying, kPOSTTEAMID as NSCopying, kPOSTOWNERID as NSCopying, kPOSTTEXT as NSCopying, kPOSTPICTURE as NSCopying, kPOSTUSERAVA as NSCopying, kPOSTUSERNAME as NSCopying, kPOSTVIDEO as NSCopying, kPOSTTYPE as NSCopying, kPOSTURLLINK as NSCopying, kPOSTFEEDTYPE as NSCopying])
         
     }
 
@@ -101,7 +102,7 @@ public class Post {
     }
 
     public func updatePost(postID: String, withValues: [String:Any]) {
-        reference(.Post).document(postID).updateData(withValues)        
+        reference(.Post).document(postID).updateData(withValues)
         
     }
     

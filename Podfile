@@ -26,7 +26,7 @@ pod 'ImagePicker'
 pod 'OneSignal'
 pod 'SinchRTC'
 pod 'GiFHUD-Swift'
-
+pod 'LGButton'
 pod 'FSCalendar'
 
 pod "Colorful", "~> 3.0"

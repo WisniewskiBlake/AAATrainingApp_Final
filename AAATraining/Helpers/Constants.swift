@@ -107,6 +107,7 @@ public let kPOSTVIDEO = "postVideo"
 public let kPOSTTHUMBNAIL = "postThumbnail"
 public let kPOSTTYPE = "postType"
 public let kPOSTURLLINK = "postUrlLink"
+public let kPOSTFEEDTYPE = "postFeedType"
 
 //Nutrition
 public let kNUTRITIONPOSTS = "nutritionPosts"

@@ -10,17 +10,18 @@ import UIKit
 import Firebase
 import FirebaseFirestore
 import ProgressHUD
+import LGButton
 
 class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var createTeamButton: UIButton!
-    @IBOutlet weak var joinTeamButton: UIButton!
+
     @IBOutlet weak var buttonsView: UIView!
+    @IBOutlet weak var joinTeamButton: LGButton!
+    @IBOutlet weak var createTeamButton: LGButton!
     
+    @IBOutlet weak var backgroundView: UIView!
     
 
-    
     let joinTapGestureRecognizer = UITapGestureRecognizer()
     let createTapGestureRecognizer = UITapGestureRecognizer()
     
@@ -42,26 +43,21 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         NotificationCenter.default.addObserver(self, selector: #selector(loadTeamsForUser), name: NSNotification.Name(rawValue: "createdTeam"), object: nil)
 
         
-        joinTeamButton.backgroundColor = #colorLiteral(red: 1, green: 0.3411764706, blue: 0, alpha: 1)
-        joinTeamButton.layer.shadowRadius = 3.0
-        joinTeamButton.layer.shadowColor = UIColor.black.cgColor
-        joinTeamButton.layer.shadowOffset = CGSize(width: 2, height: 1)
-        joinTeamButton.layer.shadowOpacity = 0.4
-        joinTeamButton.layer.cornerRadius = createTeamButton.frame.height / 2
-        joinTeamButton.layer.shadowPath = UIBezierPath(roundedRect: joinTeamButton.bounds, cornerRadius: joinTeamButton.frame.height / 2).cgPath
         
-        createTeamButton.backgroundColor = .white
-        createTeamButton.layer.shadowRadius = 3.0
-        createTeamButton.layer.shadowColor = UIColor.black.cgColor
-        createTeamButton.layer.shadowOffset = CGSize(width: 2, height: 1)
-        createTeamButton.layer.shadowOpacity = 0.4
-        createTeamButton.layer.cornerRadius = createTeamButton.frame.height / 2
-        createTeamButton.layer.shadowPath = UIBezierPath(roundedRect: createTeamButton.bounds, cornerRadius: createTeamButton.frame.height / 2).cgPath
+        
+//        createTeamButton.backgroundColor = .white
+//        createTeamButton.layer.shadowRadius = 3.0
+//        createTeamButton.layer.shadowColor = UIColor.black.cgColor
+//        createTeamButton.layer.shadowOffset = CGSize(width: 1, height: 2)
+//        createTeamButton.layer.shadowOpacity = 0.4
+//        createTeamButton.layer.cornerRadius = createTeamButton.frame.height / 2
+//        createTeamButton.layer.shadowPath = UIBezierPath(roundedRect: createTeamButton.bounds, cornerRadius: createTeamButton.frame.height / 2).cgPath
 
-        buttonsView.layer.cornerRadius = CGFloat(15.0)
-        buttonsView.layer.shadowOpacity = Float(0.2)
-        buttonsView.layer.shadowOffset = CGSize(width: 2, height: 1)
-        buttonsView.layer.shadowRadius = CGFloat(2)
+        backgroundView.layer.cornerRadius = CGFloat(25.0)
+//        buttonsView.layer.shadowOpacity = Float(0.3)
+//        buttonsView.layer.shadowOffset = CGSize(width: 0, height: 2)
+//        buttonsView.layer.shadowRadius = CGFloat(3)
+        backgroundView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
         tableView.separatorColor = .clear
         tableView.layer.cornerRadius = CGFloat(15.0)
@@ -71,6 +67,7 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     
     }
+    
     @IBAction func joinButtonClicked(_ sender: Any) {
         let userTypeSelectionVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserTypeSelectionVC") as! UserTypeSelectionVC
         userTypeSelectionVC.viewToGoTo = "join"
@@ -78,12 +75,14 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         self.present(userTypeSelectionVC, animated: true, completion: nil)
     }
     
-    @IBAction func createButtonClicked(_ sender: Any) {
+    
+    @IBAction func createTeamButtonClicked(_ sender: Any) {
         let teamRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamRegisterVC") as! TeamRegisterVC
         teamRegisterVC.userAccountType = "Coach"
         teamRegisterVC.modalPresentationStyle = .fullScreen
         self.present(teamRegisterVC, animated: true, completion: nil)
     }
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -116,13 +115,14 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         tableView.estimatedRowHeight = 100
         emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -150, width: view.bounds.size.width, height: view.bounds.size.height))
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        
+        view.backgroundColor = UIColor.white
         tableView.tableFooterView = view
         
 
     }
     
-    
+    //possibly need to change this to load teams from User
     @objc func loadTeamsForUser() {
         let query = reference(.Team).whereField(kTEAMMEMBERIDS, arrayContains: FUser.currentId())
         query.getDocuments { (snapshot, error) in
@@ -292,6 +292,8 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
+    
     
     
     
