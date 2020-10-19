@@ -58,6 +58,11 @@ class PostVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDeleg
          self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
          navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
          navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        if postFeedType == "Fitness" {
+            self.title = " New Fitness Post"
+        } else if postFeedType == "General" {
+            self.title = "New General Post"
+        }
          
      }
     

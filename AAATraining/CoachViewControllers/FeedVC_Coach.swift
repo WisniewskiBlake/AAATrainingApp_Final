@@ -170,7 +170,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         }
 
 //        actionButton.overlayView.backgroundColor = UIColor(hue: 0.31, saturation: 0.37, brightness: 0.10, alpha: 0.30)
-        actionButton.overlayView.backgroundColor = UIColor(white: 0, alpha: 0.7)
+        actionButton.overlayView.backgroundColor = UIColor(white: 0, alpha: 0.65)
         actionButton.handleSingleActionDirectly = false
 //        actionButton.itemAnimationConfiguration = .circularSlideIn(withRadius: 120)
 //        actionButton.buttonAnimationConfiguration = .rotation(toAngle: .pi * 3 / 4)
