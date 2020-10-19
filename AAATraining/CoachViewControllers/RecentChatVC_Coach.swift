@@ -25,14 +25,17 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var feedHeader: UIView!
     let searchController = UISearchController(searchResultsController: nil)
     @IBOutlet weak var searchContainer: UIView!
+    @IBOutlet weak var teamImageView: UIImageView!
     
     @IBOutlet weak var titleView: UIView!
     var emptyLabelOne = UILabel()
     let helper = Helper()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .darkContent
+        return .lightContent
     }
+    
+    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [""])
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,10 +83,10 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 150
         
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+//        navigationController?.navigationBar.prefersLargeTitles = true
+//        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+//        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+//        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         //self.tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         //titleView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         //self.tableView.backgroundColor = .white
@@ -95,35 +98,55 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
 //            emptyLabelOne.text = ""
 //        }
         
-        let attrs = [
-            NSAttributedString.Key.foregroundColor: UIColor.white,
-            NSAttributedString.Key.font: UIFont(name: "Helvetica Neue Bold", size: 26)!
-        ]
+        team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
+            if teamReturned.teamID != "" {
+                self.team = teamReturned
+                if self.team.teamLogo != "" {
+                    self.helper.imageFromData(pictureData: self.team.teamLogo) { (coverImage) in
+
+                        if coverImage != nil {
+                            self.teamImageView.image = coverImage
+                        }
+                    }
+                } else {
+                    self.teamImageView.image = UIImage(named: "HomeCover.jpg")
+                    
+                }
+            } else {
+                self.teamImageView.image = UIImage(named: "HomeCover.jpg")
+            }
+        }
+        teamImageView.layer.cornerRadius = teamImageView.frame.width / 2
+        teamImageView.clipsToBounds = true
         
-//        navigationController?.navigationBar.largeTitleTextAttributes = attrs
-//        navigationItem.searchController = searchController
-//        navigationItem.hidesSearchBarWhenScrolling = true
-        //searchController.searchBar.delegate = self
-        searchContainer.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        searchContainer.borderColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        searchContainer.borderWidth = CGFloat(1.0)
+
+//        searchContainer.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+//        searchContainer.borderColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+//        searchContainer.borderWidth = CGFloat(1.0)
+        
+        backgroundView.backgroundColor = UIColor.white
+        
         mainView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         headerView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        headerView.borderColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        headerView.borderWidth = CGFloat(1.0)
-        searchContainer.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        searchController.searchBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        searchController.searchBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        //headerView.borderColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        //headerView.borderWidth = CGFloat(12.0)
+        
+        searchController.searchBar.searchTextField.frame = CGRect(x: 0, y: 0, width: self.searchContainer.frame.width, height: self.searchContainer.frame.height);
+        
+        searchContainer.backgroundColor = UIColor.white
+        searchController.searchBar.backgroundColor = UIColor.white
+        searchController.searchBar.barTintColor = UIColor.white
         searchController.searchBar.isTranslucent = true
-        searchController.searchBar.borderWidth = CGFloat(3.0)
-        searchController.searchBar.borderColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        //searchController.searchBar.searchTextField.frame = CGRect(x: 0, y: 0, width: self.searchContainer.frame.size.width, height: self.searchContainer.frame.size.height);
-        searchController.searchBar.searchTextField.backgroundColor = .white
+        searchController.searchBar.borderWidth = CGFloat(2.0)
+        searchController.searchBar.borderColor = UIColor.white
+        searchController.searchBar.searchTextField.backgroundColor = .systemGray4
         searchContainer.addSubview(searchController.searchBar)
+        
+        //tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         //searchContainer.bringSubviewToFront(searchController.searchBar)
         
         
-//        searchController.searchBar.bottomAnchor.constraint(equalTo: titleView.bottomAnchor, constant: -10).isActive = true
+        searchController.searchBar.searchTextField.clipsToBounds = true
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         
