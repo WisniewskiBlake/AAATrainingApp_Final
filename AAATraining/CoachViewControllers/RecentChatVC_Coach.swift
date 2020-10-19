@@ -106,11 +106,11 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         //searchController.searchBar.delegate = self
         searchContainer.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         searchContainer.borderColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        searchContainer.borderWidth = CGFloat(3.0)
+        searchContainer.borderWidth = CGFloat(1.0)
         mainView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         headerView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         headerView.borderColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        headerView.borderWidth = CGFloat(3.0)
+        headerView.borderWidth = CGFloat(1.0)
         searchContainer.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         searchController.searchBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         searchController.searchBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)

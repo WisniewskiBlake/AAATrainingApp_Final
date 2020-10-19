@@ -178,10 +178,10 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         
         actionButton.buttonAnimationConfiguration.opening.duration = 0.8
         actionButton.buttonAnimationConfiguration.closing.duration = 0.6
-        actionButton.layer.shadowColor = UIColor.darkGray.cgColor
+        actionButton.layer.shadowColor = UIColor.black.cgColor
         actionButton.layer.shadowOffset = CGSize(width: 1, height: 2)
-        actionButton.layer.shadowOpacity = Float(0.6)
-        actionButton.layer.shadowRadius = CGFloat(4)
+        actionButton.layer.shadowOpacity = Float(0.5)
+        actionButton.layer.shadowRadius = CGFloat(3)
 
         actionButton.buttonColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)!
         
