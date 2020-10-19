@@ -13,12 +13,16 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
    
     @IBOutlet weak var tableView: UITableView!
 
+    @IBOutlet var mainView: UIView!
+    @IBOutlet weak var backgroundView: UIView!
     
     var recentChats: [NSDictionary] = []
     var filteredChats: [NSDictionary] = []
     var avas = [UIImage]()
     var recentListener: ListenerRegistration!
+    @IBOutlet weak var headerView: UIView!
     
+    @IBOutlet weak var feedHeader: UIView!
     let searchController = UISearchController(searchResultsController: nil)
     @IBOutlet weak var searchContainer: UIView!
     
@@ -38,9 +42,9 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         
         emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -125, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
         
-//        tableView.layer.cornerRadius = CGFloat(25.0)
-//
-//        tableView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        backgroundView.layer.cornerRadius = CGFloat(25.0)
+
+        backgroundView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -80,7 +84,9 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        self.tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        //self.tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        //titleView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        //self.tableView.backgroundColor = .white
 //        if self.recentChats.count == 0 {
 //            tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
 //        }
@@ -99,12 +105,22 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
 //        navigationItem.hidesSearchBarWhenScrolling = true
         //searchController.searchBar.delegate = self
         searchContainer.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        searchContainer.borderColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        searchContainer.borderWidth = CGFloat(3.0)
+        mainView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        headerView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        headerView.borderColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        headerView.borderWidth = CGFloat(3.0)
+        searchContainer.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         searchController.searchBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        searchController.searchBar.isTranslucent = false
-        searchController.searchBar.searchTextField.frame = CGRect(x: 0, y: 0, width: self.searchContainer.frame.size.width, height: self.searchContainer.frame.size.height);
-        searchController.searchBar.searchTextField.tintColor = .lightGray
+        searchController.searchBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        searchController.searchBar.isTranslucent = true
+        searchController.searchBar.borderWidth = CGFloat(3.0)
+        searchController.searchBar.borderColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        //searchController.searchBar.searchTextField.frame = CGRect(x: 0, y: 0, width: self.searchContainer.frame.size.width, height: self.searchContainer.frame.size.height);
+        searchController.searchBar.searchTextField.backgroundColor = .white
         searchContainer.addSubview(searchController.searchBar)
-        searchContainer.bringSubviewToFront(searchController.searchBar)
+        //searchContainer.bringSubviewToFront(searchController.searchBar)
         
         
 //        searchController.searchBar.bottomAnchor.constraint(equalTo: titleView.bottomAnchor, constant: -10).isActive = true
