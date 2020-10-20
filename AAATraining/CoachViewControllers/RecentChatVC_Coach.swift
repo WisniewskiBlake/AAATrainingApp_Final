@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseFirestore
 
-class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewDataSource, RecentChatCell_CoachDelegate, UISearchResultsUpdating, UISearchBarDelegate {
+class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewDataSource, RecentChatCell_CoachDelegate, UISearchResultsUpdating, UISearchBarDelegate, UISearchControllerDelegate {
    
     @IBOutlet weak var tableView: UITableView!
 
@@ -34,6 +34,8 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    let screenRect = UIScreen.main.bounds
+    
     
     var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [""])
     
@@ -46,7 +48,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -125, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
         
         backgroundView.layer.cornerRadius = CGFloat(25.0)
-
+        
         backgroundView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
     
@@ -124,22 +126,25 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
 //        searchContainer.borderColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
 //        searchContainer.borderWidth = CGFloat(1.0)
         
+        
+        let screenWidth = screenRect.size.width
         backgroundView.backgroundColor = UIColor.white
         
         mainView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         headerView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        //headerView.borderColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        //headerView.borderWidth = CGFloat(12.0)
         
-        searchController.searchBar.searchTextField.frame = CGRect(x: 0, y: 0, width: self.searchContainer.frame.width, height: self.searchContainer.frame.height);
-        
+        searchController.searchBar.delegate = self
+        searchController.delegate = self
+//        searchController.searchBar.searchTextField.frame = CGRect(x: 0, y: 3, width: self.searchContainer.frame.width, height: self.searchContainer.frame.height - 3);
+        searchController.searchBar.frame = CGRect(x: -5, y: 0, width: screenWidth - 3, height: 41.0)
+
         searchContainer.backgroundColor = UIColor.white
         searchController.searchBar.backgroundColor = UIColor.white
         searchController.searchBar.barTintColor = UIColor.white
         searchController.searchBar.isTranslucent = true
         searchController.searchBar.borderWidth = CGFloat(2.0)
         searchController.searchBar.borderColor = UIColor.white
-        searchController.searchBar.searchTextField.backgroundColor = .systemGray4
+        //searchController.searchBar.searchTextField.backgroundColor = .systemGray4
         searchContainer.addSubview(searchController.searchBar)
         
         //tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
@@ -151,7 +156,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         searchController.obscuresBackgroundDuringPresentation = false
         
         definesPresentationContext = true
-        
+        extendedLayoutIncludesOpaqueBars = true
         //self.tableView.reloadData()
     }
 

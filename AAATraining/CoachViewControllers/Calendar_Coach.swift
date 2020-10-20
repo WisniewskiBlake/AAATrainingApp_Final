@@ -252,11 +252,8 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                     
                    let eventDictionary = eventDictionary.data() as NSDictionary
                    let event = Event(_dictionary: eventDictionary)
-                    
 
                     self.allEvents.append(event)
-//                    print("allEvents.append(event)")
-//                    print(event.eventUserID + " 1")
   
                     //if the event that has the same teamID belongs to an existing user, append the date and count
                     if event.eventUserID == FUser.currentId() {
@@ -267,20 +264,16 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                         }
                         self.allEventDates.append(event.eventDate)
                         self.countArray.append(String(event.eventCounter))
-                       
                    }
-                    
                }
                 self.tableView.reloadData()
                 self.calendar.reloadData()
                 self.imageview.removeFromSuperview()
                 
            }
-            
             self.tableView.reloadData()
             self.calendar.reloadData()
             self.imageview.removeFromSuperview()
-            
         })
     }
     
@@ -539,18 +532,10 @@ extension UIViewController
         titleLabel.textAlignment = .left
         //titleLabel.font = UIFont(name: "PaladinsLaser", size: 19)
         titleLabel.font = UIFont(name: "Helvetica Neue Bold", size: 27)
-        //titleLabel.backgroundColor = .black
-        
-//        titleLabel.font = UIFont(name: "Paladins", size: 29)
-//        titleLabel.font = UIFont(name: "Paladins3D", size: 29)
-        //titleLabel.font = UIFont(name: "PaladinsCondensed", size: 29)
-        //titleLabel.font = UIFont(name: "Spantaran", size: 29)
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         self.navigationItem.titleView = titleLabel
-        
-        
         
         guard let containerView = self.navigationItem.titleView?.superview else { return }
         

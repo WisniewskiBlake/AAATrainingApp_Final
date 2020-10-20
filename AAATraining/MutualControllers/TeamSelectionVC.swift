@@ -101,7 +101,7 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 
             let xConstraint = NSLayoutConstraint(item: imageview, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: 1, constant: 0)
 
-            let yConstraint = NSLayoutConstraint(item: imageview, attribute: .centerY, relatedBy: .equal, toItem: self.view, attribute: .centerY, multiplier: 1, constant: 0)
+            let yConstraint = NSLayoutConstraint(item: imageview, attribute: .centerY, relatedBy: .equal, toItem: self.view, attribute: .centerY, multiplier: 1, constant: 60)
 
             NSLayoutConstraint.activate([widthConstraint, heightConstraint, xConstraint, yConstraint])
             //NSLayoutConstraint.activate([xConstraint, yConstraint])
