@@ -15,6 +15,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
 
     @IBOutlet var mainView: UIView!
     @IBOutlet weak var backgroundView: UIView!
+    @IBOutlet weak var unreadLabel: UILabel!
     
     var recentChats: [NSDictionary] = []
     var filteredChats: [NSDictionary] = []
@@ -22,12 +23,13 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     var recentListener: ListenerRegistration!
     @IBOutlet weak var headerView: UIView!
     
-    @IBOutlet weak var feedHeader: UIView!
+
     let searchController = UISearchController(searchResultsController: nil)
     @IBOutlet weak var searchContainer: UIView!
     @IBOutlet weak var teamImageView: UIImageView!
     
-    @IBOutlet weak var titleView: UIView!
+    var numUnreadMessages: String = "0"
+    
     var emptyLabelOne = UILabel()
     let helper = Helper()
     
@@ -136,7 +138,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         searchController.searchBar.delegate = self
         searchController.delegate = self
 //        searchController.searchBar.searchTextField.frame = CGRect(x: 0, y: 3, width: self.searchContainer.frame.width, height: self.searchContainer.frame.height - 3);
-        searchController.searchBar.frame = CGRect(x: -5, y: 0, width: screenWidth - 3, height: 41.0)
+        searchController.searchBar.frame = CGRect(x: -5, y: 0, width: screenWidth - 4, height: 41.0)
 
         searchContainer.backgroundColor = UIColor.white
         searchController.searchBar.backgroundColor = UIColor.white
@@ -168,12 +170,14 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     //MARK: LoadRecentChats
     
     func loadRecentChats() {
-        recentListener = reference(.Recent).whereField(kUSERID, isEqualTo: FUser.currentId()).whereField(kRECENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).addSnapshotListener({ (snapshot, error) in
+        recentListener = reference(.Recent).whereField(kUSERID, isEqualTo: FUser.currentId()).whereField(kRECENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).addSnapshotListener({ [self] (snapshot, error) in
             let helper = Helper()
             guard let snapshot = snapshot else { return }
             
             self.recentChats = []
-            
+            self.numUnreadMessages = "0"
+            var counter = 0
+            var stringConversion: String = ""
             if !snapshot.isEmpty {
                 
                 let sorted = ((helper.dictionaryFromSnapshots(snapshots: snapshot.documents)) as NSArray).sortedArray(using: [NSSortDescriptor(key: kDATE, ascending: false)]) as! [NSDictionary]
@@ -191,14 +195,17 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
                             }
                         }
                     }
+                    stringConversion = String(format: "%@", recent[kCOUNTER] as! CVarArg)
+                    self.numUnreadMessages = String(Int(numUnreadMessages)! + Int(stringConversion)!)
                     
                     reference(.Recent).whereField(kCHATROOMID, isEqualTo: recent[kCHATROOMID] as! String).getDocuments(completion: { (snapshot, error) in
                         
                     })
                 }
-                
+                self.unreadLabel.text = self.numUnreadMessages + " unread messages"
                 self.tableView.reloadData()
             }
+            self.unreadLabel.text = self.numUnreadMessages + " unread messages"
             self.tableView.reloadData()
         })
 

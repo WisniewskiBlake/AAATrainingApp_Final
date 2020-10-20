@@ -280,6 +280,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         teamImageView.layer.cornerRadius = teamImageView.frame.width / 2
         teamImageView.clipsToBounds = true
         
+        //filterSegmentedControl.borderColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
 //        teamFeedTextLabel.text = "Team Feed"
 //        teamFeedTextLabel.font = UIFont(name: "Spantaran", size: 27)!
 //        teamNameLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 18)!

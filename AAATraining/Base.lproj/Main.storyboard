@@ -655,7 +655,7 @@
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="fullyRoundedCorners" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="joinButtonClicked:" destination="zlP-4e-fTv" eventType="valueChanged" id="Ug3-0X-sAa"/>
+                                            <action selector="joinTeamButtonClicked:" destination="zlP-4e-fTv" eventType="touchUpInside" id="GX9-Nv-xH3"/>
                                         </connections>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rZL-ou-UtM" customClass="LGButton" customModule="LGButton">
@@ -699,7 +699,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="createTeamButtonClicked:" destination="zlP-4e-fTv" eventType="valueChanged" id="L2G-oY-pSE"/>
+                                            <action selector="createTeamButtonClicked:" destination="zlP-4e-fTv" eventType="touchUpInside" id="jfF-Bf-VbW"/>
                                         </connections>
                                     </view>
                                 </subviews>
@@ -4217,7 +4217,7 @@
                                     <rect key="frame" x="0.0" y="151" width="414" height="105"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Team Feed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a6G-aG-x1u">
-                                            <rect key="frame" x="19" y="17" width="152" height="30"/>
+                                            <rect key="frame" x="16" y="17" width="152" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="152" id="Lf5-wp-1nZ"/>
                                                 <constraint firstAttribute="height" constant="30" id="prB-qt-WmP"/>
@@ -4238,6 +4238,14 @@
                                                 <segment title="General"/>
                                                 <segment title="Fitness"/>
                                             </segments>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                    <real key="value" value="0.0"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                    <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
                                             <connections>
                                                 <action selector="filterSegmentChanged:" destination="doT-ZS-dhL" eventType="valueChanged" id="PTY-zq-RVN"/>
                                             </connections>
@@ -4251,7 +4259,7 @@
                                         <constraint firstAttribute="bottom" secondItem="Ofz-g3-bb9" secondAttribute="bottom" constant="17" id="RZU-nS-Mpq"/>
                                         <constraint firstAttribute="trailing" secondItem="Ofz-g3-bb9" secondAttribute="trailing" id="b5O-SA-hoW"/>
                                         <constraint firstAttribute="width" constant="414" id="f7m-AV-JAg"/>
-                                        <constraint firstItem="a6G-aG-x1u" firstAttribute="leading" secondItem="1XE-0b-q9O" secondAttribute="leading" constant="19" id="vHg-mc-Kx3"/>
+                                        <constraint firstItem="a6G-aG-x1u" firstAttribute="leading" secondItem="1XE-0b-q9O" secondAttribute="leading" constant="16" id="vHg-mc-Kx3"/>
                                     </constraints>
                                 </view>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="moreVert" translatesAutoresizingMaskIntoConstraints="NO" id="dzH-e2-EBq">
@@ -4993,7 +5001,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mFQ-KH-7uy">
-                                        <rect key="frame" x="11" y="141" width="27" height="27"/>
+                                        <rect key="frame" x="11" y="139" width="27" height="27"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="27" id="Mbe-Ov-hCw"/>
                                             <constraint firstAttribute="width" constant="27" id="xBq-Ds-eKk"/>
@@ -5018,7 +5026,7 @@
                                     <constraint firstItem="GFj-bd-Udn" firstAttribute="leading" secondItem="dW6-zM-uQH" secondAttribute="leading" constant="8" id="Q7x-fs-I9D"/>
                                     <constraint firstItem="vJI-8V-Zlh" firstAttribute="leading" secondItem="mFQ-KH-7uy" secondAttribute="trailing" constant="11" id="TnI-u6-t4e"/>
                                     <constraint firstAttribute="width" constant="414" id="aRA-33-sqv"/>
-                                    <constraint firstItem="mFQ-KH-7uy" firstAttribute="top" secondItem="GFj-bd-Udn" secondAttribute="bottom" constant="42" id="c92-06-c49"/>
+                                    <constraint firstItem="mFQ-KH-7uy" firstAttribute="top" secondItem="GFj-bd-Udn" secondAttribute="bottom" constant="40" id="c92-06-c49"/>
                                     <constraint firstItem="GFj-bd-Udn" firstAttribute="top" secondItem="dW6-zM-uQH" secondAttribute="top" constant="34" id="ca1-Br-b1s"/>
                                     <constraint firstItem="mFQ-KH-7uy" firstAttribute="leading" secondItem="dW6-zM-uQH" secondAttribute="leading" constant="11" id="nYD-zz-VSi"/>
                                     <constraint firstItem="vJI-8V-Zlh" firstAttribute="top" secondItem="GFj-bd-Udn" secondAttribute="bottom" constant="36" id="yEH-FU-ODU"/>
@@ -5154,13 +5162,13 @@
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                 <real key="value" value="15"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="2"/>
+                                                <real key="value" value="1"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
@@ -5211,6 +5219,7 @@
                         <outlet property="searchContainer" destination="HUO-Q0-AYB" id="IWs-nr-kSi"/>
                         <outlet property="tableView" destination="vQb-66-3wr" id="lTQ-2c-Oxn"/>
                         <outlet property="teamImageView" destination="mFQ-KH-7uy" id="5Zq-OR-Cj6"/>
+                        <outlet property="unreadLabel" destination="GFj-bd-Udn" id="ls0-9k-HIs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJy-7Q-Kaj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

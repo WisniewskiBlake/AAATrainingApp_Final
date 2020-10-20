@@ -67,21 +67,22 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     
     }
-    
-    @IBAction func joinButtonClicked(_ sender: Any) {
-        let userTypeSelectionVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserTypeSelectionVC") as! UserTypeSelectionVC
-        userTypeSelectionVC.viewToGoTo = "join"
-        userTypeSelectionVC.modalPresentationStyle = .fullScreen
-        self.present(userTypeSelectionVC, animated: true, completion: nil)
-    }
-    
-    
+
     @IBAction func createTeamButtonClicked(_ sender: Any) {
         let teamRegisterVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamRegisterVC") as! TeamRegisterVC
         teamRegisterVC.userAccountType = "Coach"
         teamRegisterVC.modalPresentationStyle = .fullScreen
         self.present(teamRegisterVC, animated: true, completion: nil)
     }
+    
+
+    @IBAction func joinTeamButtonClicked(_ sender: Any) {
+        let userTypeSelectionVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserTypeSelectionVC") as! UserTypeSelectionVC
+        userTypeSelectionVC.viewToGoTo = "join"
+        userTypeSelectionVC.modalPresentationStyle = .fullScreen
+        self.present(userTypeSelectionVC, animated: true, completion: nil)
+    }
+    
 
     
     override func viewWillAppear(_ animated: Bool) {
@@ -101,7 +102,7 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 
             let xConstraint = NSLayoutConstraint(item: imageview, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: 1, constant: 0)
 
-            let yConstraint = NSLayoutConstraint(item: imageview, attribute: .centerY, relatedBy: .equal, toItem: self.view, attribute: .centerY, multiplier: 1, constant: 60)
+            let yConstraint = NSLayoutConstraint(item: imageview, attribute: .centerY, relatedBy: .equal, toItem: self.view, attribute: .centerY, multiplier: 1, constant: 80)
 
             NSLayoutConstraint.activate([widthConstraint, heightConstraint, xConstraint, yConstraint])
             //NSLayoutConstraint.activate([xConstraint, yConstraint])
