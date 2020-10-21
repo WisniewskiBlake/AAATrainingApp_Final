@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 
     var window: UIWindow?
     var authListener: AuthStateDidChangeListenerHandle?
-    
+    var controllerType: Int = 0
     var locationManager: CLLocationManager?
     var coordinates: CLLocationCoordinate2D?
     

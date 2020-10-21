@@ -43,6 +43,7 @@ import UIKit
 @objc @IBDesignable public class JJFloatingActionButton: UIControl {
     /// The delegate object for the floating action button.
     ///
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     @objc public weak var delegate: JJFloatingActionButtonDelegate?
 
     /// The list of action items.
@@ -553,18 +554,34 @@ internal extension JJFloatingActionButton {
 
 fileprivate extension JJFloatingActionButton {
     @objc func buttonWasTapped() {
-
-        switch buttonState {
-        
-        case .open, .opening:
-            close()
-//            buttonState = .closed
-        case .closed:
-            handleSingleActionOrOpen()
-//            buttonState = .open
-        default:
-            break
+        if appDelegate.controllerType == 0 {
+            switch buttonState {
+            
+            case .open, .opening:
+                close()
+    //            buttonState = .closed
+            case .closed:
+                handleSingleActionOrOpen()
+    //            buttonState = .open
+            default:
+                break
+            }
+        } else if appDelegate.controllerType == 1 {
+            switch buttonState {
+            
+            case .open, .opening:
+                print("open")
+                close()
+    //            buttonState = .closed
+            case .closed:
+                print("closed")
+                handleSingleActionOrOpen()
+    //            buttonState = .open
+            default:
+                break
+            }
         }
+        
     }
 
     @objc func itemWasTapped(sender: JJActionItem) {

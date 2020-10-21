@@ -68,7 +68,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     @IBOutlet weak var feedHeader: UIView!
         
     var imageview = UIImageView()
-    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     //var floaty = Floaty()
     var actionButton = JJFloatingActionButton()
     
@@ -129,7 +129,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        appDelegate.controllerType = 0
         configureFAB()
         
         
@@ -170,6 +170,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         recentListener.remove()
+        actionButton.removeFromSuperview()
     }
     
     func configure_teamImageView() {

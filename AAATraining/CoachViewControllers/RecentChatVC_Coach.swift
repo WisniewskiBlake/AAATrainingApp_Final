@@ -38,7 +38,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         return .lightContent
     }
     let screenRect = UIScreen.main.bounds
-    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [""])
     
@@ -62,12 +62,13 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        
+        configureFAB()
 //        self.view.layoutMargins = UIEdgeInsets(top: self.view.layoutMargins.top,
 //                                               left: self.view.layoutMargins.left,
 //                                               bottom: self.view.layoutMargins.bottom,
 //                                               right: self.view.layoutMargins.right)
-        self.view.frame.size.height = backgroundHeightCache
+        appDelegate.controllerType = 1
+        self.view.frame.size.height = heightCache
         self.backgroundView.frame.size.height = backgroundHeightCache
         self.viewRespectsSystemMinimumLayoutMargins = false
         self.automaticallyAdjustsScrollViewInsets = true
@@ -80,7 +81,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
                                                                      bottom: 0,
                                                                      trailing: 0)
         
-        configureFAB()
+        
         print(backgroundView.frame.size.height)
         print(view.frame.size.height)
         
@@ -94,11 +95,13 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         recentListener.remove()
+        actionButton.removeFromSuperview()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.view.frame.size.height = backgroundHeightCache
+        
+        self.view.frame.size.height = heightCache
         self.backgroundView.frame.size.height = backgroundHeightCache
         self.backgroundView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0,
                                                                      leading: 0,
@@ -121,6 +124,12 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
             tableFooterView.frame.size.height = gapHeight + footerHeight
         }
 
+    }
+    
+    @objc func floatingActionButtonDidOpen(_ button: JJFloatingActionButton) {
+        print(actionButton.overlayView.frame.origin.y)
+        actionButton.buttonState = .open
+        
     }
     
     func configureFAB() {

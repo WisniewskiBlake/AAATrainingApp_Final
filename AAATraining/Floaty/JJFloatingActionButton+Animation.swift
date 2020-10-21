@@ -39,14 +39,21 @@ import UIKit
         guard let superview = superview, buttonState == .closed, !enabledItems.isEmpty, !isSingleActionButton else {
             return
         }
-
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         buttonState = .opening
         delegate?.floatingActionButtonWillOpen?(self)
 
         storeAnimationState()
 
         superview.bringSubviewToFront(self)
-        addOverlayView(to: superview as! UITableView)
+        if appDelegate.controllerType == 0 {
+            addOverlayView(to: superview as! UITableView)
+        } else if appDelegate.controllerType == 1 {
+            addOverlayView(to: superview)
+            
+        }
+        
+//            as! UITableView
         addItems(to: superview)
         itemContainerView.setNeedsLayout()
         itemContainerView.layoutIfNeeded()
@@ -154,23 +161,19 @@ fileprivate extension JJFloatingActionButton {
         //superview.addSubview(overlayView)
         
         superview.insertSubview(overlayView, belowSubview: self)
-//        overlayView.translatesAutoresizingMaskIntoConstraints = false
-//        overlayView.topAnchor.constraint(equalTo: superview.topAnchor, constant: 0).isActive = true
-//        overlayView.leadingAnchor.constraint(equalTo: superview.leadingAnchor, constant: 0).isActive = true
-//        overlayView.trailingAnchor.constraint(equalTo: superview.trailingAnchor, constant: 0).isActive = true
-//        overlayView.bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: 0).isActive = true
+
     }
-//    func addOverlayView(to superview: UITableView) {
-//        overlayView.isEnabled = true
-//
-//        superview.addSubview(overlayView)
-//        //superview.insertSubview(overlayView, belowSubview: self)
-//        overlayView.translatesAutoresizingMaskIntoConstraints = false
-//        overlayView.topAnchor.constraint(equalTo: (superview.tableHeaderView?.topAnchor)!, constant: 0).isActive = true
-//        overlayView.leadingAnchor.constraint(equalTo: superview.leadingAnchor, constant: 0).isActive = true
-//        overlayView.trailingAnchor.constraint(equalTo: superview.trailingAnchor, constant: 0).isActive = true
-//        overlayView.bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: 0).isActive = true
-//    }
+    func addOverlayView(to superview: UIView) {
+            overlayView.isEnabled = true
+            //overlayView.isHidden = false
+            superview.insertSubview(overlayView, belowSubview: self)
+            overlayView.translatesAutoresizingMaskIntoConstraints = false
+            overlayView.topAnchor.constraint(equalTo: superview.topAnchor).isActive = true
+            overlayView.leadingAnchor.constraint(equalTo: superview.leadingAnchor).isActive = true
+            overlayView.trailingAnchor.constraint(equalTo: superview.trailingAnchor).isActive = true
+            overlayView.bottomAnchor.constraint(equalTo: superview.bottomAnchor).isActive = true
+        }
+
 
     func showOverlay(animated: Bool, group: DispatchGroup) {
         let buttonAnimation: () -> Void = {
