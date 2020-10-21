@@ -21,7 +21,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     var filteredChats: [NSDictionary] = []
     var avas = [UIImage]()
     var recentListener: ListenerRegistration!
-    @IBOutlet weak var headerView: UIView!
+
     
     @IBOutlet weak var actionView: UIView!
     
@@ -53,10 +53,12 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        configureFAB()
+        
         
         print(screenRect.size.height, "xxx")
-        
+        configureFAB()
+        print(backgroundView.frame.size.height)
+        print(view.frame.size.height)
         
         loadRecentChats()
         configureUI()
@@ -70,24 +72,22 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         recentListener.remove()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        print(backgroundView.frame.size.height)
-        
-        fillContentGap:
-        if let tableFooterView = self.tableView.tableFooterView {
-            /// The expected height for the footer under autolayout.
-            let footerHeight = tableFooterView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-            /// The amount of empty space to fill with the footer view.
-            let gapHeight: CGFloat = self.tableView.bounds.height - self.tableView.adjustedContentInset.top - self.tableView.adjustedContentInset.bottom - self.tableView.contentSize.height
-            // Ensure there is space to be filled
-            guard gapHeight.rounded() > 0 else { break fillContentGap }
-            // Fill the gap
-            tableFooterView.frame.size.height = gapHeight + footerHeight
-        }
-        
-    }
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//
+//        fillContentGap:
+//        if let tableFooterView = self.tableView.tableFooterView {
+//            /// The expected height for the footer under autolayout.
+//            let footerHeight = tableFooterView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+//            /// The amount of empty space to fill with the footer view.
+//            let gapHeight: CGFloat = self.tableView.bounds.height - self.tableView.adjustedContentInset.top - self.tableView.adjustedContentInset.bottom - self.tableView.contentSize.height
+//            // Ensure there is space to be filled
+//            guard gapHeight.rounded() > 0 else { break fillContentGap }
+//            // Fill the gap
+//            tableFooterView.frame.size.height = gapHeight + footerHeight
+//        }
+//
+//    }
     
     func configureFAB() {
         let screenWidth = screenRect.size.width
@@ -155,10 +155,10 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         actionButton.buttonColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)!
         
         actionButton.translatesAutoresizingMaskIntoConstraints = false
-        actionButton.frame = CGRect(x: screenWidth * 0.5, y: screenHeight * 0.5, width: 60, height: 60)
-//        actionButton.display(inViewController: self)
+        //actionButton.frame = CGRect(x: screenWidth * 0.5, y: screenHeight * 0.5, width: 60, height: 60)
+        actionButton.display(inViewController: self)
           //self.actionView.addSubview(actionButton)
-        self.view.addSubview(actionButton)
+        //self.view.addSubview(actionButton)
         
 //        //actionButton.display(inView: self.view)
 //actionButton = JJFloatingActionButton(frame: CGRect(x: screenWidth * 0.5, y: screenHeight * 0.5, width: 60, height: 60))
@@ -232,7 +232,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         backgroundView.backgroundColor = UIColor.white
         
         mainView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        headerView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
         
         searchController.searchBar.delegate = self
         searchController.delegate = self
