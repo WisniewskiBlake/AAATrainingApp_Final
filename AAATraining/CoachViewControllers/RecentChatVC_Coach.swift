@@ -23,7 +23,8 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     var recentListener: ListenerRegistration!
     @IBOutlet weak var headerView: UIView!
     
-
+    @IBOutlet weak var actionView: UIView!
+    
     let searchController = UISearchController(searchResultsController: nil)
     @IBOutlet weak var searchContainer: UIView!
     @IBOutlet weak var teamImageView: UIImageView!
@@ -41,21 +42,21 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     
     var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [""])
     
+    var actionButton = JJFloatingActionButton()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(screenRect.size.height, "zzz")
         
-
-        
-        emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -125, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
-        
-        backgroundView.layer.cornerRadius = CGFloat(25.0)
-        
-        backgroundView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        configureFAB()
+        
+        print(screenRect.size.height, "xxx")
+        
         
         loadRecentChats()
         configureUI()
@@ -64,9 +65,16 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         self.tableView.tableFooterView = view
         
     }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        recentListener.remove()
+    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
+        print(backgroundView.frame.size.height)
+        
         fillContentGap:
         if let tableFooterView = self.tableView.tableFooterView {
             /// The expected height for the footer under autolayout.
@@ -78,6 +86,92 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
             // Fill the gap
             tableFooterView.frame.size.height = gapHeight + footerHeight
         }
+        
+    }
+    
+    func configureFAB() {
+        let screenWidth = screenRect.size.width
+        let screenHeight = screenRect.size.height
+        print(screenRect.size.height, "yyy")
+        
+        actionButton = JJFloatingActionButton()
+        actionButton.addItem(title: "General Post", image: UIImage(named: "create")?.withRenderingMode(.alwaysTemplate)) { item in
+            
+            self.actionButton.close()
+            let postScreen = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PostVC") as! PostVC
+            postScreen.postFeedType = "General"
+            let postNav = UINavigationController(rootViewController: postScreen)
+            self.present(postNav, animated: true, completion: nil)
+            self.actionButton.close()
+           
+        }
+        actionButton.addItem(title: "Fitness Post", image: UIImage(named: "fitness24")?.withRenderingMode(.alwaysTemplate)) { item in
+            
+            self.actionButton.close()
+            let postScreen = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PostVC") as! PostVC
+            postScreen.postFeedType = "Fitness"
+            let postNav = UINavigationController(rootViewController: postScreen)
+            self.present(postNav, animated: true, completion: nil)
+            self.actionButton.close()
+        }
+        actionButton.addItem(title: "Create Chat", image: UIImage(named: "chat3")?.withRenderingMode(.alwaysTemplate)) { item in
+            
+            let contactsVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "contactsView") as! ContactsVC_Coach
+            let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "addMembersNav") as! UINavigationController
+            contactsVC.isGroup = true
+         
+            
+            self.present(navigation, animated: true, completion: nil)
+           self.actionButton.close()
+        }
+        actionButton.addItem(title: "Create Event", image: UIImage(named: "date")?.withRenderingMode(.alwaysTemplate)) { item in
+            
+            self.actionButton.close()
+            if let eventCoach : Event_Coach = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
+            {
+                eventCoach.accountType = "Coach"
+                eventCoach.hidesBottomBarWhenPushed = true
+                eventCoach.updateNeeded = false
+                //self.navigationController?.setNavigationBarHidden(true, animated: true)
+                eventCoach.modalPresentationStyle = .overCurrentContext
+                self.present(eventCoach, animated: true, completion: nil)
+                self.actionButton.close()
+            }
+        }
+        
+        for item in actionButton.items {
+            item.buttonImageColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)!
+        }
+
+        actionButton.overlayView.backgroundColor = UIColor(white: 0, alpha: 0.65)
+        actionButton.handleSingleActionDirectly = false
+
+        actionButton.buttonAnimationConfiguration.opening.duration = 0.8
+        actionButton.buttonAnimationConfiguration.closing.duration = 0.6
+        actionButton.layer.shadowColor = UIColor.black.cgColor
+        actionButton.layer.shadowOffset = CGSize(width: 1, height: 2)
+        actionButton.layer.shadowOpacity = Float(0.5)
+        actionButton.layer.shadowRadius = CGFloat(3)
+        actionButton.buttonColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)!
+        
+        actionButton.translatesAutoresizingMaskIntoConstraints = false
+        actionButton.frame = CGRect(x: screenWidth * 0.5, y: screenHeight * 0.5, width: 60, height: 60)
+//        actionButton.display(inViewController: self)
+          //self.actionView.addSubview(actionButton)
+        self.view.addSubview(actionButton)
+        
+//        //actionButton.display(inView: self.view)
+//actionButton = JJFloatingActionButton(frame: CGRect(x: screenWidth * 0.5, y: screenHeight * 0.5, width: 60, height: 60))
+        
+       //actionButton.translatesAutoresizingMaskIntoConstraints = false
+//
+//        if #available(iOS 11.0, *) {
+//            actionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+//            actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
+//        } else {
+//            actionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+//            actionButton.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -16).isActive = true
+//        }
         
     }
     
@@ -101,6 +195,11 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
 //        if emptyLabelOne.text == "No chats to show!" {
 //            emptyLabelOne.text = ""
 //        }
+        emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -125, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
+
+        backgroundView.layer.cornerRadius = CGFloat(25.0)
+
+        backgroundView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
         team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
             if teamReturned.teamID != "" {
@@ -162,10 +261,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         //self.tableView.reloadData()
     }
 
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        recentListener.remove()
-    }
+
     
     //MARK: LoadRecentChats
     
@@ -175,8 +271,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
             guard let snapshot = snapshot else { return }
             
             self.recentChats = []
-            self.numUnreadMessages = "0"
-            var counter = 0
+            self.numUnreadMessages = "0" 
             var stringConversion: String = ""
             if !snapshot.isEmpty {
                 
@@ -229,7 +324,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
                 emptyLabelOne.textAlignment = NSTextAlignment.center
                 emptyLabelOne.font = UIFont(name: "Helvetica Neue", size: 15)
                 emptyLabelOne.textColor = UIColor.lightGray
-                self.tableView.tableFooterView!.addSubview(emptyLabelOne)
+                //self.tableView.tableFooterView!.addSubview(emptyLabelOne)
                 return 0
             } else {
                 emptyLabelOne.text = ""

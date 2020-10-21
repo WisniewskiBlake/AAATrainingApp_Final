@@ -118,74 +118,6 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         
     }
     
-    func configureFAB() {
-        //actionButton = JJFloatingActionButton(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.83, width: 60, height: 60))
-        actionButton = JJFloatingActionButton()
-        actionButton.addItem(title: "General Post", image: UIImage(named: "create")?.withRenderingMode(.alwaysTemplate)) { item in
-            
-            self.actionButton.close()
-            let postScreen = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PostVC") as! PostVC
-            postScreen.postFeedType = "General"
-            let postNav = UINavigationController(rootViewController: postScreen)
-            self.present(postNav, animated: true, completion: nil)
-            self.actionButton.close()
-           
-        }
-        actionButton.addItem(title: "Fitness Post", image: UIImage(named: "fitness24")?.withRenderingMode(.alwaysTemplate)) { item in
-            
-            self.actionButton.close()
-            let postScreen = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PostVC") as! PostVC
-            postScreen.postFeedType = "Fitness"
-            let postNav = UINavigationController(rootViewController: postScreen)
-            self.present(postNav, animated: true, completion: nil)
-            self.actionButton.close()
-        }
-        actionButton.addItem(title: "Create Chat", image: UIImage(named: "chat3")?.withRenderingMode(.alwaysTemplate)) { item in
-            
-            let contactsVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "contactsView") as! ContactsVC_Coach
-            let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "addMembersNav") as! UINavigationController
-            contactsVC.isGroup = true
-         
-            
-            self.present(navigation, animated: true, completion: nil)
-           self.actionButton.close()
-        }
-        actionButton.addItem(title: "Create Event", image: UIImage(named: "date")?.withRenderingMode(.alwaysTemplate)) { item in
-            
-            self.actionButton.close()
-            if let eventCoach : Event_Coach = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
-            {
-                eventCoach.accountType = "Coach"
-                eventCoach.hidesBottomBarWhenPushed = true
-                eventCoach.updateNeeded = false
-                //self.navigationController?.setNavigationBarHidden(true, animated: true)
-                eventCoach.modalPresentationStyle = .overCurrentContext
-                self.present(eventCoach, animated: true, completion: nil)
-                self.actionButton.close()
-            }
-        }
-        
-        for item in actionButton.items {
-            item.buttonImageColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)!
-        }
-
-//        actionButton.overlayView.backgroundColor = UIColor(hue: 0.31, saturation: 0.37, brightness: 0.10, alpha: 0.30)
-//        actionButton.overlayView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
-        actionButton.overlayView.backgroundColor = UIColor(white: 0, alpha: 0.65)
-        actionButton.handleSingleActionDirectly = false
-//        actionButton.itemAnimationConfiguration = .circularSlideIn(withRadius: 120)
-//        actionButton.buttonAnimationConfiguration = .rotation(toAngle: .pi * 3 / 4)
-        
-        actionButton.buttonAnimationConfiguration.opening.duration = 0.8
-        actionButton.buttonAnimationConfiguration.closing.duration = 0.6
-        actionButton.layer.shadowColor = UIColor.black.cgColor
-        actionButton.layer.shadowOffset = CGSize(width: 1, height: 2)
-        actionButton.layer.shadowOpacity = Float(0.5)
-        actionButton.layer.shadowRadius = CGFloat(3)
-
-        actionButton.buttonColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)!
-        
-    }
     
     @objc func floatingActionButtonDidOpen(_ button: JJFloatingActionButton) {
         print(actionButton.overlayView.frame.origin.y)
@@ -199,17 +131,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         super.viewWillAppear(animated)
         
         configureFAB()
-        actionButton.display(inViewController: self)
-        //self.tableView.addSubview(actionButton)
-        actionButton.translatesAutoresizingMaskIntoConstraints = false
-
-        if #available(iOS 11.0, *) {
-            actionButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
-            actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
-        } else {
-            actionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-            actionButton.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -16).isActive = true
-        }
+        
         
         do {
             let gif = try UIImage(gifName: "loaderFinal.gif")
@@ -881,6 +803,87 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         picker.allowsEditing = true
         picker.sourceType = source
         present(picker, animated: true, completion: nil)
+        
+    }
+    
+    func configureFAB() {
+        //actionButton = JJFloatingActionButton(frame: CGRect(x: (self.tableView.bounds.size.width) * 0.78, y: (self.tabBarController?.tabBar.frame.origin.y)! * 0.83, width: 60, height: 60))
+        actionButton = JJFloatingActionButton()
+        actionButton.addItem(title: "General Post", image: UIImage(named: "create")?.withRenderingMode(.alwaysTemplate)) { item in
+            
+            self.actionButton.close()
+            let postScreen = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PostVC") as! PostVC
+            postScreen.postFeedType = "General"
+            let postNav = UINavigationController(rootViewController: postScreen)
+            self.present(postNav, animated: true, completion: nil)
+            self.actionButton.close()
+           
+        }
+        actionButton.addItem(title: "Fitness Post", image: UIImage(named: "fitness24")?.withRenderingMode(.alwaysTemplate)) { item in
+            
+            self.actionButton.close()
+            let postScreen = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PostVC") as! PostVC
+            postScreen.postFeedType = "Fitness"
+            let postNav = UINavigationController(rootViewController: postScreen)
+            self.present(postNav, animated: true, completion: nil)
+            self.actionButton.close()
+        }
+        actionButton.addItem(title: "Create Chat", image: UIImage(named: "chat3")?.withRenderingMode(.alwaysTemplate)) { item in
+            
+            let contactsVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "contactsView") as! ContactsVC_Coach
+            let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "addMembersNav") as! UINavigationController
+            contactsVC.isGroup = true
+         
+            
+            self.present(navigation, animated: true, completion: nil)
+           self.actionButton.close()
+        }
+        actionButton.addItem(title: "Create Event", image: UIImage(named: "date")?.withRenderingMode(.alwaysTemplate)) { item in
+            
+            self.actionButton.close()
+            if let eventCoach : Event_Coach = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
+            {
+                eventCoach.accountType = "Coach"
+                eventCoach.hidesBottomBarWhenPushed = true
+                eventCoach.updateNeeded = false
+                //self.navigationController?.setNavigationBarHidden(true, animated: true)
+                eventCoach.modalPresentationStyle = .overCurrentContext
+                self.present(eventCoach, animated: true, completion: nil)
+                self.actionButton.close()
+            }
+        }
+        
+        for item in actionButton.items {
+            item.buttonImageColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)!
+        }
+
+//        actionButton.overlayView.backgroundColor = UIColor(hue: 0.31, saturation: 0.37, brightness: 0.10, alpha: 0.30)
+//        actionButton.overlayView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
+        actionButton.overlayView.backgroundColor = UIColor(white: 0, alpha: 0.65)
+        actionButton.handleSingleActionDirectly = false
+//        actionButton.itemAnimationConfiguration = .circularSlideIn(withRadius: 120)
+//        actionButton.buttonAnimationConfiguration = .rotation(toAngle: .pi * 3 / 4)
+        
+        actionButton.buttonAnimationConfiguration.opening.duration = 0.8
+        actionButton.buttonAnimationConfiguration.closing.duration = 0.6
+        actionButton.layer.shadowColor = UIColor.black.cgColor
+        actionButton.layer.shadowOffset = CGSize(width: 1, height: 2)
+        actionButton.layer.shadowOpacity = Float(0.5)
+        actionButton.layer.shadowRadius = CGFloat(3)
+
+        actionButton.buttonColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)!
+        
+        actionButton.display(inViewController: self)
+        //self.tableView.addSubview(actionButton)
+        actionButton.translatesAutoresizingMaskIntoConstraints = false
+
+        if #available(iOS 11.0, *) {
+            actionButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
+            actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
+        } else {
+            actionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+            actionButton.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -16).isActive = true
+        }
         
     }
     
