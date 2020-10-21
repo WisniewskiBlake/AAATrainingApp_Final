@@ -193,8 +193,8 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         actionButton.buttonAnimationConfiguration.closing.duration = 0.6
         actionButton.layer.shadowColor = UIColor.black.cgColor
         actionButton.layer.shadowOffset = CGSize(width: 1, height: 2)
-        actionButton.layer.shadowOpacity = Float(0.5)
-        actionButton.layer.shadowRadius = CGFloat(3)
+        actionButton.layer.shadowOpacity = Float(0.7)
+        actionButton.layer.shadowRadius = CGFloat(4)
         actionButton.buttonColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)!
         
         actionButton.translatesAutoresizingMaskIntoConstraints = false
