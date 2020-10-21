@@ -43,19 +43,43 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [""])
     
     var actionButton = JJFloatingActionButton()
-    
+    var heightCache = CGFloat(0)
+    var backgroundHeightCache = CGFloat(0)
     override func viewDidLoad() {
         super.viewDidLoad()
+        heightCache = self.view.frame.size.height
+        backgroundHeightCache = self.backgroundView.frame.size.height
         
-        print(screenRect.size.height, "zzz")
-        
+    }
+    
+    @available(iOS 11.0, *)
+    override func viewLayoutMarginsDidChange() {
+     super.viewLayoutMarginsDidChange()
+     
+        print("Did change margins")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         
-        print(screenRect.size.height, "xxx")
+//        self.view.layoutMargins = UIEdgeInsets(top: self.view.layoutMargins.top,
+//                                               left: self.view.layoutMargins.left,
+//                                               bottom: self.view.layoutMargins.bottom,
+//                                               right: self.view.layoutMargins.right)
+        self.view.frame.size.height = backgroundHeightCache
+        self.backgroundView.frame.size.height = backgroundHeightCache
+        self.viewRespectsSystemMinimumLayoutMargins = false
+        self.automaticallyAdjustsScrollViewInsets = true
+        self.backgroundView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0,
+                                                                     leading: 0,
+                                                                     bottom: 0,
+                                                                     trailing: 0)
+        self.view.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0,
+                                                                     leading: 0,
+                                                                     bottom: 0,
+                                                                     trailing: 0)
+        
         configureFAB()
         print(backgroundView.frame.size.height)
         print(view.frame.size.height)
@@ -72,27 +96,37 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         recentListener.remove()
     }
     
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//
-//        fillContentGap:
-//        if let tableFooterView = self.tableView.tableFooterView {
-//            /// The expected height for the footer under autolayout.
-//            let footerHeight = tableFooterView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-//            /// The amount of empty space to fill with the footer view.
-//            let gapHeight: CGFloat = self.tableView.bounds.height - self.tableView.adjustedContentInset.top - self.tableView.adjustedContentInset.bottom - self.tableView.contentSize.height
-//            // Ensure there is space to be filled
-//            guard gapHeight.rounded() > 0 else { break fillContentGap }
-//            // Fill the gap
-//            tableFooterView.frame.size.height = gapHeight + footerHeight
-//        }
-//
-//    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.view.frame.size.height = backgroundHeightCache
+        self.backgroundView.frame.size.height = backgroundHeightCache
+        self.backgroundView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0,
+                                                                     leading: 0,
+                                                                     bottom: 0,
+                                                                     trailing: 0)
+        self.view.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0,
+                                                                     leading: 0,
+                                                                     bottom: 0,
+                                                                     trailing: 0)
+
+        fillContentGap:
+        if let tableFooterView = self.tableView.tableFooterView {
+            /// The expected height for the footer under autolayout.
+            let footerHeight = tableFooterView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+            /// The amount of empty space to fill with the footer view.
+            let gapHeight: CGFloat = self.tableView.bounds.height - self.tableView.adjustedContentInset.top - self.tableView.adjustedContentInset.bottom - self.tableView.contentSize.height
+            // Ensure there is space to be filled
+            guard gapHeight.rounded() > 0 else { break fillContentGap }
+            // Fill the gap
+            tableFooterView.frame.size.height = gapHeight + footerHeight
+        }
+
+    }
     
     func configureFAB() {
         let screenWidth = screenRect.size.width
         let screenHeight = screenRect.size.height
-        print(screenRect.size.height, "yyy")
+        
         
         actionButton = JJFloatingActionButton()
         actionButton.addItem(title: "General Post", image: UIImage(named: "create")?.withRenderingMode(.alwaysTemplate)) { item in

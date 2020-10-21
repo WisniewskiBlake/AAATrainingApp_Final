@@ -4957,11 +4957,11 @@
         <scene sceneID="6hW-az-6Ff">
             <objects>
                 <viewController storyboardIdentifier="recentVC" id="m41-eK-O4l" customClass="RecentChatVC_Coach" customModule="LockerRoom" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" autoresizesSubviews="NO" contentMode="scaleToFill" id="6GD-SN-13O">
+                    <view key="view" autoresizesSubviews="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="6GD-SN-13O">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uts-7h-nj5">
+                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uts-7h-nj5">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="-1" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vQb-66-3wr">
@@ -5091,15 +5091,13 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EA9-Zi-Zsl">
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EA9-Zi-Zsl">
                                         <rect key="frame" x="335" y="735" width="60" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" systemColor="systemBlueColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="60" id="LZk-KI-6HQ"/>
-                                            <constraint firstAttribute="height" constant="60" id="gqi-Mo-0sH"/>
-                                        </constraints>
                                     </view>
                                 </subviews>
+                                <viewLayoutGuide key="safeArea" id="Mgn-em-7Sd"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="HUO-Q0-AYB" firstAttribute="leading" secondItem="Uts-7h-nj5" secondAttribute="leading" constant="8" id="BaW-2R-EPO"/>
@@ -5109,8 +5107,6 @@
                                     <constraint firstItem="jVk-wB-byg" firstAttribute="leading" secondItem="Uts-7h-nj5" secondAttribute="leading" id="UYV-kj-ULd"/>
                                     <constraint firstItem="vQb-66-3wr" firstAttribute="top" secondItem="Uts-7h-nj5" secondAttribute="top" constant="82" id="bBy-fh-LnW"/>
                                     <constraint firstItem="vQb-66-3wr" firstAttribute="leading" secondItem="Uts-7h-nj5" secondAttribute="leading" id="ce5-sW-hIy"/>
-                                    <constraint firstAttribute="bottom" secondItem="EA9-Zi-Zsl" secondAttribute="bottom" constant="18" id="hyx-Fb-5wD"/>
-                                    <constraint firstAttribute="trailing" secondItem="EA9-Zi-Zsl" secondAttribute="trailing" constant="19" id="l74-Tc-bbF"/>
                                     <constraint firstAttribute="trailing" secondItem="vQb-66-3wr" secondAttribute="trailing" id="muq-5D-QDc"/>
                                     <constraint firstItem="HUO-Q0-AYB" firstAttribute="width" secondItem="Uts-7h-nj5" secondAttribute="width" multiplier="0.961353" id="oP2-iv-9u1"/>
                                     <constraint firstItem="vQb-66-3wr" firstAttribute="top" secondItem="HUO-Q0-AYB" secondAttribute="bottom" constant="24" id="tYz-gC-eqy"/>
