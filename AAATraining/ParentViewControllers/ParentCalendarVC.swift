@@ -444,10 +444,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
             mapItem.openInMaps(launchOptions: options)
         }
     }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
+
     
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
         calendar.reloadData()
@@ -509,7 +506,5 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     }
     
     
-    
-
-
 }
+

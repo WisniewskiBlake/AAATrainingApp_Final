@@ -97,6 +97,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         tableView.tableFooterView = view
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -160,7 +161,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                     }
                     
                 }
-     }    
+     }
 
     
     func getEventsForNewObserver() {
@@ -629,4 +630,11 @@ extension String {
         let end = index(start, offsetBy: range.upperBound - range.lowerBound)
         return String(self[start ..< end])
     }
+}
+
+extension UINavigationController {
+
+   open override var preferredStatusBarStyle: UIStatusBarStyle {
+      return topViewController?.preferredStatusBarStyle ?? .lightContent
+   }
 }
