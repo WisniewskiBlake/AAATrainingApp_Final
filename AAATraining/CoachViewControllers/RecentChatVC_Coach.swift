@@ -343,8 +343,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
            }
            
            cell.generateCell(recentChat: recent, indexPath: indexPath)
-        
-//           cell.avatarImageView.image = avas[indexPath.row]
+
            return cell
        }
     

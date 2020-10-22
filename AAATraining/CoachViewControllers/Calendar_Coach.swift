@@ -45,10 +45,10 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [])
     
     var x = 0
-    
+    var actionButton = JJFloatingActionButton()
     var eventCopied = Event()
     var imageview = UIImageView()
-    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var emptyLabelOne = UILabel()
     
     override func viewDidLoad() {
@@ -65,6 +65,9 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     // pre-load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        configureFAB()
+        appDelegate.controllerType = 1
         do {
             let gif = try UIImage(gifName: "loaderFinal.gif")
             imageview = UIImageView(gifImage: gif, loopCount: -1) // Will loop 3 times
@@ -98,6 +101,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
     override func viewWillDisappear(_ animated: Bool) {
         recentListener.remove()
+        actionButton.removeFromSuperview()
     }
     
     func configureUI() {
@@ -156,29 +160,8 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                     }
                     
                 }
-     }
-    
-    @IBAction func createEvent_clicked(_ sender: Any) {
-        
-        if let eventCoach : Event_Coach = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
-        {
-            eventCoach.accountType = "Coach"
-            eventCoach.hidesBottomBarWhenPushed = true
+     }    
 
-            eventCoach.updateNeeded = false
-
-            eventCoach.modalPresentationStyle = .fullScreen
-            self.present(eventCoach, animated: true, completion: nil)
-        }
-        
-//        if let eventVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
-//        {
-//            eventVC.accountType == "Coach"
-//            eventVC.u
-//            eventVC.modalPresentationStyle = .fullScreen
-//            self.present(eventVC, animated: true, completion: nil)
-//        }
-    }
     
     func getEventsForNewObserver() {
         let localReference = reference(.Event).document()
@@ -503,6 +486,75 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    func configureFAB() {
+//        let screenWidth = screenRect.size.width
+//        let screenHeight = screenRect.size.height
+        
+        
+        actionButton = JJFloatingActionButton()
+        actionButton.addItem(title: "General Post", image: UIImage(named: "create")?.withRenderingMode(.alwaysTemplate)) { item in
+            
+            self.actionButton.close()
+            let postScreen = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PostVC") as! PostVC
+            postScreen.postFeedType = "General"
+            let postNav = UINavigationController(rootViewController: postScreen)
+            self.present(postNav, animated: true, completion: nil)
+            self.actionButton.close()
+           
+        }
+        actionButton.addItem(title: "Fitness Post", image: UIImage(named: "fitness24")?.withRenderingMode(.alwaysTemplate)) { item in
+            
+            self.actionButton.close()
+            let postScreen = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PostVC") as! PostVC
+            postScreen.postFeedType = "Fitness"
+            let postNav = UINavigationController(rootViewController: postScreen)
+            self.present(postNav, animated: true, completion: nil)
+            self.actionButton.close()
+        }
+        actionButton.addItem(title: "Create Chat", image: UIImage(named: "chat3")?.withRenderingMode(.alwaysTemplate)) { item in
+            
+            let contactsVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "contactsView") as! ContactsVC_Coach
+            let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "addMembersNav") as! UINavigationController
+            contactsVC.isGroup = true
+         
+            
+            self.present(navigation, animated: true, completion: nil)
+           self.actionButton.close()
+        }
+        actionButton.addItem(title: "Create Event", image: UIImage(named: "date")?.withRenderingMode(.alwaysTemplate)) { item in
+            
+            self.actionButton.close()
+            if let eventCoach : Event_Coach = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Event_Coach") as? Event_Coach
+            {
+                eventCoach.accountType = "Coach"
+                eventCoach.hidesBottomBarWhenPushed = true
+                eventCoach.updateNeeded = false
+                //self.navigationController?.setNavigationBarHidden(true, animated: true)
+                eventCoach.modalPresentationStyle = .overCurrentContext
+                self.present(eventCoach, animated: true, completion: nil)
+                self.actionButton.close()
+            }
+        }
+        
+        for item in actionButton.items {
+            item.buttonImageColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)!
+        }
+
+        actionButton.overlayView.backgroundColor = UIColor(white: 0, alpha: 0.65)
+        actionButton.handleSingleActionDirectly = false
+
+        actionButton.buttonAnimationConfiguration.opening.duration = 0.8
+        actionButton.buttonAnimationConfiguration.closing.duration = 0.6
+        actionButton.layer.shadowColor = UIColor.black.cgColor
+        actionButton.layer.shadowOffset = CGSize(width: 1, height: 2)
+        actionButton.layer.shadowOpacity = Float(0.7)
+        actionButton.layer.shadowRadius = CGFloat(4)
+        actionButton.buttonColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)!
+        
+        actionButton.translatesAutoresizingMaskIntoConstraints = false
+        actionButton.display(inViewController: self)
     }
     
 
