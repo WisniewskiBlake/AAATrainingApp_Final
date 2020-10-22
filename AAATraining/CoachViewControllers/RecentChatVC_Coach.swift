@@ -22,9 +22,6 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
     var avas = [UIImage]()
     var recentListener: ListenerRegistration!
 
-    
-    @IBOutlet weak var actionView: UIView!
-    
     let searchController = UISearchController(searchResultsController: nil)
     @IBOutlet weak var searchContainer: UIView!
     @IBOutlet weak var teamImageView: UIImageView!
@@ -63,10 +60,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         super.viewWillAppear(animated)
         
         configureFAB()
-//        self.view.layoutMargins = UIEdgeInsets(top: self.view.layoutMargins.top,
-//                                               left: self.view.layoutMargins.left,
-//                                               bottom: self.view.layoutMargins.bottom,
-//                                               right: self.view.layoutMargins.right)
+
         appDelegate.controllerType = 1
         self.view.frame.size.height = heightCache
         self.backgroundView.frame.size.height = backgroundHeightCache
@@ -80,7 +74,6 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
                                                                      leading: 0,
                                                                      bottom: 0,
                                                                      trailing: 0)
-        
         
         print(backgroundView.frame.size.height)
         print(view.frame.size.height)
@@ -198,46 +191,14 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         actionButton.buttonColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)!
         
         actionButton.translatesAutoresizingMaskIntoConstraints = false
-        //actionButton.frame = CGRect(x: screenWidth * 0.5, y: screenHeight * 0.5, width: 60, height: 60)
         actionButton.display(inViewController: self)
-          //self.actionView.addSubview(actionButton)
-        //self.view.addSubview(actionButton)
-        
-//        //actionButton.display(inView: self.view)
-//actionButton = JJFloatingActionButton(frame: CGRect(x: screenWidth * 0.5, y: screenHeight * 0.5, width: 60, height: 60))
-        
-       //actionButton.translatesAutoresizingMaskIntoConstraints = false
-//
-//        if #available(iOS 11.0, *) {
-//            actionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-//            actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
-//        } else {
-//            actionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-//            actionButton.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -16).isActive = true
-//        }
-        
     }
     
-    
-    
     func configureUI () {
+        
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 150
-        
-//        navigationController?.navigationBar.prefersLargeTitles = true
-//        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-//        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-//        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        //self.tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        //titleView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        //self.tableView.backgroundColor = .white
-//        if self.recentChats.count == 0 {
-//            tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-//        }
-//
-//        if emptyLabelOne.text == "No chats to show!" {
-//            emptyLabelOne.text = ""
-//        }
+
         emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -125, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
 
         backgroundView.layer.cornerRadius = CGFloat(25.0)
@@ -264,22 +225,15 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         }
         teamImageView.layer.cornerRadius = teamImageView.frame.width / 2
         teamImageView.clipsToBounds = true
-        
 
-//        searchContainer.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-//        searchContainer.borderColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-//        searchContainer.borderWidth = CGFloat(1.0)
-        
-        
         let screenWidth = screenRect.size.width
         backgroundView.backgroundColor = UIColor.white
         
         mainView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         
-        
         searchController.searchBar.delegate = self
         searchController.delegate = self
-//        searchController.searchBar.searchTextField.frame = CGRect(x: 0, y: 3, width: self.searchContainer.frame.width, height: self.searchContainer.frame.height - 3);
+
         searchController.searchBar.frame = CGRect(x: -5, y: 0, width: screenWidth - 4, height: 41.0)
 
         searchContainer.backgroundColor = UIColor.white
@@ -288,20 +242,16 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         searchController.searchBar.isTranslucent = true
         searchController.searchBar.borderWidth = CGFloat(2.0)
         searchController.searchBar.borderColor = UIColor.white
-        //searchController.searchBar.searchTextField.backgroundColor = .systemGray4
+
         searchContainer.addSubview(searchController.searchBar)
-        
-        //tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        //searchContainer.bringSubviewToFront(searchController.searchBar)
-        
-        
+
         searchController.searchBar.searchTextField.clipsToBounds = true
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         
         definesPresentationContext = true
         extendedLayoutIncludesOpaqueBars = true
-        //self.tableView.reloadData()
+
     }
 
 
@@ -462,26 +412,15 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         let chatVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "chatVC") as! ChatVC_Coach
         let navController = UINavigationController(rootViewController: chatVC)
 
-//        let navigation = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "chatNavigation") as! UINavigationController
-        
-        
-     
-        
-        //self.present(navigation, animated: true, completion: nil)
-        
-        //let chatVC = ChatVC_Coach()
         chatVC.hidesBottomBarWhenPushed = true
         chatVC.title = (recent[kWITHUSERFULLNAME] as? String)!
         chatVC.memberIds = (recent[kMEMBERS] as? [String])!
         chatVC.membersToPush = (recent[kMEMBERSTOPUSH] as? [String])!
         chatVC.chatRoomId = (recent[kCHATROOMID] as? String)!
         chatVC.isGroup = (recent[kTYPE] as! String) == kGROUP
-        //chatVC.allMembers = (recent[kMEMBERS])!
         
         self.present(navController, animated: true, completion: nil)
-        //self.navigationController?.present(navController, animated: true, completion: nil)
-        
-        //navigationController?.pushViewController(chatVC, animated: true)
+   
     }
     
     func selectUserForChat(isGroup: Bool) {

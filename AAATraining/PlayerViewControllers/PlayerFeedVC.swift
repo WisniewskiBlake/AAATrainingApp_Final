@@ -21,25 +21,41 @@ import JSQMessagesViewController
 
 class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
+    var allPosts: [Post] = []
+    var generalPosts: [Post] = []
+    var fitnessPosts: [Post] = []
+    var postsToShow: [Post] = []
+
+    var allUsers: [FUser] = []
+
+    var recentListener: ListenerRegistration!
+
     @IBOutlet weak var titleView: UIView!
     @IBOutlet weak var teamImageView: UIImageView!
     @IBOutlet weak var teamNameLabel: UILabel!
     @IBOutlet weak var teamFeedTextLabel: UILabel!
     @IBOutlet weak var membersTextLabel: UILabel!
-    @IBOutlet weak var postImageView: UIImageView!
+
     @IBOutlet weak var moreImageView: UIImageView!
-    
-    var allPosts: [Post] = []
-    var allUsers: [FUser] = []
-       var recentListener: ListenerRegistration!
-       
+
+    @IBOutlet weak var filterSegmentedControl: UISegmentedControl!
+    var filterString: String = ""
     var avas = [UIImage]()
     var pictures = [UIImage]()
     var postDatesArray: [String] = []
+    
+    var generalAvas = [UIImage]()
+    var generalPictures = [UIImage]()
+    var generalPostDatesArray: [String] = []
+    
+    var fitnessAvas = [UIImage]()
+    var fitnessPictures = [UIImage]()
+    var fitnessPostDatesArray: [String] = []
 
    var isLoading = false
 
     var emptyLabelOne = UILabel()
+    @IBOutlet weak var feedHeader: UIView!
     
     var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [""])
     
@@ -75,9 +91,9 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         
         emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -150, width: view.bounds.size.width, height: view.bounds.size.height))
         
-        
-    
-        // run function
+        feedHeader.layer.cornerRadius = CGFloat(25.0)
+
+        feedHeader.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
     }
     
@@ -119,7 +135,9 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         } catch {
             print(error)
         }
+        filterSegmentedControl.selectedSegmentIndex = 0
         self.imageview.startAnimatingGif()
+        filterString = ""
         loadPosts()
         getMembers()
         configureUI()
@@ -137,8 +155,8 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 300
         
-        setBadges(controller: self.tabBarController!, accountType: "player")
-        setCalendarBadges(controller: self.tabBarController!, accountType: "player")
+        setBadges(controller: self.tabBarController!, accountType: "coach")
+        setCalendarBadges(controller: self.tabBarController!, accountType: "coach")
         
         tableView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         tableView.separatorColor = UIColor.clear
@@ -146,14 +164,13 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         titleView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         titleView.alpha = 1.0
         
-        
-        
         teamImageView.layer.cornerRadius = teamImageView.frame.width / 2
         teamImageView.clipsToBounds = true
         
-        teamFeedTextLabel.text = "Team Feed"
-        teamFeedTextLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 28)!
-        teamNameLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 18)!
+        //filterSegmentedControl.borderColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+//        teamFeedTextLabel.text = "Team Feed"
+//        teamFeedTextLabel.font = UIFont(name: "Spantaran", size: 27)!
+//        teamNameLabel.font = UIFont(name: "PROGRESSPERSONALUSE", size: 18)!
         
         team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
             if teamReturned.teamID != "" {
@@ -174,56 +191,67 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
                 self.teamImageView.image = UIImage(named: "HomeCover.jpg")
             }
         }
-        self.navigationController?.view.addSubview(self.titleView)
-        self.navigationController?.navigationBar.layer.zPosition = 0;
+//        self.navigationController?.view.addSubview(self.titleView)
+//        self.navigationController?.navigationBar.layer.zPosition = 0;
         
         currentDateFormater.dateFormat = "MM/dd/YYYY"
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
         tableView.refreshControl = refreshControl
+
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    @IBAction func filterSegmentChanged(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            filterString = ""
+            loadPosts()
+            
+        case 1:
+            filterString = "General"
+            loadPosts()
+        case 2:
+            filterString = "Fitness"
+            loadPosts()
+        default:
+            return
+        }
+    }
     
     func getMembers() {
-        
-               
-               let query = reference(.Team).whereField(kTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID)
-               query.getDocuments { (snapshot, error) in
-        
-                   
-                   if error != nil {
-                       print(error!.localizedDescription)
-                    self.imageview.removeFromSuperview()
-                    self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
-                        
-                       return
-                   }
-                   
-                   guard let snapshot = snapshot else {
-                    self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
-                    self.isLoading = false
-                    self.imageview.removeFromSuperview(); return
-                   }
-                   
-                   if !snapshot.isEmpty {
-                       
-                       for userDictionary in snapshot.documents {
-                           
-                           let userDictionary = userDictionary.data() as NSDictionary
-                           let team = Team(_dictionary: userDictionary)
-                           self.membersTextLabel.text = team.teamMemberCount + " Team Members"
-                           
-                       }
-                       
-
-                   }
+        let query = reference(.Team).whereField(kTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID)
+        query.getDocuments { (snapshot, error) in
+            
+            if error != nil {
+                print(error!.localizedDescription)
                 self.imageview.removeFromSuperview()
-               }
-        
+             self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
+                 
+                return
+            }
+            
+            guard let snapshot = snapshot else {
+             self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
+             self.isLoading = false
+                self.imageview.removeFromSuperview(); return
+            }
+            
+            if !snapshot.isEmpty {
+                
+                for userDictionary in snapshot.documents {
+                    
+                    let userDictionary = userDictionary.data() as NSDictionary
+                    let team = Team(_dictionary: userDictionary)
+                    self.membersTextLabel.text = team.teamMemberCount + " Team Members"
+                }
+            }
+            self.imageview.removeFromSuperview()
+        }
+        self.imageview.removeFromSuperview()
     }
     
     @objc func moreImageViewClicked() {
@@ -331,14 +359,25 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     // MARK: - Load Posts
     @objc func loadPosts() {
         
-        
-            self.recentListener = reference(.Post).whereField(kPOSTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID as Any).order(by: kPOSTDATE, descending: true).limit(to: 100).addSnapshotListener({ (snapshot, error) in
-                   
-                self.allPosts = []
-                self.avas = []
-                self.pictures = []
-                self.postDatesArray = []
+        recentListener = reference(.Post).whereField(kPOSTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID as Any).order(by: kPOSTDATE, descending: true).limit(to: 100).addSnapshotListener({ (snapshot, error) in
+
+            self.allPosts = []
+            self.generalPosts = []
+            self.postsToShow = []
+            self.fitnessPosts = []
             
+            self.avas = []
+            self.pictures = []
+            self.postDatesArray = []
+            
+            self.generalAvas = []
+            self.generalPictures = []
+            self.generalPostDatesArray = []
+            
+            self.fitnessAvas = []
+            self.fitnessPictures = []
+            self.fitnessPostDatesArray = []
+
             if error != nil {
                 print(error!.localizedDescription)
                 self.imageview.removeFromSuperview()
@@ -348,49 +387,95 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
                    guard let snapshot = snapshot else { self.imageview.removeFromSuperview(); return }
 
                    if !snapshot.isEmpty {
-
                        for userDictionary in snapshot.documents {
-                           
                            let userDictionary = userDictionary.data() as NSDictionary
-                           
-                           let post = Post(_dictionary: userDictionary)
-                           
-                           self.allPosts.append(post)
-                        self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
 
+                            let post = Post(_dictionary: userDictionary)
+                            self.allPosts.append(post)
+                        
+                            if post.postFeedType == "General" {
+                                self.generalPosts.append(post)
+                                self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
+                                    if avatarImage != nil {
+                                        self.generalAvas.append(avatarImage!.circleMasked!)
+                                    }
+                                }
+                                if post.picture != "" {
+                                    self.helper.imageFromData(pictureData: post.picture) { (pictureImage) in
+                                        if pictureImage != nil {
+                                            self.generalPictures.append(pictureImage!)
+                                        }
+                                    }
+                                } else if post.video != "" {
+                                    self.helper.imageFromData(pictureData: post.picture) { (pictureImage) in
+                                        if pictureImage != nil {
+                                            self.generalPictures.append(pictureImage!)
+                                        }
+                                    }
+                                } else {
+                                    self.generalPictures.append(UIImage())
+                                }
+
+                                let postDate = self.helper.dateFormatter().date(from: post.date)
+                                self.generalPostDatesArray.append(self.currentDateFormater.string(from: postDate!))
+                                
+                            } else if post.postFeedType == "Fitness" {
+                                self.fitnessPosts.append(post)
+                                self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
+                                    if avatarImage != nil {
+                                        self.fitnessAvas.append(avatarImage!.circleMasked!)
+                                    }
+                                }
+                                if post.picture != "" {
+                                    self.helper.imageFromData(pictureData: post.picture) { (pictureImage) in
+                                        if pictureImage != nil {
+                                            self.fitnessPictures.append(pictureImage!)
+                                        }
+                                    }
+                                } else if post.video != "" {
+                                    self.helper.imageFromData(pictureData: post.picture) { (pictureImage) in
+                                        if pictureImage != nil {
+                                            self.fitnessPictures.append(pictureImage!)
+                                        }
+                                    }
+                                } else {
+                                    self.fitnessPictures.append(UIImage())
+                                }
+
+                                let postDate = self.helper.dateFormatter().date(from: post.date)
+                                self.fitnessPostDatesArray.append(self.currentDateFormater.string(from: postDate!))
+                                
+                            }
+                            self.helper.imageFromData(pictureData: post.postUserAva) { (avatarImage) in
                                 if avatarImage != nil {
                                     self.avas.append(avatarImage!.circleMasked!)
                                 }
                             }
                             if post.picture != "" {
                                 self.helper.imageFromData(pictureData: post.picture) { (pictureImage) in
-
                                     if pictureImage != nil {
                                         self.pictures.append(pictureImage!)
                                     }
                                 }
-
                             } else if post.video != "" {
-                                
                                 self.helper.imageFromData(pictureData: post.picture) { (pictureImage) in
-
                                     if pictureImage != nil {
                                         self.pictures.append(pictureImage!)
                                     }
                                 }
-                                
                             } else {
                                 self.pictures.append(UIImage())
                             }
-                        let postDate = self.helper.dateFormatter().date(from: post.date)
-                        self.postDatesArray.append(self.currentDateFormater.string(from: postDate!))
+
+                            let postDate = self.helper.dateFormatter().date(from: post.date)
+                            self.postDatesArray.append(self.currentDateFormater.string(from: postDate!))
                        }
+
                        self.tableView.reloadData()
-                    
                    }
-                self.imageview.removeFromSuperview()
-            })
-        
+                self.tableView.reloadData()
+
+               })
     }
     
     // MARK: - Load New
@@ -427,19 +512,67 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-      if allPosts.count == 0 {
-        emptyLabelOne.text = "Created posts will appear here!"
-        emptyLabelOne.font = UIFont(name: "Helvetica Neue", size: 15)
-        emptyLabelOne.textColor = UIColor.lightGray
-        emptyLabelOne.textAlignment = NSTextAlignment.center
-        self.tableView.tableFooterView!.addSubview(emptyLabelOne)
-        return 0
-       } else {
-         emptyLabelOne.text = ""
-         emptyLabelOne.removeFromSuperview()
-           
-         return allPosts.count
-       }
+        switch self.filterString {
+           case "":
+            if allPosts.count == 0 {
+                emptyLabelOne.text = "No posts to show!"
+                emptyLabelOne.textAlignment = NSTextAlignment.center
+                emptyLabelOne.font = UIFont(name: "Helvetica Neue", size: 15)
+                emptyLabelOne.textColor = UIColor.lightGray
+                self.tableView.tableFooterView!.addSubview(emptyLabelOne)
+                return 0
+            } else {
+                emptyLabelOne.text = ""
+                emptyLabelOne.removeFromSuperview()
+                
+                return allPosts.count
+            }
+
+          case ("General"):
+            if generalPosts.count == 0 {
+                emptyLabelOne.text = "No posts to show!"
+                emptyLabelOne.textAlignment = NSTextAlignment.center
+                emptyLabelOne.font = UIFont(name: "Helvetica Neue", size: 15)
+                emptyLabelOne.textColor = UIColor.lightGray
+                self.tableView.tableFooterView!.addSubview(emptyLabelOne)
+                return 0
+            } else {
+                emptyLabelOne.text = ""
+                emptyLabelOne.removeFromSuperview()
+                
+                return generalPosts.count
+            }
+
+           case ("Fitness"):
+            if fitnessPosts.count == 0 {
+                emptyLabelOne.text = "No posts to show!"
+                emptyLabelOne.textAlignment = NSTextAlignment.center
+                emptyLabelOne.font = UIFont(name: "Helvetica Neue", size: 15)
+                emptyLabelOne.textColor = UIColor.lightGray
+                self.tableView.tableFooterView!.addSubview(emptyLabelOne)
+                return 0
+            } else {
+                emptyLabelOne.text = ""
+                emptyLabelOne.removeFromSuperview()
+                
+                return fitnessPosts.count
+            }
+
+          default:
+            if allPosts.count == 0 {
+                emptyLabelOne.text = "No posts to show!"
+                emptyLabelOne.textAlignment = NSTextAlignment.center
+                emptyLabelOne.font = UIFont(name: "Helvetica Neue", size: 15)
+                emptyLabelOne.textColor = UIColor.lightGray
+                self.tableView.tableFooterView!.addSubview(emptyLabelOne)
+                return 0
+            } else {
+                emptyLabelOne.text = ""
+                emptyLabelOne.removeFromSuperview()
+                
+                return allPosts.count
+            }
+        }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -451,81 +584,104 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            var post: Post
+        var post: Post
+        var postsToShow: [Post] = []
+        var avasToShow = [UIImage]()
+        var picturesToShow = [UIImage]()
+        var datesToShow: [String] = []
+        if(filterString == "") {
+            postsToShow = allPosts
+            avasToShow = avas
+            picturesToShow = pictures
+            datesToShow = postDatesArray
+        } else if(filterString == "General") {
+            postsToShow = generalPosts
+            avasToShow = generalAvas
+            picturesToShow = generalPictures
+            datesToShow = generalPostDatesArray
+        } else if(filterString == "Fitness") {
+            postsToShow = fitnessPosts
+            avasToShow = fitnessAvas
+            picturesToShow = fitnessPictures
+            datesToShow = fitnessPostDatesArray
+        }
+        
+        let cellPic = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
+
+        
+        if postsToShow.count > 0 {
             
-            let cellPic = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
-            
-            if allPosts.count > 0 {
-                post = allPosts[indexPath.row]
+            post = postsToShow[indexPath.row]
 
-                if post.postType == "video" {
+            if post.postType == "video" {
+                
+                cellPic.avaImageView.image = avasToShow[indexPath.row]
+                cellPic.pictureImageView.image = picturesToShow[indexPath.row]
+                cellPic.playImageView.isHidden = false
+                
+                cellPic.postTextLabel.numberOfLines = 0
+                cellPic.postTextLabel.text = post.text
+                //DispatchQueue.main.async {
+                    cellPic.dateLabel.text = datesToShow[indexPath.row]
                     
-                    cellPic.avaImageView.image = self.avas[indexPath.row]
-                    cellPic.pictureImageView.image = self.pictures[indexPath.row]
-                    cellPic.playImageView.isHidden = false
                     
-                    cellPic.postTextLabel.numberOfLines = 0
-                    cellPic.postTextLabel.text = post.text
-                    //DispatchQueue.main.async {
-                        cellPic.dateLabel.text = self.postDatesArray[indexPath.row]
-                        
-                        
-                        cellPic.delegate = self
-                        cellPic.indexPath = indexPath
-                        cellPic.fullnameLabel.text = post.postUserName
-                        
-                        cellPic.urlTextView.text = post.postUrlLink
-                    //}
+                    cellPic.delegate = self
+                    cellPic.indexPath = indexPath
+                    cellPic.fullnameLabel.text = post.postUserName
+                    
+                    cellPic.urlTextView.text = post.postUrlLink
+                //}
 
-                     return cellPic
+                 return cellPic
+                
+            } else if post.postType == "picture" {
+                let cellPic = tableView.dequeueReusableCell(withIdentifier: "CoachPicCell", for: indexPath) as! CoachPicCell
+                
+                cellPic.avaImageView.image = avasToShow[indexPath.row]
+                cellPic.pictureImageView.image = picturesToShow[indexPath.row]
+                
+                cellPic.postTextLabel.numberOfLines = 0
+                cellPic.postTextLabel.text = post.text
+                
+                //DispatchQueue.main.async {
                     
-                } else if post.postType == "picture" {
                     
-                    cellPic.avaImageView.image = self.avas[indexPath.row]
-                    cellPic.pictureImageView.image = self.pictures[indexPath.row]
+                    cellPic.playImageView.isHidden = true
+                                
+                    cellPic.dateLabel.text = datesToShow[indexPath.row]
+                    cellPic.delegate = self
+                    cellPic.indexPath = indexPath
+                    cellPic.fullnameLabel.text = post.postUserName
                     
-                    cellPic.postTextLabel.numberOfLines = 0
-                    cellPic.postTextLabel.text = post.text
+                    cellPic.urlTextView.text = post.postUrlLink
+                //}
+                
+                return cellPic
+                
+            } else {
+                let cellNoPic = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as!
+                CoachNoPicCell
+                cellNoPic.postTextLabel.numberOfLines = 0
+                cellNoPic.postTextLabel.text = post.text
+                
+                //DispatchQueue.main.async {
                     
-                    //DispatchQueue.main.async {
-                        
-                        
-                        cellPic.playImageView.isHidden = true
-                                    
-                        cellPic.dateLabel.text = self.postDatesArray[indexPath.row]
-                        cellPic.delegate = self
-                        cellPic.indexPath = indexPath
-                        cellPic.fullnameLabel.text = post.postUserName
-                        
-                        cellPic.urlTextView.text = post.postUrlLink
-                    //}
+                    cellNoPic.avaImageView.image = avasToShow[indexPath.row]
                     
-                    return cellPic
+                    cellNoPic.dateLabel.text = datesToShow[indexPath.row]
                     
-                } else {
-                    let cellNoPic = tableView.dequeueReusableCell(withIdentifier: "CoachNoPicCell", for: indexPath) as! CoachNoPicCell
-                    
-                    cellNoPic.postTextLabel.numberOfLines = 0
-                    cellNoPic.postTextLabel.text = post.text
-                    
-                    //DispatchQueue.main.async {
-                        
-                        cellNoPic.avaImageView.image = self.avas[indexPath.row]
-                        
-                        cellNoPic.dateLabel.text = self.postDatesArray[indexPath.row]
-                        
-                        cellNoPic.fullnameLabel.text = post.postUserName
+                    cellNoPic.fullnameLabel.text = post.postUserName
 
-                        cellNoPic.urlTextView.text = post.postUrlLink
-                    //}
-                                     
-                     return cellNoPic
-                }
+                    cellNoPic.urlTextView.text = post.postUrlLink
+                //}
+                                 
+                 return cellNoPic
             }
-                    
-            
-            
-            return cellPic
+        }
+                
+        
+        
+        return cellPic
         }
     
     
