@@ -7,8 +7,16 @@
 //
 
 import UIKit
-import Foundation
+import MediaPlayer
+import ImagePicker
+import Firebase
+import FirebaseFirestore
 import ProgressHUD
+import IQAudioRecorderController
+import IDMPhotoBrowser
+import AVFoundation
+import AVKit
+import FirebaseAuth
 
 class MutualSettingsTableViewController: UITableViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
@@ -17,14 +25,16 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
     @IBOutlet weak var deleteButtonOutlet: UIButton!
     @IBOutlet weak var pushNotiStatusSwitch: UISwitch!
     @IBOutlet weak var inviteOthersBtn: UIButton!
+    @IBOutlet weak var backToTeamSelectBtn: UIButton!
     
+    private var authListener: AuthStateDidChangeListenerHandle?
     @IBOutlet weak var versionLabel: UILabel!
     let userDefaults = UserDefaults.standard
     
     var avatarSwitchStatus = false
     var firstLoad: Bool?
     let helper = Helper()
-    
+    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [""])
     override func viewDidAppear(_ animated: Bool) {
         if FUser.currentUser() != nil {
             setupUI()
@@ -125,6 +135,13 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
             ProgressHUD.showSuccess("Cache cleaned.")
         } catch {
             ProgressHUD.showError("Couldnt clean Media files.")
+        }
+    }
+    @IBAction func backToTeamSelectPressed(_ sender: Any) {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
+        {
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
         }
     }
     
@@ -249,27 +266,79 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
     //MARK: Delete user
     
     func deleteUser() {
+        let helper = Helper()
+        var teamMemberAccountTypes: [String] = []
+        var teamMemberIDs: [String] = []
+        var teamMemberCount: String = ""
+        var newTeamMemberCount: Int = 0
         
-        //delet locally
-        userDefaults.removeObject(forKey: kPUSHID)
-        userDefaults.removeObject(forKey: kCURRENTUSER)
-        userDefaults.synchronize()
+        var currentTeamID = FUser.currentUser()!.userCurrentTeamID
+        var currentID = FUser.currentId()
         
-        //delete from firebase
-        reference(.User).document(FUser.currentId()).delete()
-        
-        FUser.deleteUser { (error) in
-            
-            if error != nil {
-                
-                DispatchQueue.main.async {
-                    ProgressHUD.showError("Couldnt delete use")
-                }
-                return
+        authListener = Auth.auth().addStateDidChangeListener { (auth, user) in
+
+                    if let user = user {
+                        self.team.getTeam(teamID: currentTeamID) { (teamReturned) in
+                            if teamReturned.teamID != "" {
+                                
+                                teamMemberAccountTypes = teamReturned.teamMemberAccountTypes
+                                teamMemberIDs = teamReturned.teamMemberIDs
+                                teamMemberCount = teamReturned.teamMemberCount
+                                
+                                let index = teamMemberIDs.firstIndex(of: currentID)
+                                teamMemberAccountTypes.remove(at: index!)
+                                teamMemberIDs.remove(at: index!)
+                                newTeamMemberCount = Int(teamMemberCount)! - 1
+                                
+                                //delet locally
+    //                            self.userDefaults.removeObject(forKey: kPUSHID)
+    //                            self.userDefaults.removeObject(forKey: kCURRENTUSER)
+    //                            self.userDefaults.synchronize()
+                                
+                                //delete from firebase
+                                reference(.User).document(currentID).delete()
+                         
+                                Team.updateTeam(teamID: teamReturned.teamID, withValues: [kTEAMMEMBERIDS: teamMemberIDs, kTEAMMEMBERACCOUNTTYPES: teamMemberAccountTypes, kTEAMMEMBERCOUNT: String(newTeamMemberCount)])
+                                
+                                user.delete(completion: { (error) in
+                                    if error != nil {
+                                        
+                                    } else {
+                                        
+                                    }
+                                })
+                                
+                                self.showLoginView()
+                            } else {
+                                helper.showAlert(title: "Error", message: "Can't delete right now.", in: self)
+                            }
+                        }
+
+                        
+                    } else {
+                        helper.showAlert(title: "Error", message: "You are required to log out and log back in (re-authenticate) before deleting your account.", in: self)
+                    }
             }
+
+        if let user = Auth.auth().currentUser {
             
-            self.showLoginView()
         }
+        
+        
+//        FUser.deleteUser { (error) in
+//
+//            if error != nil {
+//
+//                DispatchQueue.main.async {
+//                    print("Couldnt delete user")
+//                    ProgressHUD.showError("Couldnt delete user")
+//                }
+//                return
+//            }
+//
+//            self.showLoginView()
+//        }
+        
     }
 
 
