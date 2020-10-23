@@ -476,59 +476,67 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         calendar.reloadData()
     }
     @IBAction func logoutViewClicked(_ sender: Any) {
-        let sheet = UIAlertController(title: "Team Login Code: " + FUser.currentUser()!.userCurrentTeamID, message: nil, preferredStyle: .actionSheet)
-        
-        
-        
-        let colorPicker = UIAlertAction(title: "Choose App Color Theme", style: .default, handler: { (action) in
-                        
+        if let vc =  UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SettingsNav") as? UINavigationController
+        {
+            vc.modalPresentationStyle = .fullScreen
+            vc.navigationController?.navigationBar.tintColor = UIColor.black
+            vc.navigationBar.tintColor = UIColor.black
             
-            let navigationColorPicker = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ColorPickerNav") as! UINavigationController
-             //let colorPickerVC = navigationColorPicker.viewControllers.first as! ColorPickerVC
-            
-            
-            self.present(navigationColorPicker, animated: true, completion: nil)
-                
-            
-        })
-        
-        let backToTeamSelect = UIAlertAction(title: "Back To Team Select", style: .default, handler: { (action) in
-                        
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
-            {
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true, completion: nil)
-            }
-                
-            
-        })
-        
-        // creating buttons for action sheet
-        let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
-                        
-            FUser.logOutCurrentUser { (success) in
-                
-                if success {
-                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
-                    {
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true, completion: nil)
-                    }
-                }
-            }
-        })
-        
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        // add buttons to action sheet
-        
-        sheet.addAction(colorPicker)
-        sheet.addAction(backToTeamSelect)
-        sheet.addAction(logout)
-        sheet.addAction(cancel)
-        
-        // show action sheet
-        present(sheet, animated: true, completion: nil)
+            self.present(vc, animated: true, completion: nil)
+        }
+//        let sheet = UIAlertController(title: "Team Login Code: " + FUser.currentUser()!.userCurrentTeamID, message: nil, preferredStyle: .actionSheet)
+//
+//
+//
+//        let colorPicker = UIAlertAction(title: "Choose App Color Theme", style: .default, handler: { (action) in
+//
+//
+//            let navigationColorPicker = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ColorPickerNav") as! UINavigationController
+//             //let colorPickerVC = navigationColorPicker.viewControllers.first as! ColorPickerVC
+//
+//
+//            self.present(navigationColorPicker, animated: true, completion: nil)
+//
+//
+//        })
+//
+//        let backToTeamSelect = UIAlertAction(title: "Back To Team Select", style: .default, handler: { (action) in
+//
+//            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
+//            {
+//                vc.modalPresentationStyle = .fullScreen
+//                self.present(vc, animated: true, completion: nil)
+//            }
+//
+//
+//        })
+//
+//        // creating buttons for action sheet
+//        let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
+//
+//            FUser.logOutCurrentUser { (success) in
+//
+//                if success {
+//                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+//                    {
+//                        vc.modalPresentationStyle = .fullScreen
+//                        self.present(vc, animated: true, completion: nil)
+//                    }
+//                }
+//            }
+//        })
+//
+//        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//
+//        // add buttons to action sheet
+//
+//        sheet.addAction(colorPicker)
+//        sheet.addAction(backToTeamSelect)
+//        sheet.addAction(logout)
+//        sheet.addAction(cancel)
+//
+//        // show action sheet
+//        present(sheet, animated: true, completion: nil)
     }
     
     

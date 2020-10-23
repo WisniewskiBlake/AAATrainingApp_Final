@@ -97,6 +97,10 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         fillContentGap:
@@ -202,9 +206,7 @@ class PlayerFeedVC: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
 
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
+
     @IBAction func filterSegmentChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:

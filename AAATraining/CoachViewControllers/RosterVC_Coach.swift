@@ -40,6 +40,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     var imageview = UIImageView()
         
     var segmentIndex = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -50,7 +51,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         self.setLeftAlignedNavigationItemTitle(text: "Roster", color: .white, margin: 12)
         
-        navigationItem.searchController = searchController
+        //navigationItem.searchController = searchController
         
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false

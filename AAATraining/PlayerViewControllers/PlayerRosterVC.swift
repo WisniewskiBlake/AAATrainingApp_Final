@@ -13,8 +13,9 @@ import FirebaseFirestore
 
 class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell_CoachDelegate {
     @IBOutlet weak var headerView: UIView!
-        @IBOutlet weak var filterSegmentedControl: UISegmentedControl!
-            
+
+    @IBOutlet weak var filterSegmentedControl: UISegmentedControl!
+    
         var allUsers: [FUser] = []
         var coaches: [FUser] = []
         var players: [FUser] = []
@@ -38,67 +39,73 @@ class PlayerRosterVC: UITableViewController, UISearchResultsUpdating, RosterCell
         var imageview = UIImageView()
                 
         var segmentIndex = 0
-        override func viewDidLoad() {
-            super.viewDidLoad()
-            navigationItem.largeTitleDisplayMode = .never
-            tableView.tableFooterView = UIView()
-                
-            self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-            navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-            self.setLeftAlignedNavigationItemTitle(text: "Roster", color: .white, margin: 12)
-                
-            navigationItem.searchController = searchController
-                
-            searchController.searchResultsUpdater = self
-            searchController.obscuresBackgroundDuringPresentation = false
-            definesPresentationContext = true
-    //        segmentIndex = filterSegmentedControl.selectedSegmentIndex
-    //        if(segmentIndex == 0) {
-    //            getTeam(filter: "")
-    //        } else if(segmentIndex == 0) {
-    //            getTeam(filter: "Player")
-    //        }
-    //        else if(segmentIndex == 0) {
-    //            getTeam(filter: "Coach")
-    //        }
-    //        else if(segmentIndex == 0) {
-    //            getTeam(filter: "Parent")
-    //        }
-                
-                
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        navigationItem.largeTitleDisplayMode = .never
+        tableView.tableFooterView = UIView()
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        self.setLeftAlignedNavigationItemTitle(text: "Roster", color: .white, margin: 12)
+        
+        //navigationItem.searchController = searchController
+        
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        definesPresentationContext = true
+
+//        segmentIndex = filterSegmentedControl.selectedSegmentIndex
+//        if(segmentIndex == 0) {
+//            getTeam(filter: "")
+//        } else if(segmentIndex == 0) {
+//            getTeam(filter: "Player")
+//        }
+//        else if(segmentIndex == 0) {
+//            getTeam(filter: "Coach")
+//        }
+//        else if(segmentIndex == 0) {
+//            getTeam(filter: "Parent")
+//        }
+        
+        
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        do {
+            let gif = try UIImage(gifName: "loaderFinal.gif")
+            imageview = UIImageView(gifImage: gif, loopCount: -1) // Will loop 3 times
+            imageview.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(imageview)
+            let widthConstraint = NSLayoutConstraint(item: imageview, attribute: .width, relatedBy: .equal,
+                                                     toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 250)
+
+            let heightConstraint = NSLayoutConstraint(item: imageview, attribute: .height, relatedBy: .equal,
+                                                      toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 250)
+
+            let xConstraint = NSLayoutConstraint(item: imageview, attribute: .centerX, relatedBy: .equal, toItem: self.tableView, attribute: .centerX, multiplier: 1, constant: 0)
+
+            let yConstraint = NSLayoutConstraint(item: imageview, attribute: .centerY, relatedBy: .equal, toItem: self.tableView, attribute: .centerY, multiplier: 1, constant: 0)
+
+            NSLayoutConstraint.activate([widthConstraint, heightConstraint, xConstraint, yConstraint])
+        } catch {
+            print(error)
         }
-            
-            
-        override func viewWillAppear(_ animated: Bool) {
-            super.viewWillAppear(animated)
-            do {
-                let gif = try UIImage(gifName: "loaderFinal.gif")
-                imageview = UIImageView(gifImage: gif, loopCount: -1) // Will loop 3 times
-                imageview.translatesAutoresizingMaskIntoConstraints = false
-                view.addSubview(imageview)
-                let widthConstraint = NSLayoutConstraint(item: imageview, attribute: .width, relatedBy: .equal,
-                                                         toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 250)
-                let heightConstraint = NSLayoutConstraint(item: imageview, attribute: .height, relatedBy: .equal,
-                                                          toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 250)
-                let xConstraint = NSLayoutConstraint(item: imageview, attribute: .centerX, relatedBy: .equal, toItem: self.tableView, attribute: .centerX, multiplier: 1, constant: 0)
-                let yConstraint = NSLayoutConstraint(item: imageview, attribute: .centerY, relatedBy: .equal, toItem: self.tableView, attribute: .centerY, multiplier: 1, constant: 0)
-                NSLayoutConstraint.activate([widthConstraint, heightConstraint, xConstraint, yConstraint])
-            } catch {
-                print(error)
-            }
-            self.imageview.startAnimatingGif()
-                
-            self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-            navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-            navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-                
-            configureUI()
-            let view = UIView()
-            view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            tableView.tableFooterView = view
-            filterSegmentedControl.selectedSegmentIndex = 0
-            getTeam(filter: "")
-        }
+        self.imageview.startAnimatingGif()
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        
+        configureUI()
+        let view = UIView()
+        view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        tableView.tableFooterView = view
+        filterSegmentedControl.selectedSegmentIndex = 0
+        getTeam(filter: "")
+    }
             
         override func viewWillDisappear(_ animated: Bool) {
             super.viewWillDisappear(animated)

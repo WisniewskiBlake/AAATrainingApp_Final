@@ -16,13 +16,14 @@ class MutualSettingsTableViewController: UITableViewController {
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var deleteButtonOutlet: UIButton!
     @IBOutlet weak var pushNotiStatusSwitch: UISwitch!
+    @IBOutlet weak var copyCodeBtn: UIButton!
     
     @IBOutlet weak var versionLabel: UILabel!
     let userDefaults = UserDefaults.standard
     
     var avatarSwitchStatus = false
     var firstLoad: Bool?
-    
+    let helper = Helper()
     
     override func viewDidAppear(_ animated: Bool) {
         if FUser.currentUser() != nil {
@@ -30,12 +31,23 @@ class MutualSettingsTableViewController: UITableViewController {
             loadUserDefaults()
         }
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if var textAttributes = navigationController?.navigationBar.titleTextAttributes {
+            textAttributes[NSAttributedString.Key.foregroundColor] = UIColor.black
+            navigationController?.navigationBar.titleTextAttributes = textAttributes
+        }
+        
+        copyCodeBtn.setTitle("Copy Code: " + FUser.currentUser()!.userCurrentTeamID, for: .normal)
+
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         navigationController?.navigationBar.prefersLargeTitles = true
         tableView.tableFooterView = UIView()
+
         
         
     }
@@ -118,11 +130,17 @@ class MutualSettingsTableViewController: UITableViewController {
     }
     
     @IBAction func colorThemeButtonPressed(_ sender: Any) {
+        let navigationColorPicker = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ColorPickerNav") as! UINavigationController
+                     //let colorPickerVC = navigationColorPicker.viewControllers.first as! ColorPickerVC
+        navigationColorPicker.modalPresentationStyle = .fullScreen
         
+                    self.present(navigationColorPicker, animated: true, completion: nil)
     }
     
     @IBAction func copyCodeButtonPressed(_ sender: Any) {
-        
+        let pasteboard = UIPasteboard.general
+        pasteboard.string = FUser.currentUser()!.userCurrentTeamID
+        self.helper.showAlert(title: "Copied!", message: "Team code copied to clipboard.", in: self)
     }
     @IBAction func termsConditionsPressed(_ sender: Any) {
     }
@@ -137,7 +155,7 @@ class MutualSettingsTableViewController: UITableViewController {
     
     @IBAction func tellAFriendButtonPressed(_ sender: Any) {
         
-        let text = "Hey! Lets chat on iChat \(kAPPURL)"
+        let text = "Hey! Join my team on LockrRoom with code: " + FUser.currentUser()!.userCurrentTeamID
         
         let objectsToShare:[Any] = [text]
         
@@ -202,9 +220,12 @@ class MutualSettingsTableViewController: UITableViewController {
     
     func showLoginView() {
         
-        let mainView = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC")
-        
-        self.present(mainView, animated: true, completion: nil)
+        let mainView = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+
+        //                  {
+        mainView?.modalPresentationStyle = .fullScreen
+
+        self.present(mainView!, animated: true, completion: nil)
     }
     
 
@@ -279,6 +300,11 @@ class MutualSettingsTableViewController: UITableViewController {
         avatarSwitchStatus = userDefaults.bool(forKey: kSHOWAVATAR)
         pushNotiStatusSwitch.isOn = avatarSwitchStatus
     }
+    
+    @IBAction func backPressed(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 
 
 }
