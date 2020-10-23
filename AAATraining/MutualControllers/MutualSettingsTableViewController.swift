@@ -15,7 +15,7 @@ class MutualSettingsTableViewController: UITableViewController {
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var deleteButtonOutlet: UIButton!
-    @IBOutlet weak var showAvatarStatusSwitch: UISwitch!
+    @IBOutlet weak var pushNotiStatusSwitch: UISwitch!
     
     @IBOutlet weak var versionLabel: UILabel!
     let userDefaults = UserDefaults.standard
@@ -102,7 +102,7 @@ class MutualSettingsTableViewController: UITableViewController {
     
     //MARK: IBActions
     
-    @IBAction func cleanCacheButtonPressed(_ sender: Any) {
+    @IBAction func leaveTeamButtonPressed(_ sender: Any) {
         
         do {
             let files = try FileManager.default.contentsOfDirectory(atPath: getDocumentsURL().path)
@@ -115,6 +115,16 @@ class MutualSettingsTableViewController: UITableViewController {
         } catch {
             ProgressHUD.showError("Couldnt clean Media files.")
         }
+    }
+    
+    @IBAction func colorThemeButtonPressed(_ sender: Any) {
+        
+    }
+    
+    @IBAction func copyCodeButtonPressed(_ sender: Any) {
+        
+    }
+    @IBAction func termsConditionsPressed(_ sender: Any) {
     }
     
     
@@ -192,7 +202,7 @@ class MutualSettingsTableViewController: UITableViewController {
     
     func showLoginView() {
         
-        let mainView = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "welcome")
+        let mainView = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC")
         
         self.present(mainView, animated: true, completion: nil)
     }
@@ -201,14 +211,14 @@ class MutualSettingsTableViewController: UITableViewController {
     //MARK: SetupUI
     
     func setupUI() {
-        
+        let helper = Helper()
         let currentUser = FUser.currentUser()!
         
         fullNameLabel.text = currentUser.fullname
         
         if currentUser.ava != "" {
             
-            imageFromData(pictureData: currentUser.avatar) { (avatarImage) in
+            helper.imageFromData(pictureData: currentUser.ava) { (avatarImage) in
                 
                 if avatarImage != nil {
                     self.avatarImageView.image = avatarImage!.circleMasked
@@ -267,7 +277,7 @@ class MutualSettingsTableViewController: UITableViewController {
         }
         
         avatarSwitchStatus = userDefaults.bool(forKey: kSHOWAVATAR)
-        showAvatarStatusSwitch.isOn = avatarSwitchStatus
+        pushNotiStatusSwitch.isOn = avatarSwitchStatus
     }
 
 

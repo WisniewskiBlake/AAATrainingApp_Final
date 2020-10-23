@@ -9287,7 +9287,7 @@
         <!--Settings-->
         <scene sceneID="mnd-Ev-VVW">
             <objects>
-                <tableViewController id="aB7-MY-HgZ" customClass="SettingsTableViewController" customModule="iChat" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="Settings" id="aB7-MY-HgZ" customClass="MutualSettingsTableViewController" customModule="LockerRoom" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="kR6-3O-gQW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -9345,6 +9345,9 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xap-ZV-ZzT">
                                                     <rect key="frame" x="16" y="7" width="359" height="30"/>
                                                     <state key="normal" title="Color Theme"/>
+                                                    <connections>
+                                                        <action selector="colorThemeButtonPressed:" destination="aB7-MY-HgZ" eventType="touchUpInside" id="3wG-hQ-vwn"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -9363,7 +9366,10 @@
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LFz-oo-i8P">
                                                     <rect key="frame" x="16" y="7" width="359" height="30"/>
-                                                    <state key="normal" title="Chat backgrounds"/>
+                                                    <state key="normal" title="Copy Team Code"/>
+                                                    <connections>
+                                                        <action selector="copyCodeButtonPressed:" destination="aB7-MY-HgZ" eventType="touchUpInside" id="OtD-g8-2wc"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -9417,9 +9423,9 @@
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cy1-zM-ygS">
                                                     <rect key="frame" x="16" y="7" width="382" height="30"/>
-                                                    <state key="normal" title="Clean Cache"/>
+                                                    <state key="normal" title="Leave Team"/>
                                                     <connections>
-                                                        <action selector="cleanCacheButtonPressed:" destination="aB7-MY-HgZ" eventType="touchUpInside" id="Y03-Zx-bQx"/>
+                                                        <action selector="leaveTeamButtonPressed:" destination="aB7-MY-HgZ" eventType="touchUpInside" id="7mV-Jg-e04"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -9466,6 +9472,9 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Six-Sz-Mrd">
                                                     <rect key="frame" x="16" y="7" width="359" height="30"/>
                                                     <state key="normal" title="Terms and conditions"/>
+                                                    <connections>
+                                                        <action selector="termsConditionsPressed:" destination="aB7-MY-HgZ" eventType="touchUpInside" id="Z7e-Nw-rTe"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -9572,14 +9581,18 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="Lcu-os-hmY">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="xe5-xS-rrc"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="xe5-xS-rrc">
+                            <connections>
+                                <segue destination="vKr-Bg-cwY" kind="show" id="Fvp-Cr-bng"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="avatarImageView" destination="aya-lF-ZMm" id="fe0-Ku-Omz"/>
-                        <outlet property="deleteButtonOutlet" destination="lmG-da-ysL" id="djG-nX-avN"/>
-                        <outlet property="fullNameLabel" destination="KHu-7W-Yt4" id="Xln-hY-Pwk"/>
-                        <outlet property="showAvatarStatusSwitch" destination="cfc-Ze-nuw" id="HKW-qe-DuX"/>
-                        <outlet property="versionLabel" destination="Iy6-Tw-gDf" id="FVz-SF-ath"/>
+                        <outlet property="avatarImageView" destination="aya-lF-ZMm" id="wNT-Y7-dbT"/>
+                        <outlet property="deleteButtonOutlet" destination="lmG-da-ysL" id="Axh-0l-cjm"/>
+                        <outlet property="fullNameLabel" destination="KHu-7W-Yt4" id="zRT-gf-BLQ"/>
+                        <outlet property="pushNotiStatusSwitch" destination="cfc-Ze-nuw" id="olx-Bx-jVw"/>
+                        <outlet property="versionLabel" destination="Iy6-Tw-gDf" id="reO-0H-zqu"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7L4-84-79Y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
