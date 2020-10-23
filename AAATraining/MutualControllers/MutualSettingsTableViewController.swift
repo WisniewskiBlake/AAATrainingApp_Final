@@ -61,6 +61,13 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let listener = authListener {
+            Auth.auth().removeStateDidChangeListener(authListener!)
+        }
+    }
+    
     @objc func loadUser() {
         
         let helper = Helper()
@@ -124,17 +131,49 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
     //MARK: IBActions
     
     @IBAction func leaveTeamButtonPressed(_ sender: Any) {
+        let helper = Helper()
+        var teamMemberAccountTypes: [String] = []
+        var teamMemberIDs: [String] = []
+        var teamMemberCount: String = ""
+        var newTeamMemberCount: Int = 0
         
-        do {
-            let files = try FileManager.default.contentsOfDirectory(atPath: getDocumentsURL().path)
-            
-            for file in files {
-                try FileManager.default.removeItem(atPath: "\(getDocumentsURL().path)/\(file)")
-            }
+        var userIsNewObserverArray = FUser.userIsNewObserverArray
+        var userTeamAccountTypes = FUser.userTeamAccountTypes
+        var userTeamIDs = FUser.userTeamIDs
 
-            ProgressHUD.showSuccess("Cache cleaned.")
-        } catch {
-            ProgressHUD.showError("Couldnt clean Media files.")
+        
+        let currentTeamID = FUser.currentUser()!.userCurrentTeamID
+        let currentID = FUser.currentId()
+        
+        team.getTeam(teamID: currentTeamID) { (teamReturned) in
+            if teamReturned.teamID != "" {
+                
+                teamMemberAccountTypes = teamReturned.teamMemberAccountTypes
+                teamMemberIDs = teamReturned.teamMemberIDs
+                teamMemberCount = teamReturned.teamMemberCount
+                
+                let index = teamMemberIDs.firstIndex(of: currentID)
+                teamMemberAccountTypes.remove(at: index!)
+                teamMemberIDs.remove(at: index!)
+                newTeamMemberCount = Int(teamMemberCount)! - 1
+                
+                let indexUser = userTeamIDs.firstIndex(of: teamReturned.teamID)
+                userTeamIDs.remove(at: index!)
+                userTeamAccountTypes.remove(at: index!)
+                userIsNewObserverArray.remove(at: index!)
+                
+                updateUser(userID: currentID , withValues: [kUSERTEAMIDS: userTeamIDs, kUSERISNEWOBSERVERARRAY: userIsNewObserverArray, kUSERTEAMACCOUNTTYPES: userTeamAccountTypes])
+                Team.updateTeam(teamID: teamReturned.teamID, withValues: [kTEAMMEMBERIDS: teamMemberIDs, kTEAMMEMBERACCOUNTTYPES: teamMemberAccountTypes, kTEAMMEMBERCOUNT: String(newTeamMemberCount)])
+
+                
+                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
+                {
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true, completion: nil)
+                }
+            } else {
+                helper.showAlert(title: "Error", message: "Can't delete right now.", in: self)
+            }
         }
     }
     @IBAction func backToTeamSelectPressed(_ sender: Any) {
@@ -231,6 +270,10 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
     
     func showLoginView() {
         
+        if let listener = authListener {
+            Auth.auth().removeStateDidChangeListener(authListener as! NSObjectProtocol)
+        }
+        
         let mainView = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
 
         //                  {
@@ -291,9 +334,9 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
                                 newTeamMemberCount = Int(teamMemberCount)! - 1
                                 
                                 //delet locally
-    //                            self.userDefaults.removeObject(forKey: kPUSHID)
-    //                            self.userDefaults.removeObject(forKey: kCURRENTUSER)
-    //                            self.userDefaults.synchronize()
+                                self.userDefaults.removeObject(forKey: kPUSHID)
+                                self.userDefaults.removeObject(forKey: kCURRENTUSER)
+                                self.userDefaults.synchronize()
                                 
                                 //delete from firebase
                                 reference(.User).document(currentID).delete()
@@ -308,6 +351,8 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
                                     }
                                 })
                                 
+                                
+                                
                                 self.showLoginView()
                             } else {
                                 helper.showAlert(title: "Error", message: "Can't delete right now.", in: self)
@@ -320,9 +365,6 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
                     }
             }
 
-        if let user = Auth.auth().currentUser {
-            
-        }
         
         
 //        FUser.deleteUser { (error) in
@@ -340,7 +382,11 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
 //        }
         
     }
-
+    deinit {
+            if let listener = authListener {
+                Auth.auth().removeStateDidChangeListener(authListener!)
+            }
+        }
 
     //MARK: UserDefaults
     

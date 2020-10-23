@@ -427,23 +427,50 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     }
     
     func deleteAUser(user : FUser) {
-        print(user.objectId)
+        let helper = Helper()
+        var teamMemberAccountTypes: [String] = []
+        var teamMemberIDs: [String] = []
+        var teamMemberCount: String = ""
+        var newTeamMemberCount: Int = 0
+        
         var userIsNewObserverArray = user.userIsNewObserverArray
         var userTeamAccountTypes = user.userTeamAccountTypes
         var userTeamIDs = user.userTeamIDs
-        var teamID = FUser.currentUser()?.userCurrentTeamID
+
         
-        let index = userTeamIDs.firstIndex(of: teamID!)
+        let currentTeamID = FUser.currentUser()!.userCurrentTeamID
+        let currentID = FUser.currentId()
         
-        userIsNewObserverArray.remove(at: index!)
-        userTeamAccountTypes.remove(at: index!)
-        userTeamIDs.remove(at: index!)
-        
-        updateUser(userID: user.objectId, withValues: [kUSERTEAMIDS: userTeamIDs, kUSERISNEWOBSERVERARRAY: userIsNewObserverArray, kUSERTEAMACCOUNTTYPES: userTeamAccountTypes])
-        Team.updateTeam(teamID: FUser.currentUser()!.userCurrentTeamID, withValues: [kTEAMMEMBERIDS: FieldValue.arrayRemove([user.objectId])])
+        team.getTeam(teamID: currentTeamID) { (teamReturned) in
+            if teamReturned.teamID != "" {
+                
+                teamMemberAccountTypes = teamReturned.teamMemberAccountTypes
+                teamMemberIDs = teamReturned.teamMemberIDs
+                teamMemberCount = teamReturned.teamMemberCount
+                
+                let index = teamMemberIDs.firstIndex(of: currentID)
+                teamMemberAccountTypes.remove(at: index!)
+                teamMemberIDs.remove(at: index!)
+                newTeamMemberCount = Int(teamMemberCount)! - 1
+                
+                let indexUser = userTeamIDs.firstIndex(of: teamReturned.teamID)
+                userTeamIDs.remove(at: index!)
+                userTeamAccountTypes.remove(at: index!)
+                userIsNewObserverArray.remove(at: index!)
+                
+                updateUser(userID: currentID , withValues: [kUSERTEAMIDS: userTeamIDs, kUSERISNEWOBSERVERARRAY: userIsNewObserverArray, kUSERTEAMACCOUNTTYPES: userTeamAccountTypes])
+                Team.updateTeam(teamID: teamReturned.teamID, withValues: [kTEAMMEMBERIDS: teamMemberIDs, kTEAMMEMBERACCOUNTTYPES: teamMemberAccountTypes, kTEAMMEMBERCOUNT: String(newTeamMemberCount)])
+                
+                self.tableView.reloadData()
+                
+                i
+            } else {
+                helper.showAlert(title: "Error", message: "Can't delete right now.", in: self)
+            }
+        }
             
 
-        self.tableView.reloadData()
+        
 
     
 
