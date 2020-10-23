@@ -289,8 +289,8 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! RosterCell_Coach
-
         
         var user: FUser
         
@@ -308,8 +308,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         
         let index = allUsers.firstIndex(where: { $0.objectId == user.objectId })!
         cell.delegate = self
-        cell.generateCellWith(fUser: user, indexPath: indexPath, accTypeIndexArr: userTeamAccTypeIndexArr, index: index)
-        
+        cell.generateCellWith(fUser: user, indexPath: indexPath, accTypeIndexArr: userTeamAccTypeIndexArr, index: index)        
         
         return cell
     }

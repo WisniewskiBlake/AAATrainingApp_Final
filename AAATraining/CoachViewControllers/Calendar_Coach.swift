@@ -51,6 +51,10 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var emptyLabelOne = UILabel()
     
+    @IBOutlet weak var teamImageView: UIImageView!
+    @IBOutlet weak var navView: UIView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -106,13 +110,34 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     }
     
     func configureUI() {
-        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
+            if teamReturned.teamID != "" {
+                self.team = teamReturned
+                if self.team.teamLogo != "" {
+                    self.helper.imageFromData(pictureData: self.team.teamLogo) { (coverImage) in
+
+                        if coverImage != nil {
+                            self.teamImageView.image = coverImage?.circleMasked
+                        }
+                    }
+                } else {
+                    self.teamImageView.image = UIImage(named: "HomeCover.jpg")
+                    
+                }
+            } else {
+                self.teamImageView.image = UIImage(named: "HomeCover.jpg")
+            }
+        }
+        teamImageView.layer.cornerRadius = teamImageView.frame.width / 2
+        teamImageView.layer.masksToBounds = true
+        teamImageView.clipsToBounds = true
+        navView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
         calendar.appearance.todayColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         calendar.appearance.headerTitleColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:23)
         self.setLeftAlignedNavigationItemTitle(text: "Team Calendar", color: .white, margin: 12)
-        splitterLabelTwo.backgroundColor = #colorLiteral(red: 0.9133789539, green: 0.9214370847, blue: 0.9337923527, alpha: 1)
+        //splitterLabelTwo.backgroundColor = #colorLiteral(red: 0.9133789539, green: 0.9214370847, blue: 0.9337923527, alpha: 1)
     }
     
     func loadUser() {
@@ -632,9 +657,3 @@ extension String {
     }
 }
 
-extension UINavigationController {
-
-   open override var preferredStatusBarStyle: UIStatusBarStyle {
-      return topViewController?.preferredStatusBarStyle ?? .lightContent
-   }
-}

@@ -47,6 +47,10 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     var imageview = UIImageView()
     let helper = Helper()
     
+    @IBOutlet weak var navView: UIView!
+    @IBOutlet weak var teamImageView: UIImageView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -95,13 +99,33 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     }
     
     func configureUI() {
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
+            if teamReturned.teamID != "" {
+                self.team = teamReturned
+                if self.team.teamLogo != "" {
+                    self.helper.imageFromData(pictureData: self.team.teamLogo) { (coverImage) in
+
+                        if coverImage != nil {
+                            self.teamImageView.image = coverImage?.circleMasked
+                        }
+                    }
+                } else {
+                    self.teamImageView.image = UIImage(named: "HomeCover.jpg")
+                    
+                }
+            } else {
+                self.teamImageView.image = UIImage(named: "HomeCover.jpg")
+            }
+        }
+        teamImageView.layer.cornerRadius = teamImageView.frame.width / 2
+        teamImageView.layer.masksToBounds = true
+        teamImageView.clipsToBounds = true
+        navView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         
         calendar.appearance.todayColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         calendar.appearance.headerTitleColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:23)
-        splitterLabelTwo.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        //splitterLabelTwo.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     }
 
     func loadUser() {

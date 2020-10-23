@@ -47,4 +47,11 @@ pod 'Floaty', '~> 4.2.0'
     # Pods for testing
   end
 
+# target 'OneSignalNotificationServiceExtension' do
+#  use_frameworks!
+# pod 'OneSignal'
+# end
+
 end
+
+

@@ -718,10 +718,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
             // refresh global variable storing the user's profile pic
             let pictureData = image?.jpegData(compressionQuality: 0.4)!
             let avatar = pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-            
-            
-            //FUser.currentUser().ava = self.avaImageView.image
-            
+  
             updateCurrentUserInFirestore(withValues: [kAVATAR : avatar!]) { (success) in
                 //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changeProPic"), object: nil)
             }

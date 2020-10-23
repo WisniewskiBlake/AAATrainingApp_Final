@@ -49,6 +49,10 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     var imageview = UIImageView()
     let helper = Helper()
     
+    @IBOutlet weak var teamImageView: UIImageView!
+    @IBOutlet weak var navView: UIView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -63,10 +67,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         self.calendar.formatter.dateFormat = "YYYY-MM-dd"
         today = calendar.formatter.string(from: todayDate)
         
-//        logoutTapGestureRecognizer.addTarget(self, action: #selector(self.logoutViewClicked))
-//        logoutView.isUserInteractionEnabled = true
- //       logoutView.addGestureRecognizer(logoutTapGestureRecognizer)
-        
+
     }
     
     // pre-load func
@@ -105,13 +106,38 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     }
     
     func configureUI() {
-        navigationController?.navigationBar.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
+            if teamReturned.teamID != "" {
+                self.team = teamReturned
+                if self.team.teamLogo != "" {
+                    self.helper.imageFromData(pictureData: self.team.teamLogo) { (coverImage) in
+
+                        if coverImage != nil {
+                            self.teamImageView.image = coverImage?.circleMasked
+                        }
+                    }
+                } else {
+                    self.teamImageView.image = UIImage(named: "HomeCover.jpg")
+                    
+                }
+            } else {
+                self.teamImageView.image = UIImage(named: "HomeCover.jpg")
+            }
+        }
+        teamImageView.layer.cornerRadius = teamImageView.frame.width / 2
+        teamImageView.clipsToBounds = true
+        teamImageView.layer.masksToBounds = true
+        navView.backgroundColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
+        
         calendar.appearance.todayColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         calendar.appearance.headerTitleColor = UIColor(hexString: FUser.currentUser()!.userTeamColorOne)
         calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize:23)
         self.setLeftAlignedNavigationItemTitle(text: "Team Calendar", color: .white, margin: 12)
         //splitterLabelTwo.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     func loadUser() {
