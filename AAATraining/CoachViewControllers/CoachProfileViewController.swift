@@ -792,6 +792,9 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
         loadPosts()
         self.dismiss(animated: true, completion: nil)
     }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
 
     //MARK: HelperFunctions

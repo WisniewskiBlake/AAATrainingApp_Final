@@ -137,9 +137,7 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
         var teamMemberCount: String = ""
         var newTeamMemberCount: Int = 0
         
-        var userIsNewObserverArray = FUser.userIsNewObserverArray
-        var userTeamAccountTypes = FUser.userTeamAccountTypes
-        var userTeamIDs = FUser.userTeamIDs
+        
 
         
         let currentTeamID = FUser.currentUser()!.userCurrentTeamID
@@ -157,20 +155,45 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
                 teamMemberIDs.remove(at: index!)
                 newTeamMemberCount = Int(teamMemberCount)! - 1
                 
-                let indexUser = userTeamIDs.firstIndex(of: teamReturned.teamID)
-                userTeamIDs.remove(at: index!)
-                userTeamAccountTypes.remove(at: index!)
-                userIsNewObserverArray.remove(at: index!)
                 
-                updateUser(userID: currentID , withValues: [kUSERTEAMIDS: userTeamIDs, kUSERISNEWOBSERVERARRAY: userIsNewObserverArray, kUSERTEAMACCOUNTTYPES: userTeamAccountTypes])
                 Team.updateTeam(teamID: teamReturned.teamID, withValues: [kTEAMMEMBERIDS: teamMemberIDs, kTEAMMEMBERACCOUNTTYPES: teamMemberAccountTypes, kTEAMMEMBERCOUNT: String(newTeamMemberCount)])
+                
+                fetchCurrentUserFromFirestore(userId: FUser.currentId(), completion: { (user) in
+
+                   if user != nil && user!.firstname != "" {
+                    
+                    var userIsNewObserverArray = user?.userIsNewObserverArray
+                    var userTeamAccountTypes = user?.userTeamAccountTypes
+                    var userTeamIDs = user?.userTeamIDs
+                    var userTeamNames = user?.userTeamNames
+                    
+                    
+                    let indexUser = userTeamIDs?.firstIndex(of: teamReturned.teamID)
+                    userTeamIDs?.remove(at: index!)
+                    userTeamAccountTypes?.remove(at: index!)
+                    userIsNewObserverArray?.remove(at: index!)
+                    userTeamNames?.remove(at: index!)
+                    
+                    updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMIDS: userTeamIDs, kUSERISNEWOBSERVERARRAY: userIsNewObserverArray, kUSERTEAMACCOUNTTYPES: userTeamAccountTypes, kUSERTEAMNAMES: userTeamNames, kUSERCURRENTTEAMID: ""]) { (success) in
+                        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
+                        {
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true, completion: nil)
+                        }
+                    }
+                    
+                   } else {
+
+                   }
+
+                })
+                
+//                updateUser(userID: currentID , withValues: [kUSERTEAMIDS: userTeamIDs, kUSERISNEWOBSERVERARRAY: userIsNewObserverArray, kUSERTEAMACCOUNTTYPES: userTeamAccountTypes])
+                
+                
 
                 
-                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
-                {
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true, completion: nil)
-                }
+                
             } else {
                 helper.showAlert(title: "Error", message: "Can't delete right now.", in: self)
             }

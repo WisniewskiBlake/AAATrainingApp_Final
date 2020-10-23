@@ -364,6 +364,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         
         showActionSheet()
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 
     
     // configuring the appearance of AvaImageView

@@ -426,57 +426,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
                })
     }
     
-//    @objc func loadPosts(filter: String) {
-//        var query: Query!
-//
-//       switch filter {
-//        case "":
-//            query = reference(.Post).whereField(kPOSTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID as Any).order(by: kPOSTDATE, descending: true).limit(to: 100)
-//       case ("General"):
-//           query = reference(.Post).whereField(kPOSTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID as Any).whereField(kPOSTFEEDTYPE, isEqualTo: "General").order(by: kPOSTDATE, descending: true).limit(to: 100)
-//        case ("Fitness"):
-//            query = reference(.Post).whereField(kPOSTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID as Any).whereField(kPOSTFEEDTYPE, isEqualTo: "Fitness").order(by: kPOSTDATE, descending: true).limit(to: 100)
-//       default:
-//           query = reference(.Post).whereField(kPOSTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID as Any).order(by: kPOSTDATE, descending: true).limit(to: 100)
-//       }
-//
-//           query.getDocuments { (snapshot, error) in
-//
-//            self.allPosts = []
-//            self.avas = []
-//            self.pictures = []
-//            self.postDatesArray = []
-//            self.generalPosts = []
-//            self.postsToShow = []
-//            self.fitnessPosts = []
-//
-//            if error != nil {
-//                print(error!.localizedDescription)
-//                self.imageview.removeFromSuperview()
-//                self.tableView.reloadData()
-//                return
-//            }
-//
-//            guard let snapshot = snapshot else { self.imageview.removeFromSuperview(); return }
-//
-//               if !snapshot.isEmpty {
-//
-//                   for postDictionary in snapshot.documents {
-//
-//                    let postDictionary = postDictionary.data() as NSDictionary
-//
-//                     let post = Post(_dictionary: postDictionary)
-//                     self.allPosts.append(post)
-//                }
-//
-//
-//                   self.tableView.reloadData()
-//               }
-//
-//               self.tableView.reloadData()
-//
-//           }
-//    }
+
 
     // MARK: - Table view data source
 

@@ -30,7 +30,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     var sectionTitleList : [String] = []
     var userListener: ListenerRegistration!
     
-    
+    var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [""])
     var isLoading = false
     let helper = Helper()
     var skip = 0
@@ -463,7 +463,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
                 
                 self.tableView.reloadData()
                 
-                i
+                
             } else {
                 helper.showAlert(title: "Error", message: "Can't delete right now.", in: self)
             }
