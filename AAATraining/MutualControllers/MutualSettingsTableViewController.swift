@@ -10,13 +10,13 @@ import UIKit
 import Foundation
 import ProgressHUD
 
-class MutualSettingsTableViewController: UITableViewController {
+class MutualSettingsTableViewController: UITableViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var deleteButtonOutlet: UIButton!
     @IBOutlet weak var pushNotiStatusSwitch: UISwitch!
-    @IBOutlet weak var copyCodeBtn: UIButton!
+    @IBOutlet weak var inviteOthersBtn: UIButton!
     
     @IBOutlet weak var versionLabel: UILabel!
     let userDefaults = UserDefaults.standard
@@ -37,8 +37,7 @@ class MutualSettingsTableViewController: UITableViewController {
             textAttributes[NSAttributedString.Key.foregroundColor] = UIColor.black
             navigationController?.navigationBar.titleTextAttributes = textAttributes
         }
-        
-        copyCodeBtn.setTitle("Copy Code: " + FUser.currentUser()!.userCurrentTeamID, for: .normal)
+
 
     }
     
@@ -88,7 +87,7 @@ class MutualSettingsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 1 {
-            return 5
+            return 4
         }
         return 2
     }
@@ -136,12 +135,7 @@ class MutualSettingsTableViewController: UITableViewController {
         
                     self.present(navigationColorPicker, animated: true, completion: nil)
     }
-    
-    @IBAction func copyCodeButtonPressed(_ sender: Any) {
-        let pasteboard = UIPasteboard.general
-        pasteboard.string = FUser.currentUser()!.userCurrentTeamID
-        self.helper.showAlert(title: "Copied!", message: "Team code copied to clipboard.", in: self)
-    }
+
     @IBAction func termsConditionsPressed(_ sender: Any) {
     }
     
@@ -305,6 +299,6 @@ class MutualSettingsTableViewController: UITableViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-
+    
 
 }
