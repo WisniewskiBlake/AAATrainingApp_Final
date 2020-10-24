@@ -87,6 +87,20 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        startAnimating()
+        loadTeamsForUser()
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 100
+        emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -150, width: view.bounds.size.width, height: view.bounds.size.height))
+        let view = UIView()
+        
+        view.backgroundColor = UIColor.white
+        tableView.tableFooterView = view
+        
+
+    }
+    
+    func startAnimating() {
         do {
             let gif = try UIImage(gifName: "loaderFinal.gif")
             imageview = UIImageView(gifImage: gif, loopCount: -1) // Will loop 3 times
@@ -110,17 +124,6 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             print(error)
         }
         self.imageview.startAnimatingGif()
-        
-        loadTeamsForUser()
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 100
-        emptyLabelOne = UILabel(frame: CGRect(x: 0, y: -150, width: view.bounds.size.width, height: view.bounds.size.height))
-        let view = UIView()
-        
-        view.backgroundColor = UIColor.white
-        tableView.tableFooterView = view
-        
-
     }
     
     //possibly need to change this to load teams from User

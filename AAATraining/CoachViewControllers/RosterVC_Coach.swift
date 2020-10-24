@@ -438,10 +438,13 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         var userTeamIDs = user.userTeamIDs
 
         
-        let currentTeamID = FUser.currentUser()!.userCurrentTeamID
-        let currentID = FUser.currentId()
         
-        team.getTeam(teamID: currentTeamID) { (teamReturned) in
+        let currentID = user.objectId
+        
+        if currentID == FUser.currentId() {
+            helper.showAlert(title: "Error", message: "You can remove yourself from the team in settings.", in: self)
+        } else {
+            team.getTeam(teamID: FUser.currentUser()!.userCurrentTeamID) { (teamReturned) in
             if teamReturned.teamID != "" {
                 
                 teamMemberAccountTypes = teamReturned.teamMemberAccountTypes
@@ -468,6 +471,10 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
                 helper.showAlert(title: "Error", message: "Can't delete right now.", in: self)
             }
         }
+            
+        }
+        
+        
             
 
         

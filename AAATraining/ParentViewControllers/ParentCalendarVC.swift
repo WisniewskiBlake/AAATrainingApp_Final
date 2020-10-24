@@ -185,8 +185,6 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
 
                     }
                     
-                    
-                    
                 }
      }
     
