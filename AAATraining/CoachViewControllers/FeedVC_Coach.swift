@@ -131,8 +131,21 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         super.viewWillAppear(animated)
         appDelegate.controllerType = 0
         configureFAB()
+        startAnimating()
+                
+        filterSegmentedControl.selectedSegmentIndex = 0        
+        filterString = ""
+        loadPosts()
+        getMembers()
         
+        configureUI()
+        let view = UIView()
+        view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        tableView.tableFooterView = view
         
+    }
+    
+    func startAnimating() {
         do {
             let gif = try UIImage(gifName: "loaderFinal.gif")
             imageview = UIImageView(gifImage: gif, loopCount: -1) // Will loop 3 times
@@ -152,19 +165,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         } catch {
             print(error)
         }
-        filterSegmentedControl.selectedSegmentIndex = 0
         self.imageview.startAnimatingGif()
-        filterString = ""
-        loadPosts()
-        getMembers()
-        
-        configureUI()
-        let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        tableView.tableFooterView = view
-        
-        
-
     }
     
     override func viewWillDisappear(_ animated: Bool) {
