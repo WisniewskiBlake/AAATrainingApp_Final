@@ -169,10 +169,10 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
                     
                     
                     let indexUser = userTeamIDs?.firstIndex(of: teamReturned.teamID)
-                    userTeamIDs?.remove(at: index!)
-                    userTeamAccountTypes?.remove(at: index!)
-                    userIsNewObserverArray?.remove(at: index!)
-                    userTeamNames?.remove(at: index!)
+                    userTeamIDs?.remove(at: indexUser!)
+                    userTeamAccountTypes?.remove(at: indexUser!)
+                    userIsNewObserverArray?.remove(at: indexUser!)
+                    userTeamNames?.remove(at: indexUser!)
                     
                     updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMIDS: userTeamIDs, kUSERISNEWOBSERVERARRAY: userIsNewObserverArray, kUSERTEAMACCOUNTTYPES: userTeamAccountTypes, kUSERTEAMNAMES: userTeamNames, kUSERCURRENTTEAMID: ""]) { (success) in
                         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC

@@ -608,7 +608,7 @@
                                             <constraint firstAttribute="width" constant="22" id="XAP-fq-xdE"/>
                                             <constraint firstAttribute="height" constant="17.5" id="yt4-JO-xov"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -877,17 +877,17 @@
                                         </connections>
                                     </tableView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Teams" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fpZ-fS-rCg">
-                                        <rect key="frame" x="19" y="12" width="159" height="31"/>
+                                        <rect key="frame" x="19" y="12" width="196" height="31"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="31" id="G8S-Ev-KhU"/>
-                                            <constraint firstAttribute="width" constant="159" id="kf0-ME-JNK"/>
+                                            <constraint firstAttribute="width" constant="196" id="kf0-ME-JNK"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="28"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="29"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mec-8Y-5pL">
-                                        <rect key="frame" x="16" y="53" width="382" height="1"/>
+                                        <rect key="frame" x="16" y="54" width="382" height="1"/>
                                         <color key="backgroundColor" systemColor="systemGray4Color"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="eB1-QM-WeM"/>
@@ -902,11 +902,11 @@
                                 <constraints>
                                     <constraint firstItem="t78-Pv-Zel" firstAttribute="trailing" secondItem="ERH-KO-0Eq" secondAttribute="trailing" id="JLB-ov-tkm"/>
                                     <constraint firstItem="Mec-8Y-5pL" firstAttribute="leading" secondItem="ERH-KO-0Eq" secondAttribute="leading" constant="16" id="Max-6a-uQb"/>
-                                    <constraint firstItem="t78-Pv-Zel" firstAttribute="top" secondItem="Mec-8Y-5pL" secondAttribute="bottom" constant="10" id="YN1-wm-Gzl"/>
+                                    <constraint firstItem="t78-Pv-Zel" firstAttribute="top" secondItem="Mec-8Y-5pL" secondAttribute="bottom" constant="9" id="YN1-wm-Gzl"/>
                                     <constraint firstItem="fpZ-fS-rCg" firstAttribute="top" secondItem="ERH-KO-0Eq" secondAttribute="top" constant="12" id="bwq-Hp-Ilq"/>
                                     <constraint firstAttribute="trailing" secondItem="Mec-8Y-5pL" secondAttribute="trailing" constant="16" id="ehm-sA-FK9"/>
                                     <constraint firstItem="fpZ-fS-rCg" firstAttribute="leading" secondItem="ERH-KO-0Eq" secondAttribute="leading" constant="19" id="i2Z-uP-BCh"/>
-                                    <constraint firstItem="Mec-8Y-5pL" firstAttribute="top" secondItem="fpZ-fS-rCg" secondAttribute="bottom" constant="10" id="pad-x8-QRa"/>
+                                    <constraint firstItem="Mec-8Y-5pL" firstAttribute="top" secondItem="fpZ-fS-rCg" secondAttribute="bottom" constant="11" id="pad-x8-QRa"/>
                                     <constraint firstItem="t78-Pv-Zel" firstAttribute="leading" secondItem="ERH-KO-0Eq" secondAttribute="leading" id="wIS-Jf-Y9g"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
@@ -9891,7 +9891,7 @@
             </objects>
             <point key="canvasLocation" x="1471" y="-2249"/>
         </scene>
-        <!--Terms & Conditions-->
+        <!--Privacy Policy-->
         <scene sceneID="tmp-xK-Lr9">
             <objects>
                 <viewController hidesBottomBarWhenPushed="YES" id="pfa-Ty-PZp" customClass="TermsConditionsVCViewController" customModule="LockerRoom" customModuleProvider="target" sceneMemberID="viewController">
@@ -9916,7 +9916,7 @@
                             <constraint firstItem="65X-kJ-bHJ" firstAttribute="top" secondItem="94X-dN-jKS" secondAttribute="top" constant="10" id="jDS-rf-GGi"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Terms &amp; Conditions" id="ogr-L2-aco"/>
+                    <navigationItem key="navigationItem" title="Privacy Policy" id="ogr-L2-aco"/>
                     <connections>
                         <outlet property="label" destination="65X-kJ-bHJ" id="e0a-9a-Gdy"/>
                     </connections>
