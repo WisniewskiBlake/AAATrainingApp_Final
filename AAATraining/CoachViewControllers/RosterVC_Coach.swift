@@ -397,28 +397,36 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 
         var user: FUser
+        var row: Int
+        var section: Int
+        let sectionTitle = self.sectionTitleList[indexPath.section]
+
+        let users = self.allUsersGroupped[sectionTitle]
 
         if searchController.isActive && searchController.searchBar.text != "" {
 
             user = filteredUsers[indexPath.row]
+            row = indexPath.row
+            section = 0
+            
         } else {
 
-            let sectionTitle = self.sectionTitleList[indexPath.section]
-
-            let users = self.allUsersGroupped[sectionTitle]
+            
 
             user = users![indexPath.row]
-
+            row = indexPath.row
+            section = indexPath.section
             
         }
 
         let deleteAction = UITableViewRowAction(style: .default, title: "Delete") { (action, indexPath) in
 
-            //allUsersGroupped.remove(at: users, indexPath.row)
-
-            self.deleteAUser(user: user)
+            self.allUsersGroupped[sectionTitle]?.remove(at: indexPath.row)
 
             
+            self.deleteAUser(user: user, row: row, section: section)
+
+            self.tableView.reloadData()
             
         }
         
@@ -427,7 +435,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         return [deleteAction]
     }
     
-    func deleteAUser(user : FUser) {
+    func deleteAUser(user : FUser, row: Int, section: Int) {
         let helper = Helper()
         var teamMemberAccountTypes: [String] = []
         var teamMemberIDs: [String] = []
@@ -467,6 +475,12 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
                 updateUser(userID: currentID , withValues: [kUSERTEAMIDS: userTeamIDs, kUSERISNEWOBSERVERARRAY: userIsNewObserverArray, kUSERTEAMACCOUNTTYPES: userTeamAccountTypes, kUSERTEAMNAMES: userTeamNames])
                 Team.updateTeam(teamID: teamReturned.teamID, withValues: [kTEAMMEMBERIDS: teamMemberIDs, kTEAMMEMBERACCOUNTTYPES: teamMemberAccountTypes, kTEAMMEMBERCOUNT: String(newTeamMemberCount)])
                 
+//                let indexPath = IndexPath(row: row, section: section)
+//                self.tableView.beginUpdates()
+//                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+//                self.tableView.endUpdates()
+//                self.tableView.reloadData()
+                
                 if self.filterSegmentedControl.selectedSegmentIndex == 0 {
                     self.getTeam(filter: "")
                 } else if self.filterSegmentedControl.selectedSegmentIndex == 1 {
@@ -476,6 +490,8 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
                 }  else if self.filterSegmentedControl.selectedSegmentIndex == 3 {
                     self.getTeam(filter: "Parent")
                 }
+                
+                self.tableView.reloadData()
                 
                 
             } else {

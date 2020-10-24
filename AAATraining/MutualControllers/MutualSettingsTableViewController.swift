@@ -104,7 +104,7 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 1 {
-            return 4
+            return 5
         }
         return 2
     }
