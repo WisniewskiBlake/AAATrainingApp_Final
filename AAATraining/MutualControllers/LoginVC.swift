@@ -332,20 +332,20 @@ class LoginVC: UIViewController, UITextViewDelegate {
     
     func configure_registerCoachButton(btn: UIButton) {
         // creating constant named 'border' of type layer which acts as a border frame
-        let border = CALayer()
-//        border.borderColor = UIColor(hexString: team.teamColorOne)?.cgColor
-        border.borderColor = UIColor.black.cgColor
-        border.borderWidth = 2
-        border.frame = CGRect(x: 0, y: 0, width: btn.frame.width, height: btn.frame.height)
-        
-        // assign border to the obj (button)
-        btn.layer.addSublayer(border)
-        
-        
-        // rounded corner
-        btn.layer.cornerRadius = 5
-        btn.layer.masksToBounds = true
-        
+//        let border = CALayer()
+////        border.borderColor = UIColor(hexString: team.teamColorOne)?.cgColor
+//        border.borderColor = UIColor.black.cgColor
+//        border.borderWidth = 2
+//        border.frame = CGRect(x: 0, y: 0, width: btn.frame.width, height: btn.frame.height)
+//
+//        // assign border to the obj (button)
+//        btn.layer.addSublayer(border)
+//
+//
+//        // rounded corner
+//        btn.layer.cornerRadius = 5
+//        btn.layer.masksToBounds = true
+//
     }
 
     

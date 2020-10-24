@@ -418,7 +418,8 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
 
             self.deleteAUser(user: user)
 
-            self.tableView.reloadData()
+            
+            
         }
         
         
@@ -436,6 +437,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         var userIsNewObserverArray = user.userIsNewObserverArray
         var userTeamAccountTypes = user.userTeamAccountTypes
         var userTeamIDs = user.userTeamIDs
+        var userTeamNames = user.userTeamNames
 
         
         
@@ -457,14 +459,23 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
                 newTeamMemberCount = Int(teamMemberCount)! - 1
                 
                 let indexUser = userTeamIDs.firstIndex(of: teamReturned.teamID)
-                userTeamIDs.remove(at: index!)
-                userTeamAccountTypes.remove(at: index!)
-                userIsNewObserverArray.remove(at: index!)
+                userTeamIDs.remove(at: indexUser!)
+                userTeamAccountTypes.remove(at: indexUser!)
+                userIsNewObserverArray.remove(at: indexUser!)
+                userTeamNames.remove(at: indexUser!)
                 
-                updateUser(userID: currentID , withValues: [kUSERTEAMIDS: userTeamIDs, kUSERISNEWOBSERVERARRAY: userIsNewObserverArray, kUSERTEAMACCOUNTTYPES: userTeamAccountTypes])
+                updateUser(userID: currentID , withValues: [kUSERTEAMIDS: userTeamIDs, kUSERISNEWOBSERVERARRAY: userIsNewObserverArray, kUSERTEAMACCOUNTTYPES: userTeamAccountTypes, kUSERTEAMNAMES: userTeamNames])
                 Team.updateTeam(teamID: teamReturned.teamID, withValues: [kTEAMMEMBERIDS: teamMemberIDs, kTEAMMEMBERACCOUNTTYPES: teamMemberAccountTypes, kTEAMMEMBERCOUNT: String(newTeamMemberCount)])
                 
-                self.tableView.reloadData()
+                if self.filterSegmentedControl.selectedSegmentIndex == 0 {
+                    self.getTeam(filter: "")
+                } else if self.filterSegmentedControl.selectedSegmentIndex == 1 {
+                    self.getTeam(filter: "Player")
+                }  else if self.filterSegmentedControl.selectedSegmentIndex == 2 {
+                    self.getTeam(filter: "Coach")
+                }  else if self.filterSegmentedControl.selectedSegmentIndex == 3 {
+                    self.getTeam(filter: "Parent")
+                }
                 
                 
             } else {
