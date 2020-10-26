@@ -200,11 +200,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
         // to restore the scene back to its current state.
         
         
-        
-        
         recentBadgeHandler?.remove()
-        
         calendarBadgeHandler?.remove()
+        
         if FUser.currentUser() != nil {
             updateCurrentUserInFirestore(withValues: [kISONLINE : false]) { (success) in
                 
@@ -212,6 +210,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
         }
         appDelegate.locationManagerStop()
         locationMangerStop()
+        print("Entered background - SD...............................")
     }
     
 

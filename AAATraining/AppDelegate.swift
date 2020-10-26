@@ -51,6 +51,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             window?.rootViewController?.overrideUserInterfaceStyle = .light
         }
         
+        func userDidLogin(userId: String) {
+//            self.push.registerUserNotificationSettings()
+//            self.initSinchWithUserId(userId: userId)
+            self.startOneSignal()
+        }
+        
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(USER_DID_LOGIN_NOTIFICATION), object: nil, queue: nil) { (note) in
+            
+            let userId = note.userInfo![kUSERID] as! String
+            UserDefaults.standard.set(userId, forKey: kUSERID)
+            UserDefaults.standard.synchronize()
+            print("User has logged in...............................")
+            userDidLogin(userId: userId)
+        }
+        
         OneSignal.initWithLaunchOptions(launchOptions, appId: kONESIGNALAPPID)
         
         
@@ -106,18 +121,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 ////           self.window?.rootViewController = mainView
 //       }
     
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        self.push.application(application, didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)
-    }
+//    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+//        self.push.application(application, didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)
+//    }
+//
+//    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+//
+//        let firebaseAuth = Auth.auth()
+//        if firebaseAuth.canHandleNotification(userInfo) {
+//            return
+//        } else {
+//            self.push.application(application, didReceiveRemoteNotification: userInfo)
+//        }
+//    }
     
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         
-        let firebaseAuth = Auth.auth()
-        if firebaseAuth.canHandleNotification(userInfo) {
-            return
-        } else {
-            self.push.application(application, didReceiveRemoteNotification: userInfo)
+        recentBadgeHandler?.remove()
+        calendarBadgeHandler?.remove()
+        
+        if FUser.currentUser() != nil {
+            updateCurrentUserInFirestore(withValues: [kISONLINE : false]) { (success) in
+                
+            }
         }
+        locationManagerStop()
+        print("Entered background - AD...............................")
     }
     
     //MARK: Location Manager delegate
