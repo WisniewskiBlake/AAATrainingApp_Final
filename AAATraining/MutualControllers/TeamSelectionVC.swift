@@ -44,17 +44,15 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         NotificationCenter.default.addObserver(self, selector: #selector(loadTeamsForUser), name: NSNotification.Name(rawValue: "joinedTeam"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadTeamsForUser), name: NSNotification.Name(rawValue: "createdTeam"), object: nil)
 
-        bannerView.adUnitID = "ca-app-pub-8479238648739219/1196914480"
+        bannerView.adUnitID = ""
         //ca-app-pub-8479238648739219/1196914480
         //c8b13a0958c55302a0092a8fdabd1f7e
         bannerView.rootViewController = self
         bannerView.delegate = self
         bannerView.load(GADRequest())
-
+        tableView.rowHeight = UITableView.automaticDimension
         backgroundView.layer.cornerRadius = CGFloat(25.0)
-//        buttonsView.layer.shadowOpacity = Float(0.3)
-//        buttonsView.layer.shadowOffset = CGSize(width: 0, height: 2)
-//        buttonsView.layer.shadowRadius = CGFloat(3)
+
         backgroundView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
         tableView.separatorColor = .clear
@@ -149,7 +147,8 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                     self.helper.imageFromData(pictureData: team.teamLogo) { (avatarImage) in
 
                         if avatarImage != nil {
-                            self.teamLogos.append(avatarImage!.circleMasked!)
+//                            self.teamLogos.append(avatarImage!.circleMasked!)
+                            self.teamLogos.append(avatarImage!)
                         }
                     }
                 }

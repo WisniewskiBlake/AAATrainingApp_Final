@@ -26,7 +26,7 @@ public let APP_STARTED_NOTIFICATION = "AppStartedNotification"
 
 //IDS and Keys
 public let kFILEREFERENCE = "gs://aaatrainingapp-be3e5.appspot.com"
-public let kONESIGNALAPPID = ""
+public let kONESIGNALAPPID = "73fb5f5d-abb3-49fa-b99d-cc2ff9c81da8"
 public let kSINCHKEY = ""
 public let kSINCHSECRET = ""
 public let kAPPURL = ""

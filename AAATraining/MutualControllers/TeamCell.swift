@@ -20,8 +20,11 @@ class TeamCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        teamImageView.layer.cornerRadius = teamImageView.frame.width / 2
-        teamImageView.clipsToBounds = true
+//        teamImageView.layer.cornerRadius = teamImageView.frame.width / 2
+//        teamImageView.clipsToBounds = true
+        teamImageView.layer.cornerRadius = CGFloat(10.0)
+
+        teamImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
 //        borderView.backgroundColor = .white
 //        borderView.layer.shadowRadius = CGFloat(4.0)
