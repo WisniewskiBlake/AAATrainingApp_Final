@@ -11,8 +11,9 @@ import Firebase
 import FirebaseFirestore
 import ProgressHUD
 import LGButton
+import GoogleMobileAds
 
-class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate {
     @IBOutlet weak var tableView: UITableView!
 
     @IBOutlet weak var buttonsView: UIView!
@@ -34,6 +35,7 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     var imageview = UIImageView()
     
+    @IBOutlet weak var bannerView: GADBannerView!
     var i = 0
     
     override func viewDidLoad() {
@@ -42,16 +44,12 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         NotificationCenter.default.addObserver(self, selector: #selector(loadTeamsForUser), name: NSNotification.Name(rawValue: "joinedTeam"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadTeamsForUser), name: NSNotification.Name(rawValue: "createdTeam"), object: nil)
 
-        
-        
-        
-//        createTeamButton.backgroundColor = .white
-//        createTeamButton.layer.shadowRadius = 3.0
-//        createTeamButton.layer.shadowColor = UIColor.black.cgColor
-//        createTeamButton.layer.shadowOffset = CGSize(width: 1, height: 2)
-//        createTeamButton.layer.shadowOpacity = 0.4
-//        createTeamButton.layer.cornerRadius = createTeamButton.frame.height / 2
-//        createTeamButton.layer.shadowPath = UIBezierPath(roundedRect: createTeamButton.bounds, cornerRadius: createTeamButton.frame.height / 2).cgPath
+        bannerView.adUnitID = "ca-app-pub-8479238648739219/1196914480"
+        //ca-app-pub-8479238648739219/1196914480
+        //c8b13a0958c55302a0092a8fdabd1f7e
+        bannerView.rootViewController = self
+        bannerView.delegate = self
+        bannerView.load(GADRequest())
 
         backgroundView.layer.cornerRadius = CGFloat(25.0)
 //        buttonsView.layer.shadowOpacity = Float(0.3)
@@ -297,7 +295,16 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         return .lightContent
     }
     
-    
+    /// Tells the delegate an ad request loaded an ad.
+    func adViewDidReceiveAd(_ bannerView: GADBannerView) {
+      print("adViewDidReceiveAd")
+    }
+
+    /// Tells the delegate an ad request failed.
+    func adView(_ bannerView: GADBannerView,
+        didFailToReceiveAdWithError error: GADRequestError) {
+      print("adView:didFailToReceiveAdWithError: \(error.localizedDescription)")
+    }
     
     
     

@@ -221,9 +221,9 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
     
     @IBAction func showAvatartSwithValueChanged(_ sender: UISwitch) {
 
-        avatarSwitchStatus = sender.isOn
-        
-        saveUserDefaults()
+//        avatarSwitchStatus = sender.isOn
+//
+//        saveUserDefaults()
     }
     
     @IBAction func tellAFriendButtonPressed(_ sender: Any) {
@@ -429,8 +429,9 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
             userDefaults.synchronize()
         }
         
-        avatarSwitchStatus = userDefaults.bool(forKey: kSHOWAVATAR)
-        pushNotiStatusSwitch.isOn = avatarSwitchStatus
+        //avatarSwitchStatus = userDefaults.bool(forKey: kSHOWAVATAR)
+        //pushNotiStatusSwitch.isOn = avatarSwitchStatus
+        pushNotiStatusSwitch.isOn = false
     }
     
     @IBAction func backPressed(_ sender: Any) {

@@ -337,6 +337,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
             playerProfileVC.userBeingViewed = user
             self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             self.navigationController?.navigationBar.isTranslucent = false
+            self.navigationController?.hidesBottomBarWhenPushed = true
             //self.navigationController?.navigationBar.autoresizesSubviews = true
             //self.navigationController?.navigationBar.insetsLayoutMarginsFromSafeArea = true
             
@@ -420,13 +421,20 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         }
 
         let deleteAction = UITableViewRowAction(style: .default, title: "Delete") { (action, indexPath) in
+            
+            let helper = Helper()
+            if user.objectId == FUser.currentId() {
+                self.helper.showAlert(title: "Error", message: "You can remove yourself from the team in settings.", in: self)
+            } else {
+                self.allUsersGroupped[sectionTitle]?.remove(at: indexPath.row)
 
-            self.allUsersGroupped[sectionTitle]?.remove(at: indexPath.row)
+                
+                self.deleteAUser(user: user, row: row, section: section)
+
+                self.tableView.reloadData()
+            }
 
             
-            self.deleteAUser(user: user, row: row, section: section)
-
-            self.tableView.reloadData()
             
         }
         

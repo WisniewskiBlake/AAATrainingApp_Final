@@ -38,7 +38,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     @IBOutlet weak var numberTextLabel: UILabel!
     
     @IBOutlet weak var baselineView: UIView!
-    @IBOutlet weak var nutritionView: UIView!
+    //@IBOutlet weak var nutritionView: UIView!
     @IBOutlet weak var editView: UIView!
     @IBOutlet weak var logoutView: UIView!
     
@@ -79,8 +79,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         baselineView.addGestureRecognizer(baselineTapGestureRecognizer)
         
         nutritionTapGestureRecognizer.addTarget(self, action: #selector(self.nutritionViewClicked))
-        nutritionView.isUserInteractionEnabled = true
-        nutritionView.addGestureRecognizer(nutritionTapGestureRecognizer)
+//        nutritionView.isUserInteractionEnabled = true
+//        nutritionView.addGestureRecognizer(nutritionTapGestureRecognizer)
         
         editTapGestureRecognizer.addTarget(self, action: #selector(self.editViewClicked))
         editView.isUserInteractionEnabled = true
@@ -95,7 +95,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         avaImageView.addGestureRecognizer(avaTapGestureRecognizer)
         
 
-        configure_avaImageView()
+        
 //        if FUser.currentUser()?.accountType == "player" {
 //            logoutView.isHidden = false
 //            loadUser()
@@ -106,9 +106,15 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
 //        }
         
     }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        configure_avaImageView()
+        
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.hidesBottomBarWhenPushed = true
         if FUser.currentUser()?.accountType == "Player" {
             logoutView.isHidden = false
             loadUser()
@@ -119,12 +125,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         }
     }
     
-    // executed after aligning the objects
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        //configure_nutritionButton(btn: nutritionButton)
-    }
+
     
     
     
@@ -179,8 +180,17 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         
         // assigning vars which we accessed from global var, to fullnameLabel
         fullnameLabel.text = "\((firstName).capitalized) \((lastName).capitalized)"
-        heightTextLabel.text = "\((height).capitalized)" + "in."
-        weightTextLabel.text = "\((weight).capitalized)" + "lb."
+        if height == "" {
+            heightTextLabel.text = ""
+        } else {
+            heightTextLabel.text = "\((height).capitalized)" + "in."
+        }
+        if weight == "" {
+            weightTextLabel.text = ""
+        } else {
+            weightTextLabel.text = "\((weight).capitalized)" + "lb."
+        }
+        
         positionTextLabel.text = "\((position).capitalized)"
         numberTextLabel.text = "\((number).capitalized)"
         
@@ -246,8 +256,17 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
                        }
                    }
                     self.fullnameLabel.text = "\(String(describing: (userCurr.firstname).capitalized)) \((userCurr.lastname).capitalized)"
-                    self.heightTextLabel.text = "\((userCurr.height).capitalized)" + "in."
-                    self.weightTextLabel.text = "\((userCurr.weight).capitalized)" + "lbs."
+                    
+                    if userCurr.height == "" {
+                        self.heightTextLabel.text = ""
+                    } else {
+                        self.heightTextLabel.text = "\((userCurr.height).capitalized)" + "in."
+                    }
+                    if userCurr.weight == "" {
+                        self.weightTextLabel.text = ""
+                    } else {
+                        self.weightTextLabel.text = "\((userCurr.weight).capitalized)" + "lb."
+                    }
                     self.positionTextLabel.text = "\((userCurr.position).capitalized)"
                     self.numberTextLabel.text = "\((userCurr.number).capitalized)"
                                     
@@ -289,59 +308,69 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     }
     
     @objc func logoutViewClicked() {
-        let sheet = UIAlertController(title: "Team Login Code: " + FUser.currentUser()!.userCurrentTeamID, message: nil, preferredStyle: .actionSheet)
         
-        
-        
-        let colorPicker = UIAlertAction(title: "Choose App Color Theme", style: .default, handler: { (action) in
-                        
+        if let vc =  UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SettingsNav") as? UINavigationController
+        {
+            vc.modalPresentationStyle = .fullScreen
+            vc.navigationController?.navigationBar.tintColor = UIColor.black
+            vc.navigationBar.tintColor = UIColor.black
             
-            let navigationColorPicker = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ColorPickerNav") as! UINavigationController
-             //let colorPickerVC = navigationColorPicker.viewControllers.first as! ColorPickerVC
-            
-            
-            self.present(navigationColorPicker, animated: true, completion: nil)
-                
-            
-        })
+            self.present(vc, animated: true, completion: nil)
+        }
         
-        let backToTeamSelect = UIAlertAction(title: "Back To Team Select", style: .default, handler: { (action) in
-                        
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
-            {
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true, completion: nil)
-            }
-                
-            
-        })
-        
-        // creating buttons for action sheet
-        let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
-                        
-            FUser.logOutCurrentUser { (success) in
-                
-                if success {
-                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
-                    {
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true, completion: nil)
-                    }
-                }
-            }
-        })
-        
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        // add buttons to action sheet
-        
-        sheet.addAction(colorPicker)
-        sheet.addAction(backToTeamSelect)
-        sheet.addAction(logout)
-        sheet.addAction(cancel)
-        
-        // show action sheet
-        present(sheet, animated: true, completion: nil)
+//        let sheet = UIAlertController(title: "Team Login Code: " + FUser.currentUser()!.userCurrentTeamID, message: nil, preferredStyle: .actionSheet)
+//
+//
+//
+//        let colorPicker = UIAlertAction(title: "Choose App Color Theme", style: .default, handler: { (action) in
+//
+//
+//            let navigationColorPicker = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ColorPickerNav") as! UINavigationController
+//             //let colorPickerVC = navigationColorPicker.viewControllers.first as! ColorPickerVC
+//
+//
+//            self.present(navigationColorPicker, animated: true, completion: nil)
+//
+//
+//        })
+//
+//        let backToTeamSelect = UIAlertAction(title: "Back To Team Select", style: .default, handler: { (action) in
+//
+//            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
+//            {
+//                vc.modalPresentationStyle = .fullScreen
+//                self.present(vc, animated: true, completion: nil)
+//            }
+//
+//
+//        })
+//
+//        // creating buttons for action sheet
+//        let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
+//
+//            FUser.logOutCurrentUser { (success) in
+//
+//                if success {
+//                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+//                    {
+//                        vc.modalPresentationStyle = .fullScreen
+//                        self.present(vc, animated: true, completion: nil)
+//                    }
+//                }
+//            }
+//        })
+//
+//        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//
+//        // add buttons to action sheet
+//
+//        sheet.addAction(colorPicker)
+//        sheet.addAction(backToTeamSelect)
+//        sheet.addAction(logout)
+//        sheet.addAction(cancel)
+//
+//        // show action sheet
+//        present(sheet, animated: true, completion: nil)
     }
     
     // make corners rounded for any views (objects)
@@ -373,7 +402,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     // configuring the appearance of AvaImageView
     func configure_avaImageView() {
         
-        // creating layer that will be applied to avaImageView (layer - broders of ava)
+//        // creating layer that will be applied to avaImageView (layer - broders of ava)
         let border = CALayer()
         border.borderColor = UIColor.white.cgColor
         border.borderWidth = 5
@@ -381,6 +410,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         avaImageView.layer.addSublayer(border)
         
         // rounded corners
+//        avaImageView.layer.cornerRadius = avaImageView.frame.width / 2
+//        //avaImageView.layer.masksToBounds = true
+//        avaImageView.clipsToBounds = true
+        
         avaImageView.layer.cornerRadius = 10
         avaImageView.layer.masksToBounds = true
         avaImageView.clipsToBounds = true

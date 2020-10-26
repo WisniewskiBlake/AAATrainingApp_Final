@@ -19,7 +19,7 @@ import AVKit
 import FirebaseAuth
 
 class EditUserVC: UITableViewController, ImagePickerDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
-    
+    var allPosts: [Post] = []
     
     @IBOutlet weak var saveButtonOutlet: UIBarButtonItem!
     
@@ -43,6 +43,10 @@ class EditUserVC: UITableViewController, ImagePickerDelegate, UIImagePickerContr
         coverTapGestureRecognizer.addTarget(self, action: #selector(self.coverViewClicked))
         avatarImageView.isUserInteractionEnabled = true
         avatarImageView.addGestureRecognizer(coverTapGestureRecognizer)
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadPosts()
     }
 
     // MARK: - Table view data source
@@ -254,6 +258,44 @@ class EditUserVC: UITableViewController, ImagePickerDelegate, UIImagePickerContr
         
     }
     
+    @objc func loadPosts() {
+        
+            var query: Query!
+            
+            query = reference(.Post).whereField(kPOSTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID as Any).whereField(kPOSTOWNERID, isEqualTo: FUser.currentId()).order(by: kPOSTDATE, descending: true)
+            
+            query.getDocuments { (snapshot, error) in
+                self.allPosts = []
+
+                
+                if error != nil {
+                    print(error!.localizedDescription)
+                    
+                    return
+                }
+                
+                guard let snapshot = snapshot else {
+                    return
+                }
+                
+                if !snapshot.isEmpty {
+                    
+                    for postDictionary in snapshot.documents {
+                        let postDictionary = postDictionary.data() as NSDictionary
+                        let post = Post(_dictionary: postDictionary)
+                        
+                        self.allPosts.append(post)
+                        
+                                        
+                    }
+                    
+                }
+                
+            }
+
+        
+    }
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[UIImagePickerController.InfoKey(rawValue: convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage))] as? UIImage
         let picturePath = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
@@ -264,8 +306,16 @@ class EditUserVC: UITableViewController, ImagePickerDelegate, UIImagePickerContr
         let avatar = pictureData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
 
         updateCurrentUserInFirestore(withValues: [kAVATAR : avatar!]) { (success) in
-            self.dismiss(animated: true)
+            
         }
+        if !allPosts.isEmpty {
+            for post in allPosts {
+
+                post.updatePost(postID: post.postID, withValues: [kPOSTUSERAVA : avatar!])
+            }
+
+        }
+        self.dismiss(animated: true)
     }
     
 }

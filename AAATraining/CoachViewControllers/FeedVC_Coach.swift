@@ -133,7 +133,7 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         configureFAB()
         startAnimating()
                 
-        filterSegmentedControl.selectedSegmentIndex = 0        
+        filterSegmentedControl.selectedSegmentIndex = 0
         filterString = ""
         loadPosts()
         getMembers()
@@ -277,13 +277,16 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
     }
     
     @objc func handleRefresh() {
-//        if filterString == "" {
-//            loadPosts(filter: "")
-//        } else if filterString == "General" {
-//            loadPosts(filter: "General")
-//        } else if filterString == "Fitness" {
-//            loadPosts(filter: "Fitness")
-//        }
+        if filterSegmentedControl.selectedSegmentIndex == 0 {
+            filterString = ""
+            loadPosts()
+        } else if filterSegmentedControl.selectedSegmentIndex == 1 {
+            filterString = "General"
+            loadPosts()
+        } else if filterSegmentedControl.selectedSegmentIndex == 2 {
+            filterString = "Fitness"
+            loadPosts()
+        }
         loadPosts()
         self.refreshControl?.endRefreshing()
     }

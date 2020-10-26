@@ -219,74 +219,84 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     }
     
     @objc func logoutViewClicked() {
-        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let copyCode = UIAlertAction(title: "Copy Team Code: " + FUser.currentUser()!.userCurrentTeamID, style: .default, handler: { (action) in
-                        
-            let pasteboard = UIPasteboard.general
-            pasteboard.string = FUser.currentUser()!.userCurrentTeamID
-            self.helper.showAlert(title: "Copied!", message: "Team code copied to clipboard.", in: self)
-                
+        if let vc =  UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SettingsNav") as? UINavigationController
+        {
+            vc.modalPresentationStyle = .fullScreen
+            vc.navigationController?.navigationBar.tintColor = UIColor.black
+            vc.navigationBar.tintColor = UIColor.black
             
-        })
+            self.present(vc, animated: true, completion: nil)
+        }
         
-        let colorPicker = UIAlertAction(title: "Choose Color Theme", style: .default, handler: { (action) in
-                        
-            
-            let navigationColorPicker = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ColorPickerNav") as! UINavigationController
-             //let colorPickerVC = navigationColorPicker.viewControllers.first as! ColorPickerVC
-            
-            
-            self.present(navigationColorPicker, animated: true, completion: nil)
-                
-            
-        })
-        
-        let changeLogo = UIAlertAction(title: "Change Team Logo", style: .default, handler: { (action) in
-                        
-            self.coverViewClicked()
-                
-            
-        })
-        
-        let backToTeamSelect = UIAlertAction(title: "Back To Team Select", style: .default, handler: { (action) in
-                        
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
-            {
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true, completion: nil)
-            }
-                
-            
-        })
-        
-        // creating buttons for action sheet
-        let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
-                        
-            FUser.logOutCurrentUser { (success) in
-                
-                if success {
-                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
-                    {
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true, completion: nil)
-                    }
-                }
-            }
-        })
-        
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        // add buttons to action sheet
-        sheet.addAction(copyCode)
-        sheet.addAction(colorPicker)
-        sheet.addAction(changeLogo)
-        sheet.addAction(backToTeamSelect)
-        sheet.addAction(logout)
-        sheet.addAction(cancel)
-        
-        // show action sheet
-        present(sheet, animated: true, completion: nil)
+//        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+//        
+//        let copyCode = UIAlertAction(title: "Copy Team Code: " + FUser.currentUser()!.userCurrentTeamID, style: .default, handler: { (action) in
+//                        
+//            let pasteboard = UIPasteboard.general
+//            pasteboard.string = FUser.currentUser()!.userCurrentTeamID
+//            self.helper.showAlert(title: "Copied!", message: "Team code copied to clipboard.", in: self)
+//                
+//            
+//        })
+//        
+//        let colorPicker = UIAlertAction(title: "Choose Color Theme", style: .default, handler: { (action) in
+//                        
+//            
+//            let navigationColorPicker = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ColorPickerNav") as! UINavigationController
+//             //let colorPickerVC = navigationColorPicker.viewControllers.first as! ColorPickerVC
+//            
+//            
+//            self.present(navigationColorPicker, animated: true, completion: nil)
+//                
+//            
+//        })
+//        
+//        let changeLogo = UIAlertAction(title: "Change Team Logo", style: .default, handler: { (action) in
+//                        
+//            self.coverViewClicked()
+//                
+//            
+//        })
+//        
+//        let backToTeamSelect = UIAlertAction(title: "Back To Team Select", style: .default, handler: { (action) in
+//                        
+//            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
+//            {
+//                vc.modalPresentationStyle = .fullScreen
+//                self.present(vc, animated: true, completion: nil)
+//            }
+//                
+//            
+//        })
+//        
+//        // creating buttons for action sheet
+//        let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
+//                        
+//            FUser.logOutCurrentUser { (success) in
+//                
+//                if success {
+//                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+//                    {
+//                        vc.modalPresentationStyle = .fullScreen
+//                        self.present(vc, animated: true, completion: nil)
+//                    }
+//                }
+//            }
+//        })
+//        
+//        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//        
+//        // add buttons to action sheet
+//        sheet.addAction(copyCode)
+//        sheet.addAction(colorPicker)
+//        sheet.addAction(changeLogo)
+//        sheet.addAction(backToTeamSelect)
+//        sheet.addAction(logout)
+//        sheet.addAction(cancel)
+//        
+//        // show action sheet
+//        present(sheet, animated: true, completion: nil)
     }
     
     
@@ -346,8 +356,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
     
     // MARK: - Load Posts
     // loading posts from the server via@objc  PHP protocol
-    @objc func loadPosts() {
-        
+    @objc func loadPosts() {        
         
             var query: Query!
             
@@ -729,7 +738,7 @@ class CoachProfileViewController: UITableViewController, UIImagePickerController
                 }
     
             }
-            
+            self.loadUser()
             self.loadPosts()
             
         }

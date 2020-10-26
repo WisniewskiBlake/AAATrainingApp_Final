@@ -13,8 +13,9 @@ import FirebaseFirestore
 import ProgressHUD
 import MapKit
 import CoreLocation
+import GoogleMobileAds
 
-class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance, UITableViewDataSource, UITableViewDelegate, CalendarCellDelegate {
+class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance, UITableViewDataSource, UITableViewDelegate, CalendarCellDelegate, GADBannerViewDelegate {
     
     @IBOutlet weak var calendar: FSCalendar!
     @IBOutlet weak var tableView: UITableView!
@@ -47,6 +48,8 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     var imageview = UIImageView()
     let helper = Helper()
     
+    @IBOutlet weak var bannerView: GADBannerView!
+    
     @IBOutlet weak var navView: UIView!
     @IBOutlet weak var teamImageView: UIImageView!
     
@@ -55,6 +58,13 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         super.viewDidLoad()
 
         NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
+        
+        bannerView.adUnitID = "ca-app-pub-8479238648739219/6983932944"
+        //ca-app-pub-8479238648739219/1196914480
+        //c8b13a0958c55302a0092a8fdabd1f7e
+        bannerView.rootViewController = self
+        bannerView.delegate = self
+        bannerView.load(GADRequest())
 
         let todayDate = self.calendar!.today! as Date
         self.calendar.formatter.dateFormat = "YYYY-MM-dd"

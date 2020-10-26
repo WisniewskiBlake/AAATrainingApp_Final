@@ -13,6 +13,7 @@ import FirebaseFirestore
 import ProgressHUD
 import MapKit
 import CoreLocation
+import GoogleMobileAds
 
 class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance, UITableViewDataSource, UITableViewDelegate, CalendarCellDelegate {
 
@@ -467,6 +468,17 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
             //mapItem.name = "User's Location"
             mapItem.openInMaps(launchOptions: options)
         }
+    }
+    
+    /// Tells the delegate an ad request loaded an ad.
+    func adViewDidReceiveAd(_ bannerView: GADBannerView) {
+      print("adViewDidReceiveAd")
+    }
+
+    /// Tells the delegate an ad request failed.
+    func adView(_ bannerView: GADBannerView,
+        didFailToReceiveAdWithError error: GADRequestError) {
+      print("adView:didFailToReceiveAdWithError: \(error.localizedDescription)")
     }
 
     
