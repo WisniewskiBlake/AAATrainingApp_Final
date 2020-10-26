@@ -167,6 +167,8 @@
 		B79CC89424FF8470007FE36E /* greyBack1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B79CC88F24FF846E007FE36E /* greyBack1.jpg */; };
 		B79CC89524FF8470007FE36E /* greyBack2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B79CC89024FF846F007FE36E /* greyBack2.jpg */; };
 		B7ABD5622521710300C4BB51 /* loaderFinal.gif in Resources */ = {isa = PBXBuildFile; fileRef = B7ABD5612521710300C4BB51 /* loaderFinal.gif */; };
+		B7B3AFFE2546B798000A85B2 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B3AFFD2546B798000A85B2 /* NotificationService.swift */; };
+		B7B3B0022546B798000A85B2 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B7B3AFFB2546B798000A85B2 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B7C3BDF824BB08D200086C27 /* CoachNoPicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C3BDF724BB08D200086C27 /* CoachNoPicCell.swift */; };
 		B7C3BDFA24BB0B1500086C27 /* CoachPicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C3BDF924BB0B1500086C27 /* CoachPicCell.swift */; };
 		B7C3BDFF24BC63F600086C27 /* manrope in Resources */ = {isa = PBXBuildFile; fileRef = B7C3BDFE24BC63F600086C27 /* manrope */; };
@@ -254,6 +256,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B7B3B0002546B798000A85B2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7F18C5824970084009BFA17 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B7B3AFFA2546B798000A85B2;
+			remoteInfo = OneSignalNotificationServiceExtension;
+		};
 		B7F18C7724970085009BFA17 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B7F18C5824970084009BFA17 /* Project object */;
@@ -269,6 +278,20 @@
 			remoteInfo = AAATraining;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B7B3B0032546B798000A85B2 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B7B3B0022546B798000A85B2 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		098B6F80E94023F2D8CA808E /* Pods_AAATraining.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AAATraining.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -433,6 +456,9 @@
 		B79CC88F24FF846E007FE36E /* greyBack1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = greyBack1.jpg; sourceTree = "<group>"; };
 		B79CC89024FF846F007FE36E /* greyBack2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = greyBack2.jpg; sourceTree = "<group>"; };
 		B7ABD5612521710300C4BB51 /* loaderFinal.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loaderFinal.gif; sourceTree = "<group>"; };
+		B7B3AFFB2546B798000A85B2 /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7B3AFFD2546B798000A85B2 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		B7B3AFFF2546B798000A85B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B7C3BDF724BB08D200086C27 /* CoachNoPicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachNoPicCell.swift; sourceTree = "<group>"; };
 		B7C3BDF924BB0B1500086C27 /* CoachPicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachPicCell.swift; sourceTree = "<group>"; };
 		B7C3BDFE24BC63F600086C27 /* manrope */ = {isa = PBXFileReference; lastKnownFileType = folder; path = manrope; sourceTree = "<group>"; };
@@ -533,6 +559,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B7B3AFF82546B798000A85B2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B7F18C5D24970084009BFA17 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -709,6 +742,15 @@
 			path = GIFLoader;
 			sourceTree = "<group>";
 		};
+		B7B3AFFC2546B798000A85B2 /* OneSignalNotificationServiceExtension */ = {
+			isa = PBXGroup;
+			children = (
+				B7B3AFFD2546B798000A85B2 /* NotificationService.swift */,
+				B7B3AFFF2546B798000A85B2 /* Info.plist */,
+			);
+			path = OneSignalNotificationServiceExtension;
+			sourceTree = "<group>";
+		};
 		B7C3BDFD24BC630C00086C27 /* fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -783,6 +825,7 @@
 				B7F18C6224970084009BFA17 /* AAATraining */,
 				B7F18C7924970085009BFA17 /* AAATrainingTests */,
 				B7F18C8424970085009BFA17 /* AAATrainingUITests */,
+				B7B3AFFC2546B798000A85B2 /* OneSignalNotificationServiceExtension */,
 				B7F18C6124970084009BFA17 /* Products */,
 				B7F8AFFB24B713E600B315FD /* Frameworks */,
 				B6012767C661C99102E4A823 /* Pods */,
@@ -795,6 +838,7 @@
 				B7F18C6024970084009BFA17 /* LockerRoom.app */,
 				B7F18C7624970085009BFA17 /* AAATrainingTests.xctest */,
 				B7F18C8124970085009BFA17 /* AAATrainingUITests.xctest */,
+				B7B3AFFB2546B798000A85B2 /* OneSignalNotificationServiceExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1021,6 +1065,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B7B3AFFA2546B798000A85B2 /* OneSignalNotificationServiceExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B7B3B0062546B798000A85B2 /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */;
+			buildPhases = (
+				B7B3AFF72546B798000A85B2 /* Sources */,
+				B7B3AFF82546B798000A85B2 /* Frameworks */,
+				B7B3AFF92546B798000A85B2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OneSignalNotificationServiceExtension;
+			productName = OneSignalNotificationServiceExtension;
+			productReference = B7B3AFFB2546B798000A85B2 /* OneSignalNotificationServiceExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		B7F18C5F24970084009BFA17 /* AAATraining */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B7F18C8A24970085009BFA17 /* Build configuration list for PBXNativeTarget "AAATraining" */;
@@ -1030,10 +1091,12 @@
 				B7F18C5D24970084009BFA17 /* Frameworks */,
 				B7F18C5E24970084009BFA17 /* Resources */,
 				E1F44F1620F683B1C7A6AFB9 /* [CP] Embed Pods Frameworks */,
+				B7B3B0032546B798000A85B2 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B7B3B0012546B798000A85B2 /* PBXTargetDependency */,
 			);
 			name = AAATraining;
 			productName = AAATraining;
@@ -1085,10 +1148,13 @@
 		B7F18C5824970084009BFA17 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1130;
+				LastSwiftUpdateCheck = 1210;
 				LastUpgradeCheck = 1160;
 				ORGANIZATIONNAME = "Blake Wisniewski";
 				TargetAttributes = {
+					B7B3AFFA2546B798000A85B2 = {
+						CreatedOnToolsVersion = 12.1;
+					};
 					B7F18C5F24970084009BFA17 = {
 						CreatedOnToolsVersion = 11.3.1;
 					};
@@ -1118,11 +1184,19 @@
 				B7F18C5F24970084009BFA17 /* AAATraining */,
 				B7F18C7524970085009BFA17 /* AAATrainingTests */,
 				B7F18C8024970085009BFA17 /* AAATrainingUITests */,
+				B7B3AFFA2546B798000A85B2 /* OneSignalNotificationServiceExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B7B3AFF92546B798000A85B2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B7F18C5E24970084009BFA17 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1376,6 +1450,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B7B3AFF72546B798000A85B2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7B3AFFE2546B798000A85B2 /* NotificationService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B7F18C5C24970084009BFA17 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1514,6 +1596,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		B7B3B0012546B798000A85B2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B7B3AFFA2546B798000A85B2 /* OneSignalNotificationServiceExtension */;
+			targetProxy = B7B3B0002546B798000A85B2 /* PBXContainerItemProxy */;
+		};
 		B7F18C7824970085009BFA17 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B7F18C5F24970084009BFA17 /* AAATraining */;
@@ -1546,6 +1633,50 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		B7B3B0042546B798000A85B2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Z2A427979Q;
+				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hockey.AAATraining.OneSignalNotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B7B3B0052546B798000A85B2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Z2A427979Q;
+				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hockey.AAATraining.OneSignalNotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		B7F18C8824970085009BFA17 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1664,6 +1795,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1BA4F70ACE38F2C36523BC95 /* Pods-AAATraining.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AAATraining/AAATraining.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -1690,6 +1822,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CD5219FAAED33CBF8A7745C6 /* Pods-AAATraining.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AAATraining/AAATraining.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -1799,6 +1932,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B7B3B0062546B798000A85B2 /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B7B3B0042546B798000A85B2 /* Debug */,
+				B7B3B0052546B798000A85B2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B7F18C5B24970084009BFA17 /* Build configuration list for PBXProject "AAATraining" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

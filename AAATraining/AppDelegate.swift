@@ -135,19 +135,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 //        }
 //    }
     
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        
-        recentBadgeHandler?.remove()
-        calendarBadgeHandler?.remove()
-        
-        if FUser.currentUser() != nil {
-            updateCurrentUserInFirestore(withValues: [kISONLINE : false]) { (success) in
-                
-            }
-        }
-        locationManagerStop()
-        print("Entered background - AD...............................")
-    }
+
     
     //MARK: Location Manager delegate
     
