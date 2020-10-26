@@ -60,7 +60,7 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
         NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
         
         bannerView.adUnitID = "ca-app-pub-8479238648739219/6983932944"
-        //ca-app-pub-8479238648739219/1196914480
+        //ca-app-pub-8479238648739219/6983932944
         //c8b13a0958c55302a0092a8fdabd1f7e
         bannerView.rootViewController = self
         bannerView.delegate = self

@@ -14,7 +14,7 @@ import MapKit
 import CoreLocation
 import GoogleMobileAds
 
-class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance, UITableViewDelegate, UITableViewDataSource, CalendarCellDelegate {
+class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance, UITableViewDelegate, UITableViewDataSource, CalendarCellDelegate, GADBannerViewDelegate {
     
 
     @IBOutlet var calendar: FSCalendar!
@@ -54,13 +54,21 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     
     @IBOutlet weak var teamImageView: UIImageView!
     @IBOutlet weak var navView: UIView!
+    @IBOutlet weak var bannerView: GADBannerView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
-
+        
+        bannerView.adUnitID = "ca-app-pub-8479238648739219/1711919805"
+        //ca-app-pub-8479238648739219/6983932944
+        //c8b13a0958c55302a0092a8fdabd1f7e
+        bannerView.rootViewController = self
+        bannerView.delegate = self
+        bannerView.load(GADRequest())
+        
         let todayDate = self.calendar!.today! as Date
         self.calendar.formatter.dateFormat = "YYYY-MM-dd"
         today = calendar.formatter.string(from: todayDate)
@@ -527,10 +535,7 @@ class Calendar_Coach: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
     }
     
     func configureFAB() {
-//        let screenWidth = screenRect.size.width
-//        let screenHeight = screenRect.size.height
-        
-        
+
         actionButton = JJFloatingActionButton()
         actionButton.addItem(title: "General Post", image: UIImage(named: "create")?.withRenderingMode(.alwaysTemplate)) { item in
             
