@@ -15,7 +15,7 @@ import MapKit
 import CoreLocation
 import GoogleMobileAds
 
-class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance, UITableViewDataSource, UITableViewDelegate, CalendarCellDelegate {
+class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegateAppearance, UITableViewDataSource, UITableViewDelegate, CalendarCellDelegate, GADBannerViewDelegate {
 
     @IBOutlet weak var calendar: FSCalendar!
     @IBOutlet weak var tableView: UITableView!
@@ -52,6 +52,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     
     @IBOutlet weak var teamImageView: UIImageView!
     @IBOutlet weak var navView: UIView!
+    @IBOutlet weak var bannerView: GADBannerView!
     
     
     override func viewDidLoad() {
@@ -61,6 +62,13 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         setCalendarBadges(controller: self.tabBarController!, accountType: "parent")
 
         NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
+        bannerView.adUnitID = "ca-app-pub-8479238648739219/3025001477"
+        //ca-app-pub-8479238648739219/3025001477
+        //c8b13a0958c55302a0092a8fdabd1f7e
+        bannerView.rootViewController = self
+        bannerView.delegate = self
+        bannerView.load(GADRequest())
+        
         
         calendar.delegate = self
         

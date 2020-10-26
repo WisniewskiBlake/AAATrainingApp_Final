@@ -6392,7 +6392,6 @@
                                     <constraint firstAttribute="trailing" secondItem="7Fn-Fh-X2f" secondAttribute="trailing" constant="20" id="Dzr-dz-kur"/>
                                     <constraint firstItem="Dim-tA-5gd" firstAttribute="top" secondItem="MDR-br-i91" secondAttribute="bottom" id="GZs-6U-Mok"/>
                                     <constraint firstAttribute="height" constant="226" id="HVg-zU-50o"/>
-                                    <constraint firstAttribute="width" constant="375" id="Hkd-Nw-oGK"/>
                                     <constraint firstItem="MDR-br-i91" firstAttribute="leading" secondItem="bVn-hr-uoq" secondAttribute="leading" id="L8K-Y6-DRt"/>
                                     <constraint firstAttribute="trailing" secondItem="Dim-tA-5gd" secondAttribute="trailing" id="VsH-Pn-YoH"/>
                                     <constraint firstItem="2LK-FY-KxZ" firstAttribute="top" secondItem="Dim-tA-5gd" secondAttribute="bottom" id="X2k-6i-w54"/>
@@ -7961,7 +7960,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cb9-cq-3fL" customClass="FSCalendar">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cb9-cq-3fL" customClass="FSCalendar">
                                 <rect key="frame" x="8" y="100" width="398" height="358"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
@@ -7983,7 +7982,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8J6-3v-2C0">
-                                <rect key="frame" x="0.0" y="482" width="414" height="330"/>
+                                <rect key="frame" x="0.0" y="466" width="414" height="309"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="414" id="Bda-kO-psC"/>
@@ -8095,7 +8094,7 @@
                                 </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ixl-Mw-bXN">
-                                <rect key="frame" x="0.0" y="480" width="414" height="1"/>
+                                <rect key="frame" x="0.0" y="464" width="414" height="1"/>
                                 <color key="backgroundColor" systemColor="systemGray4Color"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="VAY-CI-c50"/>
@@ -8150,6 +8149,13 @@
                                     <constraint firstAttribute="bottom" secondItem="2Na-kV-rsu" secondAttribute="bottom" constant="8" id="ggP-wX-dnf"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4PY-IP-aD3" customClass="GADBannerView">
+                                <rect key="frame" x="0.0" y="775" width="414" height="38"/>
+                                <color key="backgroundColor" systemColor="systemGray4Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="38" id="d1M-Fn-L1g"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="9NQ-2X-LI4"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -8161,14 +8167,17 @@
                             <constraint firstItem="Ixl-Mw-bXN" firstAttribute="leading" secondItem="ofC-lM-7vI" secondAttribute="leading" id="4lz-KJ-SiQ"/>
                             <constraint firstItem="Ixl-Mw-bXN" firstAttribute="top" secondItem="Cb9-cq-3fL" secondAttribute="bottom" constant="6" id="6WX-rh-PeU"/>
                             <constraint firstItem="DKf-Zm-Wfi" firstAttribute="leading" secondItem="9NQ-2X-LI4" secondAttribute="leading" id="6k1-4L-4hS"/>
-                            <constraint firstItem="Cb9-cq-3fL" firstAttribute="height" secondItem="ofC-lM-7vI" secondAttribute="height" multiplier="0.430804" constant="-12.000383999999997" id="Bp1-9B-xAd"/>
+                            <constraint firstItem="Cb9-cq-3fL" firstAttribute="height" secondItem="ofC-lM-7vI" secondAttribute="height" multiplier="0.430804" constant="-28.000383999999997" id="Bp1-9B-xAd"/>
                             <constraint firstItem="DKf-Zm-Wfi" firstAttribute="top" secondItem="ofC-lM-7vI" secondAttribute="top" id="FRS-Vw-Xds"/>
                             <constraint firstItem="Cb9-cq-3fL" firstAttribute="trailing" secondItem="9NQ-2X-LI4" secondAttribute="trailing" constant="-8" id="Kid-Af-GM4"/>
                             <constraint firstItem="8J6-3v-2C0" firstAttribute="top" secondItem="Ixl-Mw-bXN" secondAttribute="bottom" constant="1" id="VdL-NF-JM0"/>
                             <constraint firstItem="DKf-Zm-Wfi" firstAttribute="height" secondItem="ofC-lM-7vI" secondAttribute="height" multiplier="0.101562" id="dkw-ce-fZy"/>
                             <constraint firstItem="8J6-3v-2C0" firstAttribute="leading" secondItem="9NQ-2X-LI4" secondAttribute="leading" id="fSY-eH-Qjg"/>
-                            <constraint firstItem="8J6-3v-2C0" firstAttribute="bottom" secondItem="9NQ-2X-LI4" secondAttribute="bottom" constant="-1" id="g9Y-z7-zqH"/>
+                            <constraint firstItem="8J6-3v-2C0" firstAttribute="bottom" secondItem="9NQ-2X-LI4" secondAttribute="bottom" constant="-38" id="g9Y-z7-zqH"/>
+                            <constraint firstItem="4PY-IP-aD3" firstAttribute="bottom" secondItem="9NQ-2X-LI4" secondAttribute="bottom" id="hYI-bF-esf"/>
                             <constraint firstAttribute="trailing" secondItem="Ixl-Mw-bXN" secondAttribute="trailing" id="lmn-IJ-PSN"/>
+                            <constraint firstItem="4PY-IP-aD3" firstAttribute="trailing" secondItem="9NQ-2X-LI4" secondAttribute="trailing" id="tQ6-IL-Pc8"/>
+                            <constraint firstItem="4PY-IP-aD3" firstAttribute="leading" secondItem="9NQ-2X-LI4" secondAttribute="leading" id="x4o-iH-jOv"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="date" selectedImage="date_filled" id="hva-WZ-kDe">
@@ -8183,6 +8192,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="bannerView" destination="4PY-IP-aD3" id="6fn-GA-Cze"/>
                         <outlet property="calendar" destination="Cb9-cq-3fL" id="acT-fK-kBC"/>
                         <outlet property="navView" destination="DKf-Zm-Wfi" id="v9c-Rb-5Do"/>
                         <outlet property="splitterLabelTwo" destination="Ixl-Mw-bXN" id="dSV-c9-1O0"/>
