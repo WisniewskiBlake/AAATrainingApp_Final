@@ -100,13 +100,11 @@ public class PlayerStat {
         }
     }
     
-    func saveTeam() {
-
-        reference(.PlayerStat).document(playerStatDictionary[kPLAYERSTATID] as! String).setData(playerStatDictionary as! [String:Any])
-        
+    func saveStats() {
+        reference(.PlayerStat).document(playerStatDictionary[kPLAYERSTATID] as! String).setData(playerStatDictionary as! [String:Any])        
     }
     
-    class func updateStats(playerStatID: String, withValues: [String:Any]) {
+    func updateStats(playerStatID: String, withValues: [String:Any]) {
         reference(.PlayerStat).document(playerStatID).updateData(withValues)
     }
     

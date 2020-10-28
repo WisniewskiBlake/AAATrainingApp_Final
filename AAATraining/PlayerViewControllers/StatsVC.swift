@@ -26,9 +26,9 @@ class StatsVC: UIViewController {
     var selectedButton = UIButton()
     var dataSource = [String]()
     var cellText = "Select Stat"
-    
+    var playerStatID: String = ""
     var userBeingViewed = FUser()
-    
+    let stats = PlayerStat(playerStatID: "", playerStatUserID: "", playerStatTeamID: "", playerStatHeight: "", playerStatWeight: "", playerStatPosition: "", playerStatNumber: "")
     
     override func viewDidLoad() {
        super.viewDidLoad()
@@ -136,19 +136,19 @@ class StatsVC: UIViewController {
                 Helper().showAlert(title: "Error", message: "Please select a stat", in: self)
             } else if cellText == "Height" {
                 if Helper().isValid(height: statTextField.text!) {
-                    self.updateStats(stat: cellText.lowercased(), value: statTextField.text!)
+                    self.updateStats(stat: kPLAYERSTATHEIGHT, value: statTextField.text!)
                 }
             } else if cellText == "Weight" {
                 if Helper().isValid(weight: statTextField.text!) {
-                    self.updateStats(stat: cellText.lowercased(), value: statTextField.text!)
+                    self.updateStats(stat: kPLAYERSTATWEIGHT, value: statTextField.text!)
                 }
             } else if cellText == "Position" {
                 if Helper().isValid(position: statTextField.text!) {
-                    self.updateStats(stat: cellText.lowercased(), value: statTextField.text!)
+                    self.updateStats(stat: kPLAYERSTATPOSITION, value: statTextField.text!)
                 }
             } else if cellText == "Number" {
                 if Helper().isValid(number: statTextField.text!) {
-                    self.updateStats(stat: cellText.lowercased(), value: statTextField.text!)
+                    self.updateStats(stat: kPLAYERSTATNUMBER, value: statTextField.text!)
                 }
             }
         } else {
@@ -158,14 +158,19 @@ class StatsVC: UIViewController {
     
     // updating bio by sending request to the server
     @objc func updateStats(stat: String, value: String) {
+        stats.updateStats(playerStatID: playerStatID, withValues: [stat : value])NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateStats"), object: nil)
+
         if FUser.currentUser()?.accountType == "Player" {
-            updateCurrentUserInFirestore(withValues: [stat : value]) { (success) in
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateStats"), object: nil)
-            }
+//            updateCurrentUserInFirestore(withValues: [stat : value]) { (success) in
+//
+//            }
+
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateStats"), object: nil)
         } else {
-            updateUserInFirestore(objectID: userBeingViewed.objectId, withValues: [stat : value]) { (success) in
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateStatsAsGuest"), object: nil)
-            }
+//            updateUserInFirestore(objectID: userBeingViewed.objectId, withValues: [stat : value]) { (success) in
+//
+//            }
+ //           NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateStatsAsGuest"), object: nil)
         }
         
         

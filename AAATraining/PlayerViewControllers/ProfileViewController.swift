@@ -66,14 +66,17 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
 
     var userBeingViewed = FUser()
     var user = FUser()
+    let helper = Helper()
+    var playerStatID: String = ""
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
        // add observers for notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(loadUser), name: NSNotification.Name(rawValue: "updateStats"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(loadUserForGuest), name: NSNotification.Name(rawValue: "updateStatsAsGuest"), object: nil)
-        
+//        NotificationCenter.default.addObserver(self, selector: #selector(loadUser), name: NSNotification.Name(rawValue: "updateStats"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(loadUserForGuest), name: NSNotification.Name(rawValue: "updateStatsAsGuest"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadStats), name: NSNotification.Name(rawValue: "updateStats"), object: nil)
         baselineTapGestureRecognizer.addTarget(self, action: #selector(self.baselineViewClicked))
         baselineView.isUserInteractionEnabled = true
         baselineView.addGestureRecognizer(baselineTapGestureRecognizer)
@@ -94,17 +97,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         avaImageView.isUserInteractionEnabled = true
         avaImageView.addGestureRecognizer(avaTapGestureRecognizer)
         
-
-        
-//        if FUser.currentUser()?.accountType == "player" {
-//            logoutView.isHidden = false
-//            loadUser()
-//        } else {
-//            logoutView.isHidden = true
-//            loadUserForGuest()
-//
-//        }
-        
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -117,11 +109,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         self.navigationController?.hidesBottomBarWhenPushed = true
         if FUser.currentUser()?.accountType == "Player" {
             logoutView.isHidden = false
+            loadStats()
             loadUser()
         } else {
             logoutView.isHidden = true
+            loadStats()
             loadUserForGuest()
-            
         }
     }
     
@@ -177,23 +170,54 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
             avaImageView.image = UIImage(named: "user.png")
             isAva = false
         }
+//
+//        // assigning vars which we accessed from global var, to fullnameLabel
+//        fullnameLabel.text = "\((firstName).capitalized) \((lastName).capitalized)"
+//        if height == "" {
+//            heightTextLabel.text = ""
+//        } else {
+//            heightTextLabel.text = "\((height).capitalized)" + "in."
+//        }
+//        if weight == "" {
+//            weightTextLabel.text = ""
+//        } else {
+//            weightTextLabel.text = "\((weight).capitalized)" + "lb."
+//        }
+//
+//        positionTextLabel.text = "\((position).capitalized)"
+//        numberTextLabel.text = "\((number).capitalized)"
         
-        // assigning vars which we accessed from global var, to fullnameLabel
-        fullnameLabel.text = "\((firstName).capitalized) \((lastName).capitalized)"
-        if height == "" {
-            heightTextLabel.text = ""
-        } else {
-            heightTextLabel.text = "\((height).capitalized)" + "in."
-        }
-        if weight == "" {
-            weightTextLabel.text = ""
-        } else {
-            weightTextLabel.text = "\((weight).capitalized)" + "lb."
-        }
-        
-        positionTextLabel.text = "\((position).capitalized)"
-        numberTextLabel.text = "\((number).capitalized)"
-        
+    }
+    
+    @objc func loadStats() {
+        let query = reference(.PlayerStat).whereField(kPLAYERSTATUSERID, isEqualTo: FUser.currentId()).whereField(kPLAYERSTATTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID)
+        query.getDocuments { (snapshot, error) in
+
+            if error != nil {
+                print(error!.localizedDescription)
+                self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
+                return
+            }
+
+            guard let snapshot = snapshot else {
+                self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
+                return
+            }
+
+            if !snapshot.isEmpty {
+                for statDictionary in snapshot.documents {
+
+                    let statDictionary = statDictionary.data() as NSDictionary
+                    let stats = PlayerStat(_dictionary: statDictionary)
+                    
+                    self.playerStatID = stats.playerStatID
+                    self.positionTextLabel.text = stats.playerStatPosition
+                    self.numberTextLabel.text = stats.playerStatNumber
+                    self.heightTextLabel.text = stats.playerStatHeight
+                    self.weightTextLabel.text = stats.playerStatWeight
+                }
+            }
+        }   
     }
     
     // MARK: - Load User
@@ -241,7 +265,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
             }
             
             if !snapshot.isEmpty {
-                
                 for userDoc in snapshot.documents {
                     let userDoc = userDoc.data() as NSDictionary
                     let userCurr = FUser(_dictionary: userDoc)
@@ -255,29 +278,23 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
                             self.isAva = true
                        }
                    }
-                    self.fullnameLabel.text = "\(String(describing: (userCurr.firstname).capitalized)) \((userCurr.lastname).capitalized)"
-                    
-                    if userCurr.height == "" {
-                        self.heightTextLabel.text = ""
-                    } else {
-                        self.heightTextLabel.text = "\((userCurr.height).capitalized)" + "in."
-                    }
-                    if userCurr.weight == "" {
-                        self.weightTextLabel.text = ""
-                    } else {
-                        self.weightTextLabel.text = "\((userCurr.weight).capitalized)" + "lb."
-                    }
-                    self.positionTextLabel.text = "\((userCurr.position).capitalized)"
-                    self.numberTextLabel.text = "\((userCurr.number).capitalized)"
-                                    
+//                    self.fullnameLabel.text = "\(String(describing: (userCurr.firstname).capitalized)) \((userCurr.lastname).capitalized)"
+//
+//                    if userCurr.height == "" {
+//                        self.heightTextLabel.text = ""
+//                    } else {
+//                        self.heightTextLabel.text = "\((userCurr.height).capitalized)" + "in."
+//                    }
+//                    if userCurr.weight == "" {
+//                        self.weightTextLabel.text = ""
+//                    } else {
+//                        self.weightTextLabel.text = "\((userCurr.weight).capitalized)" + "lb."
+//                    }
+//                    self.positionTextLabel.text = "\((userCurr.position).capitalized)"
+//                    self.numberTextLabel.text = "\((userCurr.number).capitalized)"
                 }
-                
-            
             }
-        
-    }
-
-       
+        }
     }
     
     @objc func baselineViewClicked() {
@@ -301,7 +318,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         let statsVC = navigation.viewControllers.first as! StatsVC
         
         statsVC.userBeingViewed = userBeingViewed
-    
+        statsVC.playerStatID = playerStatID
+        
         self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 
         self.present(navigation, animated: true, completion: nil)
@@ -318,59 +336,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
             self.present(vc, animated: true, completion: nil)
         }
         
-//        let sheet = UIAlertController(title: "Team Login Code: " + FUser.currentUser()!.userCurrentTeamID, message: nil, preferredStyle: .actionSheet)
-//
-//
-//
-//        let colorPicker = UIAlertAction(title: "Choose App Color Theme", style: .default, handler: { (action) in
-//
-//
-//            let navigationColorPicker = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ColorPickerNav") as! UINavigationController
-//             //let colorPickerVC = navigationColorPicker.viewControllers.first as! ColorPickerVC
-//
-//
-//            self.present(navigationColorPicker, animated: true, completion: nil)
-//
-//
-//        })
-//
-//        let backToTeamSelect = UIAlertAction(title: "Back To Team Select", style: .default, handler: { (action) in
-//
-//            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
-//            {
-//                vc.modalPresentationStyle = .fullScreen
-//                self.present(vc, animated: true, completion: nil)
-//            }
-//
-//
-//        })
-//
-//        // creating buttons for action sheet
-//        let logout = UIAlertAction(title: "Log Out", style: .destructive, handler: { (action) in
-//
-//            FUser.logOutCurrentUser { (success) in
-//
-//                if success {
-//                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
-//                    {
-//                        vc.modalPresentationStyle = .fullScreen
-//                        self.present(vc, animated: true, completion: nil)
-//                    }
-//                }
-//            }
-//        })
-//
-//        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-//
-//        // add buttons to action sheet
-//
-//        sheet.addAction(colorPicker)
-//        sheet.addAction(backToTeamSelect)
-//        sheet.addAction(logout)
-//        sheet.addAction(cancel)
-//
-//        // show action sheet
-//        present(sheet, animated: true, completion: nil)
+
     }
     
     // make corners rounded for any views (objects)

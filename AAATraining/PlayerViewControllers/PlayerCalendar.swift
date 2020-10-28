@@ -151,8 +151,7 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                      self.helper.showAlert(title: "Server Error", message: error!.localizedDescription, in: self)
         
                         return
-                    }
-        
+                    }        
                     guard let snapshot = snapshot else {
                         self.helper.showAlert(title: "Data Error", message: error!.localizedDescription, in: self)
                         self.imageview.removeFromSuperview();
@@ -160,7 +159,6 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                     }
         
                     if !snapshot.isEmpty {
-        
                         for userDictionary in snapshot.documents {
         
                             let userDictionary = userDictionary.data() as NSDictionary
@@ -171,7 +169,6 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                             self.index = userTeamIDArray.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)!
                             self.isNewObserverValue = user.userIsNewObserverArray[self.index]
                             self.updateObserverArray = userIsNewObserverArray
-                            
                         }
                         if self.isNewObserverValue == "Yes" {
                             self.getEventsForNewObserver()
@@ -180,12 +177,8 @@ class PlayerCalendar: UIViewController, FSCalendarDelegate, FSCalendarDelegateAp
                         } else {
                             self.loadEvents()
                         }
-
                     }
-                    
-                    
-                    
-                }
+            }
      }
     
     func getEventsForNewObserver() {

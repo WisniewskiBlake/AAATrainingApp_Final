@@ -43,6 +43,8 @@ class TeamLoginVC: UIViewController, UITextFieldDelegate {
     
     //need to check if the user is already part of a team
     @IBAction func continueButtonClicked(_ sender: Any) {
+        let isPlayer = self.userAccountType.capitalizingFirstLetter() == "Player"
+        
         if teamCodeText.text != "" {
             team.getTeam(teamID: teamCodeText.text!) { (teamReturned) in
                 if teamReturned.teamID != "" {
@@ -74,6 +76,13 @@ class TeamLoginVC: UIViewController, UITextFieldDelegate {
                                     vc.modalPresentationStyle = .fullScreen
                                     self.present(vc, animated: true, completion: nil)
                                 }
+                            }
+                            if isPlayer {
+                                let localReference = reference(.PlayerStat).document()
+                                let statId = localReference.documentID
+                                var stats: [String : Any]!
+                                stats = [kPLAYERSTATID: statId, kPLAYERSTATUSERID: FUser.currentId(), kPLAYERSTATTEAMID: self.team.teamID, kPLAYERSTATHEIGHT: "", kPLAYERSTATWEIGHT: "", kPLAYERSTATPOSITION: "", kPLAYERSTATNUMBER: ""] as [String:Any]
+                                localReference.setData(stats)
                             }
                             
                            } else {
