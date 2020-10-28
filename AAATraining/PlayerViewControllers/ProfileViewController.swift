@@ -68,7 +68,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     var user = FUser()
     let helper = Helper()
     var playerStatID: String = ""
-    
+    var isViewedFromRoster = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -171,8 +171,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
             isAva = false
         }
 //
-//        // assigning vars which we accessed from global var, to fullnameLabel
-//        fullnameLabel.text = "\((firstName).capitalized) \((lastName).capitalized)"
+        // assigning vars which we accessed from global var, to fullnameLabel
+        fullnameLabel.text = "\((firstName).capitalized) \((lastName).capitalized)"
 //        if height == "" {
 //            heightTextLabel.text = ""
 //        } else {
@@ -190,7 +190,11 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     }
     
     @objc func loadStats() {
-        let query = reference(.PlayerStat).whereField(kPLAYERSTATUSERID, isEqualTo: FUser.currentId()).whereField(kPLAYERSTATTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID)
+        var query = reference(.PlayerStat).whereField(kPLAYERSTATUSERID, isEqualTo: FUser.currentId()).whereField(kPLAYERSTATTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID)
+        if FUser.currentUser()?.accountType != "Player" {
+            query = reference(.PlayerStat).whereField(kPLAYERSTATUSERID, isEqualTo: userBeingViewed.objectId).whereField(kPLAYERSTATTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID)
+        }
+        
         query.getDocuments { (snapshot, error) in
 
             if error != nil {
@@ -213,8 +217,16 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
                     self.playerStatID = stats.playerStatID
                     self.positionTextLabel.text = stats.playerStatPosition
                     self.numberTextLabel.text = stats.playerStatNumber
-                    self.heightTextLabel.text = stats.playerStatHeight
-                    self.weightTextLabel.text = stats.playerStatWeight
+                    if stats.playerStatHeight == "" {
+                        self.heightTextLabel.text = ""
+                    } else {
+                        self.heightTextLabel.text = stats.playerStatHeight + "in."
+                    }
+                    if stats.playerStatWeight == "" {
+                        self.weightTextLabel.text = ""
+                    } else {
+                        self.weightTextLabel.text = stats.playerStatWeight + "lb."
+                    }
                 }
             }
         }   
@@ -278,7 +290,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
                             self.isAva = true
                        }
                    }
-//                    self.fullnameLabel.text = "\(String(describing: (userCurr.firstname).capitalized)) \((userCurr.lastname).capitalized)"
+                    self.fullnameLabel.text = "\(String(describing: (userCurr.firstname).capitalized)) \((userCurr.lastname).capitalized)"
 //
 //                    if userCurr.height == "" {
 //                        self.heightTextLabel.text = ""

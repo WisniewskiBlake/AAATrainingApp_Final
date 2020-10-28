@@ -335,6 +335,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         if(user.userTeamAccountTypes[userTeamAccTypeIndexArr[index]] == "Player") {
             let playerProfileVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
             playerProfileVC.userBeingViewed = user
+            playerProfileVC.isViewedFromRoster = true
             self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             self.navigationController?.navigationBar.isTranslucent = false
             self.navigationController?.hidesBottomBarWhenPushed = true
