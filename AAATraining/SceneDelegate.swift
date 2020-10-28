@@ -190,8 +190,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
-        // Called as the scene transitions from the background to the foreground.
-        // Use this method to undo the changes made on entering the background.
+        if FUser.currentUser() != nil {
+            updateCurrentUserInFirestore(withValues: [kISONLINE : true]) { (success) in
+                
+            }
+        }
+        appDelegate.locationManagerStart()
+        locationManagerStart()
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {

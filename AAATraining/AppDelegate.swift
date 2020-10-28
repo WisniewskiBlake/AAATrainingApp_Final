@@ -66,7 +66,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             userDidLogin(userId: userId)
         }
         
-        OneSignal.initWithLaunchOptions(launchOptions, appId: kONESIGNALAPPID)
+        OneSignal.setLogLevel(.LL_VERBOSE, visualLevel: .LL_NONE)
+
+          //START OneSignal initialization code
+          let onesignalInitSettings = [kOSSettingsKeyAutoPrompt: false, kOSSettingsKeyInAppLaunchURL: false, kOSSettingsKeyInAppAlerts : false]
+          
+          // Replace 'YOUR_ONESIGNAL_APP_ID' with your OneSignal App ID.
+          OneSignal.initWithLaunchOptions(launchOptions,
+            appId: "73fb5f5d-abb3-49fa-b99d-cc2ff9c81da8",
+            handleNotificationAction: nil,
+            settings: onesignalInitSettings)
+        
+        //OneSignal.initWithLaunchOptions(launchOptions, appId: kONESIGNALAPPID, handleNotificationAction: nil, settings: [kOSSettingsKeyInAppAlerts : false])
         
         
         

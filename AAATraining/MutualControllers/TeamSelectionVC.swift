@@ -44,7 +44,7 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         NotificationCenter.default.addObserver(self, selector: #selector(loadTeamsForUser), name: NSNotification.Name(rawValue: "joinedTeam"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadTeamsForUser), name: NSNotification.Name(rawValue: "createdTeam"), object: nil)
 
-        bannerView.adUnitID = ""
+        bannerView.adUnitID = "ca-app-pub-8479238648739219/1196914480"
         //ca-app-pub-8479238648739219/1196914480
         //c8b13a0958c55302a0092a8fdabd1f7e
         bannerView.rootViewController = self
@@ -124,7 +124,7 @@ class TeamSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     //possibly need to change this to load teams from User
     @objc func loadTeamsForUser() {
-        let query = reference(.Team).whereField(kTEAMMEMBERIDS, arrayContains: FUser.currentId())
+        let query = reference(.Team).whereField(kTEAMMEMBERIDS, arrayContains: FUser.currentId()).order(by: kTEAMTYPE)
         query.getDocuments { (snapshot, error) in
             self.teams = []
             self.teamLogos = []

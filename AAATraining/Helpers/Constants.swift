@@ -68,21 +68,17 @@ public let kBIRTHDAY = "birthday"
 public let kCOVER = "cover"
 public let kCOACH = "coach"
 public let kPLAYER = "player"
-
 public let kRECENTTEAMID = "recentTeamID"
 
 
 public let kPHONE = "phone"
-
 public let kLOGINMETHOD = "loginMethod"
 public let kPUSHID = "pushId"
-
 public let kISONLINE = "isOnline"
 public let kVERIFICATIONCODE = "firebase_verification"
 
 //public let kCOUNTRY = "country"
 public let kBLOCKEDUSERID = "blockedUserId"
-
 
 public let kBACKGROUBNDIMAGE = "backgroundImage"
 public let kSHOWAVATAR = "showAvatar"
@@ -108,6 +104,17 @@ public let kPOSTTHUMBNAIL = "postThumbnail"
 public let kPOSTTYPE = "postType"
 public let kPOSTURLLINK = "postUrlLink"
 public let kPOSTFEEDTYPE = "postFeedType"
+
+//Player Stats
+public let kPLAYERSTATID = "playerStatID"
+public let kPLAYERSTATUSERID = "playerStatUserID"
+public let kPLAYERSTATTEAMID = "playerStatTeamID"
+public let kPLAYERSTATHEIGHT = "playerStatHeight"
+public let kPLAYERSTATWEIGHT = "playerStatWeight"
+public let kPLAYERSTATPOSITION = "playerStatPosition"
+public let kPLAYERSTATNUMBER = "playerStatNumber"
+public let kPLAYERSTATFIRSTNAME = "playerStatFirstName"
+public let kPLAYERSTATLASTNAME = "playerStatLastName"
 
 //Nutrition
 public let kNUTRITIONPOSTS = "nutritionPosts"

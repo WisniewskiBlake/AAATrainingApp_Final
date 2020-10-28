@@ -23,6 +23,7 @@ enum FCollectionReference: String {
     case Nutrition
     case Team
     case TeamEventCache
+    case PlayerStats
 }
 
 
