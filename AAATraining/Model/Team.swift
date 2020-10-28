@@ -12,14 +12,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 public class Team {
-    //if ever i need to make a "team owner" all I have to do is when team register is clicked, say "enter user credentials or create account" then
-    
-    //set up FUser to have a team and then set his team default when finish is clicked in register like FUser.teamID = "team loaded in after team code is typed"  and set FUser.cover to be the same as Team.logo, and add that user to "teamMemberIDs" in Team
-    
-    //user types in Team code > LoginVC has a function that takes that team code, queries database, grabs the logo and all
-    
-    // get 3 colors from the uploaded logo and when loading every screen on the app, get the team info and set elements of the screen to the colors
-    //
+
     var teamID: String
     var teamName: String
     var teamLogo: String
@@ -157,11 +150,5 @@ public class Team {
     }
     
 
-    
-    
-    //    class func getMemberCount(teamID: String) -> Int {
-    //
-//    }
-    
     
 }
