@@ -84,9 +84,9 @@ func setBadges(controller: UITabBarController, accountType: String) {
         recentBadgeCount { (badge) in
             
             if badge != 0 {
-                controller.tabBar.items![0].badgeValue = "\(badge)"
+                controller.tabBar.items![1].badgeValue = "\(badge)"
             } else {
-                controller.tabBar.items![0].badgeValue = nil
+                controller.tabBar.items![1].badgeValue = nil
             }
         }
     }

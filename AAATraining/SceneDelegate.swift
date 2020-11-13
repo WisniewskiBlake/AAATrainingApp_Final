@@ -171,7 +171,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
             setCalendarBadges(controller: top as! UITabBarController, accountType: "player")
         } else if top! is UITabBarController && top?.restorationIdentifier == "parent" {
             setBadges(controller: top as! UITabBarController, accountType: "parent")
-            setCalendarBadges(controller: top as! UITabBarController, accountType: "parent")
+            //setCalendarBadges(controller: top as! UITabBarController, accountType: "parent")
         }
         
         

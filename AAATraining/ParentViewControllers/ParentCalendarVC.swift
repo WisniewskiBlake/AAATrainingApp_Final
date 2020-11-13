@@ -58,8 +58,8 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setBadges(controller: self.tabBarController!, accountType: "coach")
-        setCalendarBadges(controller: self.tabBarController!, accountType: "parent")
+        setBadges(controller: self.tabBarController!, accountType: "parent")
+        //setCalendarBadges(controller: self.tabBarController!, accountType: "parent")
 
         NotificationCenter.default.addObserver(self, selector: #selector(loadEvents), name: NSNotification.Name(rawValue: "deleteEvent"), object: nil)
         bannerView.adUnitID = "ca-app-pub-8479238648739219/3025001477"
