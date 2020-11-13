@@ -191,15 +191,23 @@ class TeamRegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         //potentially could use save user locally here, could also fix userTeamMemberCount bc thats just straight wrong
         var userTeamAccTypeArray: [String]? = []
         var userIsNewObserverArray: [String]? = []
+        var userTeamNotificationsArray: [String]? = []
+        
         fetchCurrentUserFromFirestore(userId: FUser.currentId(), completion: { (user) in
 
            if user != nil && user!.firstname != "" {
             //we have user, login
             userTeamAccTypeArray = user?.userTeamAccountTypes
-            userIsNewObserverArray = user?.userIsNewObserverArray
             userTeamAccTypeArray!.append("Coach")
+            
+            userIsNewObserverArray = user?.userIsNewObserverArray
+            
             userIsNewObserverArray!.append("No")
-            updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMIDS : FieldValue.arrayUnion([self.teamLoginCode]), kUSERTEAMACCOUNTTYPES : userTeamAccTypeArray, kUSERTEAMNAMES : FieldValue.arrayUnion([self.teamNameText.text!]), kUSERTEAMMEMBERS : FieldValue.arrayUnion([FUser.currentId()]), kUSERTEAMMEMBERCOUNT : FieldValue.arrayUnion(["1"]), kUSERISNEWOBSERVERARRAY : userIsNewObserverArray]) { (success) in
+            
+            userTeamNotificationsArray = user?.userTeamNotifications
+            userTeamNotificationsArray!.append("Yes")
+            
+            updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMIDS : FieldValue.arrayUnion([self.teamLoginCode]), kUSERTEAMACCOUNTTYPES : userTeamAccTypeArray, kUSERTEAMNAMES : FieldValue.arrayUnion([self.teamNameText.text!]), kUSERTEAMMEMBERS : FieldValue.arrayUnion([FUser.currentId()]), kUSERTEAMNOTIFICATIONS : userTeamNotificationsArray, kUSERISNEWOBSERVERARRAY : userIsNewObserverArray]) { (success) in
                 self.goToApp()
 
             }

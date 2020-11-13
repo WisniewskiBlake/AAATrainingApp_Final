@@ -30,7 +30,9 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
     private var authListener: AuthStateDidChangeListenerHandle?
     @IBOutlet weak var versionLabel: UILabel!
     let userDefaults = UserDefaults.standard
-    
+    var userTeamIDs: [String] = []
+    var userTeamNotificationsArray: [String] = []
+    var isSwitchOn = false
     var avatarSwitchStatus = false
     var firstLoad: Bool?
     let helper = Helper()
@@ -47,7 +49,7 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
             textAttributes[NSAttributedString.Key.foregroundColor] = UIColor.black
             navigationController?.navigationBar.titleTextAttributes = textAttributes
         }
-
+        loadNotiSlider()
 
     }
     
@@ -68,31 +70,55 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
         }
     }
     
+    func loadNotiSlider() {
+        let query = reference(.User).whereField(kOBJECTID, isEqualTo: FUser.currentId())
+    
+        query.getDocuments { (snapshot, error) in
+            self.userTeamNotificationsArray = []
+            
+            if error != nil {
+                print(error!.localizedDescription)
+                
+                return
+            }
+            
+            guard let snapshot = snapshot else {
+                return
+            }
+            
+            if !snapshot.isEmpty {
+                for userDoc in snapshot.documents {
+                    let userDoc = userDoc.data() as NSDictionary
+                    let userCurr = FUser(_dictionary: userDoc)
+                    self.userTeamNotificationsArray = userCurr.userTeamNotifications
+                    self.userTeamIDs = userCurr.userTeamIDs
+                }
+            }
+        }
+    }
+    
     @objc func loadUser() {
         
         let helper = Helper()
         let user = FUser.currentUser()
-        
    
         guard let firstName = user?.firstname, let lastName = user?.lastname, let avaPath = user?.ava, let coverPath = user?.cover else {
                
                return
         }
-           
-           
-            if avaPath != "" {
-                helper.imageFromData(pictureData: avaPath) { (avatarImage) in
-                    
-                    if avatarImage != nil {
-                        avatarImageView.image = avatarImage!
-                    }
+        if avaPath != "" {
+            helper.imageFromData(pictureData: avaPath) { (avatarImage) in
+                
+                if avatarImage != nil {
+                    avatarImageView.image = avatarImage!
                 }
-            } else{
-                avatarImageView.image = UIImage(named: "user.png")
-
             }
-           // assigning vars which we accessed from global var, to fullnameLabel
-           fullNameLabel.text = "\((firstName).capitalized) \((lastName).capitalized)"
+        } else{
+            avatarImageView.image = UIImage(named: "user.png")
+
+        }
+       // assigning vars which we accessed from global var, to fullnameLabel
+       fullNameLabel.text = "\((firstName).capitalized) \((lastName).capitalized)"
            
     }
 
@@ -136,9 +162,6 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
         var teamMemberIDs: [String] = []
         var teamMemberCount: String = ""
         var newTeamMemberCount: Int = 0
-        
-        
-
         
         let currentTeamID = FUser.currentUser()!.userCurrentTeamID
         let currentID = FUser.currentId()
@@ -220,9 +243,21 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
     
     
     @IBAction func showAvatartSwithValueChanged(_ sender: UISwitch) {
-
+            
+        isSwitchOn = sender.isOn
+        let index = userTeamIDs.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)
+        if isSwitchOn {
+            userTeamNotificationsArray[index!] = "Yes"
+        } else {
+            userTeamNotificationsArray[index!] = "No"
+        }
+        
+        updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMNOTIFICATIONS : userTeamNotificationsArray]) { (success) in
+            
+        }
+        
+        
 //        avatarSwitchStatus = sender.isOn
-//
 //        saveUserDefaults()
     }
     
@@ -422,6 +457,7 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
     func loadUserDefaults() {
         
         firstLoad = userDefaults.bool(forKey: kFIRSTRUN)
+        let index = userTeamIDs.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)
         
         if !firstLoad! {
             userDefaults.set(true, forKey: kFIRSTRUN)
@@ -429,9 +465,16 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
             userDefaults.synchronize()
         }
         
-        //avatarSwitchStatus = userDefaults.bool(forKey: kSHOWAVATAR)
-        //pushNotiStatusSwitch.isOn = avatarSwitchStatus
-        pushNotiStatusSwitch.isOn = false
+        if userTeamNotificationsArray[index!] == "Yes" {
+            pushNotiStatusSwitch.isOn = true
+            
+        } else {
+            pushNotiStatusSwitch.isOn = false
+        }
+        
+//        avatarSwitchStatus = userDefaults.bool(forKey: kSHOWAVATAR)
+//        pushNotiStatusSwitch.isOn = avatarSwitchStatus
+        //pushNotiStatusSwitch.isOn = false
     }
     
     @IBAction func backPressed(_ sender: Any) {

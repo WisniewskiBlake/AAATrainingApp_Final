@@ -60,6 +60,7 @@ class TeamLoginVC: UIViewController, UITextFieldDelegate {
                         
                         var userTeamAccTypeArray: [String]? = []
                         var userIsNewObserverArray: [String]? = []
+                        var userTeamNotificationsArray: [String]? = []
                         fetchCurrentUserFromFirestore(userId: FUser.currentId(), completion: { (user) in
 
                            if user != nil && user!.firstname != "" {
@@ -70,7 +71,10 @@ class TeamLoginVC: UIViewController, UITextFieldDelegate {
                             userIsNewObserverArray = user?.userIsNewObserverArray
                             userIsNewObserverArray!.append("Yes")
                             
-                            updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMIDS : FieldValue.arrayUnion([self.team.teamID]), kUSERTEAMACCOUNTTYPES : userTeamAccTypeArray, kUSERTEAMNAMES : FieldValue.arrayUnion([self.team.teamName]), kUSERTEAMMEMBERS : FieldValue.arrayUnion([FUser.currentId()]), kUSERTEAMMEMBERCOUNT : FieldValue.arrayUnion([String(teamMemberCount)]), kUSERISNEWOBSERVERARRAY : userIsNewObserverArray]) { (success) in
+                            userTeamNotificationsArray = user?.userTeamNotifications
+                            userTeamNotificationsArray!.append("Yes")
+                            
+                            updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMIDS : FieldValue.arrayUnion([self.team.teamID]), kUSERTEAMACCOUNTTYPES : userTeamAccTypeArray, kUSERTEAMNAMES : FieldValue.arrayUnion([self.team.teamName]), kUSERTEAMMEMBERS : FieldValue.arrayUnion([FUser.currentId()]), kUSERTEAMNOTIFICATIONS : userTeamNotificationsArray, kUSERISNEWOBSERVERARRAY : userIsNewObserverArray]) { (success) in
                                 if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
                                 {
                                     vc.modalPresentationStyle = .fullScreen

@@ -180,7 +180,7 @@ class CoachRegisterVC: UIViewController, UITextFieldDelegate, GADBannerViewDeleg
         let avatar = getAvatar()
         let defaultTeamColor = #colorLiteral(red: 0.1882352941, green: 0.1882352941, blue: 0.1882352941, alpha: 1).htmlRGBaColor
         
-        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "", birthday: "", cover: "", phoneNumber: "", userCurrentTeamID: "", userTeamColorOne: defaultTeamColor, userTeamColorTwo: "", userTeamColorThree: "", userTeamIDs: [], userTeamAccountTypes: [], userTeamNames: [], userTeamMembers: [], userTeamMemberCount: [], userIsNewObserverArray: []) { (error)  in
+        FUser.registerUserWith(email: self.emailTextField.text!, password: self.passwordTextField.text!, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, avatar: avatar, height: "", weight: "", position: "", number: "", accountType: "", birthday: "", cover: "", phoneNumber: "", userCurrentTeamID: "", userTeamColorOne: defaultTeamColor, userTeamColorTwo: "", userTeamColorThree: "", userTeamIDs: [], userTeamAccountTypes: [], userTeamNames: [], userTeamMembers: [], userTeamNotifications: [], userIsNewObserverArray: []) { (error)  in
             
                 if error != nil {
                     
