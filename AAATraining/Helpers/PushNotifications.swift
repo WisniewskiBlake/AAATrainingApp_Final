@@ -14,10 +14,17 @@ func sendPushNotification(memberToPush: [String], message: String) {
     let updatedMembers = removeCurrentUserFromMembersArray(members: memberToPush)
 
     getMembersToPush(members: updatedMembers) { (userPushIds) in
-
+        var pushIDs = userPushIds
+        var index = 0
+        for pushID in pushIDs {
+            if pushID == "" {
+                pushIDs.remove(at: index)
+            }
+            index = index + 1
+        }
         let currentUser = FUser.currentUser()!
 
-        OneSignal.postNotification(["contents" : ["en" : "\(currentUser.firstname) \n \(message)"], "ios_badgeType" : "Increase", "ios_badgeCount" : 1, "include_player_ids" : userPushIds])
+        OneSignal.postNotification(["contents" : ["en" : "\(currentUser.firstname) \n \(message)"], "ios_badgeType" : "Increase", "ios_badgeCount" : 1, "include_player_ids" : pushIDs])
     }
 
 }

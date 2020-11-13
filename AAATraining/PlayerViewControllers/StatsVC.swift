@@ -44,10 +44,10 @@ class StatsVC: UIViewController {
         
         configure_avaImageView()
         if FUser.currentUser()?.accountType == "player" {
-            changesLabel.isHidden = false
+            //changesLabel.isHidden = false
             loadUser()
         } else {
-            changesLabel.isHidden = false
+            //changesLabel.isHidden = false
             loadUserForGuest()
         }
         

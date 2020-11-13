@@ -133,6 +133,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         let weight = userBeingViewed.weight
         let position = userBeingViewed.position
         let number = userBeingViewed.number
+        //self.playerStatID = userBeingViewed.objectId
         
         var team = Team(teamID: "", teamName: "", teamLogo: "", teamMemberIDs: [], teamCity: "", teamState: "", teamColorOne: "", teamColorTwo: "", teamColorThree: "", teamType: "", teamMemberCount: "", teamMemberAccountTypes: [])
          
@@ -173,19 +174,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
 //
         // assigning vars which we accessed from global var, to fullnameLabel
         fullnameLabel.text = "\((firstName).capitalized) \((lastName).capitalized)"
-//        if height == "" {
-//            heightTextLabel.text = ""
-//        } else {
-//            heightTextLabel.text = "\((height).capitalized)" + "in."
-//        }
-//        if weight == "" {
-//            weightTextLabel.text = ""
-//        } else {
-//            weightTextLabel.text = "\((weight).capitalized)" + "lb."
-//        }
-//
-//        positionTextLabel.text = "\((position).capitalized)"
-//        numberTextLabel.text = "\((number).capitalized)"
+        
         
     }
     
@@ -282,7 +271,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
                     let userCurr = FUser(_dictionary: userDoc)
                     self.user = userCurr
                     self.userBeingViewed = userCurr
-
+ 
                     helper.imageFromData(pictureData: userCurr.ava) { (avatarImage) in
         
                        if avatarImage != nil {
@@ -291,19 +280,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
                        }
                    }
                     self.fullnameLabel.text = "\(String(describing: (userCurr.firstname).capitalized)) \((userCurr.lastname).capitalized)"
-//
-//                    if userCurr.height == "" {
-//                        self.heightTextLabel.text = ""
-//                    } else {
-//                        self.heightTextLabel.text = "\((userCurr.height).capitalized)" + "in."
-//                    }
-//                    if userCurr.weight == "" {
-//                        self.weightTextLabel.text = ""
-//                    } else {
-//                        self.weightTextLabel.text = "\((userCurr.weight).capitalized)" + "lb."
-//                    }
-//                    self.positionTextLabel.text = "\((userCurr.position).capitalized)"
-//                    self.numberTextLabel.text = "\((userCurr.number).capitalized)"
+                    //self.playerStatID = userCurr.objectId
                 }
             }
         }

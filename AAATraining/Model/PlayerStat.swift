@@ -100,8 +100,8 @@ public class PlayerStat {
         }
     }
     
-    func saveStats() {
-        reference(.PlayerStat).document(playerStatDictionary[kPLAYERSTATID] as! String).setData(playerStatDictionary as! [String:Any])        
+    func saveStats(playerStatID: String, withValues: [String:Any]) {
+        reference(.PlayerStat).document(playerStatID).setData(withValues)
     }
     
     func updateStats(playerStatID: String, withValues: [String:Any]) {

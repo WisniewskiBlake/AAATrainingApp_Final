@@ -62,8 +62,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             let userId = note.userInfo![kUSERID] as! String
             UserDefaults.standard.set(userId, forKey: kUSERID)
             UserDefaults.standard.synchronize()
+            self.startOneSignal()
             print("User has logged in...............................")
-            userDidLogin(userId: userId)
+            //userDidLogin(userId: userId)
         }
         
         OneSignal.setLogLevel(.LL_VERBOSE, visualLevel: .LL_NONE)
@@ -217,7 +218,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             UserDefaults.standard.synchronize()
         }
         
-        //updateOneSignalId
+        
         updateOneSignalId()
     }
     
