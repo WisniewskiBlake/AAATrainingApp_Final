@@ -9,17 +9,45 @@
 import Foundation
 import OneSignal
 
+
+var isNotificationsShowingArray: [String] = []
+
 func sendPushNotification(memberToPush: [String], message: String) {
-
+    
+    var allUsers: [FUser] = []
+    var indices: [Int] = []
+    //isNotificationsShowingArray = []
+    
     let updatedMembers = removeCurrentUserFromMembersArray(members: memberToPush)
+    var index: [String] = []
 
+    getUsersFromFirestore(withIds: updatedMembers) { (withUsers) in
+        allUsers = []
+        indices = []
+        allUsers = withUsers
+        for user in withUsers {
+            let index = user.userTeamIDs.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)!
+            indices.append(index)
+        }
+        
+
+    }
+    
+    
     getMembersToPush(members: updatedMembers) { (userPushIds) in
         var pushIDs = userPushIds
         var index = 0
-        for pushID in pushIDs {
-            if pushID == "" {
-                pushIDs.remove(at: index)
+        for pushID in userPushIds {
+            print(allUsers.count)
+            if pushID == "" || allUsers[index].userTeamNotifications[indices[index]] == "No" {
+                if pushIDs.count == 1 {
+                    pushIDs = []
+                } else {
+                    pushIDs.remove(at: index)
+                }
+                
             }
+
             index = index + 1
         }
         let currentUser = FUser.currentUser()!
@@ -63,6 +91,7 @@ func getMembersToPush(members: [String], completion: @escaping (_ usersArray: [S
                 
                 pushIds.append(fUser.pushId!)
                 count += 1
+                
 
                 if members.count == count {
                     completion(pushIds)
@@ -75,3 +104,33 @@ func getMembersToPush(members: [String], completion: @escaping (_ usersArray: [S
     }
 
 }
+
+//func getUsers(memberID : String) {
+//    var query = reference(.User).whereField(kOBJECTID, isEqualTo: memberID)
+//         query.getDocuments { (snapshot, error) in
+//
+//             if error != nil {
+//                 print(error!.localizedDescription)
+//                 return
+//             }
+//             guard let snapshot = snapshot else {
+//                 return
+//             }
+//             if !snapshot.isEmpty {
+//
+//                 for userDictionary in snapshot.documents {
+//
+//                     let userDictionary = userDictionary.data() as NSDictionary
+//                     let fUser = FUser(_dictionary: userDictionary)
+//
+//                     allUsers.append(fUser)
+//                     let index = fUser.userTeamIDs.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)!
+//                     indices.append(index)
+//                     isNotificationsShowingArray.append(fUser.userTeamNotifications[index])
+//
+//                 }
+//             }
+//     }
+//}
+
+

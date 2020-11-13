@@ -12,6 +12,8 @@ class OutgoingMessage {
     
     let messageDictionary: NSMutableDictionary
     let helper = Helper()
+    var allUsers: [FUser] = []
+    var indices: [Int] = []
     //MARK: Initializers
     
     //text message
@@ -88,5 +90,6 @@ class OutgoingMessage {
                 }
             }
         }
-    }
+    }    
+    
 }
