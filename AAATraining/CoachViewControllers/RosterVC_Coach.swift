@@ -455,8 +455,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         var userTeamAccountTypes = user.userTeamAccountTypes
         var userTeamIDs = user.userTeamIDs
         var userTeamNames = user.userTeamNames
-
-        
+        var userTeamNotifications = user.userTeamNotifications
         
         let currentID = user.objectId
         
@@ -480,9 +479,10 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
                 userTeamAccountTypes.remove(at: indexUser!)
                 userIsNewObserverArray.remove(at: indexUser!)
                 userTeamNames.remove(at: indexUser!)
+                userTeamNotifications.remove(at: indexUser!)
                 
                 updateUser(userID: currentID , withValues: [kUSERTEAMIDS: userTeamIDs, kUSERISNEWOBSERVERARRAY: userIsNewObserverArray, kUSERTEAMACCOUNTTYPES: userTeamAccountTypes, kUSERTEAMNAMES: userTeamNames])
-                Team.updateTeam(teamID: teamReturned.teamID, withValues: [kTEAMMEMBERIDS: teamMemberIDs, kTEAMMEMBERACCOUNTTYPES: teamMemberAccountTypes, kTEAMMEMBERCOUNT: String(newTeamMemberCount)])
+                Team.updateTeam(teamID: teamReturned.teamID, withValues: [kTEAMMEMBERIDS: teamMemberIDs, kTEAMMEMBERACCOUNTTYPES: teamMemberAccountTypes, kTEAMMEMBERCOUNT: String(newTeamMemberCount), kUSERTEAMNOTIFICATIONS: userTeamNotifications])
                 
 //                let indexPath = IndexPath(row: row, section: section)
 //                self.tableView.beginUpdates()

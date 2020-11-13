@@ -391,6 +391,7 @@ class RecentChatVC_Coach: UIViewController, UITableViewDelegate, UITableViewData
         muteAction.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
         
         return [deleteAction, muteAction]
+        //return [deleteAction]
         
     }
     

@@ -15,45 +15,77 @@ var isNotificationsShowingArray: [String] = []
 func sendPushNotification(memberToPush: [String], message: String) {
     
     var allUsers: [FUser] = []
+    var allUserPushIDs: [String] = []
     var indices: [Int] = []
+    
     //isNotificationsShowingArray = []
     
-    let updatedMembers = removeCurrentUserFromMembersArray(members: memberToPush)
+    var updatedMembers = removeCurrentUserFromMembersArray(members: memberToPush)
     var index: [String] = []
 
     getUsersFromFirestore(withIds: updatedMembers) { (withUsers) in
         allUsers = []
         indices = []
-        allUsers = withUsers
+        allUserPushIDs = []
+//        allUsers = withUsers
         for user in withUsers {
-            let index = user.userTeamIDs.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)!
-            indices.append(index)
-        }
-        
-
-    }
-    
-    
-    getMembersToPush(members: updatedMembers) { (userPushIds) in
-        var pushIDs = userPushIds
-        var index = 0
-        for pushID in userPushIds {
-            print(allUsers.count)
-            if pushID == "" || allUsers[index].userTeamNotifications[indices[index]] == "No" {
-                if pushIDs.count == 1 {
-                    pushIDs = []
-                } else {
-                    pushIDs.remove(at: index)
+            if user.userTeamIDs.contains(FUser.currentUser()!.userCurrentTeamID) && user.pushId != "" {
+                if !user.userTeamNotifications.isEmpty {
+                    allUsers.append(user)
+                    allUserPushIDs.append(user.pushId!)
+                    let index = user.userTeamIDs.firstIndex(of: FUser.currentUser()!.userCurrentTeamID)!
+                    indices.append(index)
                 }
                 
+            } else if updatedMembers.contains(user.objectId) {
+                var indexToRemove = updatedMembers.firstIndex(of: user.objectId)
+                updatedMembers.remove(at: indexToRemove!)
+            } else if updatedMembers.contains("") {
+                var indexToRemove = updatedMembers.firstIndex(of: "")
+                updatedMembers.remove(at: indexToRemove!)
             }
-
-            index = index + 1
+            
         }
         let currentUser = FUser.currentUser()!
 
-        OneSignal.postNotification(["contents" : ["en" : "\(currentUser.firstname) \n \(message)"], "ios_badgeType" : "Increase", "ios_badgeCount" : 1, "include_player_ids" : pushIDs])
+//        OneSignal.postNotification(["contents" : ["en" : "\(currentUser.firstname) \n \(message)"], "ios_badgeType" : "Increase", "ios_badgeCount" : 1, "include_player_ids" : pushIDs])
+        OneSignal.postNotification(["contents" : ["en" : "\(currentUser.firstname) \n \(message)"], "ios_badgeType" : "Increase", "ios_badgeCount" : 1, "include_player_ids" : allUserPushIDs])
+
     }
+    
+    
+//    getMembersToPush(members: updatedMembers) { (userPushIds) in
+//        var pushIDs = userPushIds
+//        var index = 0
+//        for pushID in pushIDs {
+//            print(allUsers.count)
+//            if pushID == "" ||  !allUsers[index].userTeamIDs.contains(FUser.currentUser()!.userCurrentTeamID) || allUsers[index].userTeamNotifications[indices[index]] == "No" {
+//                
+//                
+//                    
+//                     
+//                        
+//                        if pushIDs.count == 1 {
+//                            pushIDs = []
+//                        } else {
+//                            pushIDs.remove(at: index)
+//                        }
+//                        
+//                    
+//                    
+//                
+//                
+//                
+//                
+//            }
+//
+//            index += 1
+//        }
+//        let currentUser = FUser.currentUser()!
+//
+////        OneSignal.postNotification(["contents" : ["en" : "\(currentUser.firstname) \n \(message)"], "ios_badgeType" : "Increase", "ios_badgeCount" : 1, "include_player_ids" : pushIDs])
+//        //OneSignal.postNotification(["contents" : ["en" : "\(currentUser.firstname) \n \(message)"], "ios_badgeType" : "Increase", "ios_badgeCount" : 1, "include_player_ids" : allUsers[k]])
+//    }
 
 }
 

@@ -189,15 +189,16 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
                     var userTeamAccountTypes = user?.userTeamAccountTypes
                     var userTeamIDs = user?.userTeamIDs
                     var userTeamNames = user?.userTeamNames
-                    
+                    var userTeamNotifications = user?.userTeamNotifications
                     
                     let indexUser = userTeamIDs?.firstIndex(of: teamReturned.teamID)
                     userTeamIDs?.remove(at: indexUser!)
                     userTeamAccountTypes?.remove(at: indexUser!)
                     userIsNewObserverArray?.remove(at: indexUser!)
                     userTeamNames?.remove(at: indexUser!)
+                    userTeamNotifications?.remove(at: indexUser!)
                     
-                    updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMIDS: userTeamIDs, kUSERISNEWOBSERVERARRAY: userIsNewObserverArray, kUSERTEAMACCOUNTTYPES: userTeamAccountTypes, kUSERTEAMNAMES: userTeamNames, kUSERCURRENTTEAMID: ""]) { (success) in
+                    updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMIDS: userTeamIDs, kUSERISNEWOBSERVERARRAY: userIsNewObserverArray, kUSERTEAMACCOUNTTYPES: userTeamAccountTypes, kUSERTEAMNAMES: userTeamNames, kUSERCURRENTTEAMID: "", kUSERTEAMNOTIFICATIONS: userTeamNotifications]) { (success) in
                         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TeamSelectionVC") as? TeamSelectionVC
                         {
                             vc.modalPresentationStyle = .fullScreen
