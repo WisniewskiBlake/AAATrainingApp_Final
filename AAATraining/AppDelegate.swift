@@ -78,7 +78,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             handleNotificationAction: nil,
             settings: onesignalInitSettings)
         
-        //OneSignal.initWithLaunchOptions(launchOptions, appId: kONESIGNALAPPID, handleNotificationAction: nil, settings: [kOSSettingsKeyInAppAlerts : false])
+        OneSignal.inFocusDisplayType = OSNotificationDisplayType.notification;
+
+          // promptForPushNotifications will show the native iOS notification permission prompt.
+          // We recommend removing the following code and instead using an In-App Message to prompt for notification permission (See step 8)
+         // OneSignal.promptForPushNotifications(userResponse: { accepted in
+          //  print("User accepted notifications: \(accepted)")
+          //})
+        
+        //commenting this out makes notifications not appear in app, need to uncomment above line though
+        OneSignal.initWithLaunchOptions(launchOptions, appId: kONESIGNALAPPID, handleNotificationAction: nil, settings: [kOSSettingsKeyInAppAlerts : false])
         
         
         

@@ -55,12 +55,8 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         navigationController?.navigationBar.prefersLargeTitles = true
         tableView.tableFooterView = UIView()
-
-        
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -212,12 +208,6 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
 
                 })
                 
-//                updateUser(userID: currentID , withValues: [kUSERTEAMIDS: userTeamIDs, kUSERISNEWOBSERVERARRAY: userIsNewObserverArray, kUSERTEAMACCOUNTTYPES: userTeamAccountTypes])
-                
-                
-
-                
-                
             } else {
                 helper.showAlert(title: "Error", message: "Can't delete right now.", in: self)
             }
@@ -236,7 +226,7 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
                      //let colorPickerVC = navigationColorPicker.viewControllers.first as! ColorPickerVC
         navigationColorPicker.modalPresentationStyle = .fullScreen
         
-                    self.present(navigationColorPicker, animated: true, completion: nil)
+        self.present(navigationColorPicker, animated: true, completion: nil)
     }
 
     @IBAction func termsConditionsPressed(_ sender: Any) {
@@ -256,10 +246,7 @@ class MutualSettingsTableViewController: UITableViewController, UIImagePickerCon
         updateUserInFirestore(objectID: FUser.currentId(), withValues: [kUSERTEAMNOTIFICATIONS : userTeamNotificationsArray]) { (success) in
             
         }
-        
-        
-//        avatarSwitchStatus = sender.isOn
-//        saveUserDefaults()
+
     }
     
     @IBAction func tellAFriendButtonPressed(_ sender: Any) {

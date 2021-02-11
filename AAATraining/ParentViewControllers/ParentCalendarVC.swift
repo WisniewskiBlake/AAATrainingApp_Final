@@ -67,15 +67,13 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
         //c8b13a0958c55302a0092a8fdabd1f7e
         bannerView.rootViewController = self
         bannerView.delegate = self
-        bannerView.load(GADRequest())
-        
+        bannerView.load(GADRequest())        
         
         calendar.delegate = self
         
         let todayDate = self.calendar!.today! as Date
         self.calendar.formatter.dateFormat = "YYYY-MM-dd"
         today = calendar.formatter.string(from: todayDate)
-        
 
     }
     
@@ -254,7 +252,6 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
             self.upcomingEvents = []
             self.eventUserIDs = []
             self.isNewObserver = true
-            
 
             if error != nil {
                 print(error!.localizedDescription)
@@ -291,9 +288,7 @@ class ParentCalendarVC: UIViewController, FSCalendarDelegate, FSCalendarDelegate
                 self.tableView.reloadData()
                 self.calendar.reloadData()
                 self.imageview.removeFromSuperview()
-                
            }
-            
             self.tableView.reloadData()
             self.calendar.reloadData()
             self.imageview.removeFromSuperview()

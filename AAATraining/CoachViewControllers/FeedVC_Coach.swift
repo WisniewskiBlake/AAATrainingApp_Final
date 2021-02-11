@@ -100,7 +100,6 @@ class FeedVC_Coach: UITableViewController, CoachPicCellDelegate, UIImagePickerCo
         feedHeader.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
        
     }
-
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()

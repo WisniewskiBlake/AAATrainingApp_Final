@@ -12,6 +12,7 @@ import Firebase
 import FirebaseCore
 import FirebaseFirestore
 import MapKit
+import OneSignal
 
 class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
 
@@ -26,7 +27,6 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     @IBOutlet weak var placeHolderLabelOne: UILabel!
     @IBOutlet weak var startText: UITextField!
     @IBOutlet weak var endText: UITextField!
-    
     
     @IBOutlet weak var titleLocationView: UIView!
     @IBOutlet weak var startEndView: UIView!
@@ -98,8 +98,6 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         getAllMembers()
         getAllEvents()
         configureUI()
-        
-        
         
         
         if #available(iOS 14.0, *) {
@@ -211,11 +209,9 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
                 let endHourToken = end24.components(separatedBy: colonDelimiter)
                 let endMinuteToken = endHourToken[1].components(separatedBy: delimiter)
                 
-                
                 let timeEndToken = event.eventEnd.components(separatedBy: delimiter)
                 let timeEndWithZeros = timeEndToken[0] + ":00 " + timeEndToken[1]
                 let fullEndString = dateWithSlash[0] + "/" + dateWithSlash[1] + "/" + dateWithSlash[2] + ", " + timeEndWithZeros
-
 
                 var startDateComps = datePicker.calendar.dateComponents([.month, .day, .year, .hour, .minute, .second], from: datePicker.date)
                 startDateComps.month = Int(dateWithSlash[0])
@@ -239,7 +235,6 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
                 
             }
         }
-        
     }
     
     
@@ -258,22 +253,21 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
             var endDay: String = ""
             var endYear: String = ""
             
-            
             let startDateComps = datePicker.calendar.dateComponents([.month, .day, .year, .hour, .minute, .second], from: datePicker.date)
             let endDateComps = endDatePicker.calendar.dateComponents([.month, .day, .year, .hour, .minute, .second], from: endDatePicker.date)
             if endDateComps.month == startDateComps.month && endDateComps.day == startDateComps.day && endDateComps.year == startDateComps.year {
-                dateFormatter.dateFormat = "h:mm a"
+            dateFormatter.dateFormat = "h:mm a"
 
-                startDate = Calendar.current.date(from: startDateComps)!
-                endDate = Calendar.current.date(from: endDateComps)!
-                startTime = dateFormatter.string(from: startDate)
-                endTime = dateFormatter.string(from: endDate)
+            startDate = Calendar.current.date(from: startDateComps)!
+            endDate = Calendar.current.date(from: endDateComps)!
+            startTime = dateFormatter.string(from: startDate)
+            endTime = dateFormatter.string(from: endDate)
                     
-                dateFormatter.dateFormat = "YYYY-MM-dd"
-                let dateForUpcomingComparison = dateFormatter.string(from: startDate)
-                
-                dateFormatter.dateFormat = "EEEE, MM-dd-YYYY"
-                let newDateString = dateFormatter.string(from: startDate)
+            dateFormatter.dateFormat = "YYYY-MM-dd"
+            let dateForUpcomingComparison = dateFormatter.string(from: startDate)
+            
+            dateFormatter.dateFormat = "EEEE, MM-dd-YYYY"
+            let newDateString = dateFormatter.string(from: startDate)
                     
                 if eventTitleText.text != "" {
                     if self.doneButton.currentTitle == "Update" &&  (newDateString == self.dateString){
@@ -333,12 +327,6 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
     //            }
             
             
-                
-            
-            
-            
-        
-
         
     }
     
@@ -355,8 +343,7 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         
         if eventUserID != eventOwnerID {
             eventCounter = 1
-        }
-        
+        }        
         
         event = [kEVENTID: eventId, kEVENTTEAMID: eventTeamID, kEVENTOWNERID: FUser.currentId(), kEVENTTEXT: eventText, kEVENTDATE: eventDate, kEVENTACCOUNTTYPE: eventAccountType, kEVENTCOUNTER: eventCounter, kEVENTUSERID: eventUserID, kEVENTGROUPID: eventGroupID, kEVENTTITLE: eventTitle, kEVENTSTART: eventStart, kEVENTEND: eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: upcomingCompar, kEVENTLOCATION: eventLocation, kEVENTIMAGE: eventImage, kEVENTURL: eventURL] as [String:Any]
         
@@ -371,6 +358,8 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         var eventCounter = 0
         
         event = [kEVENTGROUPID: eventGroupID, kEVENTID: eventId, kEVENTTEAMID: eventTeamID, kEVENTOWNERID: FUser.currentId(), kEVENTTEXT: eventText, kEVENTDATE: eventDate, kEVENTACCOUNTTYPE: eventAccountType, kEVENTCOUNTER: 0, kEVENTUSERID: "", kEVENTTITLE: eventTitle, kEVENTSTART: eventStart, kEVENTEND: eventEnd, kEVENTDATEFORUPCOMINGCOMPARISON: upcomingCompar, kEVENTLOCATION: eventLocation, kEVENTIMAGE: eventImage, kEVENTURL: eventURL] as [String:Any]
+        
+        //OneSignal.postNotification(["contents" : ["en" : "\(currentUser.firstname) \n \(message)"], "ios_badgeType" : "Increase", "ios_badgeCount" : 1, "include_player_ids" : allUserPushIDs])
         
         localReference.setData(event)
         
@@ -398,9 +387,6 @@ class Event_Coach: UIViewController, UITextViewDelegate, UINavigationControllerD
         }
         self.createTeamEvent(eventOwnerID: eventOwnerID, eventTeamID: FUser.currentUser()!.userCurrentTeamID, eventText: eventText, eventDate: fullDate, eventAccountType: eventAccountType, eventUserID: "", eventGroupID: eventGroupID, eventTitle: eventTitle, eventStart: eventStart, eventEnd: eventEnd, upcomingCompar: upcomingCompar, eventLocation: eventLocation, eventImage: "", eventURL: eventURL)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createEvent"), object: nil)
-            //sleep(UInt32(0.6))
-        
-        //}
     }
     
     func getAllMembers() {

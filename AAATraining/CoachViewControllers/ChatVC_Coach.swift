@@ -294,7 +294,7 @@ class ChatVC_Coach: JSQMessagesViewController, UIImagePickerControllerDelegate, 
         let message = objectMessages[indexPath.row]
         
         let status: NSAttributedString!
-        
+
         let attributedStringColor = [NSAttributedString.Key.foregroundColor : UIColor.darkGray]
         
         switch message[kSTATUS] as! String {

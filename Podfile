@@ -23,7 +23,7 @@ pod 'IDMPhotoBrowser'
 pod 'RNCryptor'
 
 pod 'ImagePicker'
-pod 'OneSignal'
+pod 'OneSignal', '>= 2.11.2', '< 3.0'
 pod 'SinchRTC'
 pod 'GiFHUD-Swift'
 pod 'LGButton'
@@ -52,7 +52,7 @@ end
 
 target 'OneSignalNotificationServiceExtension' do
  use_frameworks!
- pod 'OneSignal'
+ pod 'OneSignal', '>= 2.11.2', '< 3.0'
 end
 
 

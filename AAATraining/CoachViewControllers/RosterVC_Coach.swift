@@ -169,6 +169,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
                 self.sectionTitleList = []
                 self.allUsersGroupped = [:]
                 self.usersToShow = []
+                self.userTeamAccTypeIndexArr = []
                 
                 if error != nil {
                     print(error!.localizedDescription)
@@ -413,8 +414,6 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
             
         } else {
 
-            
-
             user = users![indexPath.row]
             row = indexPath.row
             section = indexPath.section
@@ -435,11 +434,7 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
                 self.tableView.reloadData()
             }
 
-            
-            
         }
-        
-        
         
         return [deleteAction]
     }
@@ -456,7 +451,6 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
         var userTeamIDs = user.userTeamIDs
         var userTeamNames = user.userTeamNames
         var userTeamNotifications = user.userTeamNotifications
-        
         let currentID = user.objectId
         
         if currentID == FUser.currentId() {
@@ -484,12 +478,6 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
                 updateUser(userID: currentID , withValues: [kUSERTEAMIDS: userTeamIDs, kUSERISNEWOBSERVERARRAY: userIsNewObserverArray, kUSERTEAMACCOUNTTYPES: userTeamAccountTypes, kUSERTEAMNAMES: userTeamNames])
                 Team.updateTeam(teamID: teamReturned.teamID, withValues: [kTEAMMEMBERIDS: teamMemberIDs, kTEAMMEMBERACCOUNTTYPES: teamMemberAccountTypes, kTEAMMEMBERCOUNT: String(newTeamMemberCount), kUSERTEAMNOTIFICATIONS: userTeamNotifications])
                 
-//                let indexPath = IndexPath(row: row, section: section)
-//                self.tableView.beginUpdates()
-//                self.tableView.deleteRows(at: [indexPath], with: .automatic)
-//                self.tableView.endUpdates()
-//                self.tableView.reloadData()
-                
                 if self.filterSegmentedControl.selectedSegmentIndex == 0 {
                     self.getTeam(filter: "")
                 } else if self.filterSegmentedControl.selectedSegmentIndex == 1 {
@@ -508,15 +496,9 @@ class RosterVC_Coach: UITableViewController, UISearchResultsUpdating, RosterCell
             }
         }
             
-        }
+    }
         
         
-            
-
-        
-
-    
-
 }
     
 

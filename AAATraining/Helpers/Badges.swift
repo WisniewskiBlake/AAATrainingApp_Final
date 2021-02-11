@@ -41,7 +41,6 @@ func recentBadgeCount(withBlock: @escaping(_ badgeNumber: Int) -> Void) {
 
 func calendarBadgeCount(withBlock: @escaping(_ badgeNumber: Int) -> Void) {
     
-    
     calendarBadgeHandler = reference(.Event).whereField(kEVENTUSERID, isEqualTo: FUser.currentId()).whereField(kEVENTTEAMID, isEqualTo: FUser.currentUser()?.userCurrentTeamID).addSnapshotListener({ (snapshot, error) in
         
         var badge = 0
@@ -90,8 +89,6 @@ func setBadges(controller: UITabBarController, accountType: String) {
             }
         }
     }
-    
-    
 }
 
 func setCalendarBadges(controller: UITabBarController, accountType: String) {
@@ -104,7 +101,7 @@ func setCalendarBadges(controller: UITabBarController, accountType: String) {
                 controller.tabBar.items![2].badgeValue = nil
             }
         }
-    } else if accountType == "parent"{
+    } else {
         calendarBadgeCount { (badge) in
             
             if badge != 0 {
@@ -114,6 +111,4 @@ func setCalendarBadges(controller: UITabBarController, accountType: String) {
             }
         }
     }
-    
-    
 }
